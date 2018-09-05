@@ -13,7 +13,7 @@
 <a href="https://packagist.org/packages/lanhktc/laravel-ecommerce"><img src="https://poser.pugx.org/lanhktc/laravel-ecommerce/v/stable.svg" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/lanhktc/laravel-ecommerce"><img src="https://poser.pugx.org/lanhktc/laravel-ecommerce/license.svg" alt="License"></a>
 </p>
-<p align="center"><img src="https://giaiphap247.com/images/demo.jpg"></p>
+<p align="center"><img src="https://giaiphap247.com/images/public.jpg"></p>
 
 ## Cài đặt
 

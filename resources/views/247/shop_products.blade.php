@@ -79,13 +79,13 @@
                             <div class="icon-new-label new-left">Sale</div>
                         @endif
                         <div class="pr-img-area product-box-{{ $product->id }}"> <a title="{{ $product->name }}" href="{{ url('san-pham/'.ktc_str_convert($product->name).'_'.$product->id.'.html') }}">
-                          <figure> <img class="first-img" src="{{ asset('documents/website/'.$product->image) }}" alt="{{ $product->name }}"> <img class="hover-img" src="{{ asset('documents/website/'.$product->image) }}" alt="{{ $product->name }}"></figure>
+                          <figure> <img class="first-img" src="{{ asset('documents/website/thumb/'.$product->image) }}" alt="{{ $product->name }}"> <img class="hover-img" src="{{ asset('documents/website/thumb/'.$product->image) }}" alt="{{ $product->name }}"></figure>
                           </a> </div>
                         <div class="pr-info-area">
                           <div class="pr-button">
                             <div class="mt-button add_to_wishlist"> <a href="#"  onClick="addToCart({{ $product->id }},'wishlist')"> <i class="fa fa-heart-o"></i> </a> </div>
-                            <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-link"></i> </a> </div>
-                            <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
+{{--                             <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-link"></i> </a> </div> --}}
+                            <div class="mt-button quick-view"> <a   onClick="addToCart({{ $product->id }})"> <i class="fa fa-cart-plus"></i> </a> </div>
                           </div>
                         </div>
                       </div>
@@ -149,7 +149,7 @@
               <div class="manufacturer-area">
                 {{-- <h2 class="saider-bar-title">&nbsp;</h2> --}}
                 <div class="saide-bar-menu">
-                    <a href="{{ $leftBanner->url }}#"><img src="{{ asset('documents/website/'.$leftBanner->image) }}"></a>
+                    <a href="{{ $leftBanner->url }}#"><img src="{{ asset('documents/website/thumb/'.$leftBanner->image) }}"></a>
                 </div>
               </div>
             </div>
@@ -171,7 +171,7 @@
             @php
               $product = App\Models\ShopProduct::find($item->id);
             @endphp
-                <li class="item" style="width:100%"> <a href="{{ url('san-pham/'.ktc_str_convert($item->name).'_'.$item->id.'.html') }}" title="Sample Product" class="product-image"><img src="{{ asset('documents/website/'.$product->image) }}" alt="Sample Product "></a>
+                <li class="item" style="width:100%"> <a href="{{ url('san-pham/'.ktc_str_convert($item->name).'_'.$item->id.'.html') }}" title="Sample Product" class="product-image"><img src="{{ asset('documents/website/thumb/'.$product->image) }}" alt="Sample Product "></a>
                   <div class="product-details">
                     <div class="access"> <a href="{{url("removeItem/$item->rowId")}}" title="Remove This Item" class="remove-cart"><i class="icon-close"></i></a></div>
                     <p class="product-name"> <a href="{{ url('san-pham/'.ktc_str_convert($item->name).'_'.$item->id.'.html') }}">{{ $item->name }}</a> </p>
@@ -218,7 +218,7 @@
               <ul>
 @foreach ($products_hot as $product_hot)
                 <li class="item">
-                  <div class="products-block-left"> <a href="{{ url('san-pham/'.ktc_str_convert($product_hot->name).'_'.$product_hot->id.'.html') }}" title="{{ $product_hot->name }}" class="product-image"><img src="{{ asset('documents/website/'.$product_hot->image) }}" alt="{{ $product_hot->name }} "></a></div>
+                  <div class="products-block-left"> <a href="{{ url('san-pham/'.ktc_str_convert($product_hot->name).'_'.$product_hot->id.'.html') }}" title="{{ $product_hot->name }}" class="product-image"><img src="{{ asset('documents/website/thumb/'.$product_hot->image) }}" alt="{{ $product_hot->name }} "></a></div>
                   <div class="products-block-right">
                     <p class="product-name"> <a href="{{ url('san-pham/'.ktc_str_convert($product_hot->name).'_'.$product_hot->id.'.html') }}">{{ $product_hot->name }}</a> </p>
 

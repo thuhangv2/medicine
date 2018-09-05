@@ -315,7 +315,7 @@ jQuery(function() {
                         "class": "tracker"
                     }).css({
                         zIndex: h,
-                        backgroundImage: "url(cannotbe)",
+                        // backgroundImage: "url(cannotbe)",
                         position: "absolute",
                         width: g.c,
                         height: g.d,

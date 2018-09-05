@@ -17,10 +17,10 @@
           @if (count($product->images)>0)
             <div class="flexslider flexslider-thumb">
               <ul class="previews-list slides">
-                <li><a href='{{ asset('documents/website/'.$product->image) }}' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '{{ asset('documents/website/'.$product->image) }}' "><img src="{{ asset('documents/website/'.$product->image) }}" alt = "Thumbnail 2"/></a></li>
+                <li><a href='{{ asset('documents/website/thumb/'.$product->image) }}' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '{{ asset('documents/website/'.$product->image) }}' "><img src="{{ asset('documents/website/thumb/'.$product->image) }}" alt = "Thumbnail 2"/></a></li>
 
                   @foreach ($product->images as $key=>$image)
-                    <li><a href='{{ asset('documents/website/'.$image->image) }}' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '{{ asset('documents/website/'.$image->image) }}' "><img src="{{ asset('documents/website/'.$image->image) }}" alt = "Thumbnail 1"/></a></li>
+                    <li><a href='{{ asset('documents/website/thumb/'.$image->image) }}' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '{{ asset('documents/website/'.$image->image) }}' "><img src="{{ asset('documents/website/thumb/'.$image->image) }}" alt = "Thumbnail 1"/></a></li>
                   @endforeach
               </ul>
             </div>
@@ -176,13 +176,13 @@
                             <div class="icon-new-label new-left">Sale</div>
                         @endif
                         <div class="pr-img-area product-box-{{ $product_real->id }}"> <a title="{{ $product_real->name }}" href="{{ url('san-pham/'.ktc_str_convert($product_real->name).'_'.$product_real->id.'.html') }}">
-                          <figure> <img class="first-img" src="{{ asset('documents/website/'.$product_real->image) }}" alt="{{ $product_real->name }}"> <img class="hover-img" src="{{ asset('documents/website/'.$product_real->image) }}" alt="{{ $product_real->name }}"></figure>
+                          <figure> <img class="first-img" src="{{ asset('documents/website/thumb/'.$product_real->image) }}" alt="{{ $product_real->name }}"> <img class="hover-img" src="{{ asset('documents/website/'.$product_real->image) }}" alt="{{ $product_real->name }}"></figure>
                           </a> </div>
                         <div class="pr-info-area">
                           <div class="pr-button">
                             <div   onClick="addToCart({{ $product_real->id }},'wishlist')" class="mt-button add_to_wishlist"> <a href="#"> <i class="fa fa-heart-o"></i> </a> </div>
-                            <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-link"></i> </a> </div>
-                            <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
+    {{--                         <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-link"></i> </a> </div> --}}
+                            <div class="mt-button quick-view"> <a  onClick="addToCart({{ $product_real->id }})"> <i class="fa fa-cart-plus"></i> </a> </div>
                           </div>
                         </div>
                       </div>

@@ -24,15 +24,15 @@
                             <div class="icon-new-label new-left">Sale</div>
                         @endif
                         <div class="pr-img-area product-box-{{ $product_hot->id }}"> <a title="{{ $product_hot->name }}" href="{{ url('san-pham/'.ktc_str_convert($product_hot->name).'_'.$product_hot->id.'.html') }}">
-                          <figure> <img class="first-img" src="{{ asset('documents/website/'.$product_hot->image) }}" alt="{{ $product_hot->name }}"> <img class="hover-img" src="{{ asset('documents/website/'.$product_hot->image) }}" alt="{{ $product_hot->name }}"></figure>
+                          <figure> <img class="first-img" src="{{ asset('documents/website/thumb/'.$product_hot->image) }}" alt="{{ $product_hot->name }}"> <img class="hover-img" src="{{ asset('documents/website/thumb/'.$product_hot->image) }}" alt="{{ $product_hot->name }}"></figure>
                           </a> </div>
                         <div class="pr-info-area">
                           <div class="pr-button">
                             <div class="mt-button add_to_wishlist"  onClick="addToCart({{ $product_hot->id }},'wishlist')">
                              <a href="#"><i class="fa fa-heart-o"></i></a>
                               </div>
-                            <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-link"></i> </a> </div>
-                            <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
+{{--                             <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-link"></i> </a> </div> --}}
+                            <div class="mt-button quick-view"> <a  onClick="addToCart({{ $product_hot->id }})"> <i class="fa fa-cart-plus"></i> </a> </div>
                           </div>
                         </div>
                       </div>
@@ -98,13 +98,13 @@
                             <div class="icon-new-label new-left">Sale</div>
                         @endif
                         <div class="pr-img-area product-box-{{ $product->id }}"> <a title="{{ $product->name }}" href="{{ url('san-pham/'.ktc_str_convert($product->name).'_'.$product->id.'.html') }}">
-                          <figure> <img class="first-img" src="{{ asset('documents/website/'.$product->image) }}" alt="{{ $product->name }}"> <img class="hover-img" src="{{ asset('documents/website/'.$product->image) }}" alt="{{ $product->name }}"></figure>
+                          <figure> <img class="first-img" src="{{ asset('documents/website/thumb/'.$product->image) }}" alt="{{ $product->name }}"> <img class="hover-img" src="{{ asset('documents/website/thumb/'.$product->image) }}" alt="{{ $product->name }}"></figure>
                           </a> </div>
                         <div class="pr-info-area">
                           <div class="pr-button">
                             <div class="mt-button add_to_wishlist"> <a href="#"  onClick="addToCart({{ $product->id }},'wishlist')"> <i class="fa fa-heart-o"></i> </a> </div>
                             <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-link"></i> </a> </div>
-                            <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
+                            <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-cart-plus"></i> </a> </div>
                           </div>
                         </div>
                       </div>
@@ -168,7 +168,7 @@
           <div class="slider-items slider-width-col6">
 @foreach ($blogs as $blog)
             <div class="item">
-              <div class="blog-box"> <a href="{{ url('blog/'.ktc_str_convert($blog->title).'_'.$blog->id.'.html') }}"> <img class="primary-img" src="{{ asset('documents/website/'.$blog->image) }}" alt="{{ $blog->title }}"></a>
+              <div class="blog-box"> <a href="{{ url('blog/'.ktc_str_convert($blog->title).'_'.$blog->id.'.html') }}"> <img class="primary-img" src="{{ asset('documents/website/thumb/'.$blog->image) }}" alt="{{ $blog->title }}"></a>
                 <div class="blog-btm-desc">
                   <div class="blog-top-desc">
                     <div class="blog-date"> {{ date('Y M D',strtotime($blog->created_at)) }} </div>
