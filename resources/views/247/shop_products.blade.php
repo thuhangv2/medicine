@@ -149,7 +149,7 @@
               <div class="manufacturer-area">
                 {{-- <h2 class="saider-bar-title">&nbsp;</h2> --}}
                 <div class="saide-bar-menu">
-                    <a href="{{ $leftBanner->url }}#"><img src="{{ asset('documents/website/thumb/'.$leftBanner->image) }}"></a>
+                    <a href="{{ $leftBanner->url }}#"><img src="{{ asset('documents/website/'.$leftBanner->image) }}"></a>
                 </div>
               </div>
             </div>
