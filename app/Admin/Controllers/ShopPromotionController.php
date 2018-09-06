@@ -3,13 +3,13 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Promocodes\Models\Promocode;
 use Encore\Admin\Controllers\ModelForm;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
-use Lanhktc\Promocodes\Models\Promocode;
 
 class ShopPromotionController extends Controller
 {
