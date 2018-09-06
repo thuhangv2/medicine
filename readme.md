@@ -99,7 +99,7 @@ Phiên bản 1.5:
 
 > File sql trong thư mục database. Link admin: your-domain/system_admin. User/pass admin/admin
 
-> Demo: http://demo.giaiphap247.com User/pass: user/123456
+> Demo: http://demo.giaiphap247.com , Link admin: http://demo.giaiphap247.com/system_admin   User/pass: user/123456
 
 Những yêu cầu riêng cho doanh nghiệp của bạn, vui lòng liên hệ:
 
