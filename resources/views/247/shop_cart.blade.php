@@ -135,7 +135,7 @@
                         <tr class="showTotal">
                      @endif
 
-                             <th>{!! $element['title'] !!} {{ $element['code']=='discount' }}</th>
+                             <th>{!! $element['title'] !!}</th>
                             <td style="text-align: right" id="{{ $element['code'] }}">{{number_format($element['value']) }} VNĐ</td>
                         </tr>
                     @endif
@@ -150,7 +150,7 @@
                                         $style = ($hasCoupon)?"display:inline;":"display: none;";
                                     @endphp
 
-                                    <label class="control-label" for="inputGroupSuccess3"><i class="glyphicon glyphicon-scissors"></i> Mã giảm giá <span style="{{ $style }} cursor: pointer;" class="text-danger" id="removeCoupon">(xóa mã đang dùng <i class="glyphicon glyphicon-remove"></i>)</span></label>
+                                    <label class="control-label" for="inputGroupSuccess3"><i class="fa fa-exchange" aria-hidden="true"></i> Mã giảm giá <span style="{{ $style }} cursor: pointer;" class="text-danger" id="removeCoupon">(xóa mã đang dùng <i class="fa fa fa-times"></i>)</span></label>
                                     <div class="input-group">
                                       <input type="text" placeholder="Nhập mã giảm giá" class="form-control" id="coupon-value" aria-describedby="inputGroupSuccess3Status">
                                       <span class="input-group-addon"  id="coupon-button" style="cursor: pointer;" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Đang kiểm tra">Kiểm tra</span>

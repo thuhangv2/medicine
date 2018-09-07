@@ -179,9 +179,9 @@ class ShopOrderTotal extends Model
             $subtotal    = Cart::subtotal();
             $value       = ($check['content']['type'] == '2') ? floor($subtotal * $check['content']['reward'] / 100) : $check['content']['reward'];
             $arrDiscount = array(
-                'title' => 'Giảm giá ' . number_format($check['content']['reward']) . $arrType[$check['content']['type']] . ' (<b>Code:</b> ' . $coupon . ')',
+                'title' => 'Giảm tối đa ' . number_format($check['content']['reward']) . $arrType[$check['content']['type']] . ' (<b>Code:</b> ' . $coupon . ')',
                 'code'  => 'discount',
-                'value' => -$value,
+                'value' => ($value > $subtotal) ? -$subtotal : -$value,
                 'sort'  => 20,
             );
         }
