@@ -84,7 +84,7 @@
     </tfoot>
   </table>
   </div>
-<form class="shipping_address" role="form" method="POST" action="{{ url('storecart') }}">
+<form class="shipping_address" id="form-order" role="form" method="POST" action="{{ url('storecart') }}">
 <div class="row">
     <div class="col-md-6">
             {{ csrf_field() }}
@@ -188,7 +188,7 @@
             </div>
             <div class="col-md-12 text-center">
                     <div class="pull-right">
-                        <button class="btn btn-success" type="submit" style="cursor: pointer;padding:10px 30px"><i class="fa fa-check"></i> Hoàn tất đơn hàng</button>
+                        <button class="btn btn-success" id="submit-order" type="button" style="cursor: pointer;padding:10px 30px"><i class="fa fa-check"></i> Hoàn tất đơn hàng</button>
                     </div>
             </div>
         </div>
@@ -244,6 +244,11 @@
                 }
         });
     }
+
+$('#submit-order').click(function(){
+    $('#form-order').submit();
+    $(this).prop('disabled',true);
+});
 
 $('#coupon-button').click(function() {
  var coupon = $('#coupon-value').val();
