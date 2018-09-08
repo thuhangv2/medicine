@@ -86,6 +86,9 @@ Mã nguồn website thương mại điện tử, tích hợp quản trị thông
 
 
 ## YÊU CẦU CÀI ĐẶT
+Phiên bản 1.6:
+
+> Sử dụng Laravel framework 5.6 , requirements: https://laravel.com/docs/5.6#server-requirements
 
 Phiên bản 1.5:
 
