@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-<a href="http://demo.giaiphap247.com">Demo</a> 
+<a href="http://demo.s-cart.org">Demo</a> 
 </p>
 <p align="center">
 <a href="https://packagist.org/packages/lanhktc/laravel-ecommerce"><img src="https://poser.pugx.org/lanhktc/laravel-ecommerce/d/total.svg" alt="Total Downloads"></a>
@@ -100,5 +100,5 @@ Phiên bản 1.5:
 
 > File sql trong thư mục database. Link admin: your-domain/system_admin. User/pass admin/admin
 
-> Demo: http://demo.giaiphap247.com , Link admin: http://demo.giaiphap247.com/system_admin   User/pass: user/123456
+> Demo: http://demo.s-cart.org , Link admin: http://demo.s-cart.org/system_admin   User/pass: user/123456
 
