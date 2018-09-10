@@ -19,7 +19,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        Admin::js('/vendor/chartjs/dist/Chart.bundle.min.js');
         return Admin::content(function (Content $content) {
             $content->header('Trang tổng quát');
             // $content->description('Description...');
@@ -103,7 +102,7 @@ class HomeController extends Controller
         </div>
         <!-- /.col -->
       </div>
-
+<script src="/vendor/chartjs/dist/Chart.bundle.min.js"></script>
 <script>
 function format_number(n) {
     return n.toFixed(0).replace(/./g, function(c, i, a) {
