@@ -1,6 +1,5 @@
 <p align="center">
     <img src="https://laravel.com/assets/img/components/logo-laravel.svg"><br>
-    <img src="https://giaiphap247.com/logo.png" style="width:80px">
 </p>
 
 <p align="center">
