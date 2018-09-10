@@ -21,13 +21,13 @@
 
 
 ```
-composer create-project lanhktc/laravel-ecommerce
+composer create-project lanhktc/s-cart
 ```
 
 Để cài đặt phiên bản cũ hơn. Ví dụ 1.5.0
 
 ```
-composer create-project lanhktc/laravel-ecommerce your-project "1.5.0"
+composer create-project lanhktc/s-cart your-project "1.5.0"
 ```
 
 
