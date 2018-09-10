@@ -4,9 +4,7 @@
 </p>
 
 <p align="center">
-<a href="http://demo.giaiphap247.com">Demo</a> |
-<a href="https://giaiphap247.com">Home page</a> |
-<a href="https://www.facebook.com/GiaiPhap247Com">Facebook</a>
+<a href="http://demo.giaiphap247.com">Demo</a> 
 </p>
 <p align="center">
 <a href="https://packagist.org/packages/lanhktc/laravel-ecommerce"><img src="https://poser.pugx.org/lanhktc/laravel-ecommerce/d/total.svg" alt="Total Downloads"></a>
@@ -105,8 +103,3 @@ Phiên bản 1.5:
 
 > Demo: http://demo.giaiphap247.com , Link admin: http://demo.giaiphap247.com/system_admin   User/pass: user/123456
 
-Những yêu cầu riêng cho doanh nghiệp của bạn, vui lòng liên hệ:
-
-https://www.facebook.com/GiaiPhap247Com
-
-https://giaiphap247.com
