@@ -1,9 +1,9 @@
 <p align="center">
-    <img src="https://laravel.com/assets/img/components/logo-laravel.svg"><br>
+    <img src="https://s-cart.org/scart.png" width="150"><br>
 </p>
 
 <p align="center">
-<a href="http://demo.s-cart.org">Demo</a> 
+<a href="http://demo.s-cart.org">Demo</a>
 </p>
 <p align="center">
 <a href="https://packagist.org/packages/lanhktc/laravel-ecommerce"><img src="https://poser.pugx.org/lanhktc/laravel-ecommerce/d/total.svg" alt="Total Downloads"></a>

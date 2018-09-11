@@ -1,7 +1,7 @@
 {
     "name": "lanhktc/s-cart",
-    "description": "E-commerce from The Laravel Framework.",
-    "keywords": ["E-commerce","CMS", "framework", "laravel","shop"],
+    "description": "Free website e-commerce for business.",
+    "keywords": ["E-commerce","CMS", "framework", "laravel","shop", "store","business"],
     "license": "MIT",
     "authors": [
         {
