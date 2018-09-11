@@ -1,7 +1,7 @@
 <p align="center">
     <img src="https://s-cart.org/scart.png" width="150"><br>
 </p>
-
+<p>Open source e-commerce for business use laravel framework</p>
 <p align="center">
 <a href="http://demo.s-cart.org">Demo</a>
 </p>
