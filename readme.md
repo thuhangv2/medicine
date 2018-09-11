@@ -85,8 +85,7 @@ Mã nguồn website thương mại điện tử, tích hợp quản trị thông
 ## YÊU CẦU CÀI ĐẶT
 Version 1.6:
 
-> Core laravel framework 5.6
-> Requirements:
+> Core laravel framework 5.6. Requirements:
 
 ```
 - PHP >= 7.1.3
@@ -100,8 +99,7 @@ Version 1.6:
 ```
 Version 1.5:
 
-> Core laravel framework 5.5
-> Requirements:
+> Core laravel framework 5.5. Requirements:
 
 ```
 - PHP >= 7.0.0
