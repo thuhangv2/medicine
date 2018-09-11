@@ -6,9 +6,9 @@
 <a href="http://demo.s-cart.org">Demo</a>
 </p>
 <p align="center">
-<a href="https://packagist.org/packages/lanhktc/laravel-ecommerce"><img src="https://poser.pugx.org/lanhktc/laravel-ecommerce/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/lanhktc/laravel-ecommerce"><img src="https://poser.pugx.org/lanhktc/laravel-ecommerce/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/lanhktc/laravel-ecommerce"><img src="https://poser.pugx.org/lanhktc/laravel-ecommerce/license.svg" alt="License"></a>
+<a href="https://packagist.org/packages/lanhktc/s-cart"><img src="https://poser.pugx.org/lanhktc/s-cart/d/total.svg" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/lanhktc/s-cart"><img src="https://poser.pugx.org/lanhktc/s-cart/v/stable.svg" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/lanhktc/s-cart"><img src="https://poser.pugx.org/lanhktc/s-cart/license.svg" alt="License"></a>
 </p>
 <p align="center"><img src="https://giaiphap247.com/images/public.jpg"></p>
 
