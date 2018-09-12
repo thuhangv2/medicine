@@ -383,7 +383,7 @@ JS;
             $subtotal = ShopOrderDetail::select(DB::raw('sum(total_price) as subtotal'))
                 ->where('order_id', $order_id)
                 ->first()->subtotal;
-            $updateSubTotal = ShopOrderTotal::updateSubTotal($order_id, $subtotal);
+            $updateSubTotal = ShopOrderTotal::updateSubTotal($order_id, empty($subtotal) ? 0 : $subtotal);
             //end update total price
             if ($rs && $updateSubTotal === 1) {
                 return json_encode(['stt' => 1, 'msg' => '']);
@@ -406,7 +406,7 @@ JS;
             $subtotal = ShopOrderDetail::select(DB::raw('sum(total_price) as subtotal'))
                 ->where('order_id', $order_id)
                 ->first()->subtotal;
-            $updateSubTotal = ShopOrderTotal::updateSubTotal($order_id, $subtotal);
+            $updateSubTotal = ShopOrderTotal::updateSubTotal($order_id, empty($subtotal) ? 0 : $subtotal);
             $item           = ShopProduct::find($product_id);
             $item->stock    = $item->stock + $qty; // Restore stock
             $item->sold     = $item->sold - $qty; // Subtract sold
