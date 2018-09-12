@@ -187,6 +187,20 @@ class ShopOrderController extends Controller
             $form->select('status', 'Trạng thái')->options($this->statusOrder);
 
             $form->divide();
+            $form->saved(function (Form $form) {
+                $id         = $form->model()->id;
+                $checkTotal = ShopOrderTotal::where('order_id', $id)->first();
+                if (!$checkTotal) {
+                    ShopOrderTotal::insert([
+                        ['code' => 'subtotal', 'value' => 0, 'title' => 'Tổng tiền hàng', 'sort' => 1, 'order_id' => $id],
+                        ['code' => 'shipping', 'value' => 0, 'title' => 'Phí giao hàng', 'sort' => 10, 'order_id' => $id],
+                        ['code' => 'discount', 'value' => 0, 'title' => 'Giảm giá', 'sort' => 20, 'order_id' => $id],
+                        ['code' => 'total', 'value' => 0, 'title' => 'Tổng tiền cần thanh toán', 'sort' => 100, 'order_id' => $id],
+                        ['code' => 'received', 'value' => 0, 'title' => 'Đã thanh toán', 'sort' => 200, 'order_id' => $id],
+                    ]);
+                }
+            });
+
         });
     }
 
