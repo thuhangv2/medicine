@@ -12,21 +12,6 @@
 </p>
 <p align="center"><img src="https://giaiphap247.com/images/public.jpg"></p>
 
-## Cài đặt
-
-Để cài phiên bản mới nhất
-
-
-```
-composer create-project lanhktc/s-cart
-```
-
-Để cài đặt phiên bản cũ hơn. Ví dụ 1.5.0
-
-```
-composer create-project lanhktc/s-cart your-project "1.5.0"
-```
-
 
 ## Giới thiệu về mã nguồn
 Open source E-commerce use Laravel framework, backend Laravel-admin
@@ -112,7 +97,20 @@ Version 1.5:
 ```
 
 
-## Configurations:
+## Installation and Configurations:
+
+To install latest version of S-cart
+
+```
+composer create-project lanhktc/s-cart
+```
+
+Or, install a specific version. Ex 1.5.0
+
+```
+composer create-project lanhktc/s-cart your-project "1.5.0"
+```
+
 
 - Chmod -R 777 public/documents/website
 - Folder thumbnail: public/documents/website/thumb.
