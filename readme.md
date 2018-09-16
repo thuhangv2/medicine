@@ -118,7 +118,7 @@ Version 1.5:
 - Folder thumbnail: public/documents/website/thumb.
 
 ```
-- Create a new database. After, import file sql database/s-cart.sql.
+- Create a new database. Then, import file sql database/s-cart.sql.
 - Link admin: your-domain/system_admin. User/pass admin/admin
 ```
 
