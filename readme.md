@@ -82,7 +82,8 @@ Mã nguồn website thương mại điện tử, tích hợp quản trị thông
 ...
 
 
-## YÊU CẦU CÀI ĐẶT
+## Requirements
+
 Version 1.6:
 
 > Core laravel framework 5.6. Requirements:
@@ -111,13 +112,21 @@ Version 1.5:
 ```
 
 
-## LƯU Ý:
+## Configurations:
 
-- Chmod -R 777 thư mục public/documents/website
-- Thư mục chứa thumbnail: public/documents/website/thumb.
-> Cấu trúc thư mục thumb phải giống với  public/documents/website
+- Chmod -R 777 public/documents/website
+- Folder thumbnail: public/documents/website/thumb.
 
-> File sql trong thư mục database. Link admin: your-domain/system_admin. User/pass admin/admin
+```
+- Create a new database. After, import file sql database/s-cart.sql.
+- Link admin: your-domain/system_admin. User/pass admin/admin
+```
 
-> Demo: http://demo.s-cart.org , Link admin: http://demo.s-cart.org/system_admin   User/pass: user/123456
 
+
+## Demo:
+
+```
+- Font-end : http://demo.s-cart.org
+- Back-end: http://demo.s-cart.org/system_admin   User/pass: user/123456
+```

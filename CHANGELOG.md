@@ -1,4 +1,10 @@
 # Release Notes
+## v1.6.2 (2018-09-08)
+
+### Changed
+> Change name of file sql from laravel-framework.sql to s-cart.sql
+> Define 'theme' and 'theme_asset' in database config
+> Disable button view in backend
 
 ## v1.6 (2018-09-08)
 
