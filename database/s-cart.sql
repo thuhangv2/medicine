@@ -11,7 +11,7 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Dumping structure for table gp247.admin_menu
+-- Dumping structure for table s-cart.admin_menu
 DROP TABLE IF EXISTS `admin_menu`;
 CREATE TABLE IF NOT EXISTS `admin_menu` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `admin_menu` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table gp247.admin_menu: ~35 rows (approximately)
+-- Dumping data for table s-cart.admin_menu: ~35 rows (approximately)
 DELETE FROM `admin_menu`;
 /*!40000 ALTER TABLE `admin_menu` DISABLE KEYS */;
 INSERT INTO `admin_menu` (`id`, `parent_id`, `order`, `title`, `icon`, `uri`, `created_at`, `updated_at`) VALUES
@@ -66,7 +66,7 @@ INSERT INTO `admin_menu` (`id`, `parent_id`, `order`, `title`, `icon`, `uri`, `c
 	(50, 43, 37, 'Cấu hình', 'fa-cog', 'shop_shipping', '2018-05-09 14:33:24', '2018-05-20 06:32:13');
 /*!40000 ALTER TABLE `admin_menu` ENABLE KEYS */;
 
--- Dumping structure for table gp247.admin_operation_log
+-- Dumping structure for table s-cart.admin_operation_log
 DROP TABLE IF EXISTS `admin_operation_log`;
 CREATE TABLE IF NOT EXISTS `admin_operation_log` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -81,12 +81,12 @@ CREATE TABLE IF NOT EXISTS `admin_operation_log` (
   KEY `admin_operation_log_user_id_index` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table gp247.admin_operation_log: ~0 rows (approximately)
+-- Dumping data for table s-cart.admin_operation_log: ~0 rows (approximately)
 DELETE FROM `admin_operation_log`;
 /*!40000 ALTER TABLE `admin_operation_log` DISABLE KEYS */;
 /*!40000 ALTER TABLE `admin_operation_log` ENABLE KEYS */;
 
--- Dumping structure for table gp247.admin_permissions
+-- Dumping structure for table s-cart.admin_permissions
 DROP TABLE IF EXISTS `admin_permissions`;
 CREATE TABLE IF NOT EXISTS `admin_permissions` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `admin_permissions` (
   UNIQUE KEY `admin_permissions_name_unique` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table gp247.admin_permissions: ~9 rows (approximately)
+-- Dumping data for table s-cart.admin_permissions: ~9 rows (approximately)
 DELETE FROM `admin_permissions`;
 /*!40000 ALTER TABLE `admin_permissions` DISABLE KEYS */;
 INSERT INTO `admin_permissions` (`id`, `name`, `slug`, `http_method`, `http_path`, `created_at`, `updated_at`) VALUES
@@ -115,7 +115,7 @@ INSERT INTO `admin_permissions` (`id`, `name`, `slug`, `http_method`, `http_path
 	(9, 'Manager Banner', 'banner', '', '/banner\r\n/banner/*', '2018-03-23 15:25:47', '2018-03-23 16:21:45');
 /*!40000 ALTER TABLE `admin_permissions` ENABLE KEYS */;
 
--- Dumping structure for table gp247.admin_roles
+-- Dumping structure for table s-cart.admin_roles
 DROP TABLE IF EXISTS `admin_roles`;
 CREATE TABLE IF NOT EXISTS `admin_roles` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `admin_roles` (
   UNIQUE KEY `admin_roles_name_unique` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table gp247.admin_roles: ~4 rows (approximately)
+-- Dumping data for table s-cart.admin_roles: ~4 rows (approximately)
 DELETE FROM `admin_roles`;
 /*!40000 ALTER TABLE `admin_roles` DISABLE KEYS */;
 INSERT INTO `admin_roles` (`id`, `name`, `slug`, `created_at`, `updated_at`) VALUES
@@ -137,7 +137,7 @@ INSERT INTO `admin_roles` (`id`, `name`, `slug`, `created_at`, `updated_at`) VAL
 	(4, 'Content', 'content', '2018-01-13 08:27:11', '2018-01-13 08:27:11');
 /*!40000 ALTER TABLE `admin_roles` ENABLE KEYS */;
 
--- Dumping structure for table gp247.admin_role_menu
+-- Dumping structure for table s-cart.admin_role_menu
 DROP TABLE IF EXISTS `admin_role_menu`;
 CREATE TABLE IF NOT EXISTS `admin_role_menu` (
   `role_id` int(11) NOT NULL,
@@ -147,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `admin_role_menu` (
   KEY `admin_role_menu_role_id_menu_id_index` (`role_id`,`menu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table gp247.admin_role_menu: ~6 rows (approximately)
+-- Dumping data for table s-cart.admin_role_menu: ~6 rows (approximately)
 DELETE FROM `admin_role_menu`;
 /*!40000 ALTER TABLE `admin_role_menu` DISABLE KEYS */;
 INSERT INTO `admin_role_menu` (`role_id`, `menu_id`, `created_at`, `updated_at`) VALUES
@@ -159,7 +159,7 @@ INSERT INTO `admin_role_menu` (`role_id`, `menu_id`, `created_at`, `updated_at`)
 	(1, 12, NULL, NULL);
 /*!40000 ALTER TABLE `admin_role_menu` ENABLE KEYS */;
 
--- Dumping structure for table gp247.admin_role_permissions
+-- Dumping structure for table s-cart.admin_role_permissions
 DROP TABLE IF EXISTS `admin_role_permissions`;
 CREATE TABLE IF NOT EXISTS `admin_role_permissions` (
   `role_id` int(11) NOT NULL,
@@ -169,7 +169,7 @@ CREATE TABLE IF NOT EXISTS `admin_role_permissions` (
   KEY `admin_role_permissions_role_id_permission_id_index` (`role_id`,`permission_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table gp247.admin_role_permissions: ~12 rows (approximately)
+-- Dumping data for table s-cart.admin_role_permissions: ~12 rows (approximately)
 DELETE FROM `admin_role_permissions`;
 /*!40000 ALTER TABLE `admin_role_permissions` DISABLE KEYS */;
 INSERT INTO `admin_role_permissions` (`role_id`, `permission_id`, `created_at`, `updated_at`) VALUES
@@ -187,7 +187,7 @@ INSERT INTO `admin_role_permissions` (`role_id`, `permission_id`, `created_at`, 
 	(2, 9, NULL, NULL);
 /*!40000 ALTER TABLE `admin_role_permissions` ENABLE KEYS */;
 
--- Dumping structure for table gp247.admin_role_users
+-- Dumping structure for table s-cart.admin_role_users
 DROP TABLE IF EXISTS `admin_role_users`;
 CREATE TABLE IF NOT EXISTS `admin_role_users` (
   `role_id` int(11) NOT NULL,
@@ -197,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `admin_role_users` (
   KEY `admin_role_users_role_id_user_id_index` (`role_id`,`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table gp247.admin_role_users: ~2 rows (approximately)
+-- Dumping data for table s-cart.admin_role_users: ~2 rows (approximately)
 DELETE FROM `admin_role_users`;
 /*!40000 ALTER TABLE `admin_role_users` DISABLE KEYS */;
 INSERT INTO `admin_role_users` (`role_id`, `user_id`, `created_at`, `updated_at`) VALUES
@@ -205,7 +205,7 @@ INSERT INTO `admin_role_users` (`role_id`, `user_id`, `created_at`, `updated_at`
 	(3, 3, NULL, NULL);
 /*!40000 ALTER TABLE `admin_role_users` ENABLE KEYS */;
 
--- Dumping structure for table gp247.admin_users
+-- Dumping structure for table s-cart.admin_users
 DROP TABLE IF EXISTS `admin_users`;
 CREATE TABLE IF NOT EXISTS `admin_users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -220,7 +220,7 @@ CREATE TABLE IF NOT EXISTS `admin_users` (
   UNIQUE KEY `admin_users_username_unique` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table gp247.admin_users: ~2 rows (approximately)
+-- Dumping data for table s-cart.admin_users: ~2 rows (approximately)
 DELETE FROM `admin_users`;
 /*!40000 ALTER TABLE `admin_users` DISABLE KEYS */;
 INSERT INTO `admin_users` (`id`, `username`, `password`, `name`, `avatar`, `remember_token`, `created_at`, `updated_at`) VALUES
@@ -228,7 +228,7 @@ INSERT INTO `admin_users` (`id`, `username`, `password`, `name`, `avatar`, `reme
 	(3, 'user', '$2y$10$5XHIa1PBq5y5XYqaE1Va.ulyxN8QFaFXyTqTcotp4uZj.kjsYTKKO', 'User', NULL, NULL, '2018-01-12 18:05:28', '2018-01-12 18:05:28');
 /*!40000 ALTER TABLE `admin_users` ENABLE KEYS */;
 
--- Dumping structure for table gp247.admin_user_permissions
+-- Dumping structure for table s-cart.admin_user_permissions
 DROP TABLE IF EXISTS `admin_user_permissions`;
 CREATE TABLE IF NOT EXISTS `admin_user_permissions` (
   `user_id` int(11) NOT NULL,
@@ -238,12 +238,12 @@ CREATE TABLE IF NOT EXISTS `admin_user_permissions` (
   KEY `admin_user_permissions_user_id_permission_id_index` (`user_id`,`permission_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table gp247.admin_user_permissions: ~0 rows (approximately)
+-- Dumping data for table s-cart.admin_user_permissions: ~0 rows (approximately)
 DELETE FROM `admin_user_permissions`;
 /*!40000 ALTER TABLE `admin_user_permissions` DISABLE KEYS */;
 /*!40000 ALTER TABLE `admin_user_permissions` ENABLE KEYS */;
 
--- Dumping structure for table gp247.banner
+-- Dumping structure for table s-cart.banner
 DROP TABLE IF EXISTS `banner`;
 CREATE TABLE IF NOT EXISTS `banner` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -259,7 +259,7 @@ CREATE TABLE IF NOT EXISTS `banner` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.banner: ~5 rows (approximately)
+-- Dumping data for table s-cart.banner: ~5 rows (approximately)
 DELETE FROM `banner`;
 /*!40000 ALTER TABLE `banner` DISABLE KEYS */;
 INSERT INTO `banner` (`id`, `image`, `url`, `html`, `status`, `sort`, `click`, `type`, `created_at`, `updated_at`) VALUES
@@ -269,7 +269,7 @@ INSERT INTO `banner` (`id`, `image`, `url`, `html`, `status`, `sort`, `click`, `
 	(17, 'banner/0e34016e40b7ba61aa6ddb2d92af3c4b.png', NULL, NULL, 1, 0, 0, 0, '2018-09-03 16:51:56', '2018-09-06 06:26:31');
 /*!40000 ALTER TABLE `banner` ENABLE KEYS */;
 
--- Dumping structure for table gp247.cms_category
+-- Dumping structure for table s-cart.cms_category
 DROP TABLE IF EXISTS `cms_category`;
 CREATE TABLE IF NOT EXISTS `cms_category` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -285,7 +285,7 @@ CREATE TABLE IF NOT EXISTS `cms_category` (
   UNIQUE KEY `uniquekey` (`uniquekey`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.cms_category: ~3 rows (approximately)
+-- Dumping data for table s-cart.cms_category: ~3 rows (approximately)
 DELETE FROM `cms_category`;
 /*!40000 ALTER TABLE `cms_category` DISABLE KEYS */;
 INSERT INTO `cms_category` (`id`, `title`, `image`, `parent`, `keyword`, `description`, `uniquekey`, `sort`, `status`) VALUES
@@ -294,7 +294,7 @@ INSERT INTO `cms_category` (`id`, `title`, `image`, `parent`, `keyword`, `descri
 	(3, 'Ẩm thực', 'cms_category/fd6fa3099b4e77989afd5cc99e637d67.jpg', 0, 'noi-dung-con', 'noi-dung-con', 'noi-dung-con', 0, 1);
 /*!40000 ALTER TABLE `cms_category` ENABLE KEYS */;
 
--- Dumping structure for table gp247.cms_conten
+-- Dumping structure for table s-cart.cms_conten
 DROP TABLE IF EXISTS `cms_conten`;
 CREATE TABLE IF NOT EXISTS `cms_conten` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -311,14 +311,14 @@ CREATE TABLE IF NOT EXISTS `cms_conten` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.cms_conten: ~0 rows (approximately)
+-- Dumping data for table s-cart.cms_conten: ~0 rows (approximately)
 DELETE FROM `cms_conten`;
 /*!40000 ALTER TABLE `cms_conten` DISABLE KEYS */;
 INSERT INTO `cms_conten` (`id`, `category_id`, `title`, `image`, `keyword`, `description`, `content`, `sort`, `status`, `created_at`, `updated_at`) VALUES
 	(3, 3, 'Giải trí', 'cms_content/6d92081ab17e3c11eb416005124a4a92.jpg', 'Invoice,Template', 'fdgdfg', '<p>fdgdfgdfgdfgdfgdfg fgfdg</p>\r\n\r\n<p>fghfgh</p>', 0, 1, '2018-02-10 03:22:10', '2018-09-01 21:25:51');
 /*!40000 ALTER TABLE `cms_conten` ENABLE KEYS */;
 
--- Dumping structure for table gp247.cms_image
+-- Dumping structure for table s-cart.cms_image
 DROP TABLE IF EXISTS `cms_image`;
 CREATE TABLE IF NOT EXISTS `cms_image` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -329,7 +329,7 @@ CREATE TABLE IF NOT EXISTS `cms_image` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.cms_image: ~2 rows (approximately)
+-- Dumping data for table s-cart.cms_image: ~2 rows (approximately)
 DELETE FROM `cms_image`;
 /*!40000 ALTER TABLE `cms_image` DISABLE KEYS */;
 INSERT INTO `cms_image` (`id`, `content_id`, `image`, `sort`, `status`) VALUES
@@ -337,7 +337,7 @@ INSERT INTO `cms_image` (`id`, `content_id`, `image`, `sort`, `status`) VALUES
 	(2, 3, 'images/75be44c336696094632625d2d85159b1.jpg', 0, 0);
 /*!40000 ALTER TABLE `cms_image` ENABLE KEYS */;
 
--- Dumping structure for table gp247.cms_news
+-- Dumping structure for table s-cart.cms_news
 DROP TABLE IF EXISTS `cms_news`;
 CREATE TABLE IF NOT EXISTS `cms_news` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -353,7 +353,7 @@ CREATE TABLE IF NOT EXISTS `cms_news` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.cms_news: ~7 rows (approximately)
+-- Dumping data for table s-cart.cms_news: ~7 rows (approximately)
 DELETE FROM `cms_news`;
 /*!40000 ALTER TABLE `cms_news` DISABLE KEYS */;
 INSERT INTO `cms_news` (`id`, `title`, `content`, `keyword`, `description`, `image`, `sort`, `status`, `created_at`, `updated_at`) VALUES
@@ -366,7 +366,7 @@ INSERT INTO `cms_news` (`id`, `title`, `content`, `keyword`, `description`, `ima
 	(7, '9 Loại Công Nghệ In 3D Cơ Bản', '<p style="text-align: center;"><span style="font-size:20px;"></span><span style="font-size:36px;"><span style="color:#27ae60;"><strong>T&igrave;m hiểu c&ocirc;ng nghệ in 3D: 9 loại c&ocirc;ng nghệ in 3D cơ bản</strong></span></span><span style="font-size:20px;"></span></p>\r\n\r\n<p><span style="font-size:20px;">&nbsp;Dưới đ&acirc;y l&agrave; 9 C&ocirc;ng nghệ in 3D đang được &aacute;p dụng tr&ecirc;n thế giới: </span></p>\r\n\r\n<p><span style="font-size:20px;"></span><span style="font-size:28px;"><strong><span style="color:#f39c12;">1. C&ocirc;ng nghệ FDM&nbsp; (Fused Deposition Modeling):</span></strong></span><span style="font-size:20px;"></span></p>\r\n\r\n<p><span style="font-size:20px;"> M&aacute;y in 3D d&ugrave;ng c&ocirc;ng nghệ FDM x&acirc;y dựng mẫu bằng c&aacute;ch đ&ugrave;n nhựa n&oacute;ng chảy rồi ho&aacute; rắn từng lớp tạo n&ecirc;n cấu tr&uacute;c chi tiết dạng khối. c&ocirc;ng nghệ n&agrave;y được sản xuất để thương mại h&oacute;a từ năm 1991. Với gi&aacute; th&agrave;nh m&aacute;y, vật liệu in 3D rẻ n&ecirc;n c&ocirc;ng nghệ n&agrave;y đang l&agrave; c&ocirc;ng nghệ in 3D ph&aacute;t triển mạnh nhất v&agrave; số lượng thiết bị chiếm nhiều nhất ở Việt Nam. </span></p>\r\n\r\n<p style="text-align: center;"><img alt="" src="/share/files/FG5HHUYIJ37445G_LARGE.jpg" style="width: 800px; height: 800px;" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p style="text-align: center;"><img alt="" src="/share/files/SCHEMATIC-OF-FDM-PROCESS.png" style="width: 800px; height: 696px;" /></p>\r\n\r\n<p style="text-align: center;">&nbsp;</p>\r\n\r\n<p style="text-align: center;">&nbsp;</p>\r\n\r\n<p style="text-align: center;"><iframe frameborder="0" height="450" scrolling="no" src="https://www.youtube.com/embed/cyXHHEfOAaA?feature=player_embedded" width="800"></iframe></p>\r\n\r\n<p style="text-align: center;">&nbsp;</p>\r\n\r\n<p><span style="font-size:28px;"><strong><span style="color:#f39c12;">2. C&ocirc;ng nghệ SLA (Stereolithography): </span></strong></span><span style="font-size:20px;"></span></p>\r\n\r\n<p><span style="font-size:20px;">Được ph&aacute;t triển bởi Chuck Hull đầu ti&ecirc;n v&agrave;o năm 1983, c&ocirc;ng nghệ SLA thực tế l&agrave; l&agrave; kỹ thuật d&ugrave;ng tia UV l&agrave;m cứng từng lớp vật liệu in 3D l&agrave; nhựa dạng lỏng, nhiều rất nhiều lớp như vậy sẽ tạo n&ecirc;n vật thể in 3D SLA. Lớp in SLA c&oacute; thể đạt từ 0.06, 0.08, 0.1,&hellip; mm. </span></p>\r\n\r\n<p><span style="font-size:20px;">Về c&aacute;c c&ocirc;ng nghệ in 3D sử dụng vật liệu nhựa, th&igrave; đ&acirc;y l&agrave; c&ocirc;ng nghệ tạo ra sản phẩm in 3D l&agrave; nhựa tốt nhất, c&oacute; thể sử dụng ngay, độ ph&acirc;n giải, độ mịn cao, c&oacute; thể n&oacute;i l&agrave; cao nhất hiện nay. </span></p>\r\n\r\n<p><span style="font-size:20px;">SLA đang được sử dụng nhiều trong c&aacute;c nh&agrave; m&aacute;y sản xuất gi&agrave;y d&eacute;p cho c&aacute;c h&atilde;ng lớn như Nike, Adidas,&hellip;để thực hiện c&ocirc;ng đoạn in 3D khu&ocirc;n gi&agrave;y v&agrave; tạo mẫu đế gi&agrave;y nhanh. </span></p>\r\n\r\n<p style="text-align: center;"><iframe frameborder="0" height="450" scrolling="no" src="https://www.youtube.com/embed/yW4EbCWaJHE?feature=player_embedded" width="800"></iframe></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p><span style="font-size:28px;"><strong><span style="color:#f39c12;">3. C&ocirc;ng nghệ DLP (Digital Light Processing):</span></strong></span><span style="font-size:20px;"> </span></p>\r\n\r\n<p><span style="font-size:20px;"><span style="display: none;">&nbsp;</span>C&ocirc;ng nghệ DLP được ph&aacute;t minh v&agrave;o năm 1987 bởi Larry Hornbeck v&agrave; trở n&ecirc;n cực kỳ phổ biến trong m&aacute;y chiếu.&nbsp;DLP sử dụng một mạng lưới m&aacute;y t&iacute;nh điều khiển, vi-gương, đặt ra tr&ecirc;n một chip b&aacute;n dẫn.&nbsp;Những gương nhỏ nghi&ecirc;ng qua lại.&nbsp;Khi một gương nghi&ecirc;ng, n&oacute; phản xạ &aacute;nh s&aacute;ng, tạo một pixel s&aacute;ng.&nbsp;Khi gương nghi&ecirc;ng theo c&aacute;ch kh&aacute;c, c&aacute;c điểm ảnh tối.&nbsp;C&ocirc;ng nghệ n&agrave;y được sử dụng trong m&aacute;y chiếu phim, điện thoại di động, v&agrave; cũng cho in ấn 3D.&nbsp;Một trong những lợi &iacute;ch cho in ấn 3D l&agrave; tốc độ của n&oacute;: Bạn c&oacute; thể in c&aacute;c lớp trong t&iacute;ch tắc với loại m&aacute;y in 3D. </span></p>\r\n\r\n<p><span style="font-size:20px;">M&aacute;y in 3D DLP chủ yếu được sử dụng trong m&ocirc;i trường chuy&ecirc;n nghiệp.&nbsp;Đ&acirc;y l&agrave; loại m&aacute;y in 3D tốc đọ cao với độ ph&acirc;n giải tuyệt vời. </span></p>\r\n\r\n<p style="text-align: center;"><iframe frameborder="0" height="450" scrolling="no" src="https://www.youtube.com/embed/9nb8mM3uEIc?feature=player_embedded" width="800"></iframe></p>\r\n\r\n<p><span style="font-size:28px;"><strong><span style="color:#f39c12;">4. C&ocirc;ng nghệ SLS (Selective Laser Sintering):</span></strong></span><span style="font-size:20px;"></span></p>\r\n\r\n<p><span style="font-size:20px;"> C&ocirc;ng nghệ SLS vận h&agrave;nh tương tự SLA nhưng vật liệu ở dạng bột, thủy tinh,&hellip;c&oacute; thể tạo lớp bằng vật liệu phụ trợ l&agrave; keo chuy&ecirc;n dụng (c&oacute; khi k&egrave;m m&agrave;u sắc CMYK, RGB nếu in 3D đa sắc m&agrave;u), hoặc tia laser, tia UV,&hellip;. </span></p>\r\n\r\n<p><span style="font-size:20px;">Đ&acirc;y l&agrave; loại m&aacute;y in 3D đ&ograve;i hỏi việc sử dụng laser c&ocirc;ng suất lớn đắt tiền, tuy nhi&ecirc;n, trong gi&aacute; của n&oacute; kh&aacute; cao với của người ti&ecirc;u d&ugrave;ng phổ th&ocirc;ng.</span></p>\r\n\r\n<p style="text-align: center;"><iframe frameborder="0" height="450" scrolling="no" src="https://www.youtube.com/embed/wdRswasftfI?feature=player_embedded" width="800"></iframe></p>\r\n\r\n<p><span style="font-size:20px;"> </span><span style="font-size:28px;"><strong><span style="color:#f39c12;">5. C&ocirc;ng nghệ SLM (Selective Laser Melting):<span style="display: none;">&nbsp;</span> </span></strong></span><span style="font-size:20px;"></span></p>\r\n\r\n<p><span style="font-size:20px;">Đ&acirc;y l&agrave; c&ocirc;ng nghệ in 3D kim loại, sử dụng vật liệu dạng bột titan, bột nh&ocirc;m, bột đồng, bột th&eacute;p để l&agrave;m vật liệu in 3D. C&ocirc;ng nghệ SLM vận h&agrave;nh tương tự SLA, SLS nhưng sử dụng tia UV, tia laser cường độ lớn. </span></p>\r\n\r\n<p><span style="font-size:20px;">Vật liệu điển h&igrave;nh được sử dụng l&agrave; th&eacute;p kh&ocirc;ng gỉ, nh&ocirc;m, titan, v&agrave; cobalt chrome.&nbsp;Đối với c&aacute;c ứng dụng trong h&agrave;ng kh&ocirc;ng vũ trụ hoặc chỉnh h&igrave;nh y tế ng&agrave;nh c&ocirc;ng nghiệp, SLM được sử dụng để tạo c&aacute;c bộ phận với h&igrave;nh học phức tạp v&agrave; cấu tr&uacute;c th&agrave;nh m&otilde;ng, với c&aacute;c k&ecirc;nh ẩn hoặc khoảng trống.&nbsp;Ở những nơi kh&aacute;c, như trong đoạn video tr&ecirc;n, n&oacute; được sử dụng để chế tạo tuabin kh&iacute; cho ng&agrave;nh c&ocirc;ng nghiệp năng lượng. </span></p>\r\n\r\n<p><span style="font-size:20px;">V&igrave; gi&aacute; th&agrave;nh thiết bị (m&aacute;y in 3d kim loại) v&agrave; vật liệu đắt đỏ n&ecirc;n c&ocirc;ng nghệ n&agrave;y chưa thực sự ph&aacute;t triển tại VN. C&aacute;c nước c&oacute; sản xuất m&aacute;y v&agrave; sử dụng c&ocirc;ng nghệ n&agrave;y nhiều nhất đ&oacute; l&agrave;: Trung Quốc, Mỹ, Đức, &Yacute;,&hellip; </span></p>\r\n\r\n<p><span style="font-size:20px;">Ở VN một số đơn vị nha khoa sử dụng m&aacute;y in 3D kim loại để sản xuất răng. Gi&aacute; m&aacute;y in 3D kim loại &gt;= $200.000. </span></p>\r\n\r\n<p style="text-align: center;"><iframe frameborder="0" height="450" scrolling="no" src="https://www.youtube.com/embed/CW3-1Qapp_s?feature=player_embedded" width="800"></iframe></p>\r\n\r\n<p><span style="font-size:28px;"><strong><span style="color:#f39c12;">6. C&ocirc;ng nghệ EBM (Electron Beam Melting): </span></strong></span></p>\r\n\r\n<p><span style="font-size:20px;">Ngược lại với SLM, kỹ thuật EBM sử dụng một ch&ugrave;m tia điện tử m&aacute;y t&iacute;nh điều khiển dưới ch&acirc;n kh&ocirc;ng để l&agrave;m tan chảy ho&agrave;n to&agrave;n bột kim loại ở nhiệt độ cao l&ecirc;n đến 1000 &deg; C. </span></p>\r\n\r\n<p><span style="font-size:20px;">Đ&acirc;y l&agrave; loại m&aacute;y in 3D c&oacute; thể sử dụng kim loại như titan tinh khiết, Inconel718, v&agrave; Inconel625 để chế tạo phụ t&ugrave;ng h&agrave;ng kh&ocirc;ng vũ trụ v&agrave; cấy gh&eacute;p y tế.&nbsp;Nhưng trong khi c&aacute;c c&ocirc;ng nghệ in 3D hiện nay n&oacute; rất chậm v&agrave; rất tốn k&eacute;m. </span></p>\r\n\r\n<p><img alt="" src="http://in3dcongnghiep.com/wp-content/uploads/2017/04/cong-nghe-in-3d-ebm.jpg" style="width: 800px; height: 534px;" /></p>\r\n\r\n<p><span style="font-size:28px;"><strong><span style="color:#f39c12;">7. C&ocirc;ng nghệ LOM (Laminated Object Manufacturing): </span></strong></span><span style="font-size:20px;"></span></p>\r\n\r\n<p><span style="font-size:20px;">LOM sử dụng lớp giấy, nhựa hoặc kim loại c&aacute;n mỏng d&iacute;nh bọc, được hợp nhất dưới nhiệt v&agrave; &aacute;p suất v&agrave; định h&igrave;nh bằng c&aacute;ch cắt bằng tia laser m&aacute;y t&iacute;nh kiểm so&aacute;t hoặc dao.&nbsp;Điều n&agrave;y đ&ocirc;i khi sau đ&oacute; gia c&ocirc;ng v&agrave; khoan.&nbsp;C&aacute;c đối tượng 3D được tạo ra lớp-by-lớp, v&agrave; sau khi vật liệu dư thừa được cắt bỏ, đối tượng c&oacute; thể được đ&aacute;nh giấy r&aacute;p hoặc được gắn v&agrave;o với sơn. </span></p>\r\n\r\n<p><span style="font-size:20px;">Mặc d&ugrave; k&iacute;ch thước ch&iacute;nh x&aacute;c của c&aacute;c loại m&aacute;y in 3D n&agrave;y l&agrave; hơi &iacute;t hơn SLA hay SLS,&nbsp;LOM l&agrave; một trong những phương ph&aacute;p in ấn gi&aacute; cả phải chăng nhất v&agrave; 3D nhanh nhất c&oacute; sẵn để tạo c&aacute;c bộ phận tương đối lớn.&nbsp;N&oacute; cũng cho ph&eacute;p đầy m&agrave;u sắc 3D in c&aacute;c đối tượng. </span></p>\r\n\r\n<p style="text-align: center;"><iframe frameborder="0" height="450" scrolling="no" src="https://www.youtube.com/embed/CW3-1Qapp_s?feature=player_embedded" width="800"></iframe></p>\r\n\r\n<p><span style="font-size:28px;"><strong><span style="color:#f39c12;">8. C&ocirc;ng nghệ BJ (Binder Jetting): </span></strong></span><span style="font-size:20px;"></span></p>\r\n\r\n<p><span style="font-size:20px;">Đ&acirc;y l&agrave; c&ocirc;ng nghệ 3D được ph&aacute;t minh tại MIT.&nbsp;C&aacute;c c&ocirc;ng nghệ in 3D xuất hiện dưới nhiều t&ecirc;n.&nbsp;N&oacute; được gọi l&agrave; &ldquo; &ldquo;in 3D in phun&rdquo;,&rdquo;in thả-on-bột&rdquo; hay &ndash; c&oacute; lẽ phổ biến nhất &ndash; l&agrave; &lsquo;chất kết d&iacute;nh phun&rsquo;. </span></p>\r\n\r\n<p><span style="font-size:20px;">Binder phun l&agrave; một qu&aacute; tr&igrave;nh sản xuất chất phụ gia.&nbsp;Đ&acirc;y l&agrave; loại m&aacute;y in 3D sử dụng hai vật liệu: một loại bột c&oacute; trụ sở (thường thạch cao) nguy&ecirc;n liệu v&agrave; một t&aacute;c nh&acirc;n li&ecirc;n kết.&nbsp;C&aacute;c đại l&yacute; đ&oacute;ng vai tr&ograve; như một chất kết d&iacute;nh giữa c&aacute;c lớp bột.&nbsp;Th&ocirc;ng thường, c&aacute;c chất kết d&iacute;nh được &eacute;p đ&ugrave;n ở dạng lỏng từ một đầu in &ndash; chỉ cần nghĩ đến một m&aacute;y in phun 2D th&ocirc;ng thường.&nbsp;Sau một lớp xong,&nbsp;tấm x&acirc;y dựng được hạ xuống v&agrave; qu&aacute; tr&igrave;nh n&agrave;y lặp đi lặp lại. Bạn c&oacute; thể sử dụng c&ocirc;ng nghệ in 3D n&agrave;y với gốm, kim loại, c&aacute;t hoặc vật liệu nhựa. Những loại m&aacute;y in 3D c&oacute; một lợi thế rất lớn.&nbsp;</span></p>\r\n\r\n<p><span style="font-size:20px;">Bạn c&oacute; thể in đầy đủ m&agrave;u sắc bằng c&aacute;ch th&ecirc;m c&aacute;c sắc tố để c&aacute;c chất kết d&iacute;nh (thường l&agrave; m&agrave;u lục lam, đỏ tươi, v&agrave;ng, đen v&agrave; trắng).&nbsp;Điều n&agrave;y khiến n&oacute; trở th&agrave;nh phương ph&aacute;p ưa th&iacute;ch cho ảnh tự chụp đ&atilde; 3D phổ biến.&nbsp;Hạn chế của phương ph&aacute;p in 3D n&agrave;y l&agrave; sự to&agrave;n vẹn cấu tr&uacute;c của c&aacute;c đối tượng.&nbsp;Bạn sẽ kh&ocirc;ng c&oacute; được độ ph&acirc;n giải cao v&agrave; in gồ ghề với loại c&ocirc;ng nghệ in 3D &ndash; nhưng c&oacute; một số trường hợp ngoại lệ. </span></p>\r\n\r\n<p><span style="font-size:20px;">Ngo&agrave;i ra c&ograve;n c&oacute; tiến bộ trong loại c&ocirc;ng nghệ in 3D.&nbsp;Trong năm 2016, Hewlett-Packard giới thiệu &ldquo;Multijet Fusion&rdquo; (MJF), m&agrave; muốn mang Binder phun v&agrave;o level- tiếp theo.&nbsp;</span></p>\r\n\r\n<p><span style="font-size:20px;">Thứ nhất,&nbsp;một lớp vật liệu in 3D được triển khai bởi một chiếc xe ngựa.&nbsp;Một cỗ xe thứ hai với một mảng in phun nhiệt đi từ phải sang tr&aacute;i, lắng đọng một cặp t&aacute;c nh&acirc;n h&oacute;a học tr&ecirc;n khắp khu vực l&agrave;m việc đầy đủ.&nbsp;Một l&agrave; một t&aacute;c nh&acirc;n sấy, để tạo ra một lớp rắn từ vật liệu, v&agrave; người kia l&agrave; một đại l&yacute; chi tiết, để x&aacute;c định ph&aacute;c thảo vật l&yacute; của lớp được tạo ra.&nbsp;Cuối c&ugrave;ng, năng lượng được &aacute;p dụng để x&uacute;c t&aacute;c c&aacute;c t&aacute;c nh&acirc;n sấy v&agrave; bột thấm nhuần với c&aacute;c đại l&yacute; chi tiết vẫn c&ograve;n trơ. </span></p>\r\n\r\n<p><span style="font-size:20px;">Ứng dụng tiềm năng cho loại m&aacute;y in 3D d&agrave;nh cho tạo mẫu nhanh v&agrave; sản xuất ngắn hạn trong &ocirc; t&ocirc;, ng&agrave;nh y tế v&agrave; h&agrave;ng kh&ocirc;ng vũ trụ.&nbsp;Tuy nhi&ecirc;n, mức độ đầy đủ về khả năng MJF vẫn chưa được th&agrave;nh lập, với c&aacute;c t&aacute;c nh&acirc;n pha trộn mới hứa hẹn cung cấp thuộc t&iacute;nh kh&aacute;c nhau như đầy đủ m&agrave;u sắc, độ dẫn, sức mạnh v&agrave; khả năng phản ứng nhiệt. </span></p>\r\n\r\n<p style="text-align: center;"><iframe frameborder="0" height="450" scrolling="no" src="https://www.youtube.com/embed/XeTdo-w6Qx8?feature=player_embedded" width="800"></iframe></p>\r\n\r\n<p><span style="font-size:28px;"><strong><span style="color:#f39c12;">9. C&ocirc;ng nghệ MJ (Material Jetting / Wax Casting): </span></strong></span><span style="font-size:20px;"></span></p>\r\n\r\n<p><span style="font-size:20px;">C&ocirc;ng nghệ phun Chất liệu được tốt hơn được gọi l&agrave;&rdquo;đ&uacute;c s&aacute;p&rdquo;.&nbsp; Đ&oacute; l&agrave; một kỹ thuật được sử dụng bởi kim ho&agrave;n từ nhiều thế kỷ.&nbsp;Mất đ&uacute;c s&aacute;p (hoặc đ&uacute;c đầu tư) l&agrave; một qu&aacute; tr&igrave;nh sản xuất m&agrave; chủ yếu l&agrave; cho ph&eacute;p bạn tạo ra đồ trang sức t&ugrave;y biến c&oacute; chất lượng rất cao trong kim loại kh&aacute;c nhau.&nbsp;Nhưng với in ấn 3D, c&oacute; cuối c&ugrave;ng l&agrave; một qu&aacute; tr&igrave;nh để tự động đ&uacute;c s&aacute;p &ndash; v&agrave; đối với hầu hết kim ho&agrave;n, đ&oacute; l&agrave; kh&aacute; một c&aacute;i g&igrave; đ&oacute;. </span></p>\r\n\r\n<p><span style="font-size:20px;">V&igrave; vậy, h&atilde;y sử dụng c&ocirc;ng nghệ in 3D nếu bạn l&agrave; một thợ kim ho&agrave;n hoặc muốn thử nghiệm với ph&ocirc;i. </span></p>\r\n\r\n<p><span style="font-size:20px;">C&oacute; một số &iacute;t c&aacute;c m&aacute;y in s&aacute;p 3D chuy&ecirc;n nghiệp tr&ecirc;n thị trường, như &ldquo;Wax Jet&rdquo; từ Statasys.&nbsp;Nếu bạn muốn thử nghiệm với c&ocirc;ng nghệ in 3D n&agrave;y,&nbsp;bạn kh&ocirc;ng cần phải mua một m&aacute;y in.&nbsp;C&oacute; những dịch vụ in ấn 3D như Shapeways hoặc Sculpteo sử dụng m&aacute;y Vật liệu phun hoặc Multijet Modeling (MJM) cho c&ocirc;ng nghệ n&agrave;y.</span></p>\r\n\r\n<p style="text-align: center;"><iframe frameborder="0" height="450" scrolling="no" src="https://www.youtube.com/embed/Cq2u7g4HT5k?feature=player_embedded" width="800"></iframe></p>\r\n\r\n<p style="text-align: right;">&nbsp;</p>\r\n\r\n<p style="text-align: right;"><a href="https://alochip.com/san-pham.html"><span style="color:#f39c12;"><span style="font-size:20px;">Edit by AloChip.</span></span></a><br />\r\n<span style="font-size:16px;">Nguồn b&agrave;i viết:&nbsp;<a href="http://in3dcongnghiep.com/tim-hieu-cong-nghe-in-3d.html">http://in3dcongnghiep.com/tim-hieu-cong-nghe-in-3d.html</a></span></p>', 'in 3d,dịch vụ in 3d,3d print,filament,tạo mẫu nhanh', '1. Công nghệ FDM  (Fused Deposition Modeling):\r\nMáy in 3D dùng công nghệ FDM xây dựng mẫu bằng cách đùn nhựa nóng chảy rồi hoá rắn từng lớp tạo nên cấu trúc chi tiết dạng khối. công nghệ này được sản xuất để thương mại hóa từ năm 1991.', 'cms_content/adee6e7ec19eb3d5e8ee7bdea05efd97.png', 0, 1, '2018-08-09 15:59:29', '2018-09-06 06:24:34');
 /*!40000 ALTER TABLE `cms_news` ENABLE KEYS */;
 
--- Dumping structure for table gp247.cms_page
+-- Dumping structure for table s-cart.cms_page
 DROP TABLE IF EXISTS `cms_page`;
 CREATE TABLE IF NOT EXISTS `cms_page` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -381,17 +381,16 @@ CREATE TABLE IF NOT EXISTS `cms_page` (
   UNIQUE KEY `key` (`uniquekey`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.cms_page: ~4 rows (approximately)
+-- Dumping data for table s-cart.cms_page: ~2 rows (approximately)
 DELETE FROM `cms_page`;
 /*!40000 ALTER TABLE `cms_page` DISABLE KEYS */;
 INSERT INTO `cms_page` (`id`, `title`, `image`, `keyword`, `description`, `content`, `uniquekey`, `status`) VALUES
-	(1, 'Trang chủ (sử dụng  nếu muốn đặt làm trang chủ)', '', NULL, NULL, NULL, 'trang-chu', 1),
-	(2, 'Giới thiệu', '', 'Giới thiệu website,hướng dẫn đặt hàng', 'Giới thiệu website', '<p><font color="#f39c12"><span style="font-size: 26px;"><b>Nội dung đang cập nhật</b></span></font></p>', 'gioi-thieu', 1),
-	(3, 'Nội dung thông báo cho người dùng', NULL, 'thông báo', NULL, '<h2>cập nhật</h2>', 'notice', 1),
-	(4, 'Liên hệ', NULL, 'liên hệ', NULL, '<p><strong>Vui l&ograve;ng li&ecirc;n hệ với ch&uacute;ng t&ocirc;i</strong></p>', 'lien-he', 1);
+	(1, 'Giới thiệu', '', 'Giới thiệu website,hướng dẫn đặt hàng', 'Giới thiệu website', '<p><font color="#f39c12"><span style="font-size: 26px;"><b>Nội dung đang cập nhật</b></span></font></p>', 'gioi-thieu', 1),
+	(2, 'Liên hệ', NULL, 'liên hệ', NULL, '<p><strong>Vui l&ograve;ng li&ecirc;n hệ với ch&uacute;ng t&ocirc;i</strong></p>', 'lien-he', 1),
+	(4, 'Liên hệ', NULL, 'liên hệ', NULL, '<p><strong>Vui l&ograve;ng li&ecirc;n hệ với ch&uacute;ng t&ocirc;i</strong></p>', 'lien-he22', 1);
 /*!40000 ALTER TABLE `cms_page` ENABLE KEYS */;
 
--- Dumping structure for table gp247.config
+-- Dumping structure for table s-cart.config
 DROP TABLE IF EXISTS `config`;
 CREATE TABLE IF NOT EXISTS `config` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -402,9 +401,9 @@ CREATE TABLE IF NOT EXISTS `config` (
   `detail` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `key` (`key`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.config: ~24 rows (approximately)
+-- Dumping data for table s-cart.config: ~24 rows (approximately)
 DELETE FROM `config`;
 /*!40000 ALTER TABLE `config` DISABLE KEYS */;
 INSERT INTO `config` (`id`, `code`, `key`, `value`, `sort`, `detail`) VALUES
@@ -431,48 +430,11 @@ INSERT INTO `config` (`id`, `code`, `key`, `value`, `sort`, `detail`) VALUES
 	(23, 'shipping', 'shipping_status', '1', 22, 'Sử dụng shipping'),
 	(24, 'config', 'promotion_mode', '1', 1, 'Sử dụng mã giảm giá'),
 	(25, 'config', 'PAYPAL_STATUS', '0', 0, 'Sử dụng paypal cho thanh toán'),
-	(26, 'info', 'site_phone_long', 'Sale: 0168.123.1209 - Kỹ thuật: 0123.448.559', 6, 'Sô điện thoại dài');
+	(26, 'info', 'site_phone_long', 'Sale: 0168.123.1209 - Kỹ thuật: 0123.448.559', 6, 'Sô điện thoại dài'),
+	(27, 'private', 'private_template', '247', 0, 'Folder template');
 /*!40000 ALTER TABLE `config` ENABLE KEYS */;
 
--- Dumping structure for table gp247.failed_jobs
-DROP TABLE IF EXISTS `failed_jobs`;
-CREATE TABLE IF NOT EXISTS `failed_jobs` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Dumping data for table gp247.failed_jobs: ~0 rows (approximately)
-DELETE FROM `failed_jobs`;
-/*!40000 ALTER TABLE `failed_jobs` DISABLE KEYS */;
-/*!40000 ALTER TABLE `failed_jobs` ENABLE KEYS */;
-
--- Dumping structure for table gp247.jobs
-DROP TABLE IF EXISTS `jobs`;
-CREATE TABLE IF NOT EXISTS `jobs` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `queue` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `attempts` tinyint(3) unsigned NOT NULL,
-  `reserved_at` int(10) unsigned DEFAULT NULL,
-  `available_at` int(10) unsigned NOT NULL,
-  `created_at` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `jobs_queue_index` (`queue`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Dumping data for table gp247.jobs: ~0 rows (approximately)
-DELETE FROM `jobs`;
-/*!40000 ALTER TABLE `jobs` DISABLE KEYS */;
-INSERT INTO `jobs` (`id`, `queue`, `payload`, `attempts`, `reserved_at`, `available_at`, `created_at`) VALUES
-	(1, 'default', '{"displayName":"App\\\\Mail\\\\WelcomeEmail","job":"Illuminate\\\\Queue\\\\CallQueuedHandler@call","maxTries":null,"timeout":null,"timeoutAt":null,"data":{"commandName":"Illuminate\\\\Mail\\\\SendQueuedMailable","command":"O:34:\\"Illuminate\\\\Mail\\\\SendQueuedMailable\\":3:{s:8:\\"mailable\\";O:21:\\"App\\\\Mail\\\\WelcomeEmail\\":19:{s:4:\\"from\\";a:0:{}s:2:\\"to\\";a:1:{i:0;a:2:{s:4:\\"name\\";N;s:7:\\"address\\";s:17:\\"lanhktc@gmail.com\\";}}s:2:\\"cc\\";a:0:{}s:3:\\"bcc\\";a:0:{}s:7:\\"replyTo\\";a:0:{}s:7:\\"subject\\";N;s:11:\\"\\u0000*\\u0000markdown\\";N;s:4:\\"view\\";N;s:8:\\"textView\\";N;s:8:\\"viewData\\";a:0:{}s:11:\\"attachments\\";a:0:{}s:14:\\"rawAttachments\\";a:0:{}s:9:\\"callbacks\\";a:0:{}s:10:\\"connection\\";N;s:5:\\"queue\\";N;s:15:\\"chainConnection\\";N;s:10:\\"chainQueue\\";N;s:5:\\"delay\\";N;s:7:\\"chained\\";a:0:{}}s:5:\\"tries\\";N;s:7:\\"timeout\\";N;}"}}', 0, NULL, 1522166893, 1522166893);
-/*!40000 ALTER TABLE `jobs` ENABLE KEYS */;
-
--- Dumping structure for table gp247.migrations
+-- Dumping structure for table s-cart.migrations
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE IF NOT EXISTS `migrations` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -481,7 +443,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table gp247.migrations: ~6 rows (approximately)
+-- Dumping data for table s-cart.migrations: ~6 rows (approximately)
 DELETE FROM `migrations`;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -493,7 +455,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(6, '2016_05_17_221000_create_promocodes_table', 3);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 
--- Dumping structure for table gp247.password_resets
+-- Dumping structure for table s-cart.password_resets
 DROP TABLE IF EXISTS `password_resets`;
 CREATE TABLE IF NOT EXISTS `password_resets` (
   `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -502,7 +464,7 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
   KEY `password_resets_email_index` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table gp247.password_resets: ~2 rows (approximately)
+-- Dumping data for table s-cart.password_resets: ~2 rows (approximately)
 DELETE FROM `password_resets`;
 /*!40000 ALTER TABLE `password_resets` DISABLE KEYS */;
 INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
@@ -510,7 +472,7 @@ INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
 	('lanhktc@gmail.com', '$2y$10$G/hr0KbnfvPzK4xRQ/9SiOzwVTxUACo3tPvd8vsgNsd2QKSkRJrCW', '2018-08-14 22:50:13');
 /*!40000 ALTER TABLE `password_resets` ENABLE KEYS */;
 
--- Dumping structure for table gp247.promocodes
+-- Dumping structure for table s-cart.promocodes
 DROP TABLE IF EXISTS `promocodes`;
 CREATE TABLE IF NOT EXISTS `promocodes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -526,24 +488,24 @@ CREATE TABLE IF NOT EXISTS `promocodes` (
   UNIQUE KEY `promocodes_code_unique` (`code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table gp247.promocodes: ~11 rows (approximately)
+-- Dumping data for table s-cart.promocodes: ~11 rows (approximately)
 DELETE FROM `promocodes`;
 /*!40000 ALTER TABLE `promocodes` DISABLE KEYS */;
 INSERT INTO `promocodes` (`id`, `code`, `reward`, `type`, `data`, `number_uses`, `used`, `status`, `expires_at`) VALUES
 	(1, 'ABC-XAA01', 100000, 0, 'Khuyến mãi đầu năm', 100, 2, 1, '2018-08-11 00:00:00'),
-	(2, 'KKB3-KLLA', 30, 2, NULL, 33, 1, 1, '2018-08-11 00:00:00'),
+	(2, 'KKB3-KLLA', 30, 2, NULL, 33, 2, 1, '2018-10-11 00:00:00'),
 	(3, 'PAA-LLK01', 100000, 1, 'Tặng điểm khách hàng thân thiết', 22, 1, 1, NULL),
 	(4, 'VONN_KKH1', 150000, 0, NULL, 1, 1, 1, '2019-03-08 00:00:00'),
 	(5, 'PAA-LLK02', 150000, 1, NULL, 111, 0, 1, NULL),
 	(6, 'VONN_KKH2', 900000, 0, 'Refurn', 4, 1, 1, '2018-07-07 00:00:00'),
 	(8, 'PAA-LLK03', 150000, 0, NULL, 111, 1, 1, NULL),
-	(9, 'PAA-LLK04', 150000, 0, NULL, 111, 1, 1, NULL),
+	(9, 'PAA-LLK04', 150000, 0, NULL, 111, 2, 1, NULL),
 	(10, 'PAA-LLK05', 150000, 0, NULL, 111, 1, 1, NULL),
 	(11, 'PAA-LLK06', 150000, 0, NULL, 111, 1, 1, NULL),
 	(13, 'PAA-LLK07', 219999, 0, NULL, 111, 1, 1, NULL);
 /*!40000 ALTER TABLE `promocodes` ENABLE KEYS */;
 
--- Dumping structure for table gp247.promocode_user
+-- Dumping structure for table s-cart.promocode_user
 DROP TABLE IF EXISTS `promocode_user`;
 CREATE TABLE IF NOT EXISTS `promocode_user` (
   `user_id` int(10) unsigned NOT NULL,
@@ -556,7 +518,7 @@ CREATE TABLE IF NOT EXISTS `promocode_user` (
   CONSTRAINT `promocode_user_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table gp247.promocode_user: ~10 rows (approximately)
+-- Dumping data for table s-cart.promocode_user: ~10 rows (approximately)
 DELETE FROM `promocode_user`;
 /*!40000 ALTER TABLE `promocode_user` DISABLE KEYS */;
 INSERT INTO `promocode_user` (`user_id`, `promocode_id`, `log`, `used_at`) VALUES
@@ -569,10 +531,12 @@ INSERT INTO `promocode_user` (`user_id`, `promocode_id`, `log`, `used_at`) VALUE
 	(3, 8, 'Order #50', '2018-06-03 14:56:26'),
 	(3, 9, 'Order #51', '2018-06-03 15:15:19'),
 	(3, 10, 'Order #52', '2018-06-03 15:41:31'),
-	(3, 11, 'Order #62', '2018-06-05 23:01:53');
+	(3, 11, 'Order #62', '2018-06-05 23:01:53'),
+	(5, 2, 'Order #77', '2018-09-07 20:58:47'),
+	(5, 9, 'Order #76', '2018-09-06 18:59:25');
 /*!40000 ALTER TABLE `promocode_user` ENABLE KEYS */;
 
--- Dumping structure for table gp247.shop_attribute
+-- Dumping structure for table s-cart.shop_attribute
 DROP TABLE IF EXISTS `shop_attribute`;
 CREATE TABLE IF NOT EXISTS `shop_attribute` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -581,7 +545,7 @@ CREATE TABLE IF NOT EXISTS `shop_attribute` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.shop_attribute: ~2 rows (approximately)
+-- Dumping data for table s-cart.shop_attribute: ~2 rows (approximately)
 DELETE FROM `shop_attribute`;
 /*!40000 ALTER TABLE `shop_attribute` DISABLE KEYS */;
 INSERT INTO `shop_attribute` (`id`, `name`, `value`) VALUES
@@ -589,7 +553,7 @@ INSERT INTO `shop_attribute` (`id`, `name`, `value`) VALUES
 	(2, 'Size', 'X,S,L');
 /*!40000 ALTER TABLE `shop_attribute` ENABLE KEYS */;
 
--- Dumping structure for table gp247.shop_brand
+-- Dumping structure for table s-cart.shop_brand
 DROP TABLE IF EXISTS `shop_brand`;
 CREATE TABLE IF NOT EXISTS `shop_brand` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -601,7 +565,7 @@ CREATE TABLE IF NOT EXISTS `shop_brand` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.shop_brand: ~6 rows (approximately)
+-- Dumping data for table s-cart.shop_brand: ~6 rows (approximately)
 DELETE FROM `shop_brand`;
 /*!40000 ALTER TABLE `shop_brand` DISABLE KEYS */;
 INSERT INTO `shop_brand` (`id`, `name`, `image`, `url`, `status`, `sort`) VALUES
@@ -613,7 +577,7 @@ INSERT INTO `shop_brand` (`id`, `name`, `image`, `url`, `status`, `sort`) VALUES
 	(6, 'Metabo', 'brand/66afc30e21e9ada47493dccfad00bd34.png', NULL, 1, 0);
 /*!40000 ALTER TABLE `shop_brand` ENABLE KEYS */;
 
--- Dumping structure for table gp247.shop_category
+-- Dumping structure for table s-cart.shop_category
 DROP TABLE IF EXISTS `shop_category`;
 CREATE TABLE IF NOT EXISTS `shop_category` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -628,7 +592,7 @@ CREATE TABLE IF NOT EXISTS `shop_category` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.shop_category: ~19 rows (approximately)
+-- Dumping data for table s-cart.shop_category: ~19 rows (approximately)
 DELETE FROM `shop_category`;
 /*!40000 ALTER TABLE `shop_category` DISABLE KEYS */;
 INSERT INTO `shop_category` (`id`, `name`, `image`, `keyword`, `uniquekey`, `description`, `parent`, `sort`, `status`) VALUES
@@ -653,7 +617,7 @@ INSERT INTO `shop_category` (`id`, `name`, `image`, `keyword`, `uniquekey`, `des
 	(19, 'Đèn LED - Ánh Sáng', 'category/e6902fd337f04ed8bc8fa9ded815261a.jpg', 'led,led dây,led strip', 'led-strip', NULL, 4, 0, 1);
 /*!40000 ALTER TABLE `shop_category` ENABLE KEYS */;
 
--- Dumping structure for table gp247.shop_image
+-- Dumping structure for table s-cart.shop_image
 DROP TABLE IF EXISTS `shop_image`;
 CREATE TABLE IF NOT EXISTS `shop_image` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -664,7 +628,7 @@ CREATE TABLE IF NOT EXISTS `shop_image` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.shop_image: ~71 rows (approximately)
+-- Dumping data for table s-cart.shop_image: ~18 rows (approximately)
 DELETE FROM `shop_image`;
 /*!40000 ALTER TABLE `shop_image` DISABLE KEYS */;
 INSERT INTO `shop_image` (`id`, `image`, `product_id`, `sort`, `status`) VALUES
@@ -688,7 +652,7 @@ INSERT INTO `shop_image` (`id`, `image`, `product_id`, `sort`, `status`) VALUES
 	(112, 'product_slide/cdc0fcaeef1a846c9993a272c1518922.jpg', 54, 0, 0);
 /*!40000 ALTER TABLE `shop_image` ENABLE KEYS */;
 
--- Dumping structure for table gp247.shop_option
+-- Dumping structure for table s-cart.shop_option
 DROP TABLE IF EXISTS `shop_option`;
 CREATE TABLE IF NOT EXISTS `shop_option` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -699,7 +663,7 @@ CREATE TABLE IF NOT EXISTS `shop_option` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.shop_option: ~3 rows (approximately)
+-- Dumping data for table s-cart.shop_option: ~3 rows (approximately)
 DELETE FROM `shop_option`;
 /*!40000 ALTER TABLE `shop_option` DISABLE KEYS */;
 INSERT INTO `shop_option` (`id`, `name`, `type`, `status`, `sort`) VALUES
@@ -708,7 +672,7 @@ INSERT INTO `shop_option` (`id`, `name`, `type`, `status`, `sort`) VALUES
 	(3, 'Chất liệu', 3, 1, 3);
 /*!40000 ALTER TABLE `shop_option` ENABLE KEYS */;
 
--- Dumping structure for table gp247.shop_option_detail
+-- Dumping structure for table s-cart.shop_option_detail
 DROP TABLE IF EXISTS `shop_option_detail`;
 CREATE TABLE IF NOT EXISTS `shop_option_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -719,7 +683,7 @@ CREATE TABLE IF NOT EXISTS `shop_option_detail` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=626 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.shop_option_detail: ~37 rows (approximately)
+-- Dumping data for table s-cart.shop_option_detail: ~37 rows (approximately)
 DELETE FROM `shop_option_detail`;
 /*!40000 ALTER TABLE `shop_option_detail` DISABLE KEYS */;
 INSERT INTO `shop_option_detail` (`id`, `name`, `add_price`, `option_id`, `product_id`) VALUES
@@ -762,7 +726,7 @@ INSERT INTO `shop_option_detail` (`id`, `name`, `add_price`, `option_id`, `produ
 	(625, 'ID=3 mm, OD=4 mm', 0, 2, 34);
 /*!40000 ALTER TABLE `shop_option_detail` ENABLE KEYS */;
 
--- Dumping structure for table gp247.shop_order
+-- Dumping structure for table s-cart.shop_order
 DROP TABLE IF EXISTS `shop_order`;
 CREATE TABLE IF NOT EXISTS `shop_order` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -788,9 +752,9 @@ CREATE TABLE IF NOT EXISTS `shop_order` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.shop_order: ~5 rows (approximately)
+-- Dumping data for table s-cart.shop_order: ~7 rows (approximately)
 DELETE FROM `shop_order`;
 /*!40000 ALTER TABLE `shop_order` DISABLE KEYS */;
 INSERT INTO `shop_order` (`id`, `user_id`, `subtotal`, `shipping`, `discount`, `payment_status`, `shipping_status`, `status`, `tax`, `total`, `received`, `balance`, `toname`, `address1`, `address2`, `country`, `phone`, `comment`, `payment_method`, `transaction`, `created_at`, `updated_at`) VALUES
@@ -798,10 +762,13 @@ INSERT INTO `shop_order` (`id`, `user_id`, `subtotal`, `shipping`, `discount`, `
 	(38, 3, 485000, 15, -15, 0, 2, 4, 0, 485000, -485000, 0, 'Lê Văn Lanh', 'Quan 12', 'Ho chi minh', NULL, '0667151172', NULL, NULL, NULL, '2018-05-15 13:59:39', '2018-05-20 06:13:07'),
 	(39, 3, 1360000, 100000, -100000, 3, 1, 1, 0, 1360000, -1060000, 300000, 'Lê Văn Lanh', 'Quan 122', 'Ho chi minh', NULL, '0667151172', 'ok', NULL, NULL, '2018-05-18 13:59:31', '2018-09-03 17:17:09'),
 	(74, 0, 20000, 10000, 0, 0, 0, 0, 0, 30000, 0, 30000, 'Nguyễn Tuấn', '南陽市長岡', 'fghfghfghfghfg', NULL, '09012345678', 'ok', NULL, NULL, '2018-09-03 17:00:37', '2018-09-03 17:14:55'),
-	(75, 5, 45000, 20000, 0, 0, 0, 0, 0, 65000, 0, 65000, 'Bao Khanh', '12', 'TTh07', NULL, '09012345678', NULL, NULL, NULL, '2018-09-05 20:59:07', NULL);
+	(75, 5, 45000, 20000, 0, 0, 0, 0, 0, 65000, 0, 65000, 'Bao Khanh', '12', 'TTh07', NULL, '09012345678', NULL, NULL, NULL, '2018-09-05 20:59:07', NULL),
+	(76, 5, 15000, 20000, -10000, 0, 0, 0, 0, 122000, 0, -115000, 'Bao Khanh', '12', 'TTh07', NULL, '09012345678', NULL, NULL, NULL, '2018-09-06 18:59:25', NULL),
+	(77, 5, 20000, 20000, -6000, 0, 0, 0, 0, 34000, 0, 34000, 'Bao Khanh', '12', 'TTh07', NULL, '09012345678', NULL, NULL, NULL, '2018-09-07 20:58:47', NULL),
+	(78, 5, NULL, 20000, 0, 0, 0, 0, 0, 20000, 0, 20000, 'Bao Khanh', '12', 'TTh07', NULL, '09012345678', NULL, NULL, NULL, '2018-09-08 00:27:24', '2018-09-12 22:28:50');
 /*!40000 ALTER TABLE `shop_order` ENABLE KEYS */;
 
--- Dumping structure for table gp247.shop_order_detail
+-- Dumping structure for table s-cart.shop_order_detail
 DROP TABLE IF EXISTS `shop_order_detail`;
 CREATE TABLE IF NOT EXISTS `shop_order_detail` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -817,19 +784,21 @@ CREATE TABLE IF NOT EXISTS `shop_order_detail` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=135 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.shop_order_detail: ~4 rows (approximately)
+-- Dumping data for table s-cart.shop_order_detail: ~7 rows (approximately)
 DELETE FROM `shop_order_detail`;
 /*!40000 ALTER TABLE `shop_order_detail` DISABLE KEYS */;
 INSERT INTO `shop_order_detail` (`id`, `order_id`, `product_id`, `name`, `price`, `qty`, `total_price`, `sku`, `type`, `option`, `created_at`, `updated_at`) VALUES
 	(131, 74, 32, 'Dây Gia Nhiệt 12V 40W Máy In 3D', 20000, 1, 20000, '3D-HOTWIRE1240', '[]', NULL, '2018-09-03 17:00:37', NULL),
 	(132, 75, 44, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', 15000, 1, 15000, 'P10-IRG', '[]', NULL, '2018-09-05 20:59:07', NULL),
 	(133, 75, 20, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', 15000, 1, 15000, 'SS495A', '[]', NULL, '2018-09-05 20:59:07', NULL),
-	(134, 75, 35, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', 15000, 1, 15000, '3D-SENSOR-NTC 100K', '[]', NULL, '2018-09-05 20:59:07', NULL);
+	(134, 75, 35, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', 15000, 1, 15000, '3D-SENSOR-NTC 100K', '[]', NULL, '2018-09-05 20:59:07', NULL),
+	(135, 76, 35, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', 15000, 1, 15000, '3D-SENSOR-NTC 100K', '[]', NULL, '2018-09-06 18:59:25', NULL),
+	(136, 77, 34, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', 20000, 1, 20000, '3D-TEFTLON-W24', '[]', NULL, '2018-09-07 20:58:47', NULL);
 /*!40000 ALTER TABLE `shop_order_detail` ENABLE KEYS */;
 
--- Dumping structure for table gp247.shop_order_history
+-- Dumping structure for table s-cart.shop_order_history
 DROP TABLE IF EXISTS `shop_order_history`;
 CREATE TABLE IF NOT EXISTS `shop_order_history` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -839,9 +808,9 @@ CREATE TABLE IF NOT EXISTS `shop_order_history` (
   `user_id` int(11) NOT NULL DEFAULT '0',
   `add_date` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.shop_order_history: ~6 rows (approximately)
+-- Dumping data for table s-cart.shop_order_history: ~9 rows (approximately)
 DELETE FROM `shop_order_history`;
 /*!40000 ALTER TABLE `shop_order_history` DISABLE KEYS */;
 INSERT INTO `shop_order_history` (`id`, `order_id`, `content`, `admin_id`, `user_id`, `add_date`) VALUES
@@ -850,10 +819,14 @@ INSERT INTO `shop_order_history` (`id`, `order_id`, `content`, `admin_id`, `user
 	(42, 74, 'Thay đổi <b>shipping</b> từ <span style="color:blue">\'\'</span> thành <span style="color:red">\'10000\'</span>', 1, 0, '2018-09-03 17:14:55'),
 	(43, 39, 'Thay đổi <b>status</b> từ <span style="color:blue">\'4\'</span> thành <span style="color:red">\'1\'</span>', 1, 0, '2018-09-03 17:17:00'),
 	(44, 39, 'Thay đổi <b>received</b> từ <span style="color:blue">\'\'</span> thành <span style="color:red">\'-1060000\'</span>', 1, 0, '2018-09-03 17:17:09'),
-	(45, 75, 'New order', 0, 5, '2018-09-05 20:59:07');
+	(45, 75, 'New order', 0, 5, '2018-09-05 20:59:07'),
+	(46, 76, 'New order', 0, 5, '2018-09-06 18:59:25'),
+	(47, 77, 'New order', 0, 5, '2018-09-07 20:58:47'),
+	(48, 78, 'New order', 0, 5, '2018-09-08 00:27:24'),
+	(49, 78, 'Xóa sản phẩm pID#137', 1, 0, '2018-09-12 22:28:50');
 /*!40000 ALTER TABLE `shop_order_history` ENABLE KEYS */;
 
--- Dumping structure for table gp247.shop_order_status
+-- Dumping structure for table s-cart.shop_order_status
 DROP TABLE IF EXISTS `shop_order_status`;
 CREATE TABLE IF NOT EXISTS `shop_order_status` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -861,7 +834,7 @@ CREATE TABLE IF NOT EXISTS `shop_order_status` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.shop_order_status: ~5 rows (approximately)
+-- Dumping data for table s-cart.shop_order_status: ~5 rows (approximately)
 DELETE FROM `shop_order_status`;
 /*!40000 ALTER TABLE `shop_order_status` DISABLE KEYS */;
 INSERT INTO `shop_order_status` (`id`, `name`) VALUES
@@ -872,7 +845,7 @@ INSERT INTO `shop_order_status` (`id`, `name`) VALUES
 	(4, 'Hoàn thành');
 /*!40000 ALTER TABLE `shop_order_status` ENABLE KEYS */;
 
--- Dumping structure for table gp247.shop_order_total
+-- Dumping structure for table s-cart.shop_order_total
 DROP TABLE IF EXISTS `shop_order_total`;
 CREATE TABLE IF NOT EXISTS `shop_order_total` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -884,9 +857,9 @@ CREATE TABLE IF NOT EXISTS `shop_order_total` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=224 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=239 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.shop_order_total: ~20 rows (approximately)
+-- Dumping data for table s-cart.shop_order_total: ~35 rows (approximately)
 DELETE FROM `shop_order_total`;
 /*!40000 ALTER TABLE `shop_order_total` DISABLE KEYS */;
 INSERT INTO `shop_order_total` (`id`, `order_id`, `title`, `code`, `value`, `sort`, `created_at`, `updated_at`) VALUES
@@ -909,10 +882,25 @@ INSERT INTO `shop_order_total` (`id`, `order_id`, `title`, `code`, `value`, `sor
 	(220, 75, 'Phí giao hàng', 'shipping', 20000, 10, '2018-09-05 20:59:07', NULL),
 	(221, 75, 'Giảm giá', 'discount', 0, 20, '2018-09-05 20:59:07', NULL),
 	(222, 75, 'Tổng tiền cần thanh toán', 'total', 65000, 100, '2018-09-05 20:59:07', NULL),
-	(223, 75, 'Đã thanh toán', 'received', 0, 200, '2018-09-05 20:59:07', NULL);
+	(223, 75, 'Đã thanh toán', 'received', 0, 200, '2018-09-05 20:59:07', NULL),
+	(224, 76, 'Tổng tiền hàng', 'subtotal', 15000, 1, '2018-09-06 18:59:25', NULL),
+	(225, 76, 'Phí giao hàng', 'shipping', 20000, 10, '2018-09-06 18:59:25', NULL),
+	(226, 76, 'Giảm giá 150,000VNĐ (<b>Code:</b> PAA-LLK04)', 'discount', -150000, 20, '2018-09-06 18:59:25', NULL),
+	(227, 76, 'Tổng tiền cần thanh toán', 'total', -115000, 100, '2018-09-06 18:59:25', NULL),
+	(228, 76, 'Đã thanh toán', 'received', 0, 200, '2018-09-06 18:59:25', NULL),
+	(229, 77, 'Tổng tiền hàng', 'subtotal', 20000, 1, '2018-09-07 20:58:47', NULL),
+	(230, 77, 'Phí giao hàng', 'shipping', 20000, 10, '2018-09-07 20:58:47', NULL),
+	(231, 77, 'Giảm tối đa 30% (<b>Code:</b> KKB3-KLLA)', 'discount', -6000, 20, '2018-09-07 20:58:47', NULL),
+	(232, 77, 'Tổng tiền cần thanh toán', 'total', 34000, 100, '2018-09-07 20:58:47', NULL),
+	(233, 77, 'Đã thanh toán', 'received', 0, 200, '2018-09-07 20:58:47', NULL),
+	(234, 78, 'Tổng tiền hàng', 'subtotal', 20000, 1, '2018-09-08 00:27:24', NULL),
+	(235, 78, 'Phí giao hàng', 'shipping', 20000, 10, '2018-09-08 00:27:24', NULL),
+	(236, 78, 'Giảm giá', 'discount', 0, 20, '2018-09-08 00:27:24', NULL),
+	(237, 78, 'Tổng tiền cần thanh toán', 'total', 20000, 100, '2018-09-08 00:27:24', '2018-09-12 22:28:50'),
+	(238, 78, 'Đã thanh toán', 'received', 0, 200, '2018-09-08 00:27:24', NULL);
 /*!40000 ALTER TABLE `shop_order_total` ENABLE KEYS */;
 
--- Dumping structure for table gp247.shop_payment_status
+-- Dumping structure for table s-cart.shop_payment_status
 DROP TABLE IF EXISTS `shop_payment_status`;
 CREATE TABLE IF NOT EXISTS `shop_payment_status` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -920,7 +908,7 @@ CREATE TABLE IF NOT EXISTS `shop_payment_status` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.shop_payment_status: ~4 rows (approximately)
+-- Dumping data for table s-cart.shop_payment_status: ~4 rows (approximately)
 DELETE FROM `shop_payment_status`;
 /*!40000 ALTER TABLE `shop_payment_status` DISABLE KEYS */;
 INSERT INTO `shop_payment_status` (`id`, `name`) VALUES
@@ -930,7 +918,7 @@ INSERT INTO `shop_payment_status` (`id`, `name`) VALUES
 	(3, 'Khách hàng dư tiền');
 /*!40000 ALTER TABLE `shop_payment_status` ENABLE KEYS */;
 
--- Dumping structure for table gp247.shop_product
+-- Dumping structure for table s-cart.shop_product
 DROP TABLE IF EXISTS `shop_product`;
 CREATE TABLE IF NOT EXISTS `shop_product` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -958,9 +946,9 @@ CREATE TABLE IF NOT EXISTS `shop_product` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `sku` (`sku`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.shop_product: ~40 rows (approximately)
+-- Dumping data for table s-cart.shop_product: ~42 rows (approximately)
 DELETE FROM `shop_product`;
 /*!40000 ALTER TABLE `shop_product` DISABLE KEYS */;
 INSERT INTO `shop_product` (`id`, `name`, `sku`, `keyword`, `description`, `image`, `content`, `brand_id`, `category_id`, `category_other`, `price`, `cost`, `stock`, `sold`, `type`, `option`, `sort`, `status`, `view`, `date_lastview`, `date_available`, `created_at`, `updated_at`) VALUES
@@ -985,11 +973,11 @@ INSERT INTO `shop_product` (`id`, `name`, `sku`, `keyword`, `description`, `imag
 	(28, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', '3DNOZZLE', 'quatang,ledfan', '', 'product/d486cdb9fad4205d4b7367f2c9df1f9e.png', '<p><strong><span style="font-size:20px;">Quạt đồng hồ đèn led nhiều m&agrave;u sắc hiển thị h&igrave;nh ảnh.</span></strong></p>\r\n\r\n<p><strong><span style="font-size:20px;">Tính năng v&agrave; th&ocirc;ng số:</span></strong></p>\r\n\r\n<p><span style="font-size:16px;">*** Hi&ecirc;̉n thị thời gian, nhiệt độ.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Hiển thịhiệu ứng chữ, h&igrave;nh ảnh nhiều m&agrave;u sắc được upload từđiện thoại di động th&ocirc;ng qua app được c&agrave;i đặt (hỗ trợ cho cả IOS v&agrave; ANDROID). tải app bằng QRCODE.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Thích hợp đ&ecirc;̉ bàn làm vi&ecirc;̣c, bàn học hoặc nơi trưng bày. Quạt r&acirc;́t mát, kh&ocirc;ng ồn.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Ngu&ocirc;̀n c&acirc;́p 5v từ c&ocirc;̉ng usb (laptop, pc, sạc di đ&ocirc;̣ng).</span></p>', 8, 11, NULL, 10000, 15000, 500, 0, 0, NULL, 0, 1, 0, NULL, NULL, '2018-08-24 04:21:48', '2018-08-24 04:29:04'),
 	(29, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', '3D-TEFLONLOCK', 'quatang,ledfan', '', 'product/743a375879e90599f75b4e98bacf0b95.png', '<p><strong><span style="font-size:20px;">Quạt đồng hồ đèn led nhiều m&agrave;u sắc hiển thị h&igrave;nh ảnh.</span></strong></p>\r\n\r\n<p><strong><span style="font-size:20px;">Tính năng v&agrave; th&ocirc;ng số:</span></strong></p>\r\n\r\n<p><span style="font-size:16px;">*** Hi&ecirc;̉n thị thời gian, nhiệt độ.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Hiển thịhiệu ứng chữ, h&igrave;nh ảnh nhiều m&agrave;u sắc được upload từđiện thoại di động th&ocirc;ng qua app được c&agrave;i đặt (hỗ trợ cho cả IOS v&agrave; ANDROID). tải app bằng QRCODE.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Thích hợp đ&ecirc;̉ bàn làm vi&ecirc;̣c, bàn học hoặc nơi trưng bày. Quạt r&acirc;́t mát, kh&ocirc;ng ồn.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Ngu&ocirc;̀n c&acirc;́p 5v từ c&ocirc;̉ng usb (laptop, pc, sạc di đ&ocirc;̣ng).</span></p>', 1, 11, '', 10000, 15000, 500, 0, 0, NULL, 0, 1, 0, NULL, NULL, '2018-08-24 04:32:48', '2018-09-02 23:46:23'),
 	(30, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', '3D-BELT-GT2', 'quatang,ledfan', '', 'product/743a375879e90599f75b4e98bacf0b95.png', '<p><strong><span style="font-size:20px;">Quạt đồng hồ đèn led nhiều m&agrave;u sắc hiển thị h&igrave;nh ảnh.</span></strong></p>\r\n\r\n<p><strong><span style="font-size:20px;">Tính năng v&agrave; th&ocirc;ng số:</span></strong></p>\r\n\r\n<p><span style="font-size:16px;">*** Hi&ecirc;̉n thị thời gian, nhiệt độ.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Hiển thịhiệu ứng chữ, h&igrave;nh ảnh nhiều m&agrave;u sắc được upload từđiện thoại di động th&ocirc;ng qua app được c&agrave;i đặt (hỗ trợ cho cả IOS v&agrave; ANDROID). tải app bằng QRCODE.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Thích hợp đ&ecirc;̉ bàn làm vi&ecirc;̣c, bàn học hoặc nơi trưng bày. Quạt r&acirc;́t mát, kh&ocirc;ng ồn.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Ngu&ocirc;̀n c&acirc;́p 5v từ c&ocirc;̉ng usb (laptop, pc, sạc di đ&ocirc;̣ng).</span></p>', 0, 11, '', 20000, 15000, 0, 0, 0, NULL, 0, 1, 1, '2018-08-31 21:00:47', NULL, '2018-08-24 04:35:39', '2018-09-02 23:49:17'),
-	(31, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', '3D-TEFLONLOCK-M10', 'quatang,ledfan', '', 'product/2ba0e7a82ca5ad2acc2514c90e3e7854.png', '<p><strong><span style="font-size:20px;">Quạt đồng hồ đèn led nhiều m&agrave;u sắc hiển thị h&igrave;nh ảnh.</span></strong></p>\r\n\r\n<p><strong><span style="font-size:20px;">Tính năng v&agrave; th&ocirc;ng số:</span></strong></p>\r\n\r\n<p><span style="font-size:16px;">*** Hi&ecirc;̉n thị thời gian, nhiệt độ.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Hiển thịhiệu ứng chữ, h&igrave;nh ảnh nhiều m&agrave;u sắc được upload từđiện thoại di động th&ocirc;ng qua app được c&agrave;i đặt (hỗ trợ cho cả IOS v&agrave; ANDROID). tải app bằng QRCODE.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Thích hợp đ&ecirc;̉ bàn làm vi&ecirc;̣c, bàn học hoặc nơi trưng bày. Quạt r&acirc;́t mát, kh&ocirc;ng ồn.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Ngu&ocirc;̀n c&acirc;́p 5v từ c&ocirc;̉ng usb (laptop, pc, sạc di đ&ocirc;̣ng).</span></p>', 0, 11, NULL, 10000, 15000, 100, 0, 0, NULL, 0, 1, 3, '2018-09-06 06:33:23', NULL, '2018-08-24 04:39:03', '2018-09-06 06:33:23'),
+	(31, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', '3D-TEFLONLOCK-M10', 'quatang,ledfan', '', 'product/2ba0e7a82ca5ad2acc2514c90e3e7854.png', '<p><strong><span style="font-size:20px;">Quạt đồng hồ đèn led nhiều m&agrave;u sắc hiển thị h&igrave;nh ảnh.</span></strong></p>\r\n\r\n<p><strong><span style="font-size:20px;">Tính năng v&agrave; th&ocirc;ng số:</span></strong></p>\r\n\r\n<p><span style="font-size:16px;">*** Hi&ecirc;̉n thị thời gian, nhiệt độ.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Hiển thịhiệu ứng chữ, h&igrave;nh ảnh nhiều m&agrave;u sắc được upload từđiện thoại di động th&ocirc;ng qua app được c&agrave;i đặt (hỗ trợ cho cả IOS v&agrave; ANDROID). tải app bằng QRCODE.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Thích hợp đ&ecirc;̉ bàn làm vi&ecirc;̣c, bàn học hoặc nơi trưng bày. Quạt r&acirc;́t mát, kh&ocirc;ng ồn.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Ngu&ocirc;̀n c&acirc;́p 5v từ c&ocirc;̉ng usb (laptop, pc, sạc di đ&ocirc;̣ng).</span></p>', 0, 11, NULL, 10000, 15000, 100, 0, 0, NULL, 0, 1, 4, '2018-09-08 13:19:46', NULL, '2018-08-24 04:39:03', '2018-09-08 13:19:46'),
 	(32, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', '3D-HOTWIRE1240', 'quatang,ledfan', '', 'product/3504e19458e349a6316c568f158de4f0.png', '<p><strong><span style="font-size:20px;">Quạt đồng hồ đèn led nhiều m&agrave;u sắc hiển thị h&igrave;nh ảnh.</span></strong></p>\r\n\r\n<p><strong><span style="font-size:20px;">Tính năng v&agrave; th&ocirc;ng số:</span></strong></p>\r\n\r\n<p><span style="font-size:16px;">*** Hi&ecirc;̉n thị thời gian, nhiệt độ.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Hiển thịhiệu ứng chữ, h&igrave;nh ảnh nhiều m&agrave;u sắc được upload từđiện thoại di động th&ocirc;ng qua app được c&agrave;i đặt (hỗ trợ cho cả IOS v&agrave; ANDROID). tải app bằng QRCODE.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Thích hợp đ&ecirc;̉ bàn làm vi&ecirc;̣c, bàn học hoặc nơi trưng bày. Quạt r&acirc;́t mát, kh&ocirc;ng ồn.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Ngu&ocirc;̀n c&acirc;́p 5v từ c&ocirc;̉ng usb (laptop, pc, sạc di đ&ocirc;̣ng).</span></p>', 0, 11, NULL, 20000, 15000, -1, 1, 1, NULL, 0, 1, 2, '2018-09-06 06:35:24', NULL, '2018-08-24 04:40:54', '2018-09-06 06:35:24'),
 	(33, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', '3D-TEFTLON-24', 'quatang,ledfan', '', 'product/2ba0e7a82ca5ad2acc2514c90e3e7854.png', '<p><strong><span style="font-size:20px;">Quạt đồng hồ đèn led nhiều m&agrave;u sắc hiển thị h&igrave;nh ảnh.</span></strong></p>\r\n\r\n<p><strong><span style="font-size:20px;">Tính năng v&agrave; th&ocirc;ng số:</span></strong></p>\r\n\r\n<p><span style="font-size:16px;">*** Hi&ecirc;̉n thị thời gian, nhiệt độ.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Hiển thịhiệu ứng chữ, h&igrave;nh ảnh nhiều m&agrave;u sắc được upload từđiện thoại di động th&ocirc;ng qua app được c&agrave;i đặt (hỗ trợ cho cả IOS v&agrave; ANDROID). tải app bằng QRCODE.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Thích hợp đ&ecirc;̉ bàn làm vi&ecirc;̣c, bàn học hoặc nơi trưng bày. Quạt r&acirc;́t mát, kh&ocirc;ng ồn.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Ngu&ocirc;̀n c&acirc;́p 5v từ c&ocirc;̉ng usb (laptop, pc, sạc di đ&ocirc;̣ng).</span></p>', 0, 11, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 0, NULL, NULL, '2018-08-24 04:44:04', '2018-08-24 04:45:51'),
-	(34, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', '3D-TEFTLON-W24', 'quatang,ledfan', NULL, 'product/1ed5aca62cbd385f3f90b85a366a55f8.png', '<p><strong><span style="font-size:20px;">Quạt đồng hồ đèn led nhiều m&agrave;u sắc hiển thị h&igrave;nh ảnh.</span></strong></p>\r\n\r\n<p><strong><span style="font-size:20px;">Tính năng v&agrave; th&ocirc;ng số:</span></strong></p>\r\n\r\n<p><span style="font-size:16px;">*** Hi&ecirc;̉n thị thời gian, nhiệt độ.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Hiển thịhiệu ứng chữ, h&igrave;nh ảnh nhiều m&agrave;u sắc được upload từđiện thoại di động th&ocirc;ng qua app được c&agrave;i đặt (hỗ trợ cho cả IOS v&agrave; ANDROID). tải app bằng QRCODE.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Thích hợp đ&ecirc;̉ bàn làm vi&ecirc;̣c, bàn học hoặc nơi trưng bày. Quạt r&acirc;́t mát, kh&ocirc;ng ồn.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Ngu&ocirc;̀n c&acirc;́p 5v từ c&ocirc;̉ng usb (laptop, pc, sạc di đ&ocirc;̣ng).</span></p>', 0, 11, '', 20000, 15000, 100, 0, 1, NULL, 0, 1, 0, NULL, NULL, '2018-08-24 05:09:34', '2018-09-06 06:19:21'),
-	(35, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', '3D-SENSOR-NTC 100K', 'quatang,ledfan', NULL, 'product/d4f0b048fb171a8bf4f9701fcbac949d.png', '<p><strong><span style="font-size:20px;">Quạt đồng hồ đèn led nhiều m&agrave;u sắc hiển thị h&igrave;nh ảnh.</span></strong></p>\r\n\r\n<p><strong><span style="font-size:20px;">Tính năng v&agrave; th&ocirc;ng số:</span></strong></p>\r\n\r\n<p><span style="font-size:16px;">*** Hi&ecirc;̉n thị thời gian, nhiệt độ.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Hiển thịhiệu ứng chữ, h&igrave;nh ảnh nhiều m&agrave;u sắc được upload từđiện thoại di động th&ocirc;ng qua app được c&agrave;i đặt (hỗ trợ cho cả IOS v&agrave; ANDROID). tải app bằng QRCODE.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Thích hợp đ&ecirc;̉ bàn làm vi&ecirc;̣c, bàn học hoặc nơi trưng bày. Quạt r&acirc;́t mát, kh&ocirc;ng ồn.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Ngu&ocirc;̀n c&acirc;́p 5v từ c&ocirc;̉ng usb (laptop, pc, sạc di đ&ocirc;̣ng).</span></p>', 0, 11, '', 15000, 15000, 99, 1, 1, NULL, 0, 1, 3, '2018-08-31 22:14:35', NULL, '2018-08-24 05:13:58', '2018-09-06 06:18:58'),
+	(34, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', '3D-TEFTLON-W24', 'quatang,ledfan', NULL, 'product/1ed5aca62cbd385f3f90b85a366a55f8.png', '<p><strong><span style="font-size:20px;">Quạt đồng hồ đèn led nhiều m&agrave;u sắc hiển thị h&igrave;nh ảnh.</span></strong></p>\r\n\r\n<p><strong><span style="font-size:20px;">Tính năng v&agrave; th&ocirc;ng số:</span></strong></p>\r\n\r\n<p><span style="font-size:16px;">*** Hi&ecirc;̉n thị thời gian, nhiệt độ.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Hiển thịhiệu ứng chữ, h&igrave;nh ảnh nhiều m&agrave;u sắc được upload từđiện thoại di động th&ocirc;ng qua app được c&agrave;i đặt (hỗ trợ cho cả IOS v&agrave; ANDROID). tải app bằng QRCODE.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Thích hợp đ&ecirc;̉ bàn làm vi&ecirc;̣c, bàn học hoặc nơi trưng bày. Quạt r&acirc;́t mát, kh&ocirc;ng ồn.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Ngu&ocirc;̀n c&acirc;́p 5v từ c&ocirc;̉ng usb (laptop, pc, sạc di đ&ocirc;̣ng).</span></p>', 0, 11, '', 20000, 15000, 99, 1, 1, NULL, 0, 1, 0, NULL, NULL, '2018-08-24 05:09:34', '2018-09-12 22:28:50'),
+	(35, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', '3D-SENSOR-NTC 100K', 'quatang,ledfan', NULL, 'product/d4f0b048fb171a8bf4f9701fcbac949d.png', '<p><strong><span style="font-size:20px;">Quạt đồng hồ đèn led nhiều m&agrave;u sắc hiển thị h&igrave;nh ảnh.</span></strong></p>\r\n\r\n<p><strong><span style="font-size:20px;">Tính năng v&agrave; th&ocirc;ng số:</span></strong></p>\r\n\r\n<p><span style="font-size:16px;">*** Hi&ecirc;̉n thị thời gian, nhiệt độ.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Hiển thịhiệu ứng chữ, h&igrave;nh ảnh nhiều m&agrave;u sắc được upload từđiện thoại di động th&ocirc;ng qua app được c&agrave;i đặt (hỗ trợ cho cả IOS v&agrave; ANDROID). tải app bằng QRCODE.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Thích hợp đ&ecirc;̉ bàn làm vi&ecirc;̣c, bàn học hoặc nơi trưng bày. Quạt r&acirc;́t mát, kh&ocirc;ng ồn.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Ngu&ocirc;̀n c&acirc;́p 5v từ c&ocirc;̉ng usb (laptop, pc, sạc di đ&ocirc;̣ng).</span></p>', 0, 11, '', 15000, 15000, 98, 2, 1, NULL, 0, 1, 3, '2018-08-31 22:14:35', NULL, '2018-08-24 05:13:58', '2018-09-06 18:59:25'),
 	(36, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', 'nRLF24L01+2.4HZ', 'quatang,ledfan', NULL, 'product/4c076364baac8604c4a32ac3eaaaf6b0.png', '<p><strong><span style="font-size:20px;">Quạt đồng hồ đèn led nhiều m&agrave;u sắc hiển thị h&igrave;nh ảnh.</span></strong></p>\r\n\r\n<p><strong><span style="font-size:20px;">Tính năng v&agrave; th&ocirc;ng số:</span></strong></p>\r\n\r\n<p><span style="font-size:16px;">*** Hi&ecirc;̉n thị thời gian, nhiệt độ.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Hiển thịhiệu ứng chữ, h&igrave;nh ảnh nhiều m&agrave;u sắc được upload từđiện thoại di động th&ocirc;ng qua app được c&agrave;i đặt (hỗ trợ cho cả IOS v&agrave; ANDROID). tải app bằng QRCODE.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Thích hợp đ&ecirc;̉ bàn làm vi&ecirc;̣c, bàn học hoặc nơi trưng bày. Quạt r&acirc;́t mát, kh&ocirc;ng ồn.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Ngu&ocirc;̀n c&acirc;́p 5v từ c&ocirc;̉ng usb (laptop, pc, sạc di đ&ocirc;̣ng).</span></p>', 0, 16, '', 25000, 15000, 0, 0, 0, NULL, 0, 1, 0, NULL, NULL, '2018-08-24 06:07:15', '2018-09-06 06:18:41'),
 	(37, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', 'ARDUINO-NANO', 'quatang,ledfan', NULL, 'product/d2bc18712eaea24237bfdfaac070c74a.png', '<p><strong><span style="font-size:20px;">Quạt đồng hồ đèn led nhiều m&agrave;u sắc hiển thị h&igrave;nh ảnh.</span></strong></p>\r\n\r\n<p><strong><span style="font-size:20px;">Tính năng v&agrave; th&ocirc;ng số:</span></strong></p>\r\n\r\n<p><span style="font-size:16px;">*** Hi&ecirc;̉n thị thời gian, nhiệt độ.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Hiển thịhiệu ứng chữ, h&igrave;nh ảnh nhiều m&agrave;u sắc được upload từđiện thoại di động th&ocirc;ng qua app được c&agrave;i đặt (hỗ trợ cho cả IOS v&agrave; ANDROID). tải app bằng QRCODE.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Thích hợp đ&ecirc;̉ bàn làm vi&ecirc;̣c, bàn học hoặc nơi trưng bày. Quạt r&acirc;́t mát, kh&ocirc;ng ồn.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Ngu&ocirc;̀n c&acirc;́p 5v từ c&ocirc;̉ng usb (laptop, pc, sạc di đ&ocirc;̣ng).</span></p>', 0, 17, '', 100000, 15000, 0, 0, 0, NULL, 0, 1, 1, '2018-08-31 21:59:45', NULL, '2018-08-24 06:25:48', '2018-09-06 06:18:27'),
 	(38, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', 'LEDSTRIP-5050RGB', 'quatang,ledfan', NULL, 'product/3d9543ddacfe442ee27111ebc94cee73.png', '<p><strong><span style="font-size:20px;">Quạt đồng hồ đèn led nhiều m&agrave;u sắc hiển thị h&igrave;nh ảnh.</span></strong></p>\r\n\r\n<p><strong><span style="font-size:20px;">Tính năng v&agrave; th&ocirc;ng số:</span></strong></p>\r\n\r\n<p><span style="font-size:16px;">*** Hi&ecirc;̉n thị thời gian, nhiệt độ.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Hiển thịhiệu ứng chữ, h&igrave;nh ảnh nhiều m&agrave;u sắc được upload từđiện thoại di động th&ocirc;ng qua app được c&agrave;i đặt (hỗ trợ cho cả IOS v&agrave; ANDROID). tải app bằng QRCODE.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Thích hợp đ&ecirc;̉ bàn làm vi&ecirc;̣c, bàn học hoặc nơi trưng bày. Quạt r&acirc;́t mát, kh&ocirc;ng ồn.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Ngu&ocirc;̀n c&acirc;́p 5v từ c&ocirc;̉ng usb (laptop, pc, sạc di đ&ocirc;̣ng).</span></p>', 0, 19, '', 15000, 15000, 0, 0, 0, NULL, 0, 1, 12, '2018-08-27 16:44:08', NULL, '2018-08-24 06:33:31', '2018-09-06 06:17:59'),
@@ -997,7 +985,7 @@ INSERT INTO `shop_product` (`id`, `name`, `sku`, `keyword`, `description`, `imag
 	(40, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', 'P10-IR', 'quatang,ledfan', NULL, 'product/2ba0e7a82ca5ad2acc2514c90e3e7854.png', '<p><strong><span style="font-size:20px;">Quạt đồng hồ đèn led nhiều m&agrave;u sắc hiển thị h&igrave;nh ảnh.</span></strong></p>\r\n\r\n<p><strong><span style="font-size:20px;">Tính năng v&agrave; th&ocirc;ng số:</span></strong></p>\r\n\r\n<p><span style="font-size:16px;">*** Hi&ecirc;̉n thị thời gian, nhiệt độ.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Hiển thịhiệu ứng chữ, h&igrave;nh ảnh nhiều m&agrave;u sắc được upload từđiện thoại di động th&ocirc;ng qua app được c&agrave;i đặt (hỗ trợ cho cả IOS v&agrave; ANDROID). tải app bằng QRCODE.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Thích hợp đ&ecirc;̉ bàn làm vi&ecirc;̣c, bàn học hoặc nơi trưng bày. Quạt r&acirc;́t mát, kh&ocirc;ng ồn.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Ngu&ocirc;̀n c&acirc;́p 5v từ c&ocirc;̉ng usb (laptop, pc, sạc di đ&ocirc;̣ng).</span></p>', 0, 19, '', 15000, 15000, 0, 0, 0, NULL, 0, 1, 6, '2018-08-30 23:20:31', NULL, '2018-08-24 08:49:49', '2018-09-06 06:17:01'),
 	(41, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', 'P10-IG', 'quatang,ledfan', NULL, 'product/f3dd749e2d58243e2d336b149c4a1235.png', '<p><strong><span style="font-size:20px;">Quạt đồng hồ đèn led nhiều m&agrave;u sắc hiển thị h&igrave;nh ảnh.</span></strong></p>\r\n\r\n<p><strong><span style="font-size:20px;">Tính năng v&agrave; th&ocirc;ng số:</span></strong></p>\r\n\r\n<p><span style="font-size:16px;">*** Hi&ecirc;̉n thị thời gian, nhiệt độ.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Hiển thịhiệu ứng chữ, h&igrave;nh ảnh nhiều m&agrave;u sắc được upload từđiện thoại di động th&ocirc;ng qua app được c&agrave;i đặt (hỗ trợ cho cả IOS v&agrave; ANDROID). tải app bằng QRCODE.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Thích hợp đ&ecirc;̉ bàn làm vi&ecirc;̣c, bàn học hoặc nơi trưng bày. Quạt r&acirc;́t mát, kh&ocirc;ng ồn.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Ngu&ocirc;̀n c&acirc;́p 5v từ c&ocirc;̉ng usb (laptop, pc, sạc di đ&ocirc;̣ng).</span></p>', 0, 19, '', 15000, 15000, 0, 0, 0, NULL, 0, 1, 9, '2018-09-03 17:02:01', NULL, '2018-08-24 08:51:11', '2018-09-06 06:16:34'),
 	(42, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', 'P10-IB', 'quatang,ledfan', NULL, 'product/579e387d103eff60a2c2d203dd58456b.png', '<p><strong><span style="font-size:20px;">Quạt đồng hồ đèn led nhiều m&agrave;u sắc hiển thị h&igrave;nh ảnh.</span></strong></p>\r\n\r\n<p><strong><span style="font-size:20px;">Tính năng v&agrave; th&ocirc;ng số:</span></strong></p>\r\n\r\n<p><span style="font-size:16px;">*** Hi&ecirc;̉n thị thời gian, nhiệt độ.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Hiển thịhiệu ứng chữ, h&igrave;nh ảnh nhiều m&agrave;u sắc được upload từđiện thoại di động th&ocirc;ng qua app được c&agrave;i đặt (hỗ trợ cho cả IOS v&agrave; ANDROID). tải app bằng QRCODE.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Thích hợp đ&ecirc;̉ bàn làm vi&ecirc;̣c, bàn học hoặc nơi trưng bày. Quạt r&acirc;́t mát, kh&ocirc;ng ồn.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Ngu&ocirc;̀n c&acirc;́p 5v từ c&ocirc;̉ng usb (laptop, pc, sạc di đ&ocirc;̣ng).</span></p>', 0, 19, '', 15000, 15000, 0, 0, 0, NULL, 0, 1, 9, '2018-08-31 21:45:43', NULL, '2018-08-24 08:52:58', '2018-09-06 06:16:20'),
-	(43, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', 'P10-IRGB', 'quatang,ledfan', NULL, 'product/4df7dbf5ab7a25605ed072d7a34199af.png', '<p><strong><span style="font-size:20px;">Quạt đồng hồ đèn led nhiều m&agrave;u sắc hiển thị h&igrave;nh ảnh.</span></strong></p>\r\n\r\n<p><strong><span style="font-size:20px;">Tính năng v&agrave; th&ocirc;ng số:</span></strong></p>\r\n\r\n<p><span style="font-size:16px;">*** Hi&ecirc;̉n thị thời gian, nhiệt độ.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Hiển thịhiệu ứng chữ, h&igrave;nh ảnh nhiều m&agrave;u sắc được upload từđiện thoại di động th&ocirc;ng qua app được c&agrave;i đặt (hỗ trợ cho cả IOS v&agrave; ANDROID). tải app bằng QRCODE.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Thích hợp đ&ecirc;̉ bàn làm vi&ecirc;̣c, bàn học hoặc nơi trưng bày. Quạt r&acirc;́t mát, kh&ocirc;ng ồn.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Ngu&ocirc;̀n c&acirc;́p 5v từ c&ocirc;̉ng usb (laptop, pc, sạc di đ&ocirc;̣ng).</span></p>', 0, 19, '', 15000, 15000, 0, 0, 0, NULL, 0, 1, 2, '2018-08-27 17:23:48', NULL, '2018-08-24 08:54:45', '2018-09-06 06:15:45'),
+	(43, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', 'P10-IRGB', 'quatang,ledfan', NULL, 'product/4df7dbf5ab7a25605ed072d7a34199af.png', '<p><strong><span style="font-size:20px;">Quạt đồng hồ đèn led nhiều m&agrave;u sắc hiển thị h&igrave;nh ảnh.</span></strong></p>\r\n\r\n<p><strong><span style="font-size:20px;">Tính năng v&agrave; th&ocirc;ng số:</span></strong></p>\r\n\r\n<p><span style="font-size:16px;">*** Hi&ecirc;̉n thị thời gian, nhiệt độ.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Hiển thịhiệu ứng chữ, h&igrave;nh ảnh nhiều m&agrave;u sắc được upload từđiện thoại di động th&ocirc;ng qua app được c&agrave;i đặt (hỗ trợ cho cả IOS v&agrave; ANDROID). tải app bằng QRCODE.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Thích hợp đ&ecirc;̉ bàn làm vi&ecirc;̣c, bàn học hoặc nơi trưng bày. Quạt r&acirc;́t mát, kh&ocirc;ng ồn.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Ngu&ocirc;̀n c&acirc;́p 5v từ c&ocirc;̉ng usb (laptop, pc, sạc di đ&ocirc;̣ng).</span></p>', 0, 19, '', 15000, 15000, 0, 0, 0, NULL, 0, 1, 3, '2018-09-08 14:13:30', NULL, '2018-08-24 08:54:45', '2018-09-08 14:13:30'),
 	(44, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', 'P10-IRG', 'quatang,ledfan', NULL, 'product/979417f469dd1ec60a09d2d4fd7729c3.png', '<p><strong><span style="font-size:20px;">Quạt đồng hồ đèn led nhiều m&agrave;u sắc hiển thị h&igrave;nh ảnh.</span></strong></p>\r\n\r\n<p><strong><span style="font-size:20px;">Tính năng v&agrave; th&ocirc;ng số:</span></strong></p>\r\n\r\n<p><span style="font-size:16px;">*** Hi&ecirc;̉n thị thời gian, nhiệt độ.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Hiển thịhiệu ứng chữ, h&igrave;nh ảnh nhiều m&agrave;u sắc được upload từđiện thoại di động th&ocirc;ng qua app được c&agrave;i đặt (hỗ trợ cho cả IOS v&agrave; ANDROID). tải app bằng QRCODE.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Thích hợp đ&ecirc;̉ bàn làm vi&ecirc;̣c, bàn học hoặc nơi trưng bày. Quạt r&acirc;́t mát, kh&ocirc;ng ồn.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Ngu&ocirc;̀n c&acirc;́p 5v từ c&ocirc;̉ng usb (laptop, pc, sạc di đ&ocirc;̣ng).</span></p>', 0, 19, '', 15000, 15000, -1, 1, 0, NULL, 0, 1, 18, '2018-08-27 17:19:52', NULL, '2018-08-24 08:56:02', '2018-09-06 06:15:30'),
 	(45, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', 'LFF', 'quatang,ledfan', NULL, 'product/d486cdb9fad4205d4b7367f2c9df1f9e.png', '<p><strong><span style="font-size:20px;">Quạt đồng hồ đèn led nhiều m&agrave;u sắc hiển thị h&igrave;nh ảnh.</span></strong></p>\r\n\r\n<p><strong><span style="font-size:20px;">Tính năng v&agrave; th&ocirc;ng số:</span></strong></p>\r\n\r\n<p><span style="font-size:16px;">*** Hi&ecirc;̉n thị thời gian, nhiệt độ.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Hiển thịhiệu ứng chữ, h&igrave;nh ảnh nhiều m&agrave;u sắc được upload từđiện thoại di động th&ocirc;ng qua app được c&agrave;i đặt (hỗ trợ cho cả IOS v&agrave; ANDROID). tải app bằng QRCODE.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Thích hợp đ&ecirc;̉ bàn làm vi&ecirc;̣c, bàn học hoặc nơi trưng bày. Quạt r&acirc;́t mát, kh&ocirc;ng ồn.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Ngu&ocirc;̀n c&acirc;́p 5v từ c&ocirc;̉ng usb (laptop, pc, sạc di đ&ocirc;̣ng).</span></p>', 0, 6, '', 15000, 15000, 0, 0, 0, NULL, 0, 1, 0, NULL, NULL, '2018-08-24 08:58:42', '2018-09-06 06:15:19'),
 	(46, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', 'P2.5-I', 'quatang,ledfan', NULL, 'product/2ba0e7a82ca5ad2acc2514c90e3e7854.png', '<p><strong><span style="font-size:20px;">Quạt đồng hồ đèn led nhiều m&agrave;u sắc hiển thị h&igrave;nh ảnh.</span></strong></p>\r\n\r\n<p><strong><span style="font-size:20px;">Tính năng v&agrave; th&ocirc;ng số:</span></strong></p>\r\n\r\n<p><span style="font-size:16px;">*** Hi&ecirc;̉n thị thời gian, nhiệt độ.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Hiển thịhiệu ứng chữ, h&igrave;nh ảnh nhiều m&agrave;u sắc được upload từđiện thoại di động th&ocirc;ng qua app được c&agrave;i đặt (hỗ trợ cho cả IOS v&agrave; ANDROID). tải app bằng QRCODE.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Thích hợp đ&ecirc;̉ bàn làm vi&ecirc;̣c, bàn học hoặc nơi trưng bày. Quạt r&acirc;́t mát, kh&ocirc;ng ồn.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Ngu&ocirc;̀n c&acirc;́p 5v từ c&ocirc;̉ng usb (laptop, pc, sạc di đ&ocirc;̣ng).</span></p>', 0, 19, '', 15000, 15000, 0, 0, 0, NULL, 0, 1, 10, '2018-09-01 01:05:52', NULL, '2018-08-24 09:23:07', '2018-09-06 06:15:07'),
@@ -1006,7 +994,7 @@ INSERT INTO `shop_product` (`id`, `name`, `sku`, `keyword`, `description`, `imag
 	(49, 'Clock FAN Hiển Thị Ảnh Nhiều Màu Sắc', 'BX-5UTbnv', 'quatang,ledfan', NULL, 'product/fcb202f533939bca1f4132d89e734b28.png', '<p><strong><span style="font-size:20px;">Quạt đồng hồ đèn led nhiều m&agrave;u sắc hiển thị h&igrave;nh ảnh.</span></strong></p>\r\n\r\n<p><strong><span style="font-size:20px;">Tính năng v&agrave; th&ocirc;ng số:</span></strong></p>\r\n\r\n<p><span style="font-size:16px;">*** Hi&ecirc;̉n thị thời gian, nhiệt độ.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Hiển thịhiệu ứng chữ, h&igrave;nh ảnh nhiều m&agrave;u sắc được upload từđiện thoại di động th&ocirc;ng qua app được c&agrave;i đặt (hỗ trợ cho cả IOS v&agrave; ANDROID). tải app bằng QRCODE.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Thích hợp đ&ecirc;̉ bàn làm vi&ecirc;̣c, bàn học hoặc nơi trưng bày. Quạt r&acirc;́t mát, kh&ocirc;ng ồn.</span></p>\r\n\r\n<p><span style="font-size:16px;">*** Ngu&ocirc;̀n c&acirc;́p 5v từ c&ocirc;̉ng usb (laptop, pc, sạc di đ&ocirc;̣ng).</span></p>', 2, 2, '2', 15000, 15000, 0, 0, 0, NULL, 0, 1, 9, '2018-09-06 06:50:56', '2018-09-19 00:00:00', '2018-09-03 08:05:59', '2018-09-06 06:50:56');
 /*!40000 ALTER TABLE `shop_product` ENABLE KEYS */;
 
--- Dumping structure for table gp247.shop_product_like
+-- Dumping structure for table s-cart.shop_product_like
 DROP TABLE IF EXISTS `shop_product_like`;
 CREATE TABLE IF NOT EXISTS `shop_product_like` (
   `product_id` int(11) NOT NULL,
@@ -1015,12 +1003,12 @@ CREATE TABLE IF NOT EXISTS `shop_product_like` (
   PRIMARY KEY (`product_id`,`users_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.shop_product_like: ~0 rows (approximately)
+-- Dumping data for table s-cart.shop_product_like: ~0 rows (approximately)
 DELETE FROM `shop_product_like`;
 /*!40000 ALTER TABLE `shop_product_like` DISABLE KEYS */;
 /*!40000 ALTER TABLE `shop_product_like` ENABLE KEYS */;
 
--- Dumping structure for table gp247.shop_product_recent_view
+-- Dumping structure for table s-cart.shop_product_recent_view
 DROP TABLE IF EXISTS `shop_product_recent_view`;
 CREATE TABLE IF NOT EXISTS `shop_product_recent_view` (
   `user_id` int(11) NOT NULL,
@@ -1029,7 +1017,7 @@ CREATE TABLE IF NOT EXISTS `shop_product_recent_view` (
   UNIQUE KEY `customer_id_product_id` (`user_id`,`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table gp247.shop_product_recent_view: ~8 rows (approximately)
+-- Dumping data for table s-cart.shop_product_recent_view: ~8 rows (approximately)
 DELETE FROM `shop_product_recent_view`;
 /*!40000 ALTER TABLE `shop_product_recent_view` DISABLE KEYS */;
 INSERT INTO `shop_product_recent_view` (`user_id`, `product_id`, `created_at`) VALUES
@@ -1043,7 +1031,7 @@ INSERT INTO `shop_product_recent_view` (`user_id`, `product_id`, `created_at`) V
 	(3, 48, '2018-08-27 17:01:49');
 /*!40000 ALTER TABLE `shop_product_recent_view` ENABLE KEYS */;
 
--- Dumping structure for table gp247.shop_product_type
+-- Dumping structure for table s-cart.shop_product_type
 DROP TABLE IF EXISTS `shop_product_type`;
 CREATE TABLE IF NOT EXISTS `shop_product_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1054,9 +1042,9 @@ CREATE TABLE IF NOT EXISTS `shop_product_type` (
   `product_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `opt_sku` (`opt_sku`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.shop_product_type: ~8 rows (approximately)
+-- Dumping data for table s-cart.shop_product_type: ~8 rows (approximately)
 DELETE FROM `shop_product_type`;
 /*!40000 ALTER TABLE `shop_product_type` DISABLE KEYS */;
 INSERT INTO `shop_product_type` (`id`, `opt_name`, `opt_sku`, `opt_price`, `opt_image`, `product_id`) VALUES
@@ -1070,7 +1058,7 @@ INSERT INTO `shop_product_type` (`id`, `opt_name`, `opt_sku`, `opt_price`, `opt_
 	(19, 'Sản phẩm xanh', 'BX-5U0-1fgfgbnvbn', NULL, 'product/7e9ee7a382be733ad68172e6abd11a95.png', 49);
 /*!40000 ALTER TABLE `shop_product_type` ENABLE KEYS */;
 
--- Dumping structure for table gp247.shop_shipping
+-- Dumping structure for table s-cart.shop_shipping
 DROP TABLE IF EXISTS `shop_shipping`;
 CREATE TABLE IF NOT EXISTS `shop_shipping` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1081,14 +1069,14 @@ CREATE TABLE IF NOT EXISTS `shop_shipping` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.shop_shipping: ~0 rows (approximately)
+-- Dumping data for table s-cart.shop_shipping: ~0 rows (approximately)
 DELETE FROM `shop_shipping`;
 /*!40000 ALTER TABLE `shop_shipping` DISABLE KEYS */;
 INSERT INTO `shop_shipping` (`id`, `type`, `value`, `free`, `status`) VALUES
-	(1, 0, 20000, 1000000, 1);
+	(1, 0, 20000, 10000000, 1);
 /*!40000 ALTER TABLE `shop_shipping` ENABLE KEYS */;
 
--- Dumping structure for table gp247.shop_shipping_address
+-- Dumping structure for table s-cart.shop_shipping_address
 DROP TABLE IF EXISTS `shop_shipping_address`;
 CREATE TABLE IF NOT EXISTS `shop_shipping_address` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -1104,14 +1092,14 @@ CREATE TABLE IF NOT EXISTS `shop_shipping_address` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.shop_shipping_address: ~0 rows (approximately)
+-- Dumping data for table s-cart.shop_shipping_address: ~0 rows (approximately)
 DELETE FROM `shop_shipping_address`;
 /*!40000 ALTER TABLE `shop_shipping_address` DISABLE KEYS */;
 INSERT INTO `shop_shipping_address` (`id`, `user_id`, `address1`, `address2`, `country`, `phone`, `sort`, `status`, `created_at`, `updated_at`) VALUES
 	(1, 1, 'Quan 1', 'Ho chi Minh', NULL, '09978998768678', 0, 0, '2018-01-14 03:12:50', '2018-01-14 03:12:50');
 /*!40000 ALTER TABLE `shop_shipping_address` ENABLE KEYS */;
 
--- Dumping structure for table gp247.shop_shipping_status
+-- Dumping structure for table s-cart.shop_shipping_status
 DROP TABLE IF EXISTS `shop_shipping_status`;
 CREATE TABLE IF NOT EXISTS `shop_shipping_status` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1119,7 +1107,7 @@ CREATE TABLE IF NOT EXISTS `shop_shipping_status` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.shop_shipping_status: ~3 rows (approximately)
+-- Dumping data for table s-cart.shop_shipping_status: ~3 rows (approximately)
 DELETE FROM `shop_shipping_status`;
 /*!40000 ALTER TABLE `shop_shipping_status` DISABLE KEYS */;
 INSERT INTO `shop_shipping_status` (`id`, `name`) VALUES
@@ -1128,7 +1116,7 @@ INSERT INTO `shop_shipping_status` (`id`, `name`) VALUES
 	(2, 'Gửi xong');
 /*!40000 ALTER TABLE `shop_shipping_status` ENABLE KEYS */;
 
--- Dumping structure for table gp247.shop_shoppingcart
+-- Dumping structure for table s-cart.shop_shoppingcart
 DROP TABLE IF EXISTS `shop_shoppingcart`;
 CREATE TABLE IF NOT EXISTS `shop_shoppingcart` (
   `identifier` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -1139,12 +1127,12 @@ CREATE TABLE IF NOT EXISTS `shop_shoppingcart` (
   KEY `shop_shoppingcart_identifier_instance_index` (`identifier`,`instance`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.shop_shoppingcart: ~0 rows (approximately)
+-- Dumping data for table s-cart.shop_shoppingcart: ~0 rows (approximately)
 DELETE FROM `shop_shoppingcart`;
 /*!40000 ALTER TABLE `shop_shoppingcart` DISABLE KEYS */;
 /*!40000 ALTER TABLE `shop_shoppingcart` ENABLE KEYS */;
 
--- Dumping structure for table gp247.shop_special_price
+-- Dumping structure for table s-cart.shop_special_price
 DROP TABLE IF EXISTS `shop_special_price`;
 CREATE TABLE IF NOT EXISTS `shop_special_price` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -1160,7 +1148,7 @@ CREATE TABLE IF NOT EXISTS `shop_special_price` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table gp247.shop_special_price: ~8 rows (approximately)
+-- Dumping data for table s-cart.shop_special_price: ~8 rows (approximately)
 DELETE FROM `shop_special_price`;
 /*!40000 ALTER TABLE `shop_special_price` DISABLE KEYS */;
 INSERT INTO `shop_special_price` (`id`, `product_id`, `price`, `off`, `date_start`, `date_end`, `status`, `comment`, `created_at`, `updated_at`) VALUES
@@ -1174,7 +1162,7 @@ INSERT INTO `shop_special_price` (`id`, `product_id`, `price`, `off`, `date_star
 	(13, 23, 198000, 10, '2018-05-08 00:00:00', '2018-06-08 00:00:00', 0, 'test giam gia', '2018-05-09 15:15:37', '2018-08-28 22:13:45');
 /*!40000 ALTER TABLE `shop_special_price` ENABLE KEYS */;
 
--- Dumping structure for table gp247.users
+-- Dumping structure for table s-cart.users
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -1191,7 +1179,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table gp247.users: ~5 rows (approximately)
+-- Dumping data for table s-cart.users: ~4 rows (approximately)
 DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `address1`, `address2`, `phone`, `remember_token`, `created_at`, `updated_at`) VALUES

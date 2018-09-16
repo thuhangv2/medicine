@@ -29,7 +29,6 @@ Column::extend('expand', Expands::class);
 
 Form::extend('ckeditor', CKEditor::class);
 //end Ckeditor
-Admin::js('/js/extent.js');
 Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
 
     $navbar->left(view('admin.search-bar'));
