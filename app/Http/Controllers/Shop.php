@@ -81,7 +81,6 @@ class shop extends Controller
         return view($this->theme . '.shop_home',
             array(
                 'title'         => $this->configs['site_title'],
-                'title_h1'      => 'Sản phẩm mới',
                 'description'   => $this->configs['site_description'],
                 'keyword'       => $this->configs['site_keyword'],
                 'banners_top'   => Banner::where('status', 1)->where('type', 1)->orderBy('sort', 'desc')->orderBy('id', 'desc')->get(),
@@ -107,7 +106,6 @@ class shop extends Controller
             $products = $category->getProductsToCategory($id = $category->id, $limit = 20, $opt = 'paginate');
             return view($this->theme . '.shop_products',
                 array(
-                    'title_h1'     => $category->name,
                     'title'        => $category->name,
                     'description'  => $category->description,
                     'keyword'      => $this->configs['site_keyword'],
@@ -140,7 +138,6 @@ class shop extends Controller
         if ($products) {
             return view($this->theme . '.shop_products',
                 array(
-                    'title_h1'    => 'Sản phẩm -' . $this->configs['site_title'],
                     'title'       => 'Sản phẩm -' . $this->configs['site_title'],
                     'description' => $this->configs['site_description'],
                     'keyword'     => $this->configs['site_keyword'],
@@ -182,7 +179,6 @@ class shop extends Controller
             //Check product available
             return view($this->theme . '.shop_product_detail',
                 array(
-                    'title_h1'           => $product->name,
                     'title'              => $product->name,
                     'description'        => $product->description,
                     'keyword'            => $this->configs['site_keyword'],
@@ -213,7 +209,6 @@ class shop extends Controller
         $orders      = ShopOrder::with('orderTotal')->where('user_id', $id)->orderBy('id', 'desc')->get();
         $statusOrder = ['0' => 'Mới', '1' => 'Đang xử lý', '2' => 'Tạm giữ', '3' => 'Hủy bỏ', '4' => 'Hoàn thành'];
         return view($this->theme . '.shop_profile')->with(array(
-            'title_h1'    => 'Trang khách hàng',
             'title'       => 'Trang khách hàng - ' . $this->configs['site_title'],
             'description' => '',
             'keyword'     => $this->configs['site_keyword'],
@@ -556,8 +551,6 @@ class shop extends Controller
         }
         return view($this->theme . '.shop_cart',
             array(
-
-                'title_h1'    => 'Giỏ hàng',
                 'title'       => 'Giỏ hàng' . ' - ' . $this->configs['site_title'],
                 'description' => '',
                 'keyword'     => '',
@@ -578,8 +571,6 @@ class shop extends Controller
         $wishlist = Cart::instance('wishlist')->content();
         return view($this->theme . '.shop_wishlist',
             array(
-
-                'title_h1'    => 'Danh sách wishlist',
                 'title'       => 'Danh sách wishlist',
                 'description' => '',
                 'keyword'     => '',
@@ -715,7 +706,6 @@ class shop extends Controller
         return view($this->theme . '.shop_products',
             array(
                 'title'         => 'Tìm kiếm: ' . $keyword,
-                'title_h1'      => 'Kết quả từ khóa: <span style="color:red;font-style:italic">' . $keyword . '</span>',
                 'description'   => '',
                 'keyword'       => $this->configs['site_keyword'],
                 'products'      => ShopProduct::resultSearch($keyword),
@@ -723,7 +713,8 @@ class shop extends Controller
             ));
     }
 
-    //=======================CMS================================================================
+//=======================CMS================================================================
+
     /**
      * [pages description]
      * @param  [type] $key [description]
@@ -737,7 +728,6 @@ class shop extends Controller
             return view($this->theme . '.cms_page',
                 array(
                     'title'         => $page->title,
-                    'title_h1'      => $page->title,
                     'description'   => '',
                     'keyword'       => $this->configs['site_keyword'],
                     'page'          => $page,
@@ -747,7 +737,7 @@ class shop extends Controller
         } else {
             return view($this->theme . '.notfound',
                 array(
-                    'title'       => 'Không tìm thấy dữ liệu',
+                    'title'       => 'Not found',
                     'description' => '',
                     'keyword'     => $this->configs['site_keyword'],
 
@@ -768,7 +758,6 @@ class shop extends Controller
         return view($this->theme . '.shop_login',
             array(
                 'title'       => 'Trang đăng nhập',
-                'title_h1'    => '',
                 'description' => '',
                 'keyword'     => $this->configs['site_keyword'],
             )
@@ -787,7 +776,6 @@ class shop extends Controller
         return view($this->theme . '.shop_forgot',
             array(
                 'title'       => 'Quên mật khẩu',
-                'title_h1'    => '',
                 'description' => '',
                 'keyword'     => $this->configs['site_keyword'],
             )
@@ -820,7 +808,6 @@ class shop extends Controller
         return view($this->theme . '.shop_contact',
             array(
                 'title'       => 'Liên hệ',
-                'title_h1'    => '',
                 'description' => '',
                 'page'        => $page,
                 'keyword'     => $this->configs['site_keyword'],
@@ -881,7 +868,7 @@ class shop extends Controller
     {
         $news_currently = CmsNews::find($id);
         if ($news_currently) {
-            $title = ($news_currently) ? $news_currently->title : 'Không tìm thấy dữ liệu';
+            $title = ($news_currently) ? $news_currently->title : 'Not found';
             return view($this->theme . '.cms_news_detail',
                 array(
                     'title'          => $title,
@@ -895,7 +882,7 @@ class shop extends Controller
         } else {
             return view($this->theme . '.notfound',
                 array(
-                    'title'       => 'Không tìm thấy dữ liệu',
+                    'title'       => 'Not found',
                     'description' => '',
                     'keyword'     => $this->configs['site_keyword'],
                 )
