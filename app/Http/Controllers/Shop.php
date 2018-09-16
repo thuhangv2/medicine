@@ -16,7 +16,6 @@ use App\Models\ShopOrderTotal;
 use App\Models\ShopProduct;
 use App\Models\ShopProductType;
 use App\User;
-// use Illuminate\Support\Facades\Request;
 use Cart;
 use DB;
 use Illuminate\Http\Request;
@@ -28,33 +27,27 @@ use Promocodes;
 use Session;
 use View;
 
-//use Illuminate\Http\Request;
 class shop extends Controller
 {
-    ////
     public $banners;
     public $news;
-    public $notice;
-    //////
     public $brands;
     public $categories;
     public $configs;
-    public $theme       = "247";
-    public $theme_asset = "247";
+    public $theme;
+    public $theme_asset;
 
     public function __construct()
     {
-        $host = request()->getHost();
+        $this->configs = Config::pluck('value', 'key')->all();
+        $this->theme   = $this->theme_asset   = $this->configs['private_template'];
+        $host          = request()->getHost();
         config(['app.url' => 'http://' . $host]);
-        //End demo multihost
-        $this->banners = Banner::where('status', 1)->orderBy('sort', 'desc')->orderBy('id', 'desc')->get();
-        $this->news    = (new CmsNews)->getItemsNews($limit = 8, $opt = 'paginate');
-        $this->notice  = (new CmsPage)->where('uniquekey', 'notice')->where('status', 1)->first();
-        //////
-
+        $this->banners    = Banner::where('status', 1)->orderBy('sort', 'desc')->orderBy('id', 'desc')->get();
+        $this->news       = (new CmsNews)->getItemsNews($limit = 8, $opt = 'paginate');
         $this->brands     = ShopBrand::getBrands();
         $this->categories = ShopCategory::getCategories(0);
-        $this->configs    = Config::pluck('value', 'key')->all();
+
 //Config for  SMTP
         config(['app.name' => $this->configs['site_title']]);
         config(['mail.driver' => ($this->configs['smtp_mode']) ? 'smtp' : 'sendmail']);
@@ -67,6 +60,8 @@ class shop extends Controller
             ['address' => $this->configs['site_email'], 'name' => $this->configs['site_title']]]
         );
 //
+
+//Share variable
         View::share('categories', $this->categories);
         View::share('brands', $this->brands);
         View::share('banners', $this->banners);
@@ -75,7 +70,7 @@ class shop extends Controller
         View::share('theme', $this->theme);
         View::share('products_hot', (new ShopProduct)->getProducts($type = 1, $limit = 4, $opt = 'random'));
         View::share('logo', Banner::where('status', 1)->where('type', 0)->orderBy('sort', 'desc')->orderBy('id', 'desc')->first());
-
+//
     }
 /**
  * [index description]
@@ -83,7 +78,6 @@ class shop extends Controller
  */
     public function index(Request $request)
     {
-        $banner = ['0' => 'Logo', '1' => 'Banner lớn', '2' => 'Banner nhỏ', '3' => 'Banner khác'];
         return view($this->theme . '.shop_home',
             array(
                 'title'         => $this->configs['site_title'],
@@ -94,7 +88,6 @@ class shop extends Controller
                 'banners_left'  => Banner::where('status', 1)->where('type', 2)->orderBy('sort', 'desc')->orderBy('id', 'desc')->first(),
                 'banners_right' => Banner::where('status', 1)->where('type', 3)->orderBy('sort', 'desc')->orderBy('id', 'desc')->limit(2)->get(),
                 'banners'       => Banner::where('status', 1)->orderBy('sort', 'desc')->orderBy('id', 'desc')->get(),
-                'notice'        => $this->getPage('notice'),
                 'products_new'  => (new ShopProduct)->getProducts($type = null, $limit = 20, $opt = null),
                 'home_page'     => 1,
                 'blogs'         => (new CmsNews)->getItemsNews($limit = 6),

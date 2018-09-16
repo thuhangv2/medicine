@@ -82,6 +82,9 @@ class ConfigInfoController extends Controller
             $grid->disableFilter();
             $grid->disableActions();
             $grid->model()->orderBy('sort', 'asc');
+            $grid->actions(function ($actions) {
+                $actions->disableView();
+            });
 
         });
     }
@@ -99,7 +102,11 @@ class ConfigInfoController extends Controller
             $form->text('code', 'Code');
             $form->text('key', 'Key');
             $form->text('value', 'Value');
-
+            $form->disableViewCheck();
+            $form->disableEditingCheck();
+            $form->tools(function (Form\Tools $tools) {
+                $tools->disableView();
+            });
         });
     }
 }

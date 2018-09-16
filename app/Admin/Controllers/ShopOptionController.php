@@ -77,7 +77,9 @@ class ShopOptionController extends Controller
             $grid->id('ID')->sortable();
             $grid->name('Tên thuộc tính')->sortable();
             $grid->status('Hoạt động')->switch();
-
+            $grid->actions(function ($actions) {
+                $actions->disableView();
+            });
         });
     }
 
@@ -93,6 +95,11 @@ class ShopOptionController extends Controller
             $form->switch('status', 'Hoạt động');
             $form->number('sort', 'Sắp xếp');
             $form->select('type', 'Cách hiển thị')->options($this->arrType)->default('1');
+            $form->disableViewCheck();
+            $form->disableEditingCheck();
+            $form->tools(function (Form\Tools $tools) {
+                $tools->disableView();
+            });
         });
     }
 

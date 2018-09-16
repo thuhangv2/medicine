@@ -75,15 +75,17 @@ class BannerController extends Controller
         return Admin::grid(Banner::class, function (Grid $grid) {
             $banner = $this->banner;
             $grid->id('ID')->sortable();
-            $grid->image('Image')->image();
+            $grid->image('Image')->image('', 50);
             $grid->url('url');
             $grid->html('html');
             $grid->type('Loại')->display(function ($type) use ($banner) {
                 return $banner[$type];
             });
-            // $grid->click('Click');
             $grid->status('status')->switch();
             $grid->sort('sort')->sortable();
+            $grid->actions(function ($actions) {
+                $actions->disableView();
+            });
             $grid->created_at();
             $grid->updated_at();
             $grid->model()->orderBy('id', 'desc');
@@ -108,6 +110,11 @@ class BannerController extends Controller
             $form->number('sort', 'sort');
             $form->display('created_at', 'Created At');
             $form->display('updated_at', 'Updated At');
+            $form->disableViewCheck();
+            $form->disableEditingCheck();
+            $form->tools(function (Form\Tools $tools) {
+                $tools->disableView();
+            });
         });
     }
 

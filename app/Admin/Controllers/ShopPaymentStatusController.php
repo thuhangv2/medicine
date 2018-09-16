@@ -75,6 +75,9 @@ class ShopPaymentStatusController extends Controller
 
             $grid->id('ID')->sortable();
             $grid->name('Tên trạng thái')->sortable();
+            $grid->actions(function ($actions) {
+                $actions->disableView();
+            });
         });
     }
 
@@ -89,6 +92,11 @@ class ShopPaymentStatusController extends Controller
 
             $form->display('id', 'ID');
             $form->text('name', 'Tên trạng thái');
+            $form->disableViewCheck();
+            $form->disableEditingCheck();
+            $form->tools(function (Form\Tools $tools) {
+                $tools->disableView();
+            });
         });
     }
 

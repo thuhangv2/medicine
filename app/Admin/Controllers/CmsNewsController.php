@@ -75,13 +75,16 @@ class CmsNewsController extends Controller
 
             $grid->id('ID')->sortable();
             $grid->title('Tên bài viết')->sortable();
-            $grid->image('Hình ảnh')->image();
+            $grid->image('Hình ảnh')->image('', 50);
             $grid->status('Trạng thái')->switch();
             $grid->created_at('Ngày tạo');
             $grid->updated_at('Lần cuối chỉnh sửa');
             $grid->disableExport();
             $grid->disableRowSelector();
             $grid->model()->orderBy('id', 'desc');
+            $grid->actions(function ($actions) {
+                $actions->disableView();
+            });
         });
     }
 
@@ -121,6 +124,11 @@ class CmsNewsController extends Controller
                     echo $e->getMessage();
                 }
 
+            });
+            $form->disableViewCheck();
+            $form->disableEditingCheck();
+            $form->tools(function (Form\Tools $tools) {
+                $tools->disableView();
             });
         });
     }

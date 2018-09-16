@@ -108,7 +108,9 @@ class ShopPromotionController extends Controller
             $grid->status('Bật/tắt')->switch();
             $grid->expires_at('Ngày hết hạn');
             $grid->disableExport();
-            // $grid->disableActions();
+            $grid->actions(function ($actions) {
+                $actions->disableView();
+            });
         });
     }
 
@@ -129,8 +131,12 @@ class ShopPromotionController extends Controller
             $form->text('data', 'Mô tả');
             $form->number('number_uses', 'Số lần sử dụng')->default(1);
             $form->datetime('expires_at', 'Ngày hết hạn');
-            // $form->number('used', 'Đã sử dụng');
             $form->switch('status', 'Trạng thái');
+            $form->disableViewCheck();
+            $form->disableEditingCheck();
+            $form->tools(function (Form\Tools $tools) {
+                $tools->disableView();
+            });
         });
     }
 

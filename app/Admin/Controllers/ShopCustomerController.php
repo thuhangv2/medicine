@@ -89,6 +89,9 @@ class ShopCustomerController extends Controller
             $grid->updated_at('Lần cuối chỉnh sửa');
             $grid->model()->orderBy('id', 'desc');
             $grid->exporter(new ExcelExpoter('dataCustomer', 'Danh sach khach hang'));
+            $grid->actions(function ($actions) {
+                $actions->disableView();
+            });
         });
     }
 
@@ -115,6 +118,12 @@ class ShopCustomerController extends Controller
                     $form->password = $form->model()->password;
                 }
             });
+            $form->disableViewCheck();
+            $form->disableEditingCheck();
+            $form->tools(function (Form\Tools $tools) {
+                $tools->disableView();
+            });
+
         });
     }
 

@@ -74,7 +74,7 @@ class ShopCategoryController extends Controller
         return Admin::grid(ShopCategory::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
-            $grid->image('Hình ảnh')->image();
+            $grid->image('Hình ảnh')->image('', 50);
             $grid->name('Tên')->sortable();
             $grid->parent('Danh mục cha')->display(function ($parent) {
                 return (ShopCategory::find($parent)) ? ShopCategory::find($parent)->name : '';
@@ -86,6 +86,9 @@ class ShopCategoryController extends Controller
                 $tools->batch(function ($batch) {
                     $batch->disableDelete();
                 });
+            });
+            $grid->actions(function ($actions) {
+                $actions->disableView();
             });
         });
     }
@@ -115,8 +118,6 @@ class ShopCategoryController extends Controller
             $form->html('<b>Hỗ trợ SEO</b>');
             $form->tags('keyword', 'Từ khóa');
             $form->textarea('description', 'Mô tả')->rules('max:300', ['max' => 'Tối đa 300 kí tự']);
-            // $form->display('created_at', 'Created At');
-            // $form->display('updated_at', 'Updated At');
             $form->saved(function (Form $form) {
                 $file_path_admin = config('filesystems.disks.admin.root');
                 try {
@@ -135,6 +136,11 @@ class ShopCategoryController extends Controller
                     echo $e->getMessage();
                 }
 
+            });
+            $form->disableViewCheck();
+            $form->disableEditingCheck();
+            $form->tools(function (Form\Tools $tools) {
+                $tools->disableView();
             });
         });
     }

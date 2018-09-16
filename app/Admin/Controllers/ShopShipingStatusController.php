@@ -75,9 +75,9 @@ class ShopShipingStatusController extends Controller
 
             $grid->id('ID')->sortable();
             $grid->name('Tên trạng thái')->sortable();
-
-            // $grid->created_at();
-            // $grid->updated_at();
+            $grid->actions(function ($actions) {
+                $actions->disableView();
+            });
         });
     }
 
@@ -92,7 +92,11 @@ class ShopShipingStatusController extends Controller
 
             $form->display('id', 'ID');
             $form->text('name', 'Tên');
-
+            $form->disableViewCheck();
+            $form->disableEditingCheck();
+            $form->tools(function (Form\Tools $tools) {
+                $tools->disableView();
+            });
         });
     }
     public function show($id)

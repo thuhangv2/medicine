@@ -74,7 +74,7 @@ class CmsCategoryController extends Controller
         return Admin::grid(CmsCategory::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
-            $grid->image('Hình ảnh')->image();
+            $grid->image('Hình ảnh')->image('', 50);
             $grid->title('Tên')->sortable();
             $grid->parent('Chủ đề cha')->display(function ($parent) {
                 return (CmsCategory::find($parent)) ? CmsCategory::find($parent)->title : '';
@@ -134,6 +134,11 @@ class CmsCategoryController extends Controller
                     //
                 }
 
+            });
+            $form->disableViewCheck();
+            $form->disableEditingCheck();
+            $form->tools(function (Form\Tools $tools) {
+                $tools->disableView();
             });
         });
     }

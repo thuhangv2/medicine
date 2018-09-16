@@ -89,7 +89,7 @@ class ShopProductController extends Controller
             $grid->category('Chuyên mục')->display(function ($cate) {
                 return $cate['name'];
             });
-            $grid->image('Hình ảnh')->image();
+            $grid->image('Hình ảnh')->image('', 50);
             $grid->cost('Giá cost')->display(function ($price) {
                 return number_format($price);
             });
@@ -106,6 +106,9 @@ class ShopProductController extends Controller
             // $grid->updated_at('Lần cuối chỉnh sửa');
             $grid->model()->orderBy('id', 'desc');
             $grid->disableExport();
+            $grid->actions(function ($actions) {
+                $actions->disableView();
+            });
         });
     }
 
@@ -290,7 +293,11 @@ SCRIPT;
                     }
                 }
             });
-
+            $form->disableViewCheck();
+            $form->disableEditingCheck();
+            $form->tools(function (Form\Tools $tools) {
+                $tools->disableView();
+            });
         });
 
     }

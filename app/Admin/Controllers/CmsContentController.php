@@ -76,13 +76,16 @@ class CmsContentController extends Controller
 
             $grid->id('ID')->sortable();
             $grid->title('Tên bài viết')->sortable();
-            $grid->image('Hình ảnh')->image();
+            $grid->image('Hình ảnh')->image('', 50);
             $grid->category('Chủ đề')->display(function ($cate) {
                 return $cate['title'];
             });
             $grid->status('Trạng thái')->switch();
             $grid->created_at('Ngày tạo');
             $grid->updated_at('Lần cuối chỉnh sửa');
+            $grid->actions(function ($actions) {
+                $actions->disableView();
+            });
             $grid->disableExport();
             $grid->model()->orderBy('id', 'desc');
         });
@@ -145,6 +148,11 @@ class CmsContentController extends Controller
                     echo $e->getMessage();
                 }
 
+            });
+            $form->disableViewCheck();
+            $form->disableEditingCheck();
+            $form->tools(function (Form\Tools $tools) {
+                $tools->disableView();
             });
         });
     }

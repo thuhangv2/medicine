@@ -144,7 +144,7 @@ class ShopOrderController extends Controller
             $grid->actions(function ($actions) {
                 $actions->disableEdit();
                 $actions->prepend('<a title="Show Customer detail" href="shop_order_edit/' . $actions->getkey() . '"><i class="fa fa-edit"></i></a>');
-                // $actions->disableDelete();
+                $actions->disableView();
             });
 
             $grid->created_at('Ngày tạo');
@@ -200,7 +200,11 @@ class ShopOrderController extends Controller
                     ]);
                 }
             });
-
+            $form->disableViewCheck();
+            $form->disableEditingCheck();
+            $form->tools(function (Form\Tools $tools) {
+                $tools->disableView();
+            });
         });
     }
 

@@ -77,17 +77,12 @@ class CmsPageController extends Controller
             $grid->status('Trạng thái')->switch();
             $grid->actions(function ($actions) {
                 $actions->disableDelete();
-                // $actions->disableEdit();
+                $actions->disableView();
             });
             $grid->disableFilter();
             $grid->disableExport();
             $grid->disableCreation();
             $grid->disableRowSelector();
-            // $grid->tools(function ($tools) {
-            //     $tools->batch(function ($batch) {
-            //         $batch->disableDelete();
-            //     });
-            // });
             $grid->model()->orderBy('id', 'desc');
         });
     }
@@ -107,6 +102,11 @@ class CmsPageController extends Controller
             $form->html('<b>Hỗ trợ SEO</b>');
             $form->tags('keyword', 'Từ khóa');
             $form->textarea('description', 'Mô tả')->rules('max:300', ['max' => 'Tối đa 300 kí tự']);
+            $form->disableViewCheck();
+            $form->disableEditingCheck();
+            $form->tools(function (Form\Tools $tools) {
+                $tools->disableView();
+            });
         });
     }
     public function show($id)

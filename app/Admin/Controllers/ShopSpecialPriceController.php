@@ -93,6 +93,9 @@ class ShopSpecialPriceController extends Controller
             $grid->updated_at('Ngày cuối cập nhật');
             $grid->model()->orderBy('id', 'desc');
             $grid->disableExport();
+            $grid->actions(function ($actions) {
+                $actions->disableView();
+            });
         });
     }
 
@@ -121,8 +124,11 @@ class ShopSpecialPriceController extends Controller
             $form->datetime('date_start', 'Ngày bắt đầu');
             $form->datetime('date_end', 'Ngày kết thúc');
             $form->textarea('comment', 'Ghi chú');
-            // $form->display('created_at', 'Created At');
-            // $form->display('updated_at', 'Updated At');
+            $form->disableViewCheck();
+            $form->disableEditingCheck();
+            $form->tools(function (Form\Tools $tools) {
+                $tools->disableView();
+            });
         });
     }
 

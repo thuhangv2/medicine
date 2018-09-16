@@ -81,6 +81,9 @@ class ShopShippingController extends Controller
             $grid->disableCreateButton();
             $grid->disableRowSelector();
             $grid->disableActions();
+            $grid->actions(function ($actions) {
+                $actions->disableView();
+            });
         });
     }
 
@@ -96,6 +99,11 @@ class ShopShippingController extends Controller
             $form->number('value', 'Giá ship');
             $form->number('free', 'Giá tối thiểu đê free ship');
             $form->switch('status', 'Trạng thái');
+            $form->disableViewCheck();
+            $form->disableEditingCheck();
+            $form->tools(function (Form\Tools $tools) {
+                $tools->disableView();
+            });
         });
     }
 
