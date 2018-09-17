@@ -78,7 +78,7 @@
                         @if ($product->price != $product->getPrice())
                             <div class="icon-new-label new-left">Sale</div>
                         @endif
-                        <div class="pr-img-area product-box-{{ $product->id }}"> <a title="{{ $product->name }}" href="{{ url('san-pham/'.ktc_str_convert($product->name).'_'.$product->id.'.html') }}">
+                        <div class="pr-img-area product-box-{{ $product->id }}"> <a title="{{ $product->name }}" href="{{ url('san-pham/'.Scart::str_to_url($product->name).'_'.$product->id.'.html') }}">
                           <figure> <img class="first-img" src="{{ asset('documents/website/thumb/'.$product->image) }}" alt="{{ $product->name }}"> <img class="hover-img" src="{{ asset('documents/website/thumb/'.$product->image) }}" alt="{{ $product->name }}"></figure>
                           </a> </div>
                         <div class="pr-info-area">
@@ -91,7 +91,7 @@
                       </div>
                       <div class="item-info">
                         <div class="info-inner">
-                          <div class="item-title"> <a title="Product title here" href="{{ url('san-pham/'.ktc_str_convert($product->name).'_'.$product->id.'.html') }}">{{ $product->name }}</a> </div>
+                          <div class="item-title"> <a title="Product title here" href="{{ url('san-pham/'.Scart::str_to_url($product->name).'_'.$product->id.'.html') }}">{{ $product->name }}</a> </div>
                           <div class="item-content">
                             <div class="rating">
                              <b>SKU</b>: {{ $product->sku }}
@@ -171,10 +171,10 @@
             @php
               $product = App\Models\ShopProduct::find($item->id);
             @endphp
-                <li class="item" style="width:100%"> <a href="{{ url('san-pham/'.ktc_str_convert($item->name).'_'.$item->id.'.html') }}" title="Sample Product" class="product-image"><img src="{{ asset('documents/website/thumb/'.$product->image) }}" alt="Sample Product "></a>
+                <li class="item" style="width:100%"> <a href="{{ url('san-pham/'.Scart::str_to_url($item->name).'_'.$item->id.'.html') }}" title="Sample Product" class="product-image"><img src="{{ asset('documents/website/thumb/'.$product->image) }}" alt="Sample Product "></a>
                   <div class="product-details">
                     <div class="access"> <a href="{{url("removeItem/$item->rowId")}}" title="Remove This Item" class="remove-cart"><i class="icon-close"></i></a></div>
-                    <p class="product-name"> <a href="{{ url('san-pham/'.ktc_str_convert($item->name).'_'.$item->id.'.html') }}">{{ $item->name }}</a> </p>
+                    <p class="product-name"> <a href="{{ url('san-pham/'.Scart::str_to_url($item->name).'_'.$item->id.'.html') }}">{{ $item->name }}</a> </p>
                     <strong>{{ $item->qty }}</strong> x <span class="price">{{ number_format($item->price) }}</span> </div>
                 </li>
             @endforeach
@@ -218,9 +218,9 @@
               <ul>
 @foreach ($products_hot as $product_hot)
                 <li class="item">
-                  <div class="products-block-left"> <a href="{{ url('san-pham/'.ktc_str_convert($product_hot->name).'_'.$product_hot->id.'.html') }}" title="{{ $product_hot->name }}" class="product-image"><img src="{{ asset('documents/website/thumb/'.$product_hot->image) }}" alt="{{ $product_hot->name }} "></a></div>
+                  <div class="products-block-left"> <a href="{{ url('san-pham/'.Scart::str_to_url($product_hot->name).'_'.$product_hot->id.'.html') }}" title="{{ $product_hot->name }}" class="product-image"><img src="{{ asset('documents/website/thumb/'.$product_hot->image) }}" alt="{{ $product_hot->name }} "></a></div>
                   <div class="products-block-right">
-                    <p class="product-name"> <a href="{{ url('san-pham/'.ktc_str_convert($product_hot->name).'_'.$product_hot->id.'.html') }}">{{ $product_hot->name }}</a> </p>
+                    <p class="product-name"> <a href="{{ url('san-pham/'.Scart::str_to_url($product_hot->name).'_'.$product_hot->id.'.html') }}">{{ $product_hot->name }}</a> </p>
 
 
                   @if ($product_hot->price != $product_hot->getPrice())
@@ -264,7 +264,7 @@
                 <li class="home"> <a title="Go to Home Page" href="{{ url('/') }}">Trang chủ</a><span>»</span></li>
                 @if (isset($categorySelf))
                     @if ($categorySelf->getParent())
-                     <li><a href="{{ url('shop/'.ktc_str_convert($categorySelf->getParent()->name).'_'.$categorySelf->getParent()->id.'.html') }}">{{ $categorySelf->getParent()->name }}</a><span>»</span></li>
+                     <li><a href="{{ url('shop/'.Scart::str_to_url($categorySelf->getParent()->name).'_'.$categorySelf->getParent()->id.'.html') }}">{{ $categorySelf->getParent()->name }}</a><span>»</span></li>
                     @endif
                     <li><a>{{ $categorySelf->name }}</a></li>
                 @endif

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Promocodes;
+namespace App\Scart\Promocodes;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -23,7 +23,7 @@ class PromocodesServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../../config/promocodes.php', 'promocodes'
+            __DIR__ . '/../../../config/promocodes.php', 'promocodes'
         );
 
         $this->app->singleton('promocodes', function ($app) {

@@ -60,12 +60,12 @@
 <div id="mobile-menu">
   <ul>
   @foreach ($categories as $category)
-        <li><a href="{{ url('shop/'.ktc_str_convert($category->name).'_'.$category->id.'.html') }}">{{ $category->name }}</a>
+        <li><a href="{{ url('shop/'.Scart::str_to_url($category->name).'_'.$category->id.'.html') }}">{{ $category->name }}</a>
           @if (count($category->getChildrens($category->id))>0)
           <ul>
           @foreach ($category->getChildrens($category->id) as $cateChild)
               <li>
-                  <a href="{{ url('shop/'.ktc_str_convert($cateChild->name).'_'.$cateChild->id.'.html') }}">{{ $cateChild->name }}</a>
+                  <a href="{{ url('shop/'.Scart::str_to_url($cateChild->name).'_'.$cateChild->id.'.html') }}">{{ $cateChild->name }}</a>
               </li>
           @endforeach
           </ul>
@@ -167,9 +167,9 @@
                             @php
                               $product = App\Models\ShopProduct::find($item->id);
                             @endphp
-                              <li class="item odd"> <a href="{{ url('san-pham/'.ktc_str_convert($item->name).'_'.$item->id.'.html') }}" title="{{ $item->name }}" class="product-image"><img src="{{ asset('documents/website/'.$product->image) }}" alt="{{ $item->name }}" width="65"></a>
+                              <li class="item odd"> <a href="{{ url('san-pham/'.Scart::str_to_url($item->name).'_'.$item->id.'.html') }}" title="{{ $item->name }}" class="product-image"><img src="{{ asset('documents/website/'.$product->image) }}" alt="{{ $item->name }}" width="65"></a>
                                 <div class="product-details"> <a href="{{url("removeItem/$item->rowId")}}" title="Xóa" class="remove-cart"><i class="pe-7s-trash"></i></a>
-                                  <p class="product-name"><a href="{{ url('san-pham/'.ktc_str_convert($item->name).'_'.$item->id.'.html') }}">{{ $item->name }}</a> </p>
+                                  <p class="product-name"><a href="{{ url('san-pham/'.Scart::str_to_url($item->name).'_'.$item->id.'.html') }}">{{ $item->name }}</a> </p>
                                   <strong>{{ $item->qty }}</strong> x <span class="price">{{ number_format($item->price) }}</span> </div>
                               </li>
                             @endforeach
@@ -229,14 +229,14 @@ if (!empty($home_page)) {
 
               <ul class="nav">
               @foreach ($categories as $category)
-                  <li><a href="{{ url('shop/'.ktc_str_convert($category->name).'_'.$category->id.'.html') }}">{{ $category->name }}</a>
+                  <li><a href="{{ url('shop/'.Scart::str_to_url($category->name).'_'.$category->id.'.html') }}">{{ $category->name }}</a>
                   @if (count($category->getChildrens($category->id))>0)
                   <div class="wrap-popup column1">
                     <div class="popup">
                       <ul class="nav">
                     @foreach ($category->getChildrens($category->id) as $cateChild)
                         <li>
-                            <a href="{{ url('shop/'.ktc_str_convert($cateChild->name).'_'.$cateChild->id.'.html') }}">{{ $cateChild->name }}</a>
+                            <a href="{{ url('shop/'.Scart::str_to_url($cateChild->name).'_'.$cateChild->id.'.html') }}">{{ $cateChild->name }}</a>
                         </li>
                     @endforeach
                       </ul>

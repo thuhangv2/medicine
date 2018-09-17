@@ -117,7 +117,7 @@
                 {{ $product->keyword }}
               </div>
               <div class="share-box">
-                <div class="fb-like" data-href="{{ url('san-pham/'.ktc_str_convert($product->name).'_'.$product->id.'.html') }}" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+                <div class="fb-like" data-href="{{ url('san-pham/'.Scart::str_to_url($product->name).'_'.$product->id.'.html') }}" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
               </div>
             </div>
           </div>
@@ -138,7 +138,7 @@
                       </div>
                     </div>
                     <div id="reviews" class="tab-pane fade">
-                         <div class="fb-comments embed-responsive-item" data-href="{{ url('san-pham/'.ktc_str_convert($product->name).'_'.$product->id.'.html') }}" data-numposts="5"></div>
+                         <div class="fb-comments embed-responsive-item" data-href="{{ url('san-pham/'.Scart::str_to_url($product->name).'_'.$product->id.'.html') }}" data-numposts="5"></div>
                     </div>
                   </div>
                 </div>
@@ -175,7 +175,7 @@
                         @if ($product_real->price != $product_real->getPrice())
                             <div class="icon-new-label new-left">Sale</div>
                         @endif
-                        <div class="pr-img-area product-box-{{ $product_real->id }}"> <a title="{{ $product_real->name }}" href="{{ url('san-pham/'.ktc_str_convert($product_real->name).'_'.$product_real->id.'.html') }}">
+                        <div class="pr-img-area product-box-{{ $product_real->id }}"> <a title="{{ $product_real->name }}" href="{{ url('san-pham/'.Scart::str_to_url($product_real->name).'_'.$product_real->id.'.html') }}">
                           <figure> <img class="first-img" src="{{ asset('documents/website/thumb/'.$product_real->image) }}" alt="{{ $product_real->name }}"> <img class="hover-img" src="{{ asset('documents/website/'.$product_real->image) }}" alt="{{ $product_real->name }}"></figure>
                           </a> </div>
                         <div class="pr-info-area">
@@ -188,7 +188,7 @@
                       </div>
                       <div class="item-info">
                         <div class="info-inner">
-                          <div class="item-title"> <a title="Product title here" href="{{ url('san-pham/'.ktc_str_convert($product_real->name).'_'.$product_real->id.'.html') }}">{{ $product_real->name }}</a> </div>
+                          <div class="item-title"> <a title="Product title here" href="{{ url('san-pham/'.Scart::str_to_url($product_real->name).'_'.$product_real->id.'.html') }}">{{ $product_real->name }}</a> </div>
                           <div class="item-content">
                             <div class="rating">
                              <b>SKU</b>: {{ $product_real->sku }}
@@ -234,8 +234,8 @@
             <div class="col-xs-12">
               <ul>
                 <li class="home"> <a title="Go to Home Page" href="{{ url('/') }}">Trang chủ</a><span>»</span></li>
-                <li class=""> <a title="{{ $product->category->name }}" href="{{ url('shop/'.ktc_str_convert($product->category->name).'_'.$product->category->id.'.html') }}">{{ $product->category->name }}</a><span>»</span></li>
-                <li class=""> <a title="{{ $product->category->name }}" href="{{ url('san-pham/'.ktc_str_convert($product->name).'_'.$product->id.'.html') }}">{{ $product->name }}</a></li>
+                <li class=""> <a title="{{ $product->category->name }}" href="{{ url('shop/'.Scart::str_to_url($product->category->name).'_'.$product->category->id.'.html') }}">{{ $product->category->name }}</a><span>»</span></li>
+                <li class=""> <a title="{{ $product->category->name }}" href="{{ url('san-pham/'.Scart::str_to_url($product->name).'_'.$product->id.'.html') }}">{{ $product->name }}</a></li>
               </ul>
             </div>
           </div>

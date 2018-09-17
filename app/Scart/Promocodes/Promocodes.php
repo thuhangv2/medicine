@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Promocodes;
+namespace App\Scart\Promocodes;
 
-use App\Promocodes\Models\Promocode;
+use App\Scart\Promocodes\Models\Promocode;
 use Carbon\Carbon;
 
 class Promocodes

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Promocodes\Facades;
+namespace App\Scart\Promocodes\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

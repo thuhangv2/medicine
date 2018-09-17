@@ -165,7 +165,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
-        App\Promocodes\PromocodesServiceProvider::class,
+        App\Scart\Promocodes\PromocodesServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -180,6 +180,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Scart\ScartServiceProvider::class,
 
     ],
 
@@ -232,7 +233,8 @@ return [
         'Cart'         => Gloudemans\Shoppingcart\Facades\Cart::class,
         'PDF'          => Barryvdh\DomPDF\Facade::class,
         'Image'        => Intervention\Image\Facades\Image::class,
-        'Promocodes'   => App\Promocodes\Facades\Promocodes::class,
+        'Promocodes'   => App\Scart\Promocodes\Facades\Promocodes::class,
+        'Scart'        => App\Scart\Helper::class,
     ],
 
 ];

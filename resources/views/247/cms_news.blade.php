@@ -21,15 +21,15 @@
                 <article class="entry">
                   <div class="row">
                     <div class="col-sm-5">
-                      <div class="entry-thumb image-hover2"> <a href="{{ url('blog/'.ktc_str_convert($blog->title).'_'.$blog->id.'.html') }}">
+                      <div class="entry-thumb image-hover2"> <a href="{{ url('blog/'.Scart::str_to_url($blog->title).'_'.$blog->id.'.html') }}">
                         <figure><img src="{{ asset('documents/website/thumb/'.$blog->image) }}" alt="{{ $blog->title }}" alt="Blog"></figure>
                         </a> </div>
                     </div>
                     <div class="col-sm-7">
-                      <h3 class="entry-title"><a href="{{ url('blog/'.ktc_str_convert($blog->title).'_'.$blog->id.'.html') }}">{{ $blog->title }}</a></h3>
+                      <h3 class="entry-title"><a href="{{ url('blog/'.Scart::str_to_url($blog->title).'_'.$blog->id.'.html') }}">{{ $blog->title }}</a></h3>
                       <div class="entry-meta-data"> <span class="author">  <span class="date"><i class="pe-7s-date"></i>&nbsp; {{ date('d/m/Y',strtotime($blog->created_at)) }}</span> </div>
                       <div class="entry-excerpt">{{ $blog->description }}</div>
-                      <a href="{{ url('blog/'.ktc_str_convert($blog->title).'_'.$blog->id.'.html') }}" class="button read-more">xem đầy đủ&nbsp; <i class="fa fa-angle-double-right"></i></a> </div>
+                      <a href="{{ url('blog/'.Scart::str_to_url($blog->title).'_'.$blog->id.'.html') }}" class="button read-more">xem đầy đủ&nbsp; <i class="fa fa-angle-double-right"></i></a> </div>
                   </div>
                 </article>
               </li>
@@ -79,10 +79,10 @@
             @php
               $product = App\Models\ShopProduct::find($item->id);
             @endphp
-                <li class="item" style="width:100%"> <a href="{{ url('san-pham/'.ktc_str_convert($item->name).'_'.$item->id.'.html') }}" title="Sample Product" class="product-image"><img src="{{ asset('documents/website/thumb/'.$product->image) }}" alt="Sample Product "></a>
+                <li class="item" style="width:100%"> <a href="{{ url('san-pham/'.Scart::str_to_url($item->name).'_'.$item->id.'.html') }}" title="Sample Product" class="product-image"><img src="{{ asset('documents/website/thumb/'.$product->image) }}" alt="Sample Product "></a>
                   <div class="product-details">
                     <div class="access"> <a href="{{url("removeItem/$item->rowId")}}" title="Remove This Item" class="remove-cart"><i class="icon-close"></i></a></div>
-                    <p class="product-name"> <a href="{{ url('san-pham/'.ktc_str_convert($item->name).'_'.$item->id.'.html') }}">{{ $item->name }}</a> </p>
+                    <p class="product-name"> <a href="{{ url('san-pham/'.Scart::str_to_url($item->name).'_'.$item->id.'.html') }}">{{ $item->name }}</a> </p>
                     <strong>{{ $item->qty }}</strong> x <span class="price">{{ number_format($item->price) }}</span> </div>
                 </li>
             @endforeach
@@ -126,9 +126,9 @@
               <ul>
 @foreach ($products_hot as $product_hot)
                 <li class="item">
-                  <div class="products-block-left"> <a href="{{ url('san-pham/'.ktc_str_convert($product_hot->name).'_'.$product_hot->id.'.html') }}" title="{{ $product_hot->name }}" class="product-image"><img src="{{ asset('documents/website/thumb/'.$product_hot->image) }}" alt="{{ $product_hot->name }} "></a></div>
+                  <div class="products-block-left"> <a href="{{ url('san-pham/'.Scart::str_to_url($product_hot->name).'_'.$product_hot->id.'.html') }}" title="{{ $product_hot->name }}" class="product-image"><img src="{{ asset('documents/website/thumb/'.$product_hot->image) }}" alt="{{ $product_hot->name }} "></a></div>
                   <div class="products-block-right">
-                    <p class="product-name"> <a href="{{ url('san-pham/'.ktc_str_convert($product_hot->name).'_'.$product_hot->id.'.html') }}">{{ $product_hot->name }}</a> </p>
+                    <p class="product-name"> <a href="{{ url('san-pham/'.Scart::str_to_url($product_hot->name).'_'.$product_hot->id.'.html') }}">{{ $product_hot->name }}</a> </p>
 
 
                   @if ($product_hot->price != $product_hot->getPrice())

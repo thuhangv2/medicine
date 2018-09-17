@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Promocodes\Models;
+namespace App\Scart\Promocodes\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;

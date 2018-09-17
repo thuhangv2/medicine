@@ -23,7 +23,7 @@
                         @if ($product_hot->price != $product_hot->getPrice())
                             <div class="icon-new-label new-left">Sale</div>
                         @endif
-                        <div class="pr-img-area product-box-{{ $product_hot->id }}"> <a title="{{ $product_hot->name }}" href="{{ url('san-pham/'.ktc_str_convert($product_hot->name).'_'.$product_hot->id.'.html') }}">
+                        <div class="pr-img-area product-box-{{ $product_hot->id }}"> <a title="{{ $product_hot->name }}" href="{{ url('san-pham/'.Scart::str_to_url($product_hot->name).'_'.$product_hot->id.'.html') }}">
                           <figure> <img class="first-img" src="{{ asset('documents/website/thumb/'.$product_hot->image) }}" alt="{{ $product_hot->name }}"> <img class="hover-img" src="{{ asset('documents/website/thumb/'.$product_hot->image) }}" alt="{{ $product_hot->name }}"></figure>
                           </a> </div>
                         <div class="pr-info-area">
@@ -38,7 +38,7 @@
                       </div>
                       <div class="item-info">
                         <div class="info-inner">
-                          <div class="item-title"> <a title="Product title here" href="{{ url('san-pham/'.ktc_str_convert($product_hot->name).'_'.$product_hot->id.'.html') }}">{{ $product_hot->name }}</a> </div>
+                          <div class="item-title"> <a title="Product title here" href="{{ url('san-pham/'.Scart::str_to_url($product_hot->name).'_'.$product_hot->id.'.html') }}">{{ $product_hot->name }}</a> </div>
                           <div class="item-content">
                             <div class="rating"> <b>SKU</b>: {{ $product_hot->sku }} </div>
                             <div class="item-price">
@@ -97,7 +97,7 @@
                         @if ($product->price != $product->getPrice())
                             <div class="icon-new-label new-left">Sale</div>
                         @endif
-                        <div class="pr-img-area product-box-{{ $product->id }}"> <a title="{{ $product->name }}" href="{{ url('san-pham/'.ktc_str_convert($product->name).'_'.$product->id.'.html') }}">
+                        <div class="pr-img-area product-box-{{ $product->id }}"> <a title="{{ $product->name }}" href="{{ url('san-pham/'.Scart::str_to_url($product->name).'_'.$product->id.'.html') }}">
                           <figure> <img class="first-img" src="{{ asset('documents/website/thumb/'.$product->image) }}" alt="{{ $product->name }}"> <img class="hover-img" src="{{ asset('documents/website/thumb/'.$product->image) }}" alt="{{ $product->name }}"></figure>
                           </a> </div>
                         <div class="pr-info-area">
@@ -110,7 +110,7 @@
                       </div>
                       <div class="item-info">
                         <div class="info-inner">
-                          <div class="item-title"> <a title="Product title here" href="{{ url('san-pham/'.ktc_str_convert($product->name).'_'.$product->id.'.html') }}">{{ $product->name }}</a> </div>
+                          <div class="item-title"> <a title="Product title here" href="{{ url('san-pham/'.Scart::str_to_url($product->name).'_'.$product->id.'.html') }}">{{ $product->name }}</a> </div>
                           <div class="item-content">
                             <div class="rating">
                              <b>SKU</b>: {{ $product->sku }}
@@ -168,14 +168,14 @@
           <div class="slider-items slider-width-col6">
 @foreach ($blogs as $blog)
             <div class="item">
-              <div class="blog-box"> <a href="{{ url('blog/'.ktc_str_convert($blog->title).'_'.$blog->id.'.html') }}"> <img class="primary-img" src="{{ asset('documents/website/thumb/'.$blog->image) }}" alt="{{ $blog->title }}"></a>
+              <div class="blog-box"> <a href="{{ url('blog/'.Scart::str_to_url($blog->title).'_'.$blog->id.'.html') }}"> <img class="primary-img" src="{{ asset('documents/website/thumb/'.$blog->image) }}" alt="{{ $blog->title }}"></a>
                 <div class="blog-btm-desc">
                   <div class="blog-top-desc">
                     <div class="blog-date"> {{ date('Y M D',strtotime($blog->created_at)) }} </div>
-                    <h4><a href="{{ url('blog/'.ktc_str_convert($blog->title).'_'.$blog->id.'.html') }}">{{ $blog->title }}</a></h4>
+                    <h4><a href="{{ url('blog/'.Scart::str_to_url($blog->title).'_'.$blog->id.'.html') }}">{{ $blog->title }}</a></h4>
                   </div>
                   <p>{{ $blog->description }}</p>
-                  <a class="read-more" href="{{ url('blog/'.ktc_str_convert($blog->title).'_'.$blog->id.'.html') }}"> Xem đầy đủ</a> </div>
+                  <a class="read-more" href="{{ url('blog/'.Scart::str_to_url($blog->title).'_'.$blog->id.'.html') }}"> Xem đầy đủ</a> </div>
               </div>
             </div>
 @endforeach
