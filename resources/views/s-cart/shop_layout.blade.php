@@ -407,7 +407,7 @@
     <div class="footer-bottom">
       <div class="container">
         <div class="row">
-          <p class="pull-left">Copyright © 2018 <a href="{{ url('http://s-cart.org') }}">S-CART</a> Inc. All rights reserved.</p>
+          <p class="pull-left">Copyright © 2018 <a href="{{ url('http://s-cart.org') }}">S-CART 2.0</a> Inc. All rights reserved.</p>
           <p class="pull-right">Hosted by  <span><a target="_blank" href="http://giaiphap247.com">GiaiPhap247</a></span></p>
         </div>
       </div>
