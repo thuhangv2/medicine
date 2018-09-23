@@ -11,10 +11,9 @@
 <a href="https://packagist.org/packages/lanhktc/s-cart"><img src="https://poser.pugx.org/lanhktc/s-cart/license.svg" alt="License"></a>
 </p>
 <p align="center"><img src="https://s-cart.org/images/s1.jpg"></p>
-<p align="center"><img src="https://s-cart.org/images/s1-1.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/s11.jpg"></p>
 <p align="center"><img src="https://s-cart.org/images/s2.jpg"></p>
 <p align="center"><img src="https://s-cart.org/images/s3.jpg"></p>
-
 
 
 ## Giới thiệu về mã nguồn
