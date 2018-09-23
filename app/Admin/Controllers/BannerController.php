@@ -14,7 +14,6 @@ use Encore\Admin\Show;
 class BannerController extends Controller
 {
     use ModelForm;
-    public $banner = ['0' => 'Logo', '1' => 'Banner lớn', '2' => 'Banner nhỏ', '3' => 'Banner khác'];
     /**
      * Index interface.
      *
@@ -58,7 +57,7 @@ class BannerController extends Controller
         return Admin::content(function (Content $content) {
 
             $content->header('Thêm mới hình ảnh');
-            // $content->description('description');
+            $content->description('description');
 
             $content->body($this->form());
         });
@@ -73,14 +72,10 @@ class BannerController extends Controller
     {
 
         return Admin::grid(Banner::class, function (Grid $grid) {
-            $banner = $this->banner;
             $grid->id('ID')->sortable();
             $grid->image('Image')->image('', 50);
             $grid->url('url');
             $grid->html('html');
-            $grid->type('Loại')->display(function ($type) use ($banner) {
-                return $banner[$type];
-            });
             $grid->status('status')->switch();
             $grid->sort('sort')->sortable();
             $grid->actions(function ($actions) {
@@ -105,7 +100,6 @@ class BannerController extends Controller
             $form->image('image', 'image')->uniqueName()->move('banner')->removable();
             $form->textarea('html', 'html');
             $form->text('url', 'Link liên kết');
-            $form->select('type', 'Loại')->options($this->banner)->rules('required');
             $form->switch('status', 'status');
             $form->number('sort', 'sort');
             $form->display('created_at', 'Created At');

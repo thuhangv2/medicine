@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 class ShopProductController extends Controller
 {
     use ModelForm;
-    public $arrType = ['0' => 'Mặc định', '1' => 'New', '2' => "Hot"];
+    public $arrType = ['0' => 'Mặc định', '1' => 'New'];
 
     /**
      * Index interface.
@@ -131,10 +131,6 @@ class ShopProductController extends Controller
                 $form->select('category_id', 'Danh mục')->options($arrCate)->rules('required', [
                     'required' => 'Bạn chưa chọn danh mục']
                 );
-                $form->multipleSelect('category_other', 'Thêm vào mục khác')->options($arrCate);
-                // $form->image('image', 'Hình ảnh')->uniqueName()->move('product')->removable();
-                // Remove image slide will remove image main
-                //
                 $form->image('image', 'Hình ảnh')->uniqueName()->move('product');
                 $form->tags('keyword', 'Từ khóa');
                 $form->textarea('description', 'Mô tả')->rules('max:300', ['max' => 'Tối đa 300 kí tự']);
@@ -145,22 +141,15 @@ class ShopProductController extends Controller
                 $form->text('sku', 'Mã hàng')->rules(function ($form) {
                     return 'required|unique:shop_product,sku,' . $form->model()->id . ',id';
                 }, ['required' => 'Bạn chưa nhập mã hàng', 'unique' => 'Mã hàng này đã có rồi'])->placeholder('Ví dụ: ABKOOT01,ABKOOT02,...')->help('Mã sản phẩm là duy nhất. Viết liền, không dấu');
-                $form->select('brand_id', 'Nhãn hiệu')->options($arrBrand)->default('0');
+                $form->select('brand_id', 'Nhãn hiệu')->options($arrBrand)->default('0')->rules('required', [
+                    'required' => 'Bạn chưa chọn danh mục']
+                );
 
                 $form->switch('status', 'Hiển thị sản phẩm');
                 $form->number('sort', 'Sắp xếp');
                 $form->divide();
                 $form->radio('type', 'Loại sản phẩm')->options($this->arrType)->default('0');
                 $form->datetime('date_available', 'Ngày bán')->help('Ngày cho khách mua. Mặc định cho phép mua từ ngày đăng bán');
-
-                $form->hasMany('types', 'Phân loại sản phẩm', function (Form\NestedForm $form) {
-                    $form->text('opt_name', 'Tên loại sản phẩm')->rules('required', [
-                        'required' => 'Bạn chưa nhập tên loại sản phẩm']);
-                    $form->text('opt_sku', 'Mã loại sản phẩm')->rules('required', [
-                        'required' => 'Bạn chưa nhập mã hàng'])->help('Mã sản phẩm là duy nhất. Viết liền, không dấu');
-                    $form->currency('opt_price', 'Giá bán')->symbol('VND')->options(['digits' => 0]);
-                    $form->image('opt_image', 'Hình ảnh')->uniqueName()->move('product');
-                });
 
             })->tab('Hình ảnh phụ', function ($form) {
                 $form->hasMany('images', 'Hình ảnh phụ', function (Form\NestedForm $form) {
@@ -240,7 +229,7 @@ SCRIPT;
                         \Image::make($file_path_admin . '/' . $product->image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $product->image);
                         //thumbnail
                         $image_thumb = \Image::make($file_path_admin . '/' . $product->image);
-                        $image_thumb->resize(200, null, function ($constraint) {
+                        $image_thumb->resize(250, null, function ($constraint) {
                             $constraint->aspectRatio();
                         });
                         $image_thumb->save($file_path_admin . '/thumb/' . $product->image);
@@ -252,7 +241,7 @@ SCRIPT;
                                 \Image::make($file_path_admin . '/' . $image->image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $image->image);
                                 //thumbnail
                                 $image_thumb = \Image::make($file_path_admin . '/' . $image->image);
-                                $image_thumb->resize(200, null, function ($constraint) {
+                                $image_thumb->resize(250, null, function ($constraint) {
                                     $constraint->aspectRatio();
                                 });
                                 $image_thumb->save($file_path_admin . '/thumb/' . $image->image);
@@ -267,7 +256,7 @@ SCRIPT;
                                 \Image::make($file_path_admin . '/' . $image->opt_image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $image->opt_image);
                                 //thumbnail
                                 $image_thumb = \Image::make($file_path_admin . '/' . $image->opt_image);
-                                $image_thumb->resize(200, null, function ($constraint) {
+                                $image_thumb->resize(250, null, function ($constraint) {
                                     $constraint->aspectRatio();
                                 });
                                 $image_thumb->save($file_path_admin . '/thumb/' . $image->opt_image);

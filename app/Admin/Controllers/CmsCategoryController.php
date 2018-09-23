@@ -106,9 +106,6 @@ class CmsCategoryController extends Controller
             $arrCate = ['0' => '== Chủ đề gốc =='] + $arrCate;
             $form->select('parent', 'Chủ đề cha')->options($arrCate);
             $form->image('image', 'Hình ảnh')->uniqueName()->move('cms_category')->removable();
-            $form->text('uniquekey', 'Unique Key')->rules(function ($form) {
-                return 'required|unique:shop_category,uniquekey,' . $form->model()->id . ',id';
-            }, ['required' => 'Bạn chưa nhập mã danh mục', 'unique' => 'Mã danh mục này đã có rồi'])->placeholder('Ví dụ: thoi-trang, thoi-trang-cho-nam,...')->help('Viết liền, không dấu, không được trùng nhau.');
             $form->number('sort', 'Sắp xếp');
             $form->switch('status', 'Trạng thái');
             $form->divide('Hỗ trợ SEO');
@@ -124,7 +121,7 @@ class CmsCategoryController extends Controller
                         \Image::make($file_path_admin . '/' . $form->model()->image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $form->model()->image);
                         //thumbnail
                         $image_thumb = \Image::make($file_path_admin . '/' . $form->model()->image);
-                        $image_thumb->resize(200, null, function ($constraint) {
+                        $image_thumb->resize(250, null, function ($constraint) {
                             $constraint->aspectRatio();
                         });
                         $image_thumb->save($file_path_admin . '/thumb/' . $form->model()->image);

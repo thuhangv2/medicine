@@ -27,6 +27,7 @@ Route::group([
     $router->resource('shop_option', ShopOptionController::class);
     $router->resource('shop_special_price', ShopSpecialPriceController::class);
     $router->resource('config_info', ConfigInfoController::class);
+    $router->resource('config_global', ConfigGlobalController::class);
     $router->resource('config_mode', ConfigModeController::class);
     $router->resource('shop_promotion', ShopPromotionController::class);
     $router->resource('shop_shipping', ShopShippingController::class);

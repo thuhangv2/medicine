@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Banner;
-use App\Models\CmsNews;
-use App\Models\CmsPage;
-use App\Models\Config;
 use App\Models\ShopBrand;
 use App\Models\ShopCategory;
 use App\Models\ShopOrder;
 use App\Models\ShopOrderDetail;
 use App\Models\ShopOrderHistory;
+use App\Models\ShopOrderStatus;
 use App\Models\ShopOrderTotal;
 use App\Models\ShopProduct;
 use App\Models\ShopProductType;
@@ -23,54 +19,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
-use Promocodes;
-use Session;
-use View;
 
-class shop extends Controller
+class Shop extends GeneralController
 {
-    public $banners;
-    public $news;
-    public $brands;
-    public $categories;
-    public $configs;
-    public $theme;
-    public $theme_asset;
-
     public function __construct()
     {
-        $this->configs = Config::pluck('value', 'key')->all();
-        $this->theme   = $this->theme_asset   = $this->configs['private_template'];
-        $host          = request()->getHost();
-        config(['app.url' => 'http://' . $host]);
-        $this->banners    = Banner::where('status', 1)->orderBy('sort', 'desc')->orderBy('id', 'desc')->get();
-        $this->news       = (new CmsNews)->getItemsNews($limit = 8, $opt = 'paginate');
-        $this->brands     = ShopBrand::getBrands();
-        $this->categories = ShopCategory::getCategories(0);
+        parent::__construct();
 
-//Config for  SMTP
-        config(['app.name' => $this->configs['site_title']]);
-        config(['mail.driver' => ($this->configs['smtp_mode']) ? 'smtp' : 'sendmail']);
-        config(['mail.host' => empty($this->configs['smtp_host']) ? env('MAIL_HOST', '') : $this->configs['smtp_host']]);
-        config(['mail.port' => empty($this->configs['smtp_port']) ? env('MAIL_PORT', '') : $this->configs['smtp_port']]);
-        config(['mail.encryption' => empty($this->configs['smtp_security']) ? env('MAIL_ENCRYPTION', '') : $this->configs['smtp_security']]);
-        config(['mail.username' => empty($this->configs['smtp_user']) ? env('MAIL_USERNAME', '') : $this->configs['smtp_user']]);
-        config(['mail.password' => empty($this->configs['smtp_password']) ? env('MAIL_PASSWORD', '') : $this->configs['smtp_password']]);
-        config(['mail.from' =>
-            ['address' => $this->configs['site_email'], 'name' => $this->configs['site_title']]]
-        );
-//
-
-//Share variable
-        View::share('categories', $this->categories);
-        View::share('brands', $this->brands);
-        View::share('banners', $this->banners);
-        View::share('configs', $this->configs);
-        View::share('theme_asset', $this->theme_asset);
-        View::share('theme', $this->theme);
-        View::share('products_hot', (new ShopProduct)->getProducts($type = 1, $limit = 4, $opt = 'random'));
-        View::share('logo', Banner::where('status', 1)->where('type', 0)->orderBy('sort', 'desc')->orderBy('id', 'desc')->first());
-//
     }
 /**
  * [index description]
@@ -80,16 +35,12 @@ class shop extends Controller
     {
         return view($this->theme . '.shop_home',
             array(
-                'title'         => $this->configs['site_title'],
-                'description'   => $this->configs['site_description'],
-                'keyword'       => $this->configs['site_keyword'],
-                'banners_top'   => Banner::where('status', 1)->where('type', 1)->orderBy('sort', 'desc')->orderBy('id', 'desc')->get(),
-                'banners_left'  => Banner::where('status', 1)->where('type', 2)->orderBy('sort', 'desc')->orderBy('id', 'desc')->first(),
-                'banners_right' => Banner::where('status', 1)->where('type', 3)->orderBy('sort', 'desc')->orderBy('id', 'desc')->limit(2)->get(),
-                'banners'       => Banner::where('status', 1)->orderBy('sort', 'desc')->orderBy('id', 'desc')->get(),
-                'products_new'  => (new ShopProduct)->getProducts($type = null, $limit = 20, $opt = null),
-                'home_page'     => 1,
-                'blogs'         => (new CmsNews)->getItemsNews($limit = 6),
+                'title'        => $this->configs_global['title'],
+                'description'  => $this->configs_global['description'],
+                'keyword'      => $this->configs_global['keyword'],
+                'banners'      => $this->banners,
+                'products_new' => (new ShopProduct)->getProducts($type = null, $limit = 6, $opt = null),
+                'products_hot' => (new ShopProduct)->getProducts($type = 1, $limit = 6, $opt = 'random'),
             )
         );
     }
@@ -104,14 +55,14 @@ class shop extends Controller
         $category = (new ShopCategory)->find($id);
         if ($category) {
             $products = $category->getProductsToCategory($id = $category->id, $limit = 20, $opt = 'paginate');
-            return view($this->theme . '.shop_products',
+            return view($this->theme . '.shop_products_list',
                 array(
                     'title'        => $category->name,
                     'description'  => $category->description,
-                    'keyword'      => $this->configs['site_keyword'],
+                    'keyword'      => $this->configs_global['keyword'],
                     'categorySelf' => $category,
                     'products'     => $products,
-                    'og_image'     => url('/') . '/documents/website/' . $category->image,
+                    'og_image'     => url($this->path_file . '/' . $category->image),
                 )
             );
         } else {
@@ -119,7 +70,7 @@ class shop extends Controller
                 array(
                     'title'       => 'Not found',
                     'description' => '',
-                    'keyword'     => $this->configs['site_keyword'],
+                    'keyword'     => $this->configs_global['keyword'],
                 )
             );
         }
@@ -134,13 +85,13 @@ class shop extends Controller
     public function allProducts()
     {
         $products = ShopProduct::where('status', 1)
-            ->orderBy('id', 'desc')->paginate(20);
+            ->orderBy('id', 'desc')->paginate(18);
         if ($products) {
-            return view($this->theme . '.shop_products',
+            return view($this->theme . '.shop_products_list',
                 array(
-                    'title'       => 'Sản phẩm -' . $this->configs['site_title'],
-                    'description' => $this->configs['site_description'],
-                    'keyword'     => $this->configs['site_keyword'],
+                    'title'       => 'All products',
+                    'description' => $this->configs_global['description'],
+                    'keyword'     => $this->configs_global['keyword'],
                     'products'    => $products,
                 )
             );
@@ -149,7 +100,7 @@ class shop extends Controller
                 array(
                     'title'       => 'Not found',
                     'description' => '',
-                    'keyword'     => $this->configs['site_keyword'],
+                    'keyword'     => $this->configs_global['keyword'],
                 )
             );
         }
@@ -181,10 +132,10 @@ class shop extends Controller
                 array(
                     'title'              => $product->name,
                     'description'        => $product->description,
-                    'keyword'            => $this->configs['site_keyword'],
+                    'keyword'            => $this->configs_global['keyword'],
                     'product'            => $product,
-                    'productsToCategory' => (new ShopCategory)->getProductsToCategory($id = $product->category_id, $limit = 8, $opt = 'random'),
-                    'og_image'           => url('/') . '/documents/website/' . $product->image,
+                    'productsToCategory' => (new ShopCategory)->getProductsToCategory($id = $product->category_id, $limit = 4, $opt = 'random'),
+                    'og_image'           => url($this->path_file . '/' . $product->image),
                 )
             );
         } else {
@@ -192,7 +143,7 @@ class shop extends Controller
                 array(
                     'title'       => 'Not found',
                     'description' => '',
-                    'keyword'     => $this->configs['site_keyword'],
+                    'keyword'     => $this->configs_global['keyword'],
                 )
             );
         }
@@ -207,11 +158,9 @@ class shop extends Controller
         $id          = Auth::user()->id;
         $user        = User::find($id);
         $orders      = ShopOrder::with('orderTotal')->where('user_id', $id)->orderBy('id', 'desc')->get();
-        $statusOrder = ['0' => 'Mới', '1' => 'Đang xử lý', '2' => 'Tạm giữ', '3' => 'Hủy bỏ', '4' => 'Hoàn thành'];
+        $statusOrder = ShopOrderStatus::pluck('name', 'id')->all();
         return view($this->theme . '.shop_profile')->with(array(
-            'title'       => 'Trang khách hàng - ' . $this->configs['site_title'],
-            'description' => '',
-            'keyword'     => $this->configs['site_keyword'],
+            'title'       => 'My profile',
             'user'        => $user,
             'orders'      => $orders,
             'statusOrder' => $statusOrder,
@@ -223,64 +172,25 @@ class shop extends Controller
  * @param  int $id brand
  * @return view
  */
-    public function product_brands($name, $id, $category = null)
+    public function product_brands($name, $id)
     {
         $brand = ShopBrand::find($id);
-        return view($this->theme . '.shop_products',
+        return view($this->theme . '.shop_products_list',
             array(
                 'title'       => $brand->name,
                 'description' => '',
-                'page'        => 'products',
-                'products'    => ShopProduct::where('status', 1)
-                    ->orderBy('id', 'desc')->where('brand', $id)->paginate(9),
+                'keyword'     => '',
+                'products'    => $brand->products()->paginate(9),
             )
         );
     }
 
-    public function logout()
-    {
-        Auth::logout();
-        return Redirect::away('login');
-    }
-
 /**
- * Remove item from cart
- * @author lanhktc
+ * [storeOrder description]
+ * @param  Request $request [description]
+ * @return [type]           [description]
  */
-    public function removeItem($id = null)
-    {
-        if ($id === null) {
-            return redirect('gio-hang.html');
-        }
-
-        if (array_key_exists($id, Cart::content()->toArray())) {
-            Cart::remove($id);
-        }
-
-        return redirect('gio-hang.html');
-    }
-/**
- * Remove item from cart
- * @author lanhktc
- */
-    public function removeItemFromWl($id = null)
-    {
-        if ($id === null) {
-            return redirect('wishlist.html');
-        }
-
-        if (array_key_exists($id, Cart::instance('wishlist')->content()->toArray())) {
-            Cart::instance('wishlist')->remove($id);
-        }
-
-        return redirect('wishlist.html');
-    }
-/**
- * Store card
- * @author lanhktc
- * @return boolean
- */
-    public function storecart(Request $request)
+    public function storeOrder(Request $request)
     {
         if (Cart::count() == 0) {
             return redirect('/');
@@ -305,18 +215,21 @@ class shop extends Controller
         if ($v->fails()) {
             return redirect()->back()->withInput()->withErrors($v->errors());
         }
+
         try {
+            //Process total
+            $objects   = array();
+            $objects[] = (new ShopOrderTotal)->getShipping(); //module shipping
+            $objects[] = (new ShopOrderTotal)->getDiscount(); //module discount
+            $objects[] = (new ShopOrderTotal)->getReceived(); //module reveived
+            $dataTotal = ShopOrderTotal::processDataTotal($objects); //sumtotal and re-sort item total
+            $subtotal  = (new ShopOrderTotal)->sumValueTotal('subtotal', $dataTotal);
+            $shipping  = (new ShopOrderTotal)->sumValueTotal('shipping', $dataTotal); //sum shipping
+            $discount  = (new ShopOrderTotal)->sumValueTotal('discount', $dataTotal); //sum discount
+            $received  = (new ShopOrderTotal)->sumValueTotal('received', $dataTotal); //sum received
+            $total     = (new ShopOrderTotal)->sumValueTotal('total', $dataTotal);
+            //end total
             DB::connection('mysql')->beginTransaction();
-            $objects                     = array();
-            $objects[]                   = (new ShopOrderTotal)->getShipping(); //module shipping
-            $objects[]                   = (new ShopOrderTotal)->getDiscount(); //module discount
-            $objects[]                   = (new ShopOrderTotal)->getReceived(); //module reveived
-            $dataTotal                   = ShopOrderTotal::processDataTotal($objects); //sumtotal and re-sort item total
-            $subtotal                    = (new ShopOrderTotal)->sumValueTotal('subtotal', $dataTotal);
-            $shipping                    = (new ShopOrderTotal)->sumValueTotal('shipping', $dataTotal); //sum shipping
-            $discount                    = (new ShopOrderTotal)->sumValueTotal('discount', $dataTotal); //sum discount
-            $received                    = (new ShopOrderTotal)->sumValueTotal('received', $dataTotal); //sum received
-            $total                       = (new ShopOrderTotal)->sumValueTotal('total', $dataTotal);
             $arrOrder['user_id']         = empty(Auth::user()->id) ? 0 : Auth::user()->id;
             $arrOrder['subtotal']        = $subtotal;
             $arrOrder['shipping']        = $shipping;
@@ -331,6 +244,7 @@ class shop extends Controller
             $arrOrder['address1']        = $request->get('address1');
             $arrOrder['address2']        = $request->get('address2');
             $arrOrder['phone']           = $request->get('phone');
+            $arrOrder['payment_method']  = empty($request->get('payment_method')) ? 'cash' : $request->get('payment_method');
             $arrOrder['comment']         = $request->get('comment');
             $arrOrder['created_at']      = date('Y-m-d H:i:s');
 
@@ -367,7 +281,7 @@ class shop extends Controller
             Cart::destroy(); // destroy cart
 
             if (!empty(session('coupon'))) {
-                Promocodes::apply(session('coupon'), $uID = null, $msg = 'Order #' . $orderId); // apply coupon
+                \Promocodes::apply(session('coupon'), $uID = null, $msg = 'Order #' . $orderId); // apply coupon
                 $request->session()->forget('coupon'); //destroy coupon
             }
 
@@ -382,19 +296,39 @@ class shop extends Controller
 
             DB::connection('mysql')->commit();
 
-            //Send email
-            try {
-                $data = ShopOrder::with('details')->find($orderId)->toArray();
-                Mail::send('vendor.mail.order_new', $data, function ($message) use ($orderId) {
-                    $message->to($this->configs['site_email'], $this->configs['site_title']);
-                    $message->replyTo($this->configs['site_email'], $this->configs['site_title']);
-                    $message->subject('[#' . $orderId . '] Đơn hàng mới!');
-                });
-            } catch (\Exception $e) {
-                //
-            } //
+            //Process paypal
+            if ($request->get('payment_method') == 'paypal') {
+                $data_payment = [];
+                foreach (Cart::content() as $value) {
+                    $product        = ShopProduct::find($value->id);
+                    $data_payment[] =
+                        [
+                        'name'     => $value->name,
+                        'quantity' => $value->qty,
+                        'price'    => (int) $value->price,
+                        'sku'      => $product->sku,
+                    ];
+                }
+                $data_payment[] =
+                    [
+                    'name'     => 'Shipping',
+                    'quantity' => 1,
+                    'price'    => (int) $shipping,
+                    'sku'      => 'shipping',
+                ];
+                $data_payment[] =
+                    [
+                    'name'     => 'Discount',
+                    'quantity' => 1,
+                    'price'    => (int) $discount,
+                    'sku'      => 'discount',
+                ];
+                $data_payment['order_id'] = $orderId;
+                return redirect('payment/paypal')->with('data_payment', $data_payment);
+            }
+            //
+            return $this->completeOrder($orderId);
 
-            return redirect('gio-hang.html')->with('message', 'ĐƠN HÀNG THÀNH CÔNG');
         } catch (\Exception $e) {
             DB::connection('mysql')->rollBack();
             echo 'Caught exception: ', $e->getMessage(), "\n";
@@ -410,7 +344,7 @@ class shop extends Controller
     public function addToCart(Request $request)
     {
         if (!$request->ajax()) {
-            return redirect('/gio-hang.html');
+            return redirect('/cart.html');
         }
         $instance = empty($request->get('instance')) ? 'default' : $request->get('instance');
         $id       = $request->get('id');
@@ -433,17 +367,6 @@ class shop extends Controller
                 );
             }
 
-            $htmlCart = '';
-            $cart     = Cart::content();
-            foreach ($cart as $key => $item) {
-                $product = ShopProduct::find($item->id);
-                $htmlCart .= '<li class="item odd"> <a href="' . url('san-pham/' . Scart::str_to_url($item->name) . '_' . $item->id . '.html') . '" title="' . $item->name . '" class="product-image"><img src="' . asset('documents/website/thumb/' . $product->image) . '" alt="' . $item->name . '" width="65"></a>
-                              <div class="product-details"> <a href="' . url("removeItem/$item->rowId") . '" title="Xóa" class="remove-cart"><i class="pe-7s-trash"></i></a>
-                                <p class="product-name"><a href="' . url('san-pham/' . Scart::str_to_url($item->name) . '_' . $item->id . '.html') . '">' . $item->name . '</a> </p>
-                                <strong>' . $item->qty . '</strong> x <span class="price">' . number_format($item->price) . '</span> </div>
-                            </li>';
-            }
-
         } else {
             //Wishlist or Compare...
             ${'arrID' . $instance} = array_keys(Cart::instance($instance)->content()->groupBy('id')->toArray());
@@ -459,20 +382,17 @@ class shop extends Controller
             } else {
                 return response()->json(
                     [
-                        'flg'   => 0,
-                        'error' => 'Sản phẩm đã có sẵn trong ' . $instance,
+                        'error' => 1,
+                        'error' => 'Product exist ' . $instance,
                     ]
                 );
             }
-            $htmlCart = '';
         }
 
         return response()->json(
             [
-                'flg'        => 1,
-                'subtotal'   => number_format(Cart::instance($instance)->subtotal()),
+                'error'      => 0,
                 'count_cart' => Cart::instance($instance)->count(),
-                'htmlCart'   => $htmlCart,
                 'instance'   => $instance,
             ]
         );
@@ -486,7 +406,7 @@ class shop extends Controller
     public function updateToCart(Request $request)
     {
         if (!$request->ajax()) {
-            return redirect('/gio-hang.html');
+            return redirect('/cart.html');
         }
         $id      = $request->get('id');
         $rowId   = $request->get('rowId');
@@ -551,7 +471,7 @@ class shop extends Controller
         }
         return view($this->theme . '.shop_cart',
             array(
-                'title'       => 'Giỏ hàng' . ' - ' . $this->configs['site_title'],
+                'title'       => 'Shoping cart',
                 'description' => '',
                 'keyword'     => '',
                 'cart'        => Cart::content(),
@@ -560,24 +480,34 @@ class shop extends Controller
             )
         );
     }
-/**
- * [cart description]
- * @param  Request $request [description]
- * @return [type]           [description]
- */
-    public function wishlist(Request $request)
+
+    public function wishlist()
     {
 
         $wishlist = Cart::instance('wishlist')->content();
         return view($this->theme . '.shop_wishlist',
             array(
-                'title'       => 'Danh sách wishlist',
+                'title'       => 'Wishlist',
                 'description' => '',
                 'keyword'     => '',
                 'wishlist'    => $wishlist,
             )
         );
     }
+
+    public function compare()
+    {
+        $compare = Cart::instance('compare')->content();
+        return view($this->theme . '.shop_compare',
+            array(
+                'title'       => 'Compare',
+                'description' => '',
+                'keyword'     => '',
+                'compare'     => $compare,
+            )
+        );
+    }
+
 /**
  * [product_type description]
  * @param  Request $request [description]
@@ -604,7 +534,7 @@ class shop extends Controller
     public function clear_cart()
     {
         Cart::destroy();
-        return redirect('/gio-hang.html');
+        return redirect('/cart.html');
     }
 
 /**
@@ -639,11 +569,11 @@ class shop extends Controller
             return json_encode(['html' => $html]);
         }
 
-        $check = json_decode(Promocodes::check($code), true);
+        $check = json_decode(\Promocodes::check($code), true);
         if ($check['error'] == 1) {
             $error = 1;
             if ($check['msg'] == 'error_code_not_exist') {
-                $msg = "Mã giảm giá không hợp lệ!";
+                $msg = "Coupon code invalid!";
             } elseif ($check['msg'] == 'error_code_cant_use') {
                 $msg = "Mã vượt quá số lần sử dụng!";
             } elseif ($check['msg'] == 'error_code_expired_disabled') {
@@ -651,7 +581,7 @@ class shop extends Controller
             } elseif ($check['msg'] == 'error_user_used') {
                 $msg = "Bạn đã dùng mã này rồi!";
             } else {
-                $msg = "Lỗi không xác định!";
+                $msg = "Error undefined!";
             }
 
         } else {
@@ -696,6 +626,49 @@ class shop extends Controller
     }
 
 /**
+ * Remove item from cart
+ * @author lanhktc
+ */
+    public function removeItem($id = null)
+    {
+        if ($id === null) {
+            return redirect('cart.html');
+        }
+
+        if (array_key_exists($id, Cart::content()->toArray())) {
+            Cart::remove($id);
+        }
+
+        return redirect('cart.html');
+    }
+
+    public function removeItem_wishlist($id = null)
+    {
+        if ($id === null) {
+            return redirect('wishlist.html');
+        }
+
+        if (array_key_exists($id, Cart::instance('wishlist')->content()->toArray())) {
+            Cart::instance('wishlist')->remove($id);
+        }
+
+        return redirect('wishlist.html');
+    }
+
+    public function removeItem_compare($id = null)
+    {
+        if ($id === null) {
+            return redirect('compare.html');
+        }
+
+        if (array_key_exists($id, Cart::instance('compare')->content()->toArray())) {
+            Cart::instance('compare')->remove($id);
+        }
+
+        return redirect('compare.html');
+    }
+
+/**
  * [search description]
  * @param  Request $request [description]
  * @return [type]           [description]
@@ -703,49 +676,14 @@ class shop extends Controller
     public function search(Request $request)
     {
         $keyword = $request->get('keyword');
-        return view($this->theme . '.shop_products',
+        return view($this->theme . '.shop_products_list',
             array(
-                'title'         => 'Tìm kiếm: ' . $keyword,
-                'description'   => '',
-                'keyword'       => $this->configs['site_keyword'],
+                'title'         => 'Search keyword: ' . $keyword,
                 'products'      => ShopProduct::resultSearch($keyword),
                 'products_left' => (new ShopProduct)->getProducts($type = null, $limit = 2, $opt = 'random'),
             ));
     }
 
-//=======================CMS================================================================
-
-    /**
-     * [pages description]
-     * @param  [type] $key [description]
-     * @return [type]      [description]
-     */
-    public function pages($key = null)
-    {
-
-        $page = $this->getPage($key);
-        if ($page) {
-            return view($this->theme . '.cms_page',
-                array(
-                    'title'         => $page->title,
-                    'description'   => '',
-                    'keyword'       => $this->configs['site_keyword'],
-                    'page'          => $page,
-                    'products_left' => (new ShopProduct)->getProducts($type = null, $limit = 2, $opt = 'random'),
-
-                ));
-        } else {
-            return view($this->theme . '.notfound',
-                array(
-                    'title'       => 'Not found',
-                    'description' => '',
-                    'keyword'     => $this->configs['site_keyword'],
-
-                )
-            );
-        }
-
-    }
 /**
  * [login description]
  * @return [type] [description]
@@ -757,13 +695,19 @@ class shop extends Controller
         }
         return view($this->theme . '.shop_login',
             array(
-                'title'       => 'Trang đăng nhập',
-                'description' => '',
-                'keyword'     => $this->configs['site_keyword'],
+                'title' => 'Login',
             )
         );
     }
-
+/**
+ * [logout description]
+ * @return [type] [description]
+ */
+    public function logout()
+    {
+        Auth::logout();
+        return Redirect::away('login');
+    }
 /**
  * [login description]
  * @return [type] [description]
@@ -775,120 +719,26 @@ class shop extends Controller
         }
         return view($this->theme . '.shop_forgot',
             array(
-                'title'       => 'Quên mật khẩu',
-                'description' => '',
-                'keyword'     => $this->configs['site_keyword'],
+                'title' => 'Forgot password',
             )
         );
     }
 
-/**
- * [getPage description]
- * @param  [type] $key [description]
- * @return [type]      [description]
- */
-    public function getPage($key = null)
+    public function completeOrder($orderId)
     {
-        $key = ($key == null || $key == '') ? 'trang-chu' : $key;
-        return CmsPage::where('uniquekey', $key)->where('status', 1)->first();
-    }
-
-    public function updatePromotion($code, $action = "apply")
-    {
-
-    }
-
-/**
- * [login description]
- * @return [type] [description]
- */
-    public function getContact()
-    {
-        $page = $this->getPage('lien-he');
-        return view($this->theme . '.shop_contact',
-            array(
-                'title'       => 'Liên hệ',
-                'description' => '',
-                'page'        => $page,
-                'keyword'     => $this->configs['site_keyword'],
-                'og_image'    => url('/') . 'logo.png',
-            )
-        );
-    }
-
-    public function postContact(Request $request)
-    {
-        $validator = $request->validate([
-            'name'    => 'required',
-            'title'   => 'required',
-            'content' => 'required',
-            'email'   => 'required|email',
-            'phone'   => 'required|regex:/^0[^0][0-9\-]{7,13}$/',
-        ], [
-            'name.required'    => 'Bạn chưa nhập tên',
-            'content.required' => 'Bạn chưa nhập nội dung',
-            'title.required'   => 'Bạn chưa nhập tiêu đề',
-            'email.required'   => 'Bạn chưa nhập email',
-            'email.email'      => 'Email chưa đúng định dạng',
-            'phone.required'   => 'Bạn chưa nhập số điện thoại',
-            'phone.regex'      => 'Số điện thoại chưa đúng',
-        ]);
         //Send email
         try {
-            $data            = $request->all();
-            $data['content'] = str_replace("\n", "<br>", $data['content']);
-            Mail::send('vendor.mail.contact', $data, function ($message) use ($data) {
-                $message->to($this->configs['site_email'], $this->configs['site_title']);
-                $message->replyTo($data['email'], $data['name']);
-                $message->subject($data['title']);
+            $data = ShopOrder::with('details')->find($orderId)->toArray();
+            Mail::send('vendor.mail.order_new', $data, function ($message) use ($orderId) {
+                $message->to($this->configs_global['email'], $this->configs_global['title']);
+                $message->replyTo($this->configs_global['email'], $this->configs_global['title']);
+                $message->subject('[#' . $orderId . '] New order!');
             });
-            return redirect('lien-he.html')->with('message', 'Cảm ơn bạn. Chúng tôi sẽ liên hệ sớm nhất có thể!');
-
         } catch (\Exception $e) {
-            echo $e->getMessage();
+            //
         } //
 
-        // dd($data);
-    }
-
-    public function news()
-    {
-        return view($this->theme . '.cms_news',
-            array(
-                'title'       => 'Blog Alo Chip',
-                'description' => $this->configs['site_description'],
-                'keyword'     => $this->configs['site_keyword'],
-                'news'        => $this->news,
-                'og_image'    => url('/') . '/logo.png',
-            )
-        );
-    }
-
-    public function news_detail($name, $id)
-    {
-        $news_currently = CmsNews::find($id);
-        if ($news_currently) {
-            $title = ($news_currently) ? $news_currently->title : 'Not found';
-            return view($this->theme . '.cms_news_detail',
-                array(
-                    'title'          => $title,
-                    'news_currently' => $news_currently,
-                    'description'    => $this->configs['site_description'],
-                    'keyword'        => $this->configs['site_keyword'],
-                    'blogs'          => (new CmsNews)->getItemsNews($limit = 4),
-                    'og_image'       => url('/') . '/documents/website/' . $news_currently->image,
-                )
-            );
-        } else {
-            return view($this->theme . '.notfound',
-                array(
-                    'title'       => 'Not found',
-                    'description' => '',
-                    'keyword'     => $this->configs['site_keyword'],
-                )
-            );
-        }
-
+        return redirect('cart.html')->with('message', 'Order succeed!');
     }
 
 }

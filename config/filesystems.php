@@ -1,5 +1,5 @@
 <?php
-
+$path_file = 'documents/website';
 return [
 
     /*
@@ -42,25 +42,24 @@ return [
      */
 
     'disks'   => [
-
-        'local'  => [
+        'path_file' => $path_file,
+        'local'     => [
             'driver' => 'local',
             'root'   => storage_path('app'),
         ],
 
-        'public' => [
+        'public'    => [
             'driver'     => 'local',
             'root'       => storage_path('app/public'),
             'url'        => env('APP_URL') . '/storage',
             'visibility' => 'public',
         ],
-        'admin'  => [
+        'admin'     => [
             'driver' => 'local',
-            'root'   => public_path('documents/website'),
-            'url'    => env('APP_URL') . '/documents/website',
-            // 'url'    => url("/share"),
+            'root'   => public_path($path_file),
+            'url'    => env('APP_URL') . '/' . $path_file,
         ],
-        's3'     => [
+        's3'        => [
             'driver' => 's3',
             'key'    => env('AWS_ACCESS_KEY_ID'),
             'secret' => env('AWS_SECRET_ACCESS_KEY'),

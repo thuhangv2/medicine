@@ -1,5 +1,7 @@
 # Release Notes
-## v1.6.2 (2018-09-08)
+## v2.0 (2018-09-23)
+
+## v1.6.2 (2018-09-16)
 
 ### Changed
 > Change name of file sql from laravel-framework.sql to s-cart.sql

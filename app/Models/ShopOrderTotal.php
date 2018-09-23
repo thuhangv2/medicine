@@ -26,7 +26,7 @@ class ShopOrderTotal extends Model
         $objects  = is_array($objects) ? $objects : [];
         //Set subtotal
         $objects[] = [
-            'title' => 'Tổng tiền hàng',
+            'title' => 'Sub total',
             'code'  => 'subtotal',
             'value' => $subtotal,
             'sort'  => 1,
@@ -39,7 +39,7 @@ class ShopOrderTotal extends Model
             }
         }
         $arrayTotal = array(
-            'title' => 'Tổng tiền cần thanh toán',
+            'title' => 'Total',
             'code'  => 'total',
             'value' => $total,
             'sort'  => 100,
@@ -143,14 +143,14 @@ class ShopOrderTotal extends Model
         $shipping = ShopShipping::find(1);
         if ($subtotal >= $shipping->free || $shipping->status == 0) {
             $arrShipping = [
-                'title' => 'Phí giao hàng',
+                'title' => 'Shipping',
                 'code'  => 'shipping',
                 'value' => 0,
                 'sort'  => 10,
             ];
         } else {
             $arrShipping = [
-                'title' => 'Phí giao hàng',
+                'title' => 'Shipping',
                 'code'  => 'shipping',
                 'value' => $shipping->value,
                 'sort'  => 10,
@@ -165,7 +165,7 @@ class ShopOrderTotal extends Model
         $check  = json_decode(Promocodes::check($coupon), true);
         if (empty($coupon) || $check['error'] == 1) {
             $arrDiscount = array(
-                'title' => 'Giảm giá',
+                'title' => 'Discount',
                 'code'  => 'discount',
                 'value' => 0,
                 'sort'  => 20,
@@ -191,7 +191,7 @@ class ShopOrderTotal extends Model
     public function getReceived()
     {
         return array(
-            'title' => 'Đã thanh toán',
+            'title' => 'Received',
             'code'  => 'received',
             'value' => 0,
             'sort'  => 200,

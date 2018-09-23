@@ -3,20 +3,22 @@
 </p>
 <p align="center">Open source e-commerce for business use laravel framework</p>
 <p align="center">
-<a href="http://demo.s-cart.org">Demo</a>
+<a href="http://demo.s-cart.org">Demo</a> | <a href="https://s-cart.org">Home page</a>
 </p>
 <p align="center">
 <a href="https://packagist.org/packages/lanhktc/s-cart"><img src="https://poser.pugx.org/lanhktc/s-cart/d/total.svg" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/lanhktc/s-cart"><img src="https://poser.pugx.org/lanhktc/s-cart/v/stable.svg" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/lanhktc/s-cart"><img src="https://poser.pugx.org/lanhktc/s-cart/license.svg" alt="License"></a>
 </p>
-<p align="center"><img src="https://giaiphap247.com/images/public.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/s1.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/s2.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/s3.jpg"></p>
 
 
 ## Giới thiệu về mã nguồn
-Open source E-commerce use Laravel framework, backend Laravel-admin
+Open source E-commerce use Laravel framework
 
-Mã nguồn website thương mại điện tử, tích hợp quản trị thông tin cho doanh nghiệp. Được xây dựng và phát triển bởi GiaiPhap247.Com
+Mã nguồn website thương mại điện tử cho doanh nghiệp xây dựng bằng laravel framework
 
 ## CÔNG NGHỆ SỬ DỤNG
 - Nền tảng Laravel framework: https://laravel.com/
@@ -67,11 +69,11 @@ Mã nguồn website thương mại điện tử, tích hợp quản trị thông
 ...
 
 
-## Requirements
+## Yêu cầu cài đặt
 
-Version 1.6:
+Version 2.0 & 1.6:
 
-> Core laravel framework 5.6. Requirements:
+> Core laravel framework 5.6. Yêu cầu:
 
 ```
 - PHP >= 7.1.3
@@ -85,7 +87,7 @@ Version 1.6:
 ```
 Version 1.5:
 
-> Core laravel framework 5.5. Requirements:
+> Core laravel framework 5.5. Yêu cầu:
 
 ```
 - PHP >= 7.0.0
@@ -97,15 +99,15 @@ Version 1.5:
 ```
 
 
-## Installation and Configurations:
+## Cấu hình và cài đặt:
 
-To install latest version of S-cart
+Để cài đặt phiên bản mới nhất của S-cart
 
 ```
 composer create-project lanhktc/s-cart
 ```
 
-Or, install a specific version. Ex 1.5.0
+Hoặc, cài đặt một phiên bản chỉ định. Ví dụ 1.5.0
 
 ```
 composer create-project lanhktc/s-cart your-project "1.5.0"

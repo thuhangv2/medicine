@@ -7,11 +7,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Services\PayPalService as PayPalSvc;
+use App\Http\Controllers\Shop as Shop;
+use App\Models\ShopOrder;
+use App\Models\ShopOrderHistory;
+use App\Scart\Payment\PayPalService as PayPalSvc;
+use Illuminate\Http\Request;
 
 class PayPalController extends Controller
 {
-
+    private $order_status = 1; // pending
+    private $order_faild  = 5; // faild
     private $paypalSvc;
 
     public function __construct(PayPalSvc $paypalSvc)
@@ -21,52 +26,52 @@ class PayPalController extends Controller
         $this->paypalSvc = $paypalSvc;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        // dd(Cart::content());
-        $data = [
-            [
-                'name'     => 'Vinataba',
-                'quantity' => 1,
-                'price'    => 1.5,
-                'sku'      => 'SDFSDF',
-            ],
-            [
-                'name'     => 'Marlboro',
-                'quantity' => 1,
-                'price'    => 1.6,
-                'sku'      => 'abcaas',
-            ],
-            [
-                'name'     => 'Esse',
-                'quantity' => 2,
-                'price'    => 1.8,
-                'sku'      => 'AVV_01',
-            ],
-        ];
-
-        $transactionDescription = "Don hang tu website";
-
-        $paypalCheckoutUrl = $this->paypalSvc
+        $data     = session('data_payment');
+        $order_id = $data['order_id'];
+        unset($data['order_id']);
+        session()->forget('data_payment');
+        $transactionDescription = "From website";
+        $paypalCheckoutUrl      = $this->paypalSvc
         // ->setCurrency('eur')
-            ->setReturnUrl(url('paypal/list'))
-        // ->setCancelUrl(url('paypal/status'))
+            ->setReturnUrl(url('payment/return/' . $order_id))
+            ->setCancelUrl(url('cart.html'))
             ->setItem($data)
         // ->setItem($data[0])
         // ->setItem($data[1])
             ->createPayment($transactionDescription);
-
         if ($paypalCheckoutUrl) {
             return redirect($paypalCheckoutUrl);
         } else {
-            dd(['Error']);
+            ShopOrder::find($order_id)->update(['status' => $this->order_faild]);
+
         }
     }
 
-    public function status()
+    public function getReturn($order_id)
     {
-        $paymentStatus = $this->paypalSvc->getPaymentStatus();
-        dd($paymentStatus);
+        if (!empty(session('paypal_payment_id'))) {
+            $paymentStatus = $this->paypalSvc->getPaymentStatus();
+            if ($paymentStatus) {
+                ShopOrder::find($order_id)->update(['transaction' => $paymentStatus->id, 'payment_method' => 'paypal', 'status' => $this->order_status]);
+                //Add history
+                $dataHistory = [
+                    'order_id' => $order_id,
+                    'content'  => 'Transaction ' . $paymentStatus->id,
+                    'user_id'  => empty(\Auth::user()->id) ? 0 : \Auth::user()->id,
+                    'add_date' => date('Y-m-d H:i:s'),
+                ];
+                ShopOrderHistory::insert($dataHistory);
+                return (new Shop)->completeOrder($order_id);
+            } else {
+                //
+            }
+
+        } else {
+            //
+        }
+
     }
 
     public function paymentList()

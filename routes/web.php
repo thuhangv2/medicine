@@ -12,51 +12,49 @@
  */
 Auth::routes();
 
-// Route::get('/home', 'HomeController@index')->name('home');
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 //============================
 Route::get('/', 'Shop@index');
 Route::get('index.html', 'Shop@index');
 Route::get('/login.html', 'Shop@showLogin');
 Route::get('/shop/{name}_{id}.html', 'Shop@productToCategory');
-Route::get('/san-pham/{name}_{id}.html', 'Shop@productDetail');
-Route::get('/brands/{name}_{id}/{category?}', 'Shop@product_brands');
+Route::get('/product/{name}_{id}.html', 'Shop@productDetail');
+Route::get('/brand/{name}_{id}/{category?}', 'Shop@product_brands');
 Route::get('/profile.html', [
     'middleware' => 'auth',
     'uses'       => 'Shop@profile',
 ]);
-Route::get('/san-pham.html', 'Shop@allProducts');
+Route::get('/products.html', 'Shop@allProducts');
 Route::get('/wishlist.html', 'Shop@wishlist');
-Route::get('/gio-hang.html', 'Shop@cart');
-Route::post('/gio-hang.html', 'Shop@cart');
-Route::get('/tim-kiem.html', 'Shop@search');
+Route::get('/compare.html', 'Shop@compare');
+Route::get('/cart.html', 'Shop@cart');
+Route::post('/cart.html', 'Shop@cart');
+Route::get('/search.html', 'Shop@search');
 Route::get('/removeItem/{id}', 'Shop@removeItem');
-Route::get('/removeItemFromWl/{id}', 'Shop@removeItemFromWl');
+Route::get('/removeItem_wishlist/{id}', 'Shop@removeItem_wishlist');
+Route::get('/removeItem_compare/{id}', 'Shop@removeItem_compare');
 Route::get('/clear-cart', 'Shop@clear_cart');
 Route::post('/addToCart', 'Shop@addToCart');
 Route::post('/updateToCart', 'Shop@updateToCart');
-Route::post('/storecart', 'Shop@storecart');
+Route::post('/storeOrder', 'Shop@storeOrder');
 Route::get('/login.html', 'Shop@login');
 Route::get('/forgot.html', 'Shop@forgot');
 Route::post('/usePromotion', 'Shop@usePromotion');
 Route::post('product_type', 'Shop@product_type');
+Route::get('/contact.html', 'Shop@getContact');
+Route::post('/contact.html', 'Shop@postContact');
 //========end shop ================
 
 //======cms==================
-Route::get('/tin-tuc.html', 'Shop@news');
-Route::get('/lien-he.html', 'Shop@getContact');
-Route::post('/lien-he.html', 'Shop@postContact');
-Route::get('/tin-tuc/{name}_{id}.html', 'Shop@news_detail');
-Route::get('/blogs.html', 'Shop@news');
-Route::get('/blog/{name}_{id}.html', 'Shop@news_detail');
-Route::get('/{key}.html', 'Shop@pages');
+Route::get('/news.html', 'Cms@news');
+Route::get('/news/{name}_{id}.html', 'Cms@news_detail');
+Route::get('/blogs.html', 'Cms@news');
+Route::get('/blog/{name}_{id}.html', 'Cms@news_detail');
+Route::get('/{key}.html', 'Cms@pages');
 //=====end cms =========
 
 Route::prefix('payment')->group(function () {
     Route::get('paypal', 'PayPalController@index');
+    Route::get('return/{order_id}', 'PayPalController@getReturn');
 });
 
 //===========auth==============

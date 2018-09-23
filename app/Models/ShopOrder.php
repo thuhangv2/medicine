@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShopOrder extends Model
 {
-    protected $table = 'shop_order';
+    protected $table    = 'shop_order';
+    protected $fillable = ['transaction', 'payment_method'];
     public function details()
     {
         return $this->hasMany('App\Models\ShopOrderDetail', 'order_id', 'id');

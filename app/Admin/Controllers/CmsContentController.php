@@ -123,7 +123,7 @@ class CmsContentController extends Controller
                         \Image::make($file_path_admin . '/' . $content->image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $content->image);
                         //thumbnail
                         $image_thumb = \Image::make($file_path_admin . '/' . $content->image);
-                        $image_thumb->resize(200, null, function ($constraint) {
+                        $image_thumb->resize(250, null, function ($constraint) {
                             $constraint->aspectRatio();
                         });
                         $image_thumb->save($file_path_admin . '/thumb/' . $content->image);
@@ -135,7 +135,7 @@ class CmsContentController extends Controller
                                 \Image::make($file_path_admin . '/' . $image->image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $image->image);
                                 //thumbnail
                                 $image_thumb = \Image::make($file_path_admin . '/' . $image->image);
-                                $image_thumb->resize(200, null, function ($constraint) {
+                                $image_thumb->resize(250, null, function ($constraint) {
                                     $constraint->aspectRatio();
                                 });
                                 $image_thumb->save($file_path_admin . '/thumb/' . $image->image);
