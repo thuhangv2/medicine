@@ -50,16 +50,7 @@
                 @endif
                 <h2>{{ $product->name }}</h2>
                 <p>SKU: {{ $product->sku }}</p>
-                @if ($product->price == $product->getPrice())
-                <div class="price-row">
-                  <span class="price">{{ number_format($product->price) }}</span>
-                </div>
-                @else
-                <div class="price-row">
-                  <span class="price"> {{ number_format($product->getPrice()) }} </span>
-                  <span  class="price-old"> {{ number_format($product->price) }} </span>
-                </div>
-                @endif
+                  {!! $product->showPrice() !!}
                 <span>
                   <label>Quantity:</label>
                   <input type="number" name="qty" value="1" />
@@ -133,16 +124,7 @@
                       <div class="single-products   product-box-{{ $product_real->id }}">
                           <div class="productinfo text-center">
                             <a href="{{ url('product/'.Scart::str_to_url($product_real->name).'_'.$product_real->id.'.html') }}"><img src="{{ asset($product_real->getThumb()) }}" alt="{{ $product_real->name }}" /></a>
-                                @if ($product_real->price == $product_real->getPrice())
-                                <div class="price-row">
-                                  <span class="price">{{ number_format($product_real->price) }}</span>
-                                </div>
-                                @else
-                                <div class="price-row">
-                                  <span class="price"> {{ number_format($product_real->getPrice()) }} </span>
-                                  <span  class="price-old"> {{ number_format($product_real->price) }} </span>
-                                </div>
-                                @endif
+                        {!! $product_real->showPrice() !!}
                             <a href="{{ url('product/'.Scart::str_to_url($product_real->name).'_'.$product_real->id.'.html') }}"><p>{{ $product_real->name }}</p></a>
                           </div>
                           @if ($product_real->price != $product_real->getPrice())

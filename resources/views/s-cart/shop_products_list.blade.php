@@ -15,16 +15,7 @@
                   <div class="productinfo text-center product-box-{{ $product->id }}">
                     <a href="{{ url('product/'.Scart::str_to_url($product->name).'_'.$product->id.'.html') }}"><img src="{{ asset($product->getThumb()) }}" alt="{{ $product->name }}" /></a>
 
-                      @if ($product->price == $product->getPrice())
-                      <div class="price-row">
-                        <span class="price">{{ number_format($product->price) }}</span>
-                      </div>
-                      @else
-                      <div class="price-row">
-                        <span class="price"> {{ number_format($product->getPrice()) }} </span>
-                        <span  class="price-old"> {{ number_format($product->price) }} </span>
-                      </div>
-                      @endif
+                    {!! $product->showPrice() !!}
 
                     <a href="{{ url('product/'.Scart::str_to_url($product->name).'_'.$product->id.'.html') }}"><p>{{ $product->name }}</p></a>
                     <a href="#" class="btn btn-default add-to-cart" onClick="addToCart({{ $product->id }})"><i class="fa fa-shopping-cart"></i>Add to cart</a>

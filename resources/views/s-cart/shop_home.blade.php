@@ -9,16 +9,7 @@
                       <div class="single-products product-box-{{ $product_new->id }}">
                           <div class="productinfo text-center">
                             <a href="{{ url('product/'.Scart::str_to_url($product_new->name).'_'.$product_new->id.'.html') }}"><img src="{{ asset($product_new->getThumb()) }}" alt="{{ $product_new->name }}" /></a>
-                                @if ($product_new->price == $product_new->getPrice())
-                                <div class="price-row">
-                                  <span class="price">{{ number_format($product_new->price) }}</span>
-                                </div>
-                                @else
-                                <div class="price-row">
-                                  <span class="price"> {{ number_format($product_new->getPrice()) }} </span>
-                                  <span  class="price-old"> {{ number_format($product_new->price) }} </span>
-                                </div>
-                                @endif
+                            {!! $product_new->showPrice() !!}
                             <a href="{{ url('product/'.Scart::str_to_url($product_new->name).'_'.$product_new->id.'.html') }}"><p>{{ $product_new->name }}</p></a>
                             <a href="#" class="btn btn-default add-to-cart" onClick="addToCart({{ $product_new->id }})"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                           </div>
@@ -58,16 +49,7 @@
                         <div class="single-products  product-box-{{ $product->id }}">
                           <div class="productinfo text-center">
                             <a href="{{ url('product/'.Scart::str_to_url($product->name).'_'.$product->id.'.html') }}"><img src="{{ asset($product->getThumb()) }}" alt="{{ $product->name }}" /></a>
-                                @if ($product->price == $product->getPrice())
-                                <div class="price-row">
-                                  <span class="price">{{ number_format($product->price) }}</span>
-                                </div>
-                                @else
-                                <div class="price-row">
-                                  <span class="price"> {{ number_format($product->getPrice()) }} </span>
-                                  <span  class="price-old"> {{ number_format($product->price) }} </span>
-                                </div>
-                                @endif
+                            {!! $product->showPrice() !!}
                             <a href="{{ url('product/'.Scart::str_to_url($product->name).'_'.$product->id.'.html') }}"><p>{{ $product->name }}</p></a>
                             <a href="#" class="btn btn-default add-to-cart" onClick="addToCart({{ $product->id }})"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                           </div>
@@ -100,16 +82,7 @@
                       <div class="single-products   product-box-{{ $product_hot->id }}">
                           <div class="productinfo text-center">
                             <a href="{{ url('product/'.Scart::str_to_url($product_hot->name).'_'.$product_hot->id.'.html') }}"><img src="{{ asset($product_hot->getThumb()) }}" alt="{{ $product_hot->name }}" /></a>
-                                @if ($product_hot->price == $product_hot->getPrice())
-                                <div class="price-row">
-                                  <span class="price">{{ number_format($product_hot->price) }}</span>
-                                </div>
-                                @else
-                                <div class="price-row">
-                                  <span class="price"> {{ number_format($product_hot->getPrice()) }} </span>
-                                  <span  class="price-old"> {{ number_format($product_hot->price) }} </span>
-                                </div>
-                                @endif
+                            {!! $product_hot->showPrice() !!}
                             <a href="{{ url('product/'.Scart::str_to_url($product_hot->name).'_'.$product_hot->id.'.html') }}"><p>{{ $product_hot->name }}</p></a>
                             <a href="#" class="btn btn-default add-to-cart" onClick="addToCart({{ $product_hot->id }})"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                           </div>
