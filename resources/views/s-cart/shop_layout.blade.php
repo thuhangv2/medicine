@@ -207,7 +207,7 @@
                     <ul>
                       @foreach ($category->getChildrens($category->id) as $cateChild)
                           <li>
-                              <a href="{{ url('shop/'.Scart::str_to_url($cateChild->name).'_'.$cateChild->id.'.html') }}">{{ $cateChild->name }}</a>
+                              <a href="{{ $cateChild->getUrl() }}">{{ $cateChild->name }}</a>
                           </li>
                       @endforeach
                     </ul>
@@ -217,7 +217,7 @@
               @else
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <h4 class="panel-title"><a href="{{ url('shop/'.Scart::str_to_url($category->name).'_'.$category->id.'.html') }}">{{ $category->name }}</a></h4>
+                    <h4 class="panel-title"><a href="{{ $category->getUrl() }}">{{ $category->name }}</a></h4>
                   </div>
                 </div>
              @endif

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Config;
 use App\Models\ShopProduct;
 use Illuminate\Database\Eloquent\Model;
+use Scart;
 
 class ShopCategory extends Model
 {
@@ -146,5 +147,12 @@ class ShopCategory extends Model
         return $path_file . '/' . $this->image;
 
     }
-
+/**
+ * [getUrl description]
+ * @return [type] [description]
+ */
+    public function getUrl()
+    {
+        return url('shop/' . Scart::str_to_url($this->name) . '_' . $this->id . '.html');
+    }
 }
