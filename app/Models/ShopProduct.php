@@ -8,6 +8,7 @@ use App\Models\ShopOptionDetail;
 use App\Models\ShopProductType;
 use App\Models\ShopSpecialPrice;
 use Illuminate\Database\Eloquent\Model;
+use Scart;
 
 class ShopProduct extends Model
 {
@@ -265,5 +266,12 @@ class ShopProduct extends Model
         return $path_file . '/' . $this->image;
 
     }
-
+/**
+ * [getUrl description]
+ * @return [type] [description]
+ */
+    public function getUrl()
+    {
+        return url('product/' . Scart::str_to_url($this->name) . '_' . $this->id . '.html');
+    }
 }

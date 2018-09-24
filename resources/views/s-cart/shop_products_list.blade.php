@@ -13,11 +13,11 @@
               <div class="product-image-wrapper">
                 <div class="single-products">
                   <div class="productinfo text-center product-box-{{ $product->id }}">
-                    <a href="{{ url('product/'.Scart::str_to_url($product->name).'_'.$product->id.'.html') }}"><img src="{{ asset($product->getThumb()) }}" alt="{{ $product->name }}" /></a>
+                    <a href="{{ $product->getUrl() }}"><img src="{{ asset($product->getThumb()) }}" alt="{{ $product->name }}" /></a>
 
                     {!! $product->showPrice() !!}
 
-                    <a href="{{ url('product/'.Scart::str_to_url($product->name).'_'.$product->id.'.html') }}"><p>{{ $product->name }}</p></a>
+                    <a href="{{ $product->getUrl() }}"><p>{{ $product->name }}</p></a>
                     <a href="#" class="btn btn-default add-to-cart" onClick="addToCart({{ $product->id }})"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                   </div>
                   @if ($product->price != $product->getPrice())

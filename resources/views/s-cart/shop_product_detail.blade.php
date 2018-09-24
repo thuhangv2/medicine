@@ -123,9 +123,9 @@
                     <div class="product-image-wrapper">
                       <div class="single-products   product-box-{{ $product_real->id }}">
                           <div class="productinfo text-center">
-                            <a href="{{ url('product/'.Scart::str_to_url($product_real->name).'_'.$product_real->id.'.html') }}"><img src="{{ asset($product_real->getThumb()) }}" alt="{{ $product_real->name }}" /></a>
+                            <a href="{{ $product_real->getUrl() }}"><img src="{{ asset($product_real->getThumb()) }}" alt="{{ $product_real->name }}" /></a>
                         {!! $product_real->showPrice() !!}
-                            <a href="{{ url('product/'.Scart::str_to_url($product_real->name).'_'.$product_real->id.'.html') }}"><p>{{ $product_real->name }}</p></a>
+                            <a href="{{ $product_real->getUrl() }}"><p>{{ $product_real->name }}</p></a>
                           </div>
                           @if ($product_real->price != $product_real->getPrice())
                           <img src="{{ asset($theme.'/images/home/sale.png') }}" class="new" alt="" />
