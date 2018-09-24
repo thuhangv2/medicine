@@ -88,9 +88,9 @@ class ShopProduct extends Model
     {
 
         if ($this->price == $this->getPrice()) {
-            return '<div class="price-row"><span class="price">' . $this->price . '</span></div>';
+            return '<div class="price-row"><span class="price">' . number_format($this->price) . '</span></div>';
         } else {
-            return '<div class="price-row"><span class="price">' . $this->getPrice() . '</span><span class="price-old">' . $this->price . '</span></div>';
+            return '<div class="price-row"><span class="price">' . number_format($this->getPrice()) . '</span><span class="price-old">' . $this->price . '</span></div>';
         }
     }
     /**
