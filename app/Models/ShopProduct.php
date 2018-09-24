@@ -84,36 +84,13 @@ class ShopProduct extends Model
      * @param  [type] $id [description]
      * @return [type]     [description]
      */
-    public function showPrice($id = null)
+    public function showPrice()
     {
-        $id      = ($id == null) ? $this->id : $id;
-        $special = (new ShopSpecialPrice)
-            ->where('product_id', $id)
-            ->where('status', 1)
-            ->where(function ($query) {
-                $query->where('date_end', '>=', date("Y-m-d"))
-                    ->orWhereNull('date_end');
-            })
-            ->where(function ($query) {
-                $query->where('date_start', '<=', date("Y-m-d"))
-                    ->orWhereNull('date_start');
-            })
-            ->first();
-        if ($special) {
-            //Show price origin
-            if ((int) Config::select('value')->where('key', 'product_display_special')->first()->value == 1) {
-                return '<span itemprop="price" class="price_sale">' . number_format($special->price) . ' VNĐ</span><span class="price_origin">' . number_format($this->find($id)->price) . ' VNĐ</span>';
-            } else {
-                return '<span itemprop="price" class="price_sale">' . number_format($special->price) . ' VNĐ</span>';
-            }
 
+        if ($this->price == $this->getPrice()) {
+            return '<div class="price-row"><span class="price">' . $this->price . '</span></div>';
         } else {
-            if ($this->getPrice($id)) {
-                return '<span itemprop="price" class="price_sale">' . number_format($this->find($id)->price) . ' VNĐ</span>';
-            } else {
-                return '<span class="contact_Price">Vui lòng liên hệ</span>';
-            }
-
+            return '<div class="price-row"><span class="price">' . $this->getPrice() . '</span><span class="price-old">' . $this->price . '</span></div>';
         }
     }
     /**
