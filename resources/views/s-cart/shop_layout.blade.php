@@ -229,7 +229,7 @@
               <div class="brands-name">
                 <ul class="nav nav-pills nav-stacked">
                   @foreach ($brands as $brand)
-                    <li><a href="{{ url('brand/'.Scart::str_to_url($brand->name).'_'.$brand->id.'.html') }}"> <span class="pull-right">({{ $brand->products()->count() }})</span>{{ $brand->name }}</a></li>
+                    <li><a href="{{ $brand->getUrl() }}"> <span class="pull-right">({{ $brand->products()->count() }})</span>{{ $brand->name }}</a></li>
                   @endforeach
                 </ul>
               </div>

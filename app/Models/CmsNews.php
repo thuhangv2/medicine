@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Scart;
 
 class CmsNews extends Model
 {
@@ -45,5 +46,12 @@ class CmsNews extends Model
         return $path_file . '/' . $this->image;
 
     }
-
+/**
+ * [getUrl description]
+ * @return [type] [description]
+ */
+    public function getUrl()
+    {
+        return url('blog/' . Scart::str_to_url($this->title) . '_' . $this->id . '.html');
+    }
 }
