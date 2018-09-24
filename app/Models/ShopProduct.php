@@ -61,8 +61,7 @@ class ShopProduct extends Model
         }
 //End type
 
-        $special = (new ShopSpecialPrice)
-            ->where('product_id', $id)
+        $special = ShopSpecialPrice::where('product_id', $id)
             ->where('status', 1)
             ->where(function ($query) {
                 $query->where('date_end', '>=', date("Y-m-d"))
@@ -78,42 +77,6 @@ class ShopProduct extends Model
         } else {
             return $this->find($id)->price;
         }
-    }
-
-    /**
-     * [showPrice description]
-     * @param  [type] $id [description]
-     * @return [type]     [description]
-     */
-    public function getListPrice($id = null)
-    {
-        $id      = ($id == null) ? $this->id : $id;
-        $special = (new ShopSpecialPrice)
-            ->where('product_id', $id)
-            ->where('status', 1)
-            ->where(function ($query) {
-                $query->where('date_end', '>=', date("Y-m-d"))
-                    ->orWhereNull('date_end');
-            })
-            ->where(function ($query) {
-                $query->where('date_start', '<=', date("Y-m-d"))
-                    ->orWhereNull('date_start');
-            })
-            ->first();
-        $arrPrice = array();
-        if ($special) {
-            //Show price origin
-            if ((int) Config::select('value')->where('key', 'product_display_special')->first()->value == 1) {
-                $arrPrice[] = number_format($special->price);
-                $arrPrice[] = number_format($this->find($id)->price);
-            } else {
-                return '<span itemprop="price" class="price_sale">' . number_format($special->price) . ' VNĐ</span>';
-            }
-
-        } else {
-            $arrPrice[] = number_format($this->find($id)->price);
-        }
-        return $arrPrice;
     }
 
     /**
