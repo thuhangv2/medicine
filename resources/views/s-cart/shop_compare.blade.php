@@ -27,7 +27,7 @@
        <td align="center">
            {{ $product->name }}({{ $product->sku }})
            <hr>
-            <a href="{{ url('product/'.Scart::str_to_url($product->name).'_'.$product->id.'.html') }}"><img width="100" src="{{asset($path_file.'/'.$product->image)}}" alt=""></a>
+            <a href="{{ url('product/'.Scart::str_to_url($product->name).'_'.$product->id.'.html') }}"><img width="100" src="{{asset($product->getImage())}}" alt=""></a>
             <hr>
             {!! $product->showPrice() !!}
             <hr>

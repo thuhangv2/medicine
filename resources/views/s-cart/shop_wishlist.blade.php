@@ -34,7 +34,7 @@
         <td>{{ $product->sku }}</td>
         <td>
             {{ $product->name }}<br>
-            <a href="{{ url('product/'.Scart::str_to_url($product->name).'_'.$product->id.'.html') }}"><img width="100" src="{{asset('documents/website/'.$product->image)}}" alt=""></a>
+            <a href="{{ url('product/'.Scart::str_to_url($product->name).'_'.$product->id.'.html') }}"><img width="100" src="{{asset($product->getImage())}}" alt=""></a>
         </td>
         <td>{!! $product->showPrice() !!}</td>
         <td>
