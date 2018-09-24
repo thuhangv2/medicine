@@ -13,7 +13,7 @@
               <div class="product-image-wrapper">
                 <div class="single-products">
                   <div class="productinfo text-center product-box-{{ $product->id }}">
-                    <a href="{{ url('product/'.Scart::str_to_url($product->name).'_'.$product->id.'.html') }}"><img src="{{ asset($path_file.'/thumb/'.$product->image) }}" alt="{{ $product->name }}" /></a>
+                    <a href="{{ url('product/'.Scart::str_to_url($product->name).'_'.$product->id.'.html') }}"><img src="{{ asset($product->getThumb()) }}" alt="{{ $product->name }}" /></a>
 
                       @if ($product->price == $product->getPrice())
                       <div class="price-row">

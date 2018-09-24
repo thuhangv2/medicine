@@ -14,7 +14,7 @@
                   <div class="row">
                     <div class="col-sm-3">
                       <div class="entry-thumb image-hover2"> <a href="{{ url('blog/'.Scart::str_to_url($blog->title).'_'.$blog->id.'.html') }}">
-                        <figure><img src="{{ asset($path_file.'/thumb/'.$blog->image) }}" alt="{{ $blog->title }}" alt="Blog"></figure>
+                        <figure><img src="{{ asset($blog->getThumb()) }}" alt="{{ $blog->title }}" alt="Blog"></figure>
                         </a> </div>
                     </div>
                     <div class="col-sm-9">

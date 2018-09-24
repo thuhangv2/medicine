@@ -62,7 +62,7 @@ class Shop extends GeneralController
                     'keyword'      => $this->configs_global['keyword'],
                     'categorySelf' => $category,
                     'products'     => $products,
-                    'og_image'     => url($this->path_file . '/' . $category->image),
+                    'og_image'     => url($category->getImage()),
                 )
             );
         } else {
@@ -135,7 +135,7 @@ class Shop extends GeneralController
                     'keyword'            => $this->configs_global['keyword'],
                     'product'            => $product,
                     'productsToCategory' => (new ShopCategory)->getProductsToCategory($id = $product->category_id, $limit = 4, $opt = 'random'),
-                    'og_image'           => url($this->path_file . '/' . $product->image),
+                    'og_image'           => url($product->getImage()),
                 )
             );
         } else {

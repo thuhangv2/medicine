@@ -6,7 +6,7 @@
           <div class="product-details"><!--product-details-->
             <div class="col-sm-5">
               <div class="view-product">
-                <img src="{{ asset($path_file.'/'.$product->image) }}" alt="" />
+                <img src="{{ asset($product->getImage()) }}" alt="" />
               </div>
           @if (count($product->images)>0)
               <div id="similar-product" class="carousel slide" data-ride="carousel">
@@ -14,11 +14,11 @@
                   <div class="carousel-inner">
                     <div class="item active">
                         <a href="#" class="col-sm-4">
-                          <img src="{{ asset($path_file.'/thumb/'.$product->image) }}" alt="">
+                          <img src="{{ asset($product->getThumb()) }}" alt="">
                         </a>
                        @foreach ($product->images as $key=>$image)
                         <a href="#" class="col-sm-4">
-                          <img src="{{ asset($path_file.'/thumb/'.$image->image) }}" alt="">
+                          <img src="{{ asset($image->getThumb()) }}" alt="">
                         </a>
                           @if ($key % 3 == 1)
                             </div>
@@ -132,7 +132,7 @@
                     <div class="product-image-wrapper">
                       <div class="single-products   product-box-{{ $product_real->id }}">
                           <div class="productinfo text-center">
-                            <a href="{{ url('product/'.Scart::str_to_url($product_real->name).'_'.$product_real->id.'.html') }}"><img src="{{ asset($path_file.'/thumb/'.$product_real->image) }}" alt="{{ $product_real->name }}" /></a>
+                            <a href="{{ url('product/'.Scart::str_to_url($product_real->name).'_'.$product_real->id.'.html') }}"><img src="{{ asset($product_real->getThumb()) }}" alt="{{ $product_real->name }}" /></a>
                                 @if ($product_real->price == $product_real->getPrice())
                                 <div class="price-row">
                                   <span class="price">{{ number_format($product_real->price) }}</span>

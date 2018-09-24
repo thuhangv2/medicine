@@ -8,7 +8,7 @@
                     <div class="product-image-wrapper">
                       <div class="single-products product-box-{{ $product_new->id }}">
                           <div class="productinfo text-center">
-                            <a href="{{ url('product/'.Scart::str_to_url($product_new->name).'_'.$product_new->id.'.html') }}"><img src="{{ asset($path_file.'/thumb/'.$product_new->image) }}" alt="{{ $product_new->name }}" /></a>
+                            <a href="{{ url('product/'.Scart::str_to_url($product_new->name).'_'.$product_new->id.'.html') }}"><img src="{{ asset($product_new->getThumb()) }}" alt="{{ $product_new->name }}" /></a>
                                 @if ($product_new->price == $product_new->getPrice())
                                 <div class="price-row">
                                   <span class="price">{{ number_format($product_new->price) }}</span>
@@ -57,7 +57,7 @@
                       <div class="product-image-wrapper">
                         <div class="single-products  product-box-{{ $product->id }}">
                           <div class="productinfo text-center">
-                            <a href="{{ url('product/'.Scart::str_to_url($product->name).'_'.$product->id.'.html') }}"><img src="{{ asset($path_file.'/thumb/'.$product->image) }}" alt="{{ $product->name }}" /></a>
+                            <a href="{{ url('product/'.Scart::str_to_url($product->name).'_'.$product->id.'.html') }}"><img src="{{ asset($product->getThumb()) }}" alt="{{ $product->name }}" /></a>
                                 @if ($product->price == $product->getPrice())
                                 <div class="price-row">
                                   <span class="price">{{ number_format($product->price) }}</span>
@@ -99,7 +99,7 @@
                     <div class="product-image-wrapper">
                       <div class="single-products   product-box-{{ $product_hot->id }}">
                           <div class="productinfo text-center">
-                            <a href="{{ url('product/'.Scart::str_to_url($product_hot->name).'_'.$product_hot->id.'.html') }}"><img src="{{ asset($path_file.'/thumb/'.$product_hot->image) }}" alt="{{ $product_hot->name }}" /></a>
+                            <a href="{{ url('product/'.Scart::str_to_url($product_hot->name).'_'.$product_hot->id.'.html') }}"><img src="{{ asset($product_hot->getThumb()) }}" alt="{{ $product_hot->name }}" /></a>
                                 @if ($product_hot->price == $product_hot->getPrice())
                                 <div class="price-row">
                                   <span class="price">{{ number_format($product_hot->price) }}</span>
