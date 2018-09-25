@@ -147,7 +147,7 @@
                                     <label class="control-label" for="inputGroupSuccess3"><i class="fa fa-exchange" aria-hidden="true"></i> Coupon <span style="{{ $style }} cursor: pointer;" class="text-danger" id="removeCoupon">(remove coupon <i class="fa fa fa-times"></i>)</span></label>
                                     <div class="input-group">
                                       <input type="text" placeholder="Your coupon" class="form-control" id="coupon-value" aria-describedby="inputGroupSuccess3Status">
-                                      <span class="input-group-addon"  id="coupon-button" style="cursor: pointer;" data-loading-text="<i class='fa fa-spinner fa-spin'></i> checking">Kiểm tra</span>
+                                      <span class="input-group-addon"  id="coupon-button" style="cursor: pointer;" data-loading-text="<i class='fa fa-spinner fa-spin'></i> checking">Apply</span>
                                     </div>
                                     <span class="status-coupon" style="display: none;" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                                     <div class="coupon-msg" style="text-align: left;padding-left: 10px;"></div>
