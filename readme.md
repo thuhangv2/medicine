@@ -3,16 +3,16 @@
 </p>
 <p align="center">Open source e-commerce for business use laravel framework</p>
 <p align="center">
-<a href="http://demo.s-cart.org">Demo</a> | <a href="https://s-cart.org">Home page</a> | <a href="https://s-cart.org">Document</a>
+<a href="http://demo.s-cart.org">Demo</a> | <a href="https://s-cart.org">Home page</a> | <a href="https://s-cart.org/page/installation.html">Installation</a> | <a href="https://s-cart.org/guide.html">Document</a>
 </p>
 <p align="center">
 <a href="https://packagist.org/packages/lanhktc/s-cart"><img src="https://poser.pugx.org/lanhktc/s-cart/d/total.svg" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/lanhktc/s-cart"><img src="https://poser.pugx.org/lanhktc/s-cart/v/stable.svg" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/lanhktc/s-cart"><img src="https://poser.pugx.org/lanhktc/s-cart/license.svg" alt="License"></a>
 </p>
-<p align="center"><img src="https://s-cart.org/images/s1.jpg"></p>
-<p align="center"><img src="https://s-cart.org/images/s2.jpg"></p>
-<p align="center"><img src="https://s-cart.org/images/s3.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/s12.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/s22.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/s32.jpg"></p>
 
 
 ## Giới thiệu về mã nguồn

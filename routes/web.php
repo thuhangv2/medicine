@@ -39,7 +39,6 @@ Route::post('/storeOrder', 'Shop@storeOrder');
 Route::get('/login.html', 'Shop@login');
 Route::get('/forgot.html', 'Shop@forgot');
 Route::post('/usePromotion', 'Shop@usePromotion');
-Route::post('product_type', 'Shop@product_type');
 Route::get('/contact.html', 'Shop@getContact');
 Route::post('/contact.html', 'Shop@postContact');
 //========end shop ================

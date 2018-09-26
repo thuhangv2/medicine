@@ -10,7 +10,6 @@ use App\Models\ShopOrderHistory;
 use App\Models\ShopOrderStatus;
 use App\Models\ShopOrderTotal;
 use App\Models\ShopProduct;
-use App\Models\ShopProductType;
 use App\User;
 use Cart;
 use DB;
@@ -509,25 +508,6 @@ class Shop extends GeneralController
     }
 
 /**
- * [product_type description]
- * @param  Request $request [description]
- * @return [type]           [description]
- */
-    public function product_type(Request $request)
-    {
-        $data         = $request->all();
-        $product_type = ShopProductType::where('opt_sku', $data['sku'])->first();
-        if ($product_type) {
-            $response = array('error' => 0, 'name' => $product_type->opt_name, 'price' => $product_type->opt_price, 'sku' => $product_type->opt_sku, 'image' => $product_type->opt_image);
-        } else {
-            $response = array('error' => 1, 'msg' => 'Not found');
-        }
-        return response()->json(
-            $response
-        );
-    }
-
-/**
  * [clear_cart description]
  * @return [type] [description]
  */
@@ -679,7 +659,7 @@ class Shop extends GeneralController
         return view($this->theme . '.shop_products_list',
             array(
                 'title'         => 'Search keyword: ' . $keyword,
-                'products'      => ShopProduct::resultSearch($keyword),
+                'products'      => ShopProduct::getSearch($keyword),
                 'products_left' => (new ShopProduct)->getProducts($type = null, $limit = 2, $opt = 'random'),
             ));
     }
