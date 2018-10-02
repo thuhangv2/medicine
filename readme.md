@@ -36,37 +36,37 @@ Mã nguồn website thương mại điện tử cho doanh nghiệp xây dựng b
 
 =======QUẢN LÝ TIN TỨC=======
 
-Tạo Blog, Tin tức
-Quản lý bài viết theo danh mục
-Tạo các trang riêng
-Liên hệ & form contact
-Chức năng quản lý banner, logo
+- Tạo Blog, Tin tức
+- Quản lý bài viết theo danh mục
+- Tạo các trang riêng
+- Liên hệ & form contact
+- Chức năng quản lý banner, logo
 
 ======= SHOP BÁN HÀNG=======
 
-Chức năng tạo giỏ hàng, mua hàng, tạo đơn hàng cho khách hàng
-Chức năng đăng ký thành viên, xem lịch sử mua hàng của khách hàng
-Chức năng đăng sản phẩm theo danh mục
-Chức năng đăng hình ảnh tự tạo thumbnail, chèn logo lên ảnh
-Chức năng xử lý đơn hàng theo giá khuyến mãi, giá gốc...
-Chức năng tính tiền ship, mã giảm giá,
-Chức năng thanh toán online qua paypal ....
-Chức năng report: biểu đồ thống kê, export csv
+- Chức năng tạo giỏ hàng, mua hàng, tạo đơn hàng cho khách hàng
+- Chức năng đăng ký thành viên, xem lịch sử mua hàng của khách hàng
+- Chức năng đăng sản phẩm theo danh mục
+- Chức năng đăng hình ảnh tự tạo thumbnail, chèn logo lên ảnh
+- Chức năng xử lý đơn hàng theo giá khuyến mãi, giá gốc...
+- Chức năng tính tiền ship, mã giảm giá,
+- Chức năng thanh toán online qua paypal ....
+- Chức năng report: biểu đồ thống kê, export csv
 
 ======= QUẢN LÝ HỆ THỐNG=======
 
-Quản lý & phân quyền user
-Quản lý thông tin doanh nghiệp: tên, địa chỉ, số điện thoại, email...
-Quản lý khách hàng
-Quản lý đơn hàng: chỉnh sửa đơn hàng, thống kê, cập nhật trạng thái đơn hàng, trạng thái thanh toán...
-Nhật ký đơn hàng: Tổng giá trị, đã thanh toán, còn lại, history..
-Quản lý banner, logo
-Phân loại sản phẩm: giá bán, giá khuyến mãi, giá cost, hàng tồn, hàng xuất, nhãn hiệu...
-Biểu đồ theo dõi
-Cấu hình hệ thống: bật tắt website, ẩn/hiện sản phẩm, bài viết
-Đăng nhập khi mua hàng hoặc không, mua hàng out of stock hoặc không ...
-Cấu hình email gửi nhận ...
-... nhiều tính năng khác sẽ cập nhật theo từng phiên bản.
+- Quản lý & phân quyền users, groups
+- Quản lý thông tin doanh nghiệp: tên, địa chỉ, số điện thoại, email...
+- Quản lý khách hàng
+- Quản lý đơn hàng: chỉnh sửa đơn hàng, thống kê, cập nhật trạng thái đơn hàng, trạng thái thanh toán...
+- Nhật ký đơn hàng: Tổng giá trị, đã thanh toán, còn lại, history..
+- Quản lý banner, logo
+- Phân loại sản phẩm: giá bán, giá khuyến mãi, giá cost, hàng tồn, hàng xuất, nhãn hiệu...
+- Biểu đồ theo dõi
+- Cấu hình hệ thống: bật tắt website, ẩn/hiện sản phẩm, bài viết
+- Đăng nhập khi mua hàng hoặc không, mua hàng out of stock hoặc không ...
+- Cấu hình email gửi nhận ...
+- ... nhiều tính năng khác sẽ cập nhật theo từng phiên bản.
 
 
 ## Yêu cầu cài đặt
