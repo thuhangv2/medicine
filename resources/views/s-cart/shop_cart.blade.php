@@ -213,8 +213,8 @@
                 new_qty: new_qty,
                 _token:'{{ csrf_token() }}'},
             success: function(data){
-                flg= parseInt(data.flg);
-                if(flg ===1)
+                error= parseInt(data.error);
+                if(error ===0)
                 {
                         window.location.replace(location.href);
                 }else{

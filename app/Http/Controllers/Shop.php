@@ -194,9 +194,11 @@ class Shop extends GeneralController
         if (Cart::count() == 0) {
             return redirect('/');
         }
+        //Not allow for guest
         if (!$this->configs['shop_allow_guest'] && !Auth::user()) {
             return redirect('login');
-        }
+        } //
+
         $messages = [
             'max'               => 'Chiều dài tối đa :max.',
             'toname.required'   => 'Bạn chưa nhập tên.',
@@ -351,10 +353,12 @@ class Shop extends GeneralController
         if ($instance == 'default') {
             //Cart
             //Condition:
-            //1. Instock
-            //2. Active
+            //1. Active
+            //2. Instock or allow order out of stock
             //3. Date availabe
-            if ($product->status != 0 and ($this->configs['product_preorder'] == 1 || $product->date_available == null || date('Y-m-d H:i:s') >= $product->date_available) and ($this->configs['product_buy_out_of_stock'] || $product->stock)) {
+            if ($product->status != 0
+                and ($this->configs['product_preorder'] == 1 || $product->date_available == null || date('Y-m-d H:i:s') >= $product->date_available)
+                and ($this->configs['product_buy_out_of_stock'] || $product->stock)) {
                 Cart::add(
                     array(
                         'id'    => $id,
@@ -413,13 +417,13 @@ class Shop extends GeneralController
         $new_qty = $request->get('new_qty');
         if ($product->stock < $new_qty && !$this->configs['product_buy_out_of_stock']) {
             return response()->json(
-                ['flg' => 0,
-                    'msg'  => 'Vượt quá số lượng cho phép.',
+                ['error' => 1,
+                    'msg'    => 'Vượt quá số lượng cho phép.',
                 ]);
         } else {
             Cart::update($rowId, ($new_qty) ? $new_qty : 0);
             return response()->json(
-                ['flg' => 1,
+                ['error' => 0,
                 ]);
         }
 
@@ -438,10 +442,12 @@ class Shop extends GeneralController
             $qty        = $request->get('qty');
             $product    = ShopProduct::find($product_id);
             //Condition:
-            //In of stock
             //Active
+            //In of stock or allow order out of stock
             //Date availabe
-            if ($product->status != 0 and ($this->configs['product_preorder'] == 1 || $product->date_available == null || date('Y-m-d H:i:s') >= $product->date_available) && ($this->configs['product_display_out_of_stock'] || $product->stock > 0)) {
+            if ($product->status != 0 and
+                ($this->configs['product_preorder'] == 1 || $product->date_available == null || date('Y-m-d H:i:s') >= $product->date_available) and
+                ($this->configs['product_display_out_of_stock'] || $product->stock > 0)) {
                 $options = array();
                 if ($opt_sku != $product->sku && $opt_sku) {
                     $options[] = $opt_sku;
@@ -480,6 +486,10 @@ class Shop extends GeneralController
         );
     }
 
+/**
+ * [wishlist description]
+ * @return [type] [description]
+ */
     public function wishlist()
     {
 
@@ -494,6 +504,10 @@ class Shop extends GeneralController
         );
     }
 
+/**
+ * [compare description]
+ * @return [type] [description]
+ */
     public function compare()
     {
         $compare = Cart::instance('compare')->content();
@@ -567,6 +581,7 @@ class Shop extends GeneralController
         } else {
             $content = $check['content'];
             if ($content['type'] === 1) {
+                //Point use in my page
                 $error = 1;
                 $msg   = "Bạn không thể dụng mã Point trực tiếp!";
             } else {
@@ -622,6 +637,11 @@ class Shop extends GeneralController
         return redirect('cart.html');
     }
 
+/**
+ * [removeItem_wishlist description]
+ * @param  [type] $id [description]
+ * @return [type]     [description]
+ */
     public function removeItem_wishlist($id = null)
     {
         if ($id === null) {
@@ -635,6 +655,11 @@ class Shop extends GeneralController
         return redirect('wishlist.html');
     }
 
+/**
+ * [removeItem_compare description]
+ * @param  [type] $id [description]
+ * @return [type]     [description]
+ */
     public function removeItem_compare($id = null)
     {
         if ($id === null) {
@@ -658,9 +683,8 @@ class Shop extends GeneralController
         $keyword = $request->get('keyword');
         return view($this->theme . '.shop_products_list',
             array(
-                'title'         => 'Search keyword: ' . $keyword,
-                'products'      => ShopProduct::getSearch($keyword),
-                'products_left' => (new ShopProduct)->getProducts($type = null, $limit = 2, $opt = 'random'),
+                'title'    => 'Search keyword: ' . $keyword,
+                'products' => ShopProduct::getSearch($keyword),
             ));
     }
 
