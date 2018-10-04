@@ -38,8 +38,8 @@ class Shop extends GeneralController
                 'description'  => $this->configs_global['description'],
                 'keyword'      => $this->configs_global['keyword'],
                 'banners'      => $this->banners,
-                'products_new' => (new ShopProduct)->getProducts($type = null, $limit = 6, $opt = null),
-                'products_hot' => (new ShopProduct)->getProducts($type = 1, $limit = 6, $opt = 'random'),
+                'products_new' => (new ShopProduct)->getProducts($type = null, $limit = $this->configs['product_new'], $opt = null),
+                'products_hot' => (new ShopProduct)->getProducts($type = 1, $limit = $this->configs['product_hot'], $opt = 'random'),
             )
         );
     }
@@ -53,7 +53,7 @@ class Shop extends GeneralController
     {
         $category = (new ShopCategory)->find($id);
         if ($category) {
-            $products = $category->getProductsToCategory($id = $category->id, $limit = 20, $opt = 'paginate');
+            $products = $category->getProductsToCategory($id = $category->id, $limit = $this->configs['product_list'], $opt = 'paginate');
             return view($this->theme . '.shop_products_list',
                 array(
                     'title'        => $category->name,
@@ -84,7 +84,7 @@ class Shop extends GeneralController
     public function allProducts()
     {
         $products = ShopProduct::where('status', 1)
-            ->orderBy('id', 'desc')->paginate(18);
+            ->orderBy('id', 'desc')->paginate($this->configs['product_list']);
         if ($products) {
             return view($this->theme . '.shop_products_list',
                 array(
@@ -133,7 +133,7 @@ class Shop extends GeneralController
                     'description'        => $product->description,
                     'keyword'            => $this->configs_global['keyword'],
                     'product'            => $product,
-                    'productsToCategory' => (new ShopCategory)->getProductsToCategory($id = $product->category_id, $limit = 4, $opt = 'random'),
+                    'productsToCategory' => (new ShopCategory)->getProductsToCategory($id = $product->category_id, $limit = $this->configs['product_relation'], $opt = 'random'),
                     'og_image'           => url($product->getImage()),
                 )
             );
@@ -154,8 +154,8 @@ class Shop extends GeneralController
      */
     public function profile()
     {
-        $id          = Auth::user()->id;
-        $user        = User::find($id);
+        $user        = Auth::user();
+        $id          = $user->id;
         $orders      = ShopOrder::with('orderTotal')->where('user_id', $id)->orderBy('id', 'desc')->get();
         $statusOrder = ShopOrderStatus::pluck('name', 'id')->all();
         return view($this->theme . '.shop_profile')->with(array(
