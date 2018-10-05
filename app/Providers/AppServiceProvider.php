@@ -14,7 +14,8 @@ class AppServiceProvider extends ServiceProvider
     // public function boot()
     public function boot()
     {
-//Config for  SMTP
+        //=======Config====
+        //Config for  SMTP
         $configs        = \App\Models\Config::pluck('value', 'key')->all();
         $configs_global = \App\Models\ConfigGlobal::first();
         config(['app.name' => $configs_global['title']]);
@@ -27,12 +28,16 @@ class AppServiceProvider extends ServiceProvider
         config(['mail.from' =>
             ['address' => $configs_global['email'], 'name' => $configs_global['title']]]
         );
-//
+        //SMTP
+
+        //============end config====
+
         //Auto switch link to https
         if (!empty($configs['site_ssl'])) {
             \URL::forceScheme('https');
         }
         //end
+
     }
 
     /**

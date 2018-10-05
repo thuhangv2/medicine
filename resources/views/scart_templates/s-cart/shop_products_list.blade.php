@@ -21,9 +21,9 @@
                     <a href="#" class="btn btn-default add-to-cart" onClick="addToCart({{ $product->id }})"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                   </div>
                   @if ($product->price != $product->getPrice())
-                  <img src="{{ asset($theme.'/images/home/sale.png') }}" class="new" alt="" />
+                  <img src="{{ asset($theme_asset.'/images/home/sale.png') }}" class="new" alt="" />
                   @elseif($product->type == 1)
-                  <img src="{{ asset($theme.'/images/home/new.png') }}" class="new" alt="" />
+                  <img src="{{ asset($theme_asset.'/images/home/new.png') }}" class="new" alt="" />
                   @endif
                 </div>
                 <div class="choose">

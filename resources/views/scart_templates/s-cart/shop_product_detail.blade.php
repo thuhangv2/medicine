@@ -44,9 +44,9 @@
             <div class="col-sm-7">
               <div class="product-information"><!--/product-information-->
                 @if ($product->price != $product->getPrice())
-                <img src="{{ asset($theme.'/images/product-details/sale.png') }}" class="newarrival" alt="" />
+                <img src="{{ asset($theme_asset.'/images/product-details/sale.png') }}" class="newarrival" alt="" />
                 @elseif($product->type == 1)
-                <img src="{{ asset($theme.'/images/product-details/new.png') }}" class="newarrival" alt="" />
+                <img src="{{ asset($theme_asset.'/images/product-details/new.png') }}" class="newarrival" alt="" />
                 @endif
                 <h2>{{ $product->name }}</h2>
                 <p>SKU: {{ $product->sku }}</p>
@@ -128,9 +128,9 @@
                             <a href="{{ $product_real->getUrl() }}"><p>{{ $product_real->name }}</p></a>
                           </div>
                           @if ($product_real->price != $product_real->getPrice())
-                          <img src="{{ asset($theme.'/images/home/sale.png') }}" class="new" alt="" />
+                          <img src="{{ asset($theme_asset.'/images/home/sale.png') }}" class="new" alt="" />
                           @elseif($product_real->type == 1)
-                          <img src="{{ asset($theme.'/images/home/new.png') }}" class="new" alt="" />
+                          <img src="{{ asset($theme_asset.'/images/home/new.png') }}" class="new" alt="" />
                           @endif
                       </div>
                     </div>

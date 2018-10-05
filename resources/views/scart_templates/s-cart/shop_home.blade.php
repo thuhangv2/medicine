@@ -14,9 +14,9 @@
                             <a href="#" class="btn btn-default add-to-cart" onClick="addToCart({{ $product_new->id }})"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                           </div>
                       @if ($product_new->price != $product_new->getPrice())
-                      <img src="{{ asset($theme.'/images/home/sale.png') }}" class="new" alt="" />
+                      <img src="{{ asset($theme_asset.'/images/home/sale.png') }}" class="new" alt="" />
                       @elseif($product_new->type == 1)
-                      <img src="{{ asset($theme.'/images/home/new.png') }}" class="new" alt="" />
+                      <img src="{{ asset($theme_asset.'/images/home/new.png') }}" class="new" alt="" />
                       @endif
                       </div>
                       <div class="choose">
@@ -54,9 +54,9 @@
                             <a href="#" class="btn btn-default add-to-cart" onClick="addToCart({{ $product->id }})"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                           </div>
                           @if ($product->price != $product->getPrice())
-                          <img src="{{ asset($theme.'/images/home/sale.png') }}" class="new" alt="" />
+                          <img src="{{ asset($theme_asset.'/images/home/sale.png') }}" class="new" alt="" />
                           @elseif($product->type == 1)
-                          <img src="{{ asset($theme.'/images/home/new.png') }}" class="new" alt="" />
+                          <img src="{{ asset($theme_asset.'/images/home/new.png') }}" class="new" alt="" />
                           @endif
 
                         </div>
@@ -87,9 +87,9 @@
                             <a href="#" class="btn btn-default add-to-cart" onClick="addToCart({{ $product_hot->id }})"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                           </div>
                           @if ($product_hot->price != $product_hot->getPrice())
-                          <img src="{{ asset($theme.'/images/home/sale.png') }}" class="new" alt="" />
+                          <img src="{{ asset($theme_asset.'/images/home/sale.png') }}" class="new" alt="" />
                           @elseif($product_hot->type == 1)
-                          <img src="{{ asset($theme.'/images/home/new.png') }}" class="new" alt="" />
+                          <img src="{{ asset($theme_asset.'/images/home/new.png') }}" class="new" alt="" />
                           @endif
                       </div>
                       <div class="choose">

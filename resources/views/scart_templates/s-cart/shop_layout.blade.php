@@ -236,7 +236,7 @@
             </div><!--/brands_products-->
 
             <div class="shipping text-center"><!--shipping-->
-              <img src="{{ asset($theme.'/images/home/shipping.jpg') }}" alt="" />
+              <img src="{{ asset($theme_asset.'/images/home/shipping.jpg') }}" alt="" />
             </div><!--/shipping-->
 
           </div>
