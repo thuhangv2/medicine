@@ -18,7 +18,7 @@
  */
 Encore\Admin\Form::forget(['map', 'editor']);
 //custome template admin
-// app('view')->prependNamespace('admin', resource_path('views/admin'));
+app('view')->prependNamespace('admin', resource_path('views/admin'));
 use App\Admin\Extensions\Column\Expands;
 use App\Admin\Extensions\Form\CKEditor;
 use Encore\Admin\Facades\Admin;
