@@ -338,7 +338,7 @@
           </div>
           <div class="col-sm-3">
             <div class="address">
-              <img src="{{ asset('s-cart/images/home/map.png') }}" alt="" />
+              <img src="{{ asset($theme_asset.'/images/home/map.png') }}" alt="" />
               <p>{{ $configs_global['address'] }}</p>
             </div>
           </div>
