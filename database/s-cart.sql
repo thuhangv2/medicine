@@ -390,7 +390,7 @@ CREATE TABLE IF NOT EXISTS `config` (
   UNIQUE KEY `key` (`key`)
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.config: ~22 rows (approximately)
+-- Dumping data for table s-cart.config: ~23 rows (approximately)
 DELETE FROM `config`;
 /*!40000 ALTER TABLE `config` DISABLE KEYS */;
 INSERT INTO `config` (`id`, `code`, `key`, `value`, `sort`, `detail`) VALUES
@@ -441,7 +441,7 @@ CREATE TABLE IF NOT EXISTS `config_global` (
 DELETE FROM `config_global`;
 /*!40000 ALTER TABLE `config_global` DISABLE KEYS */;
 INSERT INTO `config_global` (`id`, `logo`, `template`, `title`, `description`, `keyword`, `phone`, `long_phone`, `email`, `address`, `watermark`, `status`) VALUES
-	(1, 'images/scart-mid.png', 's-cart', 'Free open source - eCommerce Platform for Business', 'Free website shopping cart for business', NULL, '0123456789', 'Support: 0987654321', 'admin@admin.com', '123st - abc - xyz', 'images/09cde6a2213bfa2f0de36961b986691b.png', 1);
+	(1, 'images/scart-mid.png', 's-cart', 'Free open source - eCommerce Platform for Business', 'Free website shopping cart for business', NULL, '0123456789', 'Support: 0987654321', 'admin@admin.com', '123st - abc - xyz', 'images/watermark.png', 1);
 /*!40000 ALTER TABLE `config_global` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.migrations
