@@ -1,7 +1,7 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Server version:               10.1.28-MariaDB - mariadb.org binary distribution
--- Server OS:                    Win32
+-- Server version:               5.7.18-log - MySQL Community Server (GPL)
+-- Server OS:                    Win64
 -- HeidiSQL Version:             9.5.0.5196
 -- --------------------------------------------------------
 
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `admin_menu` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart.admin_menu: ~32 rows (approximately)
+-- Dumping data for table s-cart.admin_menu: ~19 rows (approximately)
 DELETE FROM `admin_menu`;
 /*!40000 ALTER TABLE `admin_menu` DISABLE KEYS */;
 INSERT INTO `admin_menu` (`id`, `parent_id`, `order`, `title`, `icon`, `uri`, `created_at`, `updated_at`) VALUES
@@ -388,7 +388,7 @@ CREATE TABLE IF NOT EXISTS `config` (
   `detail` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `key` (`key`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Dumping data for table s-cart.config: ~17 rows (approximately)
 DELETE FROM `config`;
@@ -410,7 +410,12 @@ INSERT INTO `config` (`id`, `code`, `key`, `value`, `sort`, `detail`) VALUES
 	(22, 'config', 'show_date_avalid', '1', 21, 'Hiển thị ngày cho phép mua'),
 	(23, 'shipping', 'shipping_status', '1', 22, 'Sử dụng shipping'),
 	(24, 'config', 'promotion_mode', '1', 1, 'Sử dụng mã giảm giá'),
-	(25, 'config', 'PAYPAL_STATUS', '1', 0, 'Sử dụng paypal cho thanh toán');
+	(25, 'config', 'PAYPAL_STATUS', '1', 0, 'Sử dụng paypal cho thanh toán'),
+	(28, 'display', 'product_hot', '6', 0, 'Số sản phẩm hot'),
+	(29, 'display', 'product_new', '6', 0, 'Số sản phẩm new'),
+	(30, 'display', 'product_list', '18', 0, 'Số sản phẩm trên trang'),
+	(31, 'config', 'site_ssl', '0', 0, 'Sử dụng https'),
+	(32, 'admin_config', 'admin_log', '0', 0, 'Sử dụng log admin');
 /*!40000 ALTER TABLE `config` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.config_global
@@ -431,7 +436,7 @@ CREATE TABLE IF NOT EXISTS `config_global` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.config_global: ~1 rows (approximately)
+-- Dumping data for table s-cart.config_global: ~0 rows (approximately)
 DELETE FROM `config_global`;
 /*!40000 ALTER TABLE `config_global` DISABLE KEYS */;
 INSERT INTO `config_global` (`id`, `logo`, `template`, `title`, `description`, `keyword`, `phone`, `long_phone`, `email`, `address`, `watermark`, `status`) VALUES
@@ -699,7 +704,7 @@ CREATE TABLE IF NOT EXISTS `shop_order` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.shop_order: ~8 rows (approximately)
+-- Dumping data for table s-cart.shop_order: ~12 rows (approximately)
 DELETE FROM `shop_order`;
 /*!40000 ALTER TABLE `shop_order` DISABLE KEYS */;
 INSERT INTO `shop_order` (`id`, `user_id`, `subtotal`, `shipping`, `discount`, `payment_status`, `shipping_status`, `status`, `tax`, `total`, `received`, `balance`, `toname`, `address1`, `address2`, `country`, `phone`, `comment`, `payment_method`, `transaction`, `created_at`, `updated_at`) VALUES
@@ -735,7 +740,7 @@ CREATE TABLE IF NOT EXISTS `shop_order_detail` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=159 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.shop_order_detail: ~8 rows (approximately)
+-- Dumping data for table s-cart.shop_order_detail: ~13 rows (approximately)
 DELETE FROM `shop_order_detail`;
 /*!40000 ALTER TABLE `shop_order_detail` DISABLE KEYS */;
 INSERT INTO `shop_order_detail` (`id`, `order_id`, `product_id`, `name`, `price`, `qty`, `total_price`, `sku`, `type`, `option`, `created_at`, `updated_at`) VALUES
@@ -766,7 +771,7 @@ CREATE TABLE IF NOT EXISTS `shop_order_history` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.shop_order_history: ~10 rows (approximately)
+-- Dumping data for table s-cart.shop_order_history: ~22 rows (approximately)
 DELETE FROM `shop_order_history`;
 /*!40000 ALTER TABLE `shop_order_history` DISABLE KEYS */;
 INSERT INTO `shop_order_history` (`id`, `order_id`, `content`, `admin_id`, `user_id`, `add_date`) VALUES
@@ -802,7 +807,7 @@ CREATE TABLE IF NOT EXISTS `shop_order_status` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.shop_order_status: ~5 rows (approximately)
+-- Dumping data for table s-cart.shop_order_status: ~6 rows (approximately)
 DELETE FROM `shop_order_status`;
 /*!40000 ALTER TABLE `shop_order_status` DISABLE KEYS */;
 INSERT INTO `shop_order_status` (`id`, `name`) VALUES
@@ -828,7 +833,7 @@ CREATE TABLE IF NOT EXISTS `shop_order_total` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=329 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.shop_order_total: ~40 rows (approximately)
+-- Dumping data for table s-cart.shop_order_total: ~125 rows (approximately)
 DELETE FROM `shop_order_total`;
 /*!40000 ALTER TABLE `shop_order_total` DISABLE KEYS */;
 INSERT INTO `shop_order_total` (`id`, `order_id`, `title`, `code`, `value`, `sort`, `created_at`, `updated_at`) VALUES
@@ -1076,7 +1081,7 @@ CREATE TABLE IF NOT EXISTS `shop_product_recent_view` (
   UNIQUE KEY `customer_id_product_id` (`user_id`,`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table s-cart.shop_product_recent_view: ~8 rows (approximately)
+-- Dumping data for table s-cart.shop_product_recent_view: ~0 rows (approximately)
 DELETE FROM `shop_product_recent_view`;
 /*!40000 ALTER TABLE `shop_product_recent_view` DISABLE KEYS */;
 INSERT INTO `shop_product_recent_view` (`user_id`, `product_id`, `created_at`) VALUES
@@ -1103,7 +1108,7 @@ CREATE TABLE IF NOT EXISTS `shop_product_type` (
   UNIQUE KEY `opt_sku` (`opt_sku`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.shop_product_type: ~7 rows (approximately)
+-- Dumping data for table s-cart.shop_product_type: ~0 rows (approximately)
 DELETE FROM `shop_product_type`;
 /*!40000 ALTER TABLE `shop_product_type` DISABLE KEYS */;
 INSERT INTO `shop_product_type` (`id`, `opt_name`, `opt_sku`, `opt_price`, `opt_image`, `product_id`) VALUES
@@ -1132,7 +1137,7 @@ CREATE TABLE IF NOT EXISTS `shop_promocodes` (
   UNIQUE KEY `promocodes_code_unique` (`code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart.shop_promocodes: ~11 rows (approximately)
+-- Dumping data for table s-cart.shop_promocodes: ~0 rows (approximately)
 DELETE FROM `shop_promocodes`;
 /*!40000 ALTER TABLE `shop_promocodes` DISABLE KEYS */;
 INSERT INTO `shop_promocodes` (`id`, `code`, `reward`, `type`, `data`, `number_uses`, `used`, `status`, `expires_at`) VALUES
@@ -1165,7 +1170,7 @@ CREATE TABLE IF NOT EXISTS `shop_promocode_user` (
   CONSTRAINT `promocode_user_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart.shop_promocode_user: ~10 rows (approximately)
+-- Dumping data for table s-cart.shop_promocode_user: ~0 rows (approximately)
 DELETE FROM `shop_promocode_user`;
 /*!40000 ALTER TABLE `shop_promocode_user` DISABLE KEYS */;
 INSERT INTO `shop_promocode_user` (`user_id`, `promocode_id`, `log`, `used_at`) VALUES
@@ -1236,7 +1241,7 @@ CREATE TABLE IF NOT EXISTS `shop_shipping_status` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.shop_shipping_status: ~3 rows (approximately)
+-- Dumping data for table s-cart.shop_shipping_status: ~0 rows (approximately)
 DELETE FROM `shop_shipping_status`;
 /*!40000 ALTER TABLE `shop_shipping_status` DISABLE KEYS */;
 INSERT INTO `shop_shipping_status` (`id`, `name`) VALUES
@@ -1277,7 +1282,7 @@ CREATE TABLE IF NOT EXISTS `shop_special_price` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.shop_special_price: ~10 rows (approximately)
+-- Dumping data for table s-cart.shop_special_price: ~0 rows (approximately)
 DELETE FROM `shop_special_price`;
 /*!40000 ALTER TABLE `shop_special_price` DISABLE KEYS */;
 INSERT INTO `shop_special_price` (`id`, `product_id`, `price`, `off`, `date_start`, `date_end`, `status`, `comment`, `created_at`, `updated_at`) VALUES
@@ -1310,7 +1315,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart.users: ~6 rows (approximately)
+-- Dumping data for table s-cart.users: ~0 rows (approximately)
 DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `address1`, `address2`, `phone`, `remember_token`, `created_at`, `updated_at`) VALUES

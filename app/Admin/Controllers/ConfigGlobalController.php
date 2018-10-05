@@ -113,11 +113,18 @@ class ConfigGlobalController extends Controller
      */
     protected function form()
     {
-        return Admin::form(ConfigGlobal::class, function (Form $form) {
+        $arrTemplates = [];
+        foreach (glob("scart_templates/*") as $value) {
+            if (is_dir($value)) {
+                $template                = explode('scart_templates/', $value)[1];
+                $arrTemplates[$template] = $template;
+            }
+        }
+        return Admin::form(ConfigGlobal::class, function (Form $form) use ($arrTemplates) {
 
             $form->image('logo', 'Logo')->removable();
             $form->image('watermark', 'watermark')->removable();
-            $form->text('template', 'Template');
+            $form->select('template', 'Template')->options($arrTemplates)->rules('required', ['required' => 'Bạn chưa chọn template']);
             $form->text('title', 'Title');
             $form->textarea('description', 'Description');
             $form->text('keyword', 'Keywords');

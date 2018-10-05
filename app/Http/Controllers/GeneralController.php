@@ -32,7 +32,8 @@ class GeneralController extends Controller
         $this->path_file      = config('filesystems.disks.path_file', '');
         $this->configs_global = ConfigGlobal::first();
         $this->configs        = Config::pluck('value', 'key')->all();
-        $this->theme          = $this->theme_asset          = $this->configs_global['template'];
+        $this->theme_asset    = 'scart_templates/' . $this->configs_global['template'];
+        $this->theme          = 'scart_templates.' . $this->configs_global['template'];
         $this->banners        = Banner::where('status', 1)->orderBy('sort', 'desc')->orderBy('id', 'desc')->get();
         $this->logo           = url($this->path_file . '/' . $this->configs_global['logo']);
         $this->brands         = ShopBrand::getBrands();
