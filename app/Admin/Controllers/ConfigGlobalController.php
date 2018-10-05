@@ -70,13 +70,20 @@ class ConfigGlobalController extends Controller
      */
     protected function grid()
     {
-        return Admin::grid(ConfigGlobal::class, function (Grid $grid) {
+        $arrTemplates = [];
+        foreach (glob("scart_templates/*") as $value) {
+            if (is_dir($value)) {
+                $template                = explode('scart_templates/', $value)[1];
+                $arrTemplates[$template] = $template;
+            }
+        }
+        return Admin::grid(ConfigGlobal::class, function (Grid $grid) use ($arrTemplates) {
 
             $grid->html('&nbsp;');
 
             $grid->logo('Logo')->image('', 50);
             $grid->watermark('watermark')->image('', 50);
-            $grid->template('Template');
+            $grid->template('Template')->editable('select', $arrTemplates);
             $grid->title('Title')->display(function ($text) {
                 return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
             });
