@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `admin_menu` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart.admin_menu: ~19 rows (approximately)
+-- Dumping data for table s-cart.admin_menu: ~32 rows (approximately)
 DELETE FROM `admin_menu`;
 /*!40000 ALTER TABLE `admin_menu` DISABLE KEYS */;
 INSERT INTO `admin_menu` (`id`, `parent_id`, `order`, `title`, `icon`, `uri`, `created_at`, `updated_at`) VALUES
@@ -390,7 +390,7 @@ CREATE TABLE IF NOT EXISTS `config` (
   UNIQUE KEY `key` (`key`)
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.config: ~17 rows (approximately)
+-- Dumping data for table s-cart.config: ~22 rows (approximately)
 DELETE FROM `config`;
 /*!40000 ALTER TABLE `config` DISABLE KEYS */;
 INSERT INTO `config` (`id`, `code`, `key`, `value`, `sort`, `detail`) VALUES
@@ -415,7 +415,8 @@ INSERT INTO `config` (`id`, `code`, `key`, `value`, `sort`, `detail`) VALUES
 	(29, 'display', 'product_new', '6', 0, 'Số sản phẩm new'),
 	(30, 'display', 'product_list', '18', 0, 'Số sản phẩm trên trang'),
 	(31, 'config', 'site_ssl', '0', 0, 'Sử dụng https'),
-	(32, 'admin_config', 'admin_log', '0', 0, 'Sử dụng log admin');
+	(32, 'admin_config', 'admin_log', '0', 0, 'Sử dụng log admin'),
+	(33, 'display', 'product_relation', '6', 0, 'Số sản phẩm relation');
 /*!40000 ALTER TABLE `config` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.config_global
@@ -436,7 +437,7 @@ CREATE TABLE IF NOT EXISTS `config_global` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.config_global: ~0 rows (approximately)
+-- Dumping data for table s-cart.config_global: ~1 rows (approximately)
 DELETE FROM `config_global`;
 /*!40000 ALTER TABLE `config_global` DISABLE KEYS */;
 INSERT INTO `config_global` (`id`, `logo`, `template`, `title`, `description`, `keyword`, `phone`, `long_phone`, `email`, `address`, `watermark`, `status`) VALUES
@@ -1051,7 +1052,7 @@ INSERT INTO `shop_product` (`id`, `name`, `sku`, `keyword`, `description`, `imag
 	(42, 'Easy Polo Black Edition', 'P10-IB', '', NULL, 'product/98fafb9da683cd9ee854598f3f3a3bd5.jpeg', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>', 0, 19, NULL, 15000, 15000, 0, 0, 0, NULL, 0, 1, 9, '2018-08-31 21:45:43', NULL, '2018-08-24 08:52:58', '2018-09-22 17:35:35'),
 	(43, 'Easy Polo Black Edition', 'P10-IRGB', '', NULL, 'product/a111c060ebb6ffbbd2d34ae278501789.jpg', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>', 0, 19, NULL, 15000, 15000, 0, 0, 0, NULL, 0, 1, 3, '2018-09-08 14:13:30', NULL, '2018-08-24 08:54:45', '2018-09-22 19:43:47'),
 	(44, 'Easy Polo Black Edition', 'P10-IRG', '', NULL, 'product/95349d3747fdaf79d391fdc98e083701.jpg', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>', 0, 19, NULL, 15000, 15000, -1, 1, 1, NULL, 0, 1, 18, '2018-08-27 17:19:52', NULL, '2018-08-24 08:56:02', '2018-09-22 17:39:35'),
-	(45, 'Easy Polo Black Edition', 'LFF', '', NULL, 'product/3c8f613d30b4e487ef95a5e4cdea634c.jpeg', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>', 0, 6, NULL, 15000, 15000, -1, 1, 0, NULL, 0, 1, 20, '2018-09-22 23:00:45', NULL, '2018-08-24 08:58:42', '2018-09-23 12:31:28'),
+	(45, 'Easy Polo Black Edition', 'LFF', '', NULL, 'product/3c8f613d30b4e487ef95a5e4cdea634c.jpeg', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>', 0, 6, NULL, 15000, 15000, -1, 1, 0, NULL, 0, 1, 22, '2018-10-05 10:19:04', NULL, '2018-08-24 08:58:42', '2018-10-05 10:19:04'),
 	(46, 'Easy Polo Black Edition', 'P2.5-I', '', NULL, 'product/949fa36ebd56593445fb61d141fd2a81.jpeg', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>', 2, 19, NULL, 15000, 15000, 0, 0, 0, NULL, 0, 1, 10, '2018-09-01 01:05:52', NULL, '2018-08-24 09:23:07', '2018-09-22 18:20:41'),
 	(47, 'Easy Polo Black Edition', 'BX-5U0', '', NULL, 'product/cd7aa3394c35330ed7f9e4095c6adb65.jpeg', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>', 0, 19, NULL, 15000, 15000, -5, 5, 0, NULL, 0, 1, 80, '2018-09-22 23:22:47', NULL, '2018-08-24 09:48:31', '2018-09-23 12:46:05'),
 	(48, 'Easy Polo Black Edition', 'BX-5UT', '', NULL, 'product/6ddd855403d127a9fed049d0ec335481.jpeg', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>', 0, 19, NULL, 15000, 15000, -10, 10, 0, NULL, 0, 1, 164, '2018-09-23 12:28:59', NULL, '2018-08-24 09:52:15', '2018-09-23 12:46:05'),
@@ -1081,7 +1082,7 @@ CREATE TABLE IF NOT EXISTS `shop_product_recent_view` (
   UNIQUE KEY `customer_id_product_id` (`user_id`,`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table s-cart.shop_product_recent_view: ~0 rows (approximately)
+-- Dumping data for table s-cart.shop_product_recent_view: ~8 rows (approximately)
 DELETE FROM `shop_product_recent_view`;
 /*!40000 ALTER TABLE `shop_product_recent_view` DISABLE KEYS */;
 INSERT INTO `shop_product_recent_view` (`user_id`, `product_id`, `created_at`) VALUES
@@ -1108,7 +1109,7 @@ CREATE TABLE IF NOT EXISTS `shop_product_type` (
   UNIQUE KEY `opt_sku` (`opt_sku`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.shop_product_type: ~0 rows (approximately)
+-- Dumping data for table s-cart.shop_product_type: ~7 rows (approximately)
 DELETE FROM `shop_product_type`;
 /*!40000 ALTER TABLE `shop_product_type` DISABLE KEYS */;
 INSERT INTO `shop_product_type` (`id`, `opt_name`, `opt_sku`, `opt_price`, `opt_image`, `product_id`) VALUES
@@ -1137,7 +1138,7 @@ CREATE TABLE IF NOT EXISTS `shop_promocodes` (
   UNIQUE KEY `promocodes_code_unique` (`code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart.shop_promocodes: ~0 rows (approximately)
+-- Dumping data for table s-cart.shop_promocodes: ~14 rows (approximately)
 DELETE FROM `shop_promocodes`;
 /*!40000 ALTER TABLE `shop_promocodes` DISABLE KEYS */;
 INSERT INTO `shop_promocodes` (`id`, `code`, `reward`, `type`, `data`, `number_uses`, `used`, `status`, `expires_at`) VALUES
@@ -1170,7 +1171,7 @@ CREATE TABLE IF NOT EXISTS `shop_promocode_user` (
   CONSTRAINT `promocode_user_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart.shop_promocode_user: ~0 rows (approximately)
+-- Dumping data for table s-cart.shop_promocode_user: ~16 rows (approximately)
 DELETE FROM `shop_promocode_user`;
 /*!40000 ALTER TABLE `shop_promocode_user` DISABLE KEYS */;
 INSERT INTO `shop_promocode_user` (`user_id`, `promocode_id`, `log`, `used_at`) VALUES
@@ -1203,7 +1204,7 @@ CREATE TABLE IF NOT EXISTS `shop_shipping` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.shop_shipping: ~0 rows (approximately)
+-- Dumping data for table s-cart.shop_shipping: ~1 rows (approximately)
 DELETE FROM `shop_shipping`;
 /*!40000 ALTER TABLE `shop_shipping` DISABLE KEYS */;
 INSERT INTO `shop_shipping` (`id`, `type`, `value`, `free`, `status`) VALUES
@@ -1226,7 +1227,7 @@ CREATE TABLE IF NOT EXISTS `shop_shipping_address` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.shop_shipping_address: ~0 rows (approximately)
+-- Dumping data for table s-cart.shop_shipping_address: ~1 rows (approximately)
 DELETE FROM `shop_shipping_address`;
 /*!40000 ALTER TABLE `shop_shipping_address` DISABLE KEYS */;
 INSERT INTO `shop_shipping_address` (`id`, `user_id`, `address1`, `address2`, `country`, `phone`, `sort`, `status`, `created_at`, `updated_at`) VALUES
@@ -1241,7 +1242,7 @@ CREATE TABLE IF NOT EXISTS `shop_shipping_status` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.shop_shipping_status: ~0 rows (approximately)
+-- Dumping data for table s-cart.shop_shipping_status: ~3 rows (approximately)
 DELETE FROM `shop_shipping_status`;
 /*!40000 ALTER TABLE `shop_shipping_status` DISABLE KEYS */;
 INSERT INTO `shop_shipping_status` (`id`, `name`) VALUES
@@ -1282,7 +1283,7 @@ CREATE TABLE IF NOT EXISTS `shop_special_price` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.shop_special_price: ~0 rows (approximately)
+-- Dumping data for table s-cart.shop_special_price: ~10 rows (approximately)
 DELETE FROM `shop_special_price`;
 /*!40000 ALTER TABLE `shop_special_price` DISABLE KEYS */;
 INSERT INTO `shop_special_price` (`id`, `product_id`, `price`, `off`, `date_start`, `date_end`, `status`, `comment`, `created_at`, `updated_at`) VALUES
@@ -1315,7 +1316,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart.users: ~0 rows (approximately)
+-- Dumping data for table s-cart.users: ~6 rows (approximately)
 DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `address1`, `address2`, `phone`, `remember_token`, `created_at`, `updated_at`) VALUES
