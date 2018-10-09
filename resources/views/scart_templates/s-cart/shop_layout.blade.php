@@ -280,7 +280,7 @@
               <div class="video-gallery text-center">
                 <a href="#">
                   <div class="iframe-img">
-                    <img src="{{ asset('s-cart/images/home/iframe1.png') }}" alt="" />
+                    <img src="{{ asset($theme_asset.'/images/home/iframe1.png') }}" alt="" />
                   </div>
                   <div class="overlay-icon">
                     <i class="fa fa-play-circle-o"></i>
@@ -295,7 +295,7 @@
               <div class="video-gallery text-center">
                 <a href="#">
                   <div class="iframe-img">
-                    <img src="{{ asset('s-cart/images/home/iframe2.png') }}" alt="" />
+                    <img src="{{ asset($theme_asset.'/images/home/iframe2.png') }}" alt="" />
                   </div>
                   <div class="overlay-icon">
                     <i class="fa fa-play-circle-o"></i>
@@ -310,7 +310,7 @@
               <div class="video-gallery text-center">
                 <a href="#">
                   <div class="iframe-img">
-                   <img src="{{ asset('s-cart/images/home/iframe3.png') }}" alt="" />
+                   <img src="{{ asset($theme_asset.'/images/home/iframe3.png') }}" alt="" />
                   </div>
                   <div class="overlay-icon">
                     <i class="fa fa-play-circle-o"></i>
@@ -325,7 +325,7 @@
               <div class="video-gallery text-center">
                 <a href="#">
                   <div class="iframe-img">
-                    <img src="{{ asset('s-cart/images/home/iframe4.png') }}" alt="" />
+                    <img src="{{ asset($theme_asset.'/images/home/iframe4.png') }}" alt="" />
                   </div>
                   <div class="overlay-icon">
                     <i class="fa fa-play-circle-o"></i>
@@ -338,7 +338,7 @@
           </div>
           <div class="col-sm-3">
             <div class="address">
-              <img src="{{ asset('s-cart/images/home/map.png') }}" alt="" />
+              <img src="{{ asset($theme_asset.'/images/home/map.png') }}" alt="" />
               <p>{{ $configs_global['address'] }}</p>
             </div>
           </div>
