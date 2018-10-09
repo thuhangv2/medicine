@@ -24,7 +24,7 @@ class ConfigInfoController extends Controller
         return Admin::content(function (Content $content) {
 
             $content->header('Thông tin cấu hình');
-            // $content->description('description');
+            $content->description(' ');
 
             $content->body($this->grid());
         });
@@ -74,7 +74,7 @@ class ConfigInfoController extends Controller
 
             $grid->id('Thứ tự')->sortable();
             $grid->detail('Thông tin')->sortable();
-            $grid->value('Value')->editable('textarea');
+            $grid->value('Value')->editable();
             $grid->model()->where('code', 'info');
             $grid->disableCreation();
             $grid->disableExport();

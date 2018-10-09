@@ -5,17 +5,17 @@ return [
     /*
      * Laravel-admin name.
      */
-    'name'          => 'System admin',
+    'name'          => 'S-cart admin',
 
     /*
      * Logo in admin panel header.
      */
-    'logo'          => 'System admin',
+    'logo'          => '<img src="/images/scart-min.png">',
 
     /*
      * Mini-logo in admin panel header.
      */
-    'logo-mini'     => '<b>Admin</b>',
+    'logo-mini'     => '<b>S-cart</b>',
 
     /*
      * Route configuration.
@@ -37,7 +37,7 @@ return [
     /*
      * Laravel-admin html title.
      */
-    'title'         => 'System admin',
+    'title'         => 'S-cart admin',
 
     /*
      * Use `https`.
