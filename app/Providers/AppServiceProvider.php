@@ -29,6 +29,8 @@ class AppServiceProvider extends ServiceProvider
             ['address' => $configs_global['email'], 'name' => $configs_global['title']]]
         );
         //SMTP
+        //
+        config(['admin.operation_log.enable' => empty($configs['admin_log']) ? false : $configs['admin_log']]);
 
         //============end config====
 

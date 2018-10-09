@@ -21,7 +21,7 @@ class HomeController extends Controller
     {
         return Admin::content(function (Content $content) {
             $content->header('Trang tổng quát');
-            // $content->description('Description...');
+            $content->description(' ');
 
             $content->row(function ($row) {
                 $row->column(4, new InfoBox('Tổng sản phẩm', 'tags', 'aqua', '/' . config('admin.route.prefix') . '/shop_product', ShopProduct::all()->count()));
