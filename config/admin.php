@@ -10,7 +10,7 @@ return [
     /*
      * Logo in admin panel header.
      */
-    'logo'          => 'S-cart',
+    'logo'          => '<img src="images/scart-min.png">',
 
     /*
      * Mini-logo in admin panel header.
