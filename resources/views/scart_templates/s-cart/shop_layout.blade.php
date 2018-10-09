@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{{ empty($description)?'':$description }}">
     <meta name="keyword" content="{{ empty($keyword)?'':$keyword }}">
-    <meta property="fb:app_id" content="{{ $configs['site_fb_appID'] }}" />
+    <meta property="fb:app_id" content="{{ $configs_global['site_fb_appID'] }}" />
     <title>{{ empty($title)?'':$title }}</title>
     <meta property="og:image" content="{{ !empty($og_image)?$og_image:asset('images/org.jpg') }}" />
     <meta property="og:url" content="{{ \Request::fullUrl() }}" />
@@ -49,7 +49,7 @@
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
-  js.src = '//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.8&appId={{ $configs['site_fb_appID'] }}';
+  js.src = '//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.8&appId={{ $configs_global['site_fb_appID'] }}';
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 </script>
