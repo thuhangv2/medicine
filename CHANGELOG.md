@@ -1,4 +1,8 @@
 # Release Notes
+## v2.0.2-2 (2018-10-09)
+### Changed
+> Config log adim
+> Fig error use funcion url in config
 ## v2.0.1 & v2.0.2 (2018-10-05)
 
 ## v2.0 (2018-09-23)
