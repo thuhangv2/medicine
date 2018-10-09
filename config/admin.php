@@ -10,12 +10,12 @@ return [
     /*
      * Logo in admin panel header.
      */
-    'logo'          => 'Scart',
+    'logo'          => 'S-cart',
 
     /*
      * Mini-logo in admin panel header.
      */
-    'logo-mini'     => '<b>Admin</b>',
+    'logo-mini'     => '<b>S-cart</b>',
 
     /*
      * Route configuration.
@@ -37,7 +37,7 @@ return [
     /*
      * Laravel-admin html title.
      */
-    'title'         => 'System admin',
+    'title'         => 'S-cart admin',
 
     /*
      * Use `https`.
