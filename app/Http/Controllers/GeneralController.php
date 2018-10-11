@@ -8,6 +8,7 @@ use App\Models\CmsNews;
 use App\Models\CmsPage;
 use App\Models\Config;
 use App\Models\ConfigGlobal;
+use App\Models\Language;
 use App\Models\ShopBrand;
 use App\Models\ShopCategory;
 use Illuminate\Http\Request;
@@ -24,7 +25,7 @@ class GeneralController extends Controller
     public $brands;
     public $categories;
     public $news;
-    public $locale;
+    public $languages;
 
     public function __construct()
     {
@@ -40,7 +41,7 @@ class GeneralController extends Controller
         $this->brands         = ShopBrand::getBrands();
         $this->categories     = ShopCategory::getCategories(0);
         $this->news           = (new CmsNews)->getItemsNews($limit = 6, $opt = 'paginate');
-        $this->locale         = app()->getLocale();
+        $this->languages      = Language::pluck('name', 'code');
 //Share variable
         View::share('path_file', $this->path_file);
         View::share('banners', $this->banners);
@@ -54,8 +55,9 @@ class GeneralController extends Controller
         View::share('brands', $this->brands);
 
         View::share('news', $this->news);
-        View::share('locale', $this->locale);
+        View::share('languages', $this->languages);
 //
+        $this->middleware('localization');
     }
 
 /**
@@ -152,4 +154,5 @@ class GeneralController extends Controller
     {
         return CmsPage::where('uniquekey', $key)->where('status', 1)->first();
     }
+
 }

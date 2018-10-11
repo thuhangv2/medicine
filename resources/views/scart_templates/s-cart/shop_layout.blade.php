@@ -66,19 +66,21 @@
               </ul>
             </div>
           </div>
-{{--           <div class="col-sm-6">
+          <div class="col-sm-6">
             <div class="btn-group pull-right">
               <div class="btn-group">
                 <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                  USA
+                  {{ $languages[app()->getLocale()] }}
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a href="#">Canada</a></li>
-                  <li><a href="#">UK</a></li>
+                  @foreach ($languages as $key => $language)
+                    <li><a href="{{ url('language/'.$key) }}">{{ $language }}</a></li>
+                  @endforeach
                 </ul>
+
               </div>
-               <div class="btn-group">
+{{--                <div class="btn-group">
                 <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
                   DOLLAR
                   <span class="caret"></span>
@@ -87,9 +89,9 @@
                   <li><a href="#">Canadian Dollar</a></li>
                   <li><a href="#">Pound</a></li>
                 </ul>
-              </div>
+              </div> --}}
             </div>
-          </div> --}}
+          </div>
         </div>
       </div>
     </div><!--/header_top-->

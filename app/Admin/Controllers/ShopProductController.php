@@ -235,7 +235,7 @@ SCRIPT;
                         $image_thumb->save($file_path_admin . '/thumb/' . $product->image);
                         //end thumb
                     }
-                    if (count($product->images)) {
+                    if (($product->images)) {
                         foreach ($product->images as $key => $image) {
                             if (!file_exists($file_path_admin . '/thumb/' . $image->image)) {
                                 \Image::make($file_path_admin . '/' . $image->image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $image->image);
@@ -250,7 +250,7 @@ SCRIPT;
                         }
                     }
 
-                    if (count($product->types)) {
+                    if (($product->types)) {
                         foreach ($product->types as $key => $image) {
                             if (!file_exists($file_path_admin . '/thumb/' . $image->opt_image)) {
                                 \Image::make($file_path_admin . '/' . $image->opt_image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $image->opt_image);
