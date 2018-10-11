@@ -67,7 +67,7 @@ class Shop extends GeneralController
         } else {
             return view($this->theme . '.notfound',
                 array(
-                    'title'       => 'Not found',
+                    'title'       => trans('messages.notfound'),
                     'description' => '',
                     'keyword'     => $this->configs_global['keyword'],
                 )
@@ -88,7 +88,7 @@ class Shop extends GeneralController
         if ($products) {
             return view($this->theme . '.shop_products_list',
                 array(
-                    'title'       => 'All products',
+                    'title'       => trans('shop.all_product'),
                     'description' => $this->configs_global['description'],
                     'keyword'     => $this->configs_global['keyword'],
                     'products'    => $products,
@@ -97,7 +97,7 @@ class Shop extends GeneralController
         } else {
             return view($this->theme . '.notfound',
                 array(
-                    'title'       => 'Not found',
+                    'title'       => trans('messages.notfound'),
                     'description' => '',
                     'keyword'     => $this->configs_global['keyword'],
                 )
@@ -140,7 +140,7 @@ class Shop extends GeneralController
         } else {
             return view($this->theme . '.notfound',
                 array(
-                    'title'       => 'Not found',
+                    'title'       => trans('messages.notfound'),
                     'description' => '',
                     'keyword'     => $this->configs_global['keyword'],
                 )
@@ -159,7 +159,7 @@ class Shop extends GeneralController
         $orders      = ShopOrder::with('orderTotal')->where('user_id', $id)->orderBy('id', 'desc')->get();
         $statusOrder = ShopOrderStatus::pluck('name', 'id')->all();
         return view($this->theme . '.shop_profile')->with(array(
-            'title'       => 'My profile',
+            'title'       => trans('msg.my_profile'),
             'user'        => $user,
             'orders'      => $orders,
             'statusOrder' => $statusOrder,
@@ -200,12 +200,12 @@ class Shop extends GeneralController
         } //
 
         $messages = [
-            'max'               => 'Chiều dài tối đa :max.',
-            'toname.required'   => 'Bạn chưa nhập tên.',
-            'address1.required' => 'Bạn chưa nhập địa chỉ nhà.',
-            'address2.required' => 'Bạn chưa nhập quận huyện.',
-            'phone.required'    => 'Bạn chưa nhập số điện thoại.',
-            'phone.regex'       => 'Số điện thoại chưa đúng.',
+            'max'               => trans('validation.max.numeric'),
+            'toname.required'   => trans('validation.required'),
+            'address1.required' => trans('validation.required'),
+            'address2.required' => trans('validation.required'),
+            'phone.required'    => trans('validation.required'),
+            'phone.regex'       => trans('validation.regex'),
         ];
         $v = Validator::make($request->all(), [
             'toname'   => 'required|max:100',
@@ -271,7 +271,7 @@ class Shop extends GeneralController
                 ShopOrderDetail::insert($arrDetail);
                 //If product out of stock
                 if (!$this->configs['product_buy_out_of_stock'] && $product->stock < $value->qty) {
-                    return redirect('/')->with('error', 'Mã hàng ' . $product->sku . ' vượt quá số lượng cho phép');
+                    return redirect('/')->with('error', trans('shop.cart.over', ['item' => $product->sku]));
                 } //
                 $product->stock -= $value->qty;
                 $product->sold += $value->qty;
@@ -386,7 +386,7 @@ class Shop extends GeneralController
                 return response()->json(
                     [
                         'error' => 1,
-                        'error' => 'Product exist ' . $instance,
+                        'error' => trans('shop.cart.exist', ['item' => $instance]),
                     ]
                 );
             }
@@ -418,7 +418,7 @@ class Shop extends GeneralController
         if ($product->stock < $new_qty && !$this->configs['product_buy_out_of_stock']) {
             return response()->json(
                 ['error' => 1,
-                    'msg'    => 'Vượt quá số lượng cho phép.',
+                    'msg'    => trans('shop.cart.over', ['item' => $product->sku]),
                 ]);
         } else {
             Cart::update($rowId, ($new_qty) ? $new_qty : 0);
@@ -476,7 +476,7 @@ class Shop extends GeneralController
         }
         return view($this->theme . '.shop_cart',
             array(
-                'title'       => 'Shoping cart',
+                'title'       => trans('shop.cart_title'),
                 'description' => '',
                 'keyword'     => '',
                 'cart'        => Cart::content(),
@@ -496,7 +496,7 @@ class Shop extends GeneralController
         $wishlist = Cart::instance('wishlist')->content();
         return view($this->theme . '.shop_wishlist',
             array(
-                'title'       => 'Wishlist',
+                'title'       => trans('shop.wishlist'),
                 'description' => '',
                 'keyword'     => '',
                 'wishlist'    => $wishlist,
@@ -513,7 +513,7 @@ class Shop extends GeneralController
         $compare = Cart::instance('compare')->content();
         return view($this->theme . '.shop_compare',
             array(
-                'title'       => 'Compare',
+                'title'       => trans('shop.compare'),
                 'description' => '',
                 'keyword'     => '',
                 'compare'     => $compare,
