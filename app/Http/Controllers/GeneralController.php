@@ -136,7 +136,7 @@ class GeneralController extends Controller
         } else {
             return view($this->theme . '.notfound',
                 array(
-                    'title'       => trans('msg.notfound'),
+                    'title'       => trans('language.notfound'),
                     'description' => '',
                     'keyword'     => $this->configs_global['keyword'],
 

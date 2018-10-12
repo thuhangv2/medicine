@@ -88,7 +88,7 @@ class Shop extends GeneralController
         if ($products) {
             return view($this->theme . '.shop_products_list',
                 array(
-                    'title'       => trans('shop.all_product'),
+                    'title'       => trans('language.all_product'),
                     'description' => $this->configs_global['description'],
                     'keyword'     => $this->configs_global['keyword'],
                     'products'    => $products,
@@ -159,7 +159,7 @@ class Shop extends GeneralController
         $orders      = ShopOrder::with('orderTotal')->where('user_id', $id)->orderBy('id', 'desc')->get();
         $statusOrder = ShopOrderStatus::pluck('name', 'id')->all();
         return view($this->theme . '.shop_profile')->with(array(
-            'title'       => trans('msg.my_profile'),
+            'title'       => trans('language.my_profile'),
             'user'        => $user,
             'orders'      => $orders,
             'statusOrder' => $statusOrder,
@@ -271,7 +271,7 @@ class Shop extends GeneralController
                 ShopOrderDetail::insert($arrDetail);
                 //If product out of stock
                 if (!$this->configs['product_buy_out_of_stock'] && $product->stock < $value->qty) {
-                    return redirect('/')->with('error', trans('shop.cart.over', ['item' => $product->sku]));
+                    return redirect('/')->with('error', trans('language.cart.over', ['item' => $product->sku]));
                 } //
                 $product->stock -= $value->qty;
                 $product->sold += $value->qty;
@@ -386,7 +386,7 @@ class Shop extends GeneralController
                 return response()->json(
                     [
                         'error' => 1,
-                        'error' => trans('shop.cart.exist', ['item' => $instance]),
+                        'error' => trans('language.cart.exist', ['item' => $instance]),
                     ]
                 );
             }
@@ -418,7 +418,7 @@ class Shop extends GeneralController
         if ($product->stock < $new_qty && !$this->configs['product_buy_out_of_stock']) {
             return response()->json(
                 ['error' => 1,
-                    'msg'    => trans('shop.cart.over', ['item' => $product->sku]),
+                    'msg'    => trans('language.cart.over', ['item' => $product->sku]),
                 ]);
         } else {
             Cart::update($rowId, ($new_qty) ? $new_qty : 0);
@@ -476,7 +476,7 @@ class Shop extends GeneralController
         }
         return view($this->theme . '.shop_cart',
             array(
-                'title'       => trans('shop.cart_title'),
+                'title'       => trans('language.cart_title'),
                 'description' => '',
                 'keyword'     => '',
                 'cart'        => Cart::content(),
@@ -496,7 +496,7 @@ class Shop extends GeneralController
         $wishlist = Cart::instance('wishlist')->content();
         return view($this->theme . '.shop_wishlist',
             array(
-                'title'       => trans('shop.wishlist'),
+                'title'       => trans('language.wishlist'),
                 'description' => '',
                 'keyword'     => '',
                 'wishlist'    => $wishlist,
@@ -513,7 +513,7 @@ class Shop extends GeneralController
         $compare = Cart::instance('compare')->content();
         return view($this->theme . '.shop_compare',
             array(
-                'title'       => trans('shop.compare'),
+                'title'       => trans('language.compare'),
                 'description' => '',
                 'keyword'     => '',
                 'compare'     => $compare,
@@ -567,15 +567,15 @@ class Shop extends GeneralController
         if ($check['error'] == 1) {
             $error = 1;
             if ($check['msg'] == 'error_code_not_exist') {
-                $msg = trans('shop.coupon.invalid');
+                $msg = trans('language.coupon.invalid');
             } elseif ($check['msg'] == 'error_code_cant_use') {
-                $msg = trans('shop.coupon.over');
+                $msg = trans('language.coupon.over');
             } elseif ($check['msg'] == 'error_code_expired_disabled') {
                 $msg = "Mã hết hạn sử dụng!";
             } elseif ($check['msg'] == 'error_user_used') {
-                $msg = trans('shop.coupon.used');
+                $msg = trans('language.coupon.used');
             } else {
-                $msg = trans('shop.coupon.undefined');
+                $msg = trans('language.coupon.undefined');
             }
 
         } else {
@@ -583,7 +583,7 @@ class Shop extends GeneralController
             if ($content['type'] === 1) {
                 //Point use in my page
                 $error = 1;
-                $msg   = trans('shop.coupon.not_allow');
+                $msg   = trans('language.coupon.not_allow');
             } else {
                 $arrType = [
                     '0' => 'VNĐ',
@@ -591,7 +591,7 @@ class Shop extends GeneralController
                     '2' => '%',
                 ];
                 $error = 0;
-                $msg   = trans('shop.coupon.not_allow', ['value' => number_format($content['reward']) . $arrType[$content['type']]]);
+                $msg   = trans('language.coupon.not_allow', ['value' => number_format($content['reward']) . $arrType[$content['type']]]);
                 $request->session()->put('coupon', $code);
 
                 $objects   = array();
@@ -683,7 +683,7 @@ class Shop extends GeneralController
         $keyword = $request->get('keyword');
         return view($this->theme . '.shop_products_list',
             array(
-                'title'    => trans('shop.search') . ': ' . $keyword,
+                'title'    => trans('language.search') . ': ' . $keyword,
                 'products' => ShopProduct::getSearch($keyword),
             ));
     }
@@ -699,7 +699,7 @@ class Shop extends GeneralController
         }
         return view($this->theme . '.shop_login',
             array(
-                'title' => trans('shop.login'),
+                'title' => trans('language.login'),
             )
         );
     }
@@ -723,7 +723,7 @@ class Shop extends GeneralController
         }
         return view($this->theme . '.shop_forgot',
             array(
-                'title' => trans('shop.for_got_password'),
+                'title' => trans('language.for_got_password'),
             )
         );
     }
@@ -742,7 +742,7 @@ class Shop extends GeneralController
             //
         } //
 
-        return redirect('cart.html')->with('message', trans('shop.order.success'));
+        return redirect('cart.html')->with('message', trans('language.order.success'));
     }
 
 }
