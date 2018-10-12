@@ -567,15 +567,15 @@ class Shop extends GeneralController
         if ($check['error'] == 1) {
             $error = 1;
             if ($check['msg'] == 'error_code_not_exist') {
-                $msg = "Coupon code invalid!";
+                $msg = trans('shop.coupon.invalid');
             } elseif ($check['msg'] == 'error_code_cant_use') {
-                $msg = "Mã vượt quá số lần sử dụng!";
+                $msg = trans('shop.coupon.over');
             } elseif ($check['msg'] == 'error_code_expired_disabled') {
                 $msg = "Mã hết hạn sử dụng!";
             } elseif ($check['msg'] == 'error_user_used') {
-                $msg = "Bạn đã dùng mã này rồi!";
+                $msg = trans('shop.coupon.used');
             } else {
-                $msg = "Error undefined!";
+                $msg = trans('shop.coupon.undefined');
             }
 
         } else {
@@ -583,7 +583,7 @@ class Shop extends GeneralController
             if ($content['type'] === 1) {
                 //Point use in my page
                 $error = 1;
-                $msg   = "Bạn không thể dụng mã Point trực tiếp!";
+                $msg   = trans('shop.coupon.not_allow');
             } else {
                 $arrType = [
                     '0' => 'VNĐ',
@@ -591,7 +591,7 @@ class Shop extends GeneralController
                     '2' => '%',
                 ];
                 $error = 0;
-                $msg   = "Mã giảm giá có giá trị " . number_format($content['reward']) . $arrType[$content['type']] . " cho đơn hàng này.";
+                $msg   = trans('shop.coupon.not_allow', ['value' => number_format($content['reward']) . $arrType[$content['type']]]);
                 $request->session()->put('coupon', $code);
 
                 $objects   = array();
@@ -683,7 +683,7 @@ class Shop extends GeneralController
         $keyword = $request->get('keyword');
         return view($this->theme . '.shop_products_list',
             array(
-                'title'    => 'Search keyword: ' . $keyword,
+                'title'    => trans('shop.search') . ': ' . $keyword,
                 'products' => ShopProduct::getSearch($keyword),
             ));
     }
@@ -699,7 +699,7 @@ class Shop extends GeneralController
         }
         return view($this->theme . '.shop_login',
             array(
-                'title' => 'Login',
+                'title' => trans('shop.login'),
             )
         );
     }
@@ -723,7 +723,7 @@ class Shop extends GeneralController
         }
         return view($this->theme . '.shop_forgot',
             array(
-                'title' => 'Forgot password',
+                'title' => trans('shop.for_got_password'),
             )
         );
     }
@@ -742,7 +742,7 @@ class Shop extends GeneralController
             //
         } //
 
-        return redirect('cart.html')->with('message', 'Order succeed!');
+        return redirect('cart.html')->with('message', trans('shop.order.success'));
     }
 
 }
