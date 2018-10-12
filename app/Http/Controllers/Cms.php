@@ -21,7 +21,7 @@ class Cms extends GeneralController
     {
         return view($this->theme . '.cms_news',
             array(
-                'title'       => 'Blogs',
+                'title'       => trans('language.blog'),
                 'description' => $this->configs_global['description'],
                 'keyword'     => $this->configs_global['keyword'],
                 'news'        => $this->news,
@@ -48,7 +48,7 @@ class Cms extends GeneralController
         } else {
             return view($this->theme . '.notfound',
                 array(
-                    'title'       => 'Not found',
+                    'title'       => trans('language.notfound'),
                     'description' => '',
                     'keyword'     => $this->configs_global['keyword'],
                 )

@@ -2,7 +2,7 @@
 
 @section('content')
           <div class="features_items"><!--features_items-->
-            <h2 class="title text-center">Features Items</h2>
+            <h2 class="title text-center">{{ trans('language.features_items') }}</h2>
                 @foreach ($products_new as  $key => $product_new)
                   <div class="col-sm-4">
                     <div class="product-image-wrapper">
@@ -11,7 +11,7 @@
                             <a href="{{ $product_new->getUrl() }}"><img src="{{ asset($product_new->getThumb()) }}" alt="{{ $product_new->name }}" /></a>
                             {!! $product_new->showPrice() !!}
                             <a href="{{ $product_new->getUrl() }}"><p>{{ $product_new->name }}</p></a>
-                            <a href="#" class="btn btn-default add-to-cart" onClick="addToCart({{ $product_new->id }})"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                            <a href="#" class="btn btn-default add-to-cart" onClick="addToCart({{ $product_new->id }})"><i class="fa fa-shopping-cart"></i>{{trans('language.add_to_cart')}}</a>
                           </div>
                       @if ($product_new->price != $product_new->getPrice())
                       <img src="{{ asset($theme_asset.'/images/home/sale.png') }}" class="new" alt="" />
@@ -21,8 +21,8 @@
                       </div>
                       <div class="choose">
                         <ul class="nav nav-pills nav-justified">
-                          <li><a onClick="addToCart({{ $product_new->id }},'wishlist')" href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                          <li><a onClick="addToCart({{ $product_new->id }},'compare')" href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                          <li><a onClick="addToCart({{ $product_new->id }},'wishlist')" href="#"><i class="fa fa-plus-square"></i>{{trans('language.add_to_wishlist')}}</a></li>
+                          <li><a onClick="addToCart({{ $product_new->id }},'compare')" href="#"><i class="fa fa-plus-square"></i>{{trans('language.add_to_compare')}}</a></li>
                         </ul>
                       </div>
                     </div>
@@ -51,7 +51,7 @@
                             <a href="{{ $product->getUrl() }}"><img src="{{ asset($product->getThumb()) }}" alt="{{ $product->name }}" /></a>
                             {!! $product->showPrice() !!}
                             <a href="{{ $product->getUrl() }}"><p>{{ $product->name }}</p></a>
-                            <a href="#" class="btn btn-default add-to-cart" onClick="addToCart({{ $product->id }})"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                            <a href="#" class="btn btn-default add-to-cart" onClick="addToCart({{ $product->id }})"><i class="fa fa-shopping-cart"></i>{{trans('language.add_to_cart')}}</a>
                           </div>
                           @if ($product->price != $product->getPrice())
                           <img src="{{ asset($theme_asset.'/images/home/sale.png') }}" class="new" alt="" />
@@ -69,7 +69,7 @@
           </div><!--/category-tab-->
 
           <div class="recommended_items"><!--recommended_items-->
-            <h2 class="title text-center">recommended items</h2>
+            <h2 class="title text-center">{{ trans('language.recommended_items') }}</h2>
 
             <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
               <div class="carousel-inner">
@@ -84,7 +84,7 @@
                             <a href="{{ $product_hot->getUrl() }}"><img src="{{ asset($product_hot->getThumb()) }}" alt="{{ $product_hot->name }}" /></a>
                             {!! $product_hot->showPrice() !!}
                             <a href="{{ $product_hot->getUrl() }}"><p>{{ $product_hot->name }}</p></a>
-                            <a href="#" class="btn btn-default add-to-cart" onClick="addToCart({{ $product_hot->id }})"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                            <a href="#" class="btn btn-default add-to-cart" onClick="addToCart({{ $product_hot->id }})"><i class="fa fa-shopping-cart"></i>{{trans('language.add_to_cart')}}</a>
                           </div>
                           @if ($product_hot->price != $product_hot->getPrice())
                           <img src="{{ asset($theme_asset.'/images/home/sale.png') }}" class="new" alt="" />
@@ -94,8 +94,8 @@
                       </div>
                       <div class="choose">
                         <ul class="nav nav-pills nav-justified">
-                          <li><a onClick="addToCart({{ $product_hot->id }},'wishlist')" href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                          <li><a onClick="addToCart({{ $product_hot->id }},'compare')" href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                          <li><a onClick="addToCart({{ $product_hot->id }},'wishlist')" href="#"><i class="fa fa-plus-square"></i>{{trans('language.add_to_wishlist')}}</a></li>
+                          <li><a onClick="addToCart({{ $product_hot->id }},'compare')" href="#"><i class="fa fa-plus-square"></i>{{trans('language.add_to_compare')}}</a></li>
                         </ul>
                       </div>
                     </div>

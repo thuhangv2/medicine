@@ -56,7 +56,7 @@
                   <input type="number" name="qty" value="1" />
                   <button type="submit" class="btn btn-fefault cart">
                     <i class="fa fa-shopping-cart"></i>
-                    Add to cart
+                    {{trans('language.add_to_cart')}}
                   </button>
                 </span>
                 <p><b>Availability:</b>
