@@ -1,9 +1,11 @@
 <?php
-
+#app/Http/Admin/Controllers/ShopCategoryController.php
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Language;
 use App\Models\ShopCategory;
+use App\Models\ShopCategoryDescription;
 use Encore\Admin\Controllers\ModelForm;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
@@ -25,7 +27,7 @@ class ShopCategoryController extends Controller
         return Admin::content(function (Content $content) {
 
             $content->header('Danh mục sản phẩm');
-            // $content->description('description');
+            $content->description(' ');
 
             $content->body($this->grid());
         });
@@ -42,7 +44,7 @@ class ShopCategoryController extends Controller
         return Admin::content(function (Content $content) use ($id) {
 
             $content->header('Chỉnh sửa danh mục sản phẩm');
-            // $content->description('description');
+            $content->description(' ');
 
             $content->body($this->form()->edit($id));
         });
@@ -58,7 +60,7 @@ class ShopCategoryController extends Controller
         return Admin::content(function (Content $content) {
 
             $content->header('Tạo mới danh mục sản phẩm');
-            // $content->description('description');
+            $content->description(' ');
 
             $content->body($this->form());
         });
@@ -75,13 +77,16 @@ class ShopCategoryController extends Controller
 
             $grid->id('ID')->sortable();
             $grid->image('Hình ảnh')->image('', 50);
-            $grid->name('Tên')->sortable();
+            $grid->name('Tên')->display(function () {
+                return ShopCategory::find($this->id)->getName();
+            });
             $grid->parent('Danh mục cha')->display(function ($parent) {
-                return (ShopCategory::find($parent)) ? ShopCategory::find($parent)->name : '';
+                return (ShopCategory::find($parent)) ? ShopCategory::find($parent)->getName() : '';
             });
             $grid->status('Status')->switch();
             $grid->sort('Sắp xếp')->editable();
             $grid->disableExport();
+            $grid->model()->orderBy('id', 'desc');
             $grid->tools(function ($tools) {
                 $tools->batch(function ($batch) {
                     $batch->disableDelete();
@@ -101,20 +106,58 @@ class ShopCategoryController extends Controller
     protected function form()
     {
         return Admin::form(ShopCategory::class, function (Form $form) {
-
-            $form->display('id', 'ID');
-            $form->text('name', 'Tên')->rules('required', ['required' => 'Bạn chưa nhập tên']);
+            $routeName        = \Route::currentRouteName();
+            $action           = \Route::getCurrentRoute()->getActionMethod();
+            $langDescriptions = array();
+            $idCheck          = 0;
+            if ($action === 'edit') {
+                $fullUrl  = url()->current();
+                $pathName = explode('.', $routeName)[0];
+                $idCheck  = empty(explode($pathName . '/', $fullUrl)[1]) ? 0 : (int) explode($pathName . '/', $fullUrl)[1];
+            }
+            $languages = Language::where('status', 1)->get();
+            foreach ($languages as $key => $language) {
+                if ($idCheck) {
+                    $langDescriptions = ShopCategoryDescription::where('shop_category_id', $idCheck)->where('lang_id', $language->id)->first();
+                }
+                $form->html('<b>' . $language->name . '</b><img style="width:50px" src="' . $language->icon . '">');
+                $form->text($language->code . '[name]', 'Tên')->rules('required', ['required' => 'Bạn chưa nhập tên'])->default(!empty($langDescriptions->name) ? $langDescriptions->name : null);
+                $form->text($language->code . '[keyword]', 'Keyword')->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
+                $form->text($language->code . '[description]', 'Description')->rules('max:300', ['max' => 'Tối đa 300 kí tự'])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
+                $form->divide();
+            }
             $arrCate = (new ShopCategory)->listCate();
             $arrCate = ['0' => '== Danh mục gốc =='] + $arrCate;
             $form->select('parent', 'Danh mục cha')->options($arrCate);
             $form->image('image', 'Hình ảnh')->uniqueName()->move('category')->removable();
             $form->number('sort', 'Sắp xếp');
             $form->switch('status', 'Trạng thái');
-            $form->divide('Hỗ trợ SEO');
-            $form->html('<b>Hỗ trợ SEO</b>');
-            $form->tags('keyword', 'Từ khóa');
-            $form->textarea('description', 'Mô tả')->rules('max:300', ['max' => 'Tối đa 300 kí tự']);
-            $form->saved(function (Form $form) {
+            $arrData = array();
+            $form->saving(function (Form $form) use ($languages, &$arrData) {
+                foreach ($languages as $key => $language) {
+                    $arrData[$language->code]            = $form->{$language->code};
+                    $arrData[$language->code]['lang_id'] = $language->id;
+                }
+            });
+            $form->saved(function (Form $form) use ($languages, &$arrData) {
+                $idForm = $form->model()->id;
+                foreach ($languages as $key => $language) {
+                    $arrData[$language->code]['shop_category_id'] = $idForm;
+                }
+                foreach ($arrData as $key => $value) {
+                    $checkLangData = ShopCategoryDescription::where('lang_id', $value['lang_id'])->where('shop_category_id', $value['shop_category_id'])->delete();
+                    ShopCategoryDescription::insert($value);
+                    // if ($checkLangData) {
+                    //     $checkLangData->name        = $value['name'];
+                    //     $checkLangData->keyword     = $value['keyword'];
+                    //     $checkLangData->description = $value['description'];
+                    //     $checkLangData->save();
+                    // } else {
+                    //     ShopCategoryDescription::insert($value);
+                    // }
+                }
+                // print_r($arrData);exit;
+                // $collection->forget($key);
                 $file_path_admin = config('filesystems.disks.admin.root');
                 try {
                     if (!file_exists($file_path_admin . '/thumb/' . $form->model()->image)) {

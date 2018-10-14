@@ -1,8 +1,10 @@
 <?php
-
+#app/Models/ShopCategory.php
 namespace App\Models;
 
 use App\Models\Config;
+use App\Models\Language;
+use App\Models\ShopCategoryDescription;
 use App\Models\ShopProduct;
 use Illuminate\Database\Eloquent\Model;
 use Scart;
@@ -11,6 +13,13 @@ class ShopCategory extends Model
 {
     public $timestamps = false;
     public $table      = 'shop_category';
+    public function locale()
+    {
+        $lange = Language::pluck('id', 'code')->all();
+        return ShopCategoryDescription::where('shop_category_id', $this->id)
+            ->where('lang_id', $lange[app()->getLocale()])
+            ->first();
+    }
     public function products()
     {
         return $this->hasMany('App\Models\ShopProduct', 'category_id', 'id');
@@ -19,12 +28,11 @@ class ShopCategory extends Model
     public function listCate()
     {
         $list   = [];
-        $result = $this->select('name', 'id', 'parent')
+        $result = $this->select('id', 'parent')
             ->where('parent', 0)
-            ->get()
-            ->toArray();
+            ->get();
         foreach ($result as $value) {
-            $list[$value['id']] = $value['name'];
+            $list[$value['id']] = $value->getName();
             if ($this->getChildrens($value['id'])->count() > 0) {
                 $this->listCateExceptRoot($value['id'], $list);
             }
@@ -34,12 +42,11 @@ class ShopCategory extends Model
 
     public function listCateExceptRoot($id, &$list, $st = '--')
     {
-        $result = $this->select('name', 'id', 'parent')
+        $result = $this->select('id', 'parent')
             ->where('parent', $id)
-            ->get()
-            ->toArray();
+            ->get();
         foreach ($result as $value) {
-            $list[$value['id']] = $st . ' ' . $value['name'];
+            $list[$value['id']] = $st . ' ' . $value->getName();
             $this->listCateExceptRoot($value['id'], $list, $st . '--');
         }
 
@@ -155,4 +162,19 @@ class ShopCategory extends Model
     {
         return url('shop/' . Scart::str_to_url($this->name) . '_' . $this->id . '.html');
     }
+
+    public function getName()
+    {
+        return empty($this->locale()->name) ? '' : $this->locale()->name;
+    }
+
+    public function getKeyword()
+    {
+        return empty($this->locale()->keyword) ? '' : $this->locale()->keyword;
+    }
+    public function getDescription()
+    {
+        return empty($this->locale()->description) ? '' : $this->locale()->description;
+    }
+
 }
