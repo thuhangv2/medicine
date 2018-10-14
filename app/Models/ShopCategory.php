@@ -177,4 +177,9 @@ class ShopCategory extends Model
         return empty($this->locale()->description) ? '' : $this->locale()->description;
     }
 
+    public function getNameAttribute()
+    {
+        return empty($this->locale()->name) ? '' : $this->locale()->name;
+
+    }
 }

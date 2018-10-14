@@ -147,16 +147,7 @@ class ShopCategoryController extends Controller
                 foreach ($arrData as $key => $value) {
                     $checkLangData = ShopCategoryDescription::where('lang_id', $value['lang_id'])->where('shop_category_id', $value['shop_category_id'])->delete();
                     ShopCategoryDescription::insert($value);
-                    // if ($checkLangData) {
-                    //     $checkLangData->name        = $value['name'];
-                    //     $checkLangData->keyword     = $value['keyword'];
-                    //     $checkLangData->description = $value['description'];
-                    //     $checkLangData->save();
-                    // } else {
-                    //     ShopCategoryDescription::insert($value);
-                    // }
                 }
-                // print_r($arrData);exit;
                 // $collection->forget($key);
                 $file_path_admin = config('filesystems.disks.admin.root');
                 try {
