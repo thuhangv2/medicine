@@ -29,7 +29,7 @@ class GeneralController extends Controller
 
     public function __construct()
     {
-
+        $this->middleware('localization');
         //=======Config====
         //Config for  SMTP
         $configs        = Config::pluck('value', 'key')->all();
@@ -68,7 +68,7 @@ class GeneralController extends Controller
         $this->brands         = ShopBrand::getBrands();
         $this->categories     = ShopCategory::getCategories(0);
         $this->news           = (new CmsNews)->getItemsNews($limit = 6, $opt = 'paginate');
-        $this->languages      = Language::pluck('name', 'code');
+        $this->languages      = Language::where('status', 1)->pluck('name', 'code');
 //Share variable
         View::share('path_file', $this->path_file);
         View::share('banners', $this->banners);
@@ -84,7 +84,6 @@ class GeneralController extends Controller
         View::share('news', $this->news);
         View::share('languages', $this->languages);
 //
-        $this->middleware('localization');
     }
 
 /**

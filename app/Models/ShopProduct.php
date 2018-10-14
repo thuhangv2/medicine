@@ -11,7 +11,7 @@ use Scart;
 class ShopProduct extends Model
 {
     public $table = 'shop_product';
-    public function locale()
+    public function local()
     {
         $lang = Language::pluck('id', 'code')->all();
         return ShopProductDescription::where('product_id', $this->id)
@@ -247,27 +247,42 @@ class ShopProduct extends Model
         return url('product/' . Scart::str_to_url($this->name) . '_' . $this->id . '.html');
     }
 
+//Fields language
     public function getName()
     {
-        return empty($this->locale()->name) ? '' : $this->locale()->name;
+        return empty($this->local()->name) ? '' : $this->local()->name;
     }
-
     public function getKeyword()
     {
-        return empty($this->locale()->keyword) ? '' : $this->locale()->keyword;
+        return empty($this->local()->keyword) ? '' : $this->local()->keyword;
     }
     public function getDescription()
     {
-        return empty($this->locale()->description) ? '' : $this->locale()->description;
+        return empty($this->local()->description) ? '' : $this->local()->description;
     }
     public function getContent()
     {
-        return empty($this->locale()->content) ? '' : $this->locale()->content;
+        return empty($this->local()->content) ? '' : $this->local()->content;
     }
+
+//Attributes
     public function getNameAttribute()
     {
-        return empty($this->locale()->name) ? '' : $this->locale()->name;
+        return $this->getName();
+    }
+    public function getKeywordAttribute()
+    {
+        return $this->getKeyword();
 
     }
+    public function getDescriptionAttribute()
+    {
+        return $this->getDescription();
 
+    }
+    public function getContentAttribute()
+    {
+        return $this->getContent();
+
+    }
 }

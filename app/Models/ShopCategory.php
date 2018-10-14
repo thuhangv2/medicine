@@ -13,7 +13,7 @@ class ShopCategory extends Model
 {
     public $timestamps = false;
     public $table      = 'shop_category';
-    public function locale()
+    public function local()
     {
         $lang = Language::pluck('id', 'code')->all();
         return ShopCategoryDescription::where('shop_category_id', $this->id)
@@ -142,10 +142,6 @@ class ShopCategory extends Model
         return $this->with('products')->where('parent', $id)->get();
     }
 
-/**
- * [getThumb description]
- * @return [type] [description]
- */
     public function getThumb()
     {
         $path_file = config('filesystems.disks.path_file', '');
@@ -156,42 +152,45 @@ class ShopCategory extends Model
         }
     }
 
-/**
- * [getImage description]
- * @return [type] [description]
- */
     public function getImage()
     {
         $path_file = config('filesystems.disks.path_file', '');
         return $path_file . '/' . $this->image;
 
     }
-/**
- * [getUrl description]
- * @return [type] [description]
- */
+
     public function getUrl()
     {
         return url('shop/' . Scart::str_to_url($this->name) . '_' . $this->id . '.html');
     }
 
+//Fields language
     public function getName()
     {
-        return empty($this->locale()->name) ? '' : $this->locale()->name;
+        return empty($this->local()->name) ? '' : $this->local()->name;
     }
-
     public function getKeyword()
     {
-        return empty($this->locale()->keyword) ? '' : $this->locale()->keyword;
+        return empty($this->local()->keyword) ? '' : $this->local()->keyword;
     }
     public function getDescription()
     {
-        return empty($this->locale()->description) ? '' : $this->locale()->description;
+        return empty($this->local()->description) ? '' : $this->local()->description;
     }
 
+//Attributes
     public function getNameAttribute()
     {
-        return empty($this->locale()->name) ? '' : $this->locale()->name;
+        return $this->getName();
+    }
+    public function getKeywordAttribute()
+    {
+        return $this->getKeyword();
+
+    }
+    public function getDescriptionAttribute()
+    {
+        return $this->getDescription();
 
     }
 }
