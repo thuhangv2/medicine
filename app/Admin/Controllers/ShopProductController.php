@@ -1,13 +1,13 @@
 <?php
-
+#app/Admin/Controller/ShopProductController.php
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Language;
 use App\Models\ShopBrand;
 use App\Models\ShopCategory;
-use App\Models\ShopOption;
-use App\Models\ShopOptionDetail;
 use App\Models\ShopProduct;
+use App\Models\ShopProductDescription;
 use Encore\Admin\Controllers\ModelForm;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
@@ -35,7 +35,7 @@ class ShopProductController extends Controller
                 $content->body($this->report());
             } else {
                 $content->header('Quản lý sản phẩm');
-                // $content->description('description');
+                $content->description(' ');
                 $content->body($this->grid());
             }
 
@@ -53,7 +53,7 @@ class ShopProductController extends Controller
         return Admin::content(function (Content $content) use ($id) {
 
             $content->header('Chỉnh sửa sản phẩm');
-            // $content->description('description');
+            $content->description(' ');
 
             $content->body($this->form($id)->edit($id));
         });
@@ -69,7 +69,7 @@ class ShopProductController extends Controller
         return Admin::content(function (Content $content) {
 
             $content->header('Tạo sản phẩm mới');
-            // $content->description('description');
+            $content->description(' ');
 
             $content->body($this->form());
         });
@@ -86,9 +86,7 @@ class ShopProductController extends Controller
 
             $grid->id('ID')->sortable();
             $grid->name('Tên sản phẩm')->sortable();
-            $grid->category('Chuyên mục')->display(function ($cate) {
-                return $cate['name'];
-            });
+            $grid->category()->name('Danh mục');
             $grid->image('Hình ảnh')->image('', 50);
             $grid->cost('Giá cost')->display(function ($price) {
                 return number_format($price);
@@ -103,7 +101,6 @@ class ShopProductController extends Controller
             });
             $grid->status('Hiển thị sản phẩm')->switch();
             $grid->created_at('Ngày tạo');
-            // $grid->updated_at('Lần cuối chỉnh sửa');
             $grid->model()->orderBy('id', 'desc');
             $grid->disableExport();
             $grid->actions(function ($actions) {
@@ -121,20 +118,38 @@ class ShopProductController extends Controller
     {
 
         return Admin::form(ShopProduct::class, function (Form $form) use ($id) {
-            $form->tab('Thông tin sản phẩm', function ($form) {
+            $languages = Language::where('status', 1)->get();
+            $form->tab('Thông tin sản phẩm', function ($form) use ($languages) {
+
+                $routeName        = \Route::currentRouteName();
+                $action           = \Route::getCurrentRoute()->getActionMethod();
+                $langDescriptions = array();
+                $idCheck          = 0;
+                if ($action === 'edit') {
+                    $fullUrl  = url()->current();
+                    $pathName = explode('.', $routeName)[0];
+                    $idCheck  = empty(explode($pathName . '/', $fullUrl)[1]) ? 0 : (int) explode($pathName . '/', $fullUrl)[1];
+                }
+
+                foreach ($languages as $key => $language) {
+                    if ($idCheck) {
+                        $langDescriptions = ShopProductDescription::where('product_id', $idCheck)->where('lang_id', $language->id)->first();
+                    }
+                    $form->html('<b>' . $language->name . '</b> <img style="height:25px" src="/' . config('filesystems.disks.path_file') . '/' . $language->icon . '">');
+                    $form->text($language->code . '[name]', 'Tên')->rules('required', ['required' => 'Bạn chưa nhập tên'])->default(!empty($langDescriptions->name) ? $langDescriptions->name : null);
+                    $form->text($language->code . '[keyword]', 'Keyword')->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
+                    $form->textarea($language->code . '[description]', 'Description')->rules('max:300', ['max' => 'Tối đa 300 kí tự'])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
+                    $form->ckeditor($language->code . '[content]', 'Nội dung')->default(!empty($langDescriptions->content) ? $langDescriptions->content : null);
+                    $form->divide();
+                }
 
                 $arrBrand = ShopBrand::pluck('name', 'id')->all();
                 $arrBrand = ['0' => '-- Chọn nhãn hiệu --'] + $arrBrand;
-                $form->text('name', 'Tên sản phẩm')->rules('required', [
-                    'required' => 'Bạn chưa nhập tên sản phẩm']);
-                $arrCate = (new ShopCategory)->listCate();
+                $arrCate  = (new ShopCategory)->listCate();
                 $form->select('category_id', 'Danh mục')->options($arrCate)->rules('required', [
                     'required' => 'Bạn chưa chọn danh mục']
                 );
                 $form->image('image', 'Hình ảnh')->uniqueName()->move('product');
-                $form->tags('keyword', 'Từ khóa');
-                $form->textarea('description', 'Mô tả')->rules('max:300', ['max' => 'Tối đa 300 kí tự']);
-                $form->ckeditor('content', 'Nội dung');
                 $form->currency('price', 'Giá bán')->symbol('VND')->options(['digits' => 0]);
                 $form->currency('cost', 'Giá cost')->symbol('VND')->options(['digits' => 0]);
                 $form->number('stock', 'Số lượng');
@@ -156,74 +171,29 @@ class ShopProductController extends Controller
                     $form->image('image', 'Hình ảnh nhỏ')->uniqueName()->move('product_slide');
                 });
 
-            })->tab('Thuộc tính sản phẩm', function ($form) use ($id) {
-                $options = ShopOption::pluck('name', 'id')->all();
-                $html    = '';
-                foreach ($options as $key => $value) {
-                    ${'option_' . $key} = ShopOptionDetail::where('product_id', $id)->where('option_id', $key)->get();
-                    $html .= '
-                        <table class="table box  table-bordered table-responsive">
-                            <thead>
-                              <tr>
-                                <th colspan="4">Thuộc tính về ' . $value . '</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                                      <tr>
-                                        <td><span>Tên ' . $value . '</span></td>
-                                        <td></td>
-                                      </tr>';
-                    if (count(${'option_' . $key}) == 0) {
-                        $html .= '<tr id="no-item-' . $key . '">
-                                <td colspan="4" align="center" style="color:#cc2a2a">Không có tùy chọn nào</td>
-                              </tr>';
-                    } else {
+            });
 
-                        foreach (${'option_' . $key} as $key2 => $value2) {
-                            $html .= '
-                                      <tr>
-                                        <td>
-                                        <span><div class="input-group"><input  type="text" name="option[' . $key . '][name][]" value="' . $value2['name'] . '" class="form-control" placeholder="Tên thuộc tính"></div></span>
-                                        </td>
-                                        <td>
-                                         <button onclick="removeItemForm(this);" class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal"  data-placement="top" rel="tooltip" data-original-title="" title="Remove item"><span class="glyphicon glyphicon-remove"></span>Xóa bỏ</button>
-                                        </td>
-                                      </tr>';
-                        }
-                    }
-
-                    $html .= '
-                               <tr id="addnew-' . $key . '">
-                                <td colspan="8">  <button type="button" class="btn btn-sm btn-success"  onclick="morItem(' . $key . ');" rel="tooltip" data-original-title="" title="Add new item"><i class="fa fa-plus"></i> Thêm lựa chọn</button>
-                        </td>
-                              </tr>
-                        <tr>
-                        </tr>
-                            </tbody>
-                          </table>';
+            $arrData = array();
+            $form->saving(function (Form $form) use ($languages, &$arrData) {
+                foreach ($languages as $key => $language) {
+                    $arrData[$language->code]            = $form->{$language->code};
+                    $arrData[$language->code]['lang_id'] = $language->id;
                 }
-                $script = <<<SCRIPT
-<script>
-                function morItem(id){
-                        $("#no-item-"+id).remove();
-                    $("tr#addnew-"+id).before("<tr><td><span><span class=\"input-group\"><input  type=\"text\" name=\"option["+id+"][name][]\" value=\"\" class=\"form-control\" placeholder=\"Tên thuộc tính\"></span></span></td><td><button onclick=\"removeItemForm(this);\" class=\"btn btn-danger btn-xs\" data-title=\"Delete\" data-toggle=\"modal\"  data-placement=\"top\" rel=\"tooltip\" data-original-title=\"\" title=\"Remove item\"><span class=\"glyphicon glyphicon-remove\"></span>Xóa bỏ</button></td></tr>");
-                    }
-
-                    function removeItemForm(elmnt){
-                      elmnt.closest("tr").remove();
-                    }
-
-                </script>
-SCRIPT;
-                $form->html($html . $script);
-
             });
 
 //saved
-            $form->saved(function (Form $form) {
-                $id              = $form->model()->id;
+            $form->saved(function (Form $form) use ($languages, &$arrData) {
+                $id = $form->model()->id;
+                foreach ($languages as $key => $language) {
+                    $arrData[$language->code]['product_id'] = $id;
+                }
+                foreach ($arrData as $key => $value) {
+                    $checkLangData = ShopProductDescription::where('lang_id', $value['lang_id'])->where('product_id', $value['product_id'])->delete();
+                    ShopProductDescription::insert($value);
+                }
+
                 $product         = ShopProduct::find($id);
-                $file_path_admin = config('filesystems.disks.admin.root');
+                $file_path_admin = config('filesystems.path_file.admin.root');
                 try {
                     if (!file_exists($file_path_admin . '/thumb/' . $product->image)) {
                         \Image::make($file_path_admin . '/' . $product->image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $product->image);
@@ -269,18 +239,6 @@ SCRIPT;
                     echo $e->getMessage();
                 }
 
-                ShopOptionDetail::where('product_id', $id)->delete();
-                $options = $form->option;
-                if (count($options) > 0) {
-                    foreach ($options as $opt_id => $option) {
-                        foreach ($option['name'] as $key => $value) {
-                            if ($value != '') {
-                                ShopOptionDetail::insert(['name' => $value, 'add_price' => 0, 'option_id' => $opt_id, 'product_id' => $id]);
-                            }
-
-                        }
-                    }
-                }
             });
             $form->disableViewCheck();
             $form->disableEditingCheck();
@@ -329,16 +287,6 @@ SCRIPT;
         });
     }
 
-    // public function show($id)
-    // {
-    //     return Admin::content(function (Content $content) use ($id) {
-
-    //         $content->header('Post');
-    //         $content->description('Detail');
-    //         $content->body(Admin::show(ShopProduct::findOrFail($id)));
-    //     });
-
-    // }
     public function show($id)
     {
         return Admin::content(function (Content $content) use ($id) {

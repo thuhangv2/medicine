@@ -1,10 +1,9 @@
 <?php
-
+#app/Models/ShopProduct.php
 namespace App\Models;
 
 use App\Models\Config;
-use App\Models\ShopOption;
-use App\Models\ShopOptionDetail;
+use App\Models\ShopProductDescription;
 use App\Models\ShopSpecialPrice;
 use Illuminate\Database\Eloquent\Model;
 use Scart;
@@ -12,7 +11,13 @@ use Scart;
 class ShopProduct extends Model
 {
     public $table = 'shop_product';
-
+    public function locale()
+    {
+        $lang = Language::pluck('id', 'code')->all();
+        return ShopProductDescription::where('product_id', $this->id)
+            ->where('lang_id', $lang[app()->getLocale()])
+            ->first();
+    }
     public function brand()
     {
         return $this->belongsTo('App\Models\ShopBrand', 'brand_id', 'id');
@@ -31,9 +36,9 @@ class ShopProduct extends Model
     {
         return $this->hasMany('App\Models\ShopProductLike', 'product_id', 'id');
     }
-    public function options()
+    public function descriptions()
     {
-        return $this->hasMany('App\Models\ShopOptionDetail', 'product_id', 'id');
+        return $this->hasMany('App\Models\ShopProductDescription', 'product_id', 'id');
     }
     public function special_price()
     {
@@ -176,9 +181,9 @@ class ShopProduct extends Model
         parent::boot();
         // before delete() method call this
         static::deleting(function ($product) {
-            $product->options()->delete();
             $product->likes()->delete();
-            $product->types()->delete();
+            $product->images()->delete();
+            $product->descriptions()->delete();
         });
     }
 
@@ -206,25 +211,6 @@ class ShopProduct extends Model
         if (is_array($category_other)) {
             $this->attributes['category_other'] = implode(',', $category_other);
         }
-
-    }
-
-/**
- * Get option of product from table option_detail
- * @return [type] [description]
- */
-    public function getOptions()
-    {
-        $optionsType = ShopOption::where('status', 1)->pluck('name', 'id');
-        $arrOptions  = array();
-        foreach ($optionsType as $key => $value) {
-            $check = ShopOptionDetail::where('option_id', $key)->where('product_id', $this->id)->pluck('name');
-            if (count($check)) {
-                $arrOptions[$value] = $check;
-            }
-
-        }
-        return $arrOptions;
 
     }
 
@@ -260,4 +246,28 @@ class ShopProduct extends Model
     {
         return url('product/' . Scart::str_to_url($this->name) . '_' . $this->id . '.html');
     }
+
+    public function getName()
+    {
+        return empty($this->locale()->name) ? '' : $this->locale()->name;
+    }
+
+    public function getKeyword()
+    {
+        return empty($this->locale()->keyword) ? '' : $this->locale()->keyword;
+    }
+    public function getDescription()
+    {
+        return empty($this->locale()->description) ? '' : $this->locale()->description;
+    }
+    public function getContent()
+    {
+        return empty($this->locale()->content) ? '' : $this->locale()->content;
+    }
+    public function getNameAttribute()
+    {
+        return empty($this->locale()->name) ? '' : $this->locale()->name;
+
+    }
+
 }

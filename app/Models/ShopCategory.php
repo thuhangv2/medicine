@@ -15,16 +15,19 @@ class ShopCategory extends Model
     public $table      = 'shop_category';
     public function locale()
     {
-        $lange = Language::pluck('id', 'code')->all();
+        $lang = Language::pluck('id', 'code')->all();
         return ShopCategoryDescription::where('shop_category_id', $this->id)
-            ->where('lang_id', $lange[app()->getLocale()])
+            ->where('lang_id', $lang[app()->getLocale()])
             ->first();
     }
     public function products()
     {
         return $this->hasMany('App\Models\ShopProduct', 'category_id', 'id');
     }
-
+    public function descriptions()
+    {
+        return $this->hasMany('App\Models\ShopCategoryDescription', 'shop_category_id', 'id');
+    }
     public function listCate()
     {
         $list   = [];
@@ -118,6 +121,15 @@ class ShopCategory extends Model
     public static function getCategories($parent)
     {
         return self::where('status', 1)->where('parent', $parent)->orderBy('sort', 'desc')->orderBy('id', 'desc')->get();
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        // before delete() method call this
+        static::deleting(function ($category) {
+            $category->descriptions()->delete();
+        });
     }
 
 /**

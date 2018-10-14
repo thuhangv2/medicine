@@ -11,24 +11,27 @@ Route::group([
 ], function (Router $router) {
 
     $router->get('/', 'HomeController@index');
-    $router->resource('shop_customer', ShopCustomerController::class);
-    $router->resource('shop_order', ShopOrderController::class);
-    $router->resource('shop_product', ShopProductController::class);
-    $router->resource('shop_category', ShopCategoryController::class);
+    $router->resource('banner', BannerController::class);
+    $router->resource('language', LanguageController::class);
+
+    $router->resource('config_info', ConfigInfoController::class);
+    $router->resource('config_global', ConfigGlobalController::class);
+    $router->resource('config_mode', ConfigModeController::class);
+
     $router->resource('cms_category', CmsCategoryController::class);
     $router->resource('cms_content', CmsContentController::class);
     $router->resource('cms_news', CmsNewsController::class);
     $router->resource('cms_page', CmsPageController::class);
-    $router->resource('banner', BannerController::class);
+
+    $router->resource('shop_customer', ShopCustomerController::class);
+    $router->resource('shop_order', ShopOrderController::class);
+    $router->resource('shop_product', ShopProductController::class);
+    $router->resource('shop_category', ShopCategoryController::class);
     $router->resource('shop_brand', ShopBrandController::class);
     $router->resource('shop_order_status', ShopOrderStatusController::class);
     $router->resource('shop_payment_status', ShopPaymentStatusController::class);
     $router->resource('shop_shipping_status', ShopShipingStatusController::class);
-    $router->resource('shop_option', ShopOptionController::class);
     $router->resource('shop_special_price', ShopSpecialPriceController::class);
-    $router->resource('config_info', ConfigInfoController::class);
-    $router->resource('config_global', ConfigGlobalController::class);
-    $router->resource('config_mode', ConfigModeController::class);
     $router->resource('shop_promotion', ShopPromotionController::class);
     $router->resource('shop_shipping', ShopShippingController::class);
     $router->get('/getInfoUser', 'ShopOrderController@getInfoUser')->name('getInfoUser');
