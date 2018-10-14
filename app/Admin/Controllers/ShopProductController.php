@@ -120,28 +120,31 @@ class ShopProductController extends Controller
         return Admin::form(ShopProduct::class, function (Form $form) use ($id) {
             $languages = Language::where('status', 1)->get();
             $form->tab('Thông tin sản phẩm', function ($form) use ($languages) {
-
-                $routeName        = \Route::currentRouteName();
-                $action           = \Route::getCurrentRoute()->getActionMethod();
-                $langDescriptions = array();
-                $idCheck          = 0;
-                if ($action === 'edit') {
-                    $fullUrl  = url()->current();
-                    $pathName = explode('.', $routeName)[0];
-                    $idCheck  = empty(explode($pathName . '/', $fullUrl)[1]) ? 0 : (int) explode($pathName . '/', $fullUrl)[1];
+//Language
+                $arrParameters = request()->route()->parameters();
+                $idCheck       = 0;
+                foreach ($arrParameters as $key => $value) {
+                    $idCheck = (int) $value;
                 }
-
+                $arrFields = array();
                 foreach ($languages as $key => $language) {
                     if ($idCheck) {
                         $langDescriptions = ShopProductDescription::where('product_id', $idCheck)->where('lang_id', $language->id)->first();
                     }
                     $form->html('<b>' . $language->name . '</b> <img style="height:25px" src="/' . config('filesystems.disks.path_file') . '/' . $language->icon . '">');
-                    $form->text($language->code . '[name]', 'Tên')->rules('required', ['required' => 'Bạn chưa nhập tên'])->default(!empty($langDescriptions->name) ? $langDescriptions->name : null);
-                    $form->text($language->code . '[keyword]', 'Keyword')->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
-                    $form->textarea($language->code . '[description]', 'Description')->rules('max:300', ['max' => 'Tối đa 300 kí tự'])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
-                    $form->ckeditor($language->code . '[content]', 'Nội dung')->default(!empty($langDescriptions->content) ? $langDescriptions->content : null);
+                    $form->text($language->code . '__name', 'Tên')->rules('required', ['required' => 'Bạn chưa nhập tên'])->default(!empty($langDescriptions->name) ? $langDescriptions->name : null);
+                    $form->text($language->code . '__keyword', 'Keyword')->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
+                    $form->textarea($language->code . '__description', 'Description')->rules('max:300', ['max' => 'Tối đa 300 kí tự'])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
+                    $form->ckeditor($language->code . '__content', 'Nội dung')->default(!empty($langDescriptions->content) ? $langDescriptions->content : null);
+                    $arrFields[] = $language->code . '__name';
+                    $arrFields[] = $language->code . '__keyword';
+                    $arrFields[] = $language->code . '__description';
+                    $arrFields[] = $language->code . '__content';
+
                     $form->divide();
                 }
+                $form->ignore($arrFields);
+//end language
 
                 $arrBrand = ShopBrand::pluck('name', 'id')->all();
                 $arrBrand = ['0' => '-- Chọn nhãn hiệu --'] + $arrBrand;
@@ -175,15 +178,21 @@ class ShopProductController extends Controller
 
             $arrData = array();
             $form->saving(function (Form $form) use ($languages, &$arrData) {
+                //Lang
                 foreach ($languages as $key => $language) {
-                    $arrData[$language->code]            = $form->{$language->code};
-                    $arrData[$language->code]['lang_id'] = $language->id;
+                    $arrData[$language->code]['name']        = request($language->code . '__name');
+                    $arrData[$language->code]['keyword']     = request($language->code . '__keyword');
+                    $arrData[$language->code]['description'] = request($language->code . '__description');
+                    $arrData[$language->code]['content']     = request($language->code . '__content');
+                    $arrData[$language->code]['lang_id']     = $language->id;
                 }
+                //end lang
             });
 
-//saved
+            //saved
             $form->saved(function (Form $form) use ($languages, &$arrData) {
                 $id = $form->model()->id;
+                //Lang
                 foreach ($languages as $key => $language) {
                     $arrData[$language->code]['product_id'] = $id;
                 }
@@ -191,7 +200,7 @@ class ShopProductController extends Controller
                     $checkLangData = ShopProductDescription::where('lang_id', $value['lang_id'])->where('product_id', $value['product_id'])->delete();
                     ShopProductDescription::insert($value);
                 }
-
+                //end lang
                 $product         = ShopProduct::find($id);
                 $file_path_admin = config('filesystems.path_file.admin.root');
                 try {

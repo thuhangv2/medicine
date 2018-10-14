@@ -99,7 +99,11 @@ class CmsCategoryController extends Controller
     protected function form()
     {
         return Admin::form(CmsCategory::class, function (Form $form) {
-
+            $arrParameters = request()->route()->parameters();
+            $idCheck       = 0;
+            foreach ($arrParameters as $key => $value) {
+                $idCheck = (int) $value;
+            }
             $form->display('id', 'ID');
             $form->text('title', 'Tên')->rules('required', ['required' => 'Bạn chưa nhập tên']);
             $arrCate = (new CmsCategory)->listCate();

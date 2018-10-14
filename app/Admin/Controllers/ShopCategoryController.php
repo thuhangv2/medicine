@@ -106,26 +106,30 @@ class ShopCategoryController extends Controller
     protected function form()
     {
         return Admin::form(ShopCategory::class, function (Form $form) {
-            $routeName        = \Route::currentRouteName();
-            $action           = \Route::getCurrentRoute()->getActionMethod();
-            $langDescriptions = array();
-            $idCheck          = 0;
-            if ($action === 'edit') {
-                $fullUrl  = url()->current();
-                $pathName = explode('.', $routeName)[0];
-                $idCheck  = empty(explode($pathName . '/', $fullUrl)[1]) ? 0 : (int) explode($pathName . '/', $fullUrl)[1];
+//Language
+            $arrParameters = request()->route()->parameters();
+            $idCheck       = 0;
+            foreach ($arrParameters as $key => $value) {
+                $idCheck = (int) $value;
             }
             $languages = Language::where('status', 1)->get();
+            $arrFields = array();
             foreach ($languages as $key => $language) {
                 if ($idCheck) {
                     $langDescriptions = ShopCategoryDescription::where('shop_category_id', $idCheck)->where('lang_id', $language->id)->first();
                 }
                 $form->html('<b>' . $language->name . '</b> <img style="height:25px" src="/' . config('filesystems.disks.path_file') . '/' . $language->icon . '">');
-                $form->text($language->code . '[name]', 'Tên')->rules('required', ['required' => 'Bạn chưa nhập tên'])->default(!empty($langDescriptions->name) ? $langDescriptions->name : null);
-                $form->text($language->code . '[keyword]', 'Keyword')->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
-                $form->text($language->code . '[description]', 'Description')->rules('max:300', ['max' => 'Tối đa 300 kí tự'])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
+                $form->text($language->code . '__name', 'Tên')->rules('required', ['required' => 'Bạn chưa nhập tên'])->default(!empty($langDescriptions->name) ? $langDescriptions->name : null);
+                $form->text($language->code . '__keyword', 'Keyword')->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
+                $form->text($language->code . '__description', 'Description')->rules('max:300', ['max' => 'Tối đa 300 kí tự'])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
+                $arrFields[] = $language->code . '__name';
+                $arrFields[] = $language->code . '__keyword';
+                $arrFields[] = $language->code . '__description';
                 $form->divide();
             }
+            $form->ignore($arrFields);
+//end language
+
             $arrCate = (new ShopCategory)->listCate();
             $arrCate = ['0' => '== Danh mục gốc =='] + $arrCate;
             $form->select('parent', 'Danh mục cha')->options($arrCate);
@@ -133,14 +137,22 @@ class ShopCategoryController extends Controller
             $form->number('sort', 'Sắp xếp');
             $form->switch('status', 'Trạng thái');
             $arrData = array();
+
             $form->saving(function (Form $form) use ($languages, &$arrData) {
+                //Lang
                 foreach ($languages as $key => $language) {
-                    $arrData[$language->code]            = $form->{$language->code};
-                    $arrData[$language->code]['lang_id'] = $language->id;
+                    $arrData[$language->code]['name']        = request($language->code . '__name');
+                    $arrData[$language->code]['keyword']     = request($language->code . '__keyword');
+                    $arrData[$language->code]['description'] = request($language->code . '__description');
+                    $arrData[$language->code]['lang_id']     = $language->id;
                 }
+                //end lang
             });
+
             $form->saved(function (Form $form) use ($languages, &$arrData) {
                 $idForm = $form->model()->id;
+
+                //Language
                 foreach ($languages as $key => $language) {
                     $arrData[$language->code]['shop_category_id'] = $idForm;
                 }
@@ -148,7 +160,7 @@ class ShopCategoryController extends Controller
                     $checkLangData = ShopCategoryDescription::where('lang_id', $value['lang_id'])->where('shop_category_id', $value['shop_category_id'])->delete();
                     ShopCategoryDescription::insert($value);
                 }
-                // $collection->forget($key);
+                //End language
                 $file_path_admin = config('filesystems.disks.admin.root');
                 try {
                     if (!file_exists($file_path_admin . '/thumb/' . $form->model()->image)) {
