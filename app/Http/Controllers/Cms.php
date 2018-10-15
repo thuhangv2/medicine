@@ -34,7 +34,7 @@ class Cms extends GeneralController
     {
         $news_currently = CmsNews::find($id);
         if ($news_currently) {
-            $title = ($news_currently) ? $news_currently->title : trans('language.notfound');
+            $title = ($news_currently) ? $news_currently->title : trans('language.not_found');
             return view($this->theme . '.cms_news_detail',
                 array(
                     'title'          => $title,
@@ -48,7 +48,7 @@ class Cms extends GeneralController
         } else {
             return view($this->theme . '.notfound',
                 array(
-                    'title'       => trans('language.notfound'),
+                    'title'       => trans('language.not_found'),
                     'description' => '',
                     'keyword'     => $this->configs_global['keyword'],
                 )

@@ -22,6 +22,10 @@ return [
 
     'my_profile'        => 'My profile',
     'notfound'          => 'Not found',
+    'empty_product'     => 'No product!',
+    'empty_entry'       => 'No entry!',
+    'not_found'         => 'Data does not exist!',
+
     'cart_title'        => 'Shopping cart',
     'wishlist'          => 'Wishlist',
     'add_to_wishlist'   => 'Add to wishlist',
