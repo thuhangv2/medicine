@@ -43,4 +43,5 @@ return [
     'maintenance'       => 'Xin lỗi, website đang bảo trì',
     'features_items'    => 'Sản phẩm nổi bật',
     'recommended_items' => 'Sản phẩm đề xuất',
+    'thank_contact'     => 'Cảm ơn bạn. Chúng tôi sẽ liên hệ sớm nhất có thể!',
 ];

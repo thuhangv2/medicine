@@ -43,4 +43,5 @@ return [
     'maintenance'       => 'Sorry! We are currently doing site maintenance!',
     'features_items'    => 'Features Items',
     'recommended_items' => 'Recommended items',
+    'thank_contact'     => 'Thanks!. We will contact as soon as possible!',
 ];

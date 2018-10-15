@@ -135,7 +135,7 @@ class GeneralController extends Controller
                 $message->replyTo($data['email'], $data['name']);
                 $message->subject($data['title']);
             });
-            return redirect('contact.html')->with('message', 'Cảm ơn bạn. Chúng tôi sẽ liên hệ sớm nhất có thể!');
+            return redirect('contact.html')->with('message', trans('language.thank_contact'));
 
         } catch (\Exception $e) {
             echo $e->getMessage();
