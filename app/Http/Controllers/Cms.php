@@ -1,5 +1,5 @@
 <?php
-
+#app/Http/Controller/Cms.php
 namespace App\Http\Controllers;
 
 use App\Models\CmsNews;
@@ -34,7 +34,7 @@ class Cms extends GeneralController
     {
         $news_currently = CmsNews::find($id);
         if ($news_currently) {
-            $title = ($news_currently) ? $news_currently->title : 'Not found';
+            $title = ($news_currently) ? $news_currently->title : trans('language.notfound');
             return view($this->theme . '.cms_news_detail',
                 array(
                     'title'          => $title,

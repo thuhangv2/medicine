@@ -1,5 +1,5 @@
 <?php
-
+#app/Http/Controller/GeneralController.php
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -95,7 +95,7 @@ class GeneralController extends Controller
         $page = $this->getPage('contact');
         return view($this->theme . '.shop_contact',
             array(
-                'title'       => 'Contact',
+                'title'       => trans('language.contact'),
                 'description' => '',
                 'page'        => $page,
                 'keyword'     => $this->configs_global['keyword'],
@@ -118,13 +118,13 @@ class GeneralController extends Controller
             'email'   => 'required|email',
             'phone'   => 'required|regex:/^0[^0][0-9\-]{7,13}$/',
         ], [
-            'name.required'    => 'The :attribute field is required.',
-            'content.required' => 'The :attribute field is required.',
-            'title.required'   => 'The :attribute field is required.',
-            'email.required'   => 'The :attribute field is required.',
-            'email.email'      => 'Your email is not in the correct format.',
-            'phone.required'   => 'The :attribute field is required.',
-            'phone.regex'      => 'Your phone is not in the correct format!',
+            'name.required'    => trans('validation.required'),
+            'content.required' => trans('validation.required'),
+            'title.required'   => trans('validation.required'),
+            'email.required'   => trans('validation.required'),
+            'email.email'      => trans('validation.email'),
+            'phone.required'   => trans('validation.required'),
+            'phone.regex'      => trans('validation.phone'),
         ]);
         //Send email
         try {

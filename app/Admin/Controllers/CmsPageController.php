@@ -1,5 +1,5 @@
 <?php
-
+#app/Http/Admin/Controllers/CmsPageController.php
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -24,7 +24,7 @@ class CmsPageController extends Controller
         return Admin::content(function (Content $content) {
 
             $content->header('Quản lý trang');
-            // $content->description('description');
+            $content->description(' ');
 
             $content->body($this->grid());
         });
@@ -41,7 +41,7 @@ class CmsPageController extends Controller
         return Admin::content(function (Content $content) use ($id) {
 
             $content->header('Chỉnh sửa trang');
-            // $content->description('description');
+            $content->description(' ');
 
             $content->body($this->form()->edit($id));
         });
@@ -57,7 +57,7 @@ class CmsPageController extends Controller
         return Admin::content(function (Content $content) {
 
             $content->header('Tạo trang mới');
-            // $content->description('description');
+            $content->description(' ');
 
             $content->body($this->form());
         });
