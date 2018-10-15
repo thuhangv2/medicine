@@ -1,5 +1,5 @@
 <?php
-
+#app/Http/Admin/Controllers/BannerController.php
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -19,15 +19,12 @@ class BannerController extends Controller
      *
      * @return Content
      */
-    public function index()
+    public function index(Content $content)
     {
-        return Admin::content(function (Content $content) {
-
-            $content->header('Quản lý hình ảnh');
-            // $content->description('description');
-
-            $content->body($this->grid());
-        });
+        return $content
+            ->header('Quản lý banner')
+            ->description(' ')
+            ->body($this->grid());
     }
 
     /**
@@ -36,15 +33,12 @@ class BannerController extends Controller
      * @param $id
      * @return Content
      */
-    public function edit($id)
+    public function edit($id, Content $content)
     {
-        return Admin::content(function (Content $content) use ($id) {
-
-            $content->header('Sửa hình ảnh');
-            // $content->description('description');
-
-            $content->body($this->form()->edit($id));
-        });
+        return $content
+            ->header('Chỉnh sửa banner')
+            ->description(' ')
+            ->body($this->form()->edit($id));
     }
 
     /**
@@ -52,15 +46,12 @@ class BannerController extends Controller
      *
      * @return Content
      */
-    public function create()
+    public function create(Content $content)
     {
-        return Admin::content(function (Content $content) {
-
-            $content->header('Thêm mới hình ảnh');
-            $content->description('description');
-
-            $content->body($this->form());
-        });
+        return $content
+            ->header('Thêm banner mới')
+            ->description(' ')
+            ->body($this->form());
     }
 
     /**
@@ -70,22 +61,21 @@ class BannerController extends Controller
      */
     protected function grid()
     {
-
-        return Admin::grid(Banner::class, function (Grid $grid) {
-            $grid->id('ID')->sortable();
-            $grid->image('Image')->image('', 50);
-            $grid->url('url');
-            $grid->html('html');
-            $grid->status('status')->switch();
-            $grid->sort('sort')->sortable();
-            $grid->actions(function ($actions) {
-                $actions->disableView();
-            });
-            $grid->created_at();
-            $grid->updated_at();
-            $grid->model()->orderBy('id', 'desc');
-            $grid->disableExport();
+        $grid = new Grid(new Banner);
+        $grid->id('ID')->sortable();
+        $grid->image('Image')->image('', 50);
+        $grid->url('url');
+        $grid->html('html');
+        $grid->status('status')->switch();
+        $grid->sort('sort')->sortable();
+        $grid->actions(function ($actions) {
+            $actions->disableView();
         });
+        $grid->created_at();
+        $grid->updated_at();
+        $grid->model()->orderBy('id', 'desc');
+        $grid->disableExport();
+        return $grid;
     }
 
     /**
@@ -95,32 +85,47 @@ class BannerController extends Controller
      */
     protected function form()
     {
-        return Admin::form(Banner::class, function (Form $form) {
-            $form->display('id', 'ID');
-            $form->image('image', 'image')->uniqueName()->move('banner')->removable();
-            $form->textarea('html', 'html');
-            $form->text('url', 'Link liên kết');
-            $form->switch('status', 'status');
-            $form->number('sort', 'sort');
-            $form->display('created_at', 'Created At');
-            $form->display('updated_at', 'Updated At');
-            $form->disableViewCheck();
-            $form->disableEditingCheck();
-            $form->tools(function (Form\Tools $tools) {
-                $tools->disableView();
-            });
+        $form = new Form(new Banner);
+        $form->image('image', 'image')->uniqueName()->move('banner')->removable();
+        $form->textarea('html', 'html');
+        $form->text('url', 'Link liên kết');
+        $form->switch('status', 'status');
+        $form->number('sort', 'sort');
+        $form->display('created_at', 'Created At');
+        $form->display('updated_at', 'Updated At');
+        $form->disableViewCheck();
+        $form->disableEditingCheck();
+        $form->tools(function (Form\Tools $tools) {
+            $tools->disableView();
         });
+        return $form;
     }
 
-    public function show($id)
+    /**
+     * Show interface.
+     *
+     * @param mixed $id
+     * @param Content $content
+     * @return Content
+     */
+    public function show($id, Content $content)
     {
-        return Admin::content(function (Content $content) use ($id) {
-            $content->header('');
-            $content->description('');
-            $content->body(Admin::show(Banner::findOrFail($id), function (Show $show) {
-                $show->id('ID');
-            }));
-        });
+        return $content
+            ->header('Detail')
+            ->description(' ')
+            ->body($this->detail($id));
+    }
+
+    /**
+     * Make a show builder.
+     *
+     * @param mixed $id
+     * @return Show
+     */
+    protected function detail($id)
+    {
+        $show = new Show(Banner::findOrFail($id));
+        return $show;
     }
 
 }
