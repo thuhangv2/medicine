@@ -108,12 +108,9 @@ class ShopCategoryController extends Controller
         return Admin::form(ShopCategory::class, function (Form $form) {
 //Language
             $arrParameters = request()->route()->parameters();
-            $idCheck       = 0;
-            foreach ($arrParameters as $key => $value) {
-                $idCheck = (int) $value;
-            }
-            $languages = Language::where('status', 1)->get();
-            $arrFields = array();
+            $idCheck       = (int) end($arrParameters);
+            $languages     = Language::where('status', 1)->get();
+            $arrFields     = array();
             foreach ($languages as $key => $language) {
                 if ($idCheck) {
                     $langDescriptions = ShopCategoryDescription::where('shop_category_id', $idCheck)->where('lang_id', $language->id)->first();

@@ -44,6 +44,7 @@ Mã nguồn website thương mại điện tử cho doanh nghiệp xây dựng b
 
 ======= SHOP BÁN HÀNG=======
 
+- Hỗ trợ đa ngôn ngữ [NEW]
 - Chức năng tạo giỏ hàng, mua hàng, tạo đơn hàng cho khách hàng
 - Chức năng đăng ký thành viên, xem lịch sử mua hàng của khách hàng
 - Chức năng đăng sản phẩm theo danh mục

@@ -88,7 +88,13 @@ class LanguageController extends Controller
         $grid->status('Status');
         $grid->default('Default');
         $grid->sort('Sort');
-
+        $grid->actions(function ($actions) {
+            if ($actions->getKey() == 1) {
+                // 1: en
+                $actions->disableDelete();
+            }
+            $actions->disableView();
+        });
         return $grid;
     }
 
@@ -120,15 +126,31 @@ class LanguageController extends Controller
      */
     protected function form()
     {
-        $form = new Form(new Language);
-
+        $form          = new Form(new Language);
+        $arrParameters = request()->route()->parameters();
+        $idCheck       = (int) end($arrParameters);
         $form->text('name', 'Name');
-        $form->text('code', 'Code');
+
+        if ($idCheck == '1') {
+            $form->display('code', 'Code');
+        } else {
+            $form->text('code', 'Code')->rules(function ($form) {
+                return 'required|unique:language,code,' . $form->model()->id . ',id';
+            }, ['required' => 'Bạn chưa nhập mã code', 'unique' => 'Code này đã có rồi'])->placeholder('Ví dụ: vi, au, en,..')->help('Viết liền, không dấu, không được trùng nhau.');
+        }
         $form->image('icon', 'Icon')->move('language');
         $form->switch('status', 'Status')->default(1);
         $form->switch('default', 'Default');
         $form->number('sort', 'Sort');
+        $form->disableViewCheck();
+        $form->disableEditingCheck();
+        $form->tools(function (Form\Tools $tools) use ($idCheck) {
+            $tools->disableView();
+            if ($idCheck == '1') {
+                $tools->disableDelete();
+            }
 
+        });
         return $form;
     }
 }

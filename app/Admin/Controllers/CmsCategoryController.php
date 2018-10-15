@@ -103,12 +103,9 @@ class CmsCategoryController extends Controller
         return Admin::form(CmsCategory::class, function (Form $form) {
 //Language
             $arrParameters = request()->route()->parameters();
-            $idCheck       = 0;
-            foreach ($arrParameters as $key => $value) {
-                $idCheck = (int) $value;
-            }
-            $languages = Language::where('status', 1)->get();
-            $arrFields = array();
+            $idCheck       = (int) end($arrParameters);
+            $languages     = Language::where('status', 1)->get();
+            $arrFields     = array();
             foreach ($languages as $key => $language) {
                 if ($idCheck) {
                     $langDescriptions = CmsCategoryDescription::where('shop_category_id', $idCheck)->where('lang_id', $language->id)->first();
