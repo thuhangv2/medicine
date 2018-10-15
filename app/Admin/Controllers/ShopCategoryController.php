@@ -161,6 +161,7 @@ class ShopCategoryController extends Controller
                     ShopCategoryDescription::insert($value);
                 }
                 //End language
+
                 $file_path_admin = config('filesystems.disks.admin.root');
                 try {
                     if (!file_exists($file_path_admin . '/thumb/' . $form->model()->image)) {

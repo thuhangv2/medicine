@@ -1,9 +1,11 @@
 <?php
-
+#app/Http/Admin/Controllers/CmsCategoryController.php
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\CmsCategory;
+use App\Models\CmsCategoryDescription;
+use App\Models\Language;
 use Encore\Admin\Controllers\ModelForm;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
@@ -25,7 +27,7 @@ class CmsCategoryController extends Controller
         return Admin::content(function (Content $content) {
 
             $content->header('Chủ đề');
-            // $content->description('description');
+            $content->description(' ');
 
             $content->body($this->grid());
         });
@@ -42,7 +44,7 @@ class CmsCategoryController extends Controller
         return Admin::content(function (Content $content) use ($id) {
 
             $content->header('Chỉnh sửa chủ đề');
-            // $content->description('description');
+            $content->description(' ');
 
             $content->body($this->form()->edit($id));
         });
@@ -58,7 +60,7 @@ class CmsCategoryController extends Controller
         return Admin::content(function (Content $content) {
 
             $content->header('Tạo chủ đề');
-            // $content->description('description');
+            $content->description(' ');
 
             $content->body($this->form());
         });
@@ -75,7 +77,7 @@ class CmsCategoryController extends Controller
 
             $grid->id('ID')->sortable();
             $grid->image('Hình ảnh')->image('', 50);
-            $grid->title('Tên')->sortable();
+            $grid->name('Tên')->sortable();
             $grid->parent('Chủ đề cha')->display(function ($parent) {
                 return (CmsCategory::find($parent)) ? CmsCategory::find($parent)->title : '';
             });
@@ -99,26 +101,62 @@ class CmsCategoryController extends Controller
     protected function form()
     {
         return Admin::form(CmsCategory::class, function (Form $form) {
+//Language
             $arrParameters = request()->route()->parameters();
             $idCheck       = 0;
             foreach ($arrParameters as $key => $value) {
                 $idCheck = (int) $value;
             }
+            $languages = Language::where('status', 1)->get();
+            $arrFields = array();
+            foreach ($languages as $key => $language) {
+                if ($idCheck) {
+                    $langDescriptions = CmsCategoryDescription::where('shop_category_id', $idCheck)->where('lang_id', $language->id)->first();
+                }
+                $form->html('<b>' . $language->name . '</b> <img style="height:25px" src="/' . config('filesystems.disks.path_file') . '/' . $language->icon . '">');
+                $form->text($language->code . '__name', 'Tên')->rules('required', ['required' => 'Bạn chưa nhập tên'])->default(!empty($langDescriptions->name) ? $langDescriptions->name : null);
+                $form->text($language->code . '__keyword', 'Keyword')->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
+                $form->text($language->code . '__description', 'Description')->rules('max:300', ['max' => 'Tối đa 300 kí tự'])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
+                $arrFields[] = $language->code . '__name';
+                $arrFields[] = $language->code . '__keyword';
+                $arrFields[] = $language->code . '__description';
+                $form->divide();
+            }
+            $form->ignore($arrFields);
+//end language
+
             $form->display('id', 'ID');
-            $form->text('title', 'Tên')->rules('required', ['required' => 'Bạn chưa nhập tên']);
             $arrCate = (new CmsCategory)->listCate();
             $arrCate = ['0' => '== Chủ đề gốc =='] + $arrCate;
             $form->select('parent', 'Chủ đề cha')->options($arrCate);
             $form->image('image', 'Hình ảnh')->uniqueName()->move('cms_category')->removable();
             $form->number('sort', 'Sắp xếp');
             $form->switch('status', 'Trạng thái');
-            $form->divide('Hỗ trợ SEO');
-            $form->html('<b>Hỗ trợ SEO</b>');
-            $form->tags('keyword', 'Từ khóa');
-            $form->textarea('description', 'Mô tả')->rules('max:300', ['max' => 'Tối đa 300 kí tự']);
-            // $form->display('created_at', 'Created At');
-            // $form->display('updated_at', 'Updated At');
+
+            $arrData = array();
+            $form->saving(function (Form $form) use ($languages, &$arrData) {
+                //Lang
+                foreach ($languages as $key => $language) {
+                    $arrData[$language->code]['name']        = request($language->code . '__name');
+                    $arrData[$language->code]['keyword']     = request($language->code . '__keyword');
+                    $arrData[$language->code]['description'] = request($language->code . '__description');
+                    $arrData[$language->code]['lang_id']     = $language->id;
+                }
+                //end lang
+            });
+
             $form->saved(function (Form $form) {
+                $idForm = $form->model()->id;
+                //Language
+                foreach ($languages as $key => $language) {
+                    $arrData[$language->code]['shop_category_id'] = $idForm;
+                }
+                foreach ($arrData as $key => $value) {
+                    $checkLangData = CmsCategoryDescription::where('lang_id', $value['lang_id'])->where('shop_category_id', $value['shop_category_id'])->delete();
+                    CmsCategoryDescription::insert($value);
+                }
+                //End language
+
                 $file_path_admin = config('filesystems.disks.admin.root');
                 try {
                     if (!file_exists($file_path_admin . '/thumb/' . $form->model()->image)) {

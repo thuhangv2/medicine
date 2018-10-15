@@ -1,13 +1,23 @@
 <?php
-
+#app/Models/CmsCategory.php
 namespace App\Models;
 
+use App\Models\CmsCategoryDescription;
+use App\Models\Language;
 use Illuminate\Database\Eloquent\Model;
 
 class CmsCategory extends Model
 {
     public $timestamps = false;
     public $table      = 'cms_category';
+
+    public function local()
+    {
+        $lang = Language::pluck('id', 'code')->all();
+        return CmsCategoryDescription::where('cms_category_id', $this->id)
+            ->where('lang_id', $lang[app()->getLocale()])
+            ->first();
+    }
 
     public function contents()
     {
@@ -17,12 +27,12 @@ class CmsCategory extends Model
     public function listCate()
     {
         $list   = [];
-        $result = $this->select('title', 'id', 'parent')
+        $result = $this->select('name', 'id', 'parent')
             ->where('parent', 0)
             ->get()
             ->toArray();
         foreach ($result as $value) {
-            $list[$value['id']] = $value['title'];
+            $list[$value['id']] = $value['name'];
             if ($this->checkChild($value['id']) > 0) {
                 $this->listCateExceptRoot($value['id'], $list);
             }
@@ -32,12 +42,12 @@ class CmsCategory extends Model
 
     public function listCateExceptRoot($id, &$list, $st = '--')
     {
-        $result = $this->select('title', 'id', 'parent')
+        $result = $this->select('name', 'id', 'parent')
             ->where('parent', $id)
             ->get()
             ->toArray();
         foreach ($result as $value) {
-            $list[$value['id']] = $st . ' ' . $value['title'];
+            $list[$value['id']] = $st . ' ' . $value['name'];
             $this->listCateExceptRoot($value['id'], $list, $st . '--');
         }
 
@@ -124,6 +134,41 @@ class CmsCategory extends Model
     {
         $path_file = config('filesystems.disks.path_file', '');
         return $path_file . '/' . $this->image;
+
+    }
+
+    public function getUrl()
+    {
+        return url('cms/' . Scart::str_to_url($this->name) . '_' . $this->id . '.html');
+    }
+
+    //Fields language
+    public function getName()
+    {
+        return empty($this->local()->name) ? '' : $this->local()->name;
+    }
+    public function getKeyword()
+    {
+        return empty($this->local()->keyword) ? '' : $this->local()->keyword;
+    }
+    public function getDescription()
+    {
+        return empty($this->local()->description) ? '' : $this->local()->description;
+    }
+
+//Attributes
+    public function getNameAttribute()
+    {
+        return $this->getName();
+    }
+    public function getKeywordAttribute()
+    {
+        return $this->getKeyword();
+
+    }
+    public function getDescriptionAttribute()
+    {
+        return $this->getDescription();
 
     }
 
