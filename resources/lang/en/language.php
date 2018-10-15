@@ -24,7 +24,7 @@ return [
     'notfound'          => 'Not found',
     'empty_product'     => 'No product!',
     'empty_entry'       => 'No entry!',
-    'not_found'         => 'Data does not exist!',
+    'not_found'         => 'Sorry! We can\'t find that page!',
 
     'cart_title'        => 'Shopping cart',
     'wishlist'          => 'Wishlist',
