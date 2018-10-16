@@ -141,24 +141,25 @@ class CmsNewsController extends Controller
                 CmsNewsDescription::insert($value);
             }
             //end lang
+            $config = \App\Models\Config::pluck('value', 'key')->all();
+            if (!empty($config['watermask'])) {
+                $file_path_admin = config('filesystems.disks.admin.root');
+                try {
+                    if (!file_exists($file_path_admin . '/thumb/' . $form->model()->image)) {
+                        \Image::make($file_path_admin . '/' . $form->model()->image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $form->model()->image);
+                        //thumbnail
+                        $image_thumb = \Image::make($file_path_admin . '/' . $form->model()->image);
+                        $image_thumb->resize(250, null, function ($constraint) {
+                            $constraint->aspectRatio();
+                        });
+                        $image_thumb->save($file_path_admin . '/thumb/' . $form->model()->image);
+                        //end thumb
+                    }
 
-            $file_path_admin = config('filesystems.disks.admin.root');
-            try {
-                if (!file_exists($file_path_admin . '/thumb/' . $form->model()->image)) {
-                    \Image::make($file_path_admin . '/' . $form->model()->image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $form->model()->image);
-                    //thumbnail
-                    $image_thumb = \Image::make($file_path_admin . '/' . $form->model()->image);
-                    $image_thumb->resize(250, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    });
-                    $image_thumb->save($file_path_admin . '/thumb/' . $form->model()->image);
-                    //end thumb
+                } catch (\Exception $e) {
+                    echo $e->getMessage();
                 }
-
-            } catch (\Exception $e) {
-                echo $e->getMessage();
             }
-
         });
         $form->disableViewCheck();
         $form->disableEditingCheck();

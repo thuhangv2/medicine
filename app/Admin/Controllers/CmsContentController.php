@@ -115,39 +115,41 @@ class CmsContentController extends Controller
             $form->textarea('description', 'Mô tả')->rules('max:300', ['max' => 'Tối đa 300 kí tự']);
 
             $form->saved(function (Form $form) {
-                $file_path_admin = config('filesystems.disks.admin.root');
-                $id              = $form->model()->id;
-                $content         = CmsContent::find($id);
-                try {
-                    if (!file_exists($file_path_admin . '/thumb/' . $content->image)) {
-                        \Image::make($file_path_admin . '/' . $content->image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $content->image);
-                        //thumbnail
-                        $image_thumb = \Image::make($file_path_admin . '/' . $content->image);
-                        $image_thumb->resize(250, null, function ($constraint) {
-                            $constraint->aspectRatio();
-                        });
-                        $image_thumb->save($file_path_admin . '/thumb/' . $content->image);
-                        //end thumb
-                    }
-                    if (count($content->images)) {
-                        foreach ($content->images as $key => $image) {
-                            if (!file_exists($file_path_admin . '/thumb/' . $image->image)) {
-                                \Image::make($file_path_admin . '/' . $image->image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $image->image);
-                                //thumbnail
-                                $image_thumb = \Image::make($file_path_admin . '/' . $image->image);
-                                $image_thumb->resize(250, null, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                });
-                                $image_thumb->save($file_path_admin . '/thumb/' . $image->image);
-                                //end thumb
+                $config = \App\Models\Config::pluck('value', 'key')->all();
+                if (!empty($config['watermask'])) {
+                    $file_path_admin = config('filesystems.disks.admin.root');
+                    $id              = $form->model()->id;
+                    $content         = CmsContent::find($id);
+                    try {
+                        if (!file_exists($file_path_admin . '/thumb/' . $content->image)) {
+                            \Image::make($file_path_admin . '/' . $content->image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $content->image);
+                            //thumbnail
+                            $image_thumb = \Image::make($file_path_admin . '/' . $content->image);
+                            $image_thumb->resize(250, null, function ($constraint) {
+                                $constraint->aspectRatio();
+                            });
+                            $image_thumb->save($file_path_admin . '/thumb/' . $content->image);
+                            //end thumb
+                        }
+                        if (($content->images)) {
+                            foreach ($content->images as $key => $image) {
+                                if (!file_exists($file_path_admin . '/thumb/' . $image->image)) {
+                                    \Image::make($file_path_admin . '/' . $image->image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $image->image);
+                                    //thumbnail
+                                    $image_thumb = \Image::make($file_path_admin . '/' . $image->image);
+                                    $image_thumb->resize(250, null, function ($constraint) {
+                                        $constraint->aspectRatio();
+                                    });
+                                    $image_thumb->save($file_path_admin . '/thumb/' . $image->image);
+                                    //end thumb
+                                }
                             }
                         }
+
+                    } catch (\Exception $e) {
+                        echo $e->getMessage();
                     }
-
-                } catch (\Exception $e) {
-                    echo $e->getMessage();
                 }
-
             });
             $form->disableViewCheck();
             $form->disableEditingCheck();
