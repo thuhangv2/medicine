@@ -12,7 +12,7 @@
     <meta property="og:type" content="Website" />
     <meta property="og:title" content="{{ empty($title)?'':$title }}" />
     <meta property="og:description" content="{{ empty($description)?'':$description }}" />
-    {{ empty($layouts->meta)?'':$layouts->meta }}
+    {!! empty($layouts->meta)?'':$layouts->meta !!}
     <link href="{{ asset($theme_asset.'/css/bootstrap.min.css')}}"" rel="stylesheet">
     <link href="{{ asset($theme_asset.'/css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{ asset($theme_asset.'/css/prettyPhoto.css')}}" rel="stylesheet">
@@ -44,7 +44,7 @@
     </style>
 </head><!--/head-->
 <body>
-{{ empty($layouts->header)?'':$layouts->header }}
+{!! empty($layouts->header)?'':$layouts->header !!}
   <header id="header"><!--header-->
     <div class="header_top"><!--header_top-->
       <div class="container">
@@ -257,7 +257,7 @@
   </section>
 @endif
 
-{{ empty($layouts->footer_top)?'':$layouts->footer_top }}
+{!! empty($layouts->footer_top)?'':$layouts->footer_top !!}
   <footer id="footer"><!--Footer-->
     <div class="footer-top">
       <div class="container">
@@ -485,6 +485,6 @@
     }
 
 </script>
-{{ empty($layouts->footer_bottom)?'':$layouts->footer_bottom }}
+{!! empty($layouts->footer_bottom)?'':$layouts->footer_bottom !!}
 </body>
 </html>
