@@ -64,7 +64,7 @@ class CmsNewsController extends Controller
      */
     protected function grid()
     {
-        $grid = new Grid(new Banner);
+        $grid = new Grid(new CmsNews);
 
         $grid->id('ID')->sortable();
         $grid->title('Tên bài viết')->sortable();
