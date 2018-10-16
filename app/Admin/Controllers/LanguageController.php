@@ -86,7 +86,6 @@ class LanguageController extends Controller
         $grid->code('Code');
         $grid->icon('Icon')->image('', 50);
         $grid->status('Status');
-        $grid->default('Default');
         $grid->sort('Sort');
         $grid->actions(function ($actions) {
             if ($actions->getKey() == 1) {
@@ -113,7 +112,6 @@ class LanguageController extends Controller
         $show->code('Code');
         $show->icon('Icon');
         $show->status('Status');
-        $show->default('Default');
         $show->sort('Sort');
 
         return $show;
@@ -140,7 +138,6 @@ class LanguageController extends Controller
         }
         $form->image('icon', 'Icon')->move('language');
         $form->switch('status', 'Status')->default(1);
-        $form->switch('default', 'Default');
         $form->number('sort', 'Sort');
         $form->disableViewCheck();
         $form->disableEditingCheck();
