@@ -164,7 +164,7 @@
             <div class="search_box pull-right">
               <form id="searchbox" method="get" action="{{ url('search.html') }}" >
                 <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Your keyword..." name="keyword">
+                  <input type="text" class="form-control" placeholder="{{ trans('language.search_form.keyword') }}..." name="keyword">
                 </div>
               </form>
             </div>

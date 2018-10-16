@@ -60,5 +60,7 @@ return [
         'message' => 'Your message...',
         'submit'  => 'Submit',
     ],
-
+    'search_form'       => [
+        'keyword' => 'Your keyword',
+    ],
 ];

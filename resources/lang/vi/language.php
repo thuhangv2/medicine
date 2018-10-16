@@ -58,5 +58,7 @@ return [
         'message' => 'Tin nhắn của bạn',
         'submit'  => 'Gửi đi',
     ],
-
+    'search_form'       => [
+        'keyword' => 'Từ khóa tìm kiếm',
+    ],
 ];
