@@ -29,11 +29,11 @@ class GeneralController extends Controller
 
     public function __construct()
     {
-        $this->middleware('localization');
         //=======Config====
         //Config for  SMTP
         $configs        = Config::pluck('value', 'key')->all();
         $configs_global = ConfigGlobal::first();
+        config(['app.locale' => empty($configs_global['locale']) ? config('app.locale') : $configs_global['locale']]);
         config(['app.name' => $configs_global['title']]);
         config(['mail.driver' => ($configs['smtp_mode']) ? 'smtp' : 'sendmail']);
         config(['mail.host' => empty($configs['smtp_host']) ? env('MAIL_HOST', '') : $configs['smtp_host']]);
@@ -84,6 +84,7 @@ class GeneralController extends Controller
         View::share('news', $this->news);
         View::share('languages', $this->languages);
 //
+        $this->middleware('localization');
     }
 
 /**
