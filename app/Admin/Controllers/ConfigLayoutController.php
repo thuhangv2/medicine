@@ -83,18 +83,18 @@ class ConfigLayoutController extends Controller
 
         // $grid->id('Id');
         $grid->meta('Meta')->display(function ($text) {
-            return '<div style="max-width:250px; overflow:auto;">' . htmlentities($text) . '</div>';
+            return '<div style="max-width:200px; overflow:auto;">' . htmlentities($text) . '</div>';
         });
         $grid->header('Header')->display(function ($text) {
-            return '<div style="max-width:250px; overflow:auto;">' . htmlentities($text) . '</div>';
+            return '<div style="max-width:200px; overflow:auto;">' . htmlentities($text) . '</div>';
         });
 
         $grid->footer_top('Footer Top')->display(function ($text) {
-            return '<div style="max-width:250px; overflow:auto;">' . htmlentities($text) . '</div>';
+            return '<div style="max-width:200px; overflow:auto;">' . htmlentities($text) . '</div>';
         });
 
         $grid->footer_bottom('Footer Bottom')->display(function ($text) {
-            return '<div style="max-width:250px; overflow:auto;">' . htmlentities($text) . '</div>';
+            return '<div style="max-width:200px; overflow:auto;">' . htmlentities($text) . '</div>';
         });
         $grid->disableCreation();
         $grid->disableExport();

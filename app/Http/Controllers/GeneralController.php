@@ -8,6 +8,7 @@ use App\Models\CmsNews;
 use App\Models\CmsPage;
 use App\Models\Config;
 use App\Models\ConfigGlobal;
+use App\Models\ConfigLayout;
 use App\Models\Language;
 use App\Models\ShopBrand;
 use App\Models\ShopCategory;
@@ -72,6 +73,7 @@ class GeneralController extends Controller
 //Share variable
         View::share('path_file', $this->path_file);
         View::share('banners', $this->banners);
+        View::share('layouts', ConfigLayout::first());
         View::share('configs', $this->configs);
         View::share('configs_global', $this->configs_global);
         View::share('theme_asset', $this->theme_asset);
