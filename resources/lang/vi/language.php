@@ -47,4 +47,16 @@ return [
     'features_items'    => 'Sản phẩm nổi bật',
     'recommended_items' => 'Sản phẩm đề xuất',
     'thank_contact'     => 'Cảm ơn bạn. Chúng tôi sẽ liên hệ sớm nhất có thể!',
+    'contact_form'      => [
+        'title'   => 'Form liên hệ',
+        'info'    => 'Thông tin liên hệ',
+        'name'    => 'Tên của bạn',
+        'email'   => 'Email',
+        'phone'   => 'Số điện thoại',
+        'subject' => 'Yêu cầu',
+        'content' => 'Nội dung chi tiết',
+        'message' => 'Tin nhắn của bạn',
+        'submit'  => 'Gửi đi',
+    ],
+
 ];

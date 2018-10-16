@@ -146,7 +146,7 @@
             <div class="mainmenu pull-left">
               <ul class="nav navbar-nav collapse navbar-collapse">
                 <li><a href="{{ url('/') }}" class="active">{{ trans('language.home') }}</a></li>
-                <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
+                <li class="dropdown"><a href="#">{{ trans('language.shop') }}<i class="fa fa-angle-down"></i></a>
                     <ul role="menu" class="sub-menu">
                         <li><a href="{{ url('products.html') }}">{{ trans('language.all_product') }}</a></li>
                         <li><a href="{{ url('compare.html') }}">{{ trans('language.compare') }}</a></li>

@@ -39,7 +39,7 @@ return [
     'logout'            => 'Logout',
     'home'              => 'Home',
     'blog'              => 'Blog',
-    'contact'           => 'Contact',
+    'contact'           => 'Contact us',
     'about'             => 'About us',
     'shop'              => 'Shop',
     'category'          => 'Category',
@@ -48,4 +48,17 @@ return [
     'features_items'    => 'Features Items',
     'recommended_items' => 'Recommended items',
     'thank_contact'     => 'Thanks!. We will contact as soon as possible!',
+
+    'contact_form'      => [
+        'title'   => 'Get in touch',
+        'info'    => 'Contact infomation',
+        'name'    => 'Name',
+        'email'   => 'Email',
+        'phone'   => 'Phone',
+        'subject' => 'Subject',
+        'content' => 'Content',
+        'message' => 'Your message...',
+        'submit'  => 'Submit',
+    ],
+
 ];
