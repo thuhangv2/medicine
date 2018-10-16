@@ -19,32 +19,27 @@ class CmsPageController extends Controller
      *
      * @return Content
      */
-    public function index()
+    public function index(Content $content)
     {
-        return Admin::content(function (Content $content) {
-
-            $content->header('Quản lý trang');
-            $content->description(' ');
-
-            $content->body($this->grid());
-        });
+        return $content
+            ->header('Quản lý trang')
+            ->description(' ')
+            ->body($this->grid());
     }
 
     /**
      * Edit interface.
      *
-     * @param $id
+     * @param mixed $id
+     * @param Content $content
      * @return Content
      */
-    public function edit($id)
+    public function edit($id, Content $content)
     {
-        return Admin::content(function (Content $content) use ($id) {
-
-            $content->header('Chỉnh sửa trang');
-            $content->description(' ');
-
-            $content->body($this->form()->edit($id));
-        });
+        return $content
+            ->header('Chỉnh sửa trang')
+            ->description(' ')
+            ->body($this->form()->edit($id));
     }
 
     /**
@@ -52,15 +47,12 @@ class CmsPageController extends Controller
      *
      * @return Content
      */
-    public function create()
+    public function create(Content $content)
     {
-        return Admin::content(function (Content $content) {
-
-            $content->header('Tạo trang mới');
-            $content->description(' ');
-
-            $content->body($this->form());
-        });
+        return $content
+            ->header('Tạo trang mới')
+            ->description(' ')
+            ->body($this->form());
     }
 
     /**
@@ -70,21 +62,22 @@ class CmsPageController extends Controller
      */
     protected function grid()
     {
-        return Admin::grid(CmsPage::class, function (Grid $grid) {
-
-            $grid->id('ID')->sortable();
-            $grid->title('Tiêu đề trang')->sortable();
-            $grid->status('Trạng thái')->switch();
-            $grid->actions(function ($actions) {
+        $grid = new Grid(new CmsPage);
+        $grid->id('ID')->sortable();
+        $grid->title('Tiêu đề trang')->sortable();
+        $grid->status('Trạng thái')->switch();
+        $grid->actions(function ($actions) {
+            if ($actions->getKey() == 1 || $actions->getKey() == 2) {
+                // 1: about, 2: contact
                 $actions->disableDelete();
-                $actions->disableView();
-            });
-            $grid->disableFilter();
-            $grid->disableExport();
-            $grid->disableCreation();
-            $grid->disableRowSelector();
-            $grid->model()->orderBy('id', 'desc');
+            }
+            $actions->disableView();
         });
+        $grid->disableFilter();
+        $grid->disableExport();
+        $grid->disableRowSelector();
+        $grid->model()->orderBy('id', 'desc');
+        return $grid;
     }
 
     /**
@@ -94,30 +87,61 @@ class CmsPageController extends Controller
      */
     protected function form()
     {
-        return Admin::form(CmsPage::class, function (Form $form) {
-            $form->display('title', 'Tiêu đề trang')->rules('required', ['required' => 'Bạn chưa nhập tên']);
-            $form->ckeditor('content', 'Nội dung');
-            $form->switch('status', 'Trạng thái');
-            $form->divide('Hỗ trợ SEO');
-            $form->html('<b>Hỗ trợ SEO</b>');
-            $form->tags('keyword', 'Từ khóa');
-            $form->textarea('description', 'Mô tả')->rules('max:300', ['max' => 'Tối đa 300 kí tự']);
-            $form->disableViewCheck();
-            $form->disableEditingCheck();
-            $form->tools(function (Form\Tools $tools) {
-                $tools->disableView();
-            });
+        $form          = new Form(new CmsPage);
+        $arrParameters = request()->route()->parameters();
+        $idCheck       = (int) end($arrParameters);
+        $form->text('title', 'Tiêu đề trang')->rules('required', ['required' => 'Bạn chưa nhập tên']);
+        $form->ckeditor('content', 'Nội dung');
+        if ($idCheck == '1' || $idCheck == '2') {
+            $form->display('uniquekey', 'Unique Key');
+        } else {
+            $form->text('uniquekey', 'Unique Key')->rules(function ($form) {
+                return 'required|unique:cms_page,uniquekey,' . $form->model()->id . ',id';
+            }, ['required' => 'Bạn chưa nhập mã trang', 'unique' => 'Mã trang này đã có rồi'])->placeholder('Ví dụ: thong-tin-khuyen-mai, tin-tuc,...')->help('Viết liền, không dấu, không được trùng nhau.');
+        }
+        $form->switch('status', 'Trạng thái');
+        $form->divide('Hỗ trợ SEO');
+        $form->html('<b>Hỗ trợ SEO</b>');
+        $form->tags('keyword', 'Từ khóa');
+        $form->textarea('description', 'Mô tả')->rules('max:300', ['max' => 'Tối đa 300 kí tự']);
+        $form->disableViewCheck();
+        $form->disableEditingCheck();
+        $form->tools(function (Form\Tools $tools) use ($idCheck) {
+            $tools->disableView();
+            if ($idCheck == '1' || $idCheck == '2') {
+                // 1: about, 2: contact
+                $tools->disableDelete();
+            }
+
         });
+        return $form;
     }
-    public function show($id)
+
+    /**
+     * Show interface.
+     *
+     * @param mixed $id
+     * @param Content $content
+     * @return Content
+     */
+    public function show($id, Content $content)
     {
-        return Admin::content(function (Content $content) use ($id) {
-            $content->header('');
-            $content->description('');
-            $content->body(Admin::show(CmsPage::findOrFail($id), function (Show $show) {
-                $show->id('ID');
-            }));
-        });
+        return $content
+            ->header('Detail')
+            ->description(' ')
+            ->body($this->detail($id));
+    }
+
+    /**
+     * Make a show builder.
+     *
+     * @param mixed $id
+     * @return Show
+     */
+    protected function detail($id)
+    {
+        $show = new Show(CmsPage::findOrFail($id));
+        return $show;
     }
 
 }

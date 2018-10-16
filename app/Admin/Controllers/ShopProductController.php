@@ -122,10 +122,8 @@ class ShopProductController extends Controller
             $form->tab('Thông tin sản phẩm', function ($form) use ($languages) {
 //Language
                 $arrParameters = request()->route()->parameters();
-                $idCheck       = 0;
-                foreach ($arrParameters as $key => $value) {
-                    $idCheck = (int) $value;
-                }
+                $idCheck       = (int) end($arrParameters);
+
                 $arrFields = array();
                 foreach ($languages as $key => $language) {
                     if ($idCheck) {
