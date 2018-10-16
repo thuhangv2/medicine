@@ -1,5 +1,5 @@
 <?php
-
+#app/Models/CmsNews.php
 namespace App\Models;
 
 use App\Models\CmsNewsDescription;
