@@ -12,6 +12,7 @@
     <meta property="og:type" content="Website" />
     <meta property="og:title" content="{{ empty($title)?'':$title }}" />
     <meta property="og:description" content="{{ empty($description)?'':$description }}" />
+    {{ $meta }}
     <link href="{{ asset($theme_asset.'/css/bootstrap.min.css')}}"" rel="stylesheet">
     <link href="{{ asset($theme_asset.'/css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{ asset($theme_asset.'/css/prettyPhoto.css')}}" rel="stylesheet">
@@ -43,20 +44,7 @@
     </style>
 </head><!--/head-->
 <body>
-
-<div id="fb-root"></div>
-@if ($configs_global['site_fb_appID'])
-  <script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = '//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.8&appId={{ $configs_global['site_fb_appID'] }}';
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
-  </script>
-@endif
-
-
+{{ $header }}
   <header id="header"><!--header-->
     <div class="header_top"><!--header_top-->
       <div class="container">
@@ -269,7 +257,7 @@
   </section>
 @endif
 
-
+{{ $footer_top }}
   <footer id="footer"><!--Footer-->
     <div class="footer-top">
       <div class="container">
@@ -497,14 +485,6 @@
     }
 
 </script>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125870439-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'UA-125870439-1');
-</script>
-
+{{ $footer_bottom }}
 </body>
 </html>

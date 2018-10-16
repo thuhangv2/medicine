@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CmsPage;
 use App\Models\CmsPageDescription;
 use App\Models\Language;
-use Encore\Admin\Controllers\ModelForm;
+use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -15,7 +15,7 @@ use Encore\Admin\Show;
 
 class CmsPageController extends Controller
 {
-    use ModelForm;
+    use HasResourceActions;
     /**
      * Index interface.
      *

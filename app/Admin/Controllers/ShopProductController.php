@@ -9,7 +9,7 @@ use App\Models\ShopBrand;
 use App\Models\ShopCategory;
 use App\Models\ShopProduct;
 use App\Models\ShopProductDescription;
-use Encore\Admin\Controllers\ModelForm;
+use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 
 class ShopProductController extends Controller
 {
-    use ModelForm;
+    use HasResourceActions;
     public $arrType = ['0' => 'Mặc định', '1' => 'New'];
 
     /**

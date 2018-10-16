@@ -14,7 +14,7 @@ use App\Models\ShopProduct;
 use App\Models\ShopShippingStatus;
 use App\User;
 use DB;
-use Encore\Admin\Controllers\ModelForm;
+use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -24,7 +24,7 @@ use Illuminate\Http\Request;
 
 class ShopOrderController extends Controller
 {
-    use ModelForm;
+    use HasResourceActions;
     public $statusPayment, $statusOrder, $statusShipping, $statusOrder2, $statusShipping2;
 
     public function __construct()

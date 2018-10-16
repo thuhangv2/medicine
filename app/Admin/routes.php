@@ -16,6 +16,7 @@ Route::group([
 
     $router->resource('config_info', ConfigInfoController::class);
     $router->resource('config_global', ConfigGlobalController::class);
+    $router->resource('config_layout', ConfigLayoutController::class);
     $router->resource('config_mode', ConfigModeController::class);
 
     $router->resource('cms_category', CmsCategoryController::class);
