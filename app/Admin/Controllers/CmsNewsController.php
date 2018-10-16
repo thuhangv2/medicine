@@ -4,7 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\CmsNews;
-use App\Models\CmsNewstDescription;
+use App\Models\CmsNewsDescription;
 use App\Models\Language;
 use Encore\Admin\Controllers\ModelForm;
 use Encore\Admin\Facades\Admin;
@@ -96,7 +96,7 @@ class CmsNewsController extends Controller
         $arrFields     = array();
         foreach ($languages as $key => $language) {
             if ($idCheck) {
-                $langDescriptions = CmsCategoryDescription::where('shop_category_id', $idCheck)->where('lang_id', $language->id)->first();
+                $langDescriptions = CmsNewsDescription::where('cms_news_id', $idCheck)->where('lang_id', $language->id)->first();
             }
             $form->html('<b>' . $language->name . '</b> <img style="height:25px" src="/' . config('filesystems.disks.path_file') . '/' . $language->icon . '">');
             $form->text($language->code . '__title', 'Tên')->rules('required', ['required' => 'Bạn chưa nhập tên'])->default(!empty($langDescriptions->title) ? $langDescriptions->title : null);
@@ -137,8 +137,8 @@ class CmsNewsController extends Controller
                 $arrData[$language->code]['cms_news_id'] = $id;
             }
             foreach ($arrData as $key => $value) {
-                $checkLangData = CmsNewstDescription::where('lang_id', $value['lang_id'])->where('cms_news_id', $value['cms_news_id'])->delete();
-                CmsNewstDescription::insert($value);
+                $checkLangData = CmsNewsDescription::where('lang_id', $value['lang_id'])->where('cms_news_id', $value['cms_news_id'])->delete();
+                CmsNewsDescription::insert($value);
             }
             //end lang
 
