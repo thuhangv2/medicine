@@ -33,7 +33,7 @@ class GeneralController extends Controller
         //Config for  SMTP
         $configs        = Config::pluck('value', 'key')->all();
         $configs_global = ConfigGlobal::first();
-        config(['app.locale' => empty($configs_global['locale']) ? config('app.locale') : $configs_global['locale']]);
+        // config(['app.locale' => empty($configs_global['locale']) ? config('app.locale') : $configs_global['locale']]);
         config(['app.name' => $configs_global['title']]);
         config(['mail.driver' => ($configs['smtp_mode']) ? 'smtp' : 'sendmail']);
         config(['mail.host' => empty($configs['smtp_host']) ? env('MAIL_HOST', '') : $configs['smtp_host']]);
@@ -68,7 +68,7 @@ class GeneralController extends Controller
         $this->brands         = ShopBrand::getBrands();
         $this->categories     = ShopCategory::getCategories(0);
         $this->news           = (new CmsNews)->getItemsNews($limit = 6, $opt = 'paginate');
-        $this->languages      = Language::where('status', 1)->pluck('name', 'code');
+        $this->languages      = Language::where('status', 1)->get()->keyBy('code');
 //Share variable
         View::share('path_file', $this->path_file);
         View::share('banners', $this->banners);

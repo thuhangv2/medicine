@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Config;
+use App\Models\Language;
 use App\Models\ShopProductDescription;
 use App\Models\ShopSpecialPrice;
 use Illuminate\Database\Eloquent\Model;

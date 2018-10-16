@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\ConfigGlobal;
+use App\Models\Language;
 use Encore\Admin\Controllers\ModelForm;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
@@ -103,12 +104,10 @@ class ConfigGlobalController extends Controller
             $grid->email('Email')->display(function ($text) {
                 return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
             });
-            $grid->site_fb_appID('FB App ID')->display(function ($text) {
-                return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
+            $grid->locale('Language')->display(function ($text) {
+                return Language::pluck('name', 'code')->all()[$text];
             });
-            $grid->facebook('FB Fanpage')->display(function ($text) {
-                return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
-            });
+
             $grid->status('Status website')->switch();
             $grid->disableCreation();
             $grid->disableExport();
@@ -137,7 +136,7 @@ class ConfigGlobalController extends Controller
             }
         }
         return Admin::form(ConfigGlobal::class, function (Form $form) use ($arrTemplates) {
-
+            $languages = Language::pluck('name', 'code')->all();
             $form->image('logo', 'Logo')->removable();
             $form->image('watermark', 'watermark')->removable();
             $form->select('template', 'Template')->options($arrTemplates)->rules('required', ['required' => 'Bạn chưa chọn template']);
@@ -148,9 +147,8 @@ class ConfigGlobalController extends Controller
             $form->text('long_phone', 'Long phone');
             $form->text('address', 'Address');
             $form->text('email', 'Email');
-            $form->text('site_fb_appID', 'FacebookID');
-            $form->text('facebook', 'FB Fanpage');
-            $form->switch('status', 'Status website');
+            $form->select('locale', 'Language')->options($languages);
+            $form->switch('status', 'Status');
             $form->disableViewCheck();
             $form->disableEditingCheck();
             $form->tools(function (Form\Tools $tools) {
