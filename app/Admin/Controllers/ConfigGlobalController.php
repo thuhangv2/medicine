@@ -104,11 +104,9 @@ class ConfigGlobalController extends Controller
             $grid->email('Email')->display(function ($text) {
                 return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
             });
-            $grid->locale('Language')->display(function ($text) {
-                return Language::pluck('name', 'code')->all()[$text];
-            });
+            $grid->locale('Default Language')->editable('select', Language::where('status', 1)->pluck('name', 'code')->all());
 
-            $grid->status('Status website')->switch();
+            $grid->status('Status')->switch();
             $grid->disableCreation();
             $grid->disableExport();
             $grid->disableRowSelector();
