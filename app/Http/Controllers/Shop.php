@@ -219,16 +219,17 @@ class Shop extends GeneralController
 
         try {
             //Process total
-            $objects   = array();
-            $objects[] = (new ShopOrderTotal)->getShipping(); //module shipping
-            $objects[] = (new ShopOrderTotal)->getDiscount(); //module discount
-            $objects[] = (new ShopOrderTotal)->getReceived(); //module reveived
-            $dataTotal = ShopOrderTotal::processDataTotal($objects); //sumtotal and re-sort item total
-            $subtotal  = (new ShopOrderTotal)->sumValueTotal('subtotal', $dataTotal);
-            $shipping  = (new ShopOrderTotal)->sumValueTotal('shipping', $dataTotal); //sum shipping
-            $discount  = (new ShopOrderTotal)->sumValueTotal('discount', $dataTotal); //sum discount
-            $received  = (new ShopOrderTotal)->sumValueTotal('received', $dataTotal); //sum received
-            $total     = (new ShopOrderTotal)->sumValueTotal('total', $dataTotal);
+            $objects        = array();
+            $objects[]      = (new ShopOrderTotal)->getShipping(); //module shipping
+            $objects[]      = (new ShopOrderTotal)->getDiscount(); //module discount
+            $objects[]      = (new ShopOrderTotal)->getReceived(); //module reveived
+            $dataTotal      = ShopOrderTotal::processDataTotal($objects); //sumtotal and re-sort item total
+            $subtotal       = (new ShopOrderTotal)->sumValueTotal('subtotal', $dataTotal);
+            $shipping       = (new ShopOrderTotal)->sumValueTotal('shipping', $dataTotal); //sum shipping
+            $discount       = (new ShopOrderTotal)->sumValueTotal('discount', $dataTotal); //sum discount
+            $received       = (new ShopOrderTotal)->sumValueTotal('received', $dataTotal); //sum received
+            $total          = (new ShopOrderTotal)->sumValueTotal('total', $dataTotal);
+            $payment_method = empty($request->get('payment_method')) ? 'cash' : $request->get('payment_method');
             //end total
             DB::connection('mysql')->beginTransaction();
             $arrOrder['user_id']         = empty(Auth::user()->id) ? 0 : Auth::user()->id;
@@ -245,7 +246,7 @@ class Shop extends GeneralController
             $arrOrder['address1']        = $request->get('address1');
             $arrOrder['address2']        = $request->get('address2');
             $arrOrder['phone']           = $request->get('phone');
-            $arrOrder['payment_method']  = empty($request->get('payment_method')) ? 'cash' : $request->get('payment_method');
+            $arrOrder['payment_method']  = $payment_method;
             $arrOrder['comment']         = $request->get('comment');
             $arrOrder['created_at']      = date('Y-m-d H:i:s');
 
@@ -279,8 +280,6 @@ class Shop extends GeneralController
 
             }
 
-            Cart::destroy(); // destroy cart
-
             if (!empty(session('coupon'))) {
                 \Promocodes::apply(session('coupon'), $uID = null, $msg = 'Order #' . $orderId); // apply coupon
                 $request->session()->forget('coupon'); //destroy coupon
@@ -295,12 +294,15 @@ class Shop extends GeneralController
             ];
             ShopOrderHistory::insert($dataHistory);
 
+            $dataItems = Cart::content();
+            Cart::destroy(); // destroy cart
+
             DB::connection('mysql')->commit();
 
             //Process paypal
-            if ($request->get('payment_method') == 'paypal') {
+            if ($payment_method == 'paypal') {
                 $data_payment = [];
-                foreach (Cart::content() as $value) {
+                foreach ($dataItems as $value) {
                     $product        = ShopProduct::find($value->id);
                     $data_payment[] =
                         [
@@ -326,9 +328,11 @@ class Shop extends GeneralController
                 ];
                 $data_payment['order_id'] = $orderId;
                 return redirect('payment/paypal')->with('data_payment', $data_payment);
+            } else {
+                return $this->completeOrder($orderId);
             }
+
             //
-            return $this->completeOrder($orderId);
 
         } catch (\Exception $e) {
             DB::connection('mysql')->rollBack();

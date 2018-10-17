@@ -40,7 +40,13 @@ class PayPalService
                 $paypalConfigs['paypal_secret']
             )
         );
-        $this->paypalConfigs   = $paypalConfigs;
+        $this->apiContext->setConfig([
+            'mode'                   => $paypalConfigs['paypal_mode'],
+            'http.ConnectionTimeOut' => 30,
+            'log.logEnabled'         => $paypalConfigs['paypal_log'],
+            'log.FileName'           => storage_path() . '/' . $paypalConfigs['paypal_path_log'],
+            'log.LogLevel'           => 'INFO',
+        ]);
         $this->paymentCurrency = $paypalConfigs['paypal_currency'];
 
         $this->totalAmount = 0;

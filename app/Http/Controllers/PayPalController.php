@@ -27,9 +27,9 @@ class PayPalController extends Controller
         $this->paypalSvc    = $paypalSvc;
         $this->order_status = $paypalConfigs['paypal_order_status_success'];
         $this->order_faild  = $paypalConfigs['paypal_order_status_faild'];
-        config(['paypal.settings.mode' => $paypalConfigs['paypal_mode']]);
-        config(['paypal.settings.log.logEnabled' => $paypalConfigs['paypal_log']]);
-        config(['paypal.settings.log.FileName' => storage_path() . '/' . $paypalConfigs['paypal_path_log']]);
+        // config(['paypal.settings.mode' => $paypalConfigs['paypal_mode']]);
+        // config(['paypal.settings.log.logEnabled' => $paypalConfigs['paypal_log']]);
+        // config(['paypal.settings.log.FileName' => storage_path() . '/' . $paypalConfigs['paypal_path_log']]);
     }
 
     public function index(Request $request)
@@ -60,7 +60,7 @@ class PayPalController extends Controller
         if (!empty(session('paypal_payment_id'))) {
             $paymentStatus = $this->paypalSvc->getPaymentStatus();
             if ($paymentStatus) {
-                ShopOrder::find($order_id)->update(['transaction' => $paymentStatus->id, 'payment_method' => 'paypal', 'status' => $this->order_status]);
+                ShopOrder::find($order_id)->update(['transaction' => $paymentStatus->id, 'status' => $this->order_status]);
                 //Add history
                 $dataHistory = [
                     'order_id' => $order_id,
