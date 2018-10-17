@@ -61,4 +61,18 @@ return [
     'search_form'       => [
         'keyword' => 'Từ khóa tìm kiếm',
     ],
+
+    'admin'             => [
+        'paypal_client_id'            => 'Client ID',
+        'paypal_secret'               => 'Secret',
+        'paypal_mode'                 => 'Paypal mode',
+        'paypal_log'                  => 'Bật log',
+        'paypal_path_log'             => 'Đường dẫn file log (trong storage)',
+        'paypal_status'               => 'Kích hoạt module',
+        'paypal_currency'             => 'Đơn vị tiền tệ',
+        'paypal_order_status_success' => 'Status order khi thành công',
+        'paypal_order_status_faild'   => 'Status order khi thất bại',
+        'not_empty'                   => 'Không được để trống!',
+    ],
+
 ];

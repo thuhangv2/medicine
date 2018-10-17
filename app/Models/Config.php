@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Config extends Model
 {
-    public $timestamps = false;
-    public $table      = 'config';
+    public $timestamps  = false;
+    public $table       = 'config';
+    protected $fillable = ['value'];
 }

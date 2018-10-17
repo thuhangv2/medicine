@@ -113,10 +113,10 @@ class ConfigInfoController extends Controller
 
     public function paypalConfigPost(Request $request)
     {
-        dd($request->all());
-        $key   = $request->input('pk');
-        $field = $request->input('name');
-        $value = $request->input('value');
+        $data  = $request->all();
+        $key   = $data['pk'];
+        $field = $data['name'];
+        $value = $data['value'];
         Config::where('key', $key)->update(['value' => $value]);
 
     }
@@ -125,8 +125,8 @@ class ConfigInfoController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Order #');
-            // $content->description('description');
+            $content->header('Paypal config');
+            $content->description(' ');
             $content->body(
                 $this->viewPaypalConfig()
             );
@@ -135,8 +135,7 @@ class ConfigInfoController extends Controller
 
     public function viewPaypalConfig()
     {
-        $title  = 'Title';
-        $paypal = Config::where('code', 'payment_paypal')->get();
+        $paypal = Config::where('code', 'payment_paypal')->orderBy('sort', 'desc')->get();
         if ($paypal === null) {
             return 'no data';
         }
@@ -148,16 +147,31 @@ class ConfigInfoController extends Controller
             $data['value']    = $field->value;
             $data['disabled'] = 0;
             $data['required'] = 1;
-            if ($field->key) {
-                $data['type'] = 'text';
+            if ($field->key == 'paypal_mode') {
+                $data['type']   = 'select';
+                $data['source'] = json_encode(
+                    array(
+                        ['value' => 'sandbox', 'text' => 'sandbox'],
+                        ['value' => 'live', 'text' => 'live'],
+                    )
+                );
+            } elseif ($field->key == 'paypal_status' || $field->key == 'paypal_log') {
+                $data['type']   = 'select';
+                $data['source'] = json_encode(
+                    array(
+                        ['value' => '0', 'text' => 'OFF'],
+                        ['value' => '1', 'text' => 'ON'],
+                    )
+                );
             } else {
-                $data['type'] = 'textarea';
+                $data['type']   = 'text';
+                $data['source'] = '';
             }
             $data['url'] = route('paypalConfigPost');
             $fields[]    = $data;
         }
         return view('admin.CustomEdit')->with([
-            "datas" => $fields, "title" => $title,
+            "datas" => $fields,
         ])->render();
     }
 

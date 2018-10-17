@@ -63,4 +63,18 @@ return [
     'search_form'       => [
         'keyword' => 'Your keyword',
     ],
+
+    'admin'             => [
+        'paypal_client_id'            => 'Client ID',
+        'paypal_secret'               => 'Secret',
+        'paypal_mode'                 => 'Paypal mode',
+        'paypal_log'                  => 'Enable log',
+        'paypal_path_log'             => 'Path log (in storage)',
+        'paypal_status'               => 'Enable module',
+        'paypal_currency'             => 'Currency',
+        'paypal_order_status_success' => 'Order status success',
+        'paypal_order_status_faild'   => 'Order status faild',
+        'not_empty'                   => 'Data not empty!',
+    ],
+
 ];

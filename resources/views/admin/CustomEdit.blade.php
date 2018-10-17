@@ -6,21 +6,18 @@
 
 <div class="container box">
     <div class="box-header with-border">
-        <h3 class="box-title"><span class="glyphicon glyphicon-list-alt"></span> {{ $title }}</h3>
+        <h3 class="box-title"> </h3>
         <div class="box-tools">
-            <div class="btn-group pull-right" style="margin-right: 10px">
-                <a href="{{ URL::previous() }}" class="btn btn-sm btn-default"><i class="fa fa-list"></i>&nbsp;List</a>
-            </div>
-            <div class="btn-group pull-right" style="margin-right: 10px">
-                <a class="btn btn-sm btn-default form-history-back"><i class="fa fa-arrow-left"></i>&nbsp;Back</a>
-            </div>
         </div>
     </div>
     <div>
        <table class="table box table-bordered">
         @foreach ($datas as $data)
         <tr>
-          <th>{{ $data['title'] }}:</th><td><a href="#" class="editable editable-click {{ ($data['disabled'])?'editable-disabled':'' }} {{ ($data['required'])?'fied-required':'no-required' }}" data-name="{{ $data['field'] }}" data-type="{{ $data['type'] }}" data-pk="{{ $data['key'] }}" data-url="{{ $data['url'] }}" data-title="{{ $data['title'] }}" >{{ $data['value'] }}</a></td>
+          <th style="width: 200px;">{!! trans(htmlentities($data['title'])) !!}:</th>
+          <td>
+            <a href="#" class="{{ !empty($data['disabled'])?'editable-disabled':'' }} {{ ($data['required'])?'fied-required':'no-required' }}" data-name="{{ $data['field'] }}" data-type="{{ $data['type'] }}" data-pk="{{ $data['key'] }}" data-source ="{{ $data['source'] }}" data-url="{{ $data['url'] }}" data-title="{!! trans(htmlentities($data['title'])) !!}" data-value="{{ $data['value'] }}"></a>
+          </td>
         </tr>
         @endforeach
       </table>
@@ -34,7 +31,7 @@ $(document).ready(function() {
         $('.fied-required').editable({
         validate: function(value) {
             if (value == '') {
-                return 'Không được để trống';
+                return '{{  trans('language.admin.not_empty') }}';
             }
         }
     });

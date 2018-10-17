@@ -45,6 +45,6 @@ Route::group([
     });
 //Paypal
     $router->get('/paypalConfig', 'ConfigInfoController@paypalConfig')->name('paypalConfig');
-    $router->post('/paypalConfigPost', 'ConfigInfoController@paypalConfigPost')->name('paypalConfigPost');
+    $router->any('/paypalConfigPost', 'ConfigInfoController@paypalConfigPost')->name('paypalConfigPost');
 
 });
