@@ -43,4 +43,8 @@ Route::group([
     $router->get('/ckfinder', function () {
         return view('admin.ckfinder');
     });
+//Paypal
+    $router->get('/paypalConfig', 'ConfigInfoController@paypalConfig')->name('paypalConfig');
+    $router->post('/paypalConfigPost', 'ConfigInfoController@paypalConfigPost')->name('paypalConfigPost');
+
 });
