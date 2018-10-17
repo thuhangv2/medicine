@@ -8,6 +8,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Shop as Shop;
+use App\Models\Config;
 use App\Models\ShopOrder;
 use App\Models\ShopOrderHistory;
 use App\Scart\Payment\PayPalService as PayPalSvc;
@@ -15,15 +16,20 @@ use Illuminate\Http\Request;
 
 class PayPalController extends Controller
 {
-    private $order_status = 1; // pending
-    private $order_faild  = 5; // faild
+    private $order_status; // pending
+    private $order_faild; // faild
     private $paypalSvc;
 
     public function __construct(PayPalSvc $paypalSvc)
     {
         // parent::__construct();
-
-        $this->paypalSvc = $paypalSvc;
+        $paypalConfigs      = Config::where('code', 'payment_paypal')->pluck('value', 'key');
+        $this->paypalSvc    = $paypalSvc;
+        $this->order_status = $paypalConfigs['paypal_order_status_success'];
+        $this->order_faild  = $paypalConfigs['paypal_order_status_faild'];
+        config(['paypal.settings.mode' => $paypalConfigs['paypal_mode']]);
+        config(['paypal.settings.log.logEnabled' => $paypalConfigs['paypal_log']]);
+        config(['paypal.settings.log.FileName' => storage_path() . '/' . $paypalConfigs['paypal_path_log']]);
     }
 
     public function index(Request $request)

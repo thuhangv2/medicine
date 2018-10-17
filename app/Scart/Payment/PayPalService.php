@@ -2,6 +2,7 @@
 
 namespace App\Scart\Payment;
 
+use App\Models\Config;
 use PayPal\Api\Amount;
 use PayPal\Api\Item;
 use PayPal\Api\ItemList;
@@ -27,17 +28,20 @@ class PayPalService
     private $returnUrl;
     // return link when customer click cancel
     private $cancelUrl;
+    private $paypalConfigs;
+
     public function __construct()
     {
-        $paypalConfigs    = config('paypal');
+        // $paypalConfigs    = config('paypal');
+        $paypalConfigs    = Config::where('code', 'payment_paypal')->pluck('value', 'key');
         $this->apiContext = new ApiContext(
             new OAuthTokenCredential(
-                $paypalConfigs['client_id'],
-                $paypalConfigs['secret']
+                $paypalConfigs['paypal_client_id'],
+                $paypalConfigs['paypal_secret']
             )
         );
-
-        $this->paymentCurrency = "USD";
+        $this->paypalConfigs   = $paypalConfigs;
+        $this->paymentCurrency = $paypalConfigs['paypal_currency'];
 
         $this->totalAmount = 0;
     }

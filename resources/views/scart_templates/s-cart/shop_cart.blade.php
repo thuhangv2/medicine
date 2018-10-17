@@ -159,7 +159,7 @@
                         <td colspan="2">
                             <i class="fa fa-credit-card-alt"></i> Payment method:<br>
                             <div class="form-group">
-                                @if (empty($configs['PAYPAL_STATUS']))
+                                @if (empty($configs['paypal_status']))
                                     <input type="hidden" name="payment_method" value="cash"><img src="{{ asset('images/cash.png') }}">
                                 @else
                                 <div class="col-md-6">
