@@ -1,5 +1,5 @@
 <?php
-
+#app/Http/Admin/Controllers/ConfigModeController.php
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;

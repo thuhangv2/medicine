@@ -104,7 +104,6 @@ class ConfigGlobalController extends Controller
             $grid->email('Email')->display(function ($text) {
                 return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
             });
-            $grid->locale('Default Language')->editable('select', Language::where('status', 1)->pluck('name', 'code')->all());
 
             $grid->status('Status')->switch();
             $grid->disableCreation();
@@ -145,7 +144,6 @@ class ConfigGlobalController extends Controller
             $form->text('long_phone', 'Long phone');
             $form->text('address', 'Address');
             $form->text('email', 'Email');
-            $form->select('locale', 'Language')->options($languages);
             $form->switch('status', 'Status');
             $form->disableViewCheck();
             $form->disableEditingCheck();

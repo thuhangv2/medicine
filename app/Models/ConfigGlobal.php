@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ConfigGlobal extends Model
 {
-    public $timestamps = false;
-    public $table      = 'config_global';
+    public $timestamps  = false;
+    public $table       = 'config_global';
+    protected $fillable = ['locale'];
 }

@@ -46,5 +46,10 @@ Route::group([
 //Paypal
     $router->get('/paypalConfig', 'ConfigInfoController@paypalConfig')->name('paypalConfig');
     $router->any('/paypalConfigPost', 'ConfigInfoController@paypalConfigPost')->name('paypalConfigPost');
+//Language
+    $router->get('locale/{code}', function ($code) {
+        \App\Models\ConfigGlobal::first()->update(['locale' => $code]);
+        return back();
+    });
 
 });

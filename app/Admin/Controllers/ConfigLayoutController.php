@@ -24,7 +24,7 @@ class ConfigLayoutController extends Controller
     {
         return $content
             ->header('Index')
-            ->description('description')
+            ->description(' ')
             ->body($this->grid());
     }
 

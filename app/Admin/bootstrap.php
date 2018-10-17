@@ -21,6 +21,8 @@ Encore\Admin\Form::forget(['map', 'editor']);
 app('view')->prependNamespace('admin', resource_path('views/admin'));
 use App\Admin\Extensions\Column\Expands;
 use App\Admin\Extensions\Form\CKEditor;
+use App\Models\ConfigGlobal;
+use App\Models\Language;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid\Column;
@@ -30,10 +32,26 @@ Column::extend('expand', Expands::class);
 Form::extend('ckeditor', CKEditor::class);
 //end Ckeditor
 Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
-
+    $configs_global = ConfigGlobal::first();
+    $languages      = Language::where('status', 1)->get()->keyBy('code');
+    $path_file      = config('filesystems.disks.path_file');
+    $htmlLang       = '';
+    foreach ($languages as $key => $language) {
+        $htmlLang .= '<li><a target=_blank href="' . url(config('admin.route.prefix') . '/locale/' . $key) . '"><img alt="' . $language['name'] . '" src="/' . $path_file . '/' . $language['icon'] . '" style="height: 25px;"></a></li>';
+    }
+    $navbar->left('<div class="btn-group" style="margin:10px 0 0 20px;cursor:pointer;">
+                <span  class="dropdown-toggle usa" data-toggle="dropdown">
+                <img alt="' . $languages[$configs_global->locale]['name'] . '" src="/' . $path_file . '/' . $languages[$configs_global->locale]['icon'] . '" style="height: 25px;">
+                  <span class="caret"></span>
+                </span>
+                <ul class="dropdown-menu">
+                  ' . $htmlLang . '
+                </ul>
+              </div>');
     $navbar->left(view('admin.search-bar'));
 
-    $navbar->right('<li class="dropdown notifications-menu">
+    $navbar->right('
+<!--      <li class="dropdown notifications-menu">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
       <i class="fa fa-bell-o"></i>
       <span class="label label-warning">10</span>
@@ -41,7 +59,6 @@ Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
     <ul class="dropdown-menu">
       <li class="header">You have 10 notifications</li>
       <li>
-        <!-- inner menu: contains the actual data -->
         <ul class="menu">
           <li>
             <a href="#">
@@ -69,6 +86,9 @@ Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
       </li>
       <li class="footer"><a href="#">View all</a></li>
     </ul>
-    </li>');
+    </li>
+-->
+
+    ');
 
 });
