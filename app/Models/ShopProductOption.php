@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ShopProductType extends Model
+class ShopProductOption extends Model
 {
-    public $table       = 'shop_product_type';
+    public $table       = 'shop_product_option';
     protected $fillable = ['opt_name', 'product_id', 'opt_price', 'opt_sku', 'opt_image'];
     public $timestamps  = false;
     public function product()

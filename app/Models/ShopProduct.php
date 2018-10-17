@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\Config;
 use App\Models\Language;
 use App\Models\ShopProductDescription;
-use App\Models\ShopProductType;
+use App\Models\ShopProductOption;
 use App\Models\ShopSpecialPrice;
 use Illuminate\Database\Eloquent\Model;
 use Scart;
@@ -43,9 +43,9 @@ class ShopProduct extends Model
         return $this->hasMany('App\Models\ShopProductDescription', 'product_id', 'id');
     }
 
-    public function types()
+    public function options()
     {
-        return $this->hasMany(ShopProductType::class, 'product_id', 'id');
+        return $this->hasMany(ShopProductOption::class, 'product_id', 'id');
     }
 
     public function special_price()
@@ -66,7 +66,7 @@ class ShopProduct extends Model
         if product have type, will use price of type
          */
         if ($opt_sku) {
-            return ShopProductType::where('product_id', $id)->where('opt_sku', $opt_sku)->first()->opt_price;
+            return ShopProductOption::where('product_id', $id)->where('opt_sku', $opt_sku)->first()->opt_price;
         }
 //End type
 

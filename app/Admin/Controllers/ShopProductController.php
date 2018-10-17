@@ -230,8 +230,8 @@ class ShopProductController extends Controller
                             }
                         }
 
-                        if (($product->types)) {
-                            foreach ($product->types as $key => $image) {
+                        if (($product->options)) {
+                            foreach ($product->options as $key => $image) {
                                 if (!file_exists($file_path_admin . '/thumb/' . $image->opt_image)) {
                                     \Image::make($file_path_admin . '/' . $image->opt_image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $image->opt_image);
                                     //thumbnail
