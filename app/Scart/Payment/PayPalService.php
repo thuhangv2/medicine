@@ -45,7 +45,7 @@ class PayPalService
             'http.ConnectionTimeOut' => 30,
             'log.logEnabled'         => $paypalConfigs['paypal_log'],
             'log.FileName'           => storage_path() . '/' . $paypalConfigs['paypal_path_log'],
-            'log.LogLevel'           => 'INFO',
+            'log.LogLevel'           => 'WARNING',
         ]);
         $this->paymentCurrency = $paypalConfigs['paypal_currency'];
 
