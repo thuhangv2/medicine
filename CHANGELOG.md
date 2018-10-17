@@ -1,7 +1,17 @@
 # Release Notes
+## v2.1.1 (2018-10-20)
+
+### Add
+> Multi language
+> Custome layout
+
+### Changed
+> Config paypal
+
+
 ## v2.0.2-2 (2018-10-09)
 ### Changed
-> Config log adim
+> Config log admin
 > Fig error use funcion url in config
 ## v2.0.1 & v2.0.2 (2018-10-05)
 
