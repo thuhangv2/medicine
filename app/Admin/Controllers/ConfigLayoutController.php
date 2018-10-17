@@ -135,7 +135,7 @@ class ConfigLayoutController extends Controller
     {
         $form = new Form(new ConfigLayout);
 
-        $form->html('Phần source này thêm bên dưới các thẻ <b><</b>meta<b>></b>');
+        $form->html('Phần source này thêm bên dưới các thẻ <i><</i>meta<b>></b>');
         $form->textarea('meta', 'Meta');
         $form->html('Phần source này thêm ngay dưới thẻ <b><</b>body<b>></b>');
         $form->textarea('header', 'Header');
