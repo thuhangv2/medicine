@@ -26,7 +26,7 @@ var chart = new Chart(ctx, {
         "labels":{!! $months1 !!},
         "datasets":[
             {
-                "label":"Tổng doanh số",
+                "label":"Total amount",
                 "data":{!! $arrTotalsAmount_year !!},
                 "fill":false,
                 "backgroundColor":[
