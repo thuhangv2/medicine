@@ -28,7 +28,7 @@ var chart = new Chart(ctx, {
 
 
         {
-            label: "Doanh số",
+            label: "Total amount",
             backgroundColor: 'rgba(225,0,0,0.4)',
             borderColor: "rgb(231, 53, 253)",
             borderCapStyle: 'square',
@@ -103,7 +103,7 @@ var chart = new Chart(ctx, {
                 },
                 scaleLabel: {
                      display: true,
-                     labelString: 'Doanh số (VNĐ)',
+                     labelString: 'Total amount (VNĐ)',
                      fontSize: 15
                   }
             }

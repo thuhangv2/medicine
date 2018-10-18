@@ -20,13 +20,13 @@ class HomeController extends Controller
     public function index()
     {
         return Admin::content(function (Content $content) {
-            $content->header('Trang tổng quát');
+            $content->header(trans('language.admin.dashboard'));
             $content->description(' ');
 
             $content->row(function ($row) {
-                $row->column(4, new InfoBox('Tổng sản phẩm', 'tags', 'aqua', '/' . config('admin.route.prefix') . '/shop_product', ShopProduct::all()->count()));
-                $row->column(4, new InfoBox('Tổng đơn hàng', 'shopping-cart', 'green', '/' . config('admin.route.prefix') . '/shop_order', ShopOrder::all()->count()));
-                $row->column(4, new InfoBox('Tổng số khách hàng', 'user', 'yellow', '/' . config('admin.route.prefix') . '/shop_customer', User::all()->count()));
+                $row->column(4, new InfoBox(trans('language.admin.total_product'), 'tags', 'aqua', '/' . config('admin.route.prefix') . '/shop_product', ShopProduct::all()->count()));
+                $row->column(4, new InfoBox(trans('language.admin.total_order'), 'shopping-cart', 'green', '/' . config('admin.route.prefix') . '/shop_order', ShopOrder::all()->count()));
+                $row->column(4, new InfoBox(trans('language.admin.total_customer'), 'user', 'yellow', '/' . config('admin.route.prefix') . '/shop_customer', User::all()->count()));
             });
 
             $content->row(function (Row $row) {
@@ -50,7 +50,6 @@ class HomeController extends Controller
                     $arrTotalsOrder[$day]  = $value->total_order;
                 }
                 $max_order = max($arrTotalsOrder);
-                //Doanh số cộng dồn
                 foreach ($arrTotalsAmount as $key => $value) {
                     if ($key != 1) {
                         $key_first = $key - 1;
@@ -62,7 +61,7 @@ class HomeController extends Controller
                 $arrTotalsOrder  = '[' . implode(',', $arrTotalsOrder) . ']';
 
                 $chart1 = view('admin.chart.chart1', compact(['arrDays', 'arrTotalsAmount', 'arrTotalsOrder', 'max_order']));
-                $row->column(12, new Box('Đơn hàng trong tháng', $chart1));
+                $row->column(12, new Box(trans('language.admin.order_month'), $chart1));
             });
 
 //===================12 months  ==============================
@@ -86,13 +85,13 @@ class HomeController extends Controller
                 $arrTotalsAmount_year = '[' . implode(',', $arrTotalsAmount_year) . ']';
 
                 $chart2 = view('admin.chart.chart2', compact(['arrTotalsAmount_year', 'totals_month', 'months1', 'max_order']));
-                $row->column(12, new Box('Đơn hàng trong tháng', $chart2));
+                $row->column(12, new Box(trans('language.admin.order_year'), $chart2));
             });
 
             $users   = User::select('id', 'email', 'name', 'phone', 'created_at')->orderBy('id', 'desc')->limit(10)->get()->toArray();
-            $headers = ['Id', 'Email', 'Name', 'Phone', 'Ngày đăng ký'];
+            $headers = ['Id', 'Email', 'Name', 'Phone', 'Time'];
             $rows    = $users;
-            $content->row((new Box('Khách hàng mới', new Table($headers, $rows)))->style('info')->solid());
+            $content->row((new Box(trans('language.admin.new_customer'), new Table($headers, $rows)))->style('info')->solid());
         });
     }
 }

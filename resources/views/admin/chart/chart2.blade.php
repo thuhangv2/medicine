@@ -63,7 +63,7 @@ var chart = new Chart(ctx, {
                 type:"bar",
             },
             {
-                "label":"Line doanh số",
+                "label":"Line total amount",
                 "data":{!! $arrTotalsAmount_year !!},
                 "fill":false,
                 "backgroundColor":"red",

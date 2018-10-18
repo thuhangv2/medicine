@@ -78,6 +78,13 @@ return [
         'not_empty'                   => 'Data not empty!',
         'search_order'                => 'Search order id, email, phone or name',
         'only_numeric'                => 'Please input numeric!',
+        'order_year'                  => 'In this year',
+        'order_month'                 => 'In this month',
+        'dashboard'                   => 'Dashboard',
+        'total_product'               => 'Product total',
+        'total_order'                 => 'Order total',
+        'total_customer'              => 'Customer total',
+        'new_customer'                => 'New customer',
     ],
 
 ];

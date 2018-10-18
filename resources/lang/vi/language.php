@@ -76,6 +76,13 @@ return [
         'not_empty'                   => 'Không được để trống!',
         'search_order'                => 'Số order, email, phone hoặc tên',
         'only_numeric'                => 'Vui lòng nhập số!',
+        'order_year'                  => 'Đơn hàng trong năm',
+        'order_month'                 => 'Đơn hàng trong tháng',
+        'dashboard'                   => 'Trang tổng quan',
+        'total_product'               => 'Thống kê sản phẩm',
+        'total_order'                 => 'Thống kê đơn hàng',
+        'total_customer'              => 'Thống kê khách hàng',
+        'new_customer'                => 'Khách hàng mới',
     ],
 
 ];

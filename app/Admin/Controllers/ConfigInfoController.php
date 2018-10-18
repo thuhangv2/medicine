@@ -189,7 +189,7 @@ class ConfigInfoController extends Controller
                 $data['type']   = 'select';
                 $data['source'] = json_encode(
                     array(
-                        ['value' => '0', 'text' => 'Sednmail'],
+                        ['value' => '0', 'text' => 'Not use'],
                         ['value' => '1', 'text' => 'SMTP'],
                     )
                 );
