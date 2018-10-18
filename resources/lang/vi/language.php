@@ -69,7 +69,7 @@ return [
         'paypal_mode'                  => 'Paypal mode',
         'paypal_log'                   => 'Bật log',
         'paypal_path_log'              => 'Đường dẫn file log (trong storage)',
-        'paypal_status'                => 'Kích hoạt module',
+        'paypal_status'                => 'Kích hoạt module Paypal',
         'paypal_currency'              => 'Đơn vị tiền tệ',
         'paypal_order_status_success'  => 'Status order khi thành công',
         'paypal_order_status_faild'    => 'Status order khi thất bại',
@@ -89,7 +89,7 @@ return [
         'relation_product'             => 'Sản phẩm liên quan',
         'enable_https'                 => 'Sử dụng https',
         'enable_log_admin'             => 'Bật log Admin',
-        'enable_watermask'             => 'Dùng logo khi upload ảnh',
+        'enable_watermask'             => 'Chèn logo khi upload ảnh',
         'use_coupon'                   => 'Sử dụng coupon',
         'use_shipping'                 => 'Sử dụng shipping',
         'show_date_available'          => 'Hiển thị ngày cho phép mua',
@@ -107,6 +107,10 @@ return [
         'use_mode'                     => 'Chế độ',
         'config_control'               => 'Bảng điều khiển cấu hình',
         'site_status'                  => 'Bật/Tắt website',
+        'config_paypal'                => 'Cấu hình Paypal',
+        'config_email'                 => 'Cấu hình Email SMTP',
+        'config_display'               => 'Cấu hình số item hiển thị trên trang',
+        'info_global'                  => 'Thông tin chung website',
     ],
 
 ];

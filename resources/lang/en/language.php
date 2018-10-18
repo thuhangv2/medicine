@@ -109,6 +109,10 @@ return [
         'use_mode'                     => 'Use Mode',
         'config_control'               => 'Config control',
         'site_status'                  => 'On/Off website',
+        'config_paypal'                => 'Config Paypal',
+        'config_email'                 => 'Config Email',
+        'config_display'               => 'Config Items/pages display',
+        'info_global'                  => 'Info global',
     ],
 
 ];

@@ -30,9 +30,9 @@ class ConfigInfoController extends Controller
             $content->description(' ');
             $content->body($this->grid());
             $content->row(function (Row $row) {
-                $row->column(1 / 3, new Box('Config paypal', $this->viewPaypalConfig()));
-                $row->column(1 / 3, new Box('Config email', $this->viewSMTPConfig()));
-                $row->column(1 / 3, new Box('Config display', $this->viewDisplayConfig()));
+                $row->column(1 / 3, new Box(trans('language.admin.config_paypal'), $this->viewPaypalConfig()));
+                $row->column(1 / 3, new Box(trans('language.admin.config_email'), $this->viewSMTPConfig()));
+                $row->column(1 / 3, new Box(trans('language.admin.config_display'), $this->viewDisplayConfig()));
             });
 
         });
@@ -78,10 +78,9 @@ class ConfigInfoController extends Controller
      */
     protected function grid()
     {
-
         $grid = new Grid(new Config);
         $grid->detail(trans('language.admin.field_config'))->display(function ($detail) {
-            return trans(htmlentities($detail));
+            return '<strong>' . trans(htmlentities($detail)) . '</strong>';
         });
         $states = [
             '1' => ['value' => 1, 'text' => 'YES', 'color' => 'primary'],

@@ -24,7 +24,7 @@ class ConfigGlobalController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Config global for site');
+            $content->header(trans('language.admin.info_global'));
             $content->description(' ');
 
             $content->body($this->grid());
@@ -41,7 +41,7 @@ class ConfigGlobalController extends Controller
     {
         return Admin::content(function (Content $content) use ($id) {
 
-            $content->header('Edit config');
+            $content->header(trans('language.admin.info_global'));
             $content->description(' ');
 
             $content->body($this->form()->edit($id));
@@ -109,11 +109,14 @@ class ConfigGlobalController extends Controller
             $grid->disableExport();
             $grid->disableRowSelector();
             $grid->disableFilter();
+            $grid->disablePagination();
             $grid->actions(function ($actions) {
                 $actions->disableView();
                 $actions->disableDelete();
             });
-
+            $grid->tools(function ($tools) {
+                $tools->disableRefreshButton();
+            });
         });
     }
 
