@@ -66,7 +66,7 @@
                 </button>
                 <ul class="dropdown-menu">
                   @foreach ($languages as $key => $language)
-                    <li><a href="{{ url('language/'.$key) }}">{{ $language['name'] }} <img src="{{ asset($path_file.'/'.$language['icon']) }}" style="height: 25px;"></a></li>
+                    <li><a href="{{ url('locale/'.$key) }}">{{ $language['name'] }} <img src="{{ asset($path_file.'/'.$language['icon']) }}" style="height: 25px;"></a></li>
                   @endforeach
                 </ul>
 

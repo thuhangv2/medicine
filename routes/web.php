@@ -81,7 +81,7 @@ Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 //================================
 //Language
-Route::get('language/{code}', function ($code) {
+Route::get('locale/{code}', function ($code) {
     session(['locale' => $code]);
     return back();
 });
