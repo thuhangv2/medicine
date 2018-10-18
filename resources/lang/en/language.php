@@ -23,6 +23,7 @@ return [
     'my_profile'        => 'My profile',
     'notfound'          => 'Not found',
     'empty_product'     => 'No product!',
+    'no_data'           => 'No data!',
     'empty_entry'       => 'No entry!',
     'not_found'         => 'Sorry! We can\'t find that page!',
 
@@ -76,6 +77,7 @@ return [
         'paypal_order_status_faild'   => 'Order status faild',
         'not_empty'                   => 'Data not empty!',
         'search_order'                => 'Search order id, email, phone or name',
+        'only_numeric'                => 'Please input numeric!',
     ],
 
 ];

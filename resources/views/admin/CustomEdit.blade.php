@@ -35,8 +35,18 @@ $(document).ready(function() {
             }
         }
     });
+
+    $('.number-required').editable({
+           validate: function(value) {
+            if (value == '') {
+                return '{{  trans('language.admin.not_empty') }}';
+            }
+            if (!$.isNumeric(value)) {
+                return '{{  trans('language.admin.only_numeric') }}';
+            }
+        },
+    });
+
+
 });
-
-
-
 </script>

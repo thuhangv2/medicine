@@ -25,6 +25,7 @@ return [
     'empty_product'     => 'Không có sản phẩm nào!',
     'empty_entry'       => 'Không có bài viết nào!',
     'not_found'         => 'Dữ liệu không tồn tại!',
+    'no_data'           => 'Không có dữ liệu!',
     'cart_title'        => 'Giỏ hàng',
     'wishlist'          => 'Sản phẩm yêu thích',
     'add_to_wishlist'   => 'Yêu thích',
@@ -74,6 +75,7 @@ return [
         'paypal_order_status_faild'   => 'Status order khi thất bại',
         'not_empty'                   => 'Không được để trống!',
         'search_order'                => 'Số order, email, phone hoặc tên',
+        'only_numeric'                => 'Vui lòng nhập số!',
     ],
 
 ];

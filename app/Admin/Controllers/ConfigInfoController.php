@@ -9,6 +9,8 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
+use Encore\Admin\Layout\Row;
+use Encore\Admin\Widgets\Box;
 use Illuminate\Http\Request;
 
 class ConfigInfoController extends Controller
@@ -26,7 +28,11 @@ class ConfigInfoController extends Controller
 
             $content->header('Thông tin cấu hình');
             $content->description(' ');
-
+            $content->row(function (Row $row) {
+                $row->column(1 / 3, new Box('Config paypal', $this->viewPaypalConfig()));
+                $row->column(1 / 3, new Box('Config email', $this->viewSMTPConfig()));
+                $row->column(1 / 3, new Box('Config display', $this->viewDisplayConfig()));
+            });
             $content->body($this->grid());
         });
     }
@@ -111,7 +117,7 @@ class ConfigInfoController extends Controller
         });
     }
 
-    public function paypalConfigPost(Request $request)
+    public function updateConfigField(Request $request)
     {
         $data  = $request->all();
         $key   = $data['pk'];
@@ -137,7 +143,7 @@ class ConfigInfoController extends Controller
     {
         $paypal = Config::where('code', 'payment_paypal')->orderBy('sort', 'desc')->get();
         if ($paypal === null) {
-            return 'no data';
+            return trans('language.no_data');
         }
         $fields = [];
         foreach ($paypal as $key => $field) {
@@ -167,8 +173,74 @@ class ConfigInfoController extends Controller
                 $data['type']   = 'text';
                 $data['source'] = '';
             }
-            $data['url'] = route('paypalConfigPost');
+            $data['url'] = route('updateConfigField');
             $fields[]    = $data;
+        }
+        return view('admin.CustomEdit')->with([
+            "datas" => $fields,
+        ])->render();
+    }
+
+    public function viewSMTPConfig()
+    {
+        $paypal = Config::where('code', 'smtp')->orderBy('sort', 'desc')->get();
+        if ($paypal === null) {
+            return trans('language.no_data');
+        }
+        $fields = [];
+        foreach ($paypal as $key => $field) {
+            $data['title']    = $field->detail;
+            $data['field']    = $field->key;
+            $data['key']      = $field->key;
+            $data['value']    = $field->value;
+            $data['disabled'] = 0;
+            $data['required'] = 0;
+            if ($field->key == 'smtp_mode') {
+                $data['type']   = 'select';
+                $data['source'] = json_encode(
+                    array(
+                        ['value' => '0', 'text' => 'Sednmail'],
+                        ['value' => '1', 'text' => 'SMTP'],
+                    )
+                );
+            } elseif ($field->key == 'smtp_security') {
+                $data['type']   = 'select';
+                $data['source'] = json_encode(
+                    array(
+                        ['value' => 'tls', 'text' => 'TLS'],
+                        ['value' => 'ssl', 'text' => 'SSL'],
+                    )
+                );
+            } else {
+                $data['type']   = 'text';
+                $data['source'] = '';
+            }
+            $data['url'] = route('updateConfigField');
+            $fields[]    = $data;
+        }
+        return view('admin.CustomEdit')->with([
+            "datas" => $fields,
+        ])->render();
+    }
+
+    public function viewDisplayConfig()
+    {
+        $paypal = Config::where('code', 'display')->orderBy('sort', 'desc')->get();
+        if ($paypal === null) {
+            return trans('language.no_data');
+        }
+        $fields = [];
+        foreach ($paypal as $key => $field) {
+            $data['title']    = $field->detail;
+            $data['field']    = $field->key;
+            $data['key']      = $field->key;
+            $data['value']    = $field->value;
+            $data['disabled'] = 0;
+            $data['required'] = 0;
+            $data['source']   = '';
+            $data['type']     = 'text';
+            $data['url']      = route('updateConfigField');
+            $fields[]         = $data;
         }
         return view('admin.CustomEdit')->with([
             "datas" => $fields,
