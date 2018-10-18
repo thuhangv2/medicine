@@ -18,7 +18,7 @@
 
 <form action="{{url(config('admin.route.prefix'))  }}/shop_order" method="get" class="search-form" pjax-container>
     <div class="input-group input-group-sm ">
-        <input type="text" name="keyword" class="form-control" placeholder="Tìm số order hoặc tên người nhận">
+        <input type="text" name="keyword" class="form-control" placeholder="{{ trans('language.admin.search_order') }}">
         <span class="input-group-btn">
             <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
           </span>

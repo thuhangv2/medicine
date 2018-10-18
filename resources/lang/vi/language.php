@@ -73,6 +73,7 @@ return [
         'paypal_order_status_success' => 'Status order khi thành công',
         'paypal_order_status_faild'   => 'Status order khi thất bại',
         'not_empty'                   => 'Không được để trống!',
+        'search_order'                => 'Số order, email, phone hoặc tên',
     ],
 
 ];

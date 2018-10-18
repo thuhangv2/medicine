@@ -148,16 +148,12 @@ class ShopOrderController extends Controller
             });
 
             $grid->created_at('Ngày tạo');
-            // $grid->updated_at();
-            // $grid->tools(function ($tools) {
-            //     $tools->batch(function ($batch) {
-            //         $batch->disableDelete();
-            //     });
-            // });
             $grid->model()->orderBy('id', 'desc');
             if ($keyword != "") {
                 $grid->model()
                     ->where('toname', 'like', '%' . $keyword . '%')
+                    ->orWhere('phone', 'like', '%' . $keyword . '%')
+                    ->orWhere('email', 'like', '%' . $keyword . '%')
                     ->orWhere('id', (int) $keyword);
             }
             $grid->exporter(new ExcelExpoter('dataOrder', 'Danh sach order'));

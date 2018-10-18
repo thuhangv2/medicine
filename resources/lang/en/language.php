@@ -75,6 +75,7 @@ return [
         'paypal_order_status_success' => 'Order status success',
         'paypal_order_status_faild'   => 'Order status faild',
         'not_empty'                   => 'Data not empty!',
+        'search_order'                => 'Search order id, email, phone or name',
     ],
 
 ];
