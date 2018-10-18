@@ -84,7 +84,7 @@ class ConfigInfoController extends Controller
             return trans(htmlentities($detail));
         });
         $grid->value(trans('language.admin.use_mode'))->switch();
-        $grid->model()->where('code', 'config')->orderBy('sort', 'asc');
+        $grid->model()->where('code', 'config')->orderBy('sort', 'desc');
         $grid->disableCreation();
         $grid->disableExport();
         $grid->disableRowSelector();
