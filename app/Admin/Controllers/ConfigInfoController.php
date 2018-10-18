@@ -26,14 +26,15 @@ class ConfigInfoController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Thông tin cấu hình');
+            $content->header('Config info');
             $content->description(' ');
+            $content->body($this->grid());
             $content->row(function (Row $row) {
                 $row->column(1 / 3, new Box('Config paypal', $this->viewPaypalConfig()));
                 $row->column(1 / 3, new Box('Config email', $this->viewSMTPConfig()));
                 $row->column(1 / 3, new Box('Config display', $this->viewDisplayConfig()));
             });
-            $content->body($this->grid());
+
         });
     }
 
@@ -77,23 +78,22 @@ class ConfigInfoController extends Controller
      */
     protected function grid()
     {
-        return Admin::grid(Config::class, function (Grid $grid) {
 
-            $grid->id('Thứ tự')->sortable();
-            $grid->detail('Thông tin')->sortable();
-            $grid->value('Value')->editable();
-            $grid->model()->where('code', 'info');
-            $grid->disableCreation();
-            $grid->disableExport();
-            $grid->disableRowSelector();
-            $grid->disableFilter();
-            $grid->disableActions();
-            $grid->model()->orderBy('sort', 'asc');
-            $grid->actions(function ($actions) {
-                $actions->disableView();
-            });
-
+        $grid = new Grid(new Config);
+        $grid->detail('Thông tin');
+        $grid->value('Bật/Tắt')->switch();
+        $grid->model()->where('code', 'config')->orderBy('sort', 'asc');
+        $grid->disableCreation();
+        $grid->disableExport();
+        $grid->disableRowSelector();
+        $grid->disableFilter();
+        $grid->disableActions();
+        $grid->disablePagination();
+        $grid->tools(function ($tools) {
+            $tools->disableRefreshButton();
         });
+        $grid->paginate(100);
+        return $grid;
     }
 
     /**
@@ -125,18 +125,6 @@ class ConfigInfoController extends Controller
         $value = $data['value'];
         Config::where('key', $key)->update(['value' => $value]);
 
-    }
-
-    public function paypalConfig()
-    {
-        return Admin::content(function (Content $content) {
-
-            $content->header('Paypal config');
-            $content->description(' ');
-            $content->body(
-                $this->viewPaypalConfig()
-            );
-        });
     }
 
     public function viewPaypalConfig()
