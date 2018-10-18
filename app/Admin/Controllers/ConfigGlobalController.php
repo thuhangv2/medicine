@@ -105,7 +105,6 @@ class ConfigGlobalController extends Controller
                 return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
             });
 
-            $grid->status('Status')->switch();
             $grid->disableCreation();
             $grid->disableExport();
             $grid->disableRowSelector();
@@ -144,7 +143,6 @@ class ConfigGlobalController extends Controller
             $form->text('long_phone', 'Long phone');
             $form->text('address', 'Address');
             $form->text('email', 'Email');
-            $form->switch('status', 'Status');
             $form->disableViewCheck();
             $form->disableEditingCheck();
             $form->tools(function (Form\Tools $tools) {
