@@ -80,7 +80,7 @@ class ConfigInfoController extends Controller
     {
         $grid = new Grid(new Config);
         $grid->detail(trans('language.admin.field_config'))->display(function ($detail) {
-            return '<strong>' . trans(htmlentities($detail)) . '</strong>';
+            return trans(htmlentities($detail));
         });
         $states = [
             '1' => ['value' => 1, 'text' => 'YES', 'color' => 'primary'],
