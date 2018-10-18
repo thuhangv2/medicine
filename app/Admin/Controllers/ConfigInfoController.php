@@ -83,7 +83,11 @@ class ConfigInfoController extends Controller
         $grid->detail(trans('language.admin.field_config'))->display(function ($detail) {
             return trans(htmlentities($detail));
         });
-        $grid->value(trans('language.admin.use_mode'))->switch();
+        $states = [
+            '1' => ['value' => 1, 'text' => 'YES', 'color' => 'primary'],
+            '0' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
+        ];
+        $grid->value(trans('language.admin.use_mode'))->switch($states);
         $grid->model()->where('code', 'config')->orderBy('sort', 'desc');
         $grid->disableCreation();
         $grid->disableExport();
@@ -110,7 +114,11 @@ class ConfigInfoController extends Controller
             $form->display('id', 'ID');
             $form->text('code', 'Code');
             $form->text('key', 'Key');
-            $form->text('value', 'Value');
+            $states = [
+                '1' => ['value' => 1, 'text' => 'YES', 'color' => 'primary'],
+                '0' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
+            ];
+            $form->switch('value', 'Value')->states($states);
             $form->disableViewCheck();
             $form->disableEditingCheck();
             $form->tools(function (Form\Tools $tools) {
