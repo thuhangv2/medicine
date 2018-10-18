@@ -195,6 +195,8 @@ class ConfigInfoController extends Controller
             $data['value']    = $field->value;
             $data['disabled'] = 0;
             $data['required'] = 0;
+            $data['type']     = 'text';
+            $data['source']   = '';
             if ($field->key == 'smtp_mode') {
                 $data['type']   = 'select';
                 $data['source'] = json_encode(
@@ -203,6 +205,8 @@ class ConfigInfoController extends Controller
                         ['value' => '1', 'text' => 'SMTP'],
                     )
                 );
+            } elseif ($field->key == 'smtp_port') {
+                $data['type'] = 'number';
             } elseif ($field->key == 'smtp_security') {
                 $data['type']   = 'select';
                 $data['source'] = json_encode(
@@ -211,9 +215,6 @@ class ConfigInfoController extends Controller
                         ['value' => 'ssl', 'text' => 'SSL'],
                     )
                 );
-            } else {
-                $data['type']   = 'text';
-                $data['source'] = '';
             }
             $data['url'] = route('updateConfigField');
             $fields[]    = $data;
@@ -238,7 +239,7 @@ class ConfigInfoController extends Controller
             $data['disabled'] = 0;
             $data['required'] = 0;
             $data['source']   = '';
-            $data['type']     = 'text';
+            $data['type']     = 'number';
             $data['url']      = route('updateConfigField');
             $fields[]         = $data;
         }
