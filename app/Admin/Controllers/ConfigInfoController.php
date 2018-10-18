@@ -26,7 +26,7 @@ class ConfigInfoController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Config info');
+            $content->header(trans('language.admin.config_control'));
             $content->description(' ');
             $content->body($this->grid());
             $content->row(function (Row $row) {
@@ -80,8 +80,10 @@ class ConfigInfoController extends Controller
     {
 
         $grid = new Grid(new Config);
-        $grid->detail('Thông tin');
-        $grid->value('Bật/Tắt')->switch();
+        $grid->detail(trans('language.admin.field_config'))->display(function ($detail) {
+            return trans(htmlentities($detail));
+        });
+        $grid->value(trans('language.admin.use_mode'))->switch();
         $grid->model()->where('code', 'config')->orderBy('sort', 'asc');
         $grid->disableCreation();
         $grid->disableExport();
