@@ -105,9 +105,10 @@ return [
         'smtp_user'                    => 'Tài khoản SMTP',
         'smtp_host'                    => 'Server SMTP',
         'shop_allow_guest'             => 'Allow for guest order',
-        'field_config'                 => 'Field config',
+        'field_config'                 => 'Fields config',
         'use_mode'                     => 'Use Mode',
         'config_control'               => 'Config control',
+        'site_status'                  => 'On/Off website',
     ],
 
 ];

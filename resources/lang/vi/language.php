@@ -106,6 +106,7 @@ return [
         'field_config'                 => 'Tên chức năng',
         'use_mode'                     => 'Chế độ',
         'config_control'               => 'Bảng điều khiển cấu hình',
+        'site_status'                  => 'Bật/Tắt website',
     ],
 
 ];

@@ -172,7 +172,7 @@
     <div class="alert alert-danger">{!! Session::get('error') !!}</div>
 @endif
 
-@if ($configs_global['status'])
+@if ($configs['site_status'])
   @yield('notice')
   @yield('breadcrumb')
   <section>
