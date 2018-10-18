@@ -3,10 +3,11 @@
 
 ### Add
 > Multi language
-> Custome layout
+> Customize layout
+
 
 ### Changed
-> Config paypal
+> Customize config manager
 
 
 ## v2.0.2-2 (2018-10-09)
