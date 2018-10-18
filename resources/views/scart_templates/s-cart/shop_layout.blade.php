@@ -60,13 +60,12 @@
           <div class="col-sm-6">
             <div class="btn-group pull-right">
               <div class="btn-group">
-                <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                  {{ $languages[app()->getLocale()]['name'] }} <img src="{{ asset($path_file.'/'.$languages[app()->getLocale()]['icon']) }}" style="height: 25px;">
+                <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown"><img src="{{ asset($path_file.'/'.$languages[app()->getLocale()]['icon']) }}" style="height: 25px;">
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
                   @foreach ($languages as $key => $language)
-                    <li><a href="{{ url('locale/'.$key) }}">{{ $language['name'] }} <img src="{{ asset($path_file.'/'.$language['icon']) }}" style="height: 25px;"></a></li>
+                    <li><a href="{{ url('locale/'.$key) }}"><img src="{{ asset($path_file.'/'.$language['icon']) }}" style="height: 25px;"></a></li>
                   @endforeach
                 </ul>
 
