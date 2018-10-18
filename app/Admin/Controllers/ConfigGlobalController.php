@@ -95,9 +95,9 @@ class ConfigGlobalController extends Controller
                 return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
             });
             $grid->phone('Phone');
-            $grid->long_phone('Long phone')->display(function ($text) {
-                return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
-            });
+            // $grid->long_phone('Long phone')->display(function ($text) {
+            //     return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
+            // });
             $grid->address('Address')->display(function ($text) {
                 return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
             });
@@ -138,12 +138,12 @@ class ConfigGlobalController extends Controller
             $languages = Language::pluck('name', 'code')->all();
             $form->image('logo', 'Logo')->removable();
             $form->image('watermark', 'watermark')->removable();
-            $form->select('template', 'Template')->options($arrTemplates)->rules('required', ['required' => 'Bạn chưa chọn template']);
+            $form->select('template', 'Template')->options($arrTemplates)->rules('required', ['required' => 'Please choose template']);
             $form->text('title', 'Title');
             $form->textarea('description', 'Description');
             $form->text('keyword', 'Keywords');
             $form->text('phone', 'Phone');
-            $form->text('long_phone', 'Long phone');
+            // $form->text('long_phone', 'Long phone');
             $form->text('address', 'Address');
             $form->text('email', 'Email');
             $form->disableViewCheck();
