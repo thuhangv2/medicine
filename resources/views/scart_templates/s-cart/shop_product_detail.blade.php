@@ -60,7 +60,7 @@
                   </button>
                 </span>
                 <p><b>Availability:</b>
-                @if ($configs['show_date_avalid'] && $product->date_available >= date('Y-m-d H:i:s'))
+                @if ($configs['show_date_available'] && $product->date_available >= date('Y-m-d H:i:s'))
                 {{ $product->date_available }}
                 @else
                 In Stock
