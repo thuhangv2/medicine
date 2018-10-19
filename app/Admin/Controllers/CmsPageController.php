@@ -24,7 +24,7 @@ class CmsPageController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->header(trans('language.admin.page_manager'))
+            ->header(trans('language.admin.cms_page'))
             ->description(' ')
             ->body($this->grid());
     }
@@ -39,7 +39,7 @@ class CmsPageController extends Controller
     public function edit($id, Content $content)
     {
         return $content
-            ->header(trans('language.admin.page_manager'))
+            ->header(trans('language.admin.cms_page'))
             ->description(' ')
             ->body($this->form()->edit($id));
     }
@@ -52,7 +52,7 @@ class CmsPageController extends Controller
     public function create(Content $content)
     {
         return $content
-            ->header(trans('language.admin.page_manager'))
+            ->header(trans('language.admin.cms_page'))
             ->description(' ')
             ->body($this->form());
     }
