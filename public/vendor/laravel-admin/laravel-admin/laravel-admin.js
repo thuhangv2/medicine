@@ -24,7 +24,8 @@ toastr.options = {
 
 $.pjax.defaults.timeout = 5000;
 $.pjax.defaults.maxCacheLength = 0;
-$(document).pjax('a:not(a[target="_blank"])', {
+// $('.treeview-menu .menu-open').pjax('a:not(a[target="_blank"])', {
+$('.treeview-menu').pjax('a:not(a[target="_blank"])', {
     container: '#pjax-container'
 });
 
