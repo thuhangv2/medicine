@@ -37,7 +37,7 @@ Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
     $path_file      = config('filesystems.disks.path_file');
     $htmlLang       = '';
     foreach ($languages as $key => $language) {
-        $htmlLang .= '<li><a target=_blank href="' . url(config('admin.route.prefix') . '/locale/' . $key) . '"><img alt="' . $language['name'] . '" src="/' . $path_file . '/' . $language['icon'] . '" style="height: 25px;"></a></li>';
+        $htmlLang .= '<li><a  href="' . url(config('admin.route.prefix') . '/locale/' . $key) . '" no-pjax><img alt="' . $language['name'] . '" src="/' . $path_file . '/' . $language['icon'] . '" style="height: 25px;"></a></li>';
     }
     $navbar->left('<div class="btn-group" style="margin:10px 0 0 20px;cursor:pointer;">
                 <span  class="dropdown-toggle usa" data-toggle="dropdown">
