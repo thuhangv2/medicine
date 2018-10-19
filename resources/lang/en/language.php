@@ -78,7 +78,7 @@ return [
         'not_empty'                    => 'Data not empty!',
         'search_order'                 => 'Search order id, email, phone or name',
         'only_numeric'                 => 'Please input numeric!',
-        'order_year'                   => 'In this year',
+        'order_year'                   => 'In 12 months',
         'order_month'                  => 'In this month',
         'dashboard'                    => 'Dashboard',
         'total_product'                => 'Product total',
