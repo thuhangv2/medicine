@@ -25,8 +25,8 @@ class ShopSpecialPriceController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Quản lý giá khuyến mãi');
-            // $content->description('description');
+            $content->header(trans('language.admin.special_price_manager'));
+            $content->description(' ');
 
             $content->body($this->grid());
         });
@@ -42,8 +42,8 @@ class ShopSpecialPriceController extends Controller
     {
         return Admin::content(function (Content $content) use ($id) {
 
-            $content->header('Sửa giá khuyến mãi');
-            // $content->description('description');
+            $content->header(trans('language.admin.special_price_manager'));
+            $content->description(' ');
 
             $content->body($this->form()->edit($id));
         });
@@ -58,8 +58,8 @@ class ShopSpecialPriceController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Tạo giá khuyến mãi');
-            // $content->description('description');
+            $content->header(trans('language.admin.special_price_manager'));
+            $content->description(' ');
 
             $content->body($this->form());
         });
@@ -74,27 +74,31 @@ class ShopSpecialPriceController extends Controller
     {
         return Admin::grid(ShopSpecialPrice::class, function (Grid $grid) {
 
-            $grid->id('Thứ tự')->sortable();
-            $grid->product('Sản phẩm')->display(function ($product) {
-                return $product['name'] . " - Mã: <b>" . $product['sku'] . "</b>";
+            $grid->id(trans('language.admin.sort'))->sortable();
+            $grid->product(trans('language.admin.product'))->display(function ($product) {
+                return $product['name'] . "<br>(SKU: " . $product['sku'] . ")";
             });
-            $grid->price('Giá khuyến mãi')->display(function ($price) {
+            $grid->price(trans('language.admin.special_price'))->display(function ($price) {
                 return number_format($price) . ' VNĐ';
             });
-            $grid->date_start('Ngày bắt đầu')->display(function ($date) {
-                return ($date) ? $date : '<span style="color:red">Chưa chọn</span>';
+            $grid->date_start(trans('language.admin.date_start'))->display(function ($date) {
+                return ($date) ?? '<span style="color:red">NULL</span>';
             })->sortable();
-            $grid->date_end('Ngày kết thúc')->display(function ($date) {
-                return ($date) ? $date : '<span style="color:red">Chưa chọn</span>';
+            $grid->date_end(trans('language.admin.date_end'))->display(function ($date) {
+                return ($date) ?? '<span style="color:red">NULL</span>';
             })->sortable();
-            $grid->comment('Ghi chú');
+            $grid->comment(trans('language.admin.comment'));
             $grid->status(trans('language.admin.status'))->switch();
-            $grid->created_at('Ngày tạo');
-            $grid->updated_at('Ngày cuối cập nhật');
+            $grid->created_at(trans('language.admin.created_at'));
+            $grid->updated_at(trans('language.admin.last_modify'));
             $grid->model()->orderBy('id', 'desc');
             $grid->disableExport();
+            $grid->disableFilter();
             $grid->actions(function ($actions) {
                 $actions->disableView();
+            });
+            $grid->tools(function ($tools) {
+                $tools->disableRefreshButton();
             });
         });
     }
@@ -108,22 +112,22 @@ class ShopSpecialPriceController extends Controller
     {
         Admin::script($this->jsProcess());
         return Admin::form(ShopSpecialPrice::class, function (Form $form) {
-            $products = ShopProduct::pluck('name', 'id')->all();
-            $form->select('product_id', 'Sản phẩm')->options($products)->rules(function ($form) {
+            $products = ShopProduct::getListProductNotSpecialPrice();
+            $form->select('product_id', trans('language.admin.product'))->options($products)->rules(function ($form) {
                 return 'required|unique:shop_special_price,product_id,' . $form->model()->id . ',id';
-            }, ['required' => 'Bạn chưa chọn sản phẩm', 'unique' => 'Sản phẩm này đã có rồi']);
+            });
 
             $form->html('
         <div class="input-group">
         <span class="input-group-addon">VNĐ</span><input disabled style="width: 120px; text-align: right;" type="text" id="price-old"  value="0" class="form-control price">
-        </div>', 'Giá gốc');
+        </div>', trans('language.admin.origin_price'));
 
-            $form->currency('off', 'Giá khuyến mãi')->symbol('%')->options(['digits' => 0])->default(0);
-            $form->currency('price', 'Giá khuyến mãi')->symbol('VND')->options(['digits' => 0])->default(0);
+            $form->currency('off', trans('language.admin.discount_percent'))->symbol('%')->options(['digits' => 0])->default(0);
+            $form->currency('price', trans('language.admin.special_price'))->symbol('VND')->options(['digits' => 0])->default(0);
             $form->switch('status', trans('language.admin.status'));
-            $form->datetime('date_start', 'Ngày bắt đầu');
-            $form->datetime('date_end', 'Ngày kết thúc');
-            $form->textarea('comment', 'Ghi chú');
+            $form->datetime('date_start', trans('language.admin.date_start'));
+            $form->datetime('date_end', trans('language.admin.date_end'));
+            $form->textarea('comment', trans('language.admin.comment'));
             $form->disableViewCheck();
             $form->disableEditingCheck();
             $form->tools(function (Form\Tools $tools) {

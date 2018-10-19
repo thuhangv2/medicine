@@ -302,4 +302,20 @@ class ShopProduct extends Model
         return $this->getContent();
 
     }
+
+/**
+ * [getListProductNotSpecialPrice description]
+ * @return [type] [description]
+ */
+    public static function getListProductNotSpecialPrice()
+    {
+        $products = self::select('id', 'sku')
+            ->get();
+        $arrProduct = [];
+        foreach ($products as $key => $value) {
+            $p                      = self::find($value->id);
+            $arrProduct[$value->id] = $p->getName() . ' (' . $p->sku . ')';
+        }
+        return $arrProduct;
+    }
 }

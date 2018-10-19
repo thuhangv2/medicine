@@ -26,7 +26,7 @@ class ShopCategoryController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Danh mục sản phẩm');
+            $content->header(trans('language.admin.shop_category'));
             $content->description(' ');
 
             $content->body($this->grid());
@@ -43,7 +43,7 @@ class ShopCategoryController extends Controller
     {
         return Admin::content(function (Content $content) use ($id) {
 
-            $content->header('Chỉnh sửa danh mục sản phẩm');
+            $content->header(trans('language.admin.shop_category'));
             $content->description(' ');
 
             $content->body($this->form()->edit($id));
@@ -59,7 +59,7 @@ class ShopCategoryController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Tạo mới danh mục sản phẩm');
+            $content->header(trans('language.admin.shop_category'));
             $content->description(' ');
 
             $content->body($this->form());
@@ -76,24 +76,24 @@ class ShopCategoryController extends Controller
         return Admin::grid(ShopCategory::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
-            $grid->image('Hình ảnh')->image('', 50);
-            $grid->name('Tên')->display(function () {
+            $grid->image(trans('language.admin.image'))->image('', 50);
+            $grid->name(trans('language.admin.name'))->display(function () {
                 return ShopCategory::find($this->id)->getName();
             });
-            $grid->parent('Danh mục cha')->display(function ($parent) {
+            $grid->parent(trans('language.admin.parent_category'))->display(function ($parent) {
                 return (ShopCategory::find($parent)) ? ShopCategory::find($parent)->getName() : '';
             });
-            $grid->status('Status')->switch();
-            $grid->sort('Sắp xếp')->editable();
+            $grid->status(trans('language.admin.status'))->switch();
+            $grid->sort(trans('language.admin.sort'))->editable();
             $grid->disableExport();
             $grid->model()->orderBy('id', 'desc');
-            $grid->tools(function ($tools) {
-                $tools->batch(function ($batch) {
-                    $batch->disableDelete();
-                });
-            });
+            $grid->disableRowSelector();
+            $grid->disableFilter();
             $grid->actions(function ($actions) {
                 $actions->disableView();
+            });
+            $grid->tools(function ($tools) {
+                $tools->disableRefreshButton();
             });
         });
     }
@@ -128,10 +128,10 @@ class ShopCategoryController extends Controller
 //end language
 
             $arrCate = (new ShopCategory)->listCate();
-            $arrCate = ['0' => '== Danh mục gốc =='] + $arrCate;
-            $form->select('parent', 'Danh mục cha')->options($arrCate);
-            $form->image('image', 'Hình ảnh')->uniqueName()->move('category')->removable();
-            $form->number('sort', 'Sắp xếp');
+            $arrCate = ['0' => '== ROOT =='] + $arrCate;
+            $form->select('parent', trans('language.admin.parent_category'))->options($arrCate);
+            $form->image('image', trans('language.admin.image'))->uniqueName()->move('category')->removable();
+            $form->number('sort', trans('language.admin.sort'));
             $form->switch('status', trans('language.admin.status'));
             $arrData = array();
 
