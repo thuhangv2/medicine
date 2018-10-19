@@ -111,9 +111,9 @@ class CmsCategoryController extends Controller
                     $langDescriptions = CmsCategoryDescription::where('shop_category_id', $idCheck)->where('lang_id', $language->id)->first();
                 }
                 $form->html('<b>' . $language->name . '</b> <img style="height:25px" src="/' . config('filesystems.disks.path_file') . '/' . $language->icon . '">');
-                $form->text($language->code . '__name', 'Tên')->rules('required', ['required' => 'Bạn chưa nhập tên'])->default(!empty($langDescriptions->name) ? $langDescriptions->name : null);
-                $form->text($language->code . '__keyword', 'Keyword')->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
-                $form->text($language->code . '__description', 'Description')->rules('max:300', ['max' => 'Tối đa 300 kí tự'])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
+                $form->text($language->code . '__name', 'Tên')->rules('required', ['required' => trans('validation.required')])->default(!empty($langDescriptions->name) ? $langDescriptions->name : null);
+                $form->text($language->code . '__keyword', trans('language.admin.keyword'))->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
+                $form->text($language->code . '__description', trans('language.admin.description'))->rules('max:300', ['max' => trans('validation.max')])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
                 $arrFields[] = $language->code . '__name';
                 $arrFields[] = $language->code . '__keyword';
                 $arrFields[] = $language->code . '__description';
@@ -128,7 +128,7 @@ class CmsCategoryController extends Controller
             $form->select('parent', 'Chủ đề cha')->options($arrCate);
             $form->image('image', 'Hình ảnh')->uniqueName()->move('cms_category')->removable();
             $form->number('sort', 'Sắp xếp');
-            $form->switch('status', 'Trạng thái');
+            $form->switch('status', trans('language.admin.status'));
 
             $arrData = array();
             $form->saving(function (Form $form) use ($languages, &$arrData) {

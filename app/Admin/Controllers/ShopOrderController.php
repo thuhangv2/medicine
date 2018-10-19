@@ -126,7 +126,7 @@ class ShopOrderController extends Controller
                 return number_format($price);
             });
             $statusOrder = $this->statusOrder;
-            $grid->status('Trạng thái')->display(function ($status) use ($statusOrder) {
+            $grid->status(trans('language.admin.status'))->display(function ($status) use ($statusOrder) {
                 $style = "";
                 if ($status == 0) {
                     $style = '';
@@ -180,7 +180,7 @@ class ShopOrderController extends Controller
             $form->text('address2', 'Quận Huyện');
             $form->mobile('phone', 'Phone');
             $form->textarea('comment', 'Ghi chú');
-            $form->select('status', 'Trạng thái')->options($this->statusOrder);
+            $form->select('status', trans('language.admin.status'))->options($this->statusOrder);
 
             $form->divide();
             $form->saved(function (Form $form) {

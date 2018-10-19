@@ -76,7 +76,7 @@ class ShopBrandController extends Controller
             $grid->id('ID')->sortable();
             $grid->name('Tên nhãn hiệu')->sortable();
             $grid->image('Hình ảnh')->image('', 50);
-            $grid->status('Trạng thái')->switch();
+            $grid->status(trans('language.admin.status'))->switch();
             $grid->disableExport();
             $grid->actions(function ($actions) {
                 $actions->disableView();
@@ -95,7 +95,7 @@ class ShopBrandController extends Controller
 
             $form->text('name', 'Tên nhà cung cấp');
             $form->image('image', 'Hình ảnh')->uniqueName()->move('brand')->removable();
-            $form->switch('status', 'Trạng thái');
+            $form->switch('status', trans('language.admin.status'));
             $form->number('sort', 'Sắp xếp');
             $form->disableViewCheck();
             $form->disableEditingCheck();

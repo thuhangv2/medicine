@@ -131,10 +131,10 @@ class ShopProductController extends Controller
                         $langDescriptions = ShopProductDescription::where('product_id', $idCheck)->where('lang_id', $language->id)->first();
                     }
                     $form->html('<b>' . $language->name . '</b> <img style="height:25px" src="/' . config('filesystems.disks.path_file') . '/' . $language->icon . '">');
-                    $form->text($language->code . '__name', 'Tên')->rules('required', ['required' => 'Bạn chưa nhập tên'])->default(!empty($langDescriptions->name) ? $langDescriptions->name : null);
-                    $form->text($language->code . '__keyword', 'Keyword')->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
-                    $form->textarea($language->code . '__description', 'Description')->rules('max:300', ['max' => 'Tối đa 300 kí tự'])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
-                    $form->ckeditor($language->code . '__content', 'Nội dung')->default(!empty($langDescriptions->content) ? $langDescriptions->content : null);
+                    $form->text($language->code . '__name', 'Tên')->rules('required', ['required' => trans('validation.required')])->default(!empty($langDescriptions->name) ? $langDescriptions->name : null);
+                    $form->text($language->code . '__keyword', trans('language.admin.keyword'))->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
+                    $form->textarea($language->code . '__description', trans('language.admin.description'))->rules('max:300', ['max' => trans('validation.max')])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
+                    $form->ckeditor($language->code . '__content', trans('language.admin.content'))->default(!empty($langDescriptions->content) ? $langDescriptions->content : null);
                     $arrFields[] = $language->code . '__name';
                     $arrFields[] = $language->code . '__keyword';
                     $arrFields[] = $language->code . '__description';
@@ -287,7 +287,7 @@ class ShopProductController extends Controller
                 $style = ($type == 1) ? 'class="label label-success"' : (($type == 2) ? '  class="label label-danger"' : 'class="label label-default"');
                 return '<span ' . $style . '>' . $arrType[$type] . '</span>';
             });
-            $grid->status('Trạng thái')->display(function ($stt) {
+            $grid->status(trans('language.admin.status'))->display(function ($stt) {
                 return ($stt) ? 'Actie' : 'Disabled';
             });
             $grid->model()->orderBy('id', 'desc');

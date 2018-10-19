@@ -80,7 +80,7 @@ class CmsContentController extends Controller
             $grid->category('Chủ đề')->display(function ($cate) {
                 return $cate['title'];
             });
-            $grid->status('Trạng thái')->switch();
+            $grid->status(trans('language.admin.status'))->switch();
             $grid->created_at('Ngày tạo');
             $grid->updated_at('Lần cuối chỉnh sửa');
             $grid->actions(function ($actions) {
@@ -99,12 +99,12 @@ class CmsContentController extends Controller
     protected function form()
     {
         return Admin::form(CmsContent::class, function (Form $form) {
-            $form->text('title', 'Tên bài viết')->rules('required', ['required' => 'Bạn chưa nhập tên']);
+            $form->text('title', 'Tên bài viết')->rules('required', ['required' => trans('validation.required')]);
             $arrCate = (new CmsCategory)->listCate();
             $form->select('category_id', 'Danh mục')->options($arrCate)->rules('required');
             $form->image('image', 'Hình ảnh')->uniqueName()->move('cms_content')->removable();
-            $form->ckeditor('content', 'Nội dung');
-            $form->switch('status', 'Trạng thái');
+            $form->ckeditor('content', trans('language.admin.content'));
+            $form->switch('status', trans('language.admin.status'));
             $form->number('sort', 'Sắp xếp');
             $form->hasMany('images', 'Hình ảnh phụ', function (Form\NestedForm $form) {
                 $form->image('image', 'Hình ảnh nhỏ')->uniqueName()->removable();
@@ -112,7 +112,7 @@ class CmsContentController extends Controller
             $form->divide('Hỗ trợ SEO');
             $form->html('<b>Hỗ trợ SEO</b>');
             $form->tags('keyword', 'Từ khóa');
-            $form->textarea('description', 'Mô tả')->rules('max:300', ['max' => 'Tối đa 300 kí tự']);
+            $form->textarea('description', 'Mô tả')->rules('max:300', ['max' => trans('validation.max')]);
 
             $form->saved(function (Form $form) {
                 $config = \App\Models\Config::pluck('value', 'key')->all();

@@ -131,7 +131,7 @@ class ShopPromotionController extends Controller
             $form->text('data', 'Mô tả');
             $form->number('number_uses', 'Số lần sử dụng')->default(1);
             $form->datetime('expires_at', 'Ngày hết hạn');
-            $form->switch('status', 'Trạng thái');
+            $form->switch('status', trans('language.admin.status'));
             $form->disableViewCheck();
             $form->disableEditingCheck();
             $form->tools(function (Form\Tools $tools) {

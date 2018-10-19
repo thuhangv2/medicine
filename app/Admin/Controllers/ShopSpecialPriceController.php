@@ -88,7 +88,7 @@ class ShopSpecialPriceController extends Controller
                 return ($date) ? $date : '<span style="color:red">Chưa chọn</span>';
             })->sortable();
             $grid->comment('Ghi chú');
-            $grid->status('Trạng thái')->switch();
+            $grid->status(trans('language.admin.status'))->switch();
             $grid->created_at('Ngày tạo');
             $grid->updated_at('Ngày cuối cập nhật');
             $grid->model()->orderBy('id', 'desc');
@@ -120,7 +120,7 @@ class ShopSpecialPriceController extends Controller
 
             $form->currency('off', 'Giá khuyến mãi')->symbol('%')->options(['digits' => 0])->default(0);
             $form->currency('price', 'Giá khuyến mãi')->symbol('VND')->options(['digits' => 0])->default(0);
-            $form->switch('status', 'Trạng thái');
+            $form->switch('status', trans('language.admin.status'));
             $form->datetime('date_start', 'Ngày bắt đầu');
             $form->datetime('date_end', 'Ngày kết thúc');
             $form->textarea('comment', 'Ghi chú');

@@ -88,7 +88,7 @@ class ConfigGlobalController extends Controller
             $grid->title('Title')->display(function ($text) {
                 return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
             });
-            $grid->description('Description')->display(function ($text) {
+            $grid->description(trans('language.admin.description'))->display(function ($text) {
                 return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
             });
             $grid->keyword('Keywords')->display(function ($text) {
@@ -140,7 +140,7 @@ class ConfigGlobalController extends Controller
             $form->image('watermark', 'watermark')->removable();
             $form->select('template', 'Template')->options($arrTemplates)->rules('required', ['required' => 'Please choose template']);
             $form->text('title', 'Title');
-            $form->textarea('description', 'Description');
+            $form->textarea('description', trans('language.admin.description'));
             $form->text('keyword', 'Keywords');
             $form->text('phone', 'Phone');
             // $form->text('long_phone', 'Long phone');

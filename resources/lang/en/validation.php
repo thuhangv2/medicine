@@ -113,6 +113,7 @@ return [
     'unique'               => 'The :attribute has already been taken.',
     'uploaded'             => 'The :attribute failed to upload.',
     'url'                  => 'The :attribute format is invalid.',
+    'validate_nickname'    => 'Only use a-z a-z and 0-9.',
 
     /*
     |--------------------------------------------------------------------------

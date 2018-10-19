@@ -134,7 +134,7 @@ class LanguageController extends Controller
         } else {
             $form->text('code', 'Code')->rules(function ($form) {
                 return 'required|unique:language,code,' . $form->model()->id . ',id';
-            }, ['required' => 'Bạn chưa nhập mã code', 'unique' => 'Code này đã có rồi'])->placeholder('Ví dụ: vi, au, en,..')->help('Viết liền, không dấu, không được trùng nhau.');
+            }, ['required' => 'Bạn chưa nhập mã code', 'unique' => 'Code này đã có rồi'])->placeholder('Ví dụ: vi, au, en,..')->help(trans('validation.validate_nickname'));
         }
         $form->image('icon', 'Icon')->move('language');
         $form->switch('status', 'Status')->default(1);

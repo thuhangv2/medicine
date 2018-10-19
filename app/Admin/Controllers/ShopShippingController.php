@@ -98,7 +98,7 @@ class ShopShippingController extends Controller
 
             $form->number('value', 'Giá ship');
             $form->number('free', 'Giá tối thiểu đê free ship');
-            $form->switch('status', 'Trạng thái');
+            $form->switch('status', trans('language.admin.status'));
             $form->disableViewCheck();
             $form->disableEditingCheck();
             $form->tools(function (Form\Tools $tools) {
