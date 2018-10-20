@@ -30,9 +30,9 @@ class ConfigInfoController extends Controller
             $content->description(' ');
             $content->body($this->grid());
             $content->row(function (Row $row) {
-                $row->column(1 / 3, new Box(trans('language.admin.config_paypal'), $this->viewPaypalConfig()));
                 $row->column(1 / 3, new Box(trans('language.admin.config_email'), $this->viewSMTPConfig()));
                 $row->column(1 / 3, new Box(trans('language.admin.config_display'), $this->viewDisplayConfig()));
+                $row->column(12, new Box(trans('language.admin.config_paypal'), $this->viewPaypalConfig()));
             });
 
         });
@@ -149,7 +149,7 @@ class ConfigInfoController extends Controller
             $data['key']      = $field->key;
             $data['value']    = $field->value;
             $data['disabled'] = 0;
-            $data['required'] = 1;
+            $data['required'] = 0;
             if ($field->key == 'paypal_mode') {
                 $data['type']   = 'select';
                 $data['source'] = json_encode(
