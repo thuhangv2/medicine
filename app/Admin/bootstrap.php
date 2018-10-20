@@ -39,7 +39,8 @@ Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
     foreach ($languages as $key => $language) {
         $htmlLang .= '<li><a  href="' . url(config('admin.route.prefix') . '/locale/' . $key) . '" no-pjax><img alt="' . $language['name'] . '" src="/' . $path_file . '/' . $language['icon'] . '" style="height: 25px;"></a></li>';
     }
-    $navbar->left('<div class="btn-group" style="margin:10px 0 0 20px;cursor:pointer;">
+    if (count($languages) > 1) {
+        $navbar->left('<div class="btn-group" style="margin:10px 0 0 20px;cursor:pointer;">
                 <span  class="dropdown-toggle usa" data-toggle="dropdown">
                 <img alt="' . $languages[$configs_global->locale]['name'] . '" src="/' . $path_file . '/' . $languages[$configs_global->locale]['icon'] . '" style="height: 25px;">
                   <span class="caret"></span>
@@ -48,6 +49,8 @@ Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
                   ' . $htmlLang . '
                 </ul>
               </div>');
+    }
+
     $navbar->left(view('admin.search-bar'));
 
     $navbar->right('

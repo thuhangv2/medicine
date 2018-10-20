@@ -60,6 +60,7 @@
           <div class="col-sm-6">
             <div class="btn-group pull-right">
               <div class="btn-group">
+                @if (count($languages)>1)
                 <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown"><img src="{{ asset($path_file.'/'.$languages[app()->getLocale()]['icon']) }}" style="height: 25px;">
                   <span class="caret"></span>
                 </button>
@@ -68,6 +69,8 @@
                     <li><a href="{{ url('locale/'.$key) }}"><img src="{{ asset($path_file.'/'.$language['icon']) }}" style="height: 25px;"></a></li>
                   @endforeach
                 </ul>
+                @endif
+
 
               </div>
 {{--                <div class="btn-group">
