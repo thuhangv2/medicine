@@ -26,7 +26,7 @@ return [
 
         'namespace'  => 'App\\Admin\\Controllers',
 
-        'middleware' => ['web', 'admin', 'localizationAdmin'],
+        'middleware' => ['localizationAdmin', 'web', 'admin'],
     ],
 
     /*
@@ -37,7 +37,7 @@ return [
     /*
      * Laravel-admin html title.
      */
-    'title'         => 'S-cart admin',
+    'title'         => 'S-cart Admin',
 
     /*
      * Use `https`.

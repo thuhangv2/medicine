@@ -52,7 +52,7 @@ class CmsNewsController extends Controller
     public function create(Content $content)
     {
         return $content
-            ->header(trans('admin.create'))
+            ->header(trans('language.admin.cms_news'))
             ->description(' ')
             ->body($this->form());
     }
@@ -67,9 +67,9 @@ class CmsNewsController extends Controller
         $grid = new Grid(new CmsNews);
 
         $grid->id('ID')->sortable();
-        $grid->title(trans('languagae.admin.title'))->sortable();
-        $grid->image('Image')->image('', 50);
-        $grid->status('Status')->switch();
+        $grid->title(trans('language.admin.title'))->sortable();
+        $grid->image(trans('language.admin.image'))->image('', 50);
+        $grid->status(trans('language.admin.status'))->switch();
         $grid->created_at(trans('language.admin.created_at'));
         $grid->updated_at(trans('language.admin.last_modify'));
         $grid->model()->orderBy('id', 'desc');
@@ -148,24 +148,26 @@ class CmsNewsController extends Controller
             }
             //end lang
             $config = \App\Models\Config::pluck('value', 'key')->all();
-            if (!empty($config['watermask'])) {
-                $file_path_admin = config('filesystems.disks.admin.root');
-                try {
-                    if (!file_exists($file_path_admin . '/thumb/' . $form->model()->image)) {
-                        \Image::make($file_path_admin . '/' . $form->model()->image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $form->model()->image);
-                        //thumbnail
-                        $image_thumb = \Image::make($file_path_admin . '/' . $form->model()->image);
-                        $image_thumb->resize(250, null, function ($constraint) {
-                            $constraint->aspectRatio();
-                        });
-                        $image_thumb->save($file_path_admin . '/thumb/' . $form->model()->image);
-                        //end thumb
-                    }
 
-                } catch (\Exception $e) {
-                    echo $e->getMessage();
+            $file_path_admin = config('filesystems.disks.admin.root');
+            try {
+                if (!file_exists($file_path_admin . '/thumb/' . $form->model()->image)) {
+                    if (!empty($config['watermark'])) {
+                        \Image::make($file_path_admin . '/' . $form->model()->image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $form->model()->image);
+                    }
+                    //thumbnail
+                    $image_thumb = \Image::make($file_path_admin . '/' . $form->model()->image);
+                    $image_thumb->resize(250, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                    $image_thumb->save($file_path_admin . '/thumb/' . $form->model()->image);
+                    //end thumb
                 }
+
+            } catch (\Exception $e) {
+                echo $e->getMessage();
             }
+
         });
         $form->disableViewCheck();
         $form->disableEditingCheck();

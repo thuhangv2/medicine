@@ -47,7 +47,8 @@ class ShopOrderController extends Controller
         $keyword = empty($keyword) ? "" : $keyword;
         return Admin::content(function (Content $content) use ($keyword) {
 
-            $content->header('Quản lý đơn hàng');
+            $content->header(trans('language.admin.order_manager'));
+            $content->description(' ');
             if ($keyword != "") {
                 $content->description('Tìm kiếm đơn hàng theo từ khóa: "' . $keyword . '"');
             }

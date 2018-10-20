@@ -1,5 +1,5 @@
 <?php
-
+#app/Admin/Controller/ShopBrandController.php
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -24,8 +24,8 @@ class ShopBrandController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Nhãn hiệu');
-            // $content->description('description');
+            $content->header(trans('language.brands'));
+            $content->description(' ');
 
             $content->body($this->grid());
         });
@@ -41,8 +41,8 @@ class ShopBrandController extends Controller
     {
         return Admin::content(function (Content $content) use ($id) {
 
-            $content->header('Chỉnh sửa');
-            // $content->description('description');
+            $content->header(trans('language.brands'));
+            $content->description(' ');
 
             $content->body($this->form()->edit($id));
         });
@@ -57,8 +57,8 @@ class ShopBrandController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Tạo mới');
-            // $content->description('description');
+            $content->header(trans('language.brands'));
+            $content->description(' ');
 
             $content->body($this->form());
         });
@@ -74,8 +74,8 @@ class ShopBrandController extends Controller
         return Admin::grid(ShopBrand::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
-            $grid->name('Tên nhãn hiệu')->sortable();
-            $grid->image('Hình ảnh')->image('', 50);
+            $grid->name(trans('language.admin.name'))->sortable();
+            $grid->image(trans('language.admin.image'))->image('', 50);
             $grid->status(trans('language.admin.status'))->switch();
             $grid->disableExport();
             $grid->actions(function ($actions) {
@@ -93,10 +93,10 @@ class ShopBrandController extends Controller
     {
         return Admin::form(ShopBrand::class, function (Form $form) {
 
-            $form->text('name', 'Tên nhà cung cấp');
-            $form->image('image', 'Hình ảnh')->uniqueName()->move('brand')->removable();
+            $form->text('name', trans('language.admin.name'));
+            $form->image('image', trans('language.admin.image'))->uniqueName()->move('brand')->removable();
             $form->switch('status', trans('language.admin.status'));
-            $form->number('sort', 'Sắp xếp');
+            $form->number('sort', trans('language.admin.sort'));
             $form->disableViewCheck();
             $form->disableEditingCheck();
             $form->tools(function (Form\Tools $tools) {

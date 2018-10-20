@@ -192,54 +192,58 @@ class ShopProductController extends Controller
                     ShopProductDescription::insert($value);
                 }
                 //end lang
-                $config = \App\Models\Config::pluck('value', 'key')->all();
-                if (!empty($config['watermask'])) {
-                    $product         = ShopProduct::find($id);
-                    $file_path_admin = config('filesystems.path_file.admin.root');
-                    try {
-                        if (!file_exists($file_path_admin . '/thumb/' . $product->image)) {
+                $config          = \App\Models\Config::pluck('value', 'key')->all();
+                $product         = ShopProduct::find($id);
+                $file_path_admin = config('filesystems.path_file.admin.root');
+                try {
+                    if (!file_exists($file_path_admin . '/thumb/' . $product->image)) {
+                        if (!empty($config['watermark'])) {
                             \Image::make($file_path_admin . '/' . $product->image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $product->image);
-                            //thumbnail
-                            $image_thumb = \Image::make($file_path_admin . '/' . $product->image);
-                            $image_thumb->resize(250, null, function ($constraint) {
-                                $constraint->aspectRatio();
-                            });
-                            $image_thumb->save($file_path_admin . '/thumb/' . $product->image);
-                            //end thumb
                         }
-                        if (($product->images)) {
-                            foreach ($product->images as $key => $image) {
-                                if (!file_exists($file_path_admin . '/thumb/' . $image->image)) {
-                                    \Image::make($file_path_admin . '/' . $image->image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $image->image);
-                                    //thumbnail
-                                    $image_thumb = \Image::make($file_path_admin . '/' . $image->image);
-                                    $image_thumb->resize(250, null, function ($constraint) {
-                                        $constraint->aspectRatio();
-                                    });
-                                    $image_thumb->save($file_path_admin . '/thumb/' . $image->image);
-                                    //end thumb
-                                }
-                            }
-                        }
-
-                        if (($product->options)) {
-                            foreach ($product->options as $key => $image) {
-                                if (!file_exists($file_path_admin . '/thumb/' . $image->opt_image)) {
-                                    \Image::make($file_path_admin . '/' . $image->opt_image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $image->opt_image);
-                                    //thumbnail
-                                    $image_thumb = \Image::make($file_path_admin . '/' . $image->opt_image);
-                                    $image_thumb->resize(250, null, function ($constraint) {
-                                        $constraint->aspectRatio();
-                                    });
-                                    $image_thumb->save($file_path_admin . '/thumb/' . $image->opt_image);
-                                    //end thumb
-                                }
-                            }
-                        }
-
-                    } catch (\Exception $e) {
-                        echo $e->getMessage();
+                        //thumbnail
+                        $image_thumb = \Image::make($file_path_admin . '/' . $product->image);
+                        $image_thumb->resize(250, null, function ($constraint) {
+                            $constraint->aspectRatio();
+                        });
+                        $image_thumb->save($file_path_admin . '/thumb/' . $product->image);
+                        //end thumb
                     }
+                    if (($product->images)) {
+                        foreach ($product->images as $key => $image) {
+                            if (!file_exists($file_path_admin . '/thumb/' . $image->image)) {
+                                if (!empty($config['watermark'])) {
+                                    \Image::make($file_path_admin . '/' . $image->image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $image->image);
+                                }
+                                //thumbnail
+                                $image_thumb = \Image::make($file_path_admin . '/' . $image->image);
+                                $image_thumb->resize(250, null, function ($constraint) {
+                                    $constraint->aspectRatio();
+                                });
+                                $image_thumb->save($file_path_admin . '/thumb/' . $image->image);
+                                //end thumb
+                            }
+                        }
+                    }
+
+                    if (($product->options)) {
+                        foreach ($product->options as $key => $image) {
+                            if (!file_exists($file_path_admin . '/thumb/' . $image->opt_image)) {
+                                if (!empty($config['watermark'])) {
+                                    \Image::make($file_path_admin . '/' . $image->opt_image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $image->opt_image);
+                                }
+                                //thumbnail
+                                $image_thumb = \Image::make($file_path_admin . '/' . $image->opt_image);
+                                $image_thumb->resize(250, null, function ($constraint) {
+                                    $constraint->aspectRatio();
+                                });
+                                $image_thumb->save($file_path_admin . '/thumb/' . $image->opt_image);
+                                //end thumb
+                            }
+                        }
+                    }
+
+                } catch (\Exception $e) {
+                    echo $e->getMessage();
                 }
 
             });
