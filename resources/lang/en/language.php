@@ -150,6 +150,7 @@ return [
         'last_modify'                  => 'Last modify',
         'created_at'                   => 'Created at',
         'language_manager'             => 'Language manager',
+        'banner_manager'               => 'Banner manager',
     ],
 
 ];

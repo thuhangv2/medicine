@@ -141,7 +141,7 @@ class LanguageController extends Controller
         } else {
             $form->text('code', 'Code')->rules(function ($form) {
                 return 'required|unique:language,code,' . $form->model()->id . ',id';
-            })->placeholder('Ví dụ: vi, au, en,..')->help(trans('validation.validate_nickname'));
+            })->placeholder('Ex: vi, au, en,..')->help(trans('validation.validate_nickname'));
         }
         $form->image('icon', 'Icon')->move('language');
         $form->switch('status', 'Status')->default(1);

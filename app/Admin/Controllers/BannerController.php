@@ -22,7 +22,7 @@ class BannerController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->header('Quản lý banner')
+            ->header(trans('language.admin.banner_manager'))
             ->description(' ')
             ->body($this->grid());
     }
@@ -36,7 +36,7 @@ class BannerController extends Controller
     public function edit($id, Content $content)
     {
         return $content
-            ->header('Chỉnh sửa banner')
+            ->header(trans('language.admin.banner_manager'))
             ->description(' ')
             ->body($this->form()->edit($id));
     }
@@ -49,7 +49,7 @@ class BannerController extends Controller
     public function create(Content $content)
     {
         return $content
-            ->header('Thêm banner mới')
+            ->header(trans('language.admin.banner_manager'))
             ->description(' ')
             ->body($this->form());
     }
@@ -63,11 +63,11 @@ class BannerController extends Controller
     {
         $grid = new Grid(new Banner);
         $grid->id('ID')->sortable();
-        $grid->image('Image')->image('', 50);
+        $grid->image(trans('language.admin.image'))->image('', 50);
         $grid->url('url');
         $grid->html('html');
-        $grid->status('status')->switch();
-        $grid->sort('sort')->sortable();
+        $grid->status(trans('language.admin.status'))->switch();
+        $grid->sort(trans('language.admin.sort'))->sortable();
         $grid->actions(function ($actions) {
             $actions->disableView();
         });
@@ -86,13 +86,13 @@ class BannerController extends Controller
     protected function form()
     {
         $form = new Form(new Banner);
-        $form->image('image', 'image')->uniqueName()->move('banner')->removable();
+        $form->image('image', trans('language.admin.image'))->uniqueName()->move('banner')->removable();
         $form->textarea('html', 'html');
-        $form->text('url', 'Link liên kết');
-        $form->switch('status', 'status');
-        $form->number('sort', 'sort');
-        $form->display('created_at', 'Created At');
-        $form->display('updated_at', 'Updated At');
+        $form->text('url', 'Url');
+        $form->switch('status', trans('language.admin.status'));
+        $form->number('sort', trans('language.admin.sort'));
+        $form->display('created_at', trans('language.admin.created_at'));
+        $form->display('updated_at', trans('language.admin.last_modify'));
         $form->disableViewCheck();
         $form->disableEditingCheck();
         $form->tools(function (Form\Tools $tools) {

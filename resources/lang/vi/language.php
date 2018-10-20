@@ -148,6 +148,7 @@ return [
         'last_modify'                  => 'Lần cuối chỉnh sửa',
         'created_at'                   => 'Tạo lúc',
         'language_manager'             => 'Quản lý ngôn ngữ',
+        'banner_manager'               => 'Quản lý banner',
     ],
 
 ];
