@@ -140,7 +140,7 @@ class ShopProductController extends Controller
 //end language
 
                 $arrBrand = ShopBrand::pluck('name', 'id')->all();
-                $arrBrand = ['0' => '-- ' . trans('language.admin.brand') . ' --'] + $arrBrand;
+                $arrBrand = ['0' => '-- ' . trans('language.brands') . ' --'] + $arrBrand;
                 $arrCate  = (new ShopCategory)->listCate();
                 $form->select('category_id', trans('language.admin.shop_category'))->options($arrCate)->rules('required'
                 );
@@ -151,18 +151,18 @@ class ShopProductController extends Controller
                 $form->text('sku', trans('language.admin.sku'))->rules(function ($form) {
                     return 'required|unique:shop_product,sku,' . $form->model()->id . ',id';
                 })->placeholder('Ex: ABKOOT01,ABKOOT02,...')->help(trans('validation.validate_nickname'));
-                $form->select('brand_id', trans('language.admin.brand'))->options($arrBrand)->default('0')->rules('required'
+                $form->select('brand_id', trans('language.brands'))->options($arrBrand)->default('0')->rules('required'
                 );
 
-                $form->switch('status', 'Hiển thị sản phẩm');
-                $form->number('sort', 'Sắp xếp');
+                $form->switch('status', trans('language.admin.status'));
+                $form->number('sort', trans('language.admin.sort'));
                 $form->divide();
-                $form->radio('type', 'Loại sản phẩm')->options($this->arrType)->default('0');
-                $form->datetime('date_available', 'Ngày bán')->help('Ngày cho khách mua. Mặc định cho phép mua từ ngày đăng bán');
+                $form->radio('type', trans('language.admin.product_type'))->options($this->arrType)->default('0');
+                $form->datetime('date_available', trans('language.date_available'))->help(trans('language.default_available'));
 
             })->tab(trans('language.admin.sub_image'), function ($form) {
-                $form->hasMany('images', 'Hình ảnh phụ', function (Form\NestedForm $form) {
-                    $form->image('image', 'Hình ảnh nhỏ')->uniqueName()->move('product_slide');
+                $form->hasMany('images', ' ', function (Form\NestedForm $form) {
+                    $form->image('image', trans('language.admin.sub_image'))->uniqueName()->move('product_slide');
                 });
 
             });

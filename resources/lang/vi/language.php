@@ -48,6 +48,8 @@ return [
     'features_items'    => 'Sản phẩm nổi bật',
     'recommended_items' => 'Sản phẩm đề xuất',
     'thank_contact'     => 'Cảm ơn bạn. Chúng tôi sẽ liên hệ sớm nhất có thể!',
+    'date_available'    => 'Ngày bán',
+    'default_available' => 'Mặc đính, cho phép mua từ ngày đăng bán.',
     'contact_form'      => [
         'title'   => 'Form liên hệ',
         'info'    => 'Thông tin liên hệ',

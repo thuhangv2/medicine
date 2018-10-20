@@ -49,6 +49,8 @@ return [
     'features_items'    => 'Features Items',
     'recommended_items' => 'Recommended items',
     'thank_contact'     => 'Thanks!. We will contact as soon as possible!',
+    'date_available'    => 'Date available',
+    'default_available' => 'Allows purchase from creation date as default.',
 
     'contact_form'      => [
         'title'   => 'Get in touch',
