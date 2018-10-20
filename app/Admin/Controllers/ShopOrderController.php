@@ -280,7 +280,7 @@ JS;
         if ($order === null) {
             return 'no data';
         }
-        $products = ShopProduct::pluck('name', 'id')->all();
+        $products = ShopProduct::getArrayProductName();
         return view('admin.OrderEdit')->with([
             "order" => $order, "products" => $products, "statusOrder" => $this->statusOrder, "statusPayment" => $this->statusPayment, "statusShipping" => $this->statusShipping, "statusOrder2" => $this->statusOrder2, "statusShipping2" => $this->statusShipping2, 'dataTotal' => ShopOrderTotal::getTotal($id),
         ])->render();
