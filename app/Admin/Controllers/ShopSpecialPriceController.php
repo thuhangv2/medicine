@@ -112,7 +112,7 @@ class ShopSpecialPriceController extends Controller
     {
         Admin::script($this->jsProcess());
         return Admin::form(ShopSpecialPrice::class, function (Form $form) {
-            $products = ShopProduct::getListProductNotSpecialPrice();
+            $products = ShopProduct::getArrayProductName();
             $form->select('product_id', trans('language.admin.product'))->options($products)->rules(function ($form) {
                 return 'required|unique:shop_special_price,product_id,' . $form->model()->id . ',id';
             });

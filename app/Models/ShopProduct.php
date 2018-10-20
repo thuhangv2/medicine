@@ -304,10 +304,10 @@ class ShopProduct extends Model
     }
 
 /**
- * [getListProductNotSpecialPrice description]
+ * [getArrayProductName description]
  * @return [type] [description]
  */
-    public static function getListProductNotSpecialPrice()
+    public static function getArrayProductName()
     {
         $products = self::select('id', 'sku')
             ->get();

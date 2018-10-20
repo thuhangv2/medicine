@@ -113,7 +113,7 @@ return [
     'unique'               => 'The :attribute has already been taken.',
     'uploaded'             => 'The :attribute failed to upload.',
     'url'                  => 'The :attribute format is invalid.',
-    'validate_nickname'    => 'Viết liền, không dấu, không được trùng nhau.',
+    'validate_nickname'    => 'Giá trị này phải là duy nhất. Viết liền, không dấu, không được trùng nhau.',
 
     /*
     |--------------------------------------------------------------------------

@@ -46,7 +46,7 @@ return [
     'input'                 => 'Nhập vào',
     'succeeded'             => 'Hoàn thành',
     'failed'                => 'Thất bại',
-    'delete_confirm'        => 'Are you sure to delete this item ?',
+    'delete_confirm'        => 'Bạn có muốn xóa item này ?',
     'delete_succeeded'      => 'Xóa thành công !',
     'delete_failed'         => 'Xóa thất bại !',
     'update_succeeded'      => 'Cập nhật thành công !',
@@ -54,7 +54,7 @@ return [
     'refresh_succeeded'     => 'Làm mới xong !',
     'login_successful'      => 'Đăng nhập thành công',
 
-    'choose'                => 'Choose',
+    'choose'                => 'Chọn',
     'choose_file'           => 'Chọn file',
     'choose_image'          => 'Chọn hình',
 
@@ -62,8 +62,8 @@ return [
     'deny'                  => 'Bạn không có đủ quyền hạn',
 
     'administrator'         => 'Administrator',
-    'roles'                 => 'Roles',
-    'permissions'           => 'Permissions',
+    'roles'                 => 'Nhóm',
+    'permissions'           => 'Quyền',
     'slug'                  => 'Slug',
 
     'created_at'            => 'Tạo lúc',
@@ -75,18 +75,18 @@ return [
     'icon'                  => 'Icon',
     'uri'                   => 'URI',
 
-    'operation_log'         => 'Operation log',
+    'operation_log'         => 'Log admin',
     'parent_select_error'   => 'Parent select error',
 
     'pagination'            => [
         'range' => 'Showing :first to :last of :total entries',
     ],
 
-    'role'                  => 'Role',
-    'permission'            => 'Permission',
+    'role'                  => 'Nhóm',
+    'permission'            => 'Quyền',
     'route'                 => 'Route',
-    'confirm'               => 'Confirm',
-    'cancel'                => 'Cancel',
+    'confirm'               => 'Xác nhận',
+    'cancel'                => 'Hủy bỏ',
 
     'http'                  => [
         'method' => 'HTTP method',
@@ -94,20 +94,21 @@ return [
     ],
     'all_methods_if_empty'  => 'All methods if empty',
 
-    'all'                   => 'All',
-    'current_page'          => 'Current page',
-    'selected_rows'         => 'Selected rows',
+    'all'                   => 'Tất cả',
+    'current_page'          => 'Trạng hiện tại',
+    'selected_rows'         => 'Chọn các dòng',
 
     'upload'                => 'Upload',
-    'new_folder'            => 'New folder',
-    'time'                  => 'Time',
-    'size'                  => 'Size',
+    'new_folder'            => 'Thư mục mới',
+    'time'                  => 'Thời gian',
+    'size'                  => 'Kích thước',
 
     'listbox'               => [
         'text_total'         => 'Showing all {0}',
         'text_empty'         => 'Empty list',
         'filtered'           => '{0} / {1}',
         'filter_clear'       => 'Show all',
-        'filter_placeholder' => 'Filter',
+        'filter_placeholder' => 'Bộ lọc',
     ],
+    'search'                => 'Tìm kiếm',
 ];
