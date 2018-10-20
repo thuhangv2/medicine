@@ -23,8 +23,8 @@ class LanguageController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->header('Index')
-            ->description('description')
+            ->header(trans('language.admin.language_manager'))
+            ->description(' ')
             ->body($this->grid());
     }
 
@@ -38,8 +38,8 @@ class LanguageController extends Controller
     public function show($id, Content $content)
     {
         return $content
-            ->header('Detail')
-            ->description('description')
+            ->header(trans('language.admin.language_manager'))
+            ->description(' ')
             ->body($this->detail($id));
     }
 
@@ -53,8 +53,8 @@ class LanguageController extends Controller
     public function edit($id, Content $content)
     {
         return $content
-            ->header('Edit')
-            ->description('description')
+            ->header(trans('language.admin.language_manager'))
+            ->description(' ')
             ->body($this->form()->edit($id));
     }
 
@@ -67,8 +67,8 @@ class LanguageController extends Controller
     public function create(Content $content)
     {
         return $content
-            ->header('Create')
-            ->description('description')
+            ->header(trans('language.admin.language_manager'))
+            ->description(' ')
             ->body($this->form());
     }
 
@@ -93,6 +93,13 @@ class LanguageController extends Controller
                 $actions->disableDelete();
             }
             $actions->disableView();
+        });
+        $grid->disableExport();
+        $grid->disableRowSelector();
+        $grid->disableFilter();
+        $grid->disablePagination();
+        $grid->tools(function ($tools) {
+            $tools->disableRefreshButton();
         });
         return $grid;
     }
@@ -134,7 +141,7 @@ class LanguageController extends Controller
         } else {
             $form->text('code', 'Code')->rules(function ($form) {
                 return 'required|unique:language,code,' . $form->model()->id . ',id';
-            }, ['required' => 'Bạn chưa nhập mã code', 'unique' => 'Code này đã có rồi'])->placeholder('Ví dụ: vi, au, en,..')->help(trans('validation.validate_nickname'));
+            })->placeholder('Ví dụ: vi, au, en,..')->help(trans('validation.validate_nickname'));
         }
         $form->image('icon', 'Icon')->move('language');
         $form->switch('status', 'Status')->default(1);

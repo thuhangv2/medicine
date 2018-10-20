@@ -147,6 +147,7 @@ return [
         'origin_price'                 => 'Giá gốc',
         'last_modify'                  => 'Lần cuối chỉnh sửa',
         'created_at'                   => 'Tạo lúc',
+        'language_manager'             => 'Quản lý ngôn ngữ',
     ],
 
 ];

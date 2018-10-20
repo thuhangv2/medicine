@@ -149,6 +149,7 @@ return [
         'origin_price'                 => 'Origin price',
         'last_modify'                  => 'Last modify',
         'created_at'                   => 'Created at',
+        'language_manager'             => 'Language manager',
     ],
 
 ];
