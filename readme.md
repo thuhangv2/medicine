@@ -72,7 +72,7 @@ Mã nguồn website thương mại điện tử cho doanh nghiệp xây dựng b
 
 ## Yêu cầu cài đặt
 
-Version 2.0.x, 2.1.x & 1.6:
+Version 2.1.x, 2.0.x & 1.6:
 
 > Core laravel framework 5.6. Yêu cầu:
 
