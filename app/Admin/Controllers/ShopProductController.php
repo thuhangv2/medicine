@@ -113,7 +113,7 @@ class ShopProductController extends Controller
     {
 
         return Admin::form(ShopProduct::class, function (Form $form) use ($id) {
-            $languages = Language::where(trans('language.admin.status'), 1)->get();
+            $languages = Language::where(status, 1)->get();
             $form->tab(trans('language.admin.product_info'), function ($form) use ($languages) {
 //Language
                 $arrParameters = request()->route()->parameters();
