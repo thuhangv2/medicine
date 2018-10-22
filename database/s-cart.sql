@@ -1,7 +1,7 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Server version:               10.1.28-MariaDB - mariadb.org binary distribution
--- Server OS:                    Win32
+-- Server version:               5.7.18-log - MySQL Community Server (GPL)
+-- Server OS:                    Win64
 -- HeidiSQL Version:             9.5.0.5196
 -- --------------------------------------------------------
 
@@ -11,7 +11,7 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Dumping structure for table s-cart-lang.admin_menu
+-- Dumping structure for table s-cart.admin_menu
 DROP TABLE IF EXISTS `admin_menu`;
 CREATE TABLE IF NOT EXISTS `admin_menu` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `admin_menu` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart-lang.admin_menu: ~33 rows (approximately)
+-- Dumping data for table s-cart.admin_menu: ~33 rows (approximately)
 DELETE FROM `admin_menu`;
 /*!40000 ALTER TABLE `admin_menu` DISABLE KEYS */;
 INSERT INTO `admin_menu` (`id`, `parent_id`, `order`, `title`, `icon`, `uri`, `created_at`, `updated_at`) VALUES
@@ -64,7 +64,7 @@ INSERT INTO `admin_menu` (`id`, `parent_id`, `order`, `title`, `icon`, `uri`, `c
 	(55, 0, 0, 'Layout customize', 'fa-columns', NULL, '2018-10-18 21:13:41', '2018-10-18 21:13:41');
 /*!40000 ALTER TABLE `admin_menu` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.admin_operation_log
+-- Dumping structure for table s-cart.admin_operation_log
 DROP TABLE IF EXISTS `admin_operation_log`;
 CREATE TABLE IF NOT EXISTS `admin_operation_log` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `admin_operation_log` (
   KEY `admin_operation_log_user_id_index` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart-lang.admin_operation_log: ~2 rows (approximately)
+-- Dumping data for table s-cart.admin_operation_log: ~2 rows (approximately)
 DELETE FROM `admin_operation_log`;
 /*!40000 ALTER TABLE `admin_operation_log` DISABLE KEYS */;
 INSERT INTO `admin_operation_log` (`id`, `user_id`, `path`, `method`, `ip`, `input`, `created_at`, `updated_at`) VALUES
@@ -87,7 +87,7 @@ INSERT INTO `admin_operation_log` (`id`, `user_id`, `path`, `method`, `ip`, `inp
 	(2, 1, 'system_admin/auth/logs', 'GET', '127.0.0.1', '[]', '2018-10-09 21:15:38', '2018-10-09 21:15:38');
 /*!40000 ALTER TABLE `admin_operation_log` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.admin_permissions
+-- Dumping structure for table s-cart.admin_permissions
 DROP TABLE IF EXISTS `admin_permissions`;
 CREATE TABLE IF NOT EXISTS `admin_permissions` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `admin_permissions` (
   UNIQUE KEY `admin_permissions_name_unique` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart-lang.admin_permissions: ~10 rows (approximately)
+-- Dumping data for table s-cart.admin_permissions: ~10 rows (approximately)
 DELETE FROM `admin_permissions`;
 /*!40000 ALTER TABLE `admin_permissions` DISABLE KEYS */;
 INSERT INTO `admin_permissions` (`id`, `name`, `slug`, `http_method`, `http_path`, `created_at`, `updated_at`) VALUES
@@ -117,7 +117,7 @@ INSERT INTO `admin_permissions` (`id`, `name`, `slug`, `http_method`, `http_path
 	(10, 'View', 'vieew', 'GET', '*', '2018-09-23 18:56:03', '2018-09-23 18:56:03');
 /*!40000 ALTER TABLE `admin_permissions` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.admin_roles
+-- Dumping structure for table s-cart.admin_roles
 DROP TABLE IF EXISTS `admin_roles`;
 CREATE TABLE IF NOT EXISTS `admin_roles` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `admin_roles` (
   UNIQUE KEY `admin_roles_name_unique` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart-lang.admin_roles: ~4 rows (approximately)
+-- Dumping data for table s-cart.admin_roles: ~4 rows (approximately)
 DELETE FROM `admin_roles`;
 /*!40000 ALTER TABLE `admin_roles` DISABLE KEYS */;
 INSERT INTO `admin_roles` (`id`, `name`, `slug`, `created_at`, `updated_at`) VALUES
@@ -139,7 +139,7 @@ INSERT INTO `admin_roles` (`id`, `name`, `slug`, `created_at`, `updated_at`) VAL
 	(4, 'Content', 'content', '2018-01-13 08:27:11', '2018-01-13 08:27:11');
 /*!40000 ALTER TABLE `admin_roles` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.admin_role_menu
+-- Dumping structure for table s-cart.admin_role_menu
 DROP TABLE IF EXISTS `admin_role_menu`;
 CREATE TABLE IF NOT EXISTS `admin_role_menu` (
   `role_id` int(11) NOT NULL,
@@ -149,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `admin_role_menu` (
   KEY `admin_role_menu_role_id_menu_id_index` (`role_id`,`menu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart-lang.admin_role_menu: ~2 rows (approximately)
+-- Dumping data for table s-cart.admin_role_menu: ~2 rows (approximately)
 DELETE FROM `admin_role_menu`;
 /*!40000 ALTER TABLE `admin_role_menu` DISABLE KEYS */;
 INSERT INTO `admin_role_menu` (`role_id`, `menu_id`, `created_at`, `updated_at`) VALUES
@@ -157,7 +157,7 @@ INSERT INTO `admin_role_menu` (`role_id`, `menu_id`, `created_at`, `updated_at`)
 	(1, 12, NULL, NULL);
 /*!40000 ALTER TABLE `admin_role_menu` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.admin_role_permissions
+-- Dumping structure for table s-cart.admin_role_permissions
 DROP TABLE IF EXISTS `admin_role_permissions`;
 CREATE TABLE IF NOT EXISTS `admin_role_permissions` (
   `role_id` int(11) NOT NULL,
@@ -167,7 +167,7 @@ CREATE TABLE IF NOT EXISTS `admin_role_permissions` (
   KEY `admin_role_permissions_role_id_permission_id_index` (`role_id`,`permission_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart-lang.admin_role_permissions: ~12 rows (approximately)
+-- Dumping data for table s-cart.admin_role_permissions: ~12 rows (approximately)
 DELETE FROM `admin_role_permissions`;
 /*!40000 ALTER TABLE `admin_role_permissions` DISABLE KEYS */;
 INSERT INTO `admin_role_permissions` (`role_id`, `permission_id`, `created_at`, `updated_at`) VALUES
@@ -185,7 +185,7 @@ INSERT INTO `admin_role_permissions` (`role_id`, `permission_id`, `created_at`, 
 	(3, 10, NULL, NULL);
 /*!40000 ALTER TABLE `admin_role_permissions` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.admin_role_users
+-- Dumping structure for table s-cart.admin_role_users
 DROP TABLE IF EXISTS `admin_role_users`;
 CREATE TABLE IF NOT EXISTS `admin_role_users` (
   `role_id` int(11) NOT NULL,
@@ -195,7 +195,7 @@ CREATE TABLE IF NOT EXISTS `admin_role_users` (
   KEY `admin_role_users_role_id_user_id_index` (`role_id`,`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart-lang.admin_role_users: ~2 rows (approximately)
+-- Dumping data for table s-cart.admin_role_users: ~2 rows (approximately)
 DELETE FROM `admin_role_users`;
 /*!40000 ALTER TABLE `admin_role_users` DISABLE KEYS */;
 INSERT INTO `admin_role_users` (`role_id`, `user_id`, `created_at`, `updated_at`) VALUES
@@ -203,7 +203,7 @@ INSERT INTO `admin_role_users` (`role_id`, `user_id`, `created_at`, `updated_at`
 	(3, 3, NULL, NULL);
 /*!40000 ALTER TABLE `admin_role_users` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.admin_users
+-- Dumping structure for table s-cart.admin_users
 DROP TABLE IF EXISTS `admin_users`;
 CREATE TABLE IF NOT EXISTS `admin_users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -218,15 +218,15 @@ CREATE TABLE IF NOT EXISTS `admin_users` (
   UNIQUE KEY `admin_users_username_unique` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart-lang.admin_users: ~2 rows (approximately)
+-- Dumping data for table s-cart.admin_users: ~2 rows (approximately)
 DELETE FROM `admin_users`;
 /*!40000 ALTER TABLE `admin_users` DISABLE KEYS */;
 INSERT INTO `admin_users` (`id`, `username`, `password`, `name`, `avatar`, `remember_token`, `created_at`, `updated_at`) VALUES
-	(1, 'admin', '$2y$10$xz52J77ECfy3haB8CpCm2.xsuDGBtRDPdrphYPu5RwvVpgSOze0F2', 'Administrator', NULL, '7DwqBloXsOhnYVNTC7Bu0B3PHqYxkuJRAjvUXq194B4oScENMCIVCsJFUxTj', '2018-01-12 17:27:40', '2018-10-22 06:42:07'),
-	(3, 'user', '$2y$10$Ao7Uey2z5jPFta/rZG51XuG1OZiWdlbdf3QSgsAjKn9Hfpcp14Ami', 'User', NULL, '3V1Ph1f9iavXGxIm44GHdv5CDXqmTLkrdUX0tBNsoQHducgBMLeRhUPlYU7c', '2018-01-12 18:05:28', '2018-09-23 18:56:26');
+	(1, 'admin', '$2y$10$dKzPKTPQwZOeEF4qAykcI.QarUYlxd/x.X29/u2pDsC500S85YdZ2', 'Administrator', NULL, 'p9m8qDvhGMASGfDhNKTHdcpktOXpEcYq32yKOnfs4Clms7BSsfNF5bxmWUR9', '2018-01-12 17:27:40', '2018-10-22 11:49:33'),
+	(3, 'user', '$2y$10$Ao7Uey2z5jPFta/rZG51XuG1OZiWdlbdf3QSgsAjKn9Hfpcp14Ami', 'User', NULL, 'titlVOwBiJJt8IAXIFRsaeqboOsauxJGyfBOH8Xh24hHMG88uMmjdJcoUTiU', '2018-01-12 18:05:28', '2018-09-23 18:56:26');
 /*!40000 ALTER TABLE `admin_users` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.admin_user_permissions
+-- Dumping structure for table s-cart.admin_user_permissions
 DROP TABLE IF EXISTS `admin_user_permissions`;
 CREATE TABLE IF NOT EXISTS `admin_user_permissions` (
   `user_id` int(11) NOT NULL,
@@ -236,12 +236,12 @@ CREATE TABLE IF NOT EXISTS `admin_user_permissions` (
   KEY `admin_user_permissions_user_id_permission_id_index` (`user_id`,`permission_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart-lang.admin_user_permissions: ~0 rows (approximately)
+-- Dumping data for table s-cart.admin_user_permissions: ~0 rows (approximately)
 DELETE FROM `admin_user_permissions`;
 /*!40000 ALTER TABLE `admin_user_permissions` DISABLE KEYS */;
 /*!40000 ALTER TABLE `admin_user_permissions` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.banner
+-- Dumping structure for table s-cart.banner
 DROP TABLE IF EXISTS `banner`;
 CREATE TABLE IF NOT EXISTS `banner` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -257,7 +257,7 @@ CREATE TABLE IF NOT EXISTS `banner` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.banner: ~3 rows (approximately)
+-- Dumping data for table s-cart.banner: ~3 rows (approximately)
 DELETE FROM `banner`;
 /*!40000 ALTER TABLE `banner` DISABLE KEYS */;
 INSERT INTO `banner` (`id`, `image`, `url`, `html`, `status`, `sort`, `click`, `type`, `created_at`, `updated_at`) VALUES
@@ -266,7 +266,7 @@ INSERT INTO `banner` (`id`, `image`, `url`, `html`, `status`, `sort`, `click`, `
 	(17, 'banner/36e662803f744d4f9df2cecc2e17b87b.jpg', NULL, '<h1>S-CART</h1>\r\n                  <h2>Free E-Commerce Template</h2>\r\n                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>\r\n                  <button type="button" class="btn btn-default get">Get it now</button>', 1, 0, 0, 0, '2018-09-03 16:51:56', '2018-09-20 22:24:23');
 /*!40000 ALTER TABLE `banner` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.cms_category
+-- Dumping structure for table s-cart.cms_category
 DROP TABLE IF EXISTS `cms_category`;
 CREATE TABLE IF NOT EXISTS `cms_category` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -280,12 +280,12 @@ CREATE TABLE IF NOT EXISTS `cms_category` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.cms_category: ~0 rows (approximately)
+-- Dumping data for table s-cart.cms_category: ~0 rows (approximately)
 DELETE FROM `cms_category`;
 /*!40000 ALTER TABLE `cms_category` DISABLE KEYS */;
 /*!40000 ALTER TABLE `cms_category` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.cms_category_description
+-- Dumping structure for table s-cart.cms_category_description
 DROP TABLE IF EXISTS `cms_category_description`;
 CREATE TABLE IF NOT EXISTS `cms_category_description` (
   `cms_category_id` int(11) NOT NULL,
@@ -296,12 +296,12 @@ CREATE TABLE IF NOT EXISTS `cms_category_description` (
   UNIQUE KEY `cms_category_id_lang_id` (`cms_category_id`,`lang_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.cms_category_description: ~0 rows (approximately)
+-- Dumping data for table s-cart.cms_category_description: ~0 rows (approximately)
 DELETE FROM `cms_category_description`;
 /*!40000 ALTER TABLE `cms_category_description` DISABLE KEYS */;
 /*!40000 ALTER TABLE `cms_category_description` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.cms_conten
+-- Dumping structure for table s-cart.cms_conten
 DROP TABLE IF EXISTS `cms_conten`;
 CREATE TABLE IF NOT EXISTS `cms_conten` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -318,12 +318,12 @@ CREATE TABLE IF NOT EXISTS `cms_conten` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.cms_conten: ~0 rows (approximately)
+-- Dumping data for table s-cart.cms_conten: ~0 rows (approximately)
 DELETE FROM `cms_conten`;
 /*!40000 ALTER TABLE `cms_conten` DISABLE KEYS */;
 /*!40000 ALTER TABLE `cms_conten` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.cms_image
+-- Dumping structure for table s-cart.cms_image
 DROP TABLE IF EXISTS `cms_image`;
 CREATE TABLE IF NOT EXISTS `cms_image` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -334,7 +334,7 @@ CREATE TABLE IF NOT EXISTS `cms_image` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.cms_image: ~2 rows (approximately)
+-- Dumping data for table s-cart.cms_image: ~2 rows (approximately)
 DELETE FROM `cms_image`;
 /*!40000 ALTER TABLE `cms_image` DISABLE KEYS */;
 INSERT INTO `cms_image` (`id`, `content_id`, `image`, `sort`, `status`) VALUES
@@ -342,7 +342,7 @@ INSERT INTO `cms_image` (`id`, `content_id`, `image`, `sort`, `status`) VALUES
 	(2, 3, 'images/75be44c336696094632625d2d85159b1.jpg', 0, 0);
 /*!40000 ALTER TABLE `cms_image` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.cms_news
+-- Dumping structure for table s-cart.cms_news
 DROP TABLE IF EXISTS `cms_news`;
 CREATE TABLE IF NOT EXISTS `cms_news` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -358,7 +358,7 @@ CREATE TABLE IF NOT EXISTS `cms_news` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.cms_news: ~7 rows (approximately)
+-- Dumping data for table s-cart.cms_news: ~7 rows (approximately)
 DELETE FROM `cms_news`;
 /*!40000 ALTER TABLE `cms_news` DISABLE KEYS */;
 INSERT INTO `cms_news` (`id`, `title`, `content`, `image`, `keyword`, `description`, `sort`, `status`, `created_at`, `updated_at`) VALUES
@@ -371,7 +371,7 @@ INSERT INTO `cms_news` (`id`, `title`, `content`, `image`, `keyword`, `descripti
 	(7, NULL, NULL, 'cms_content/bdbd7a28e7be30d83ba2842cdc580a02.png', NULL, NULL, 0, 1, '2018-08-09 15:59:29', '2018-09-23 09:26:41');
 /*!40000 ALTER TABLE `cms_news` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.cms_news_description
+-- Dumping structure for table s-cart.cms_news_description
 DROP TABLE IF EXISTS `cms_news_description`;
 CREATE TABLE IF NOT EXISTS `cms_news_description` (
   `cms_news_id` int(11) NOT NULL,
@@ -383,7 +383,7 @@ CREATE TABLE IF NOT EXISTS `cms_news_description` (
   UNIQUE KEY `cms_news_id_lang_id` (`cms_news_id`,`lang_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.cms_news_description: ~14 rows (approximately)
+-- Dumping data for table s-cart.cms_news_description: ~14 rows (approximately)
 DELETE FROM `cms_news_description`;
 /*!40000 ALTER TABLE `cms_news_description` DISABLE KEYS */;
 INSERT INTO `cms_news_description` (`cms_news_id`, `lang_id`, `title`, `keyword`, `description`, `content`) VALUES
@@ -403,7 +403,7 @@ INSERT INTO `cms_news_description` (`cms_news_id`, `lang_id`, `title`, `keyword`
 	(7, 2, 'Easy Polo Black Edition', '', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>');
 /*!40000 ALTER TABLE `cms_news_description` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.cms_page
+-- Dumping structure for table s-cart.cms_page
 DROP TABLE IF EXISTS `cms_page`;
 CREATE TABLE IF NOT EXISTS `cms_page` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -418,7 +418,7 @@ CREATE TABLE IF NOT EXISTS `cms_page` (
   UNIQUE KEY `key` (`uniquekey`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.cms_page: ~2 rows (approximately)
+-- Dumping data for table s-cart.cms_page: ~2 rows (approximately)
 DELETE FROM `cms_page`;
 /*!40000 ALTER TABLE `cms_page` DISABLE KEYS */;
 INSERT INTO `cms_page` (`id`, `title`, `content`, `image`, `keyword`, `description`, `uniquekey`, `status`) VALUES
@@ -426,7 +426,7 @@ INSERT INTO `cms_page` (`id`, `title`, `content`, `image`, `keyword`, `descripti
 	(2, NULL, NULL, NULL, NULL, NULL, 'contact', 1);
 /*!40000 ALTER TABLE `cms_page` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.cms_page_description
+-- Dumping structure for table s-cart.cms_page_description
 DROP TABLE IF EXISTS `cms_page_description`;
 CREATE TABLE IF NOT EXISTS `cms_page_description` (
   `cms_page_id` int(11) NOT NULL,
@@ -438,7 +438,7 @@ CREATE TABLE IF NOT EXISTS `cms_page_description` (
   UNIQUE KEY `cms_page_id_lang_id` (`cms_page_id`,`lang_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.cms_page_description: ~4 rows (approximately)
+-- Dumping data for table s-cart.cms_page_description: ~4 rows (approximately)
 DELETE FROM `cms_page_description`;
 /*!40000 ALTER TABLE `cms_page_description` DISABLE KEYS */;
 INSERT INTO `cms_page_description` (`cms_page_id`, `lang_id`, `title`, `keyword`, `description`, `content`) VALUES
@@ -448,7 +448,7 @@ INSERT INTO `cms_page_description` (`cms_page_id`, `lang_id`, `title`, `keyword`
 	(2, 2, 'Liên hệ với chúng tôi', '', NULL, NULL);
 /*!40000 ALTER TABLE `cms_page_description` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.config
+-- Dumping structure for table s-cart.config
 DROP TABLE IF EXISTS `config`;
 CREATE TABLE IF NOT EXISTS `config` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -461,7 +461,7 @@ CREATE TABLE IF NOT EXISTS `config` (
   UNIQUE KEY `key` (`key`)
 ) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.config: ~29 rows (approximately)
+-- Dumping data for table s-cart.config: ~29 rows (approximately)
 DELETE FROM `config`;
 /*!40000 ALTER TABLE `config` DISABLE KEYS */;
 INSERT INTO `config` (`id`, `code`, `key`, `value`, `sort`, `detail`) VALUES
@@ -489,14 +489,14 @@ INSERT INTO `config` (`id`, `code`, `key`, `value`, `sort`, `detail`) VALUES
 	(35, 'payment_paypal', 'paypal_mode', 'sandbox', 8, 'language.admin.paypal_mode'),
 	(36, 'payment_paypal', 'paypal_log', '1', 0, 'language.admin.paypal_log'),
 	(37, 'payment_paypal', 'paypal_path_log', 'logs/paypal.log', 0, 'language.admin.paypal_path_log'),
-	(40, 'payment_paypal', 'paypal_status', '0', 9, 'language.admin.paypal_status'),
+	(40, 'payment_paypal', 'paypal_status', '1', 9, 'language.admin.paypal_status'),
 	(41, 'payment_paypal', 'paypal_currency', 'USD', 0, 'language.admin.paypal_currency'),
 	(42, 'payment_paypal', 'paypal_order_status_success', '1', 0, 'language.admin.paypal_order_status_success'),
 	(43, 'payment_paypal', 'paypal_order_status_faild', '5', 0, 'language.admin.paypal_order_status_faild'),
 	(44, 'config', 'site_status', '1', 100, 'language.admin.site_status');
 /*!40000 ALTER TABLE `config` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.config_global
+-- Dumping structure for table s-cart.config_global
 DROP TABLE IF EXISTS `config_global`;
 CREATE TABLE IF NOT EXISTS `config_global` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -514,14 +514,14 @@ CREATE TABLE IF NOT EXISTS `config_global` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.config_global: ~1 rows (approximately)
+-- Dumping data for table s-cart.config_global: ~1 rows (approximately)
 DELETE FROM `config_global`;
 /*!40000 ALTER TABLE `config_global` DISABLE KEYS */;
 INSERT INTO `config_global` (`id`, `logo`, `watermark`, `template`, `title`, `description`, `keyword`, `phone`, `long_phone`, `email`, `address`, `locale`) VALUES
 	(1, 'images/scart-mid.png', 'images/watermark.png', 's-cart', 'Free open source - eCommerce Platform for Business', 'Free website shopping cart for business', NULL, '0123456789', 'Support: 0987654321', 'admin@admin.com', '123st - abc - xyz', 'en');
 /*!40000 ALTER TABLE `config_global` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.config_layout
+-- Dumping structure for table s-cart.config_layout
 DROP TABLE IF EXISTS `config_layout`;
 CREATE TABLE IF NOT EXISTS `config_layout` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -532,14 +532,14 @@ CREATE TABLE IF NOT EXISTS `config_layout` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.config_layout: ~1 rows (approximately)
+-- Dumping data for table s-cart.config_layout: ~1 rows (approximately)
 DELETE FROM `config_layout`;
 /*!40000 ALTER TABLE `config_layout` DISABLE KEYS */;
 INSERT INTO `config_layout` (`id`, `meta`, `header`, `footer_bottom`, `footer_top`) VALUES
 	(1, NULL, '<div id="fb-root"></div>\r\n<script>(function(d, s, id) {\r\n  var js, fjs = d.getElementsByTagName(s)[0];\r\n  if (d.getElementById(id)) return;\r\n  js = d.createElement(s); js.id = id;\r\n  js.src = \'//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.8&appId=934208239994473\';\r\n  fjs.parentNode.insertBefore(js, fjs);\r\n}(document, \'script\', \'facebook-jssdk\'));\r\n</script>', '<!-- Global site tag (gtag.js) - Google Analytics -->\r\n<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125870439-1"></script>\r\n<script>\r\n  window.dataLayer = window.dataLayer || [];\r\n  function gtag(){dataLayer.push(arguments);}\r\n  gtag(\'js\', new Date());\r\n  gtag(\'config\', \'UA-125870439-1\');\r\n</script>', NULL);
 /*!40000 ALTER TABLE `config_layout` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.language
+-- Dumping structure for table s-cart.language
 DROP TABLE IF EXISTS `language`;
 CREATE TABLE IF NOT EXISTS `language` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -552,15 +552,14 @@ CREATE TABLE IF NOT EXISTS `language` (
   UNIQUE KEY `code` (`code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.language: ~2 rows (approximately)
+-- Dumping data for table s-cart.language: ~1 rows (approximately)
 DELETE FROM `language`;
 /*!40000 ALTER TABLE `language` DISABLE KEYS */;
 INSERT INTO `language` (`id`, `name`, `code`, `icon`, `status`, `sort`) VALUES
-	(1, 'English', 'en', 'language/flag_uk.png', 1, 1),
-	(2, 'Việt Nam', 'vi', 'language/flag_vn.png', 1, 0);
+	(1, 'English', 'en', 'language/flag_uk.png', 1, 1);
 /*!40000 ALTER TABLE `language` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.migrations
+-- Dumping structure for table s-cart.migrations
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE IF NOT EXISTS `migrations` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -569,7 +568,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart-lang.migrations: ~6 rows (approximately)
+-- Dumping data for table s-cart.migrations: ~6 rows (approximately)
 DELETE FROM `migrations`;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -581,7 +580,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(6, '2016_05_17_221000_create_promocodes_table', 3);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.password_resets
+-- Dumping structure for table s-cart.password_resets
 DROP TABLE IF EXISTS `password_resets`;
 CREATE TABLE IF NOT EXISTS `password_resets` (
   `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -590,7 +589,7 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
   KEY `password_resets_email_index` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart-lang.password_resets: ~3 rows (approximately)
+-- Dumping data for table s-cart.password_resets: ~3 rows (approximately)
 DELETE FROM `password_resets`;
 /*!40000 ALTER TABLE `password_resets` DISABLE KEYS */;
 INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
@@ -599,7 +598,24 @@ INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
 	('lanhktc@gmail.com', '$2y$10$qKtQ1Lqy9WraRawxDh.zQeemGIlYqoCRDNvysHbRlVtHVAtip0SCy', '2018-09-23 08:02:26');
 /*!40000 ALTER TABLE `password_resets` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.shop_brand
+-- Dumping structure for table s-cart.shop_attribute
+DROP TABLE IF EXISTS `shop_attribute`;
+CREATE TABLE IF NOT EXISTS `shop_attribute` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `value` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Dumping data for table s-cart.shop_attribute: ~2 rows (approximately)
+DELETE FROM `shop_attribute`;
+/*!40000 ALTER TABLE `shop_attribute` DISABLE KEYS */;
+INSERT INTO `shop_attribute` (`id`, `name`, `value`) VALUES
+	(1, 'Màu sắc', 'Xanh,Đỏ,Vàng,Trắng'),
+	(2, 'Size', 'X,S,L');
+/*!40000 ALTER TABLE `shop_attribute` ENABLE KEYS */;
+
+-- Dumping structure for table s-cart.shop_brand
 DROP TABLE IF EXISTS `shop_brand`;
 CREATE TABLE IF NOT EXISTS `shop_brand` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -611,7 +627,7 @@ CREATE TABLE IF NOT EXISTS `shop_brand` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.shop_brand: ~6 rows (approximately)
+-- Dumping data for table s-cart.shop_brand: ~6 rows (approximately)
 DELETE FROM `shop_brand`;
 /*!40000 ALTER TABLE `shop_brand` DISABLE KEYS */;
 INSERT INTO `shop_brand` (`id`, `name`, `image`, `url`, `status`, `sort`) VALUES
@@ -623,7 +639,7 @@ INSERT INTO `shop_brand` (`id`, `name`, `image`, `url`, `status`, `sort`) VALUES
 	(6, 'Metabo', 'brand/66afc30e21e9ada47493dccfad00bd34.png', NULL, 1, 0);
 /*!40000 ALTER TABLE `shop_brand` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.shop_category
+-- Dumping structure for table s-cart.shop_category
 DROP TABLE IF EXISTS `shop_category`;
 CREATE TABLE IF NOT EXISTS `shop_category` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -637,7 +653,7 @@ CREATE TABLE IF NOT EXISTS `shop_category` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.shop_category: ~18 rows (approximately)
+-- Dumping data for table s-cart.shop_category: ~18 rows (approximately)
 DELETE FROM `shop_category`;
 /*!40000 ALTER TABLE `shop_category` DISABLE KEYS */;
 INSERT INTO `shop_category` (`id`, `name`, `image`, `keyword`, `description`, `parent`, `sort`, `status`) VALUES
@@ -661,7 +677,7 @@ INSERT INTO `shop_category` (`id`, `name`, `image`, `keyword`, `description`, `p
 	(18, NULL, '', NULL, NULL, 3, 0, 1);
 /*!40000 ALTER TABLE `shop_category` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.shop_category_description
+-- Dumping structure for table s-cart.shop_category_description
 DROP TABLE IF EXISTS `shop_category_description`;
 CREATE TABLE IF NOT EXISTS `shop_category_description` (
   `shop_category_id` int(11) NOT NULL,
@@ -672,7 +688,7 @@ CREATE TABLE IF NOT EXISTS `shop_category_description` (
   UNIQUE KEY `shop_category_id_lang_id` (`shop_category_id`,`lang_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.shop_category_description: ~36 rows (approximately)
+-- Dumping data for table s-cart.shop_category_description: ~36 rows (approximately)
 DELETE FROM `shop_category_description`;
 /*!40000 ALTER TABLE `shop_category_description` DISABLE KEYS */;
 INSERT INTO `shop_category_description` (`shop_category_id`, `lang_id`, `name`, `keyword`, `description`) VALUES
@@ -714,7 +730,7 @@ INSERT INTO `shop_category_description` (`shop_category_id`, `lang_id`, `name`, 
 	(18, 2, 'Danh mục ADIDAS', 'Arduino Shield', NULL);
 /*!40000 ALTER TABLE `shop_category_description` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.shop_image
+-- Dumping structure for table s-cart.shop_image
 DROP TABLE IF EXISTS `shop_image`;
 CREATE TABLE IF NOT EXISTS `shop_image` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -725,7 +741,7 @@ CREATE TABLE IF NOT EXISTS `shop_image` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.shop_image: ~21 rows (approximately)
+-- Dumping data for table s-cart.shop_image: ~21 rows (approximately)
 DELETE FROM `shop_image`;
 /*!40000 ALTER TABLE `shop_image` DISABLE KEYS */;
 INSERT INTO `shop_image` (`id`, `image`, `product_id`, `sort`, `status`) VALUES
@@ -752,7 +768,81 @@ INSERT INTO `shop_image` (`id`, `image`, `product_id`, `sort`, `status`) VALUES
 	(116, 'product_slide/89230e4667315ad3ce14785ebbe0bf2a.jpg', 48, 0, 0);
 /*!40000 ALTER TABLE `shop_image` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.shop_order
+-- Dumping structure for table s-cart.shop_option
+DROP TABLE IF EXISTS `shop_option`;
+CREATE TABLE IF NOT EXISTS `shop_option` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `type` int(11) NOT NULL DEFAULT '1' COMMENT '1- radio, 2 -select, 3-text',
+  `status` int(11) NOT NULL DEFAULT '1',
+  `sort` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Dumping data for table s-cart.shop_option: ~3 rows (approximately)
+DELETE FROM `shop_option`;
+/*!40000 ALTER TABLE `shop_option` DISABLE KEYS */;
+INSERT INTO `shop_option` (`id`, `name`, `type`, `status`, `sort`) VALUES
+	(1, 'Màu sắc', 1, 1, 0),
+	(2, 'Kích thước', 2, 1, 0),
+	(3, 'Chất liệu', 3, 1, 3);
+/*!40000 ALTER TABLE `shop_option` ENABLE KEYS */;
+
+-- Dumping structure for table s-cart.shop_option_detail
+DROP TABLE IF EXISTS `shop_option_detail`;
+CREATE TABLE IF NOT EXISTS `shop_option_detail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text COLLATE utf8_unicode_ci NOT NULL,
+  `add_price` int(11) NOT NULL DEFAULT '0',
+  `option_id` int(11) NOT NULL DEFAULT '0',
+  `product_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=646 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Dumping data for table s-cart.shop_option_detail: ~37 rows (approximately)
+DELETE FROM `shop_option_detail`;
+/*!40000 ALTER TABLE `shop_option_detail` DISABLE KEYS */;
+INSERT INTO `shop_option_detail` (`id`, `name`, `add_price`, `option_id`, `product_id`) VALUES
+	(1, 'X', 0, 2, 0),
+	(2, 'XL', 10000, 2, 0),
+	(3, 'Đỏ', 0, 1, 0),
+	(4, 'Xanh', 10000, 1, 0),
+	(5, 'Vàng', 5000, 1, 0),
+	(24, 'Tím', 20000, 1, 15),
+	(47, 'Tìm', 0, 2, 16),
+	(48, 'Ok', 0, 2, 16),
+	(49, 'Xanh', 0, 1, 17),
+	(50, 'Do', 0, 1, 17),
+	(581, 'S', 0, 2, 6),
+	(582, 'XL', 0, 2, 6),
+	(606, 'Màu xanh', 0, 1, 12),
+	(607, 'Màu đỏ', 0, 1, 12),
+	(608, 'Màu tím', 0, 1, 12),
+	(609, 'XL', 0, 2, 12),
+	(610, 'XXL', 0, 2, 12),
+	(626, 'Màu Trắng Đục', 0, 1, 34),
+	(627, 'Trong Suốt', 0, 1, 34),
+	(628, 'ID=2 mm, OD=4 mm', 0, 2, 34),
+	(629, 'ID=2 mm, OD=3 mm', 0, 2, 34),
+	(630, 'ID=3 mm, OD=4 mm', 0, 2, 34),
+	(631, 'S', 0, 2, 5),
+	(632, 'XL', 0, 2, 5),
+	(633, 'XXX', 0, 2, 5),
+	(634, 'White/Đen', 0, 1, 9),
+	(635, 'Black/Đen', 0, 1, 9),
+	(636, 'Transparent/Trong suốt', 0, 1, 9),
+	(637, 'Red/Đỏ', 0, 1, 9),
+	(638, 'Yellow/Vàng', 0, 1, 9),
+	(639, 'Blue/Xanh Dương', 0, 1, 9),
+	(640, 'Green/Xanh Lá', 0, 1, 9),
+	(641, 'Orange/Cam', 0, 1, 9),
+	(642, 'Cyan/Lam', 0, 1, 9),
+	(643, 'Pink/Hồng', 0, 1, 9),
+	(644, 'Đường kính 1.75mm', 0, 2, 9),
+	(645, 'Đường kính 3mm', 0, 2, 9);
+/*!40000 ALTER TABLE `shop_option_detail` ENABLE KEYS */;
+
+-- Dumping structure for table s-cart.shop_order
 DROP TABLE IF EXISTS `shop_order`;
 CREATE TABLE IF NOT EXISTS `shop_order` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -779,9 +869,9 @@ CREATE TABLE IF NOT EXISTS `shop_order` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=122 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.shop_order: ~37 rows (approximately)
+-- Dumping data for table s-cart.shop_order: ~38 rows (approximately)
 DELETE FROM `shop_order`;
 /*!40000 ALTER TABLE `shop_order` DISABLE KEYS */;
 INSERT INTO `shop_order` (`id`, `user_id`, `subtotal`, `shipping`, `discount`, `payment_status`, `shipping_status`, `status`, `tax`, `total`, `received`, `balance`, `toname`, `address1`, `address2`, `country`, `phone`, `email`, `comment`, `payment_method`, `transaction`, `created_at`, `updated_at`) VALUES
@@ -821,10 +911,11 @@ INSERT INTO `shop_order` (`id`, `user_id`, `subtotal`, `shipping`, `discount`, `
 	(118, 0, 10000, 20000, 0, 0, 0, 0, 0, 30000, 0, 30000, 'krissanawat kaewsanmuang', 'rhtrthrth', 'rthrth', NULL, '0843534534', '', NULL, 'paypal', NULL, '2018-10-17 06:42:22', NULL),
 	(119, 7, 15000, 200000, 0, 0, 0, 0, 0, 215000, 0, 215000, 'trucnguyen', 'viet nam', 'viet nam', NULL, '0975236548', '', NULL, 'paypal', NULL, '2018-10-17 23:38:23', '2018-10-18 21:41:20'),
 	(120, 0, 40000, 20000, 0, 0, 0, 0, 0, 60000, 0, 60000, 'dfd', 'sdfsdf', 'sdfsdfsdf', NULL, '09012345678', NULL, NULL, 'paypal', NULL, '2018-10-19 21:44:17', NULL),
-	(121, 0, 15000, 20000, 0, 0, 0, 0, 0, 35000, 0, 35000, 'Hung', '南陽市長岡', 'fgdfg', NULL, '09012345678', NULL, 'dgdfgdfg', 'paypal', NULL, '2018-10-19 21:48:06', NULL);
+	(121, 0, 15000, 20000, 0, 0, 0, 0, 0, 35000, 0, 35000, 'Hung', '南陽市長岡', 'fgdfg', NULL, '09012345678', NULL, 'dgdfgdfg', 'paypal', NULL, '2018-10-19 21:48:06', NULL),
+	(122, 0, 10000, 20000, 0, 0, 0, 0, 0, 30000, 0, 30000, 'A', 'A', 'A', NULL, '01658843629', NULL, NULL, 'cash', NULL, '2018-10-21 16:44:08', NULL);
 /*!40000 ALTER TABLE `shop_order` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.shop_order_detail
+-- Dumping structure for table s-cart.shop_order_detail
 DROP TABLE IF EXISTS `shop_order_detail`;
 CREATE TABLE IF NOT EXISTS `shop_order_detail` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -840,9 +931,9 @@ CREATE TABLE IF NOT EXISTS `shop_order_detail` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=188 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=189 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.shop_order_detail: ~42 rows (approximately)
+-- Dumping data for table s-cart.shop_order_detail: ~43 rows (approximately)
 DELETE FROM `shop_order_detail`;
 /*!40000 ALTER TABLE `shop_order_detail` DISABLE KEYS */;
 INSERT INTO `shop_order_detail` (`id`, `order_id`, `product_id`, `name`, `price`, `qty`, `total_price`, `sku`, `type`, `option`, `created_at`, `updated_at`) VALUES
@@ -887,10 +978,11 @@ INSERT INTO `shop_order_detail` (`id`, `order_id`, `product_id`, `name`, `price`
 	(184, 118, 49, 'Easy Polo Black Edition', 10000, 1, 10000, 'BX-5UTbnv', '[]', NULL, '2018-10-17 06:42:22', NULL),
 	(185, 119, 41, 'Easy Polo Black Edition', 15000, 1, 15000, 'P10-IG', '[]', NULL, '2018-10-17 23:38:23', NULL),
 	(186, 120, 6, 'Easy Polo Black Edition', 40000, 1, 40000, 'CLOCKFAN2', '[]', NULL, '2018-10-19 21:44:17', NULL),
-	(187, 121, 48, 'Easy Polo Black Edition', 15000, 1, 15000, 'BX-5UT', '[]', NULL, '2018-10-19 21:48:06', NULL);
+	(187, 121, 48, 'Easy Polo Black Edition', 15000, 1, 15000, 'BX-5UT', '[]', NULL, '2018-10-19 21:48:06', NULL),
+	(188, 122, 49, 'Easy Polo Black Edition', 10000, 1, 10000, 'BX-5UTbnv', '[]', NULL, '2018-10-21 16:44:08', NULL);
 /*!40000 ALTER TABLE `shop_order_detail` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.shop_order_history
+-- Dumping structure for table s-cart.shop_order_history
 DROP TABLE IF EXISTS `shop_order_history`;
 CREATE TABLE IF NOT EXISTS `shop_order_history` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -900,9 +992,9 @@ CREATE TABLE IF NOT EXISTS `shop_order_history` (
   `user_id` int(11) NOT NULL DEFAULT '0',
   `add_date` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.shop_order_history: ~48 rows (approximately)
+-- Dumping data for table s-cart.shop_order_history: ~49 rows (approximately)
 DELETE FROM `shop_order_history`;
 /*!40000 ALTER TABLE `shop_order_history` DISABLE KEYS */;
 INSERT INTO `shop_order_history` (`id`, `order_id`, `content`, `admin_id`, `user_id`, `add_date`) VALUES
@@ -953,10 +1045,11 @@ INSERT INTO `shop_order_history` (`id`, `order_id`, `content`, `admin_id`, `user
 	(105, 119, 'New order', 0, 7, '2018-10-17 23:38:23'),
 	(106, 119, 'Thay đổi <b>shipping</b> từ <span style="color:blue">\'\'</span> thành <span style="color:red">\'200000\'</span>', 1, 0, '2018-10-18 21:41:20'),
 	(107, 120, 'New order', 0, 0, '2018-10-19 21:44:17'),
-	(108, 121, 'New order', 0, 0, '2018-10-19 21:48:06');
+	(108, 121, 'New order', 0, 0, '2018-10-19 21:48:06'),
+	(109, 122, 'New order', 0, 0, '2018-10-21 16:44:08');
 /*!40000 ALTER TABLE `shop_order_history` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.shop_order_status
+-- Dumping structure for table s-cart.shop_order_status
 DROP TABLE IF EXISTS `shop_order_status`;
 CREATE TABLE IF NOT EXISTS `shop_order_status` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -964,7 +1057,7 @@ CREATE TABLE IF NOT EXISTS `shop_order_status` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.shop_order_status: ~6 rows (approximately)
+-- Dumping data for table s-cart.shop_order_status: ~6 rows (approximately)
 DELETE FROM `shop_order_status`;
 /*!40000 ALTER TABLE `shop_order_status` DISABLE KEYS */;
 INSERT INTO `shop_order_status` (`id`, `name`) VALUES
@@ -976,7 +1069,7 @@ INSERT INTO `shop_order_status` (`id`, `name`) VALUES
 	(5, 'Failed');
 /*!40000 ALTER TABLE `shop_order_status` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.shop_order_total
+-- Dumping structure for table s-cart.shop_order_total
 DROP TABLE IF EXISTS `shop_order_total`;
 CREATE TABLE IF NOT EXISTS `shop_order_total` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -988,9 +1081,9 @@ CREATE TABLE IF NOT EXISTS `shop_order_total` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=454 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=459 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.shop_order_total: ~250 rows (approximately)
+-- Dumping data for table s-cart.shop_order_total: ~255 rows (approximately)
 DELETE FROM `shop_order_total`;
 /*!40000 ALTER TABLE `shop_order_total` DISABLE KEYS */;
 INSERT INTO `shop_order_total` (`id`, `order_id`, `title`, `code`, `value`, `sort`, `created_at`, `updated_at`) VALUES
@@ -1243,10 +1336,15 @@ INSERT INTO `shop_order_total` (`id`, `order_id`, `title`, `code`, `value`, `sor
 	(450, 121, 'Shipping', 'shipping', 20000, 10, '2018-10-19 21:48:06', NULL),
 	(451, 121, 'Discount', 'discount', 0, 20, '2018-10-19 21:48:06', NULL),
 	(452, 121, 'Total', 'total', 35000, 100, '2018-10-19 21:48:06', NULL),
-	(453, 121, 'Received', 'received', 0, 200, '2018-10-19 21:48:06', NULL);
+	(453, 121, 'Received', 'received', 0, 200, '2018-10-19 21:48:06', NULL),
+	(454, 122, 'Sub total', 'subtotal', 10000, 1, '2018-10-21 16:44:08', NULL),
+	(455, 122, 'Shipping', 'shipping', 20000, 10, '2018-10-21 16:44:08', NULL),
+	(456, 122, 'Discount', 'discount', 0, 20, '2018-10-21 16:44:08', NULL),
+	(457, 122, 'Total', 'total', 30000, 100, '2018-10-21 16:44:08', NULL),
+	(458, 122, 'Received', 'received', 0, 200, '2018-10-21 16:44:08', NULL);
 /*!40000 ALTER TABLE `shop_order_total` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.shop_payment_status
+-- Dumping structure for table s-cart.shop_payment_status
 DROP TABLE IF EXISTS `shop_payment_status`;
 CREATE TABLE IF NOT EXISTS `shop_payment_status` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1254,7 +1352,7 @@ CREATE TABLE IF NOT EXISTS `shop_payment_status` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.shop_payment_status: ~4 rows (approximately)
+-- Dumping data for table s-cart.shop_payment_status: ~4 rows (approximately)
 DELETE FROM `shop_payment_status`;
 /*!40000 ALTER TABLE `shop_payment_status` DISABLE KEYS */;
 INSERT INTO `shop_payment_status` (`id`, `name`) VALUES
@@ -1264,7 +1362,7 @@ INSERT INTO `shop_payment_status` (`id`, `name`) VALUES
 	(3, 'Khách hàng dư tiền');
 /*!40000 ALTER TABLE `shop_payment_status` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.shop_product
+-- Dumping structure for table s-cart.shop_product
 DROP TABLE IF EXISTS `shop_product`;
 CREATE TABLE IF NOT EXISTS `shop_product` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -1294,37 +1392,37 @@ CREATE TABLE IF NOT EXISTS `shop_product` (
   UNIQUE KEY `sku` (`sku`)
 ) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.shop_product: ~40 rows (approximately)
+-- Dumping data for table s-cart.shop_product: ~40 rows (approximately)
 DELETE FROM `shop_product`;
 /*!40000 ALTER TABLE `shop_product` DISABLE KEYS */;
 INSERT INTO `shop_product` (`id`, `name`, `sku`, `keyword`, `description`, `image`, `content`, `brand_id`, `category_id`, `category_other`, `price`, `cost`, `stock`, `sold`, `type`, `option`, `sort`, `status`, `view`, `date_lastview`, `date_available`, `created_at`, `updated_at`) VALUES
-	(3, NULL, 'MEGA2560', NULL, NULL, 'product/f2d9505d28f1b10f949cec466cada01e.jpeg', NULL, 1, 7, NULL, 220000, 150000, 0, -5, 0, NULL, 0, 1, 1, '2018-10-16 17:21:32', NULL, '2018-01-15 14:57:31', '2018-10-16 17:21:32'),
-	(4, NULL, 'LEDFAN1', NULL, NULL, 'product/95349d3747fdaf79d391fdc98e083701.jpg', NULL, 1, 6, NULL, 190000, 100000, 17, -1, 1, NULL, 0, 1, 1, '2018-08-27 11:37:16', NULL, '2018-01-16 13:03:54', '2018-08-27 11:37:16'),
+	(3, NULL, 'MEGA2560', NULL, NULL, 'product/f2d9505d28f1b10f949cec466cada01e.jpeg', NULL, 1, 7, NULL, 220000, 150000, 0, -5, 0, NULL, 0, 1, 2, '2018-10-20 15:50:48', NULL, '2018-01-15 14:57:31', '2018-10-20 15:50:48'),
+	(4, NULL, 'LEDFAN1', NULL, NULL, 'product/95349d3747fdaf79d391fdc98e083701.jpg', NULL, 1, 6, NULL, 190000, 100000, 17, -1, 1, NULL, 0, 1, 4, '2018-10-22 05:38:35', NULL, '2018-01-16 13:03:54', '2018-10-22 05:38:35'),
 	(5, NULL, 'CLOCKFAN1', NULL, NULL, 'product/15aa6b1f31b53a0177d7653761a45274.jpeg', NULL, 2, 13, NULL, 420000, 320000, 11, 1, 1, NULL, 0, 1, 6, '2018-10-18 02:40:46', NULL, '2018-01-16 13:04:41', '2018-10-18 02:40:46'),
-	(6, NULL, 'CLOCKFAN2', NULL, NULL, 'product/0e1416d509af3712bd801404ca928702.jpeg', NULL, 1, 13, NULL, 380000, 250000, 98, 79, 1, NULL, 0, 1, 5, '2018-10-19 21:44:01', NULL, '2018-02-02 14:52:50', '2018-10-19 21:44:17'),
+	(6, NULL, 'CLOCKFAN2', NULL, NULL, 'product/0e1416d509af3712bd801404ca928702.jpeg', NULL, 1, 13, NULL, 380000, 250000, 98, 79, 1, NULL, 0, 1, 6, '2018-10-21 23:59:57', NULL, '2018-02-02 14:52:50', '2018-10-21 23:59:57'),
 	(7, NULL, 'CLOCKFAN3', NULL, NULL, 'product/95349d3747fdaf79d391fdc98e083701.jpg', NULL, 1, 13, NULL, 320000, 250000, 51, 0, 1, NULL, 1, 1, 5, '2018-10-19 10:17:55', NULL, '2018-02-02 14:53:30', '2018-10-19 10:17:55'),
 	(8, NULL, 'TMC2208', NULL, NULL, 'product/95349d3747fdaf79d391fdc98e083701.jpg', NULL, 6, 11, NULL, 220000, 130000, 101, 1, 0, NULL, 1, 1, 9, '2018-09-22 23:13:13', NULL, '2018-02-02 14:53:30', '2018-09-22 23:13:13'),
 	(9, NULL, 'FILAMENT', NULL, NULL, 'product/95349d3747fdaf79d391fdc98e083701.jpg', NULL, 1, 15, NULL, 299000, 200000, 127, 6, 1, NULL, 1, 1, 1, '2018-10-16 18:44:46', NULL, '2018-02-02 14:53:30', '2018-10-16 18:44:46'),
 	(10, NULL, 'A4988', NULL, NULL, 'product/820283598735f98a9b23960821da438b.jpeg', NULL, 1, 11, NULL, 39000, 20000, 107, 33, 0, NULL, 1, 1, 0, NULL, NULL, '2018-02-02 14:53:30', '2018-06-27 16:21:10'),
 	(11, NULL, 'ANYCUBIC-P', NULL, NULL, 'product/d63af407fa92299e163696a585566dc7.jpeg', NULL, 3, 10, NULL, 4990000, 3500000, 1, 1048, 0, NULL, 0, 1, 1, '2018-10-18 11:14:26', NULL, '2018-01-15 14:57:31', '2018-10-18 11:14:26'),
 	(12, NULL, '3DHLFD', NULL, NULL, 'product/95349d3747fdaf79d391fdc98e083701.jpg', NULL, 1, 12, NULL, 7990000, 5200000, 10, 20, 1, NULL, 0, 1, 0, NULL, NULL, '2018-01-15 14:57:31', '2018-09-03 17:15:38'),
-	(20, NULL, 'SS495A', NULL, NULL, 'product/95349d3747fdaf79d391fdc98e083701.jpg', NULL, 2, 14, NULL, 15000, 7000, 1005, 1059, 1, NULL, 0, 1, 2, '2018-09-06 06:45:53', NULL, '2018-01-15 14:57:31', '2018-09-06 06:45:53'),
+	(20, NULL, 'SS495A', NULL, NULL, 'product/95349d3747fdaf79d391fdc98e083701.jpg', NULL, 2, 14, NULL, 15000, 7000, 1005, 1059, 1, NULL, 0, 1, 3, '2018-10-21 18:06:10', NULL, '2018-01-15 14:57:31', '2018-10-21 18:06:10'),
 	(21, NULL, '3D-CARBON1.75', NULL, NULL, 'product/d05966a529efdd8d7b41ed9b687859b6.jpeg', NULL, 2, 15, NULL, 390000, 15000, 10, 19, 1, NULL, 1, 1, 2, '2018-10-16 18:44:49', NULL, '2018-02-02 14:53:30', '2018-10-16 18:44:49'),
-	(22, NULL, '3D-GOLD1.75', NULL, NULL, 'product/eedfd153bf368919a134da17f22c8de7.jpeg', NULL, 2, 15, NULL, 500000, 15000, 10, 1, 1, NULL, 1, 1, 3, '2018-10-20 04:49:54', NULL, '2018-04-12 15:05:37', '2018-10-20 04:49:54'),
+	(22, NULL, '3D-GOLD1.75', NULL, NULL, 'product/eedfd153bf368919a134da17f22c8de7.jpeg', NULL, 2, 15, NULL, 500000, 15000, 10, 1, 1, NULL, 1, 1, 4, '2018-10-22 00:16:55', NULL, '2018-04-12 15:05:37', '2018-10-22 00:16:55'),
 	(23, NULL, 'LCD12864-3D', NULL, NULL, 'product/a7a315526ecf7594731448d792714a11.jpeg', NULL, 2, 11, NULL, 220000, 15000, 0, 0, 0, NULL, 0, 1, 1, '2018-10-17 08:39:04', NULL, '2018-08-11 13:33:37', '2018-10-17 08:39:04'),
 	(24, NULL, 'LCD2004-3D', NULL, NULL, 'product/9215506044b8a350fc082f5350b3653a.jpg', NULL, 2, 11, NULL, 190000, 15000, 0, 0, 0, NULL, 0, 1, 1, '2018-10-17 12:23:19', NULL, '2018-08-11 13:39:31', '2018-10-17 12:23:19'),
 	(25, NULL, 'RAMPS1.5-3D', NULL, NULL, 'product/1d6cdd4473603c7a4d162067713b8da8.jpg', NULL, 2, 11, NULL, 120000, 15000, 0, 0, 0, NULL, 0, 1, 1, '2018-10-17 04:10:02', NULL, '2018-08-11 13:41:25', '2018-10-17 04:10:02'),
-	(26, NULL, 'EFULL-3D', NULL, NULL, 'product/07e79f6546499878cba383dd5bfe977e.jpeg', NULL, 1, 11, NULL, 890000, 15000, 0, 0, 0, NULL, 0, 1, 1, '2018-08-28 06:39:46', NULL, '2018-08-11 13:50:25', '2018-09-22 17:39:55'),
+	(26, NULL, 'EFULL-3D', NULL, NULL, 'product/07e79f6546499878cba383dd5bfe977e.jpeg', NULL, 1, 11, NULL, 890000, 15000, 0, 0, 0, NULL, 0, 1, 2, '2018-10-21 01:49:01', NULL, '2018-08-11 13:50:25', '2018-10-21 01:49:01'),
 	(27, NULL, 'ANYCUBIC-I3M', NULL, NULL, 'product/ea88b7078652909f3d6c5d445aa05f59.jpeg', NULL, 1, 10, NULL, 7990000, 15000, 5, 0, 0, NULL, 0, 1, 0, NULL, NULL, '2018-08-22 16:26:00', '2018-09-22 17:34:25'),
 	(28, NULL, '3DNOZZLE', NULL, NULL, 'product/c25c81c852823f5ea8ba4250978217a5.jpeg', NULL, 1, 11, NULL, 10000, 15000, 500, 0, 0, NULL, 0, 1, 0, NULL, NULL, '2018-08-24 04:21:48', '2018-09-22 18:17:21'),
 	(29, NULL, '3D-TEFLONLOCK', NULL, NULL, 'product/8e28f51184f0a96970c05185b1412fa1.jpeg', NULL, 1, 12, NULL, 10000, 15000, 500, 0, 0, NULL, 0, 1, 11, '2018-10-17 21:28:45', NULL, '2018-08-24 04:32:48', '2018-10-17 21:28:45'),
-	(30, NULL, '3D-BELT-GT2', NULL, NULL, 'product/ed74817ffed5bcc692c00135f4288a8c.jpeg', NULL, 1, 11, NULL, 20000, 15000, 0, 0, 1, NULL, 0, 1, 4, '2018-09-22 21:10:20', NULL, '2018-08-24 04:35:39', '2018-10-10 20:39:06'),
+	(30, NULL, '3D-BELT-GT2', NULL, NULL, 'product/ed74817ffed5bcc692c00135f4288a8c.jpeg', NULL, 1, 11, NULL, 20000, 15000, 0, 0, 1, NULL, 0, 1, 5, '2018-10-21 21:26:29', NULL, '2018-08-24 04:35:39', '2018-10-21 21:26:29'),
 	(31, NULL, '3D-TEFLONLOCK-M10', NULL, NULL, 'product/0e1416d509af3712bd801404ca928702.jpeg', NULL, 2, 11, NULL, 10000, 15000, 100, 0, 0, NULL, 0, 1, 4, '2018-09-08 13:19:46', NULL, '2018-08-24 04:39:03', '2018-09-22 17:29:10'),
 	(32, NULL, '3D-HOTWIRE1240', NULL, NULL, 'product/efd9fb910ba539c125b7c431a1ccc563.jpg', NULL, 0, 11, NULL, 20000, 15000, -1, 1, 1, NULL, 0, 1, 4, '2018-10-19 19:39:51', NULL, '2018-08-24 04:40:54', '2018-10-19 19:39:51'),
-	(33, NULL, '3D-TEFTLON-24', NULL, NULL, 'product/a635cc2bdf5485ccb2c0cc9d186968b2.jpeg', NULL, 2, 16, NULL, 15000, 15000, 100, 0, 0, NULL, 1, 1, 0, NULL, NULL, '2018-08-24 04:44:04', '2018-10-10 20:37:58'),
+	(33, NULL, '3D-TEFTLON-24', NULL, NULL, 'product/a635cc2bdf5485ccb2c0cc9d186968b2.jpeg', NULL, 2, 16, NULL, 15000, 15000, 100, 0, 0, NULL, 1, 1, 1, '2018-10-22 09:01:31', NULL, '2018-08-24 04:44:04', '2018-10-22 09:01:31'),
 	(34, NULL, '3D-TEFTLON-W24', NULL, NULL, 'product/a32f12e009ebf0d24ab264706ecbc15e.jpeg', NULL, 5, 11, NULL, 20000, 15000, 99, 1, 1, NULL, 0, 1, 4, '2018-10-19 21:39:59', NULL, '2018-08-24 05:09:34', '2018-10-19 21:39:59'),
 	(35, NULL, '3D-SENSOR-NTC 100K', NULL, NULL, 'product/41c8f0d0111cd5a3f0538604233cbed8.jpeg', NULL, 4, 10, NULL, 15000, 15000, 98, 2, 1, NULL, 0, 1, 4, '2018-10-18 17:42:41', NULL, '2018-08-24 05:13:58', '2018-10-18 17:42:41'),
-	(36, NULL, 'nRLF24L01+2.4HZ', NULL, NULL, 'product/820283598735f98a9b23960821da438b.jpeg', NULL, 3, 11, NULL, 25000, 15000, 0, 0, 0, NULL, 0, 1, 1, '2018-10-18 17:09:21', NULL, '2018-08-24 06:07:15', '2018-10-18 17:09:21'),
+	(36, NULL, 'nRLF24L01+2.4HZ', NULL, NULL, 'product/820283598735f98a9b23960821da438b.jpeg', NULL, 3, 11, NULL, 25000, 15000, 0, 0, 0, NULL, 0, 1, 2, '2018-10-21 04:56:59', NULL, '2018-08-24 06:07:15', '2018-10-21 04:56:59'),
 	(37, NULL, 'ARDUINO-NANO', NULL, NULL, 'product/da687e60e54bd7fc7eab5c76e7ec3754.jpeg', NULL, 1, 17, NULL, 100000, 15000, 0, 0, 0, NULL, 0, 1, 2, '2018-10-17 12:20:25', NULL, '2018-08-24 06:25:48', '2018-10-17 12:20:25'),
 	(38, NULL, 'LEDSTRIP-5050RGB', NULL, NULL, 'product/61559578baf403e03565e73a14f845ce.jpeg', NULL, 1, 9, NULL, 15000, 15000, 0, 0, 1, NULL, 0, 1, 19, '2018-10-19 21:43:39', NULL, '2018-08-24 06:33:31', '2018-10-19 21:43:39'),
 	(39, NULL, 'LEDSTRIP-S', NULL, NULL, 'product/c400aecd5c6d87782ac9af33dd7a5980.jpg', NULL, 4, 19, NULL, 15000, 15000, 0, 0, 0, NULL, 0, 1, 2, '2018-10-16 12:04:10', NULL, '2018-08-24 08:46:21', '2018-10-16 12:04:10'),
@@ -1336,11 +1434,11 @@ INSERT INTO `shop_product` (`id`, `name`, `sku`, `keyword`, `description`, `imag
 	(45, NULL, 'LFF', NULL, NULL, 'product/3c8f613d30b4e487ef95a5e4cdea634c.jpeg', NULL, 0, 6, NULL, 15000, 15000, -1, 1, 0, NULL, 0, 1, 26, '2018-10-19 18:58:20', NULL, '2018-08-24 08:58:42', '2018-10-19 18:58:20'),
 	(46, NULL, 'P2.5-I', NULL, NULL, 'product/949fa36ebd56593445fb61d141fd2a81.jpeg', NULL, 2, 19, NULL, 15000, 15000, 0, 0, 0, NULL, 0, 1, 14, '2018-10-19 21:01:22', NULL, '2018-08-24 09:23:07', '2018-10-19 21:01:22'),
 	(47, NULL, 'BX-5U0', NULL, NULL, 'product/cd7aa3394c35330ed7f9e4095c6adb65.jpeg', NULL, 0, 19, NULL, 15000, 15000, -5, 5, 0, NULL, 0, 1, 84, '2018-10-19 10:55:41', NULL, '2018-08-24 09:48:31', '2018-10-19 10:55:41'),
-	(48, NULL, 'BX-5UT', NULL, NULL, 'product/6ddd855403d127a9fed049d0ec335481.jpeg', NULL, 0, 19, NULL, 15000, 15000, -11, 11, 0, NULL, 0, 1, 198, '2018-10-20 12:08:38', NULL, '2018-08-24 09:52:15', '2018-10-20 12:08:38'),
-	(49, NULL, 'BX-5UTbnv', NULL, NULL, 'product/0950df6d59696ad39a8e5505735f578c.jpeg', NULL, 2, 2, NULL, 15000, 15000, -7, 7, 1, NULL, 0, 1, 47, '2018-10-20 12:08:45', '2018-09-19 00:00:00', '2018-09-03 08:05:59', '2018-10-20 12:08:45');
+	(48, NULL, 'BX-5UT', NULL, NULL, 'product/6ddd855403d127a9fed049d0ec335481.jpeg', NULL, 0, 19, NULL, 15000, 15000, -11, 11, 0, NULL, 0, 1, 200, '2018-10-21 07:01:20', NULL, '2018-08-24 09:52:15', '2018-10-21 07:01:20'),
+	(49, NULL, 'BX-5UTbnv', NULL, NULL, 'product/0950df6d59696ad39a8e5505735f578c.jpeg', NULL, 2, 2, NULL, 15000, 15000, -8, 8, 1, NULL, 0, 1, 54, '2018-10-22 11:28:51', '2018-09-19 00:00:00', '2018-09-03 08:05:59', '2018-10-22 11:28:51');
 /*!40000 ALTER TABLE `shop_product` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.shop_product_description
+-- Dumping structure for table s-cart.shop_product_description
 DROP TABLE IF EXISTS `shop_product_description`;
 CREATE TABLE IF NOT EXISTS `shop_product_description` (
   `product_id` int(11) NOT NULL,
@@ -1352,7 +1450,7 @@ CREATE TABLE IF NOT EXISTS `shop_product_description` (
   UNIQUE KEY `product_id_lang_id` (`product_id`,`lang_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.shop_product_description: ~80 rows (approximately)
+-- Dumping data for table s-cart.shop_product_description: ~80 rows (approximately)
 DELETE FROM `shop_product_description`;
 /*!40000 ALTER TABLE `shop_product_description` DISABLE KEYS */;
 INSERT INTO `shop_product_description` (`product_id`, `lang_id`, `name`, `description`, `keyword`, `content`) VALUES
@@ -1438,7 +1536,7 @@ INSERT INTO `shop_product_description` (`product_id`, `lang_id`, `name`, `descri
 	(49, 2, 'Easy Polo Black Edition', '', NULL, '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>');
 /*!40000 ALTER TABLE `shop_product_description` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.shop_product_like
+-- Dumping structure for table s-cart.shop_product_like
 DROP TABLE IF EXISTS `shop_product_like`;
 CREATE TABLE IF NOT EXISTS `shop_product_like` (
   `product_id` int(11) NOT NULL,
@@ -1447,12 +1545,12 @@ CREATE TABLE IF NOT EXISTS `shop_product_like` (
   PRIMARY KEY (`product_id`,`users_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.shop_product_like: ~0 rows (approximately)
+-- Dumping data for table s-cart.shop_product_like: ~0 rows (approximately)
 DELETE FROM `shop_product_like`;
 /*!40000 ALTER TABLE `shop_product_like` DISABLE KEYS */;
 /*!40000 ALTER TABLE `shop_product_like` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.shop_product_option
+-- Dumping structure for table s-cart.shop_product_option
 DROP TABLE IF EXISTS `shop_product_option`;
 CREATE TABLE IF NOT EXISTS `shop_product_option` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1465,7 +1563,7 @@ CREATE TABLE IF NOT EXISTS `shop_product_option` (
   UNIQUE KEY `opt_sku` (`opt_sku`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.shop_product_option: ~7 rows (approximately)
+-- Dumping data for table s-cart.shop_product_option: ~7 rows (approximately)
 DELETE FROM `shop_product_option`;
 /*!40000 ALTER TABLE `shop_product_option` DISABLE KEYS */;
 INSERT INTO `shop_product_option` (`id`, `opt_name`, `opt_sku`, `opt_price`, `opt_image`, `product_id`) VALUES
@@ -1478,7 +1576,7 @@ INSERT INTO `shop_product_option` (`id`, `opt_name`, `opt_sku`, `opt_price`, `op
 	(18, 'Sản phẩm xanh', 'BX-5U0-1fgfgg', NULL, 'product/7eb3eefcb94b7548cc4942a42f36e186.jpg', 27);
 /*!40000 ALTER TABLE `shop_product_option` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.shop_product_recent_view
+-- Dumping structure for table s-cart.shop_product_recent_view
 DROP TABLE IF EXISTS `shop_product_recent_view`;
 CREATE TABLE IF NOT EXISTS `shop_product_recent_view` (
   `user_id` int(11) NOT NULL,
@@ -1487,7 +1585,7 @@ CREATE TABLE IF NOT EXISTS `shop_product_recent_view` (
   UNIQUE KEY `customer_id_product_id` (`user_id`,`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table s-cart-lang.shop_product_recent_view: ~8 rows (approximately)
+-- Dumping data for table s-cart.shop_product_recent_view: ~8 rows (approximately)
 DELETE FROM `shop_product_recent_view`;
 /*!40000 ALTER TABLE `shop_product_recent_view` DISABLE KEYS */;
 INSERT INTO `shop_product_recent_view` (`user_id`, `product_id`, `created_at`) VALUES
@@ -1501,7 +1599,33 @@ INSERT INTO `shop_product_recent_view` (`user_id`, `product_id`, `created_at`) V
 	(3, 48, '2018-08-27 17:01:49');
 /*!40000 ALTER TABLE `shop_product_recent_view` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.shop_promocodes
+-- Dumping structure for table s-cart.shop_product_type
+DROP TABLE IF EXISTS `shop_product_type`;
+CREATE TABLE IF NOT EXISTS `shop_product_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `opt_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `opt_sku` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `opt_price` int(11) DEFAULT NULL,
+  `opt_image` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `opt_sku` (`opt_sku`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Dumping data for table s-cart.shop_product_type: ~7 rows (approximately)
+DELETE FROM `shop_product_type`;
+/*!40000 ALTER TABLE `shop_product_type` DISABLE KEYS */;
+INSERT INTO `shop_product_type` (`id`, `opt_name`, `opt_sku`, `opt_price`, `opt_image`, `product_id`) VALUES
+	(3, 'Sản phẩm xanh', 'BX-5UT-s', 454, 'product/4c28c6a2fc6a3fa79197798707d55b5c.png', 48),
+	(4, '34324234', 'BX-5UT-T', 1111, 'product/293da323794f89ee2d7962f44f930393.png', 48),
+	(12, 'fdgdfg', 'fgdfgd', NULL, 'product/68f8a4d063e4ddef447616116dd03e0f.png', 42),
+	(13, 'bnmbnmbn', 'BX-5U0-1fgfgjghjhgj', NULL, 'product/2702691387f97f5985843cbb243d267c.png', 42),
+	(16, 'Sản phẩm xanh', 'BX-5U0-1fgfgkjh', NULL, 'product/777274d55ff7adeef36ca930022a8db9.jpg', 29),
+	(17, 'Sản phẩm xanh', 'BX-5U0-1fgfgl', NULL, 'product/0ba3c6a927bb0e2cd2d54ce0c13df919.jpg', 30),
+	(18, 'Sản phẩm xanh', 'BX-5U0-1fgfgg', NULL, 'product/7eb3eefcb94b7548cc4942a42f36e186.jpg', 27);
+/*!40000 ALTER TABLE `shop_product_type` ENABLE KEYS */;
+
+-- Dumping structure for table s-cart.shop_promocodes
 DROP TABLE IF EXISTS `shop_promocodes`;
 CREATE TABLE IF NOT EXISTS `shop_promocodes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -1517,7 +1641,7 @@ CREATE TABLE IF NOT EXISTS `shop_promocodes` (
   UNIQUE KEY `promocodes_code_unique` (`code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart-lang.shop_promocodes: ~14 rows (approximately)
+-- Dumping data for table s-cart.shop_promocodes: ~14 rows (approximately)
 DELETE FROM `shop_promocodes`;
 /*!40000 ALTER TABLE `shop_promocodes` DISABLE KEYS */;
 INSERT INTO `shop_promocodes` (`id`, `code`, `reward`, `type`, `data`, `number_uses`, `used`, `status`, `expires_at`) VALUES
@@ -1537,7 +1661,7 @@ INSERT INTO `shop_promocodes` (`id`, `code`, `reward`, `type`, `data`, `number_u
 	(17, 'PAA-LLK010', 219999, 0, NULL, 111, 2, 1, NULL);
 /*!40000 ALTER TABLE `shop_promocodes` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.shop_promocode_user
+-- Dumping structure for table s-cart.shop_promocode_user
 DROP TABLE IF EXISTS `shop_promocode_user`;
 CREATE TABLE IF NOT EXISTS `shop_promocode_user` (
   `user_id` int(10) unsigned NOT NULL,
@@ -1550,7 +1674,7 @@ CREATE TABLE IF NOT EXISTS `shop_promocode_user` (
   CONSTRAINT `promocode_user_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart-lang.shop_promocode_user: ~16 rows (approximately)
+-- Dumping data for table s-cart.shop_promocode_user: ~16 rows (approximately)
 DELETE FROM `shop_promocode_user`;
 /*!40000 ALTER TABLE `shop_promocode_user` DISABLE KEYS */;
 INSERT INTO `shop_promocode_user` (`user_id`, `promocode_id`, `log`, `used_at`) VALUES
@@ -1572,7 +1696,7 @@ INSERT INTO `shop_promocode_user` (`user_id`, `promocode_id`, `log`, `used_at`) 
 	(5, 9, 'Order #76', '2018-09-06 18:59:25');
 /*!40000 ALTER TABLE `shop_promocode_user` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.shop_shipping
+-- Dumping structure for table s-cart.shop_shipping
 DROP TABLE IF EXISTS `shop_shipping`;
 CREATE TABLE IF NOT EXISTS `shop_shipping` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1583,14 +1707,14 @@ CREATE TABLE IF NOT EXISTS `shop_shipping` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.shop_shipping: ~1 rows (approximately)
+-- Dumping data for table s-cart.shop_shipping: ~1 rows (approximately)
 DELETE FROM `shop_shipping`;
 /*!40000 ALTER TABLE `shop_shipping` DISABLE KEYS */;
 INSERT INTO `shop_shipping` (`id`, `type`, `value`, `free`, `status`) VALUES
 	(1, 0, 20000, 10000000, 1);
 /*!40000 ALTER TABLE `shop_shipping` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.shop_shipping_address
+-- Dumping structure for table s-cart.shop_shipping_address
 DROP TABLE IF EXISTS `shop_shipping_address`;
 CREATE TABLE IF NOT EXISTS `shop_shipping_address` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -1606,14 +1730,14 @@ CREATE TABLE IF NOT EXISTS `shop_shipping_address` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.shop_shipping_address: ~1 rows (approximately)
+-- Dumping data for table s-cart.shop_shipping_address: ~1 rows (approximately)
 DELETE FROM `shop_shipping_address`;
 /*!40000 ALTER TABLE `shop_shipping_address` DISABLE KEYS */;
 INSERT INTO `shop_shipping_address` (`id`, `user_id`, `address1`, `address2`, `country`, `phone`, `sort`, `status`, `created_at`, `updated_at`) VALUES
 	(1, 1, 'Quan 1', 'Ho chi Minh', NULL, '09978998768678', 0, 0, '2018-01-14 03:12:50', '2018-01-14 03:12:50');
 /*!40000 ALTER TABLE `shop_shipping_address` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.shop_shipping_status
+-- Dumping structure for table s-cart.shop_shipping_status
 DROP TABLE IF EXISTS `shop_shipping_status`;
 CREATE TABLE IF NOT EXISTS `shop_shipping_status` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1621,7 +1745,7 @@ CREATE TABLE IF NOT EXISTS `shop_shipping_status` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.shop_shipping_status: ~3 rows (approximately)
+-- Dumping data for table s-cart.shop_shipping_status: ~3 rows (approximately)
 DELETE FROM `shop_shipping_status`;
 /*!40000 ALTER TABLE `shop_shipping_status` DISABLE KEYS */;
 INSERT INTO `shop_shipping_status` (`id`, `name`) VALUES
@@ -1630,7 +1754,7 @@ INSERT INTO `shop_shipping_status` (`id`, `name`) VALUES
 	(2, 'Gửi xong');
 /*!40000 ALTER TABLE `shop_shipping_status` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.shop_shoppingcart
+-- Dumping structure for table s-cart.shop_shoppingcart
 DROP TABLE IF EXISTS `shop_shoppingcart`;
 CREATE TABLE IF NOT EXISTS `shop_shoppingcart` (
   `identifier` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -1641,12 +1765,12 @@ CREATE TABLE IF NOT EXISTS `shop_shoppingcart` (
   KEY `shop_shoppingcart_identifier_instance_index` (`identifier`,`instance`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.shop_shoppingcart: ~0 rows (approximately)
+-- Dumping data for table s-cart.shop_shoppingcart: ~0 rows (approximately)
 DELETE FROM `shop_shoppingcart`;
 /*!40000 ALTER TABLE `shop_shoppingcart` DISABLE KEYS */;
 /*!40000 ALTER TABLE `shop_shoppingcart` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.shop_special_price
+-- Dumping structure for table s-cart.shop_special_price
 DROP TABLE IF EXISTS `shop_special_price`;
 CREATE TABLE IF NOT EXISTS `shop_special_price` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -1662,7 +1786,7 @@ CREATE TABLE IF NOT EXISTS `shop_special_price` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart-lang.shop_special_price: ~10 rows (approximately)
+-- Dumping data for table s-cart.shop_special_price: ~10 rows (approximately)
 DELETE FROM `shop_special_price`;
 /*!40000 ALTER TABLE `shop_special_price` DISABLE KEYS */;
 INSERT INTO `shop_special_price` (`id`, `product_id`, `price`, `off`, `date_start`, `date_end`, `status`, `comment`, `created_at`, `updated_at`) VALUES
@@ -1678,7 +1802,7 @@ INSERT INTO `shop_special_price` (`id`, `product_id`, `price`, `off`, `date_star
 	(15, 3, 200000, 0, NULL, NULL, 1, NULL, '2018-09-22 18:20:14', '2018-09-22 18:20:14');
 /*!40000 ALTER TABLE `shop_special_price` ENABLE KEYS */;
 
--- Dumping structure for table s-cart-lang.users
+-- Dumping structure for table s-cart.users
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -1695,7 +1819,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart-lang.users: ~8 rows (approximately)
+-- Dumping data for table s-cart.users: ~8 rows (approximately)
 DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `address1`, `address2`, `phone`, `remember_token`, `created_at`, `updated_at`) VALUES
