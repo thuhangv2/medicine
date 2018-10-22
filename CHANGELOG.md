@@ -1,5 +1,5 @@
 # Release Notes
-## v2.1.1 (2018-10-22)
+## v2.0.4 (2018-10-22)
 
 ### Add
 > Multi language
