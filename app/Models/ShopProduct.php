@@ -88,20 +88,31 @@ class ShopProduct extends Model
         }
     }
 
-    /**
-     * [showPrice description]
-     * @param  [type] $id [description]
-     * @return [type]     [description]
-     */
-    public function showPrice()
+/**
+ * [showPrice description]
+ * @param  [type] $classNew [description]
+ * @param  [type] $classOld [description]
+ * @param  [type] $divWrap  [description]
+ * @return [type]           [description]
+ */
+    public function showPrice($classNew = null, $classOld = null, $divWrap = null)
     {
 
         if ($this->price == $this->getPrice()) {
-            return '<div class="price-row"><span class="price">' . number_format($this->price) . '</span></div>';
+            $str = '<span class="' . (($classNew) ? $classNew : 'new-price') . '">' . number_format($this->price) . '</span>';
+            if ($divWrap = null) {
+                $str = '<div class="' . $divWrap . '">' . $str . '</div>';
+            }
+            return $str;
         } else {
-            return '<div class="price-row"><span class="price">' . number_format($this->getPrice()) . '</span><span class="price-old">' . $this->price . '</span></div>';
+            $str = '<span class="' . (($classNew) ? $classNew : 'new-price') . '">' . number_format($this->getPrice()) . '</span><span class="' . (($classNew) ? $classOld : 'old-price') . '">' . $this->price . '</span>';
+            if ($divWrap = null) {
+                $str = '<div class="' . $divWrap . '">' . $str . '</div>';
+            }
+            return $str;
         }
     }
+
     /**
      * [getProducts description]
      * @param  [type] $type  [description]
