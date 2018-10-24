@@ -128,9 +128,9 @@
                             <a href="{{ $product_real->getUrl() }}"><p>{{ $product_real->name }}</p></a>
                           </div>
                           @if ($product_real->price != $product_real->getPrice())
-                          <img src="{{ asset($theme_asset.'/images/home/sale.png') }}" class="new" alt="" />
+                          <img src="{{ asset($theme_asset.'/images/home/sale2.png') }}" class="new" alt="" />
                           @elseif($product_real->type == 1)
-                          <img src="{{ asset($theme_asset.'/images/home/new.png') }}" class="new" alt="" />
+                          <img src="{{ asset($theme_asset.'/images/home/new2.png') }}" class="new" alt="" />
                           @endif
                       </div>
                     </div>
