@@ -29,13 +29,13 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset($theme_asset.'/images/ico/apple-touch-icon-72-precomposed.png')}}">
     <link rel="apple-touch-icon-precomposed" href="{{ asset($theme_asset.'/images/ico/apple-touch-icon-57-precomposed.png')}}">
     <style type="text/css">
-      .price{
+      .new-price{
         color:#FE980F;
         font-size: 20px;
         padding: 10px;
         font-weight:bold;
       }
-      .price-old {
+      .old-price {
         text-decoration: line-through;
         color: #a95d5d;
         font-size: 17px;
