@@ -44,9 +44,9 @@
             <div class="col-sm-7">
               <div class="product-information"><!--/product-information-->
                 @if ($product->price != $product->getPrice())
-                <img src="{{ asset($theme_asset.'/images/product-details/sale.png') }}" class="newarrival" alt="" />
+                <img src="{{ asset($theme_asset.'/images/home/sale.png') }}" class="newarrival" alt="" />
                 @elseif($product->type == 1)
-                <img src="{{ asset($theme_asset.'/images/product-details/new.png') }}" class="newarrival" alt="" />
+                <img src="{{ asset($theme_asset.'/images/home/new.png') }}" class="newarrival" alt="" />
                 @endif
                 <h2>{{ $product->name }}</h2>
                 <p>SKU: {{ $product->sku }}</p>
