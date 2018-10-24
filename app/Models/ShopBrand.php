@@ -27,4 +27,15 @@ class ShopBrand extends Model
     {
         return url('brand/' . Scart::str_to_url($this->name) . '_' . $this->id . '.html');
     }
+
+    /**
+     * [getImage description]
+     * @return [type] [description]
+     */
+    public function getImage()
+    {
+        $path_file = config('filesystems.disks.path_file', '');
+        return $path_file . '/' . $this->image;
+
+    }
 }

@@ -100,13 +100,13 @@ class ShopProduct extends Model
 
         if ($this->price == $this->getPrice()) {
             $str = '<span class="' . (($classNew) ? $classNew : 'new-price') . '">' . number_format($this->price) . '</span>';
-            if ($divWrap = null) {
+            if ($divWrap != null) {
                 $str = '<div class="' . $divWrap . '">' . $str . '</div>';
             }
             return $str;
         } else {
-            $str = '<span class="' . (($classNew) ? $classNew : 'new-price') . '">' . number_format($this->getPrice()) . '</span><span class="' . (($classNew) ? $classOld : 'old-price') . '">' . $this->price . '</span>';
-            if ($divWrap = null) {
+            $str = '<span class="' . (($classNew) ? $classNew : 'new-price') . '">' . number_format($this->getPrice()) . '</span><span class="' . (($classNew) ? $classOld : 'old-price') . '">' . number_format($this->price) . '</span>';
+            if ($divWrap != null) {
                 $str = '<div class="' . $divWrap . '">' . $str . '</div>';
             }
             return $str;
