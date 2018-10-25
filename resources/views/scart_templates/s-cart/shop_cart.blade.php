@@ -56,7 +56,7 @@
             <a href="{{$product->getUrl() }}"><img width="100" src="{{asset($product->getImage())}}" alt=""></a>
         </td>
         <td>{!! $product->showPrice() !!}</td>
-        <td><input style="width: 70px;" type="number" onChange="updateCart({{$item->id}});" class="item-qty" id="item-{{$item->id}}" name="qty-{{$item->id}}" value="{{$item->qty}}"><span class="text-danger item-qty-{{$item->id}}" style="display: none;"></span></td>
+        <td><input style="width: 70px;" type="number" onChange="updateCart('{{$item->rowId}}',{{ $item->id }});" class="item-qty" id="item-{{$item->id}}" name="qty-{{$item->id}}" value="{{$item->qty}}"><span class="text-danger item-qty-{{$item->id}}" style="display: none;"></span></td>
         <td align="right">{{number_format($item->subtotal)}}</td>
         <td>
             <a onClick="return confirm('Confirm?')" title="Remove Item" alt="Remove Item" class="cart_quantity_delete" href="{{url("removeItem/$item->rowId")}}"><i class="fa fa-times"></i></a>
@@ -200,7 +200,7 @@
 
 @push('scripts')
 <script type="text/javascript">
-    function updateCart(id){
+    function updateCart(rowId,id){
         var new_qty = $('#item-'+id).val();
             $.ajax({
             url: '{{ action('Shop@updateToCart') }}',
@@ -210,6 +210,7 @@
             cache: false,
             data: {
                 id: id,
+                rowId: rowId,
                 new_qty: new_qty,
                 _token:'{{ csrf_token() }}'},
             success: function(data){
