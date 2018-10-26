@@ -44,9 +44,9 @@
             <div class="col-sm-7">
               <div class="product-information"><!--/product-information-->
                 @if ($product->price != $product->getPrice())
-                <img src="{{ asset($theme_asset.'/images/product-details/sale.png') }}" class="newarrival" alt="" />
+                <img src="{{ asset($theme_asset.'/images/home/sale2.png') }}" class="newarrival" alt="" />
                 @elseif($product->type == 1)
-                <img src="{{ asset($theme_asset.'/images/product-details/new.png') }}" class="newarrival" alt="" />
+                <img src="{{ asset($theme_asset.'/images/home/new2.png') }}" class="newarrival" alt="" />
                 @endif
                 <h2>{{ $product->name }}</h2>
                 <p>SKU: {{ $product->sku }}</p>
@@ -72,6 +72,7 @@
                   <b>Quick Overview:</b>
                   <p>{{ $product->description }}</p>
                 </div>
+              <div class="addthis_inline_share_toolbox_yprn"></div>
               </div><!--/product-information-->
             </div>
           </div><!--/product-details-->
@@ -91,19 +92,7 @@
 
               <div class="tab-pane fade" id="reviews" >
                 <div class="col-sm-12">
-                  <p><b>Write Your Review</b></p>
-
-                  <form action="#">
-                    <span>
-                      <input type="text" placeholder="Your Name"/>
-                      <input type="email" placeholder="Email Address"/>
-                    </span>
-                    <textarea name="" ></textarea>
-                    <b>Rating: </b> <img src="images/product-details/rating.png" alt="" />
-                    <button type="button" class="btn btn-default pull-right">
-                      Submit
-                    </button>
-                  </form>
+<div class="fb-comments" data-href="{{ $product->getUrl() }}" data-numposts="5"></div>
                 </div>
               </div>
 
@@ -151,4 +140,6 @@
 
 @endpush
 @push('scripts')
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5bd09e60b8c26cab"></script>
 @endpush
