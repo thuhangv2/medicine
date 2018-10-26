@@ -15,24 +15,15 @@
 <p align="center"><img src="https://s-cart.org/images/s32.jpg"></p>
 
 
-## Giới thiệu về mã nguồn
-Open source E-commerce use Laravel framework
+## About S-cart
+Free Open source E-commerce use Laravel framework for Business
 
-Mã nguồn website thương mại điện tử cho doanh nghiệp xây dựng bằng laravel framework
+## Technology
+- Core Laravel framework: https://laravel.com/
+- Laravel-admin : http://laravel-admin.org/
+- In addition, s-cart also integrates other free open source libraries.
 
-## CÔNG NGHỆ SỬ DỤNG
-- Nền tảng Laravel framework: https://laravel.com/
-- Tích hợp Laravel-admin : http://laravel-admin.org/
-- Ngoài ra, mã nguồn cũng tích hợp các thư viện miễn phí khác để hỗ trợ phát triển các ứng dụng cho website
-
-
-## NGUYÊN TẮC XÂY DỰNG MÃ NGUỒN
-- Không can thiệp vào core của bất kì library nào. Vì vậy bạn hoàn toàn có thể update bất kì thư viện vào khi cần thiết
-- Download và sử dụng miễn phí
-
-
-
-## CHỨC NĂNG MÃ NGUỒN
+## List Functions of S-cart
 
 =======QUẢN LÝ TIN TỨC=======
 
@@ -70,11 +61,11 @@ Mã nguồn website thương mại điện tử cho doanh nghiệp xây dựng b
 - ... nhiều tính năng khác sẽ cập nhật theo từng phiên bản.
 
 
-## Yêu cầu cài đặt
+## Requirements:
 
-Version 2.1.x, 2.0.x & 1.6:
+Version 2.0.4, 2.0.3, 2.0.2 & 1.6:
 
-> Core laravel framework 5.6. Yêu cầu:
+> Core laravel framework 5.6. Requirements::
 
 ```
 - PHP >= 7.1.3
@@ -88,7 +79,7 @@ Version 2.1.x, 2.0.x & 1.6:
 ```
 Version 1.5:
 
-> Core laravel framework 5.5. Yêu cầu:
+> Core laravel framework 5.5. Requirements:
 
 ```
 - PHP >= 7.0.0
@@ -100,15 +91,15 @@ Version 1.5:
 ```
 
 
-## Cấu hình và cài đặt:
+## Installation & configuration:
 
-Để cài đặt phiên bản mới nhất của S-cart
+Install last version S-cart
 
 ```
 composer create-project lanhktc/s-cart
 ```
 
-Hoặc, cài đặt một phiên bản chỉ định. Ví dụ 1.5.0
+or, install a specific version of S-cart, ex 1.5.0
 
 ```
 composer create-project lanhktc/s-cart your-project "1.5.0"
