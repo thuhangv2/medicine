@@ -83,7 +83,6 @@ class ShopCategoryController extends Controller
             $grid->parent(trans('language.admin.parent_category'))->display(function ($parent) {
                 return (ShopCategory::find($parent)) ? ShopCategory::find($parent)->getName() : '';
             });
-            $grid->status(trans('language.admin.status'))->switch();
             $grid->sort(trans('language.admin.sort'))->editable();
             $grid->disableExport();
             $grid->model()->orderBy('id', 'desc');
@@ -116,7 +115,7 @@ class ShopCategoryController extends Controller
                     $langDescriptions = ShopCategoryDescription::where('shop_category_id', $idCheck)->where('lang_id', $language->id)->first();
                 }
                 $form->html('<b>' . $language->name . '</b> <img style="height:25px" src="/' . config('filesystems.disks.path_file') . '/' . $language->icon . '">');
-                $form->text($language->code . '__name', 'Tên')->rules('required', ['required' => trans('validation.required')])->default(!empty($langDescriptions->name) ? $langDescriptions->name : null);
+                $form->text($language->code . '__name', trans('language.admin.name'))->rules('required', ['required' => trans('validation.required')])->default(!empty($langDescriptions->name) ? $langDescriptions->name : null);
                 $form->text($language->code . '__keyword', trans('language.admin.keyword'))->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
                 $form->text($language->code . '__description', trans('language.admin.description'))->rules('max:300', ['max' => trans('validation.max')])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
                 $arrFields[] = $language->code . '__name';

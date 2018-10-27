@@ -1,12 +1,23 @@
 <?php
-
+#app/Models/CmsContent.php
 namespace App\Models;
 
+use App\Models\CmsContentDescription;
+use App\Models\Language;
 use Illuminate\Database\Eloquent\Model;
 
 class CmsContent extends Model
 {
     public $table = 'cms_conten';
+
+    public function local()
+    {
+        $lang = Language::pluck('id', 'code')->all();
+        return CmsContentDescription::where('cms_content_id', $this->id)
+            ->where('lang_id', $lang[app()->getLocale()])
+            ->first();
+    }
+
     public function category()
     {
         return $this->belongsTo('App\Models\CmsCategory', 'category_id', 'id');
@@ -39,6 +50,54 @@ class CmsContent extends Model
     {
         $path_file = config('filesystems.disks.path_file', '');
         return $path_file . '/' . $this->image;
+
+    }
+
+/**
+ * [getUrl description]
+ * @return [type] [description]
+ */
+    public function getUrl()
+    {
+        return url(Scart::str_to_url($this->category->title) . '/' . Scart::str_to_url($this->title) . '_' . $this->id . '.html');
+    }
+
+    //Fields language
+    public function getTitle()
+    {
+        return empty($this->local()->title) ? '' : $this->local()->title;
+    }
+    public function getKeyword()
+    {
+        return empty($this->local()->keyword) ? '' : $this->local()->keyword;
+    }
+    public function getDescription()
+    {
+        return empty($this->local()->description) ? '' : $this->local()->description;
+    }
+    public function getContent()
+    {
+        return empty($this->local()->content) ? '' : $this->local()->content;
+    }
+//Attributes
+    public function getTitleAttribute()
+    {
+        return $this->getTitle();
+    }
+    public function getKeywordAttribute()
+    {
+        return $this->getKeyword();
+
+    }
+    public function getDescriptionAttribute()
+    {
+        return $this->getDescription();
+
+    }
+
+    public function getContentAttribute()
+    {
+        return $this->getContent();
 
     }
 

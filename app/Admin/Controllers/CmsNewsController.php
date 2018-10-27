@@ -69,7 +69,6 @@ class CmsNewsController extends Controller
         $grid->id('ID')->sortable();
         $grid->title(trans('language.admin.title'))->sortable();
         $grid->image(trans('language.admin.image'))->image('', 50);
-        $grid->status(trans('language.admin.status'))->switch();
         $grid->created_at(trans('language.admin.created_at'));
         $grid->updated_at(trans('language.admin.last_modify'));
         $grid->model()->orderBy('id', 'desc');

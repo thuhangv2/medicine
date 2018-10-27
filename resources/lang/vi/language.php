@@ -116,6 +116,8 @@ return [
         'cms_news'                     => 'Quản lý tin tức',
         'cms_page'                     => 'Quản lý các trang',
         'cms_name'                     => 'Tên bài viết',
+        'cms_content'                  => 'Bài viết',
+        'cms_category'                 => 'Danh mục CMS',
         'product_manager'              => 'Quản lý sản phẩm',
         'product_name'                 => 'Tên sản phẩm',
         'product_type'                 => 'Loại sản phẩm',

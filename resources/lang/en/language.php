@@ -118,6 +118,8 @@ return [
         'cms_news'                     => 'News manager',
         'cms_page'                     => 'Page manager',
         'cms_name'                     => 'Entry name',
+        'cms_content'                  => 'Entry',
+        'cms_category'                 => 'Cms category',
         'product_manager'              => 'Product manager',
         'product_name'                 => 'Product name',
         'product_type'                 => 'Product type',

@@ -26,7 +26,7 @@ class CmsCategoryController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Chủ đề');
+            $content->header(trans('language.admin.cms_category'));
             $content->description(' ');
 
             $content->body($this->grid());
@@ -43,7 +43,7 @@ class CmsCategoryController extends Controller
     {
         return Admin::content(function (Content $content) use ($id) {
 
-            $content->header('Chỉnh sửa chủ đề');
+            $content->header(trans('language.admin.cms_category'));
             $content->description(' ');
 
             $content->body($this->form()->edit($id));
@@ -59,7 +59,7 @@ class CmsCategoryController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Tạo chủ đề');
+            $content->header(trans('language.admin.cms_category'));
             $content->description(' ');
 
             $content->body($this->form());
@@ -76,19 +76,20 @@ class CmsCategoryController extends Controller
         return Admin::grid(CmsCategory::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
-            $grid->image('Hình ảnh')->image('', 50);
-            $grid->title('Tên')->sortable();
-            $grid->parent('Chủ đề cha')->display(function ($parent) {
-                return (CmsCategory::find($parent)) ? CmsCategory::find($parent)->title : '';
+            $grid->image(trans('language.admin.image'))->image('', 50);
+            $grid->name(trans('language.admin.name'))->display(function () {
+                return CmsCategory::find($this->id)->getName();
             });
-            $grid->status('Status')->switch();
-            $grid->sort('Sắp xếp')->editable();
-
+            $grid->sort(trans('language.admin.sort'))->editable();
             $grid->disableExport();
+            $grid->model()->orderBy('id', 'desc');
             $grid->disableRowSelector();
-
+            $grid->disableFilter();
             $grid->actions(function ($actions) {
                 $actions->disableView();
+            });
+            $grid->tools(function ($tools) {
+                $tools->disableRefreshButton();
             });
         });
     }
@@ -110,11 +111,11 @@ class CmsCategoryController extends Controller
                 if ($idCheck) {
                     $langDescriptions = CmsCategoryDescription::where('cms_category_id', $idCheck)->where('lang_id', $language->id)->first();
                 }
-                $form->html('<b>' . $language->title . '</b> <img style="height:25px" src="/' . config('filesystems.disks.path_file') . '/' . $language->icon . '">');
-                $form->text($language->code . '__title', 'Tên')->rules('required', ['required' => trans('validation.required')])->default(!empty($langDescriptions->title) ? $langDescriptions->title : null);
+                $form->html('<b>' . $language->name . '</b> <img style="height:25px" src="/' . config('filesystems.disks.path_file') . '/' . $language->icon . '">');
+                $form->text($language->code . '__name', trans('language.admin.name'))->rules('required', ['required' => trans('validation.required')])->default(!empty($langDescriptions->name) ? $langDescriptions->name : null);
                 $form->text($language->code . '__keyword', trans('language.admin.keyword'))->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
                 $form->text($language->code . '__description', trans('language.admin.description'))->rules('max:300', ['max' => trans('validation.max')])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
-                $arrFields[] = $language->code . '__title';
+                $arrFields[] = $language->code . '__name';
                 $arrFields[] = $language->code . '__keyword';
                 $arrFields[] = $language->code . '__description';
                 $form->divide();
@@ -122,19 +123,15 @@ class CmsCategoryController extends Controller
             $form->ignore($arrFields);
 //end language
 
-            $form->display('id', 'ID');
-            $arrCate = (new CmsCategory)->listCate();
-            $arrCate = ['0' => '== Chủ đề gốc =='] + $arrCate;
-            $form->select('parent', 'Chủ đề cha')->options($arrCate);
-            $form->image('image', 'Hình ảnh')->uniqueName()->move('cms_category')->removable();
-            $form->number('sort', 'Sắp xếp');
+            $form->image('image', trans('language.admin.image'))->uniqueName()->move('cms_category')->removable();
+            $form->number('sort', trans('language.admin.sort'));
             $form->switch('status', trans('language.admin.status'));
-
             $arrData = array();
+
             $form->saving(function (Form $form) use ($languages, &$arrData) {
                 //Lang
                 foreach ($languages as $key => $language) {
-                    $arrData[$language->code]['title']       = request($language->code . '__title');
+                    $arrData[$language->code]['name']        = request($language->code . '__name');
                     $arrData[$language->code]['keyword']     = request($language->code . '__keyword');
                     $arrData[$language->code]['description'] = request($language->code . '__description');
                     $arrData[$language->code]['lang_id']     = $language->id;
@@ -144,6 +141,7 @@ class CmsCategoryController extends Controller
 
             $form->saved(function (Form $form) use ($languages, &$arrData) {
                 $idForm = $form->model()->id;
+
                 //Language
                 foreach ($languages as $key => $language) {
                     $arrData[$language->code]['cms_category_id'] = $idForm;
@@ -153,8 +151,7 @@ class CmsCategoryController extends Controller
                     CmsCategoryDescription::insert($value);
                 }
                 //End language
-                $config = \App\Models\Config::pluck('value', 'key')->all();
-
+                $config          = \App\Models\Config::pluck('value', 'key')->all();
                 $file_path_admin = config('filesystems.disks.admin.root');
                 try {
                     if (!file_exists($file_path_admin . '/thumb/' . $form->model()->image)) {
@@ -169,9 +166,11 @@ class CmsCategoryController extends Controller
                         $image_thumb->save($file_path_admin . '/thumb/' . $form->model()->image);
                         //end thumb
                     }
+
                 } catch (\Exception $e) {
-                    //
+                    echo $e->getMessage();
                 }
+
             });
             $form->disableViewCheck();
             $form->disableEditingCheck();
@@ -180,7 +179,6 @@ class CmsCategoryController extends Controller
             });
         });
     }
-
     public function show($id)
     {
         return Admin::content(function (Content $content) use ($id) {

@@ -94,7 +94,6 @@ class ShopProductController extends Controller
                 $style = ($type == 1) ? 'class="label label-success"' : (($type == 2) ? '  class="label label-danger"' : 'class="label label-default"');
                 return '<span ' . $style . '>' . $arrType[$type] . '</span>';
             });
-            $grid->status(trans('language.admin.status'))->switch();
             $grid->created_at(trans('language.admin.created_at'));
             $grid->model()->orderBy('id', 'desc');
             $grid->disableExport();
@@ -128,7 +127,7 @@ class ShopProductController extends Controller
                     $form->text($language->code . '__name', trans('language.admin.product_name'))->rules('required', ['required' => trans('validation.required')])->default(!empty($langDescriptions->name) ? $langDescriptions->name : null);
                     $form->text($language->code . '__keyword', trans('language.admin.keyword'))->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
                     $form->textarea($language->code . '__description', trans('language.admin.description'))->rules('max:300', ['max' => trans('validation.max')])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
-                    $form->ckeditor($language->code . '__content', trans('language.admin.content'))->default(!empty($langDescriptions->content) ? $langDescriptions->content : null);
+                    $form->ckeditor($language->code . '__content', trans('language.admin.content'))->default(!empty($langDescriptions->content) ? $langDescriptions->content : null)->rules('required');
                     $arrFields[] = $language->code . '__name';
                     $arrFields[] = $language->code . '__keyword';
                     $arrFields[] = $language->code . '__description';

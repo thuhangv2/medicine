@@ -67,7 +67,6 @@ class CmsPageController extends Controller
         $grid = new Grid(new CmsPage);
         $grid->id('ID')->sortable();
         $grid->title(trans('language.admin.page_name'))->sortable();
-        $grid->status(trans('language.admin.status'))->switch();
         $grid->actions(function ($actions) {
             if ($actions->getKey() == 1 || $actions->getKey() == 2) {
                 // 1: about, 2: contact
@@ -106,7 +105,7 @@ class CmsPageController extends Controller
             $form->text($language->code . '__title', 'Tên')->rules('required', ['required' => trans('validation.required')])->default(!empty($langDescriptions->title) ? $langDescriptions->title : null);
             $form->text($language->code . '__keyword', trans('language.admin.keyword'))->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
             $form->text($language->code . '__description', trans('language.admin.description'))->rules('max:300', ['max' => trans('validation.max')])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
-            $form->ckeditor($language->code . '__content', trans('language.admin.content'))->default(!empty($langDescriptions->content) ? $langDescriptions->content : null);
+            $form->ckeditor($language->code . '__content', trans('language.admin.content'))->default(!empty($langDescriptions->content) ? $langDescriptions->content : null)->rules('required');
             $arrFields[] = $language->code . '__title';
             $arrFields[] = $language->code . '__keyword';
             $arrFields[] = $language->code . '__description';
