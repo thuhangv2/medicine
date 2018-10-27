@@ -139,7 +139,7 @@ class CmsCategory extends Model
 
     public function getUrl()
     {
-        return url('cms/' . Scart::str_to_url($this->title) . '_' . $this->id . '.html');
+        return url('cms/' . \Scart::str_to_url($this->title) . '_' . $this->id . '.html');
     }
 
     //Fields language
