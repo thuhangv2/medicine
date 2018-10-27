@@ -77,8 +77,8 @@ class CmsCategoryController extends Controller
 
             $grid->id('ID')->sortable();
             $grid->image(trans('language.admin.image'))->image('', 50);
-            $grid->name(trans('language.admin.name'))->display(function () {
-                return CmsCategory::find($this->id)->getName();
+            $grid->title(trans('language.admin.name'))->display(function () {
+                return CmsCategory::find($this->id)->getTitle();
             });
             $grid->sort(trans('language.admin.sort'))->editable();
             $grid->disableExport();
@@ -112,10 +112,10 @@ class CmsCategoryController extends Controller
                     $langDescriptions = CmsCategoryDescription::where('cms_category_id', $idCheck)->where('lang_id', $language->id)->first();
                 }
                 $form->html('<b>' . $language->name . '</b> <img style="height:25px" src="/' . config('filesystems.disks.path_file') . '/' . $language->icon . '">');
-                $form->text($language->code . '__name', trans('language.admin.name'))->rules('required', ['required' => trans('validation.required')])->default(!empty($langDescriptions->name) ? $langDescriptions->name : null);
+                $form->text($language->code . '__title', trans('language.admin.name'))->rules('required', ['required' => trans('validation.required')])->default(!empty($langDescriptions->title) ? $langDescriptions->title : null);
                 $form->text($language->code . '__keyword', trans('language.admin.keyword'))->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
                 $form->text($language->code . '__description', trans('language.admin.description'))->rules('max:300', ['max' => trans('validation.max')])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
-                $arrFields[] = $language->code . '__name';
+                $arrFields[] = $language->code . '__title';
                 $arrFields[] = $language->code . '__keyword';
                 $arrFields[] = $language->code . '__description';
                 $form->divide();
@@ -131,7 +131,7 @@ class CmsCategoryController extends Controller
             $form->saving(function (Form $form) use ($languages, &$arrData) {
                 //Lang
                 foreach ($languages as $key => $language) {
-                    $arrData[$language->code]['name']        = request($language->code . '__name');
+                    $arrData[$language->code]['title']       = request($language->code . '__title');
                     $arrData[$language->code]['keyword']     = request($language->code . '__keyword');
                     $arrData[$language->code]['description'] = request($language->code . '__description');
                     $arrData[$language->code]['lang_id']     = $language->id;
