@@ -27,12 +27,12 @@ class CmsCategory extends Model
     public function listCate()
     {
         $list   = [];
-        $result = $this->select('name', 'id', 'parent')
+        $result = $this->select('title', 'id', 'parent')
             ->where('parent', 0)
             ->get()
             ->toArray();
         foreach ($result as $value) {
-            $list[$value['id']] = $value['name'];
+            $list[$value['id']] = $value['title'];
             if ($this->checkChild($value['id']) > 0) {
                 $this->listCateExceptRoot($value['id'], $list);
             }
@@ -42,12 +42,12 @@ class CmsCategory extends Model
 
     public function listCateExceptRoot($id, &$list, $st = '--')
     {
-        $result = $this->select('name', 'id', 'parent')
+        $result = $this->select('title', 'id', 'parent')
             ->where('parent', $id)
             ->get()
             ->toArray();
         foreach ($result as $value) {
-            $list[$value['id']] = $st . ' ' . $value['name'];
+            $list[$value['id']] = $st . ' ' . $value['title'];
             $this->listCateExceptRoot($value['id'], $list, $st . '--');
         }
 
@@ -139,13 +139,13 @@ class CmsCategory extends Model
 
     public function getUrl()
     {
-        return url('cms/' . Scart::str_to_url($this->name) . '_' . $this->id . '.html');
+        return url('cms/' . Scart::str_to_url($this->title) . '_' . $this->id . '.html');
     }
 
     //Fields language
-    public function getName()
+    public function getTitle()
     {
-        return empty($this->local()->name) ? '' : $this->local()->name;
+        return empty($this->local()->title) ? '' : $this->local()->title;
     }
     public function getKeyword()
     {
@@ -157,9 +157,9 @@ class CmsCategory extends Model
     }
 
 //Attributes
-    public function getNameAttribute()
+    public function getTitleAttribute()
     {
-        return $this->getName();
+        return $this->getTitle();
     }
     public function getKeywordAttribute()
     {

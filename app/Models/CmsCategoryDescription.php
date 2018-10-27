@@ -9,5 +9,5 @@ class CmsCategoryDescription extends Model
     protected $primaryKey = null;
     public $timestamps    = false;
     public $table         = 'cms_category_description';
-    protected $fillable   = ['lang_id', 'name', 'description', 'keyword', 'shop_category_id'];
+    protected $fillable   = ['lang_id', 'title', 'description', 'keyword', 'shop_category_id'];
 }
