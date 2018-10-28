@@ -73,6 +73,7 @@ class CmsContentController extends Controller
         $grid->category(trans('language.category'))->display(function ($cate) {
             return $cate['title'];
         });
+        $grid->status(trans('language.admin.status'))->switch();
         $grid->created_at(trans('language.admin.created_at'));
         $grid->updated_at(trans('language.admin.last_modify'));
         $grid->model()->orderBy('id', 'desc');
@@ -134,7 +135,7 @@ class CmsContentController extends Controller
                 $arrData[$language->code]['keyword']     = request($language->code . '__keyword');
                 $arrData[$language->code]['description'] = request($language->code . '__description');
                 $arrData[$language->code]['content']     = request($language->code . '__content');
-                $arrData[$language->code]['lang_id']     = $language->id;
+
             }
             //end lang
         });
@@ -144,7 +145,12 @@ class CmsContentController extends Controller
             $id = $form->model()->id;
             //Lang
             foreach ($languages as $key => $language) {
-                $arrData[$language->code]['cms_content_id'] = $id;
+                if (array_filter($arrData[$language->code], function ($v, $k) {
+                    return $v != null;
+                }, ARRAY_FILTER_USE_BOTH)) {
+                    $arrData[$language->code]['lang_id']        = $language->id;
+                    $arrData[$language->code]['cms_content_id'] = $id;
+                }
             }
 
             foreach ($arrData as $key => $value) {

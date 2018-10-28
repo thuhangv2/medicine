@@ -80,6 +80,7 @@ class CmsCategoryController extends Controller
             $grid->title(trans('language.admin.name'))->display(function () {
                 return CmsCategory::find($this->id)->getTitle();
             });
+            $grid->status(trans('language.admin.status'))->switch();
             $grid->sort(trans('language.admin.sort'))->editable();
             $grid->disableExport();
             $grid->model()->orderBy('id', 'desc');
@@ -134,7 +135,7 @@ class CmsCategoryController extends Controller
                     $arrData[$language->code]['title']       = request($language->code . '__title');
                     $arrData[$language->code]['keyword']     = request($language->code . '__keyword');
                     $arrData[$language->code]['description'] = request($language->code . '__description');
-                    $arrData[$language->code]['lang_id']     = $language->id;
+
                 }
                 //end lang
             });
@@ -144,7 +145,12 @@ class CmsCategoryController extends Controller
 
                 //Language
                 foreach ($languages as $key => $language) {
-                    $arrData[$language->code]['cms_category_id'] = $idForm;
+                    if (array_filter($arrData[$language->code], function ($v, $k) {
+                        return $v != null;
+                    }, ARRAY_FILTER_USE_BOTH)) {
+                        $arrData[$language->code]['cms_category_id'] = $idForm;
+                        $arrData[$language->code]['lang_id']         = $language->id;
+                    }
                 }
                 foreach ($arrData as $key => $value) {
                     $checkLangData = CmsCategoryDescription::where('lang_id', $value['lang_id'])->where('cms_category_id', $value['cms_category_id'])->delete();

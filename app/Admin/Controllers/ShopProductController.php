@@ -94,6 +94,7 @@ class ShopProductController extends Controller
                 $style = ($type == 1) ? 'class="label label-success"' : (($type == 2) ? '  class="label label-danger"' : 'class="label label-default"');
                 return '<span ' . $style . '>' . $arrType[$type] . '</span>';
             });
+            $grid->status(trans('language.admin.status'))->switch();
             $grid->created_at(trans('language.admin.created_at'));
             $grid->model()->orderBy('id', 'desc');
             $grid->disableExport();
@@ -174,7 +175,7 @@ class ShopProductController extends Controller
                     $arrData[$language->code]['keyword']     = request($language->code . '__keyword');
                     $arrData[$language->code]['description'] = request($language->code . '__description');
                     $arrData[$language->code]['content']     = request($language->code . '__content');
-                    $arrData[$language->code]['lang_id']     = $language->id;
+
                 }
                 //end lang
             });
@@ -184,7 +185,12 @@ class ShopProductController extends Controller
                 $id = $form->model()->id;
                 //Lang
                 foreach ($languages as $key => $language) {
-                    $arrData[$language->code]['product_id'] = $id;
+                    if (array_filter($arrData[$language->code], function ($v, $k) {
+                        return $v != null;
+                    }, ARRAY_FILTER_USE_BOTH)) {
+                        $arrData[$language->code]['product_id'] = $id;
+                        $arrData[$language->code]['lang_id']    = $language->id;
+                    }
                 }
                 foreach ($arrData as $key => $value) {
                     $checkLangData = ShopProductDescription::where('lang_id', $value['lang_id'])->where('product_id', $value['product_id'])->delete();

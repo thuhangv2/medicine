@@ -67,6 +67,7 @@ class CmsPageController extends Controller
         $grid = new Grid(new CmsPage);
         $grid->id('ID')->sortable();
         $grid->title(trans('language.admin.page_name'))->sortable();
+        $grid->status(trans('language.admin.status'))->switch();
         $grid->actions(function ($actions) {
             if ($actions->getKey() == 1 || $actions->getKey() == 2) {
                 // 1: about, 2: contact
@@ -142,7 +143,7 @@ class CmsPageController extends Controller
                 $arrData[$language->code]['keyword']     = request($language->code . '__keyword');
                 $arrData[$language->code]['description'] = request($language->code . '__description');
                 $arrData[$language->code]['content']     = request($language->code . '__content');
-                $arrData[$language->code]['lang_id']     = $language->id;
+
             }
             //end lang
         });
@@ -151,7 +152,12 @@ class CmsPageController extends Controller
             $id = $form->model()->id;
             //Lang
             foreach ($languages as $key => $language) {
-                $arrData[$language->code]['cms_page_id'] = $id;
+                if (array_filter($arrData[$language->code], function ($v, $k) {
+                    return $v != null;
+                }, ARRAY_FILTER_USE_BOTH)) {
+                    $arrData[$language->code]['cms_page_id'] = $id;
+                    $arrData[$language->code]['lang_id']     = $language->id;
+                }
             }
             foreach ($arrData as $key => $value) {
                 $checkLangData = CmsPageDescription::where('lang_id', $value['lang_id'])->where('cms_page_id', $value['cms_page_id'])->delete();

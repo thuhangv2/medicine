@@ -83,6 +83,7 @@ class ShopCategoryController extends Controller
             $grid->parent(trans('language.admin.parent_category'))->display(function ($parent) {
                 return (ShopCategory::find($parent)) ? ShopCategory::find($parent)->getName() : '';
             });
+            $grid->status(trans('language.admin.status'))->switch();
             $grid->sort(trans('language.admin.sort'))->editable();
             $grid->disableExport();
             $grid->model()->orderBy('id', 'desc');
@@ -140,7 +141,7 @@ class ShopCategoryController extends Controller
                     $arrData[$language->code]['name']        = request($language->code . '__name');
                     $arrData[$language->code]['keyword']     = request($language->code . '__keyword');
                     $arrData[$language->code]['description'] = request($language->code . '__description');
-                    $arrData[$language->code]['lang_id']     = $language->id;
+
                 }
                 //end lang
             });
@@ -150,7 +151,12 @@ class ShopCategoryController extends Controller
 
                 //Language
                 foreach ($languages as $key => $language) {
-                    $arrData[$language->code]['shop_category_id'] = $idForm;
+                    if (array_filter($arrData[$language->code], function ($v, $k) {
+                        return $v != null;
+                    }, ARRAY_FILTER_USE_BOTH)) {
+                        $arrData[$language->code]['shop_category_id'] = $idForm;
+                        $arrData[$language->code]['lang_id']          = $language->id;
+                    }
                 }
                 foreach ($arrData as $key => $value) {
                     $checkLangData = ShopCategoryDescription::where('lang_id', $value['lang_id'])->where('shop_category_id', $value['shop_category_id'])->delete();

@@ -69,6 +69,7 @@ class CmsNewsController extends Controller
         $grid->id('ID')->sortable();
         $grid->title(trans('language.admin.title'))->sortable();
         $grid->image(trans('language.admin.image'))->image('', 50);
+        $grid->status(trans('language.admin.status'))->switch();
         $grid->created_at(trans('language.admin.created_at'));
         $grid->updated_at(trans('language.admin.last_modify'));
         $grid->model()->orderBy('id', 'desc');
@@ -129,7 +130,7 @@ class CmsNewsController extends Controller
                 $arrData[$language->code]['keyword']     = request($language->code . '__keyword');
                 $arrData[$language->code]['description'] = request($language->code . '__description');
                 $arrData[$language->code]['content']     = request($language->code . '__content');
-                $arrData[$language->code]['lang_id']     = $language->id;
+
             }
             //end lang
         });
@@ -139,7 +140,12 @@ class CmsNewsController extends Controller
             $id = $form->model()->id;
             //Lang
             foreach ($languages as $key => $language) {
-                $arrData[$language->code]['cms_news_id'] = $id;
+                if (array_filter($arrData[$language->code], function ($v, $k) {
+                    return $v != null;
+                }, ARRAY_FILTER_USE_BOTH)) {
+                    $arrData[$language->code]['cms_news_id'] = $id;
+                    $arrData[$language->code]['lang_id']     = $language->id;
+                }
             }
             foreach ($arrData as $key => $value) {
                 $checkLangData = CmsNewsDescription::where('lang_id', $value['lang_id'])->where('cms_news_id', $value['cms_news_id'])->delete();
