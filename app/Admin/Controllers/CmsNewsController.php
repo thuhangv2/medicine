@@ -145,12 +145,11 @@ class CmsNewsController extends Controller
                 }, ARRAY_FILTER_USE_BOTH)) {
                     $arrData[$language->code]['cms_news_id'] = $id;
                     $arrData[$language->code]['lang_id']     = $language->id;
+                    CmsNewsDescription::where('lang_id', $arrData[$language->code]['lang_id'])->where('cms_news_id', $arrData[$language->code]['cms_news_id'])->delete();
+                    CmsNewsDescription::insert($arrData[$language->code]);
                 }
             }
-            foreach ($arrData as $key => $value) {
-                $checkLangData = CmsNewsDescription::where('lang_id', $value['lang_id'])->where('cms_news_id', $value['cms_news_id'])->delete();
-                CmsNewsDescription::insert($value);
-            }
+
             //end lang
             $config = \App\Models\Config::pluck('value', 'key')->all();
 

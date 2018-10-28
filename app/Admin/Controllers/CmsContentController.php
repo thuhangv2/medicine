@@ -150,13 +150,11 @@ class CmsContentController extends Controller
                 }, ARRAY_FILTER_USE_BOTH)) {
                     $arrData[$language->code]['lang_id']        = $language->id;
                     $arrData[$language->code]['cms_content_id'] = $id;
+                    CmsContentDescription::where('lang_id', $arrData[$language->code]['lang_id'])->where('cms_content_id', $arrData[$language->code]['cms_content_id'])->delete();
+                    CmsContentDescription::insert($arrData[$language->code]);
                 }
             }
 
-            foreach ($arrData as $key => $value) {
-                $checkLangData = CmsContentDescription::where('lang_id', $value['lang_id'])->where('cms_content_id', $value['cms_content_id'])->delete();
-                CmsContentDescription::insert($value);
-            }
             //end lang
             $config = \App\Models\Config::pluck('value', 'key')->all();
 

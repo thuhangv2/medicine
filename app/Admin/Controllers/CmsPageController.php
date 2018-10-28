@@ -157,12 +157,11 @@ class CmsPageController extends Controller
                 }, ARRAY_FILTER_USE_BOTH)) {
                     $arrData[$language->code]['cms_page_id'] = $id;
                     $arrData[$language->code]['lang_id']     = $language->id;
+                    CmsPageDescription::where('lang_id', $arrData[$language->code]['lang_id'])->where('cms_page_id', $arrData[$language->code]['cms_page_id'])->delete();
+                    CmsPageDescription::insert($arrData[$language->code]);
                 }
             }
-            foreach ($arrData as $key => $value) {
-                $checkLangData = CmsPageDescription::where('lang_id', $value['lang_id'])->where('cms_page_id', $value['cms_page_id'])->delete();
-                CmsPageDescription::insert($value);
-            }
+
             //end lang
         });
 

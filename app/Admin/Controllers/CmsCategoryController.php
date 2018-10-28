@@ -150,11 +150,9 @@ class CmsCategoryController extends Controller
                     }, ARRAY_FILTER_USE_BOTH)) {
                         $arrData[$language->code]['cms_category_id'] = $idForm;
                         $arrData[$language->code]['lang_id']         = $language->id;
+                        CmsCategoryDescription::where('lang_id', $arrData[$language->code]['lang_id'])->where('cms_category_id', $arrData[$language->code]['cms_category_id'])->delete();
+                        CmsCategoryDescription::insert($arrData[$language->code]);
                     }
-                }
-                foreach ($arrData as $key => $value) {
-                    $checkLangData = CmsCategoryDescription::where('lang_id', $value['lang_id'])->where('cms_category_id', $value['cms_category_id'])->delete();
-                    CmsCategoryDescription::insert($value);
                 }
                 //End language
                 $config          = \App\Models\Config::pluck('value', 'key')->all();

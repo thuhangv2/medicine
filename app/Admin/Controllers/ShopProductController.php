@@ -190,11 +190,9 @@ class ShopProductController extends Controller
                     }, ARRAY_FILTER_USE_BOTH)) {
                         $arrData[$language->code]['product_id'] = $id;
                         $arrData[$language->code]['lang_id']    = $language->id;
+                        ShopProductDescription::where('lang_id', $arrData[$language->code]['lang_id'])->where('product_id', $arrData[$language->code]['product_id'])->delete();
+                        ShopProductDescription::insert($arrData[$language->code]);
                     }
-                }
-                foreach ($arrData as $key => $value) {
-                    $checkLangData = ShopProductDescription::where('lang_id', $value['lang_id'])->where('product_id', $value['product_id'])->delete();
-                    ShopProductDescription::insert($value);
                 }
                 //end lang
                 $config          = \App\Models\Config::pluck('value', 'key')->all();

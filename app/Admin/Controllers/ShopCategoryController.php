@@ -156,12 +156,11 @@ class ShopCategoryController extends Controller
                     }, ARRAY_FILTER_USE_BOTH)) {
                         $arrData[$language->code]['shop_category_id'] = $idForm;
                         $arrData[$language->code]['lang_id']          = $language->id;
+                        ShopCategoryDescription::where('lang_id', $arrData[$language->code]['lang_id'])->where('shop_category_id', $arrData[$language->code]['shop_category_id'])->delete();
+                        ShopCategoryDescription::insert($arrData[$language->code]);
                     }
                 }
-                foreach ($arrData as $key => $value) {
-                    $checkLangData = ShopCategoryDescription::where('lang_id', $value['lang_id'])->where('shop_category_id', $value['shop_category_id'])->delete();
-                    ShopCategoryDescription::insert($value);
-                }
+
                 //End language
                 $config          = \App\Models\Config::pluck('value', 'key')->all();
                 $file_path_admin = config('filesystems.disks.admin.root');
