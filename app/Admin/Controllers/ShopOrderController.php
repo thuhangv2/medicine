@@ -50,7 +50,7 @@ class ShopOrderController extends Controller
             $content->header(trans('language.admin.order_manager'));
             $content->description(' ');
             if ($keyword != "") {
-                $content->description('Tìm kiếm đơn hàng theo từ khóa: "' . $keyword . '"');
+                $content->description(trans('language.order.search_keyword') . ': "' . $keyword . '"');
             }
 
             $content->body($this->grid($keyword));
@@ -67,8 +67,8 @@ class ShopOrderController extends Controller
     {
         return Admin::content(function (Content $content) use ($id) {
 
-            $content->header('Chỉnh sửa đơn hàng');
-            // $content->description('description');
+            $content->header(trans('language.admin.order_manager'));
+            $content->description(' ');
 
             $content->body($this->form()->edit($id));
         });
@@ -83,8 +83,8 @@ class ShopOrderController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Tạo đơn hàng mới');
-            // $content->description('description');
+            $content->header(trans('language.admin.order_manager'));
+            $content->description(' ');
 
             $content->body($this->form());
         });
@@ -103,27 +103,27 @@ class ShopOrderController extends Controller
             $grid->customer('Email')->display(function ($customer) {
                 return empty($customer['email']) ? 'N/A' : $customer['email'];
             });
-            $grid->toname('Khách hàng')->expand(function () {
+            $grid->toname(trans('language.order.customer_name'))->expand(function () {
                 $html = '<br>';
-                $html .= '<span style="padding-left:20px;">Người nhận: ' . $this->toname . '</span><br>';
-                $html .= '<span style="padding-left:20px;">Địa chỉ: ' . $this->address1 . ' ' . $this->address2 . '</span><br>';
-                $html .= '<span style="padding-left:20px;">Số điện thoại: ' . $this->phone . '</span><br>';
-                $html .= (!empty($this->comment)) ? '<span style="padding-left:20px;"><span style="color:red;font-weight:bold;">Ghi chú:</span> ' . $this->comment : '';
+                $html .= '<span style="padding-left:20px;">' . trans('language.order.shipping_name') . ': ' . $this->toname . '</span><br>';
+                $html .= '<span style="padding-left:20px;">' . trans('language.order.shipping_address') . ': ' . $this->address1 . ' ' . $this->address2 . '</span><br>';
+                $html .= '<span style="padding-left:20px;">' . trans('language.order.shipping_phone') . ': ' . $this->phone . '</span><br>';
+                $html .= (!empty($this->comment)) ? '<span style="padding-left:20px;"><span style="color:red;font-weight:bold;">' . trans('language.order.note') . ':</span> ' . $this->comment : '';
                 return $html . "</span></span><br>";
-            }, 'Thông tin nhận hàng');
-            $grid->subtotal('Tiền hàng')->display(function ($price) {
+            }, trans('language.order.shipping_address'));
+            $grid->subtotal(trans('language.order.sub_total'))->display(function ($price) {
                 return number_format($price);
             });
-            $grid->shipping('Tiền Ship')->display(function ($price) {
+            $grid->shipping(trans('language.order.shipping_price'))->display(function ($price) {
                 return number_format($price);
             });
-            $grid->discount('Giảm giá')->display(function ($price) {
+            $grid->discount(trans('language.order.discount'))->display(function ($price) {
                 return number_format($price);
             });
-            $grid->total('Tổng giá')->display(function ($price) {
+            $grid->total(trans('language.order.total'))->display(function ($price) {
                 return number_format($price);
             });
-            $grid->received('Đã thanh toán')->display(function ($price) {
+            $grid->received(trans('language.order.received'))->display(function ($price) {
                 return number_format($price);
             });
             $statusOrder = $this->statusOrder;
@@ -148,7 +148,7 @@ class ShopOrderController extends Controller
                 $actions->disableView();
             });
 
-            $grid->created_at('Ngày tạo');
+            $grid->created_at(trans('language.admin.created_at'));
             $grid->model()->orderBy('id', 'desc');
             if ($keyword != "") {
                 $grid->model()
@@ -157,7 +157,7 @@ class ShopOrderController extends Controller
                     ->orWhere('email', 'like', '%' . $keyword . '%')
                     ->orWhere('id', (int) $keyword);
             }
-            $grid->exporter(new ExcelExpoter('dataOrder', 'Danh sach order'));
+            $grid->exporter(new ExcelExpoter('dataOrder', 'Order list'));
         });
     }
 
@@ -176,11 +176,11 @@ class ShopOrderController extends Controller
                 $arrCustomer[$value['id']] = $value['name'] . "<" . $value['email'] . ">";
             }
             $form->select('user_id', 'Chọn khách hàng')->options($arrCustomer);
-            $form->text('toname', 'Tên người nhận hàng');
-            $form->text('address1', 'Số nhà, đường');
-            $form->text('address2', 'Quận Huyện');
-            $form->mobile('phone', 'Phone');
-            $form->textarea('comment', 'Ghi chú');
+            $form->text('toname', trans('language.order.shipping_name'));
+            $form->text('address1', trans('language.order.shipping_address1'));
+            $form->text('address2', trans('language.order.shipping_address2'));
+            $form->mobile('phone', trans('language.order.shipping_phone'));
+            $form->textarea('comment', trans('language.order.order_name'));
             $form->select('status', trans('language.admin.status'))->options($this->statusOrder);
 
             $form->divide();
@@ -189,11 +189,11 @@ class ShopOrderController extends Controller
                 $checkTotal = ShopOrderTotal::where('order_id', $id)->first();
                 if (!$checkTotal) {
                     ShopOrderTotal::insert([
-                        ['code' => 'subtotal', 'value' => 0, 'title' => 'Tổng tiền hàng', 'sort' => 1, 'order_id' => $id],
-                        ['code' => 'shipping', 'value' => 0, 'title' => 'Phí giao hàng', 'sort' => 10, 'order_id' => $id],
-                        ['code' => 'discount', 'value' => 0, 'title' => 'Giảm giá', 'sort' => 20, 'order_id' => $id],
-                        ['code' => 'total', 'value' => 0, 'title' => 'Tổng tiền cần thanh toán', 'sort' => 100, 'order_id' => $id],
-                        ['code' => 'received', 'value' => 0, 'title' => 'Đã thanh toán', 'sort' => 200, 'order_id' => $id],
+                        ['code' => 'subtotal', 'value' => 0, 'title' => 'Subtotal', 'sort' => 1, 'order_id' => $id],
+                        ['code' => 'shipping', 'value' => 0, 'title' => 'Shipping', 'sort' => 10, 'order_id' => $id],
+                        ['code' => 'discount', 'value' => 0, 'title' => 'Discount', 'sort' => 20, 'order_id' => $id],
+                        ['code' => 'total', 'value' => 0, 'title' => 'Total', 'sort' => 100, 'order_id' => $id],
+                        ['code' => 'received', 'value' => 0, 'title' => 'Received', 'sort' => 200, 'order_id' => $id],
                     ]);
                 }
             });
@@ -266,8 +266,8 @@ JS;
     {
         return Admin::content(function (Content $content) use ($id) {
 
-            $content->header('Order #' . $id);
-            // $content->description('description');
+            $content->header(trans('language.admin.order_manager'));
+            $content->description(' ');
             $content->body(
                 $this->detailOrderForm($id)
             );
@@ -314,7 +314,7 @@ JS;
         //Add history
         $dataHistory = [
             'order_id' => $order_id,
-            'content'  => 'Thay đổi <b>' . $field . '</b> từ <span style="color:blue">\'' . $order_origin[$field] . '\'</span> thành <span style="color:red">\'' . $value . '\'</span>',
+            'content'  => 'Change <b>' . $field . '</b> from <span style="color:blue">\'' . $order_origin[$field] . '\'</span> to <span style="color:red">\'' . $value . '\'</span>',
             'admin_id' => Admin::user()->id,
             'add_date' => date('Y-m-d H:i:s'),
         ];
@@ -333,7 +333,7 @@ JS;
             } else {
                 $style = 'style="font-weight:bold;"';
             }
-            $style_blance = '<tr ' . $style . ' class="data-balance"><td>Còn lại:</td><td align="right">' . number_format($order->balance) . '</td></tr>';
+            $style_blance = '<tr ' . $style . ' class="data-balance"><td>' . trans('language.order.balance') . ':</td><td align="right">' . number_format($order->balance) . '</td></tr>';
             return json_encode(['stt' => 1, 'msg' => [
                 'total'          => number_format($order->total),
                 'subtotal'       => number_format($order->subtotal),
@@ -388,7 +388,7 @@ JS;
             //Add history
             $dataHistory = [
                 'order_id' => $order_id,
-                'content'  => 'Thêm mới sản phẩm (' . implode(",", $listNew) . ')',
+                'content'  => 'Add product (' . implode(",", $listNew) . ')',
                 'admin_id' => Admin::user()->id,
                 'add_date' => date('Y-m-d H:i:s'),
             ];
@@ -430,7 +430,7 @@ JS;
             //Add history
             $dataHistory = [
                 'order_id' => $order_id,
-                'content'  => 'Xóa sản phẩm pID#' . $pId,
+                'content'  => 'Remove product pID#' . $pId,
                 'admin_id' => Admin::user()->id,
                 'add_date' => date('Y-m-d H:i:s'),
             ];

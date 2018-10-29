@@ -55,7 +55,7 @@ INSERT INTO `admin_menu` (`id`, `parent_id`, `order`, `title`, `icon`, `uri`, `c
 	(28, 25, 20, 'Shipping status', 'fa-ambulance', 'shop_shipping_status', '2018-05-06 23:46:53', '2018-10-16 08:33:43'),
 	(30, 0, 23, 'Marketing', 'fa-star-half-empty', NULL, '2018-05-07 13:47:33', '2018-10-16 08:33:43'),
 	(31, 0, 21, 'Customer Manager', 'fa-group', NULL, '2018-05-07 13:52:20', '2018-10-18 21:17:33'),
-	(41, 30, 24, 'Coupon & khuyến mãi', 'fa-rocket', 'shop_promotion', '2018-05-07 23:54:45', '2018-10-16 08:33:43'),
+	(41, 30, 24, 'Coupon', 'fa-rocket', 'shop_promotion', '2018-05-07 23:54:45', '2018-10-16 08:33:43'),
 	(43, 0, 25, 'Shipping Manager', 'fa-ambulance', NULL, '2018-05-07 23:56:13', '2018-10-18 21:17:50'),
 	(50, 43, 26, 'Shipping', 'fa-ambulance', 'shop_shipping', '2018-05-09 14:33:24', '2018-10-17 20:02:24'),
 	(51, 23, 30, 'Config global', 'fa-cogs', 'config_global', '2018-09-19 20:51:31', '2018-10-16 08:33:43'),
@@ -531,7 +531,7 @@ CREATE TABLE IF NOT EXISTS `config_global` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.config_global: ~1 rows (approximately)
+-- Dumping data for table s-cart.config_global: ~0 rows (approximately)
 DELETE FROM `config_global`;
 /*!40000 ALTER TABLE `config_global` DISABLE KEYS */;
 INSERT INTO `config_global` (`id`, `logo`, `watermark`, `template`, `title`, `description`, `keyword`, `phone`, `long_phone`, `email`, `address`, `locale`) VALUES
@@ -549,7 +549,7 @@ CREATE TABLE IF NOT EXISTS `config_layout` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.config_layout: ~1 rows (approximately)
+-- Dumping data for table s-cart.config_layout: ~0 rows (approximately)
 DELETE FROM `config_layout`;
 /*!40000 ALTER TABLE `config_layout` DISABLE KEYS */;
 INSERT INTO `config_layout` (`id`, `meta`, `header`, `footer_bottom`, `footer_top`) VALUES
@@ -567,9 +567,9 @@ CREATE TABLE IF NOT EXISTS `language` (
   `sort` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `code` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.language: ~1 rows (approximately)
+-- Dumping data for table s-cart.language: ~2 rows (approximately)
 DELETE FROM `language`;
 /*!40000 ALTER TABLE `language` DISABLE KEYS */;
 INSERT INTO `language` (`id`, `name`, `code`, `icon`, `status`, `sort`) VALUES
@@ -1090,11 +1090,11 @@ CREATE TABLE IF NOT EXISTS `shop_order_status` (
 DELETE FROM `shop_order_status`;
 /*!40000 ALTER TABLE `shop_order_status` DISABLE KEYS */;
 INSERT INTO `shop_order_status` (`id`, `name`) VALUES
-	(0, 'Mới'),
-	(1, 'Đang xử lý'),
-	(2, 'Tạm giữ'),
-	(3, 'Hủy bỏ'),
-	(4, 'Hoàn thành'),
+	(0, 'New'),
+	(1, 'Processing'),
+	(2, 'Hold'),
+	(3, 'Canceled'),
+	(4, 'Done'),
 	(5, 'Failed');
 /*!40000 ALTER TABLE `shop_order_status` ENABLE KEYS */;
 
@@ -1751,35 +1751,12 @@ CREATE TABLE IF NOT EXISTS `shop_shipping` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.shop_shipping: ~1 rows (approximately)
+-- Dumping data for table s-cart.shop_shipping: ~0 rows (approximately)
 DELETE FROM `shop_shipping`;
 /*!40000 ALTER TABLE `shop_shipping` DISABLE KEYS */;
 INSERT INTO `shop_shipping` (`id`, `type`, `value`, `free`, `status`) VALUES
 	(1, 0, 20000, 10000000, 1);
 /*!40000 ALTER TABLE `shop_shipping` ENABLE KEYS */;
-
--- Dumping structure for table s-cart.shop_shipping_address
-DROP TABLE IF EXISTS `shop_shipping_address`;
-CREATE TABLE IF NOT EXISTS `shop_shipping_address` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `address1` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `address2` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `country` int(3) DEFAULT NULL,
-  `phone` char(50) COLLATE utf8_unicode_ci NOT NULL,
-  `sort` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `status` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table s-cart.shop_shipping_address: ~1 rows (approximately)
-DELETE FROM `shop_shipping_address`;
-/*!40000 ALTER TABLE `shop_shipping_address` DISABLE KEYS */;
-INSERT INTO `shop_shipping_address` (`id`, `user_id`, `address1`, `address2`, `country`, `phone`, `sort`, `status`, `created_at`, `updated_at`) VALUES
-	(1, 1, 'Quan 1', 'Ho chi Minh', NULL, '09978998768678', 0, 0, '2018-01-14 03:12:50', '2018-01-14 03:12:50');
-/*!40000 ALTER TABLE `shop_shipping_address` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_shipping_status
 DROP TABLE IF EXISTS `shop_shipping_status`;
@@ -1793,9 +1770,9 @@ CREATE TABLE IF NOT EXISTS `shop_shipping_status` (
 DELETE FROM `shop_shipping_status`;
 /*!40000 ALTER TABLE `shop_shipping_status` DISABLE KEYS */;
 INSERT INTO `shop_shipping_status` (`id`, `name`) VALUES
-	(0, 'Chưa gửi'),
-	(1, 'Đang gửi'),
-	(2, 'Gửi xong');
+	(0, 'Not sent'),
+	(1, 'Sending'),
+	(2, 'Shipping done');
 /*!40000 ALTER TABLE `shop_shipping_status` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_shoppingcart

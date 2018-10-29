@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://s-cart.org/scart.png" width="150"><br>
+    <img src="https://s-cart.org/logo.png" width="150"><br>
 </p>
 <p align="center">Open source e-commerce for business use laravel framework</p>
 <p align="center">
@@ -10,9 +10,9 @@
 <a href="https://packagist.org/packages/lanhktc/s-cart"><img src="https://poser.pugx.org/lanhktc/s-cart/v/stable.svg" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/lanhktc/s-cart"><img src="https://poser.pugx.org/lanhktc/s-cart/license.svg" alt="License"></a>
 </p>
-<p align="center"><img src="https://s-cart.org/images/s12.jpg"></p>
-<p align="center"><img src="https://s-cart.org/images/s22.jpg"></p>
-<p align="center"><img src="https://s-cart.org/images/s32.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/s-cart-1.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/s-cart-2.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/s-cart-3.jpg"></p>
 
 
 ## About S-cart
