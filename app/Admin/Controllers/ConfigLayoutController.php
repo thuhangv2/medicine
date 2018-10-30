@@ -39,7 +39,7 @@ class ConfigLayoutController extends Controller
     {
         return $content
             ->header('Detail')
-            ->description('description')
+            ->description(' ')
             ->body($this->detail($id));
     }
 
@@ -54,7 +54,7 @@ class ConfigLayoutController extends Controller
     {
         return $content
             ->header('Edit')
-            ->description('description')
+            ->description(' ')
             ->body($this->form()->edit($id));
     }
 
@@ -135,13 +135,16 @@ class ConfigLayoutController extends Controller
     {
         $form = new Form(new ConfigLayout);
 
-        $form->html('Phần source này thêm bên dưới các thẻ <i><</i>meta<b>></b>');
+        $form->html('<b>Position:</b><br><img src="/images/position1.jpg">');
         $form->textarea('meta', 'Meta');
-        $form->html('Phần source này thêm ngay dưới thẻ <b><</b>body<b>></b>');
+        $form->divide();
+        $form->html('<b>Position:</b><br><img src="/images/position2.jpg">');
         $form->textarea('header', 'Header');
-        $form->html('Phần source này thêm trên thẻ <b><</b>footer<b>></b>');
+        $form->divide();
+        $form->html('<b>Position:</b><br><img src="/images/position3.jpg">');
         $form->textarea('footer_top', 'Footer Top');
-        $form->html('Phần source này thêm ngay trên thẻ <b><</b>/body<b>></b>');
+        $form->divide();
+        $form->html('<b>Position:</b><br><img src="/images/position4.jpg">');
         $form->textarea('footer_bottom', 'Footer Bottom');
         $form->disableViewCheck();
         $form->disableEditingCheck();
