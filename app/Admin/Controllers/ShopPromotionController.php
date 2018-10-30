@@ -29,8 +29,8 @@ class ShopPromotionController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Quản lý Promotion');
-            // $content->description('description');
+            $content->header(trans('language.admin.promotion_manager'));
+            $content->description(' ');
 
             $content->body($this->grid());
         });
@@ -46,8 +46,8 @@ class ShopPromotionController extends Controller
     {
         return Admin::content(function (Content $content) use ($id) {
 
-            $content->header('Chỉnh sửa');
-            // $content->description('description');
+            $content->header(trans('language.admin.promotion_manager'));
+            $content->description(' ');
 
             $content->body($this->form()->edit($id));
         });
@@ -62,8 +62,8 @@ class ShopPromotionController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Tạo mới');
-            // $content->description('description');
+            $content->header(trans('language.admin.promotion_manager'));
+            $content->description(' ');
 
             $content->body($this->form());
         });
@@ -79,12 +79,12 @@ class ShopPromotionController extends Controller
         return Admin::grid(Promocode::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
-            $grid->code('Coupon code');
-            $grid->reward('Giá trị')->display(function ($reward) {
+            $grid->code(trans('language.promotion.code'));
+            $grid->reward(trans('language.promotion.value'))->display(function ($reward) {
                 return number_format($reward);
             });
             $arrType = $this->arrType;
-            $grid->type('Loại')->display(function ($type) use ($arrType) {
+            $grid->type(trans('language.promotion.type'))->display(function ($type) use ($arrType) {
                 if ($type == 0) {
                     return "<span class='label label-success'>$arrType[$type]</span>";
                 } elseif ($type == 1) {
@@ -94,19 +94,19 @@ class ShopPromotionController extends Controller
                 }
 
             });
-            $grid->data('Mô tả');
-            $grid->number_uses('Được dùng');
-            $grid->used('Đã dùng');
-            $grid->users('History')->expand(function () {
+            $grid->data(trans('language.promotion.description'));
+            $grid->number_uses(trans('language.promotion.maximum'));
+            $grid->used(trans('language.promotion.used'));
+            $grid->users(trans('language.promotion.history'))->expand(function () {
                 $dataPromo = Promocode::find($this->id);
                 $html      = '<br>';
                 foreach ($dataPromo->users as $key => $value) {
                     $html .= '<span style="padding-left:20px;"><i class="fa fa-angle-double-right"></i> Khách hàng ID' . $value->pivot->user_id . ' dùng lúc ' . $value->pivot->used_at . '.  Nội dung: ' . $value->pivot->log . '</span><br>';
                 }
                 return $html . "<br>";
-            }, 'Lịch sử sử dụng');
-            $grid->status('Bật/tắt')->switch();
-            $grid->expires_at('Ngày hết hạn');
+            }, trans('language.promotion.history'));
+            $grid->status()->switch();
+            $grid->expires_at(trans('language.promotion.expire'));
             $grid->disableExport();
             $grid->actions(function ($actions) {
                 $actions->disableView();

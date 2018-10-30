@@ -64,17 +64,22 @@ class BannerController extends Controller
         $grid = new Grid(new Banner);
         $grid->id('ID')->sortable();
         $grid->image(trans('language.admin.image'))->image('', 50);
-        $grid->url('url');
-        $grid->html('html');
+        $grid->url('URL');
+        $grid->html('HTML')->display(function ($text) {
+            return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
+        });
         $grid->status(trans('language.admin.status'))->switch();
         $grid->sort(trans('language.admin.sort'))->sortable();
+        $grid->disableRowSelector();
+        $grid->disableFilter();
+        $grid->tools(function ($tools) {
+            $tools->disableRefreshButton();
+        });
+        $grid->disableExport();
         $grid->actions(function ($actions) {
             $actions->disableView();
         });
-        $grid->created_at();
-        $grid->updated_at();
         $grid->model()->orderBy('id', 'desc');
-        $grid->disableExport();
         return $grid;
     }
 

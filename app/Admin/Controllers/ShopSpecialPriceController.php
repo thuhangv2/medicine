@@ -90,7 +90,6 @@ class ShopSpecialPriceController extends Controller
             $grid->comment(trans('language.admin.comment'));
             $grid->status(trans('language.admin.status'))->switch();
             $grid->created_at(trans('language.admin.created_at'));
-            $grid->updated_at(trans('language.admin.last_modify'));
             $grid->model()->orderBy('id', 'desc');
             $grid->disableExport();
             $grid->disableFilter();

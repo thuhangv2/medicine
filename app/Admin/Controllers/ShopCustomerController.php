@@ -25,14 +25,13 @@ class ShopCustomerController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            // $content->description('description');
             $action = \Request::input('action');
             if ($action == 'report') {
-                $content->header('Thống kê khách hàng');
+                $content->header(trans('language.admin.analytic'));
                 $content->body($this->report());
             } else {
-                $content->header('Danh sách khách hàng');
-                // $content->description('description');
+                $content->header(trans('language.order.customer'));
+                $content->description(' ');
                 $content->body($this->grid());
             }
 
@@ -49,8 +48,8 @@ class ShopCustomerController extends Controller
     {
         return Admin::content(function (Content $content) use ($id) {
 
-            $content->header('Chỉnh sửa');
-            // $content->description('description');
+            $content->header(trans('language.order.customer'));
+            $content->description(' ');
 
             $content->body($this->form()->edit($id));
         });
@@ -65,8 +64,8 @@ class ShopCustomerController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Tạo mới');
-            // $content->description('description');
+            $content->header(trans('language.order.customer'));
+            $content->description(' ');
 
             $content->body($this->form());
         });
@@ -83,12 +82,12 @@ class ShopCustomerController extends Controller
 
             $grid->id('ID')->sortable();
             $grid->email('Email')->sortable();
-            $grid->name('Name')->sortable();
+            $grid->name(trans('language.order.customer_name'))->sortable();
 
-            $grid->created_at('Ngày tạo');
-            $grid->updated_at('Lần cuối chỉnh sửa');
+            $grid->created_at(trans('language.admin.created_at'));
+            $grid->updated_at(trans('language.admin.last_modify'));
             $grid->model()->orderBy('id', 'desc');
-            $grid->exporter(new ExcelExpoter('dataCustomer', 'Danh sach khach hang'));
+            $grid->exporter(new ExcelExpoter('dataCustomer', 'Customer list'));
             $grid->actions(function ($actions) {
                 $actions->disableView();
             });
@@ -105,12 +104,12 @@ class ShopCustomerController extends Controller
         return Admin::form(User::class, function (Form $form) {
 
             $form->display('id', 'ID');
-            $form->text('name', 'Tên');
+            $form->text('name', trans('language.order.customer_name'));
             $form->email('email', 'Email');
             $form->password('password', 'Password');
-            $form->text('address1', 'Address 1');
-            $form->text('address2', 'Address 2');
-            $form->text('phone', 'Phone');
+            $form->text('address1', trans('language.order.shipping_address1'));
+            $form->text('address2', trans('language.order.shipping_address2'));
+            $form->text('phone', trans('language.order.shipping_phone'));
             $form->saving(function (Form $form) {
                 if ($form->password) {
                     $form->password = bcrypt($form->password);
@@ -136,17 +135,17 @@ class ShopCustomerController extends Controller
         return Admin::grid(User::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
-            $grid->name('Tên khách hàng')->sortable();
+            $grid->name(trans('language.order.customer_name'))->sortable();
             $grid->email('Email')->sortable();
-            $grid->address2('Địa chỉ')->sortable();
-            $grid->orders('Tổng đơn hàng')->display(function ($orders) {
+            $grid->address2(trans('language.order.shipping_address'))->sortable();
+            $grid->orders(trans('language.order.order_total'))->display(function ($orders) {
                 $total_order = count($orders);
                 return $total_order;
             });
-            $grid->html('Tổng giá trị')->display(function () {
+            $grid->html(trans('language.order.total'))->display(function () {
                 return number_format(User::find($this->id)->orders_amount());
             });
-            $grid->created_at('Ngày đăng ký')->sortable();
+            $grid->created_at(trans('language.admin.created_at'))->sortable();
             $grid->model()->orderBy('id', 'desc');
             // $grid->disableExport();
             $grid->disableCreateButton();

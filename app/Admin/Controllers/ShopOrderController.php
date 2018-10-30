@@ -175,12 +175,12 @@ class ShopOrderController extends Controller
             foreach ($customers as $key => $value) {
                 $arrCustomer[$value['id']] = $value['name'] . "<" . $value['email'] . ">";
             }
-            $form->select('user_id', 'Chọn khách hàng')->options($arrCustomer);
+            $form->select('user_id', trans('language.order.select_customer'))->options($arrCustomer);
             $form->text('toname', trans('language.order.shipping_name'));
             $form->text('address1', trans('language.order.shipping_address1'));
             $form->text('address2', trans('language.order.shipping_address2'));
             $form->mobile('phone', trans('language.order.shipping_phone'));
-            $form->textarea('comment', trans('language.order.order_name'));
+            $form->textarea('comment', trans('language.order.order_note'));
             $form->select('status', trans('language.admin.status'))->options($this->statusOrder);
 
             $form->divide();

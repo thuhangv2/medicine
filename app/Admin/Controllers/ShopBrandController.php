@@ -77,10 +77,16 @@ class ShopBrandController extends Controller
             $grid->name(trans('language.admin.name'))->sortable();
             $grid->image(trans('language.admin.image'))->image('', 50);
             $grid->status(trans('language.admin.status'))->switch();
+            $grid->disableRowSelector();
+            $grid->disableFilter();
+            $grid->tools(function ($tools) {
+                $tools->disableRefreshButton();
+            });
             $grid->disableExport();
             $grid->actions(function ($actions) {
                 $actions->disableView();
             });
+            $grid->model()->orderBy('id', 'desc');
         });
     }
 

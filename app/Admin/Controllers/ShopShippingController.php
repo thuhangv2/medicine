@@ -24,8 +24,8 @@ class ShopShippingController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Quản lý shipping');
-            // $content->description('description');
+            $content->header(trans('language.admin.shipping_manager'));
+            $content->description(' ');
 
             $content->body($this->grid());
         });
@@ -41,8 +41,8 @@ class ShopShippingController extends Controller
     {
         return Admin::content(function (Content $content) use ($id) {
 
-            $content->header('Chỉnh sửa');
-            // $content->description('description');
+            $content->header(trans('language.admin.shipping_manager'));
+            $content->description(' ');
 
             $content->body($this->form()->edit($id));
         });
@@ -57,8 +57,8 @@ class ShopShippingController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Tạo mới');
-            // $content->description('description');
+            $content->header(trans('language.admin.shipping_manager'));
+            $content->description(' ');
 
             $content->body($this->form());
         });
@@ -74,16 +74,20 @@ class ShopShippingController extends Controller
         return Admin::grid(ShopShipping::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
-            $grid->value('Giá shipping')->editable();
-            $grid->free('Giá tối hiểu để free ship')->editable();
-            $grid->status('Bật/tắt')->switch();
-            $grid->disableExport();
+            $grid->value(trans('language.order.shipping_price'))->editable();
+            $grid->free(trans('language.order.free_shipping'))->editable();
+            $grid->status()->switch();
             $grid->disableCreateButton();
             $grid->disableRowSelector();
-            $grid->disableActions();
+            $grid->disableFilter();
+            $grid->tools(function ($tools) {
+                $tools->disableRefreshButton();
+            });
+            $grid->disableExport();
             $grid->actions(function ($actions) {
                 $actions->disableView();
             });
+            $grid->model()->orderBy('id', 'desc');
         });
     }
 

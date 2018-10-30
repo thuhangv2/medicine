@@ -24,8 +24,8 @@ class ShopPaymentStatusController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Trạng thái thanh toán');
-            // $content->description('description');
+            $content->header(trans('language.order.order_payment_status'));
+            $content->description(' ');
 
             $content->body($this->grid());
         });
@@ -41,8 +41,8 @@ class ShopPaymentStatusController extends Controller
     {
         return Admin::content(function (Content $content) use ($id) {
 
-            $content->header('Chỉnh sửa trạng thái');
-            // $content->description('description');
+            $content->header(trans('language.order.order_payment_status'));
+            $content->description(' ');
 
             $content->body($this->form()->edit($id));
         });
@@ -57,8 +57,8 @@ class ShopPaymentStatusController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Thêm mới trạng thái thanh toán');
-            // $content->description('description');
+            $content->header(trans('language.order.order_payment_status'));
+            $content->description(' ');
 
             $content->body($this->form());
         });
@@ -74,10 +74,17 @@ class ShopPaymentStatusController extends Controller
         return Admin::grid(ShopPaymentStatus::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
-            $grid->name('Tên trạng thái')->sortable();
+            $grid->name(trans('language.admin.name'))->sortable();
+            $grid->disableRowSelector();
+            $grid->disableFilter();
+            $grid->tools(function ($tools) {
+                $tools->disableRefreshButton();
+            });
+            $grid->disableExport();
             $grid->actions(function ($actions) {
                 $actions->disableView();
             });
+            $grid->model()->orderBy('id', 'desc');
         });
     }
 
@@ -91,7 +98,7 @@ class ShopPaymentStatusController extends Controller
         return Admin::form(ShopPaymentStatus::class, function (Form $form) {
 
             $form->display('id', 'ID');
-            $form->text('name', 'Tên trạng thái');
+            $form->text('name', trans('language.admin.name'));
             $form->disableViewCheck();
             $form->disableEditingCheck();
             $form->tools(function (Form\Tools $tools) {
