@@ -193,13 +193,14 @@ return [
     ],
 
     'product'           => [
-        'sku'         => 'SKU',
-        'name'        => 'Product name',
-        'price'       => 'Price',
-        'quantity'    => 'Quantity',
-        'total_price' => 'Total',
-        'attribute'   => 'Attribute',
-        'add_product' => 'Add product',
+        'sku'          => 'SKU',
+        'name'         => 'Product name',
+        'price'        => 'Price',
+        'quantity'     => 'Quantity',
+        'total_price'  => 'Total',
+        'attribute'    => 'Attribute',
+        'add_product'  => 'Add product',
+        'edit_product' => 'Edit product',
 
     ],
     'promotion'         => [

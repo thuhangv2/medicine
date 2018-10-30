@@ -191,13 +191,14 @@ return [
     ],
 
     'product'           => [
-        'sku'         => 'Mã hàng',
-        'name'        => 'Tên sản phẩm',
-        'price'       => 'Giá bán',
-        'quantity'    => 'Số lượng',
-        'total_price' => 'Tổng số tiền',
-        'attribute'   => 'Thuộc tính',
-        'add_product' => 'Thêm sản phẩm',
+        'sku'          => 'Mã hàng',
+        'name'         => 'Tên sản phẩm',
+        'price'        => 'Giá bán',
+        'quantity'     => 'Số lượng',
+        'total_price'  => 'Tổng số tiền',
+        'attribute'    => 'Thuộc tính',
+        'add_product'  => 'Thêm sản phẩm',
+        'edit_product' => 'Chỉnh sửa sản phẩm',
 
     ],
     'promotion'         => [

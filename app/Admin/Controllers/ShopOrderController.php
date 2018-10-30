@@ -465,7 +465,7 @@ JS;
             //Add history
             $dataHistory = [
                 'order_id' => $order_id,
-                'content'  => 'Chỉnh sửa sản phẩm #' . $pId,
+                'content'  => trans('language.product.edit_product') . ' #' . $pId,
                 'admin_id' => Admin::user()->id,
                 'add_date' => date('Y-m-d H:i:s'),
             ];
