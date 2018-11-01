@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Config;
+use App\Models\ShopOrderStatus;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
@@ -165,6 +166,16 @@ class ConfigInfoController extends Controller
                         ['value' => '0', 'text' => 'OFF'],
                         ['value' => '1', 'text' => 'ON'],
                     )
+                );
+            } elseif ($field->key == 'paypal_order_status_success') {
+                $data['type']   = 'select';
+                $data['source'] = json_encode(
+                    ShopOrderStatus::mapValue()
+                );
+            } elseif ($field->key == 'paypal_order_status_faild') {
+                $data['type']   = 'select';
+                $data['source'] = json_encode(
+                    ShopOrderStatus::mapValue()
                 );
             } else {
                 $data['type']   = 'text';
