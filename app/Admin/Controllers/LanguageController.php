@@ -3,12 +3,14 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\ConfigGlobal;
 use App\Models\Language;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
+use Illuminate\Support\MessageBag;
 
 class LanguageController extends Controller
 {
@@ -154,6 +156,20 @@ class LanguageController extends Controller
                 $tools->disableDelete();
             }
 
+        });
+
+        $form->saving(function (Form $form) {
+            if ($form->status === 0 || $form->status === 'off') {
+                $locale = ConfigGlobal::first()->locale;
+                if ($locale == $form->code) {
+                    $error = new MessageBag([
+                        'title'   => trans('language.admin.access_denied'),
+                        'message' => trans('language.admin.access_denied_msg'),
+                    ]);
+                    return back()->with(compact('error'));
+                }
+
+            }
         });
         return $form;
     }

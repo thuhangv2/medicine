@@ -157,6 +157,8 @@ return [
         'promotion_manager'            => 'Promotion manager',
         'analytic'                     => 'Analytic',
         'report'                       => 'Report',
+        'access_denied'                => 'Access denied!',
+        'access_denied_msg'            => 'Can\'t disable this language. Please change default language before do that.',
     ],
     'order'             => [
         'title'                 => 'Order',

@@ -155,6 +155,8 @@ return [
         'promotion_manager'            => 'Quản lý Promotion',
         'analytic'                     => 'Thống kê',
         'report'                       => 'Báo cáo',
+        'access_denied'                => 'Hành động từ chối!',
+        'access_denied_msg'            => 'Bạn không thể khóa ngôn ngữ này vì nó đang là mặc định. Phải thay đổi ngôn ngữ mặc định trước.',
     ],
     'order'             => [
         'title'                 => 'Đơn hàng',
