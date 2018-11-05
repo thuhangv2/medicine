@@ -46,6 +46,7 @@ Brand product
 
 Manage & permission users, groups
 Customer management
+Image management
 Order management: edit orders, update payment status, shipping status ...
 Order history
 Report:  chart, statistics, export csv, pdf...
