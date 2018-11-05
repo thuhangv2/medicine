@@ -329,4 +329,14 @@ class ShopProduct extends Model
         }
         return $arrProduct;
     }
+
+/**
+ * [getPercentDiscount description]
+ * @return [type] [description]
+ */
+    public function getPercentDiscount()
+    {
+        return round(100 - (($this->price - $this->getPrice()) / $this->price) * 100);
+    }
+
 }
