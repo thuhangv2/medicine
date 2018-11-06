@@ -336,7 +336,7 @@ class ShopProduct extends Model
  */
     public function getPercentDiscount()
     {
-        return round(100 - (($this->price - $this->getPrice()) / $this->price) * 100);
+        return round((($this->price - $this->getPrice()) / $this->price) * 100);
     }
 
 }
