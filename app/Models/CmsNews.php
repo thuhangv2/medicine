@@ -4,8 +4,8 @@ namespace App\Models;
 
 use App\Models\CmsNewsDescription;
 use App\Models\Language;
+use Helper;
 use Illuminate\Database\Eloquent\Model;
-use Scart;
 
 class CmsNews extends Model
 {
@@ -61,7 +61,7 @@ class CmsNews extends Model
  */
     public function getUrl()
     {
-        return url('blog/' . Scart::str_to_url($this->title) . '_' . $this->id . '.html');
+        return url('blog/' . Helper::strToUrl($this->title) . '_' . $this->id . '.html');
     }
 
     //Fields language

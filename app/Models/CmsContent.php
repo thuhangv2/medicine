@@ -59,7 +59,7 @@ class CmsContent extends Model
  */
     public function getUrl()
     {
-        return url('cms/' . \Scart::str_to_url($this->category->title) . '/' . \Scart::str_to_url($this->title) . '_' . $this->id . '.html');
+        return url('cms/' . \Helper::strToUrl($this->category->title) . '/' . \Helper::strToUrl($this->title) . '_' . $this->id . '.html');
     }
 
     //Fields language

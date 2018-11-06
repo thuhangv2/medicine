@@ -233,8 +233,9 @@ return [
         'Cart'         => Gloudemans\Shoppingcart\Facades\Cart::class,
         'PDF'          => Barryvdh\DomPDF\Facade::class,
         'Image'        => Intervention\Image\Facades\Image::class,
+        //scart
         'Promocodes'   => App\Scart\Promocodes\Facades\Promocodes::class,
-        'Scart'        => App\Scart\Helper::class,
+        'Helper'       => App\Scart\Helper::class,
     ],
 
 ];

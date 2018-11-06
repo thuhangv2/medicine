@@ -3,7 +3,7 @@ namespace App\Scart;
 
 class Helper
 {
-    public static function str_to_url($str)
+    public static function strToUrl($str)
     {
         $unicode = array(
             'a' => 'á|à|ả|ã|ạ|ă|ắ|ặ|ằ|ẳ|ẵ|â|ấ|ầ|ẩ|ẫ|ậ',

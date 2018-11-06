@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use Helper;
 use Illuminate\Database\Eloquent\Model;
-use Scart;
 
 class ShopBrand extends Model
 {
@@ -25,7 +25,7 @@ class ShopBrand extends Model
      */
     public function getUrl()
     {
-        return url('brand/' . Scart::str_to_url($this->name) . '_' . $this->id . '.html');
+        return url('brand/' . Helper::strToUrl($this->name) . '_' . $this->id . '.html');
     }
 
     /**

@@ -23,6 +23,9 @@ class ScartServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        require_once app_path() . '/Scart/Helper.php';
+        foreach (glob(app_path() . '/Scart/Helpers/*.php') as $filename) {
+            require_once $filename;
+        }
+
     }
 }

@@ -6,8 +6,8 @@ use App\Models\Config;
 use App\Models\Language;
 use App\Models\ShopCategoryDescription;
 use App\Models\ShopProduct;
+use Helper;
 use Illuminate\Database\Eloquent\Model;
-use Scart;
 
 class ShopCategory extends Model
 {
@@ -161,7 +161,7 @@ class ShopCategory extends Model
 
     public function getUrl()
     {
-        return url('shop/' . Scart::str_to_url($this->name) . '_' . $this->id . '.html');
+        return url('shop/' . Helper::strToUrl($this->name) . '_' . $this->id . '.html');
     }
 
 //Fields language

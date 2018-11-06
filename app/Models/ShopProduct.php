@@ -7,8 +7,8 @@ use App\Models\Language;
 use App\Models\ShopProductDescription;
 use App\Models\ShopProductOption;
 use App\Models\ShopSpecialPrice;
+use Helper;
 use Illuminate\Database\Eloquent\Model;
-use Scart;
 
 class ShopProduct extends Model
 {
@@ -272,7 +272,7 @@ class ShopProduct extends Model
  */
     public function getUrl()
     {
-        return url('product/' . Scart::str_to_url($this->name) . '_' . $this->id . '.html');
+        return url('product/' . Helper::strToUrl($this->name) . '_' . $this->id . '.html');
     }
 
 //Fields language
