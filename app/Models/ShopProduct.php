@@ -145,7 +145,7 @@ class ShopProduct extends Model
         }
     }
 
-    public static function getSearch($keyword)
+    public static function getSearch($keyword, $limit = 12)
     {
         return self::where('status', 1)
             ->where(function ($sql) use ($keyword) {
@@ -153,7 +153,7 @@ class ShopProduct extends Model
                     ->orWhere('sku', 'like', '%' . $keyword . '%');
             })
             ->orderBy('id', 'desc')
-            ->paginate(12);
+            ->paginate($limit);
     }
 
     public function getProductsSpecial($limit = null, $random = true)
