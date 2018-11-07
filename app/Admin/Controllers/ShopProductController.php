@@ -149,8 +149,8 @@ class ShopProductController extends Controller
                 $form->currency('cost', trans('language.admin.price_cost'))->symbol('VND')->options(['digits' => 0]);
                 $form->number('stock', trans('language.admin.stock'));
                 $form->text('sku', trans('language.admin.sku'))->rules(function ($form) {
-                    return 'required|unique:shop_product,sku,' . $form->model()->id . ',id';
-                })->placeholder('Ex: ABKOOT01,ABKOOT02,...')->help(trans('validation.validate_nickname'));
+                    return 'required|regex:/(^([0-9A-Za-z\-]+)$)/|unique:shop_product,sku,' . $form->model()->id . ',id';
+                }, ['regex' => trans('language.product.sku_validate')])->placeholder('Ex: ABKOOT01,ABKOOT02,...');
                 $form->select('brand_id', trans('language.brands'))->options($arrBrand)->default('0')->rules('required'
                 );
 

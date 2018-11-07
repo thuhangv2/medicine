@@ -194,6 +194,7 @@ return [
 
     'product'           => [
         'sku'          => 'Mã hàng',
+        'sku_validate' => 'SKU chỉ được dùng các chữ số, chữ cái không dấu và dấu -',
         'name'         => 'Tên sản phẩm',
         'price'        => 'Giá bán',
         'quantity'     => 'Số lượng',

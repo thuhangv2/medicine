@@ -196,6 +196,7 @@ return [
 
     'product'           => [
         'sku'          => 'SKU',
+        'sku_validate' => 'SKU only use characters in 0-9a-zA-Z and -',
         'name'         => 'Product name',
         'price'        => 'Price',
         'quantity'     => 'Quantity',
