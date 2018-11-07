@@ -28,11 +28,11 @@ class ShopCategory extends Model
     {
         return $this->hasMany('App\Models\ShopCategoryDescription', 'shop_category_id', 'id');
     }
-    public function getTreeCategory()
+    public function getTreeCategory($root = 0)
     {
         $list   = [];
         $result = $this->select('id', 'parent')
-            ->where('parent', 0)
+            ->where('parent', $root)
             ->get();
         foreach ($result as $value) {
             $list[$value['id']] = $value->getName();

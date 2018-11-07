@@ -24,11 +24,11 @@ class CmsCategory extends Model
         return $this->hasMany('App\Models\CmsContent', 'category_id', 'id');
     }
 
-    public function getTreeCategory()
+    public function getTreeCategory($root = 0)
     {
         $list   = [];
         $result = $this->select('title', 'id', 'parent')
-            ->where('parent', 0)
+            ->where('parent', $root)
             ->get()
             ->toArray();
         foreach ($result as $value) {
