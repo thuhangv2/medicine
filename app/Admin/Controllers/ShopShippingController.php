@@ -100,8 +100,8 @@ class ShopShippingController extends Controller
     {
         return Admin::form(ShopShipping::class, function (Form $form) {
 
-            $form->number('value', 'Giá ship');
-            $form->number('free', 'Giá tối thiểu đê free ship');
+            $form->number('value', trans('language.order.shipping_price'));
+            $form->number('free', trans('language.order.free_shipping'));
             $form->switch('status', trans('language.admin.status'));
             $form->disableViewCheck();
             $form->disableEditingCheck();
