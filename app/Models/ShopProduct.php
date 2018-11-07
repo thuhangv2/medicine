@@ -24,7 +24,10 @@ class ShopProduct extends Model
     {
         return $this->belongsTo('App\Models\ShopBrand', 'brand_id', 'id');
     }
-
+    public function vendor()
+    {
+        return $this->belongsTo('App\Models\ShopVendor', 'vendor_id', 'id');
+    }
     public function category()
     {
         return $this->belongsTo('App\Models\ShopCategory', 'category_id', 'id');

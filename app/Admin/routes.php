@@ -28,6 +28,7 @@ Route::group([
     $router->resource('shop_product', ShopProductController::class);
     $router->resource('shop_category', ShopCategoryController::class);
     $router->resource('shop_brand', ShopBrandController::class);
+    $router->resource('shop_vendor', ShopVendorController::class);
     $router->resource('shop_order_status', ShopOrderStatusController::class);
     $router->resource('shop_payment_status', ShopPaymentStatusController::class);
     $router->resource('shop_shipping_status', ShopShipingStatusController::class);

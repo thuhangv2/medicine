@@ -50,6 +50,8 @@ return [
     'thank_contact'     => 'Cảm ơn bạn. Chúng tôi sẽ liên hệ sớm nhất có thể!',
     'date_available'    => 'Ngày bán',
     'default_available' => 'Mặc đính, cho phép mua từ ngày đăng bán.',
+    'vendor'            => 'Nhà cung cấp',
+
     'contact_form'      => [
         'title'   => 'Form liên hệ',
         'info'    => 'Thông tin liên hệ',
@@ -135,6 +137,9 @@ return [
         'product'                      => 'Sản phẩm',
         'parent_category'              => 'Danh mục cha',
         'name'                         => 'Tên',
+        'email'                        => 'Email',
+        'phone'                        => 'Số điện thoại',
+        'address'                      => 'Địa chỉ',
         'page_name'                    => 'Tên trang',
         'image'                        => 'Hình ảnh',
         'sub_image'                    => 'Hình ảnh phụ',

@@ -9,6 +9,7 @@ use App\Models\ShopBrand;
 use App\Models\ShopCategory;
 use App\Models\ShopProduct;
 use App\Models\ShopProductDescription;
+use App\Models\ShopVendor;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
@@ -139,21 +140,26 @@ class ShopProductController extends Controller
                 $form->ignore($arrFields);
 //end language
 
-                $arrBrand = ShopBrand::pluck('name', 'id')->all();
-                $arrBrand = ['0' => '-- ' . trans('language.brands') . ' --'] + $arrBrand;
-                $arrCate  = (new ShopCategory)->getTreeCategory();
-                $form->select('category_id', trans('language.admin.shop_category'))->options($arrCate)->rules('required'
-                );
+                $arrBrand  = ShopBrand::pluck('name', 'id')->all();
+                $arrBrand  = ['0' => '-- ' . trans('language.brands') . ' --'] + $arrBrand;
+                $arrVendor = ShopVendor::pluck('name', 'id')->all();
+                $arrVendor = ['0' => '-- ' . trans('language.vendor') . ' --'] + $arrVendor;
+                $arrCate   = (new ShopCategory)->getTreeCategory();
+                $form->select('category_id', trans('language.admin.shop_category'))->options($arrCate)
+                    ->rules('required');
                 $form->image('image', trans('language.admin.image'))->uniqueName()->move('product');
                 $form->currency('price', trans('language.admin.price'))->symbol('VND')->options(['digits' => 0]);
                 $form->currency('cost', trans('language.admin.price_cost'))->symbol('VND')->options(['digits' => 0]);
                 $form->number('stock', trans('language.admin.stock'));
-                $form->text('sku', trans('language.admin.sku'))->rules(function ($form) {
-                    return 'required|regex:/(^([0-9A-Za-z\-]+)$)/|unique:shop_product,sku,' . $form->model()->id . ',id';
-                }, ['regex' => trans('language.product.sku_validate')])->placeholder('Ex: ABKOOT01,ABKOOT02,...');
-                $form->select('brand_id', trans('language.brands'))->options($arrBrand)->default('0')->rules('required'
-                );
-
+                $form->text('sku', trans('language.admin.sku'))
+                    ->rules(function ($form) {
+                        return 'required|regex:/(^([0-9A-Za-z\-]+)$)/|unique:shop_product,sku,' . $form->model()->id . ',id';
+                    }, ['regex' => trans('language.product.sku_validate')])
+                    ->placeholder('Ex: ABKOOT01,ABKOOT02,...');
+                $form->select('brand_id', trans('language.brands'))->options($arrBrand)->default('0')
+                    ->rules('required');
+                $form->select('vendor_id', trans('language.vendor'))->options($arrVendor)->default('0')
+                    ->rules('required');
                 $form->switch('status', trans('language.admin.status'));
                 $form->number('sort', trans('language.admin.sort'));
                 $form->divide();

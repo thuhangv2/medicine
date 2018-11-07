@@ -51,6 +51,7 @@ return [
     'thank_contact'     => 'Thanks!. We will contact as soon as possible!',
     'date_available'    => 'Date available',
     'default_available' => 'Allows purchase from creation date as default.',
+    'vendor'            => 'Vendor',
 
     'contact_form'      => [
         'title'   => 'Get in touch',
@@ -139,6 +140,9 @@ return [
         'page_name'                    => 'Page name',
         'title'                        => 'Title',
         'name'                         => 'Name',
+        'email'                        => 'Email',
+        'phone'                        => 'Phone',
+        'address'                      => 'Address',
         'image'                        => 'Image',
         'sub_image'                    => 'Other image',
         'sort'                         => 'Sort',
