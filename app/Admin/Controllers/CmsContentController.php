@@ -121,7 +121,7 @@ class CmsContentController extends Controller
         }
         $form->ignore($arrFields);
 //end language
-        $arrCate = (new CmsCategory)->listCate();
+        $arrCate = (new CmsCategory)->getTreeCategory();
         $form->select('category_id', trans('language.category'))->options($arrCate)->rules('required');
         $form->image('image', trans('language.admin.image'))->uniqueName()->move('cms_content')->removable();
         $form->switch('status', trans('language.admin.status'));

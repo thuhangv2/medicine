@@ -141,7 +141,7 @@ class ShopProductController extends Controller
 
                 $arrBrand = ShopBrand::pluck('name', 'id')->all();
                 $arrBrand = ['0' => '-- ' . trans('language.brands') . ' --'] + $arrBrand;
-                $arrCate  = (new ShopCategory)->listCate();
+                $arrCate  = (new ShopCategory)->getTreeCategory();
                 $form->select('category_id', trans('language.admin.shop_category'))->options($arrCate)->rules('required'
                 );
                 $form->image('image', trans('language.admin.image'))->uniqueName()->move('product');

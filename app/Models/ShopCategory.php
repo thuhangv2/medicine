@@ -28,7 +28,7 @@ class ShopCategory extends Model
     {
         return $this->hasMany('App\Models\ShopCategoryDescription', 'shop_category_id', 'id');
     }
-    public function listCate()
+    public function getTreeCategory()
     {
         $list   = [];
         $result = $this->select('id', 'parent')
@@ -37,20 +37,20 @@ class ShopCategory extends Model
         foreach ($result as $value) {
             $list[$value['id']] = $value->getName();
             if ($this->getChildrens($value['id'])->count() > 0) {
-                $this->listCateExceptRoot($value['id'], $list);
+                $this->getTreeCategoryTmp($value['id'], $list);
             }
         }
         return $list;
     }
 
-    public function listCateExceptRoot($id, &$list, $st = '--')
+    public function getTreeCategoryTmp($id, &$list, $st = '--')
     {
         $result = $this->select('id', 'parent')
             ->where('parent', $id)
             ->get();
         foreach ($result as $value) {
             $list[$value['id']] = $st . ' ' . $value->getName();
-            $this->listCateExceptRoot($value['id'], $list, $st . '--');
+            $this->getTreeCategoryTmp($value['id'], $list, $st . '--');
         }
 
     }
