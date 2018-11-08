@@ -27,33 +27,33 @@ Free Open source E-commerce use Laravel framework for Business
 
 ======= CMS CONTENT =======
 
-Manage blogs and news
-Manage pages: contact, introduction ...
-Multi-language
+- Manage blogs and news
+- Manage pages: contact, introduction ...
+- Multi-language
 
 ======= SHOPPING =======
-Customer sign up
-Purchase history
-Process cart
-Discount
-Shipping fee
-Payment: paypal
-Manage product: price sale, cost price, promotion price, quantity, multi images ..
-Categories product
-Brand product
+- Customer sign up
+- Purchase history
+- Process cart
+- Discount
+- Shipping fee
+- Payment: paypal
+- Manage product: price sale, cost price, promotion price, quantity, multi images ..
+- Categories product
+- Brand product
 
 ======= SYSTEM MANAGEMENT =======
 
-Manage & permission users, groups
-Customer management
-Image management
-Order management: edit orders, update payment status, shipping status ...
-Order history
-Report:  chart, statistics, export csv, pdf...
-Generate image thumbnail, watermark
-Manage banner, logo
-Configure email SMTP
-System configuration: turn off website, hide / show products
+- Manage & permission users, groups
+- Customer management
+- Image management
+- Order management: edit orders, update payment status, shipping status ...
+- Order history
+- Report:  chart, statistics, export csv, pdf...
+- Generate image thumbnail, watermark
+- Manage banner, logo
+- Configure email SMTP
+- System configuration: turn off website, hide / show products
 
 
 ## Requirements:
