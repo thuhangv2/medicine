@@ -52,7 +52,6 @@ class Report extends Controller
         $grid->disableRowSelector();
         $grid->disableFilter();
         $grid->disableActions();
-        $grid->disablePagination();
         $grid->tools(function ($tools) {
             $tools->disableRefreshButton();
         });
@@ -92,7 +91,6 @@ class Report extends Controller
         $grid->disableRowSelector();
         $grid->disableFilter();
         $grid->disableActions();
-        $grid->disablePagination();
         $grid->tools(function ($tools) {
             $tools->disableRefreshButton();
         });

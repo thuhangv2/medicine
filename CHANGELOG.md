@@ -1,6 +1,6 @@
 # Release Notes
-## v2.0.4 (2018-10-22)
-
+## v2.0.4.1.1 (2018-11-10)
+## v2.0.4.1 (2018-10-29)
 ### Add
 > Multi language
 > Customize layout
