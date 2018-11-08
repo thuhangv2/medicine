@@ -88,7 +88,11 @@ class HomeController extends Controller
                 $row->column(12, new Box(trans('language.admin.order_year'), $chart2));
             });
 
-            $users   = User::select('id', 'email', 'name', 'phone', 'created_at')->orderBy('id', 'desc')->limit(10)->get()->toArray();
+            $users = User::select('id', 'email', 'name', 'phone', 'created_at')->orderBy('id', 'desc')
+                ->limit(10)->get()
+                ->each(function ($item) {
+                    $item->setAppends([]);
+                })->toArray();
             $headers = ['Id', 'Email', 'Name', 'Phone', 'Time'];
             $rows    = $users;
             $content->row((new Box(trans('language.admin.new_customer'), new Table($headers, $rows)))->style('info')->solid());
