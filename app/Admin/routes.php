@@ -50,5 +50,5 @@ Route::group([
         \App\Models\ConfigGlobal::first()->update(['locale' => $code]);
         return back();
     });
-
+    $router->get('/report/{key}', 'Report@index');
 });

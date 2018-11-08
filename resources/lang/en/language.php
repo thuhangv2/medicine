@@ -208,6 +208,7 @@ return [
         'attribute'    => 'Attribute',
         'add_product'  => 'Add product',
         'edit_product' => 'Edit product',
+        'category'     => 'Category',
 
     ],
     'promotion'         => [
@@ -220,5 +221,15 @@ return [
         'expire'      => 'Expire',
         'history'     => 'History',
     ],
-
+    'customer'          => [
+        'name'         => 'Name',
+        'phone'        => 'Phone',
+        'email'        => 'Email',
+        'address'      => 'Address',
+        'address1'     => 'Address 1',
+        'address2'     => 'Address 2',
+        'order_total'  => 'Order Total',
+        'amount_total' => 'Amount Total',
+        'created_at'   => 'Time added',
+    ],
 ];

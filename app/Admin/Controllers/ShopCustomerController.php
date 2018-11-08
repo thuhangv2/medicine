@@ -25,16 +25,9 @@ class ShopCustomerController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $action = \Request::input('action');
-            if ($action == 'report') {
-                $content->header(trans('language.admin.analytic'));
-                $content->body($this->report());
-            } else {
-                $content->header(trans('language.order.customer'));
-                $content->description(' ');
-                $content->body($this->grid());
-            }
-
+            $content->header(trans('language.order.customer'));
+            $content->description(' ');
+            $content->body($this->grid());
         });
     }
 
@@ -126,34 +119,6 @@ class ShopCustomerController extends Controller
         });
     }
 
-/**
- * Report product
- * @return [type] [description]
- */
-    protected function report()
-    {
-        return Admin::grid(User::class, function (Grid $grid) {
-
-            $grid->id('ID')->sortable();
-            $grid->name(trans('language.order.customer_name'))->sortable();
-            $grid->email('Email')->sortable();
-            $grid->address2(trans('language.order.shipping_address'))->sortable();
-            $grid->orders(trans('language.order.order_total'))->display(function ($orders) {
-                $total_order = count($orders);
-                return $total_order;
-            });
-            $grid->html(trans('language.order.total'))->display(function () {
-                return number_format(User::find($this->id)->orders_amount());
-            });
-            $grid->created_at(trans('language.admin.created_at'))->sortable();
-            $grid->model()->orderBy('id', 'desc');
-            // $grid->disableExport();
-            $grid->disableCreateButton();
-            $grid->disableRowSelector();
-            $grid->disableActions();
-            $grid->exporter(new ExcelExpoter('dataCustomer_report', 'Report khach hang'));
-        });
-    }
     public function show($id)
     {
         return Admin::content(function (Content $content) use ($id) {

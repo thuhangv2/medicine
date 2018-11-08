@@ -207,6 +207,7 @@ return [
         'attribute'    => 'Thuộc tính',
         'add_product'  => 'Thêm sản phẩm',
         'edit_product' => 'Chỉnh sửa sản phẩm',
+        'category'     => 'Danh mục',
 
     ],
     'promotion'         => [
@@ -219,4 +220,17 @@ return [
         'expire'      => 'Hết hạn',
         'history'     => 'Lịch sử',
     ],
+
+    'customer'          => [
+        'name'         => 'Tên',
+        'phone'        => 'Số điện thoại',
+        'email'        => 'Email',
+        'address'      => 'Địa chỉ',
+        'address1'     => 'Số nhà',
+        'address2'     => 'Thành Phố',
+        'order_total'  => 'Tổng đơn hàng',
+        'amount_total' => 'Tổng số tiền',
+        'created_at'   => 'Thời gian tạo',
+    ],
+
 ];
