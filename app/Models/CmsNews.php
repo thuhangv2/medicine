@@ -9,7 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class CmsNews extends Model
 {
-    public $table = 'cms_news';
+    public $table      = 'cms_news';
+    protected $appends = [
+        'title',
+        'keyword',
+        'description',
+        'content',
+    ];
 
     public function local()
     {

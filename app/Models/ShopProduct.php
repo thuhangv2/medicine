@@ -12,7 +12,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShopProduct extends Model
 {
-    public $table = 'shop_product';
+    public $table      = 'shop_product';
+    protected $appends = [
+        'name',
+        'keyword',
+        'description',
+        'content',
+    ];
+
     public function local()
     {
         $lang = Language::pluck('id', 'code')->all();

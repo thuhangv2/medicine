@@ -10,7 +10,12 @@ class CmsPage extends Model
 {
     public $timestamps = false;
     public $table      = 'cms_page';
-
+    protected $appends = [
+        'title',
+        'keyword',
+        'description',
+        'content',
+    ];
     public function local()
     {
         $lang = Language::pluck('id', 'code')->all();

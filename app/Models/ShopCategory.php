@@ -13,6 +13,12 @@ class ShopCategory extends Model
 {
     public $timestamps = false;
     public $table      = 'shop_category';
+    protected $appends = [
+        'name',
+        'keyword',
+        'description',
+    ];
+
     public function local()
     {
         $lang = Language::pluck('id', 'code')->all();

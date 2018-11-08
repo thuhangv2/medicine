@@ -10,7 +10,11 @@ class CmsCategory extends Model
 {
     public $timestamps = false;
     public $table      = 'cms_category';
-
+    protected $appends = [
+        'title',
+        'keyword',
+        'description',
+    ];
     public function local()
     {
         $lang = Language::pluck('id', 'code')->all();

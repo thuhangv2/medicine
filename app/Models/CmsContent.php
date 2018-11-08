@@ -8,8 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class CmsContent extends Model
 {
-    public $table = 'cms_conten';
-
+    public $table      = 'cms_conten';
+    protected $appends = [
+        'title',
+        'keyword',
+        'description',
+        'content',
+    ];
     public function local()
     {
         $lang = Language::pluck('id', 'code')->all();
