@@ -73,18 +73,19 @@ class Report extends Controller
         $grid->id('ID')->sortable();
         $grid->sku(trans('language.product.sku'))->sortable();
         $grid->name(trans('language.product.name'));
-        $grid->category(trans('language.product.category'))->display(function () {
-            return ShopProduct::find($this->id)->category->name;
-        });
-        $grid->email('Email')->sortable();
-        $grid->phone(trans('language.customer.phone'))->sortable();
-        $grid->address(trans('language.customer.address'))->display(function () {
-            return $this->address1 . ' ' . $this->address2;
-        });
-        $grid->order_total(trans('language.customer.order_total'));
-        $grid->order_amount(trans('language.customer.amount_total'))->display(function ($order_amount) {
-            return number_format($order_amount);
-        });
+        $grid->category()->name(trans('language.product.category'));
+        $grid->price(trans('language.product.price'))->display(function ($price) {
+            return number_format($price);
+        })->sortable();
+        $grid->stock(trans('language.product.stock'))->display(function ($stock) {
+            return number_format($stock);
+        })->sortable();
+        $grid->sold(trans('language.product.sold'))->display(function ($sold) {
+            return number_format($sold);
+        })->sortable();
+        $grid->view(trans('language.product.view'))->display(function ($view) {
+            return number_format($view);
+        })->sortable();
 
         $grid->disableCreation();
         $grid->disableExport();

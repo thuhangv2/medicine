@@ -51,7 +51,7 @@ class ShopProduct extends Model
         return $this->hasMany(ShopProductOption::class, 'product_id', 'id');
     }
 
-    public function special_price()
+    public function specialPrice()
     {
         return $this->hasMany('App\Models\ShopSpecialPrice', 'product_id', 'id');
     }
