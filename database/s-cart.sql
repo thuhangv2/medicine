@@ -23,9 +23,9 @@ CREATE TABLE IF NOT EXISTS `admin_menu` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart.admin_menu: ~33 rows (approximately)
+-- Dumping data for table s-cart.admin_menu: ~38 rows (approximately)
 DELETE FROM `admin_menu`;
 /*!40000 ALTER TABLE `admin_menu` DISABLE KEYS */;
 INSERT INTO `admin_menu` (`id`, `parent_id`, `order`, `title`, `icon`, `uri`, `created_at`, `updated_at`) VALUES
@@ -36,32 +36,37 @@ INSERT INTO `admin_menu` (`id`, `parent_id`, `order`, `title`, `icon`, `uri`, `c
 	(5, 2, 5, 'Permission', 'fa-ban', 'auth/permissions', NULL, NULL),
 	(6, 2, 6, 'Menu', 'fa-bars', 'auth/menu', NULL, NULL),
 	(7, 2, 7, 'Operation log', 'fa-history', 'auth/logs', NULL, NULL),
-	(8, 31, 22, 'Customer', 'fa-user-md', 'shop_customer', '2018-01-13 15:27:55', '2018-10-19 20:20:24'),
-	(9, 25, 17, 'Order', 'fa-shopping-cart', 'shop_order', '2018-01-13 15:33:55', '2018-10-19 20:20:13'),
-	(10, 15, 14, 'Product manager', 'fa-file-photo-o', 'shop_product', '2018-01-13 15:44:02', '2018-10-19 20:19:45'),
-	(11, 15, 15, 'Brand', 'fa-bank', 'shop_brand', '2018-01-13 15:47:15', '2018-10-19 20:19:57'),
-	(13, 15, 12, 'Categories', 'fa-folder-open-o', 'shop_category', '2018-01-13 15:52:17', '2018-10-19 20:19:05'),
-	(14, 15, 13, 'Special price', 'fa-paw', 'shop_special_price', '2018-02-06 18:07:21', '2018-10-19 20:19:35'),
-	(15, 0, 11, 'Shop Manager', 'fa-folder-open', NULL, '2018-02-09 06:04:43', '2018-10-18 21:16:47'),
+	(8, 31, 25, 'Customer', 'fa-user-md', 'shop_customer', '2018-01-13 15:27:55', '2018-11-08 06:01:37'),
+	(9, 25, 19, 'Orders', 'fa-shopping-cart', 'shop_order', '2018-01-13 15:33:55', '2018-11-08 06:01:37'),
+	(10, 15, 14, 'All products', 'fa-file-photo-o', 'shop_product', '2018-01-13 15:44:02', '2018-11-07 21:52:38'),
+	(11, 15, 16, 'Brand', 'fa-bank', 'shop_brand', '2018-01-13 15:47:15', '2018-11-07 21:42:27'),
+	(13, 15, 13, 'Categories', 'fa-folder-open-o', 'shop_category', '2018-01-13 15:52:17', '2018-11-07 21:42:27'),
+	(14, 15, 15, 'Special price', 'fa-paw', 'shop_special_price', '2018-02-06 18:07:21', '2018-11-07 21:52:21'),
+	(15, 0, 12, 'Product Manager', 'fa-folder-open', NULL, '2018-02-09 06:04:43', '2018-11-07 21:50:13'),
 	(17, 0, 8, 'CMS Manager', 'fa-coffee', NULL, '2018-02-10 09:06:05', '2018-10-18 21:16:24'),
-	(18, 23, 28, 'Config info', 'fa-cog', 'config_info', '2018-02-10 09:07:45', '2018-10-18 21:10:38'),
+	(18, 23, 33, 'Config info', 'fa-cog', 'config_info', '2018-02-10 09:07:45', '2018-11-08 06:01:37'),
 	(21, 17, 9, 'Blog & News', 'fa-file-powerpoint-o', 'cms_news', '2018-02-10 09:13:01', '2018-10-19 20:18:25'),
 	(22, 17, 10, 'Cms Page', 'fa-clone', 'cms_page', '2018-02-10 09:19:50', '2018-10-19 20:18:37'),
-	(23, 0, 27, 'Config Manager', 'fa-cogs', NULL, '2018-02-11 15:01:24', '2018-10-18 21:18:14'),
-	(24, 0, 31, 'Banner', 'fa-picture-o', 'banner', '2018-03-13 20:10:22', '2018-10-18 21:18:30'),
-	(25, 0, 16, 'Order Manager', 'fa-cart-arrow-down', NULL, '2018-05-06 14:59:14', '2018-10-18 21:17:11'),
-	(26, 25, 18, 'Order status', 'fa-asterisk', 'shop_order_status', '2018-05-06 15:56:14', '2018-10-16 08:33:43'),
-	(27, 25, 19, 'Payment Status', 'fa-recycle', 'shop_payment_status', '2018-05-06 15:57:12', '2018-10-16 08:33:43'),
-	(28, 25, 20, 'Shipping status', 'fa-ambulance', 'shop_shipping_status', '2018-05-06 23:46:53', '2018-10-16 08:33:43'),
-	(30, 0, 23, 'Marketing', 'fa-star-half-empty', NULL, '2018-05-07 13:47:33', '2018-10-16 08:33:43'),
-	(31, 0, 21, 'Customer Manager', 'fa-group', NULL, '2018-05-07 13:52:20', '2018-10-18 21:17:33'),
-	(41, 30, 24, 'Coupon', 'fa-rocket', 'shop_promotion', '2018-05-07 23:54:45', '2018-10-16 08:33:43'),
-	(43, 0, 25, 'Shipping Manager', 'fa-ambulance', NULL, '2018-05-07 23:56:13', '2018-10-18 21:17:50'),
-	(50, 43, 26, 'Shipping', 'fa-ambulance', 'shop_shipping', '2018-05-09 14:33:24', '2018-10-17 20:02:24'),
-	(51, 23, 30, 'Config global', 'fa-cogs', 'config_global', '2018-09-19 20:51:31', '2018-10-16 08:33:43'),
-	(52, 0, 32, 'Config Language', 'fa-pagelines', 'language', '2018-10-14 21:58:23', '2018-10-18 21:15:34'),
-	(53, 55, 0, 'Component', 'fa-bars', 'config_layout/1/edit', '2018-10-17 06:16:09', '2018-10-18 21:14:11'),
-	(55, 0, 0, 'Layout customize', 'fa-columns', NULL, '2018-10-18 21:13:41', '2018-10-18 21:13:41');
+	(23, 0, 32, 'Config Manager', 'fa-cogs', NULL, '2018-02-11 15:01:24', '2018-11-08 06:01:37'),
+	(24, 17, 11, 'Banner', 'fa-picture-o', 'banner', '2018-03-13 20:10:22', '2018-11-07 21:42:27'),
+	(25, 0, 18, 'Order Manager', 'fa-cart-arrow-down', NULL, '2018-05-06 14:59:14', '2018-11-08 06:01:37'),
+	(26, 25, 20, 'Order status', 'fa-asterisk', 'shop_order_status', '2018-05-06 15:56:14', '2018-11-08 06:01:37'),
+	(27, 25, 21, 'Payment Status', 'fa-recycle', 'shop_payment_status', '2018-05-06 15:57:12', '2018-11-08 06:01:37'),
+	(28, 25, 22, 'Shipping status', 'fa-ambulance', 'shop_shipping_status', '2018-05-06 23:46:53', '2018-11-08 06:01:37'),
+	(30, 0, 26, 'Extensions', 'fa-puzzle-piece', NULL, '2018-05-07 13:47:33', '2018-11-08 06:01:37'),
+	(31, 0, 24, 'Customer Manager', 'fa-group', NULL, '2018-05-07 13:52:20', '2018-11-08 06:01:37'),
+	(41, 25, 23, 'Coupon', 'fa-rocket', 'shop_promotion', '2018-05-07 23:54:45', '2018-11-08 06:01:37'),
+	(43, 30, 27, 'Shipping Manager', 'fa-ambulance', NULL, '2018-05-07 23:56:13', '2018-11-09 00:10:32'),
+	(50, 43, 28, 'Shipping', 'fa-ambulance', 'shop_shipping', '2018-05-09 14:33:24', '2018-11-08 06:01:37'),
+	(51, 23, 34, 'Config global', 'fa-cogs', 'config_global', '2018-09-19 20:51:31', '2018-11-08 06:01:37'),
+	(52, 56, 36, 'Config Language', 'fa-pagelines', 'language', '2018-10-14 21:58:23', '2018-11-08 06:01:37'),
+	(53, 55, 38, 'HTML', 'fa-bars', 'config_layout/1/edit', '2018-10-17 06:16:09', '2018-11-08 06:01:37'),
+	(55, 0, 37, 'Layout customize', 'fa-columns', NULL, '2018-10-18 21:13:41', '2018-11-08 06:01:37'),
+	(56, 23, 35, 'Localisation', 'fa-shirtsinbulk', NULL, '2018-11-02 06:04:12', '2018-11-08 06:01:37'),
+	(57, 15, 17, 'Vendor', 'fa-user-secret', 'shop_vendor', '2018-11-07 22:15:33', '2018-11-08 06:01:37'),
+	(58, 0, 29, 'Report & Analytics', 'fa-pie-chart', NULL, '2018-11-08 05:59:47', '2018-11-08 06:01:37'),
+	(59, 58, 30, 'Customer', 'fa-bars', 'report/customer', '2018-11-08 06:00:54', '2018-11-08 06:02:05'),
+	(60, 58, 31, 'Product', 'fa-bars', 'report/product', '2018-11-08 06:01:21', '2018-11-08 06:01:37');
 /*!40000 ALTER TABLE `admin_menu` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.admin_operation_log
@@ -222,8 +227,8 @@ CREATE TABLE IF NOT EXISTS `admin_users` (
 DELETE FROM `admin_users`;
 /*!40000 ALTER TABLE `admin_users` DISABLE KEYS */;
 INSERT INTO `admin_users` (`id`, `username`, `password`, `name`, `avatar`, `remember_token`, `created_at`, `updated_at`) VALUES
-	(1, 'admin', '$2y$10$9nSEvrmtc65E0PI6opCQVujfDHHb.2iiFOCvNo7ries5v96y989tu', 'Administrator', NULL, 'CQnUoyFf3lmgS1yXx8aeyy0VOW4Vj4xoCo4jvWmqfU53Oj5EyyUyzW2Rotu2', '2018-01-12 17:27:40', '2018-10-28 17:09:07'),
-	(3, 'user', '$2y$10$Ao7Uey2z5jPFta/rZG51XuG1OZiWdlbdf3QSgsAjKn9Hfpcp14Ami', 'User', NULL, 'xsmp2WfvIM9HstI6HPN9bRWU6PeiAzT8JTm2FZXwobuI0rngR1ecpJOgqNOM', '2018-01-12 18:05:28', '2018-09-23 18:56:26');
+	(1, 'admin', '$2y$10$57fWhVxTRcFSff8HE/QwguUa0ftbVAD5NlVIw4trOnGydl5uog7W2', 'Administrator', NULL, 'Nztkc2ChVMzNfWYudfqTwFyxoI6G2ItTeBB6HBh2D2O9tXiJPzAaCGlB3ooC', '2018-01-12 17:27:40', '2018-11-09 00:37:45'),
+	(3, 'user', '$2y$10$Ao7Uey2z5jPFta/rZG51XuG1OZiWdlbdf3QSgsAjKn9Hfpcp14Ami', 'User', NULL, 'NRLhtUIxSV2rfe0qplhjaK18v3d65Q4Oan1PY3tt4gzsrzAIt83b3e1CssMP', '2018-01-12 18:05:28', '2018-09-23 18:56:26');
 /*!40000 ALTER TABLE `admin_users` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.admin_user_permissions
@@ -270,11 +275,8 @@ INSERT INTO `banner` (`id`, `image`, `url`, `html`, `status`, `sort`, `click`, `
 DROP TABLE IF EXISTS `cms_category`;
 CREATE TABLE IF NOT EXISTS `cms_category` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `image` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `parent` tinyint(4) NOT NULL DEFAULT '0',
-  `keyword` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sort` tinyint(4) unsigned NOT NULL DEFAULT '0',
   `status` tinyint(4) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
@@ -306,11 +308,7 @@ DROP TABLE IF EXISTS `cms_conten`;
 CREATE TABLE IF NOT EXISTS `cms_conten` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `category_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `title` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `image` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `keyword` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `content` text COLLATE utf8_unicode_ci NOT NULL,
   `sort` tinyint(4) unsigned DEFAULT '0',
   `status` tinyint(4) unsigned DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -363,11 +361,7 @@ INSERT INTO `cms_image` (`id`, `content_id`, `image`, `sort`, `status`) VALUES
 DROP TABLE IF EXISTS `cms_news`;
 CREATE TABLE IF NOT EXISTS `cms_news` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `content` text COLLATE utf8_unicode_ci,
   `image` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `keyword` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sort` tinyint(4) unsigned NOT NULL DEFAULT '0',
   `status` tinyint(4) unsigned NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -378,14 +372,14 @@ CREATE TABLE IF NOT EXISTS `cms_news` (
 -- Dumping data for table s-cart.cms_news: ~7 rows (approximately)
 DELETE FROM `cms_news`;
 /*!40000 ALTER TABLE `cms_news` DISABLE KEYS */;
-INSERT INTO `cms_news` (`id`, `title`, `content`, `image`, `keyword`, `description`, `sort`, `status`, `created_at`, `updated_at`) VALUES
-	(1, NULL, NULL, 'cms_content/bdbd7a28e7be30d83ba2842cdc580a02.png', NULL, NULL, 0, 1, '2018-02-10 03:35:13', '2018-09-06 06:25:35'),
-	(2, NULL, NULL, 'cms_content/8ce2fd76cf30bcd9e099345a68ca17b6.png', NULL, NULL, 0, 1, '2018-08-02 17:10:19', '2018-09-06 06:25:26'),
-	(3, NULL, NULL, 'cms_content/bdbd7a28e7be30d83ba2842cdc580a02.png', NULL, NULL, 0, 1, '2018-08-02 17:16:49', '2018-09-06 06:25:17'),
-	(4, NULL, NULL, 'cms_content/8ce2fd76cf30bcd9e099345a68ca17b6.png', NULL, NULL, 0, 1, '2018-08-02 17:59:52', '2018-09-06 06:25:06'),
-	(5, NULL, NULL, 'cms_content/16889dd0f3e75856c9b387420d641ce4.png', NULL, NULL, 0, 1, '2018-08-09 13:44:08', '2018-09-23 09:27:12'),
-	(6, NULL, NULL, 'cms_content/8ce2fd76cf30bcd9e099345a68ca17b6.png', NULL, NULL, 0, 1, '2018-08-09 13:50:36', '2018-09-23 09:26:59'),
-	(7, NULL, NULL, 'cms_content/bdbd7a28e7be30d83ba2842cdc580a02.png', NULL, NULL, 0, 1, '2018-08-09 15:59:29', '2018-09-23 09:26:41');
+INSERT INTO `cms_news` (`id`, `image`, `sort`, `status`, `created_at`, `updated_at`) VALUES
+	(1, 'cms_content/bdbd7a28e7be30d83ba2842cdc580a02.png', 0, 1, '2018-02-10 03:35:13', '2018-09-06 06:25:35'),
+	(2, 'cms_content/8ce2fd76cf30bcd9e099345a68ca17b6.png', 0, 1, '2018-08-02 17:10:19', '2018-09-06 06:25:26'),
+	(3, 'cms_content/bdbd7a28e7be30d83ba2842cdc580a02.png', 0, 1, '2018-08-02 17:16:49', '2018-09-06 06:25:17'),
+	(4, 'cms_content/8ce2fd76cf30bcd9e099345a68ca17b6.png', 0, 1, '2018-08-02 17:59:52', '2018-09-06 06:25:06'),
+	(5, 'cms_content/16889dd0f3e75856c9b387420d641ce4.png', 0, 1, '2018-08-09 13:44:08', '2018-09-23 09:27:12'),
+	(6, 'cms_content/8ce2fd76cf30bcd9e099345a68ca17b6.png', 0, 1, '2018-08-09 13:50:36', '2018-09-23 09:26:59'),
+	(7, 'cms_content/bdbd7a28e7be30d83ba2842cdc580a02.png', 0, 1, '2018-08-09 15:59:29', '2018-09-23 09:26:41');
 /*!40000 ALTER TABLE `cms_news` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.cms_news_description
@@ -424,11 +418,7 @@ INSERT INTO `cms_news_description` (`cms_news_id`, `lang_id`, `title`, `keyword`
 DROP TABLE IF EXISTS `cms_page`;
 CREATE TABLE IF NOT EXISTS `cms_page` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `content` text COLLATE utf8_unicode_ci,
   `image` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `keyword` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `uniquekey` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `status` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
@@ -438,9 +428,9 @@ CREATE TABLE IF NOT EXISTS `cms_page` (
 -- Dumping data for table s-cart.cms_page: ~2 rows (approximately)
 DELETE FROM `cms_page`;
 /*!40000 ALTER TABLE `cms_page` DISABLE KEYS */;
-INSERT INTO `cms_page` (`id`, `title`, `content`, `image`, `keyword`, `description`, `uniquekey`, `status`) VALUES
-	(1, NULL, NULL, '', NULL, NULL, 'about', 1),
-	(2, NULL, NULL, NULL, NULL, NULL, 'contact', 1);
+INSERT INTO `cms_page` (`id`, `image`, `uniquekey`, `status`) VALUES
+	(1, '', 'about', 1),
+	(2, NULL, 'contact', 1);
 /*!40000 ALTER TABLE `cms_page` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.cms_page_description
@@ -493,13 +483,13 @@ INSERT INTO `config` (`id`, `code`, `key`, `value`, `sort`, `detail`) VALUES
 	(19, 'config', 'product_display_out_of_stock', '1', 19, 'language.admin.product_display_out_of_stock'),
 	(20, 'config', 'product_buy_out_of_stock', '1', 20, 'language.admin.product_buy_out_of_stock'),
 	(22, 'config', 'show_date_available', '1', 21, 'language.admin.show_date_available'),
-	(24, 'config', 'promotion_mode', '1', 1, 'language.admin.use_coupon'),
+	(24, 'config', 'promotion_mode', '0', 1, 'language.admin.use_coupon'),
 	(26, 'display', 'product_hot', '12', 0, 'language.admin.hot_product'),
 	(27, 'display', 'product_new', '6', 0, 'language.admin.new_product'),
 	(28, 'display', 'product_list', '18', 0, 'language.admin.list_product'),
 	(29, 'display', 'product_relation', '4', 0, 'language.admin.relation_product'),
 	(30, 'config', 'site_ssl', '0', 0, 'language.admin.enable_https'),
-	(31, 'config', 'admin_log', 'off', 0, 'language.admin.enable_log_admin'),
+	(31, 'config', 'admin_log', '0', 0, 'language.admin.enable_log_admin'),
 	(32, 'config', 'watermark', '1', 0, 'language.admin.enable_watermark'),
 	(33, 'payment_paypal', 'paypal_client_id', NULL, 0, 'language.admin.paypal_client_id'),
 	(34, 'payment_paypal', 'paypal_secret', NULL, 0, 'language.admin.paypal_secret'),
@@ -553,7 +543,7 @@ CREATE TABLE IF NOT EXISTS `config_layout` (
 DELETE FROM `config_layout`;
 /*!40000 ALTER TABLE `config_layout` DISABLE KEYS */;
 INSERT INTO `config_layout` (`id`, `meta`, `header`, `footer_bottom`, `footer_top`) VALUES
-	(1, NULL, '<div id="fb-root"></div>\r\n<script>(function(d, s, id) {\r\n  var js, fjs = d.getElementsByTagName(s)[0];\r\n  if (d.getElementById(id)) return;\r\n  js = d.createElement(s); js.id = id;\r\n  js.src = \'//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.8&appId=934208239994473\';\r\n  fjs.parentNode.insertBefore(js, fjs);\r\n}(document, \'script\', \'facebook-jssdk\'));\r\n</script>', '<!-- Global site tag (gtag.js) - Google Analytics -->\r\n<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125870439-1"></script>\r\n<script>\r\n  window.dataLayer = window.dataLayer || [];\r\n  function gtag(){dataLayer.push(arguments);}\r\n  gtag(\'js\', new Date());\r\n  gtag(\'config\', \'UA-125870439-1\');\r\n</script>', NULL);
+	(1, NULL, '<div id="fb-root"></div>\r\n<script>(function(d, s, id) {\r\n  var js, fjs = d.getElementsByTagName(s)[0];\r\n  if (d.getElementById(id)) return;\r\n  js = d.createElement(s); js.id = id;\r\n  js.src = \'//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.8&appId=934208239994473\';\r\n  fjs.parentNode.insertBefore(js, fjs);\r\n}(document, \'script\', \'facebook-jssdk\'));\r\n</script>', '<!-- Global site tag (gtag.js) - Google Analytics -->\r\n<script async src="https://www.googletagmanager.com/gtag/js?id=UA-128658138-1"></script>\r\n<script>\r\n  window.dataLayer = window.dataLayer || [];\r\n  function gtag(){dataLayer.push(arguments);}\r\n  gtag(\'js\', new Date());\r\n\r\n  gtag(\'config\', \'UA-128658138-1\');\r\n</script>', NULL);
 /*!40000 ALTER TABLE `config_layout` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.language
@@ -586,16 +576,9 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart.migrations: ~6 rows (approximately)
+-- Dumping data for table s-cart.migrations: ~0 rows (approximately)
 DELETE FROM `migrations`;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-	(1, '2014_10_12_000000_create_users_table', 1),
-	(2, '2014_10_12_100000_create_password_resets_table', 1),
-	(3, '2016_01_04_173148_create_admin_tables', 1),
-	(4, '2018_03_27_145238_create_jobs_table', 2),
-	(5, '2018_03_27_145322_create_failed_jobs_table', 2),
-	(6, '2016_05_17_221000_create_promocodes_table', 3);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.password_resets
@@ -607,31 +590,10 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
   KEY `password_resets_email_index` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart.password_resets: ~3 rows (approximately)
+-- Dumping data for table s-cart.password_resets: ~0 rows (approximately)
 DELETE FROM `password_resets`;
 /*!40000 ALTER TABLE `password_resets` DISABLE KEYS */;
-INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
-	('test@gmail.com', '$2y$10$Hig4bWDSh3NzYchxkAK5sOqNYs3dx2oYJMLZ5z6k.1bP91/kTYFyu', '2018-01-14 14:23:29'),
-	('asakc@gmail.com', '$2y$10$pDj4LAa6kzG8TvoOHVBjkugNNF.tWxAJmghEETs32v.wkdBeaFe66', '2018-09-20 18:42:04'),
-	('lanhktc@gmail.com', '$2y$10$qKtQ1Lqy9WraRawxDh.zQeemGIlYqoCRDNvysHbRlVtHVAtip0SCy', '2018-09-23 08:02:26');
 /*!40000 ALTER TABLE `password_resets` ENABLE KEYS */;
-
--- Dumping structure for table s-cart.shop_attribute
-DROP TABLE IF EXISTS `shop_attribute`;
-CREATE TABLE IF NOT EXISTS `shop_attribute` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `value` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table s-cart.shop_attribute: ~2 rows (approximately)
-DELETE FROM `shop_attribute`;
-/*!40000 ALTER TABLE `shop_attribute` DISABLE KEYS */;
-INSERT INTO `shop_attribute` (`id`, `name`, `value`) VALUES
-	(1, 'Màu sắc', 'Xanh,Đỏ,Vàng,Trắng'),
-	(2, 'Size', 'X,S,L');
-/*!40000 ALTER TABLE `shop_attribute` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_brand
 DROP TABLE IF EXISTS `shop_brand`;
@@ -661,10 +623,7 @@ INSERT INTO `shop_brand` (`id`, `name`, `image`, `url`, `status`, `sort`) VALUES
 DROP TABLE IF EXISTS `shop_category`;
 CREATE TABLE IF NOT EXISTS `shop_category` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `image` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `keyword` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
   `parent` int(11) NOT NULL DEFAULT '0',
   `sort` tinyint(4) NOT NULL DEFAULT '0',
   `status` tinyint(4) NOT NULL DEFAULT '0',
@@ -674,25 +633,25 @@ CREATE TABLE IF NOT EXISTS `shop_category` (
 -- Dumping data for table s-cart.shop_category: ~18 rows (approximately)
 DELETE FROM `shop_category`;
 /*!40000 ALTER TABLE `shop_category` DISABLE KEYS */;
-INSERT INTO `shop_category` (`id`, `name`, `image`, `keyword`, `description`, `parent`, `sort`, `status`) VALUES
-	(1, NULL, NULL, NULL, NULL, 0, 0, 1),
-	(2, NULL, '', NULL, NULL, 0, 0, 1),
-	(3, NULL, '', NULL, NULL, 0, 0, 1),
-	(4, NULL, '', NULL, NULL, 0, 0, 1),
-	(5, NULL, '', NULL, NULL, 0, 0, 1),
-	(6, NULL, '', NULL, NULL, 9, 0, 1),
-	(7, NULL, '', NULL, NULL, 4, 0, 1),
-	(8, NULL, '', NULL, NULL, 4, 0, 1),
-	(9, NULL, '', NULL, NULL, 0, 0, 1),
-	(10, NULL, '', NULL, NULL, 2, 0, 1),
-	(11, NULL, '', NULL, NULL, 1, 0, 1),
-	(12, NULL, '', NULL, NULL, 1, 3, 1),
-	(13, NULL, '', NULL, NULL, 9, 2, 1),
-	(14, NULL, '', NULL, NULL, 4, 0, 1),
-	(15, NULL, '', NULL, NULL, 5, 0, 1),
-	(16, NULL, '', NULL, NULL, 2, 0, 1),
-	(17, NULL, '', NULL, NULL, 3, 0, 1),
-	(18, NULL, '', NULL, NULL, 3, 0, 1);
+INSERT INTO `shop_category` (`id`, `image`, `parent`, `sort`, `status`) VALUES
+	(1, NULL, 0, 0, 1),
+	(2, '', 0, 0, 1),
+	(3, '', 0, 0, 1),
+	(4, '', 0, 0, 1),
+	(5, '', 0, 0, 1),
+	(6, '', 9, 0, 1),
+	(7, '', 4, 0, 1),
+	(8, '', 4, 0, 1),
+	(9, '', 0, 0, 1),
+	(10, '', 2, 0, 1),
+	(11, '', 1, 0, 1),
+	(12, '', 1, 3, 1),
+	(13, '', 9, 2, 1),
+	(14, '', 4, 0, 1),
+	(15, '', 5, 0, 1),
+	(16, '', 2, 0, 1),
+	(17, '', 3, 0, 1),
+	(18, '', 3, 0, 1);
 /*!40000 ALTER TABLE `shop_category` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_category_description
@@ -710,42 +669,42 @@ CREATE TABLE IF NOT EXISTS `shop_category_description` (
 DELETE FROM `shop_category_description`;
 /*!40000 ALTER TABLE `shop_category_description` DISABLE KEYS */;
 INSERT INTO `shop_category_description` (`shop_category_id`, `lang_id`, `name`, `keyword`, `description`) VALUES
-	(1, 1, 'SPORTSWEAR', 'sản phẩm', NULL),
-	(1, 2, 'Danh mục SPORTSWEAR', 'sản phẩm', NULL),
-	(2, 1, 'MENS', 'iot', NULL),
-	(2, 2, 'Danh mục MENS', 'iot', NULL),
-	(3, 1, 'WOMENS', 'arduino', NULL),
-	(3, 2, 'Danh mục WOMENS', 'arduino', NULL),
-	(4, 1, 'KIDS', 'linh kiện điện tử', NULL),
-	(4, 2, 'Danh mục KIDS', 'linh kiện điện tử', NULL),
-	(5, 1, 'FASHION', 'in 3d', NULL),
-	(5, 2, 'Danh mục FASHION', 'in 3d', NULL),
-	(6, 1, 'GUESS', 'quạt đèn led, led fan', NULL),
-	(6, 2, 'Danh mục GUESS', 'quạt đèn led, led fan', NULL),
-	(7, 1, 'PUMA', 'ic', NULL),
-	(7, 2, 'Danh mục PUMA', 'ic', NULL),
-	(8, 1, 'ASICS', 'lcd', NULL),
-	(8, 2, 'Danh mục ASICS', 'lcd', NULL),
-	(9, 1, 'HOUSEHOLDS', 'quảng cáo, holo 3d, led fan', 'Những sản phẩm công nghệ'),
-	(9, 2, 'Danh mục HOUSEHOLDS', 'quảng cáo, holo 3d, led fan', 'Những sản phẩm công nghệ'),
-	(10, 1, 'VALENTINO', 'máy in 3d', NULL),
-	(10, 2, 'Danh mục VALENTINO', 'máy in 3d', NULL),
-	(11, 1, 'DIOR', 'diy, ráp máy in 3d', NULL),
-	(11, 2, 'Danh mục DIOR', 'diy, ráp máy in 3d', NULL),
-	(12, 1, 'VALENTINO', 'quatang,ledfan,quạt,hologram, quảng cáo', NULL),
-	(12, 2, 'Danh mục VALENTINO', 'quatang,ledfan,quạt,hologram, quảng cáo', NULL),
-	(13, 1, 'DIOR', 'quatang,ledfan', NULL),
-	(13, 2, 'Danh mục DIOR', 'quatang,ledfan', NULL),
-	(14, 1, 'FENDI', 'cảm biến, sensor', NULL),
-	(14, 2, 'Danh mục FENDI', 'cảm biến, sensor', NULL),
-	(15, 1, 'FENDI', 'in 3d, dịch vụ in 3d, 3d print, filament, tạo mẫu nhanh', NULL),
-	(15, 2, 'Danh mục  FENDI', 'in 3d, dịch vụ in 3d, 3d print, filament, tạo mẫu nhanh', NULL),
-	(16, 1, 'NIKE', '', NULL),
-	(16, 2, 'Danh mục NIKE', '', NULL),
-	(17, 1, 'UNDER ARMOUR', '', NULL),
-	(17, 2, 'Danh mục UNDER ARMOUR', '', NULL),
-	(18, 1, 'ADIDAS', 'Arduino Shield', NULL),
-	(18, 2, 'Danh mục ADIDAS', 'Arduino Shield', NULL);
+	(1, 1, 'SPORTSWEAR', NULL, NULL),
+	(1, 2, 'Danh mục SPORTSWEAR', NULL, NULL),
+	(2, 1, 'MENS', NULL, NULL),
+	(2, 2, 'Danh mục MENS', NULL, NULL),
+	(3, 1, 'WOMENS', NULL, NULL),
+	(3, 2, 'Danh mục WOMENS', NULL, NULL),
+	(4, 1, 'KIDS', NULL, NULL),
+	(4, 2, 'Danh mục KIDS', NULL, NULL),
+	(5, 1, 'FASHION', NULL, NULL),
+	(5, 2, 'Danh mục FASHION', NULL, NULL),
+	(6, 1, 'GUESS', NULL, NULL),
+	(6, 2, 'Danh mục GUESS', NULL, NULL),
+	(7, 1, 'PUMA', NULL, NULL),
+	(7, 2, 'Danh mục PUMA', NULL, NULL),
+	(8, 1, 'ASICS', NULL, NULL),
+	(8, 2, 'Danh mục ASICS', NULL, NULL),
+	(9, 1, 'HOUSEHOLDS', NULL, NULL),
+	(9, 2, 'Danh mục HOUSEHOLDS', NULL, NULL),
+	(10, 1, 'VALENTINO', NULL, NULL),
+	(10, 2, 'Danh mục VALENTINO', NULL, NULL),
+	(11, 1, 'DIOR', NULL, NULL),
+	(11, 2, 'Danh mục DIOR', NULL, NULL),
+	(12, 1, 'VALENTINO', NULL, NULL),
+	(12, 2, 'Danh mục VALENTINO', NULL, NULL),
+	(13, 1, 'DIOR', NULL, NULL),
+	(13, 2, 'Danh mục DIOR', NULL, NULL),
+	(14, 1, 'FENDI', NULL, NULL),
+	(14, 2, 'Danh mục FENDI', NULL, NULL),
+	(15, 1, 'FENDI', NULL, NULL),
+	(15, 2, 'Danh mục  FENDI', NULL, NULL),
+	(16, 1, 'NIKE', NULL, NULL),
+	(16, 2, 'Danh mục NIKE', NULL, NULL),
+	(17, 1, 'UNDER ARMOUR', NULL, NULL),
+	(17, 2, 'Danh mục UNDER ARMOUR', NULL, NULL),
+	(18, 1, 'ADIDAS', NULL, NULL),
+	(18, 2, 'Danh mục ADIDAS', NULL, NULL);
 /*!40000 ALTER TABLE `shop_category_description` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_image
@@ -786,80 +745,6 @@ INSERT INTO `shop_image` (`id`, `image`, `product_id`, `sort`, `status`) VALUES
 	(116, 'product_slide/89230e4667315ad3ce14785ebbe0bf2a.jpg', 48, 0, 0);
 /*!40000 ALTER TABLE `shop_image` ENABLE KEYS */;
 
--- Dumping structure for table s-cart.shop_option
-DROP TABLE IF EXISTS `shop_option`;
-CREATE TABLE IF NOT EXISTS `shop_option` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `type` int(11) NOT NULL DEFAULT '1' COMMENT '1- radio, 2 -select, 3-text',
-  `status` int(11) NOT NULL DEFAULT '1',
-  `sort` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table s-cart.shop_option: ~3 rows (approximately)
-DELETE FROM `shop_option`;
-/*!40000 ALTER TABLE `shop_option` DISABLE KEYS */;
-INSERT INTO `shop_option` (`id`, `name`, `type`, `status`, `sort`) VALUES
-	(1, 'Màu sắc', 1, 1, 0),
-	(2, 'Kích thước', 2, 1, 0),
-	(3, 'Chất liệu', 3, 1, 3);
-/*!40000 ALTER TABLE `shop_option` ENABLE KEYS */;
-
--- Dumping structure for table s-cart.shop_option_detail
-DROP TABLE IF EXISTS `shop_option_detail`;
-CREATE TABLE IF NOT EXISTS `shop_option_detail` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` text COLLATE utf8_unicode_ci NOT NULL,
-  `add_price` int(11) NOT NULL DEFAULT '0',
-  `option_id` int(11) NOT NULL DEFAULT '0',
-  `product_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=646 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table s-cart.shop_option_detail: ~37 rows (approximately)
-DELETE FROM `shop_option_detail`;
-/*!40000 ALTER TABLE `shop_option_detail` DISABLE KEYS */;
-INSERT INTO `shop_option_detail` (`id`, `name`, `add_price`, `option_id`, `product_id`) VALUES
-	(1, 'X', 0, 2, 0),
-	(2, 'XL', 10000, 2, 0),
-	(3, 'Đỏ', 0, 1, 0),
-	(4, 'Xanh', 10000, 1, 0),
-	(5, 'Vàng', 5000, 1, 0),
-	(24, 'Tím', 20000, 1, 15),
-	(47, 'Tìm', 0, 2, 16),
-	(48, 'Ok', 0, 2, 16),
-	(49, 'Xanh', 0, 1, 17),
-	(50, 'Do', 0, 1, 17),
-	(581, 'S', 0, 2, 6),
-	(582, 'XL', 0, 2, 6),
-	(606, 'Màu xanh', 0, 1, 12),
-	(607, 'Màu đỏ', 0, 1, 12),
-	(608, 'Màu tím', 0, 1, 12),
-	(609, 'XL', 0, 2, 12),
-	(610, 'XXL', 0, 2, 12),
-	(626, 'Màu Trắng Đục', 0, 1, 34),
-	(627, 'Trong Suốt', 0, 1, 34),
-	(628, 'ID=2 mm, OD=4 mm', 0, 2, 34),
-	(629, 'ID=2 mm, OD=3 mm', 0, 2, 34),
-	(630, 'ID=3 mm, OD=4 mm', 0, 2, 34),
-	(631, 'S', 0, 2, 5),
-	(632, 'XL', 0, 2, 5),
-	(633, 'XXX', 0, 2, 5),
-	(634, 'White/Đen', 0, 1, 9),
-	(635, 'Black/Đen', 0, 1, 9),
-	(636, 'Transparent/Trong suốt', 0, 1, 9),
-	(637, 'Red/Đỏ', 0, 1, 9),
-	(638, 'Yellow/Vàng', 0, 1, 9),
-	(639, 'Blue/Xanh Dương', 0, 1, 9),
-	(640, 'Green/Xanh Lá', 0, 1, 9),
-	(641, 'Orange/Cam', 0, 1, 9),
-	(642, 'Cyan/Lam', 0, 1, 9),
-	(643, 'Pink/Hồng', 0, 1, 9),
-	(644, 'Đường kính 1.75mm', 0, 2, 9),
-	(645, 'Đường kính 3mm', 0, 2, 9);
-/*!40000 ALTER TABLE `shop_option_detail` ENABLE KEYS */;
-
 -- Dumping structure for table s-cart.shop_order
 DROP TABLE IF EXISTS `shop_order`;
 CREATE TABLE IF NOT EXISTS `shop_order` (
@@ -887,9 +772,9 @@ CREATE TABLE IF NOT EXISTS `shop_order` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=126 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=131 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.shop_order: ~41 rows (approximately)
+-- Dumping data for table s-cart.shop_order: ~46 rows (approximately)
 DELETE FROM `shop_order`;
 /*!40000 ALTER TABLE `shop_order` DISABLE KEYS */;
 INSERT INTO `shop_order` (`id`, `user_id`, `subtotal`, `shipping`, `discount`, `payment_status`, `shipping_status`, `status`, `tax`, `total`, `received`, `balance`, `toname`, `address1`, `address2`, `country`, `phone`, `email`, `comment`, `payment_method`, `transaction`, `created_at`, `updated_at`) VALUES
@@ -932,8 +817,13 @@ INSERT INTO `shop_order` (`id`, `user_id`, `subtotal`, `shipping`, `discount`, `
 	(121, 0, 15000, 20000, 0, 0, 0, 0, 0, 35000, 0, 35000, 'Hung', '南陽市長岡', 'fgdfg', NULL, '09012345678', NULL, 'dgdfgdfg', 'paypal', NULL, '2018-10-19 21:48:06', NULL),
 	(122, 0, 10000, 20000, 0, 0, 0, 0, 0, 30000, 0, 30000, 'A', 'A', 'A', NULL, '01658843629', NULL, NULL, 'cash', NULL, '2018-10-21 16:44:08', NULL),
 	(123, 0, 10000, 20000, 0, 0, 0, 0, 0, 30000, 0, 30000, 'dgdf', 'gdgsdg', 'serg', NULL, '090125468', NULL, NULL, 'cash', NULL, '2018-10-23 10:51:11', NULL),
-	(124, 11, 30000, 20000, 0, 0, 0, 0, 0, 50000, 0, 50000, 'levantu', 'hn', 'hn', NULL, '0914731527', NULL, NULL, 'cash', NULL, '2018-10-23 13:21:06', NULL),
-	(125, 0, 75000, 20000, 0, 0, 0, 0, 0, 95000, 0, 95000, 'Rhdjb', 'Shdbfj', 'Djdb', NULL, '0973736483', NULL, NULL, 'cash', NULL, '2018-10-23 22:38:45', NULL);
+	(124, 11, 30000, 20000, 0, 0, 0, 0, 0, 50000, 0, 50000, 'levantu', 'hn', 'hn', NULL, '0914731527', NULL, NULL, 'cash', NULL, '2018-10-23 13:21:06', '2018-11-09 00:11:11'),
+	(125, 0, 75000, 20000, 0, 0, 0, 0, 0, 95000, 0, 95000, 'Rhdjb', 'Shdbfj', 'Djdb', NULL, '0973736483', NULL, NULL, 'cash', NULL, '2018-10-23 22:38:45', NULL),
+	(126, 0, 60000, 20000, 0, 0, 0, 0, 0, 80000, 0, 80000, 'paul', 'kuku', 'dada', NULL, '0747140904', NULL, NULL, 'cash', NULL, '2018-10-31 12:50:30', NULL),
+	(127, 0, 125000, 20000, 0, 0, 0, 0, 0, 145000, 0, 145000, '123123', '213123', '123123', NULL, '0987654321', NULL, NULL, 'cash', NULL, '2018-11-01 13:27:57', NULL),
+	(128, 0, 115000, 20000, 0, 0, 0, 0, 0, 135000, 0, 135000, 'vinaenter', 'vinaenter', 'vinaenter', NULL, '0978735237', NULL, 'ccccccccccccccccc', 'cash', NULL, '2018-11-05 18:23:55', NULL),
+	(129, 0, 15000, 20000, 0, 0, 0, 0, 0, 35000, 0, 35000, 'fasdfasfasdf', 'ádfasdfasdf', 'sdfafasdfasdfasdf', NULL, '01673419334', NULL, NULL, 'cash', NULL, '2018-11-05 18:35:28', NULL),
+	(130, 5, 90000, 15000, -10000, 0, 1, 1, 0, 95000, -35000, 60000, 'Bao Khanh', '12/A3', 'TTh07', NULL, '09012345678', NULL, 'Comment', NULL, NULL, '2018-11-09 00:12:55', '2018-11-09 00:14:54');
 /*!40000 ALTER TABLE `shop_order` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_order_detail
@@ -952,9 +842,9 @@ CREATE TABLE IF NOT EXISTS `shop_order_detail` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=194 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=204 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.shop_order_detail: ~48 rows (approximately)
+-- Dumping data for table s-cart.shop_order_detail: ~58 rows (approximately)
 DELETE FROM `shop_order_detail`;
 /*!40000 ALTER TABLE `shop_order_detail` DISABLE KEYS */;
 INSERT INTO `shop_order_detail` (`id`, `order_id`, `product_id`, `name`, `price`, `qty`, `total_price`, `sku`, `type`, `option`, `created_at`, `updated_at`) VALUES
@@ -1005,7 +895,17 @@ INSERT INTO `shop_order_detail` (`id`, `order_id`, `product_id`, `name`, `price`
 	(190, 124, 49, 'Easy Polo Black Edition', 10000, 3, 30000, 'BX-5UTbnv', '[]', NULL, '2018-10-23 13:21:06', NULL),
 	(191, 125, 47, 'Easy Polo Black Edition', 15000, 2, 30000, 'BX-5U0', '[]', NULL, '2018-10-23 22:38:45', NULL),
 	(192, 125, 45, 'Easy Polo Black Edition', 15000, 1, 15000, 'LFF', '[]', NULL, '2018-10-23 22:38:45', NULL),
-	(193, 125, 48, 'Easy Polo Black Edition', 15000, 2, 30000, 'BX-5UT', '[]', NULL, '2018-10-23 22:38:45', NULL);
+	(193, 125, 48, 'Easy Polo Black Edition', 15000, 2, 30000, 'BX-5UT', '[]', NULL, '2018-10-23 22:38:45', NULL),
+	(194, 126, 45, 'Easy Polo Black Edition', 15000, 4, 60000, 'LFF', '[]', NULL, '2018-10-31 12:50:30', NULL),
+	(195, 127, 49, 'Easy Polo Black Edition', 10000, 1, 10000, 'BX-5UTbnv', '[]', NULL, '2018-11-01 13:27:57', NULL),
+	(196, 127, 47, 'Easy Polo Black Edition', 15000, 1, 15000, 'BX-5U0', '[]', NULL, '2018-11-01 13:27:57', NULL),
+	(197, 127, 12, 'Easy Polo Black Edition', 100000, 1, 100000, '3DHLFD', '[]', NULL, '2018-11-01 13:27:57', NULL),
+	(198, 128, 49, 'Easy Polo Black Edition', 10000, 10, 100000, 'BX-5UTbnv', '[]', NULL, '2018-11-05 18:23:55', NULL),
+	(199, 128, 44, 'Easy Polo Black Edition', 15000, 1, 15000, 'P10-IRG', '[]', NULL, '2018-11-05 18:23:55', NULL),
+	(200, 129, 45, 'Easy Polo Black Edition', 15000, 1, 15000, 'LFF', '[]', NULL, '2018-11-05 18:35:28', NULL),
+	(201, 130, 32, 'Easy Polo Black Edition', 20000, 2, 40000, '3D-HOTWIRE1240', NULL, NULL, NULL, NULL),
+	(202, 130, 31, 'Easy Polo Black Edition', 10000, 4, 40000, '3D-TEFLONLOCK-M10', NULL, NULL, NULL, NULL),
+	(203, 130, 29, 'Easy Polo Black Edition', 10000, 1, 10000, '3D-TEFLONLOCK', NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `shop_order_detail` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_order_history
@@ -1018,9 +918,9 @@ CREATE TABLE IF NOT EXISTS `shop_order_history` (
   `user_id` int(11) NOT NULL DEFAULT '0',
   `add_date` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.shop_order_history: ~52 rows (approximately)
+-- Dumping data for table s-cart.shop_order_history: ~67 rows (approximately)
 DELETE FROM `shop_order_history`;
 /*!40000 ALTER TABLE `shop_order_history` DISABLE KEYS */;
 INSERT INTO `shop_order_history` (`id`, `order_id`, `content`, `admin_id`, `user_id`, `add_date`) VALUES
@@ -1075,7 +975,22 @@ INSERT INTO `shop_order_history` (`id`, `order_id`, `content`, `admin_id`, `user
 	(109, 122, 'New order', 0, 0, '2018-10-21 16:44:08'),
 	(110, 123, 'New order', 0, 0, '2018-10-23 10:51:11'),
 	(111, 124, 'New order', 0, 11, '2018-10-23 13:21:06'),
-	(112, 125, 'New order', 0, 0, '2018-10-23 22:38:45');
+	(112, 125, 'New order', 0, 0, '2018-10-23 22:38:45'),
+	(113, 126, 'New order', 0, 0, '2018-10-31 12:50:30'),
+	(114, 127, 'New order', 0, 0, '2018-11-01 13:27:57'),
+	(115, 128, 'New order', 0, 0, '2018-11-05 18:23:55'),
+	(116, 129, 'New order', 0, 0, '2018-11-05 18:35:28'),
+	(117, 124, 'Change <b>shipping</b> from <span style="color:blue">\'\'</span> to <span style="color:red">\'200000\'</span>', 1, 0, '2018-11-09 00:11:08'),
+	(118, 124, 'Change <b>shipping</b> from <span style="color:blue">\'\'</span> to <span style="color:red">\'20000\'</span>', 1, 0, '2018-11-09 00:11:11'),
+	(119, 130, 'Add product (Easy Polo Black Edition)', 1, 0, '2018-11-09 00:13:09'),
+	(120, 130, 'Add product (Easy Polo Black Edition)', 1, 0, '2018-11-09 00:13:16'),
+	(121, 130, 'Add product (Easy Polo Black Edition)', 1, 0, '2018-11-09 00:13:23'),
+	(122, 130, 'Change <b>shipping</b> from <span style="color:blue">\'\'</span> to <span style="color:red">\'15000\'</span>', 1, 0, '2018-11-09 00:13:39'),
+	(123, 130, 'Change <b>discount</b> from <span style="color:blue">\'\'</span> to <span style="color:red">\'-10000\'</span>', 1, 0, '2018-11-09 00:13:47'),
+	(124, 130, 'Change <b>received</b> from <span style="color:blue">\'\'</span> to <span style="color:red">\'-35000\'</span>', 1, 0, '2018-11-09 00:13:56'),
+	(125, 130, 'Change <b>shipping_status</b> from <span style="color:blue">\'0\'</span> to <span style="color:red">\'1\'</span>', 1, 0, '2018-11-09 00:14:06'),
+	(126, 130, 'Change <b>status</b> from <span style="color:blue">\'0\'</span> to <span style="color:red">\'1\'</span>', 1, 0, '2018-11-09 00:14:11'),
+	(127, 130, 'Change <b>address1</b> from <span style="color:blue">\'12\'</span> to <span style="color:red">\'12/A3\'</span>', 1, 0, '2018-11-09 00:14:54');
 /*!40000 ALTER TABLE `shop_order_history` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_order_status
@@ -1110,9 +1025,9 @@ CREATE TABLE IF NOT EXISTS `shop_order_total` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=474 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=499 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.shop_order_total: ~270 rows (approximately)
+-- Dumping data for table s-cart.shop_order_total: ~295 rows (approximately)
 DELETE FROM `shop_order_total`;
 /*!40000 ALTER TABLE `shop_order_total` DISABLE KEYS */;
 INSERT INTO `shop_order_total` (`id`, `order_id`, `title`, `code`, `value`, `sort`, `created_at`, `updated_at`) VALUES
@@ -1377,15 +1292,40 @@ INSERT INTO `shop_order_total` (`id`, `order_id`, `title`, `code`, `value`, `sor
 	(462, 123, 'Total', 'total', 30000, 100, '2018-10-23 10:51:11', NULL),
 	(463, 123, 'Received', 'received', 0, 200, '2018-10-23 10:51:11', NULL),
 	(464, 124, 'Sub total', 'subtotal', 30000, 1, '2018-10-23 13:21:06', NULL),
-	(465, 124, 'Shipping', 'shipping', 20000, 10, '2018-10-23 13:21:06', NULL),
+	(465, 124, 'Shipping', 'shipping', 20000, 10, '2018-10-23 13:21:06', '2018-11-09 00:11:11'),
 	(466, 124, 'Discount', 'discount', 0, 20, '2018-10-23 13:21:06', NULL),
-	(467, 124, 'Total', 'total', 50000, 100, '2018-10-23 13:21:06', NULL),
+	(467, 124, 'Total', 'total', 50000, 100, '2018-10-23 13:21:06', '2018-11-09 00:11:11'),
 	(468, 124, 'Received', 'received', 0, 200, '2018-10-23 13:21:06', NULL),
 	(469, 125, 'Sub total', 'subtotal', 75000, 1, '2018-10-23 22:38:45', NULL),
 	(470, 125, 'Shipping', 'shipping', 20000, 10, '2018-10-23 22:38:45', NULL),
 	(471, 125, 'Discount', 'discount', 0, 20, '2018-10-23 22:38:45', NULL),
 	(472, 125, 'Total', 'total', 95000, 100, '2018-10-23 22:38:45', NULL),
-	(473, 125, 'Received', 'received', 0, 200, '2018-10-23 22:38:45', NULL);
+	(473, 125, 'Received', 'received', 0, 200, '2018-10-23 22:38:45', NULL),
+	(474, 126, 'Sub total', 'subtotal', 60000, 1, '2018-10-31 12:50:30', NULL),
+	(475, 126, 'Shipping', 'shipping', 20000, 10, '2018-10-31 12:50:30', NULL),
+	(476, 126, 'Discount', 'discount', 0, 20, '2018-10-31 12:50:30', NULL),
+	(477, 126, 'Total', 'total', 80000, 100, '2018-10-31 12:50:30', NULL),
+	(478, 126, 'Received', 'received', 0, 200, '2018-10-31 12:50:30', NULL),
+	(479, 127, 'Sub total', 'subtotal', 125000, 1, '2018-11-01 13:27:57', NULL),
+	(480, 127, 'Shipping', 'shipping', 20000, 10, '2018-11-01 13:27:57', NULL),
+	(481, 127, 'Discount', 'discount', 0, 20, '2018-11-01 13:27:57', NULL),
+	(482, 127, 'Total', 'total', 145000, 100, '2018-11-01 13:27:57', NULL),
+	(483, 127, 'Received', 'received', 0, 200, '2018-11-01 13:27:57', NULL),
+	(484, 128, 'Sub total', 'subtotal', 115000, 1, '2018-11-05 18:23:55', NULL),
+	(485, 128, 'Shipping', 'shipping', 20000, 10, '2018-11-05 18:23:55', NULL),
+	(486, 128, 'Discount', 'discount', 0, 20, '2018-11-05 18:23:55', NULL),
+	(487, 128, 'Total', 'total', 135000, 100, '2018-11-05 18:23:55', NULL),
+	(488, 128, 'Received', 'received', 0, 200, '2018-11-05 18:23:55', NULL),
+	(489, 129, 'Sub total', 'subtotal', 15000, 1, '2018-11-05 18:35:28', NULL),
+	(490, 129, 'Shipping', 'shipping', 20000, 10, '2018-11-05 18:35:28', NULL),
+	(491, 129, 'Discount', 'discount', 0, 20, '2018-11-05 18:35:28', NULL),
+	(492, 129, 'Total', 'total', 35000, 100, '2018-11-05 18:35:28', NULL),
+	(493, 129, 'Received', 'received', 0, 200, '2018-11-05 18:35:28', NULL),
+	(494, 130, 'Subtotal', 'subtotal', 90000, 1, NULL, '2018-11-09 00:13:23'),
+	(495, 130, 'Shipping', 'shipping', 15000, 10, NULL, '2018-11-09 00:13:39'),
+	(496, 130, 'Discount', 'discount', -10000, 20, NULL, '2018-11-09 00:13:47'),
+	(497, 130, 'Total', 'total', 95000, 100, NULL, '2018-11-09 00:13:47'),
+	(498, 130, 'Received', 'received', -35000, 200, NULL, '2018-11-09 00:13:56');
 /*!40000 ALTER TABLE `shop_order_total` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_payment_status
@@ -1400,23 +1340,20 @@ CREATE TABLE IF NOT EXISTS `shop_payment_status` (
 DELETE FROM `shop_payment_status`;
 /*!40000 ALTER TABLE `shop_payment_status` DISABLE KEYS */;
 INSERT INTO `shop_payment_status` (`id`, `name`) VALUES
-	(0, 'Chưa thanh toán'),
-	(1, 'Thanh toán một phần'),
-	(2, 'Thanh toán xong'),
-	(3, 'Khách hàng dư tiền');
+	(0, 'Unpaid'),
+	(1, 'Partial payment'),
+	(2, 'Paid'),
+	(3, 'Refurn');
 /*!40000 ALTER TABLE `shop_payment_status` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_product
 DROP TABLE IF EXISTS `shop_product`;
 CREATE TABLE IF NOT EXISTS `shop_product` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sku` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `keyword` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `image` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `content` text COLLATE utf8_unicode_ci,
-  `brand_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `brand_id` int(10) unsigned DEFAULT '0',
+  `vendor_id` int(10) unsigned DEFAULT '0',
   `category_id` int(10) unsigned NOT NULL DEFAULT '0',
   `category_other` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `price` int(11) NOT NULL,
@@ -1439,47 +1376,47 @@ CREATE TABLE IF NOT EXISTS `shop_product` (
 -- Dumping data for table s-cart.shop_product: ~40 rows (approximately)
 DELETE FROM `shop_product`;
 /*!40000 ALTER TABLE `shop_product` DISABLE KEYS */;
-INSERT INTO `shop_product` (`id`, `name`, `sku`, `keyword`, `description`, `image`, `content`, `brand_id`, `category_id`, `category_other`, `price`, `cost`, `stock`, `sold`, `type`, `option`, `sort`, `status`, `view`, `date_lastview`, `date_available`, `created_at`, `updated_at`) VALUES
-	(3, NULL, 'MEGA2560', NULL, NULL, 'product/f2d9505d28f1b10f949cec466cada01e.jpeg', NULL, 1, 7, NULL, 220000, 150000, 0, -5, 0, NULL, 0, 1, 2, '2018-10-20 15:50:48', NULL, '2018-01-15 14:57:31', '2018-10-20 15:50:48'),
-	(4, NULL, 'LEDFAN1', NULL, NULL, 'product/95349d3747fdaf79d391fdc98e083701.jpg', NULL, 1, 6, NULL, 190000, 100000, 17, -1, 1, NULL, 0, 1, 4, '2018-10-22 05:38:35', NULL, '2018-01-16 13:03:54', '2018-10-22 05:38:35'),
-	(5, NULL, 'CLOCKFAN1', NULL, NULL, 'product/15aa6b1f31b53a0177d7653761a45274.jpeg', NULL, 2, 13, NULL, 420000, 320000, 11, 1, 1, NULL, 0, 1, 6, '2018-10-18 02:40:46', NULL, '2018-01-16 13:04:41', '2018-10-18 02:40:46'),
-	(6, NULL, 'CLOCKFAN2', NULL, NULL, 'product/0e1416d509af3712bd801404ca928702.jpeg', NULL, 1, 13, NULL, 380000, 250000, 98, 79, 1, NULL, 0, 1, 17, '2018-10-24 23:12:02', NULL, '2018-02-02 14:52:50', '2018-10-24 23:12:02'),
-	(7, NULL, 'CLOCKFAN3', NULL, NULL, 'product/95349d3747fdaf79d391fdc98e083701.jpg', NULL, 1, 13, NULL, 320000, 250000, 51, 0, 1, NULL, 1, 1, 7, '2018-10-24 21:20:59', NULL, '2018-02-02 14:53:30', '2018-10-24 21:20:59'),
-	(8, NULL, 'TMC2208', NULL, NULL, 'product/95349d3747fdaf79d391fdc98e083701.jpg', NULL, 6, 11, NULL, 220000, 130000, 101, 1, 0, NULL, 1, 1, 10, '2018-10-26 06:04:26', NULL, '2018-02-02 14:53:30', '2018-10-26 06:04:26'),
-	(9, NULL, 'FILAMENT', NULL, NULL, 'product/95349d3747fdaf79d391fdc98e083701.jpg', NULL, 1, 15, NULL, 299000, 200000, 127, 6, 1, NULL, 1, 1, 2, '2018-10-24 19:12:27', NULL, '2018-02-02 14:53:30', '2018-10-24 19:12:27'),
-	(10, NULL, 'A4988', NULL, NULL, 'product/820283598735f98a9b23960821da438b.jpeg', NULL, 1, 11, NULL, 39000, 20000, 107, 33, 0, NULL, 1, 1, 0, NULL, NULL, '2018-02-02 14:53:30', '2018-06-27 16:21:10'),
-	(11, NULL, 'ANYCUBIC-P', NULL, NULL, 'product/d63af407fa92299e163696a585566dc7.jpeg', NULL, 3, 10, NULL, 4990000, 3500000, 1, 1048, 0, NULL, 0, 1, 1, '2018-10-18 11:14:26', NULL, '2018-01-15 14:57:31', '2018-10-18 11:14:26'),
-	(12, NULL, '3DHLFD', NULL, NULL, 'product/95349d3747fdaf79d391fdc98e083701.jpg', NULL, 1, 12, NULL, 7990000, 5200000, 10, 20, 1, NULL, 0, 1, 1, '2018-10-23 12:13:58', NULL, '2018-01-15 14:57:31', '2018-10-23 12:13:58'),
-	(20, NULL, 'SS495A', NULL, NULL, 'product/95349d3747fdaf79d391fdc98e083701.jpg', NULL, 2, 14, NULL, 15000, 7000, 1005, 1059, 1, NULL, 0, 1, 4, '2018-10-22 13:34:50', NULL, '2018-01-15 14:57:31', '2018-10-22 13:34:50'),
-	(21, NULL, '3D-CARBON1.75', NULL, NULL, 'product/d05966a529efdd8d7b41ed9b687859b6.jpeg', NULL, 2, 15, NULL, 390000, 15000, 10, 19, 1, NULL, 1, 1, 4, '2018-10-23 15:17:09', NULL, '2018-02-02 14:53:30', '2018-10-23 15:17:09'),
-	(22, NULL, '3D-GOLD1.75', NULL, NULL, 'product/eedfd153bf368919a134da17f22c8de7.jpeg', NULL, 2, 15, NULL, 500000, 15000, 10, 1, 1, NULL, 1, 1, 10, '2018-10-28 13:39:51', NULL, '2018-04-12 15:05:37', '2018-10-28 13:39:51'),
-	(23, NULL, 'LCD12864-3D', NULL, NULL, 'product/a7a315526ecf7594731448d792714a11.jpeg', NULL, 2, 11, NULL, 220000, 15000, 0, 0, 0, NULL, 0, 1, 1, '2018-10-17 08:39:04', NULL, '2018-08-11 13:33:37', '2018-10-17 08:39:04'),
-	(24, NULL, 'LCD2004-3D', NULL, NULL, 'product/9215506044b8a350fc082f5350b3653a.jpg', NULL, 2, 11, NULL, 190000, 15000, 0, 0, 0, NULL, 0, 1, 1, '2018-10-17 12:23:19', NULL, '2018-08-11 13:39:31', '2018-10-17 12:23:19'),
-	(25, NULL, 'RAMPS1.5-3D', NULL, NULL, 'product/1d6cdd4473603c7a4d162067713b8da8.jpg', NULL, 2, 11, NULL, 120000, 15000, 0, 0, 0, NULL, 0, 1, 1, '2018-10-17 04:10:02', NULL, '2018-08-11 13:41:25', '2018-10-17 04:10:02'),
-	(26, NULL, 'EFULL-3D', NULL, NULL, 'product/07e79f6546499878cba383dd5bfe977e.jpeg', NULL, 1, 11, NULL, 890000, 15000, 0, 0, 0, NULL, 0, 1, 2, '2018-10-21 01:49:01', NULL, '2018-08-11 13:50:25', '2018-10-21 01:49:01'),
-	(27, NULL, 'ANYCUBIC-I3M', NULL, NULL, 'product/ea88b7078652909f3d6c5d445aa05f59.jpeg', NULL, 1, 10, NULL, 7990000, 15000, 5, 0, 0, NULL, 0, 1, 1, '2018-10-23 06:59:30', NULL, '2018-08-22 16:26:00', '2018-10-23 06:59:30'),
-	(28, NULL, '3DNOZZLE', NULL, NULL, 'product/c25c81c852823f5ea8ba4250978217a5.jpeg', NULL, 1, 11, NULL, 10000, 15000, 500, 0, 0, NULL, 0, 1, 0, NULL, NULL, '2018-08-24 04:21:48', '2018-09-22 18:17:21'),
-	(29, NULL, '3D-TEFLONLOCK', NULL, NULL, 'product/8e28f51184f0a96970c05185b1412fa1.jpeg', NULL, 1, 12, NULL, 10000, 15000, 500, 0, 0, NULL, 0, 1, 11, '2018-10-17 21:28:45', NULL, '2018-08-24 04:32:48', '2018-10-17 21:28:45'),
-	(30, NULL, '3D-BELT-GT2', NULL, NULL, 'product/8f795b2335d42cdb7c7eafcfaf714cb2.jpeg', NULL, 1, 11, NULL, 20000, 15000, 0, 0, 1, NULL, 0, 1, 14, '2018-10-27 15:40:15', NULL, '2018-08-24 04:35:39', '2018-10-27 15:40:15'),
-	(31, NULL, '3D-TEFLONLOCK-M10', NULL, NULL, 'product/0e1416d509af3712bd801404ca928702.jpeg', NULL, 2, 11, NULL, 10000, 15000, 100, 0, 0, NULL, 0, 1, 4, '2018-09-08 13:19:46', NULL, '2018-08-24 04:39:03', '2018-09-22 17:29:10'),
-	(32, NULL, '3D-HOTWIRE1240', NULL, NULL, 'product/efd9fb910ba539c125b7c431a1ccc563.jpg', NULL, 0, 11, NULL, 20000, 15000, -1, 1, 1, NULL, 0, 1, 4, '2018-10-19 19:39:51', NULL, '2018-08-24 04:40:54', '2018-10-19 19:39:51'),
-	(33, NULL, '3D-TEFTLON-24', NULL, NULL, 'product/a635cc2bdf5485ccb2c0cc9d186968b2.jpeg', NULL, 2, 16, NULL, 15000, 15000, 100, 0, 0, NULL, 1, 1, 6, '2018-10-27 08:18:35', NULL, '2018-08-24 04:44:04', '2018-10-27 08:18:35'),
-	(34, NULL, '3D-TEFTLON-W24', NULL, NULL, 'product/a32f12e009ebf0d24ab264706ecbc15e.jpeg', NULL, 5, 11, NULL, 20000, 15000, 99, 1, 1, NULL, 0, 1, 5, '2018-10-23 00:45:43', NULL, '2018-08-24 05:09:34', '2018-10-23 00:45:43'),
-	(35, NULL, '3D-SENSOR-NTC 100K', NULL, NULL, 'product/41c8f0d0111cd5a3f0538604233cbed8.jpeg', NULL, 4, 10, NULL, 15000, 15000, 98, 2, 1, NULL, 0, 1, 5, '2018-10-22 22:37:32', NULL, '2018-08-24 05:13:58', '2018-10-22 22:37:32'),
-	(36, NULL, 'nRLF24L01+2.4HZ', NULL, NULL, 'product/820283598735f98a9b23960821da438b.jpeg', NULL, 3, 11, NULL, 25000, 15000, 0, 0, 0, NULL, 0, 1, 4, '2018-10-26 06:04:13', NULL, '2018-08-24 06:07:15', '2018-10-26 06:04:13'),
-	(37, NULL, 'ARDUINO-NANO', NULL, NULL, 'product/da687e60e54bd7fc7eab5c76e7ec3754.jpeg', NULL, 1, 17, NULL, 100000, 15000, 0, 0, 0, NULL, 0, 1, 4, '2018-10-26 06:53:27', NULL, '2018-08-24 06:25:48', '2018-10-26 06:53:27'),
-	(38, NULL, 'LEDSTRIP-5050RGB', NULL, NULL, 'product/61559578baf403e03565e73a14f845ce.jpeg', NULL, 1, 9, NULL, 15000, 15000, 0, 0, 1, NULL, 0, 1, 26, '2018-10-26 15:13:32', NULL, '2018-08-24 06:33:31', '2018-10-26 15:13:32'),
-	(39, NULL, 'LEDSTRIP-S', NULL, NULL, 'product/c400aecd5c6d87782ac9af33dd7a5980.jpg', NULL, 4, 19, NULL, 15000, 15000, 0, 0, 0, NULL, 0, 1, 3, '2018-10-23 16:18:17', NULL, '2018-08-24 08:46:21', '2018-10-23 16:18:17'),
-	(40, NULL, 'P10-IR', NULL, NULL, 'product/830d640cd17eba0bf186dc649d5c3053.jpeg', NULL, 0, 19, NULL, 15000, 15000, 0, 0, 0, NULL, 0, 1, 6, '2018-08-30 23:20:31', NULL, '2018-08-24 08:49:49', '2018-09-22 17:27:41'),
-	(41, NULL, 'P10-IG', NULL, NULL, 'product/9d9aab8be8634708c9cf5b690fee74a4.jpeg', NULL, 0, 19, NULL, 15000, 15000, -1, 1, 1, NULL, 0, 1, 14, '2018-10-20 02:01:25', NULL, '2018-08-24 08:51:11', '2018-10-20 02:01:25'),
-	(42, NULL, 'P10-IB', NULL, NULL, 'product/98fafb9da683cd9ee854598f3f3a3bd5.jpeg', NULL, 0, 19, NULL, 15000, 15000, 0, 0, 0, NULL, 0, 1, 9, '2018-08-31 21:45:43', NULL, '2018-08-24 08:52:58', '2018-09-22 17:35:35'),
-	(43, NULL, 'P10-IRGB', NULL, NULL, 'product/a111c060ebb6ffbbd2d34ae278501789.jpg', NULL, 0, 19, NULL, 15000, 15000, 0, 0, 0, NULL, 0, 1, 4, '2018-10-17 00:01:45', NULL, '2018-08-24 08:54:45', '2018-10-17 00:01:45'),
-	(44, NULL, 'P10-IRG', NULL, NULL, 'product/95349d3747fdaf79d391fdc98e083701.jpg', NULL, 0, 19, NULL, 15000, 15000, -1, 1, 1, NULL, 0, 1, 21, '2018-10-26 06:53:17', NULL, '2018-08-24 08:56:02', '2018-10-26 06:53:17'),
-	(45, NULL, 'LFF', NULL, NULL, 'product/3c8f613d30b4e487ef95a5e4cdea634c.jpeg', NULL, 0, 6, NULL, 15000, 15000, -2, 2, 0, NULL, 0, 1, 32, '2018-10-26 06:40:15', NULL, '2018-08-24 08:58:42', '2018-10-26 06:40:15'),
-	(46, NULL, 'P2.5-I', NULL, NULL, 'product/949fa36ebd56593445fb61d141fd2a81.jpeg', NULL, 2, 19, NULL, 15000, 15000, 0, 0, 0, NULL, 0, 1, 19, '2018-10-23 15:03:09', NULL, '2018-08-24 09:23:07', '2018-10-23 15:03:09'),
-	(47, NULL, 'BX-5U0', NULL, NULL, 'product/cd7aa3394c35330ed7f9e4095c6adb65.jpeg', NULL, 0, 19, NULL, 15000, 15000, -7, 7, 0, NULL, 0, 1, 91, '2018-10-23 23:49:47', NULL, '2018-08-24 09:48:31', '2018-10-23 23:49:47'),
-	(48, NULL, 'BX-5UT', NULL, NULL, 'product/6ddd855403d127a9fed049d0ec335481.jpeg', NULL, 0, 19, NULL, 15000, 15000, -13, 13, 0, NULL, 0, 1, 233, '2018-10-26 06:55:33', NULL, '2018-08-24 09:52:15', '2018-10-26 06:55:33'),
-	(49, NULL, 'BX-5UTbnv', NULL, NULL, 'product/0950df6d59696ad39a8e5505735f578c.jpeg', NULL, 2, 2, NULL, 15000, 15000, -12, 12, 1, NULL, 0, 1, 87, '2018-10-27 17:48:27', '2018-09-19 00:00:00', '2018-09-03 08:05:59', '2018-10-27 17:48:27');
+INSERT INTO `shop_product` (`id`, `sku`, `image`, `brand_id`, `vendor_id`, `category_id`, `category_other`, `price`, `cost`, `stock`, `sold`, `type`, `option`, `sort`, `status`, `view`, `date_lastview`, `date_available`, `created_at`, `updated_at`) VALUES
+	(3, 'MEGA2560', 'product/f2d9505d28f1b10f949cec466cada01e.jpeg', 1, 0, 7, NULL, 220000, 150000, 100, 0, 0, NULL, 0, 1, 7, '2018-11-03 20:26:00', NULL, '2018-01-15 14:57:31', '2018-11-03 20:26:00'),
+	(4, 'LEDFAN1', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 6, NULL, 190000, 100000, 100, 0, 1, NULL, 0, 1, 8, '2018-11-03 20:25:46', NULL, '2018-01-16 13:03:54', '2018-11-03 20:25:46'),
+	(5, 'CLOCKFAN1', 'product/15aa6b1f31b53a0177d7653761a45274.jpeg', 2, 0, 13, NULL, 420000, 320000, 100, 0, 1, NULL, 0, 1, 10, '2018-11-03 20:25:53', NULL, '2018-01-16 13:04:41', '2018-11-03 20:25:53'),
+	(6, 'CLOCKFAN2', 'product/0e1416d509af3712bd801404ca928702.jpeg', 1, 0, 13, NULL, 380000, 250000, 100, 0, 1, NULL, 0, 1, 25, '2018-11-03 20:25:52', NULL, '2018-02-02 14:52:50', '2018-11-03 20:25:52'),
+	(7, 'CLOCKFAN3', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 13, NULL, 320000, 250000, 100, 0, 1, NULL, 1, 1, 12, '2018-11-07 20:07:46', NULL, '2018-02-02 14:53:30', '2018-11-07 20:07:46'),
+	(8, 'TMC2208', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 6, 0, 11, NULL, 220000, 130000, 100, 0, 0, NULL, 1, 1, 15, '2018-11-03 20:25:59', NULL, '2018-02-02 14:53:30', '2018-11-03 20:25:59'),
+	(9, 'FILAMENT', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 15, NULL, 299000, 200000, 100, 0, 1, NULL, 1, 1, 10, '2018-11-05 16:30:35', NULL, '2018-02-02 14:53:30', '2018-11-05 16:30:35'),
+	(10, 'A4988', 'product/820283598735f98a9b23960821da438b.jpeg', 1, 0, 11, NULL, 39000, 20000, 100, 0, 0, NULL, 1, 1, 6, '2018-11-03 20:25:59', NULL, '2018-02-02 14:53:30', '2018-11-03 20:25:59'),
+	(11, 'ANYCUBIC-P', 'product/d63af407fa92299e163696a585566dc7.jpeg', 3, 0, 10, NULL, 4990000, 3500000, 100, 0, 0, NULL, 0, 1, 2, '2018-10-31 16:06:09', NULL, '2018-01-15 14:57:31', '2018-10-31 16:06:09'),
+	(12, '3DHLFD', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 12, NULL, 7990000, 5200000, 100, 0, 1, NULL, 0, 1, 7, '2018-11-08 18:28:39', NULL, '2018-01-15 14:57:31', '2018-11-08 18:28:39'),
+	(20, 'SS495A', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 2, 0, 14, NULL, 15000, 7000, 100, 0, 1, NULL, 0, 1, 9, '2018-11-03 20:25:51', NULL, '2018-01-15 14:57:31', '2018-11-03 20:25:51'),
+	(21, '3D-CARBON1.75', 'product/d05966a529efdd8d7b41ed9b687859b6.jpeg', 2, 0, 15, NULL, 390000, 15000, 100, 0, 1, NULL, 1, 1, 10, '2018-11-08 19:01:59', NULL, '2018-02-02 14:53:30', '2018-11-08 19:01:59'),
+	(22, '3D-GOLD1.75', 'product/eedfd153bf368919a134da17f22c8de7.jpeg', 2, 0, 15, NULL, 500000, 15000, 100, 0, 1, NULL, 1, 1, 16, '2018-11-03 21:01:45', NULL, '2018-04-12 15:05:37', '2018-11-03 21:01:45'),
+	(23, 'LCD12864-3D', 'product/a7a315526ecf7594731448d792714a11.jpeg', 2, 0, 11, NULL, 220000, 15000, 100, 0, 0, NULL, 0, 1, 4, '2018-11-03 20:25:56', NULL, '2018-08-11 13:33:37', '2018-11-03 20:25:56'),
+	(24, 'LCD2004-3D', 'product/9215506044b8a350fc082f5350b3653a.jpg', 2, 0, 11, NULL, 190000, 15000, 100, 0, 0, NULL, 0, 1, 3, '2018-11-03 20:25:46', NULL, '2018-08-11 13:39:31', '2018-11-03 20:25:46'),
+	(25, 'RAMPS1.5-3D', 'product/1d6cdd4473603c7a4d162067713b8da8.jpg', 2, 0, 11, NULL, 120000, 15000, 100, 0, 0, NULL, 0, 1, 2, '2018-10-31 16:06:45', NULL, '2018-08-11 13:41:25', '2018-10-31 16:06:45'),
+	(26, 'EFULL-3D', 'product/07e79f6546499878cba383dd5bfe977e.jpeg', 1, 0, 11, NULL, 890000, 15000, 100, 0, 0, NULL, 0, 1, 4, '2018-11-03 20:26:02', NULL, '2018-08-11 13:50:25', '2018-11-03 20:26:02'),
+	(27, 'ANYCUBIC-I3M', 'product/ea88b7078652909f3d6c5d445aa05f59.jpeg', 1, 0, 10, NULL, 7990000, 15000, 100, 0, 0, NULL, 0, 1, 10, '2018-11-06 09:22:54', NULL, '2018-08-22 16:26:00', '2018-11-06 09:22:54'),
+	(28, '3DNOZZLE', 'product/c25c81c852823f5ea8ba4250978217a5.jpeg', 1, 0, 11, NULL, 10000, 15000, 100, 0, 0, NULL, 0, 1, 2, '2018-11-03 20:25:57', NULL, '2018-08-24 04:21:48', '2018-11-03 20:25:57'),
+	(29, '3D-TEFLONLOCK', 'product/8e28f51184f0a96970c05185b1412fa1.jpeg', 1, 0, 12, NULL, 10000, 15000, 100, 0, 0, NULL, 0, 1, 12, '2018-10-31 16:07:43', NULL, '2018-08-24 04:32:48', '2018-10-31 16:07:43'),
+	(30, '3D-BELT-GT2', 'product/8f795b2335d42cdb7c7eafcfaf714cb2.jpeg', 1, 0, 11, NULL, 20000, 15000, 100, 0, 1, NULL, 0, 1, 17, '2018-11-03 20:26:00', NULL, '2018-08-24 04:35:39', '2018-11-03 20:26:00'),
+	(31, '3D-TEFLONLOCK-M10', 'product/0e1416d509af3712bd801404ca928702.jpeg', 2, 0, 11, NULL, 10000, 15000, 100, 0, 0, NULL, 0, 1, 6, '2018-11-03 20:26:01', NULL, '2018-08-24 04:39:03', '2018-11-03 20:26:01'),
+	(32, '3D-HOTWIRE1240', 'product/efd9fb910ba539c125b7c431a1ccc563.jpg', 0, 0, 11, NULL, 20000, 15000, 100, 0, 1, NULL, 0, 1, 8, '2018-11-03 20:25:48', NULL, '2018-08-24 04:40:54', '2018-11-03 20:25:48'),
+	(33, '3D-TEFTLON-24', 'product/a635cc2bdf5485ccb2c0cc9d186968b2.jpeg', 2, 0, 16, NULL, 15000, 15000, 100, 0, 0, NULL, 1, 1, 14, '2018-11-03 20:25:55', NULL, '2018-08-24 04:44:04', '2018-11-03 20:25:55'),
+	(34, '3D-TEFTLON-W24', 'product/a32f12e009ebf0d24ab264706ecbc15e.jpeg', 5, 0, 11, NULL, 20000, 15000, 100, 0, 1, NULL, 0, 1, 11, '2018-11-08 14:46:34', NULL, '2018-08-24 05:09:34', '2018-11-08 14:46:34'),
+	(35, '3D-SENSOR-NTC 100K', 'product/41c8f0d0111cd5a3f0538604233cbed8.jpeg', 4, 0, 10, NULL, 15000, 15000, 100, 0, 1, NULL, 0, 1, 11, '2018-11-04 23:29:14', NULL, '2018-08-24 05:13:58', '2018-11-04 23:29:14'),
+	(36, 'nRLF24L01+2.4HZ', 'product/820283598735f98a9b23960821da438b.jpeg', 3, 0, 11, NULL, 25000, 15000, 100, 0, 0, NULL, 0, 1, 9, '2018-11-03 20:25:54', NULL, '2018-08-24 06:07:15', '2018-11-03 20:25:54'),
+	(37, 'ARDUINO-NANO', 'product/da687e60e54bd7fc7eab5c76e7ec3754.jpeg', 1, 0, 17, NULL, 100000, 15000, 100, 0, 0, NULL, 0, 1, 9, '2018-11-03 20:26:02', NULL, '2018-08-24 06:25:48', '2018-11-03 20:26:02'),
+	(38, 'LEDSTRIP-5050RGB', 'product/61559578baf403e03565e73a14f845ce.jpeg', 1, 0, 9, NULL, 15000, 15000, 100, 0, 1, NULL, 0, 1, 31, '2018-11-03 20:25:57', NULL, '2018-08-24 06:33:31', '2018-11-03 20:25:57'),
+	(39, 'LEDSTRIP-S', 'product/c400aecd5c6d87782ac9af33dd7a5980.jpg', 4, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 5, '2018-11-03 20:25:55', NULL, '2018-08-24 08:46:21', '2018-11-03 20:25:55'),
+	(40, 'P10-IR', 'product/830d640cd17eba0bf186dc649d5c3053.jpeg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 8, '2018-11-03 20:25:47', NULL, '2018-08-24 08:49:49', '2018-11-03 20:25:47'),
+	(41, 'P10-IG', 'product/9d9aab8be8634708c9cf5b690fee74a4.jpeg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 1, NULL, 0, 1, 21, '2018-11-03 20:25:50', NULL, '2018-08-24 08:51:11', '2018-11-03 20:25:50'),
+	(42, 'P10-IB', 'product/98fafb9da683cd9ee854598f3f3a3bd5.jpeg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 10, '2018-10-31 16:08:42', NULL, '2018-08-24 08:52:58', '2018-10-31 16:08:42'),
+	(43, 'P10-IRGB', 'product/a111c060ebb6ffbbd2d34ae278501789.jpg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 6, '2018-11-03 20:25:55', NULL, '2018-08-24 08:54:45', '2018-11-03 20:25:55'),
+	(44, 'P10-IRG', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 1, NULL, 0, 1, 26, '2018-11-03 20:25:49', NULL, '2018-08-24 08:56:02', '2018-11-05 18:23:55'),
+	(45, 'LFF', 'product/3c8f613d30b4e487ef95a5e4cdea634c.jpeg', 0, 0, 6, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 36, '2018-10-30 18:54:47', NULL, '2018-08-24 08:58:42', '2018-11-05 18:35:28'),
+	(46, 'P2.5-I', 'product/949fa36ebd56593445fb61d141fd2a81.jpeg', 2, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 31, '2018-11-04 10:50:30', NULL, '2018-08-24 09:23:07', '2018-11-04 10:50:30'),
+	(47, 'BX-5U0', 'product/cd7aa3394c35330ed7f9e4095c6adb65.jpeg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 103, '2018-11-07 21:18:49', NULL, '2018-08-24 09:48:31', '2018-11-07 21:18:49'),
+	(48, 'BX-5UT', 'product/6ddd855403d127a9fed049d0ec335481.jpeg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 255, '2018-11-08 09:36:23', NULL, '2018-08-24 09:52:15', '2018-11-08 09:36:23'),
+	(49, 'BX-5UTbnv', 'product/0950df6d59696ad39a8e5505735f578c.jpeg', 2, 0, 2, NULL, 15000, 15000, 100, 0, 1, NULL, 0, 1, 121, '2018-11-08 08:52:08', '2018-09-19 00:00:00', '2018-09-03 08:05:59', '2018-11-08 08:52:08');
 /*!40000 ALTER TABLE `shop_product` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_product_description
@@ -1643,32 +1580,6 @@ INSERT INTO `shop_product_recent_view` (`user_id`, `product_id`, `created_at`) V
 	(3, 48, '2018-08-27 17:01:49');
 /*!40000 ALTER TABLE `shop_product_recent_view` ENABLE KEYS */;
 
--- Dumping structure for table s-cart.shop_product_type
-DROP TABLE IF EXISTS `shop_product_type`;
-CREATE TABLE IF NOT EXISTS `shop_product_type` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `opt_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `opt_sku` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `opt_price` int(11) DEFAULT NULL,
-  `opt_image` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `product_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `opt_sku` (`opt_sku`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- Dumping data for table s-cart.shop_product_type: ~7 rows (approximately)
-DELETE FROM `shop_product_type`;
-/*!40000 ALTER TABLE `shop_product_type` DISABLE KEYS */;
-INSERT INTO `shop_product_type` (`id`, `opt_name`, `opt_sku`, `opt_price`, `opt_image`, `product_id`) VALUES
-	(3, 'Sản phẩm xanh', 'BX-5UT-s', 454, 'product/4c28c6a2fc6a3fa79197798707d55b5c.png', 48),
-	(4, '34324234', 'BX-5UT-T', 1111, 'product/293da323794f89ee2d7962f44f930393.png', 48),
-	(12, 'fdgdfg', 'fgdfgd', NULL, 'product/68f8a4d063e4ddef447616116dd03e0f.png', 42),
-	(13, 'bnmbnmbn', 'BX-5U0-1fgfgjghjhgj', NULL, 'product/2702691387f97f5985843cbb243d267c.png', 42),
-	(16, 'Sản phẩm xanh', 'BX-5U0-1fgfgkjh', NULL, 'product/777274d55ff7adeef36ca930022a8db9.jpg', 29),
-	(17, 'Sản phẩm xanh', 'BX-5U0-1fgfgl', NULL, 'product/0ba3c6a927bb0e2cd2d54ce0c13df919.jpg', 30),
-	(18, 'Sản phẩm xanh', 'BX-5U0-1fgfgg', NULL, 'product/7eb3eefcb94b7548cc4942a42f36e186.jpg', 27);
-/*!40000 ALTER TABLE `shop_product_type` ENABLE KEYS */;
-
 -- Dumping structure for table s-cart.shop_promocodes
 DROP TABLE IF EXISTS `shop_promocodes`;
 CREATE TABLE IF NOT EXISTS `shop_promocodes` (
@@ -1822,6 +1733,27 @@ INSERT INTO `shop_special_price` (`id`, `product_id`, `price`, `off`, `date_star
 	(14, 49, 10000, 0, NULL, NULL, 1, NULL, '2018-09-22 18:19:07', '2018-09-22 18:19:07'),
 	(15, 3, 200000, 0, NULL, NULL, 1, NULL, '2018-09-22 18:20:14', '2018-09-22 18:20:14');
 /*!40000 ALTER TABLE `shop_special_price` ENABLE KEYS */;
+
+-- Dumping structure for table s-cart.shop_vendor
+DROP TABLE IF EXISTS `shop_vendor`;
+CREATE TABLE IF NOT EXISTS `shop_vendor` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `phone` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `image` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `address` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `url` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `sort` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Dumping data for table s-cart.shop_vendor: ~0 rows (approximately)
+DELETE FROM `shop_vendor`;
+/*!40000 ALTER TABLE `shop_vendor` DISABLE KEYS */;
+INSERT INTO `shop_vendor` (`id`, `name`, `email`, `phone`, `image`, `address`, `url`, `sort`) VALUES
+	(1, 'ABC distributor', 'abc@abc.com', '012496657567', NULL, NULL, NULL, 0);
+/*!40000 ALTER TABLE `shop_vendor` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.users
 DROP TABLE IF EXISTS `users`;
