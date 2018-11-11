@@ -166,6 +166,7 @@ return [
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         App\Scart\Promocodes\PromocodesServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -181,6 +182,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Scart\ScartServiceProvider::class,
+        App\Scart\Promocodes\PromocodesServiceProvider::class,
 
     ],
 
@@ -233,6 +235,7 @@ return [
         'Cart'         => Gloudemans\Shoppingcart\Facades\Cart::class,
         'PDF'          => Barryvdh\DomPDF\Facade::class,
         'Image'        => Intervention\Image\Facades\Image::class,
+        'Excel'        => Maatwebsite\Excel\Facades\Excel::class,
         //scart
         'Promocodes'   => App\Scart\Promocodes\Facades\Promocodes::class,
         'Helper'       => App\Scart\Helper::class,

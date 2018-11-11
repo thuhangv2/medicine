@@ -209,6 +209,7 @@ return [
         'stock'        => 'Stock',
         'view'         => 'View',
         'sold'         => 'Sold',
+        'import_multi' => 'Import multiple',
 
     ],
     'promotion'         => [
@@ -231,5 +232,10 @@ return [
         'order_total'  => 'Order Total',
         'amount_total' => 'Amount Total',
         'created_at'   => 'Time added',
+    ],
+
+    'process'           => [
+        'productImport'      => 'Import multiple product',
+        'productImport_text' => 'Download file format',
     ],
 ];

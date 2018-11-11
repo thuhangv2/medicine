@@ -51,4 +51,10 @@ Route::group([
         return back();
     });
     $router->get('/report/{key}', 'Report@index');
+
+    //Process Simpe
+    $router->prefix('process')->group(function ($router) {
+        $router->any('/productImport', 'Process@importProduct');
+    });
+
 });

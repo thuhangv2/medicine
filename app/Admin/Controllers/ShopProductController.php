@@ -102,6 +102,17 @@ class ShopProductController extends Controller
             $grid->actions(function ($actions) {
                 $actions->disableView();
             });
+
+            $grid->tools(function ($tools) {
+                $tools->append('<div class="pull-right">
+<div class="btn-group pull-right" style="margin-right: 10px">
+    <a href="/' . config('admin.route.prefix') . '/process/productImport" class="btn btn-sm btn-success" title="New">
+        <i class="fa fa-save"></i><span class="hidden-xs">&nbsp;&nbsp;&nbsp;' . trans('language.product.import_multi') . '</span>
+    </a>
+</div>
+        </div>');
+            });
+
         });
     }
 

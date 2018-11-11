@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class ShopProduct extends Model
 {
     public $table      = 'shop_product';
+    protected $guarded = [];
     protected $appends = [
         'name',
         'keyword',

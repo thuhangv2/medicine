@@ -208,7 +208,7 @@ return [
         'product_info' => 'Thông tin sản phẩm',
         'view'         => 'Lượt xem',
         'sold'         => 'Đã bán',
-
+        'import_multi' => 'Import nhiều sản phẩm',
     ],
     'promotion'         => [
         'code'        => 'Mã coupon',
@@ -231,6 +231,11 @@ return [
         'order_total'  => 'Tổng đơn hàng',
         'amount_total' => 'Tổng số tiền',
         'created_at'   => 'Thời gian tạo',
+    ],
+
+    'process'           => [
+        'productImport'      => 'Thêm nhiều sản phẩm',
+        'productImport_text' => 'Tải file mẫu ở đây',
     ],
 
 ];
