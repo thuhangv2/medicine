@@ -2,6 +2,7 @@
 ## v2.0.4.2 (2018-11-10)
 ## v2.0.4.1 (2018-10-29)
 ### Add
+> Import multiple products
 > Multi language
 > Customize layout
 
