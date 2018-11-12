@@ -50,7 +50,8 @@ return [
     'base_directory'           => 'public',
 
     'images_folder_name'       => 'documents/photos',
-    'files_folder_name'        => 'documents/files',
+    // 'files_folder_name'        => 'documents/files',
+    'files_folder_name'        => 'documents',
 
     // 'shared_folder_name'       => 'shares',
     'thumb_folder_name'        => 'documents/thumbs',
