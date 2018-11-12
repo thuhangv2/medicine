@@ -46,7 +46,7 @@ Route::group([
 //Update config
     $router->any('/updateConfigField', 'ConfigInfoController@updateConfigField')->name('updateConfigField');
 //Language
-    $router->get('locale/{code}', function ($code) {
+    $router->post('locale/{code}', function ($code) {
         \App\Models\ConfigGlobal::first()->update(['locale' => $code]);
         return back();
     });

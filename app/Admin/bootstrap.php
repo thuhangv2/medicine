@@ -36,11 +36,15 @@ Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
     $languages      = Language::where('status', 1)->get()->keyBy('code');
     $path_file      = config('filesystems.disks.path_file');
     $htmlLang       = '';
+    $formLang       = '';
+
     foreach ($languages as $key => $language) {
-        $htmlLang .= '<li><a  href="' . url(config('admin.route.prefix') . '/locale/' . $key) . '" no-pjax><img alt="' . $language['name'] . '" src="/' . $path_file . '/' . $language['icon'] . '" style="height: 25px;"></a></li>';
+        $formLang .= '<form id="form-lang-' . $key . '" action="' . url(config('admin.route.prefix') . '/locale/' . $key) . '" method="POST" style="display: none;">' . csrf_field() . '
+</form>';
+        $htmlLang .= '<li onClick="$(\'#form-lang-' . $key . '\').submit();"><img alt="' . $language['name'] . '" src="/' . $path_file . '/' . $language['icon'] . '" style="height: 25px;"></li>';
     }
     if (count($languages) > 1) {
-        $navbar->left('<div class="btn-group" style="margin:10px 0 0 20px;cursor:pointer;">
+        $navbar->left($formLang . '<div class="btn-group" style="margin:10px 0 0 20px;cursor:pointer;">
                 <span  class="dropdown-toggle usa" data-toggle="dropdown">
                 <img alt="' . $languages[$configs_global->locale]['name'] . '" src="/' . $path_file . '/' . $languages[$configs_global->locale]['icon'] . '" style="height: 25px;">
                   <span class="caret"></span>
