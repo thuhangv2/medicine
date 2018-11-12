@@ -153,8 +153,14 @@
   <script src="{{ asset('vendor/laravel-filemanager/js/jquery.form.min.js') }}"></script>
   <script src="{{ asset('vendor/laravel-filemanager/js/dropzone.min.js') }}"></script>
   <script>
-    var route_prefix = "{{ url('/') }}";
-    var lfm_route = "{{ config('lfm.url_prefix', config('lfm.prefix')) }}";
+    @if (\Request::secure())
+      var route_prefix = "{{ secure_url('/') }}";
+      var lfm_route = "{{ secure_url(config('lfm.url_prefix', config('lfm.prefix'))) }}";
+    @else
+        var route_prefix = "{{ url('/') }}";
+        var lfm_route = "{{ url(config('lfm.url_prefix', config('lfm.prefix'))) }}";
+    @endif
+
     var lang = {!! json_encode(trans('laravel-filemanager::lfm')) !!};
   </script>
   <script>{!! \File::get(base_path('vendor/unisharp/laravel-filemanager/public/js/script.js')) !!}</script>
