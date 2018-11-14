@@ -165,7 +165,6 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
-        App\Scart\Promocodes\PromocodesServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
 
         /*

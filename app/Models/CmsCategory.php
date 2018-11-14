@@ -31,12 +31,12 @@ class CmsCategory extends Model
     public function getTreeCategory($root = 0)
     {
         $list   = [];
-        $result = $this->select('title', 'id', 'parent')
+        $result = $this->select('id', 'parent')
             ->where('parent', $root)
             ->get()
             ->toArray();
         foreach ($result as $value) {
-            $list[$value['id']] = $value['title'];
+            $list[$value['id']] = $value->getTitle();
             if ($this->checkChild($value['id']) > 0) {
                 $this->getTreeCategoryTmp($value['id'], $list);
             }
@@ -46,12 +46,12 @@ class CmsCategory extends Model
 
     public function getTreeCategoryTmp($id, &$list, $st = '--')
     {
-        $result = $this->select('title', 'id', 'parent')
+        $result = $this->select('id', 'parent')
             ->where('parent', $id)
             ->get()
             ->toArray();
         foreach ($result as $value) {
-            $list[$value['id']] = $st . ' ' . $value['title'];
+            $list[$value['id']] = $st . ' ' . $value->getTitle();
             $this->getTreeCategoryTmp($value['id'], $list, $st . '--');
         }
 
@@ -113,7 +113,7 @@ class CmsCategory extends Model
  */
     public static function getCategories($parent)
     {
-        return self::where('status', 1)->where('parent', $parent)->orderBy('id', 'desc')->orderBy('sort', 'desc')->get();
+        return self::where('status', 1)->where('parent', $parent)->orderBy('sort', 'desc')->orderBy('id', 'desc')->get();
     }
 
 /**
