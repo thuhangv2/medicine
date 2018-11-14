@@ -1,6 +1,5 @@
 /node_modules
 /storage/*.key
-composer.lock
 /vendor
 /.idea
 /.vagrant
