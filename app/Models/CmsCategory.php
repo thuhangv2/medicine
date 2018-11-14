@@ -33,8 +33,7 @@ class CmsCategory extends Model
         $list   = [];
         $result = $this->select('id', 'parent')
             ->where('parent', $root)
-            ->get()
-            ->toArray();
+            ->get();
         foreach ($result as $value) {
             $list[$value['id']] = $value->getTitle();
             if ($this->checkChild($value['id']) > 0) {
@@ -48,8 +47,7 @@ class CmsCategory extends Model
     {
         $result = $this->select('id', 'parent')
             ->where('parent', $id)
-            ->get()
-            ->toArray();
+            ->get();
         foreach ($result as $value) {
             $list[$value['id']] = $st . ' ' . $value->getTitle();
             $this->getTreeCategoryTmp($value['id'], $list, $st . '--');
