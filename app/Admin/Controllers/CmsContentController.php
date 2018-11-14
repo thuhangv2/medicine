@@ -98,35 +98,41 @@ class CmsContentController extends Controller
      */
     protected function form()
     {
-        $form = new Form(new CmsContent);
+        $form      = new Form(new CmsContent);
+        $languages = Language::where('status', 1)->get();
+        $form->tab(trans('language.product.product_info'), function ($form) use ($languages) {
 //Language
-        $arrParameters = request()->route()->parameters();
-        $idCheck       = (int) end($arrParameters);
-        $languages     = Language::where('status', 1)->get();
-        $arrFields     = array();
-        foreach ($languages as $key => $language) {
-            if ($idCheck) {
-                $langDescriptions = CmsContentDescription::where('cms_content_id', $idCheck)->where('lang_id', $language->id)->first();
+            $arrParameters = request()->route()->parameters();
+            $idCheck       = (int) end($arrParameters);
+            $arrFields     = array();
+            foreach ($languages as $key => $language) {
+                if ($idCheck) {
+                    $langDescriptions = CmsContentDescription::where('cms_content_id', $idCheck)->where('lang_id', $language->id)->first();
+                }
+                $form->html('<b>' . $language->name . '</b> <img style="height:25px" src="/' . config('filesystems.disks.path_file') . '/' . $language->icon . '">');
+                $form->text($language->code . '__title', trans('language.admin.title'))->rules('required', ['required' => trans('validation.required')])->default(!empty($langDescriptions->title) ? $langDescriptions->title : null);
+                $form->text($language->code . '__keyword', trans('language.admin.keyword'))->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
+                $form->text($language->code . '__description', trans('language.admin.description'))->rules('max:300', ['max' => trans('validation.max')])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
+                $form->ckeditor($language->code . '__content', trans('language.admin.content'))->default(!empty($langDescriptions->content) ? $langDescriptions->content : null)->rules('required');
+                $arrFields[] = $language->code . '__title';
+                $arrFields[] = $language->code . '__keyword';
+                $arrFields[] = $language->code . '__description';
+                $arrFields[] = $language->code . '__content';
+                $form->divide();
             }
-            $form->html('<b>' . $language->name . '</b> <img style="height:25px" src="/' . config('filesystems.disks.path_file') . '/' . $language->icon . '">');
-            $form->text($language->code . '__title', trans('language.admin.title'))->rules('required', ['required' => trans('validation.required')])->default(!empty($langDescriptions->title) ? $langDescriptions->title : null);
-            $form->text($language->code . '__keyword', trans('language.admin.keyword'))->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
-            $form->text($language->code . '__description', trans('language.admin.description'))->rules('max:300', ['max' => trans('validation.max')])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
-            $form->ckeditor($language->code . '__content', trans('language.admin.content'))->default(!empty($langDescriptions->content) ? $langDescriptions->content : null)->rules('required');
-            $arrFields[] = $language->code . '__title';
-            $arrFields[] = $language->code . '__keyword';
-            $arrFields[] = $language->code . '__description';
-            $arrFields[] = $language->code . '__content';
-            $form->divide();
-        }
-        $form->ignore($arrFields);
+            $form->ignore($arrFields);
 //end language
-        $arrCate = (new CmsCategory)->getTreeCategory();
-        $form->select('category_id', trans('language.category'))->options($arrCate)->rules('required');
-        $form->image('image', trans('language.admin.image'))->uniqueName()->move('cms_content')->removable();
-        $form->switch('status', trans('language.admin.status'));
-        $form->number('sort', trans('language.admin.sort'));
+            $arrCate = (new CmsCategory)->getTreeCategory();
+            $form->select('category_id', trans('language.category'))->options($arrCate)->rules('required');
+            $form->image('image', trans('language.admin.image'))->uniqueName()->move('cms_content')->removable();
+            $form->switch('status', trans('language.admin.status'));
+            $form->number('sort', trans('language.admin.sort'));
+        })->tab(trans('language.admin.sub_image'), function ($form) {
+            $form->hasMany('images', ' ', function (Form\NestedForm $form) {
+                $form->image('image', trans('language.admin.sub_image'))->uniqueName()->move('product_slide');
+            });
 
+        });
         $arrData = array();
         $form->saving(function (Form $form) use ($languages, &$arrData) {
             //Lang
