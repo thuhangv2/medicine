@@ -230,7 +230,7 @@ CREATE TABLE IF NOT EXISTS `admin_users` (
 DELETE FROM `admin_users`;
 /*!40000 ALTER TABLE `admin_users` DISABLE KEYS */;
 INSERT INTO `admin_users` (`id`, `username`, `password`, `name`, `avatar`, `remember_token`, `created_at`, `updated_at`) VALUES
-	(1, 'admin', '$2y$10$vYyIakPvltcTJ7CBaU/TL.jMbtnYJkwj3OCBeYXIAiDtgqSFm3AQm', 'Administrator', NULL, 'Qc7pOAIMYmzYDz6Ew1sBD9QaDUoJ83kL8fzPx6yD6XdqkRdmpzkeB8zzlltR', '2018-01-12 17:27:40', '2018-11-12 22:55:29'),
+	(1, 'admin', '$2y$10$wwXEVBZ9NHpeSoSSnipCLOhxbcI5UNTiF5U.3bGeoBFXR8NeLOF12', 'Administrator', NULL, 'Qc7pOAIMYmzYDz6Ew1sBD9QaDUoJ83kL8fzPx6yD6XdqkRdmpzkeB8zzlltR', '2018-01-12 17:27:40', '2018-11-15 06:39:31'),
 	(3, 'user', '$2y$10$Ao7Uey2z5jPFta/rZG51XuG1OZiWdlbdf3QSgsAjKn9Hfpcp14Ami', 'User', NULL, 'Mle9NHz93h50M8x42L5pqUxm406WTwpvDKxXQTSgMBHaR5qzI5BseTRkYZeM', '2018-01-12 18:05:28', '2018-09-23 18:56:26');
 /*!40000 ALTER TABLE `admin_users` ENABLE KEYS */;
 
@@ -253,7 +253,7 @@ DELETE FROM `admin_user_permissions`;
 DROP TABLE IF EXISTS `banner`;
 CREATE TABLE IF NOT EXISTS `banner` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `image` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `image` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `url` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `html` text COLLATE utf8_unicode_ci,
   `status` tinyint(4) NOT NULL DEFAULT '0',
@@ -311,7 +311,7 @@ DROP TABLE IF EXISTS `cms_conten`;
 CREATE TABLE IF NOT EXISTS `cms_conten` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `category_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `image` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `image` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sort` tinyint(4) unsigned DEFAULT '0',
   `status` tinyint(4) unsigned DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -775,7 +775,7 @@ CREATE TABLE IF NOT EXISTS `shop_order` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=131 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Dumping data for table s-cart.shop_order: ~46 rows (approximately)
 DELETE FROM `shop_order`;
@@ -826,7 +826,8 @@ INSERT INTO `shop_order` (`id`, `user_id`, `subtotal`, `shipping`, `discount`, `
 	(127, 0, 125000, 20000, 0, 0, 0, 0, 0, 145000, 0, 145000, '123123', '213123', '123123', NULL, '0987654321', NULL, NULL, 'cash', NULL, '2018-11-01 13:27:57', NULL),
 	(128, 0, 115000, 20000, 0, 0, 0, 0, 0, 135000, 0, 135000, 'vinaenter', 'vinaenter', 'vinaenter', NULL, '0978735237', NULL, 'ccccccccccccccccc', 'cash', NULL, '2018-11-05 18:23:55', NULL),
 	(129, 0, 15000, 20000, 0, 0, 0, 0, 0, 35000, 0, 35000, 'fasdfasfasdf', 'ádfasdfasdf', 'sdfafasdfasdfasdf', NULL, '01673419334', NULL, NULL, 'cash', NULL, '2018-11-05 18:35:28', NULL),
-	(130, 5, 90000, 15000, -10000, 0, 1, 1, 0, 95000, -35000, 60000, 'Bao Khanh', '12/A3', 'TTh07', NULL, '09012345678', NULL, 'Comment', NULL, NULL, '2018-11-09 00:12:55', '2018-11-09 00:14:54');
+	(130, 5, 90000, 15000, -10000, 0, 1, 1, 0, 95000, -35000, 60000, 'Bao Khanh', '12/A3', 'TTh07', NULL, '09012345678', NULL, 'Comment', NULL, NULL, '2018-11-09 00:12:55', '2018-11-09 00:14:54'),
+	(131, 0, 10000, 20000, 0, 0, 0, 0, 0, 30000, 0, 30000, 'quang', 'sdf', 'fsdf', NULL, '01667133042', NULL, NULL, 'cash', NULL, '2018-11-13 15:08:31', NULL);
 /*!40000 ALTER TABLE `shop_order` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_order_detail
@@ -845,7 +846,7 @@ CREATE TABLE IF NOT EXISTS `shop_order_detail` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=204 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=205 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Dumping data for table s-cart.shop_order_detail: ~58 rows (approximately)
 DELETE FROM `shop_order_detail`;
@@ -908,7 +909,8 @@ INSERT INTO `shop_order_detail` (`id`, `order_id`, `product_id`, `name`, `price`
 	(200, 129, 45, 'Easy Polo Black Edition', 15000, 1, 15000, 'LFF', '[]', NULL, '2018-11-05 18:35:28', NULL),
 	(201, 130, 32, 'Easy Polo Black Edition', 20000, 2, 40000, '3D-HOTWIRE1240', NULL, NULL, NULL, NULL),
 	(202, 130, 31, 'Easy Polo Black Edition', 10000, 4, 40000, '3D-TEFLONLOCK-M10', NULL, NULL, NULL, NULL),
-	(203, 130, 29, 'Easy Polo Black Edition', 10000, 1, 10000, '3D-TEFLONLOCK', NULL, NULL, NULL, NULL);
+	(203, 130, 29, 'Easy Polo Black Edition', 10000, 1, 10000, '3D-TEFLONLOCK', NULL, NULL, NULL, NULL),
+	(204, 131, 49, 'Easy Polo Black Edition', 10000, 1, 10000, 'BX-5UTbnv', '[]', NULL, '2018-11-13 15:08:31', NULL);
 /*!40000 ALTER TABLE `shop_order_detail` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_order_history
@@ -921,7 +923,7 @@ CREATE TABLE IF NOT EXISTS `shop_order_history` (
   `user_id` int(11) NOT NULL DEFAULT '0',
   `add_date` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Dumping data for table s-cart.shop_order_history: ~67 rows (approximately)
 DELETE FROM `shop_order_history`;
@@ -993,7 +995,8 @@ INSERT INTO `shop_order_history` (`id`, `order_id`, `content`, `admin_id`, `user
 	(124, 130, 'Change <b>received</b> from <span style="color:blue">\'\'</span> to <span style="color:red">\'-35000\'</span>', 1, 0, '2018-11-09 00:13:56'),
 	(125, 130, 'Change <b>shipping_status</b> from <span style="color:blue">\'0\'</span> to <span style="color:red">\'1\'</span>', 1, 0, '2018-11-09 00:14:06'),
 	(126, 130, 'Change <b>status</b> from <span style="color:blue">\'0\'</span> to <span style="color:red">\'1\'</span>', 1, 0, '2018-11-09 00:14:11'),
-	(127, 130, 'Change <b>address1</b> from <span style="color:blue">\'12\'</span> to <span style="color:red">\'12/A3\'</span>', 1, 0, '2018-11-09 00:14:54');
+	(127, 130, 'Change <b>address1</b> from <span style="color:blue">\'12\'</span> to <span style="color:red">\'12/A3\'</span>', 1, 0, '2018-11-09 00:14:54'),
+	(128, 131, 'New order', 0, 0, '2018-11-13 15:08:31');
 /*!40000 ALTER TABLE `shop_order_history` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_order_status
@@ -1028,7 +1031,7 @@ CREATE TABLE IF NOT EXISTS `shop_order_total` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=499 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=504 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Dumping data for table s-cart.shop_order_total: ~295 rows (approximately)
 DELETE FROM `shop_order_total`;
@@ -1328,7 +1331,12 @@ INSERT INTO `shop_order_total` (`id`, `order_id`, `title`, `code`, `value`, `sor
 	(495, 130, 'Shipping', 'shipping', 15000, 10, NULL, '2018-11-09 00:13:39'),
 	(496, 130, 'Discount', 'discount', -10000, 20, NULL, '2018-11-09 00:13:47'),
 	(497, 130, 'Total', 'total', 95000, 100, NULL, '2018-11-09 00:13:47'),
-	(498, 130, 'Received', 'received', -35000, 200, NULL, '2018-11-09 00:13:56');
+	(498, 130, 'Received', 'received', -35000, 200, NULL, '2018-11-09 00:13:56'),
+	(499, 131, 'Sub total', 'subtotal', 10000, 1, '2018-11-13 15:08:31', NULL),
+	(500, 131, 'Shipping', 'shipping', 20000, 10, '2018-11-13 15:08:31', NULL),
+	(501, 131, 'Discount', 'discount', 0, 20, '2018-11-13 15:08:31', NULL),
+	(502, 131, 'Total', 'total', 30000, 100, '2018-11-13 15:08:31', NULL),
+	(503, 131, 'Received', 'received', 0, 200, '2018-11-13 15:08:31', NULL);
 /*!40000 ALTER TABLE `shop_order_total` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_payment_status
@@ -1380,46 +1388,46 @@ CREATE TABLE IF NOT EXISTS `shop_product` (
 DELETE FROM `shop_product`;
 /*!40000 ALTER TABLE `shop_product` DISABLE KEYS */;
 INSERT INTO `shop_product` (`id`, `sku`, `image`, `brand_id`, `vendor_id`, `category_id`, `category_other`, `price`, `cost`, `stock`, `sold`, `type`, `option`, `sort`, `status`, `view`, `date_lastview`, `date_available`, `created_at`, `updated_at`) VALUES
-	(3, 'MEGA2560', 'product/f2d9505d28f1b10f949cec466cada01e.jpeg', 1, 0, 7, NULL, 220000, 150000, 100, 0, 0, NULL, 0, 1, 8, '2018-11-09 13:39:14', NULL, '2018-01-15 14:57:31', '2018-11-09 13:39:14'),
-	(4, 'LEDFAN1', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 6, NULL, 190000, 100000, 100, 0, 1, NULL, 0, 1, 8, '2018-11-03 20:25:46', NULL, '2018-01-16 13:03:54', '2018-11-03 20:25:46'),
-	(5, 'CLOCKFAN1', 'product/15aa6b1f31b53a0177d7653761a45274.jpeg', 2, 0, 13, NULL, 420000, 320000, 100, 0, 1, NULL, 0, 1, 12, '2018-11-12 17:04:04', NULL, '2018-01-16 13:04:41', '2018-11-12 17:04:04'),
-	(6, 'CLOCKFAN2', 'product/0e1416d509af3712bd801404ca928702.jpeg', 1, 0, 13, NULL, 380000, 250000, 100, 0, 1, NULL, 0, 1, 25, '2018-11-03 20:25:52', NULL, '2018-02-02 14:52:50', '2018-11-03 20:25:52'),
-	(7, 'CLOCKFAN3', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 13, NULL, 320000, 250000, 100, 0, 1, NULL, 1, 1, 17, '2018-11-11 22:41:38', NULL, '2018-02-02 14:53:30', '2018-11-11 22:41:38'),
-	(8, 'TMC2208', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 6, 0, 11, NULL, 220000, 130000, 100, 0, 0, NULL, 1, 1, 20, '2018-11-11 00:06:10', NULL, '2018-02-02 14:53:30', '2018-11-11 00:06:10'),
-	(9, 'FILAMENT', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 15, NULL, 299000, 200000, 100, 0, 1, NULL, 1, 1, 17, '2018-11-11 16:11:28', NULL, '2018-02-02 14:53:30', '2018-11-11 16:11:28'),
-	(10, 'A4988', 'product/820283598735f98a9b23960821da438b.jpeg', 1, 0, 11, NULL, 39000, 20000, 100, 0, 0, NULL, 1, 1, 11, '2018-11-11 08:23:01', NULL, '2018-02-02 14:53:30', '2018-11-11 08:23:01'),
-	(11, 'ANYCUBIC-P', 'product/d63af407fa92299e163696a585566dc7.jpeg', 3, 0, 10, NULL, 4990000, 3500000, 100, 0, 0, NULL, 0, 1, 4, '2018-11-12 20:21:13', NULL, '2018-01-15 14:57:31', '2018-11-12 20:21:13'),
-	(12, '3DHLFD', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 12, NULL, 7990000, 5200000, 100, 0, 1, NULL, 0, 1, 7, '2018-11-08 18:28:39', NULL, '2018-01-15 14:57:31', '2018-11-08 18:28:39'),
-	(20, 'SS495A', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 2, 0, 14, NULL, 15000, 7000, 100, 0, 1, NULL, 0, 1, 25, '2018-11-11 02:16:06', NULL, '2018-01-15 14:57:31', '2018-11-11 02:16:06'),
-	(21, '3D-CARBON1.75', 'product/d05966a529efdd8d7b41ed9b687859b6.jpeg', 2, 0, 15, NULL, 390000, 15000, 100, 0, 1, NULL, 1, 1, 12, '2018-11-10 01:54:51', NULL, '2018-02-02 14:53:30', '2018-11-10 01:54:51'),
-	(22, '3D-GOLD1.75', 'product/eedfd153bf368919a134da17f22c8de7.jpeg', 2, 0, 15, NULL, 500000, 15000, 100, 0, 1, NULL, 1, 1, 16, '2018-11-03 21:01:45', NULL, '2018-04-12 15:05:37', '2018-11-03 21:01:45'),
-	(23, 'LCD12864-3D', 'product/a7a315526ecf7594731448d792714a11.jpeg', 2, 0, 11, NULL, 220000, 15000, 100, 0, 0, NULL, 0, 1, 8, '2018-11-10 02:44:48', NULL, '2018-08-11 13:33:37', '2018-11-10 02:44:48'),
-	(24, 'LCD2004-3D', 'product/9215506044b8a350fc082f5350b3653a.jpg', 2, 0, 11, NULL, 190000, 15000, 100, 0, 0, NULL, 0, 1, 6, '2018-11-09 18:01:30', NULL, '2018-08-11 13:39:31', '2018-11-09 18:01:31'),
-	(25, 'RAMPS1.5-3D', 'product/1d6cdd4473603c7a4d162067713b8da8.jpg', 2, 0, 11, NULL, 120000, 15000, 100, 0, 0, NULL, 0, 1, 2, '2018-10-31 16:06:45', NULL, '2018-08-11 13:41:25', '2018-10-31 16:06:45'),
-	(26, 'EFULL-3D', 'product/07e79f6546499878cba383dd5bfe977e.jpeg', 1, 0, 11, NULL, 890000, 15000, 100, 0, 0, NULL, 0, 1, 4, '2018-11-03 20:26:02', NULL, '2018-08-11 13:50:25', '2018-11-03 20:26:02'),
-	(27, 'ANYCUBIC-I3M', 'product/ea88b7078652909f3d6c5d445aa05f59.jpeg', 1, 0, 10, NULL, 7990000, 15000, 100, 0, 0, NULL, 0, 1, 18, '2018-11-09 21:15:24', NULL, '2018-08-22 16:26:00', '2018-11-09 21:15:24'),
-	(28, '3DNOZZLE', 'product/c25c81c852823f5ea8ba4250978217a5.jpeg', 1, 0, 11, NULL, 10000, 15000, 100, 0, 0, NULL, 0, 1, 2, '2018-11-03 20:25:57', NULL, '2018-08-24 04:21:48', '2018-11-03 20:25:57'),
-	(29, '3D-TEFLONLOCK', 'product/8e28f51184f0a96970c05185b1412fa1.jpeg', 1, 0, 12, NULL, 10000, 15000, 100, 0, 0, NULL, 0, 1, 15, '2018-11-10 03:03:11', NULL, '2018-08-24 04:32:48', '2018-11-10 03:03:11'),
-	(30, '3D-BELT-GT2', 'product/8f795b2335d42cdb7c7eafcfaf714cb2.jpeg', 1, 0, 11, NULL, 20000, 15000, 100, 0, 1, NULL, 0, 1, 21, '2018-11-12 13:24:58', NULL, '2018-08-24 04:35:39', '2018-11-12 13:24:58'),
-	(31, '3D-TEFLONLOCK-M10', 'product/0e1416d509af3712bd801404ca928702.jpeg', 2, 0, 11, NULL, 10000, 15000, 100, 0, 0, NULL, 0, 1, 6, '2018-11-03 20:26:01', NULL, '2018-08-24 04:39:03', '2018-11-03 20:26:01'),
-	(32, '3D-HOTWIRE1240', 'product/efd9fb910ba539c125b7c431a1ccc563.jpg', 0, 0, 11, NULL, 20000, 15000, 100, 0, 1, NULL, 0, 1, 16, '2018-11-10 03:23:30', NULL, '2018-08-24 04:40:54', '2018-11-10 03:23:30'),
-	(33, '3D-TEFTLON-24', 'product/a635cc2bdf5485ccb2c0cc9d186968b2.jpeg', 2, 0, 16, NULL, 15000, 15000, 100, 0, 0, NULL, 1, 1, 20, '2018-11-11 10:11:02', NULL, '2018-08-24 04:44:04', '2018-11-11 10:11:02'),
-	(34, '3D-TEFTLON-W24', 'product/a32f12e009ebf0d24ab264706ecbc15e.jpeg', 5, 0, 11, NULL, 20000, 15000, 100, 0, 1, NULL, 0, 1, 14, '2018-11-10 08:53:47', NULL, '2018-08-24 05:09:34', '2018-11-10 08:53:47'),
-	(35, '3D-SENSOR-NTC 100K', 'product/41c8f0d0111cd5a3f0538604233cbed8.jpeg', 4, 0, 10, NULL, 15000, 15000, 100, 0, 1, NULL, 0, 1, 12, '2018-11-09 18:10:48', NULL, '2018-08-24 05:13:58', '2018-11-09 18:10:48'),
-	(36, 'nRLF24L01+2.4HZ', 'product/820283598735f98a9b23960821da438b.jpeg', 3, 0, 11, NULL, 25000, 15000, 100, 0, 0, NULL, 0, 1, 18, '2018-11-10 23:08:03', NULL, '2018-08-24 06:07:15', '2018-11-10 23:08:03'),
-	(37, 'ARDUINO-NANO', 'product/da687e60e54bd7fc7eab5c76e7ec3754.jpeg', 1, 0, 17, NULL, 100000, 15000, 100, 0, 0, NULL, 0, 1, 11, '2018-11-11 17:24:59', NULL, '2018-08-24 06:25:48', '2018-11-11 17:24:59'),
-	(38, 'LEDSTRIP-5050RGB', 'product/61559578baf403e03565e73a14f845ce.jpeg', 1, 0, 9, NULL, 15000, 15000, 100, 0, 1, NULL, 0, 1, 36, '2018-11-12 12:24:21', NULL, '2018-08-24 06:33:31', '2018-11-12 12:24:21'),
-	(39, 'LEDSTRIP-S', 'product/c400aecd5c6d87782ac9af33dd7a5980.jpg', 4, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 9, '2018-11-09 23:23:20', NULL, '2018-08-24 08:46:21', '2018-11-09 23:23:20'),
+	(3, 'MEGA2560', 'product/f2d9505d28f1b10f949cec466cada01e.jpeg', 1, 0, 7, NULL, 220000, 150000, 100, 0, 0, NULL, 0, 1, 9, '2018-11-15 00:20:11', NULL, '2018-01-15 14:57:31', '2018-11-15 00:20:11'),
+	(4, 'LEDFAN1', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 6, NULL, 190000, 100000, 100, 0, 1, NULL, 0, 1, 9, '2018-11-15 03:39:10', NULL, '2018-01-16 13:03:54', '2018-11-15 03:39:10'),
+	(5, 'CLOCKFAN1', 'product/15aa6b1f31b53a0177d7653761a45274.jpeg', 2, 0, 13, NULL, 420000, 320000, 100, 0, 1, NULL, 0, 1, 13, '2018-11-15 00:07:43', NULL, '2018-01-16 13:04:41', '2018-11-15 00:07:43'),
+	(6, 'CLOCKFAN2', 'product/0e1416d509af3712bd801404ca928702.jpeg', 1, 0, 13, NULL, 380000, 250000, 100, 0, 1, NULL, 0, 1, 30, '2018-11-15 01:00:40', NULL, '2018-02-02 14:52:50', '2018-11-15 01:00:40'),
+	(7, 'CLOCKFAN3', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 13, NULL, 320000, 250000, 100, 0, 1, NULL, 1, 1, 22, '2018-11-15 00:54:38', NULL, '2018-02-02 14:53:30', '2018-11-15 00:54:38'),
+	(8, 'TMC2208', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 6, 0, 11, NULL, 220000, 130000, 100, 0, 0, NULL, 1, 1, 21, '2018-11-14 23:56:36', NULL, '2018-02-02 14:53:30', '2018-11-14 23:56:36'),
+	(9, 'FILAMENT', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 15, NULL, 299000, 200000, 100, 0, 1, NULL, 1, 1, 22, '2018-11-15 00:49:16', NULL, '2018-02-02 14:53:30', '2018-11-15 00:49:16'),
+	(10, 'A4988', 'product/820283598735f98a9b23960821da438b.jpeg', 1, 0, 11, NULL, 39000, 20000, 100, 0, 0, NULL, 1, 1, 12, '2018-11-14 22:49:34', NULL, '2018-02-02 14:53:30', '2018-11-14 22:49:34'),
+	(11, 'ANYCUBIC-P', 'product/d63af407fa92299e163696a585566dc7.jpeg', 3, 0, 10, NULL, 4990000, 3500000, 100, 0, 0, NULL, 0, 1, 5, '2018-11-14 17:31:03', NULL, '2018-01-15 14:57:31', '2018-11-14 17:31:03'),
+	(12, '3DHLFD', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 12, NULL, 7990000, 5200000, 100, 0, 1, NULL, 0, 1, 11, '2018-11-15 02:16:52', NULL, '2018-01-15 14:57:31', '2018-11-15 02:16:52'),
+	(20, 'SS495A', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 2, 0, 14, NULL, 15000, 7000, 100, 0, 1, NULL, 0, 1, 31, '2018-11-14 22:51:39', NULL, '2018-01-15 14:57:31', '2018-11-14 22:51:39'),
+	(21, '3D-CARBON1.75', 'product/d05966a529efdd8d7b41ed9b687859b6.jpeg', 2, 0, 15, NULL, 390000, 15000, 100, 0, 1, NULL, 1, 1, 16, '2018-11-15 01:06:03', NULL, '2018-02-02 14:53:30', '2018-11-15 01:06:03'),
+	(22, '3D-GOLD1.75', 'product/eedfd153bf368919a134da17f22c8de7.jpeg', 2, 0, 15, NULL, 500000, 15000, 100, 0, 1, NULL, 1, 1, 20, '2018-11-15 00:49:51', NULL, '2018-04-12 15:05:37', '2018-11-15 00:49:51'),
+	(23, 'LCD12864-3D', 'product/a7a315526ecf7594731448d792714a11.jpeg', 2, 0, 11, NULL, 220000, 15000, 100, 0, 0, NULL, 0, 1, 9, '2018-11-14 19:26:50', NULL, '2018-08-11 13:33:37', '2018-11-14 19:26:50'),
+	(24, 'LCD2004-3D', 'product/9215506044b8a350fc082f5350b3653a.jpg', 2, 0, 11, NULL, 190000, 15000, 100, 0, 0, NULL, 0, 1, 7, '2018-11-14 20:11:43', NULL, '2018-08-11 13:39:31', '2018-11-14 20:11:43'),
+	(25, 'RAMPS1.5-3D', 'product/1d6cdd4473603c7a4d162067713b8da8.jpg', 2, 0, 11, NULL, 120000, 15000, 100, 0, 0, NULL, 0, 1, 3, '2018-11-14 19:50:44', NULL, '2018-08-11 13:41:25', '2018-11-14 19:50:44'),
+	(26, 'EFULL-3D', 'product/07e79f6546499878cba383dd5bfe977e.jpeg', 1, 0, 11, NULL, 890000, 15000, 100, 0, 0, NULL, 0, 1, 5, '2018-11-14 20:35:03', NULL, '2018-08-11 13:50:25', '2018-11-14 20:35:03'),
+	(27, 'ANYCUBIC-I3M', 'product/ea88b7078652909f3d6c5d445aa05f59.jpeg', 1, 0, 10, NULL, 7990000, 15000, 100, 0, 0, NULL, 0, 1, 19, '2018-11-15 00:17:29', NULL, '2018-08-22 16:26:00', '2018-11-15 00:17:29'),
+	(28, '3DNOZZLE', 'product/c25c81c852823f5ea8ba4250978217a5.jpeg', 1, 0, 11, NULL, 10000, 15000, 100, 0, 0, NULL, 0, 1, 3, '2018-11-15 03:05:45', NULL, '2018-08-24 04:21:48', '2018-11-15 03:05:45'),
+	(29, '3D-TEFLONLOCK', 'product/8e28f51184f0a96970c05185b1412fa1.jpeg', 1, 0, 12, NULL, 10000, 15000, 100, 0, 0, NULL, 0, 1, 16, '2018-11-14 20:37:41', NULL, '2018-08-24 04:32:48', '2018-11-14 20:37:41'),
+	(30, '3D-BELT-GT2', 'product/8f795b2335d42cdb7c7eafcfaf714cb2.jpeg', 1, 0, 11, NULL, 20000, 15000, 100, 0, 1, NULL, 0, 1, 24, '2018-11-15 02:51:00', NULL, '2018-08-24 04:35:39', '2018-11-15 02:51:00'),
+	(31, '3D-TEFLONLOCK-M10', 'product/0e1416d509af3712bd801404ca928702.jpeg', 2, 0, 11, NULL, 10000, 15000, 100, 0, 0, NULL, 0, 1, 7, '2018-11-14 19:48:19', NULL, '2018-08-24 04:39:03', '2018-11-14 19:48:19'),
+	(32, '3D-HOTWIRE1240', 'product/efd9fb910ba539c125b7c431a1ccc563.jpg', 0, 0, 11, NULL, 20000, 15000, 100, 0, 1, NULL, 0, 1, 17, '2018-11-14 20:59:28', NULL, '2018-08-24 04:40:54', '2018-11-14 20:59:28'),
+	(33, '3D-TEFTLON-24', 'product/a635cc2bdf5485ccb2c0cc9d186968b2.jpeg', 2, 0, 16, NULL, 15000, 15000, 100, 0, 0, NULL, 1, 1, 21, '2018-11-14 15:56:05', NULL, '2018-08-24 04:44:04', '2018-11-14 15:56:05'),
+	(34, '3D-TEFTLON-W24', 'product/a32f12e009ebf0d24ab264706ecbc15e.jpeg', 5, 0, 11, NULL, 20000, 15000, 100, 0, 1, NULL, 0, 1, 16, '2018-11-15 01:38:56', NULL, '2018-08-24 05:09:34', '2018-11-15 01:38:56'),
+	(35, '3D-SENSOR-NTC 100K', 'product/41c8f0d0111cd5a3f0538604233cbed8.jpeg', 4, 0, 10, NULL, 15000, 15000, 100, 0, 1, NULL, 0, 1, 13, '2018-11-15 01:40:54', NULL, '2018-08-24 05:13:58', '2018-11-15 01:40:54'),
+	(36, 'nRLF24L01+2.4HZ', 'product/820283598735f98a9b23960821da438b.jpeg', 3, 0, 11, NULL, 25000, 15000, 100, 0, 0, NULL, 0, 1, 19, '2018-11-15 02:14:28', NULL, '2018-08-24 06:07:15', '2018-11-15 02:14:28'),
+	(37, 'ARDUINO-NANO', 'product/da687e60e54bd7fc7eab5c76e7ec3754.jpeg', 1, 0, 17, NULL, 100000, 15000, 100, 0, 0, NULL, 0, 1, 12, '2018-11-15 02:16:22', NULL, '2018-08-24 06:25:48', '2018-11-15 02:16:22'),
+	(38, 'LEDSTRIP-5050RGB', 'product/61559578baf403e03565e73a14f845ce.jpeg', 1, 0, 9, NULL, 15000, 15000, 100, 0, 1, NULL, 0, 1, 41, '2018-11-15 03:37:26', NULL, '2018-08-24 06:33:31', '2018-11-15 03:37:26'),
+	(39, 'LEDSTRIP-S', 'product/c400aecd5c6d87782ac9af33dd7a5980.jpg', 4, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 11, '2018-11-14 16:48:31', NULL, '2018-08-24 08:46:21', '2018-11-14 16:48:31'),
 	(40, 'P10-IR', 'product/830d640cd17eba0bf186dc649d5c3053.jpeg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 12, '2018-11-10 02:34:32', NULL, '2018-08-24 08:49:49', '2018-11-10 02:34:32'),
-	(41, 'P10-IG', 'product/9d9aab8be8634708c9cf5b690fee74a4.jpeg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 1, NULL, 0, 1, 22, '2018-11-09 12:08:39', NULL, '2018-08-24 08:51:11', '2018-11-09 12:08:39'),
+	(41, 'P10-IG', 'product/9d9aab8be8634708c9cf5b690fee74a4.jpeg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 1, NULL, 0, 1, 24, '2018-11-15 03:54:26', NULL, '2018-08-24 08:51:11', '2018-11-15 03:54:26'),
 	(42, 'P10-IB', 'product/98fafb9da683cd9ee854598f3f3a3bd5.jpeg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 12, '2018-11-09 23:54:31', NULL, '2018-08-24 08:52:58', '2018-11-09 23:54:31'),
 	(43, 'P10-IRGB', 'product/a111c060ebb6ffbbd2d34ae278501789.jpg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 8, '2018-11-09 05:43:03', NULL, '2018-08-24 08:54:45', '2018-11-09 05:43:03'),
-	(44, 'P10-IRG', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 1, NULL, 0, 1, 33, '2018-11-10 09:04:41', NULL, '2018-08-24 08:56:02', '2018-11-10 09:04:41'),
-	(45, 'LFF', 'product/3c8f613d30b4e487ef95a5e4cdea634c.jpeg', 0, 0, 6, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 39, '2018-11-10 08:33:55', NULL, '2018-08-24 08:58:42', '2018-11-10 08:33:55'),
-	(46, 'P2.5-I', 'product/949fa36ebd56593445fb61d141fd2a81.jpeg', 2, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 35, '2018-11-09 23:12:46', NULL, '2018-08-24 09:23:07', '2018-11-09 23:12:46'),
-	(47, 'BX-5U0', 'product/cd7aa3394c35330ed7f9e4095c6adb65.jpeg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 105, '2018-11-11 12:59:47', NULL, '2018-08-24 09:48:31', '2018-11-11 12:59:47'),
-	(48, 'BX-5UT', 'product/6ddd855403d127a9fed049d0ec335481.jpeg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 255, '2018-11-08 09:36:23', NULL, '2018-08-24 09:52:15', '2018-11-08 09:36:23'),
-	(49, 'BX-5UTbnv', 'product/0950df6d59696ad39a8e5505735f578c.jpeg', 2, 0, 2, NULL, 15000, 15000, 100, 0, 1, NULL, 0, 1, 130, '2018-11-12 18:12:00', '2018-09-19 00:00:00', '2018-09-03 08:05:59', '2018-11-12 18:12:00');
+	(44, 'P10-IRG', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 1, NULL, 0, 1, 37, '2018-11-15 03:52:42', NULL, '2018-08-24 08:56:02', '2018-11-15 03:52:42'),
+	(45, 'LFF', 'product/3c8f613d30b4e487ef95a5e4cdea634c.jpeg', 0, 0, 6, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 44, '2018-11-15 03:23:41', NULL, '2018-08-24 08:58:42', '2018-11-15 03:23:41'),
+	(46, 'P2.5-I', 'product/949fa36ebd56593445fb61d141fd2a81.jpeg', 2, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 39, '2018-11-15 03:21:51', NULL, '2018-08-24 09:23:07', '2018-11-15 03:21:51'),
+	(47, 'BX-5U0', 'product/cd7aa3394c35330ed7f9e4095c6adb65.jpeg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 111, '2018-11-15 01:58:53', NULL, '2018-08-24 09:48:31', '2018-11-15 01:58:53'),
+	(48, 'BX-5UT', 'product/6ddd855403d127a9fed049d0ec335481.jpeg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 257, '2018-11-15 01:56:52', NULL, '2018-08-24 09:52:15', '2018-11-15 01:56:52'),
+	(49, 'BX-5UTbnv', 'product/0950df6d59696ad39a8e5505735f578c.jpeg', 2, 0, 2, NULL, 15000, 15000, 99, 1, 1, NULL, 0, 1, 138, '2018-11-15 01:22:30', '2018-09-19 00:00:00', '2018-09-03 08:05:59', '2018-11-15 01:22:30');
 /*!40000 ALTER TABLE `shop_product` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_product_description
