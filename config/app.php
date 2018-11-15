@@ -240,4 +240,32 @@ return [
         'Helper'       => App\Scart\Helper::class,
     ],
 
+    'debug_blacklist' => [
+        '_ENV'    => [
+            'APP_KEY',
+            'DB_DATABASE',
+            'DB_USERNAME',
+            'DB_PASSWORD',
+            'MAIL_HOST',
+            'MAIL_USERNAME',
+            'MAIL_PASSWORD',
+        ],
+
+        '_SERVER' => [
+            'APP_KEY',
+            'DB_DATABASE',
+            'DB_USERNAME',
+            'DB_PASSWORD',
+            'MAIL_HOST',
+            'MAIL_USERNAME',
+            'MAIL_PASSWORD',
+            'DOCUMENT_ROOT',
+            'CONTEXT_DOCUMENT_ROOT',
+            'SCRIPT_FILENAME',
+        ],
+        '_POST'   => [
+            'password',
+        ],
+    ],
+
 ];
