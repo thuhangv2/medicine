@@ -33,7 +33,7 @@ class ConfigInfoController extends Controller
             $content->row(function (Row $row) {
                 $row->column(1 / 3, new Box(trans('language.admin.config_email'), $this->viewSMTPConfig()));
                 $row->column(1 / 3, new Box(trans('language.admin.config_display'), $this->viewDisplayConfig()));
-                $row->column(12, new Box(trans('language.admin.config_paypal'), $this->viewPaypalConfig()));
+                $row->column(1 / 3, new Box(trans('language.admin.config_paypal'), $this->viewPaypalConfig()));
             });
 
         });
