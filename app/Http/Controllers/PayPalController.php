@@ -27,9 +27,6 @@ class PayPalController extends Controller
         $this->paypalSvc    = $paypalSvc;
         $this->order_status = $paypalConfigs['paypal_order_status_success'];
         $this->order_faild  = $paypalConfigs['paypal_order_status_faild'];
-        // config(['paypal.settings.mode' => $paypalConfigs['paypal_mode']]);
-        // config(['paypal.settings.log.logEnabled' => $paypalConfigs['paypal_log']]);
-        // config(['paypal.settings.log.FileName' => storage_path() . '/' . $paypalConfigs['paypal_path_log']]);
     }
 
     public function index(Request $request)

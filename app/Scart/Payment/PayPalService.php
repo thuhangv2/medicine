@@ -32,16 +32,17 @@ class PayPalService
 
     public function __construct()
     {
-        // $paypalConfigs    = config('paypal');
-        $paypalConfigs    = Config::where('code', 'payment_paypal')->pluck('value', 'key');
+        $paypal_env    = config('paypal');
+        $paypalConfigs = Config::where('code', 'payment_paypal')->pluck('value', 'key');
+
         $this->apiContext = new ApiContext(
             new OAuthTokenCredential(
-                $paypalConfigs['paypal_client_id'],
-                $paypalConfigs['paypal_secret']
+                $paypal_env['client_id'],
+                $paypal_env['secret']
             )
         );
         $this->apiContext->setConfig([
-            'mode'                   => $paypalConfigs['paypal_mode'],
+            'mode'                   => $paypal_env['settings']['mode'],
             'http.ConnectionTimeOut' => 30,
             'log.logEnabled'         => $paypalConfigs['paypal_log'],
             'log.FileName'           => storage_path() . '/' . $paypalConfigs['paypal_path_log'],
