@@ -11,7 +11,7 @@ return [
     | login page.
     |
      */
-    'name'                      => 'S-cart Admin',
+    'name'                      => 'S-Cart Admin',
 
     /*
     |--------------------------------------------------------------------------
@@ -22,7 +22,7 @@ return [
     | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
     |
      */
-    'logo'                      => '<img src="/images/scart-min.png">',
+    'logo'                      => 'S-Cart Admin',
 
     /*
     |--------------------------------------------------------------------------
@@ -34,7 +34,7 @@ return [
     | '<img src="http://logo-url" alt="Admin logo">'.
     |
      */
-    'logo-mini'                 => '<b>S-cart</b>',
+    'logo-mini'                 => '<b>S-Cart</b>',
 
     /*
     |--------------------------------------------------------------------------
