@@ -200,18 +200,15 @@ class Shop extends GeneralController
         } //
 
         $messages = [
-            'max'               => trans('validation.max.numeric'),
-            'toname.required'   => trans('validation.required'),
-            'address1.required' => trans('validation.required'),
-            'address2.required' => trans('validation.required'),
-            'phone.required'    => trans('validation.required'),
-            'phone.regex'       => trans('validation.regex'),
+            'max'      => trans('validation.max.string'),
+            'required' => trans('validation.required'),
         ];
         $v = Validator::make($request->all(), [
             'toname'   => 'required|max:100',
             'address1' => 'required|max:100',
             'address2' => 'required|max:100',
             'phone'    => 'required|regex:/^0[^0][0-9\-]{7,13}$/',
+            'email'    => 'required|string|email|max:255',
         ], $messages);
         if ($v->fails()) {
             return redirect()->back()->withInput()->withErrors($v->errors());
@@ -243,6 +240,7 @@ class Shop extends GeneralController
             $arrOrder['total']           = $total;
             $arrOrder['balance']         = $total + $received;
             $arrOrder['toname']          = $request->get('toname');
+            $arrOrder['email']           = $request->get('email');
             $arrOrder['address1']        = $request->get('address1');
             $arrOrder['address2']        = $request->get('address2');
             $arrOrder['phone']           = $request->get('phone');

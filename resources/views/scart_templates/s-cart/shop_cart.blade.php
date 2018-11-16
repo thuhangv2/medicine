@@ -98,6 +98,16 @@
                         </td>
                 </tr>
                 <tr>
+                    <td colspan="2" class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                        <label for="email" class="control-label"><i class="fa fa-user"></i> Email:</label> <input name="email" type="text" placeholder="Email" value="{{ (Auth::user() && !old('email'))?Auth::user()->name: old('email')}}">
+                            @if($errors->has('email'))
+                                <span class="help-block">{{ $errors->first('email') }}</span>
+                            @endif
+                    </td>
+
+                </tr>
+
+                <tr>
                     <td class="form-group{{ $errors->has('address1') ? ' has-error' : '' }}"><label for="address1" class="control-label"><i class="fa fa-home"></i> Address 1:</label> <input name="address1" type="text" placeholder="Address 1" value="{{ (Auth::user() && !old('address1'))?Auth::user()->address1: old('address1')}}">
                             @if($errors->has('address1'))
                                 <span class="help-block">{{ $errors->first('address1') }}</span>
