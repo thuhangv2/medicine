@@ -99,7 +99,7 @@
                 </tr>
                 <tr>
                     <td colspan="2" class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                        <label for="email" class="control-label"><i class="fa fa-user"></i> Email:</label> <input name="email" type="text" placeholder="Email" value="{{ (Auth::user() && !old('email'))?Auth::user()->name: old('email')}}">
+                        <label for="email" class="control-label"><i class="fa fa-user"></i> Email:</label> <input name="email" type="text" placeholder="Email" value="{{ (Auth::user() && !old('email'))?Auth::user()->email: old('email')}}">
                             @if($errors->has('email'))
                                 <span class="help-block">{{ $errors->first('email') }}</span>
                             @endif

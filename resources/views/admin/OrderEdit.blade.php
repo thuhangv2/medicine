@@ -25,7 +25,7 @@
           <th>{{ trans('language.order.shipping_phone') }}:</th><td><a href="#" class="updateInfoRequired" data-name="phone" data-type="text" data-pk="{{ $order->id }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.shipping_phone') }}" >{{ $order->phone }}</a></td>
         </tr>
         <tr>
-          <th>Email:</th><td>{{ empty($order->customer->email)?'N/A':$order->customer->email}}</td>
+          <th>Email:</th><td>{{ empty($order->email)?'N/A':$order->email}}</td>
         </tr>
         <tr>
           <th>{{ trans('language.order.shipping_address1') }}:</th><td><a href="#" class="updateInfoRequired" data-name="address1" data-type="text" data-pk="{{ $order->id }}" data-url="{{ route("order_update") }}" data-title="Địa chỉ 1" >{{ $order->address1 }}</a></td>

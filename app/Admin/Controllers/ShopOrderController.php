@@ -100,8 +100,8 @@ class ShopOrderController extends Controller
         return Admin::grid(ShopOrder::class, function (Grid $grid) use ($keyword) {
 
             $grid->id('ID')->sortable();
-            $grid->customer('Email')->display(function ($customer) {
-                return empty($customer['email']) ? 'N/A' : $customer['email'];
+            $grid->email('Email')->display(function ($email) {
+                return empty($email) ? 'N/A' : $email;
             });
             $grid->toname(trans('language.order.customer_name'))->expand(function () {
                 $html = '<br>';

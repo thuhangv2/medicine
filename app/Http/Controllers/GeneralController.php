@@ -54,6 +54,7 @@ class GeneralController extends Controller
         //Auto switch link to https
         if (!empty($configs['site_ssl'])) {
             \URL::forceScheme('https');
+            $this->app['request']->server->set('HTTPS', true);
         }
         //end
 
