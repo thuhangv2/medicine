@@ -15,6 +15,7 @@ return [
         'undefined' => 'Lỗi không xác định!',
         'not_allow' => 'Bạn không thể sử Point ở đây!',
         'value'     => 'Mã giảm giá có giá trị :value cho đơn hàng này!',
+        'expire'    => 'Mã hết hạn sử dụng!',
     ],
     'my_profile'        => 'Trang quản lý cá nhân',
     'notfound'          => 'Không tìm thấy dữ liệu',

@@ -15,6 +15,7 @@ return [
         'undefined' => 'Error undefined!',
         'not_allow' => 'You can not use Point in here!',
         'value'     => 'This coupon have value :value for this order!',
+        'expire'    => 'Code expires!',
     ],
 
     'my_profile'        => 'My profile',

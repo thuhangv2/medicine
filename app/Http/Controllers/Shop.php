@@ -574,7 +574,7 @@ class Shop extends GeneralController
             } elseif ($check['msg'] == 'error_code_cant_use') {
                 $msg = trans('language.coupon.over');
             } elseif ($check['msg'] == 'error_code_expired_disabled') {
-                $msg = "Mã hết hạn sử dụng!";
+                $msg = trans('language.coupon.expire');
             } elseif ($check['msg'] == 'error_user_used') {
                 $msg = trans('language.coupon.used');
             } else {
