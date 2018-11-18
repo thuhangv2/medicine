@@ -8,10 +8,6 @@ return [
         'exist' => 'Sản phẩm đã tồn tại trong :instance',
     ],
 
-    'order'             => [
-        'success' => 'Đơn hàng thành công',
-    ],
-
     'coupon'            => [
         'invalid'   => 'Mã giảm giá không hợp lệ!',
         'over'      => 'Mã giảm giá vượt quá số lần sử dụng!',
@@ -188,6 +184,10 @@ return [
         'select_customer'       => 'Vui lòng chọn khách hàng',
         'add_more'              => 'Thêm nhiều hơn',
         'search_keyword'        => 'Tìm từ khóa',
+        'success'               => 'Đơn hàng thành công',
+        'email'                 => [
+            'new_title' => 'ĐƠN HÀNG MỚI',
+        ],
     ],
 
     'product'           => [

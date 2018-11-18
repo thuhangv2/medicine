@@ -7,9 +7,6 @@ return [
         'over'  => 'Product :item has exceeded the maximum number of allowed quantity.',
         'exist' => 'This product exist in :instance',
     ],
-    'order'             => [
-        'success' => 'Order success',
-    ],
 
     'coupon'            => [
         'invalid'   => 'This code invalid!',
@@ -189,6 +186,10 @@ return [
         'select_customer'       => 'Select customer',
         'add_more'              => 'Add more',
         'search_keyword'        => 'Search keyword',
+        'success'               => 'Order success',
+        'email'                 => [
+            'new_title' => 'NEW ORDER',
+        ],
     ],
 
     'product'           => [

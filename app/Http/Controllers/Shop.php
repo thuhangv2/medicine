@@ -388,7 +388,7 @@ class Shop extends GeneralController
                 return response()->json(
                     [
                         'error' => 1,
-                        'error' => trans('language.cart.exist', ['item' => $instance]),
+                        'msg'   => trans('language.cart.exist', ['instance' => $instance]),
                     ]
                 );
             }
@@ -419,8 +419,9 @@ class Shop extends GeneralController
         $new_qty = $request->get('new_qty');
         if ($product->stock < $new_qty && !$this->configs['product_buy_out_of_stock']) {
             return response()->json(
-                ['error' => 1,
-                    'msg'    => trans('language.cart.over', ['item' => $product->sku]),
+                [
+                    'error' => 1,
+                    'msg'   => trans('language.cart.over', ['item' => $product->sku]),
                 ]);
         } else {
             Cart::update($rowId, ($new_qty) ? $new_qty : 0);
@@ -738,12 +739,11 @@ class Shop extends GeneralController
             Mail::send('vendor.mail.order_new', $data, function ($message) use ($orderId) {
                 $message->to($this->configs_global['email'], $this->configs_global['title']);
                 $message->replyTo($this->configs_global['email'], $this->configs_global['title']);
-                $message->subject('[#' . $orderId . '] New order!');
+                $message->subject(trans('language.order.email.new_title') . '#' . $orderId);
             });
         } catch (\Exception $e) {
             //
         } //
-
         return redirect('cart.html')->with('message', trans('language.order.success'));
     }
 
