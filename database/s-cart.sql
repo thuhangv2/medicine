@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS `admin_menu` (
   `title` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `icon` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `uri` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `permission` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -28,48 +29,48 @@ CREATE TABLE IF NOT EXISTS `admin_menu` (
 -- Dumping data for table s-cart.admin_menu: ~41 rows (approximately)
 DELETE FROM `admin_menu`;
 /*!40000 ALTER TABLE `admin_menu` DISABLE KEYS */;
-INSERT INTO `admin_menu` (`id`, `parent_id`, `order`, `title`, `icon`, `uri`, `created_at`, `updated_at`) VALUES
-	(1, 0, 1, 'Index', 'fa-bar-chart', '/', NULL, NULL),
-	(2, 0, 2, 'Admin', 'fa-tasks', '', NULL, NULL),
-	(3, 2, 3, 'Users', 'fa-users', 'auth/users', NULL, NULL),
-	(4, 2, 4, 'Roles', 'fa-user', 'auth/roles', NULL, NULL),
-	(5, 2, 5, 'Permission', 'fa-ban', 'auth/permissions', NULL, NULL),
-	(6, 2, 6, 'Menu', 'fa-bars', 'auth/menu', NULL, NULL),
-	(7, 2, 7, 'Operation log', 'fa-history', 'auth/logs', NULL, NULL),
-	(8, 31, 25, 'Customer', 'fa-user-md', 'shop_customer', '2018-01-13 15:27:55', '2018-11-08 06:01:37'),
-	(9, 25, 19, 'Orders', 'fa-shopping-cart', 'shop_order', '2018-01-13 15:33:55', '2018-11-08 06:01:37'),
-	(10, 15, 13, 'All products', 'fa-file-photo-o', 'shop_product', '2018-01-13 15:44:02', '2018-11-12 19:25:48'),
-	(11, 15, 15, 'Brand', 'fa-bank', 'shop_brand', '2018-01-13 15:47:15', '2018-11-12 19:25:48'),
-	(13, 15, 12, 'Categories', 'fa-folder-open-o', 'shop_category', '2018-01-13 15:52:17', '2018-11-12 19:25:48'),
-	(14, 15, 14, 'Special price', 'fa-paw', 'shop_special_price', '2018-02-06 18:07:21', '2018-11-12 19:25:48'),
-	(15, 0, 11, 'Product Manager', 'fa-folder-open', NULL, '2018-02-09 06:04:43', '2018-11-12 19:25:48'),
-	(17, 0, 8, 'CMS Manager', 'fa-coffee', NULL, '2018-02-10 09:06:05', '2018-10-18 21:16:24'),
-	(18, 23, 33, 'Config info', 'fa-cog', 'config_info', '2018-02-10 09:07:45', '2018-11-08 06:01:37'),
-	(21, 17, 9, 'Blog & News', 'fa-file-powerpoint-o', 'cms_news', '2018-02-10 09:13:01', '2018-10-19 20:18:25'),
-	(22, 17, 10, 'Cms Page', 'fa-clone', 'cms_page', '2018-02-10 09:19:50', '2018-10-19 20:18:37'),
-	(23, 0, 32, 'Config Manager', 'fa-cogs', NULL, '2018-02-11 15:01:24', '2018-11-08 06:01:37'),
-	(24, 62, 40, 'Banners', 'fa-simplybuilt', 'banner', '2018-03-13 20:10:22', '2018-11-12 19:26:42'),
-	(25, 0, 18, 'Order Manager', 'fa-cart-arrow-down', NULL, '2018-05-06 14:59:14', '2018-11-08 06:01:37'),
-	(26, 25, 20, 'Order status', 'fa-asterisk', 'shop_order_status', '2018-05-06 15:56:14', '2018-11-08 06:01:37'),
-	(27, 25, 21, 'Payment Status', 'fa-recycle', 'shop_payment_status', '2018-05-06 15:57:12', '2018-11-08 06:01:37'),
-	(28, 25, 22, 'Shipping status', 'fa-ambulance', 'shop_shipping_status', '2018-05-06 23:46:53', '2018-11-08 06:01:37'),
-	(30, 0, 26, 'Extensions', 'fa-puzzle-piece', NULL, '2018-05-07 13:47:33', '2018-11-08 06:01:37'),
-	(31, 0, 24, 'Customer Manager', 'fa-group', NULL, '2018-05-07 13:52:20', '2018-11-08 06:01:37'),
-	(41, 25, 23, 'Coupon', 'fa-rocket', 'shop_promotion', '2018-05-07 23:54:45', '2018-11-08 06:01:37'),
-	(43, 30, 27, 'Shipping Manager', 'fa-ambulance', NULL, '2018-05-07 23:56:13', '2018-11-09 00:10:32'),
-	(50, 43, 28, 'Shipping', 'fa-ambulance', 'shop_shipping', '2018-05-09 14:33:24', '2018-11-08 06:01:37'),
-	(51, 23, 34, 'Config global', 'fa-cogs', 'config_global', '2018-09-19 20:51:31', '2018-11-08 06:01:37'),
-	(52, 56, 36, 'Config Language', 'fa-pagelines', 'language', '2018-10-14 21:58:23', '2018-11-08 06:01:37'),
-	(53, 55, 38, 'HTML', 'fa-bars', 'config_layout/1/edit', '2018-10-17 06:16:09', '2018-11-08 06:01:37'),
-	(55, 0, 37, 'Layout customize', 'fa-columns', NULL, '2018-10-18 21:13:41', '2018-11-08 06:01:37'),
-	(56, 23, 35, 'Localisation', 'fa-shirtsinbulk', NULL, '2018-11-02 06:04:12', '2018-11-08 06:01:37'),
-	(57, 15, 16, 'Vendor', 'fa-user-secret', 'shop_vendor', '2018-11-07 22:15:33', '2018-11-12 19:25:48'),
-	(58, 0, 29, 'Report & Analytics', 'fa-pie-chart', NULL, '2018-11-08 05:59:47', '2018-11-08 06:01:37'),
-	(59, 58, 30, 'Customer', 'fa-bars', 'report/customer', '2018-11-08 06:00:54', '2018-11-08 06:02:05'),
-	(60, 58, 31, 'Product', 'fa-bars', 'report/product', '2018-11-08 06:01:21', '2018-11-08 06:01:37'),
-	(61, 15, 17, 'Import multi product', 'fa-save', 'process/productImport', '2018-11-11 16:10:14', '2018-11-12 19:25:48'),
-	(62, 0, 39, 'Images manager', 'fa-image', NULL, '2018-11-12 19:25:16', '2018-11-12 19:25:48'),
-	(63, 62, 0, 'Images', 'fa-file-image-o', 'documents', '2018-11-12 19:26:13', '2018-11-12 19:30:35');
+INSERT INTO `admin_menu` (`id`, `parent_id`, `order`, `title`, `icon`, `uri`, `permission`, `created_at`, `updated_at`) VALUES
+	(1, 0, 1, 'Index', 'fa-bar-chart', '/', NULL, NULL, NULL),
+	(2, 0, 2, 'Admin', 'fa-tasks', '', NULL, NULL, NULL),
+	(3, 2, 3, 'Users', 'fa-users', 'auth/users', NULL, NULL, NULL),
+	(4, 2, 4, 'Roles', 'fa-user', 'auth/roles', NULL, NULL, NULL),
+	(5, 2, 5, 'Permission', 'fa-ban', 'auth/permissions', NULL, NULL, NULL),
+	(6, 2, 6, 'Menu', 'fa-bars', 'auth/menu', NULL, NULL, NULL),
+	(7, 2, 7, 'Operation log', 'fa-history', 'auth/logs', NULL, NULL, NULL),
+	(8, 31, 25, 'Customer', 'fa-user-md', 'shop_customer', NULL, '2018-01-13 15:27:55', '2018-11-08 06:01:37'),
+	(9, 25, 19, 'Orders', 'fa-shopping-cart', 'shop_order', NULL, '2018-01-13 15:33:55', '2018-11-08 06:01:37'),
+	(10, 15, 13, 'All products', 'fa-file-photo-o', 'shop_product', NULL, '2018-01-13 15:44:02', '2018-11-12 19:25:48'),
+	(11, 15, 15, 'Brand', 'fa-bank', 'shop_brand', NULL, '2018-01-13 15:47:15', '2018-11-12 19:25:48'),
+	(13, 15, 12, 'Categories', 'fa-folder-open-o', 'shop_category', NULL, '2018-01-13 15:52:17', '2018-11-12 19:25:48'),
+	(14, 15, 14, 'Special price', 'fa-paw', 'shop_special_price', NULL, '2018-02-06 18:07:21', '2018-11-12 19:25:48'),
+	(15, 0, 11, 'Product Manager', 'fa-folder-open', NULL, NULL, '2018-02-09 06:04:43', '2018-11-12 19:25:48'),
+	(17, 0, 8, 'CMS Manager', 'fa-coffee', NULL, NULL, '2018-02-10 09:06:05', '2018-10-18 21:16:24'),
+	(18, 23, 33, 'Config info', 'fa-cog', 'config_info', NULL, '2018-02-10 09:07:45', '2018-11-08 06:01:37'),
+	(21, 17, 9, 'Blog & News', 'fa-file-powerpoint-o', 'cms_news', NULL, '2018-02-10 09:13:01', '2018-10-19 20:18:25'),
+	(22, 17, 10, 'Cms Page', 'fa-clone', 'cms_page', NULL, '2018-02-10 09:19:50', '2018-10-19 20:18:37'),
+	(23, 0, 32, 'Config Manager', 'fa-cogs', NULL, NULL, '2018-02-11 15:01:24', '2018-11-08 06:01:37'),
+	(24, 62, 40, 'Banners', 'fa-simplybuilt', 'banner', NULL, '2018-03-13 20:10:22', '2018-11-12 19:26:42'),
+	(25, 0, 18, 'Order Manager', 'fa-cart-arrow-down', NULL, NULL, '2018-05-06 14:59:14', '2018-11-08 06:01:37'),
+	(26, 25, 20, 'Order status', 'fa-asterisk', 'shop_order_status', NULL, '2018-05-06 15:56:14', '2018-11-08 06:01:37'),
+	(27, 25, 21, 'Payment Status', 'fa-recycle', 'shop_payment_status', NULL, '2018-05-06 15:57:12', '2018-11-08 06:01:37'),
+	(28, 25, 22, 'Shipping status', 'fa-ambulance', 'shop_shipping_status', NULL, '2018-05-06 23:46:53', '2018-11-08 06:01:37'),
+	(30, 0, 26, 'Extensions', 'fa-puzzle-piece', NULL, NULL, '2018-05-07 13:47:33', '2018-11-08 06:01:37'),
+	(31, 0, 24, 'Customer Manager', 'fa-group', NULL, NULL, '2018-05-07 13:52:20', '2018-11-08 06:01:37'),
+	(41, 25, 23, 'Coupon', 'fa-rocket', 'shop_promotion', NULL, '2018-05-07 23:54:45', '2018-11-08 06:01:37'),
+	(43, 30, 27, 'Shipping Manager', 'fa-ambulance', NULL, NULL, '2018-05-07 23:56:13', '2018-11-09 00:10:32'),
+	(50, 43, 28, 'Shipping', 'fa-ambulance', 'shop_shipping', NULL, '2018-05-09 14:33:24', '2018-11-08 06:01:37'),
+	(51, 23, 34, 'Config global', 'fa-cogs', 'config_global', NULL, '2018-09-19 20:51:31', '2018-11-08 06:01:37'),
+	(52, 56, 36, 'Config Language', 'fa-pagelines', 'language', NULL, '2018-10-14 21:58:23', '2018-11-08 06:01:37'),
+	(53, 55, 38, 'HTML Module', 'fa-bars', 'config_layout/1/edit', NULL, '2018-10-17 06:16:09', '2018-11-18 08:55:05'),
+	(55, 0, 37, 'Layout customize', 'fa-columns', NULL, NULL, '2018-10-18 21:13:41', '2018-11-08 06:01:37'),
+	(56, 23, 35, 'Localisation', 'fa-shirtsinbulk', NULL, NULL, '2018-11-02 06:04:12', '2018-11-08 06:01:37'),
+	(57, 15, 16, 'Vendor', 'fa-user-secret', 'shop_vendor', NULL, '2018-11-07 22:15:33', '2018-11-12 19:25:48'),
+	(58, 0, 29, 'Report & Analytics', 'fa-pie-chart', NULL, NULL, '2018-11-08 05:59:47', '2018-11-08 06:01:37'),
+	(59, 58, 30, 'Customer', 'fa-bars', 'report/customer', NULL, '2018-11-08 06:00:54', '2018-11-08 06:02:05'),
+	(60, 58, 31, 'Product', 'fa-bars', 'report/product', NULL, '2018-11-08 06:01:21', '2018-11-08 06:01:37'),
+	(61, 15, 17, 'Import multi product', 'fa-save', 'process/productImport', NULL, '2018-11-11 16:10:14', '2018-11-12 19:25:48'),
+	(62, 0, 39, 'Images manager', 'fa-image', NULL, NULL, '2018-11-12 19:25:16', '2018-11-12 19:25:48'),
+	(63, 62, 0, 'Images', 'fa-file-image-o', 'documents', NULL, '2018-11-12 19:26:13', '2018-11-12 19:30:35');
 /*!40000 ALTER TABLE `admin_menu` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.admin_operation_log
@@ -85,14 +86,144 @@ CREATE TABLE IF NOT EXISTS `admin_operation_log` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `admin_operation_log_user_id_index` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=133 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table s-cart.admin_operation_log: ~2 rows (approximately)
 DELETE FROM `admin_operation_log`;
 /*!40000 ALTER TABLE `admin_operation_log` DISABLE KEYS */;
 INSERT INTO `admin_operation_log` (`id`, `user_id`, `path`, `method`, `ip`, `input`, `created_at`, `updated_at`) VALUES
 	(1, 1, 'system_admin/auth/logs', 'GET', '127.0.0.1', '[]', '2018-10-09 21:15:35', '2018-10-09 21:15:35'),
-	(2, 1, 'system_admin/auth/logs', 'GET', '127.0.0.1', '[]', '2018-10-09 21:15:38', '2018-10-09 21:15:38');
+	(2, 1, 'system_admin/auth/logs', 'GET', '127.0.0.1', '[]', '2018-10-09 21:15:38', '2018-10-09 21:15:38'),
+	(3, 3, 'system_admin', 'GET', '125.234.115.202', '[]', '2018-11-15 17:02:34', '2018-11-15 17:02:34'),
+	(4, 3, 'system_admin/config_info', 'GET', '125.234.115.202', '{"_pjax":"#pjax-container"}', '2018-11-15 17:02:38', '2018-11-15 17:02:38'),
+	(5, 3, 'system_admin', 'GET', '116.109.183.158', '[]', '2018-11-15 21:47:59', '2018-11-15 21:47:59'),
+	(6, 3, 'system_admin/cms_news', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container"}', '2018-11-15 21:48:07', '2018-11-15 21:48:07'),
+	(7, 3, 'system_admin/cms_page', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container"}', '2018-11-15 21:48:09', '2018-11-15 21:48:09'),
+	(8, 3, 'system_admin/shop_product', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container"}', '2018-11-15 21:48:12', '2018-11-15 21:48:12'),
+	(9, 3, 'system_admin/shop_special_price', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container"}', '2018-11-15 21:48:13', '2018-11-15 21:48:13'),
+	(10, 3, 'system_admin/shop_brand', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container"}', '2018-11-15 21:48:14', '2018-11-15 21:48:14'),
+	(11, 3, 'system_admin/process/productImport', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container"}', '2018-11-15 21:48:15', '2018-11-15 21:48:15'),
+	(12, 3, 'system_admin/shop_vendor', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container"}', '2018-11-15 21:48:17', '2018-11-15 21:48:17'),
+	(13, 3, 'system_admin/shop_special_price', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container"}', '2018-11-15 21:48:17', '2018-11-15 21:48:17'),
+	(14, 3, 'system_admin/shop_category', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container"}', '2018-11-15 21:48:18', '2018-11-15 21:48:18'),
+	(15, 3, 'system_admin/process/productImport', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container"}', '2018-11-15 21:48:30', '2018-11-15 21:48:30'),
+	(16, 3, 'system_admin/shop_product', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container"}', '2018-11-15 21:48:31', '2018-11-15 21:48:31'),
+	(17, 3, 'system_admin/shop_special_price', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container"}', '2018-11-15 21:48:32', '2018-11-15 21:48:32'),
+	(18, 3, 'system_admin/shop_brand', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container"}', '2018-11-15 21:48:33', '2018-11-15 21:48:33'),
+	(19, 3, 'system_admin/shop_vendor', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container"}', '2018-11-15 21:48:33', '2018-11-15 21:48:33'),
+	(20, 3, 'system_admin', 'GET', '116.109.183.158', '[]', '2018-11-15 21:48:35', '2018-11-15 21:48:35'),
+	(21, 3, 'system_admin/shop_order', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container"}', '2018-11-15 21:48:47', '2018-11-15 21:48:47'),
+	(22, 3, 'system_admin', 'GET', '116.109.183.158', '[]', '2018-11-15 21:49:09', '2018-11-15 21:49:09'),
+	(23, 3, 'system_admin/auth/logout', 'GET', '116.109.183.158', '[]', '2018-11-15 21:49:11', '2018-11-15 21:49:11'),
+	(24, 3, 'system_admin', 'GET', '116.109.183.158', '[]', '2018-11-15 22:40:02', '2018-11-15 22:40:02'),
+	(25, 3, 'system_admin', 'GET', '116.109.183.158', '[]', '2018-11-15 22:42:13', '2018-11-15 22:42:13'),
+	(26, 3, 'system_admin', 'GET', '113.190.210.92', '[]', '2018-11-17 18:12:01', '2018-11-17 18:12:01'),
+	(27, 3, 'system_admin/shop_product', 'GET', '113.190.210.92', '{"_pjax":"#pjax-container"}', '2018-11-17 18:12:06', '2018-11-17 18:12:06'),
+	(28, 3, 'system_admin/shop_product/49/edit', 'GET', '113.190.210.92', '[]', '2018-11-17 18:12:11', '2018-11-17 18:12:11'),
+	(29, 3, 'system_admin', 'GET', '113.190.210.92', '[]', '2018-11-17 18:12:42', '2018-11-17 18:12:42'),
+	(30, 3, 'system_admin/cms_news', 'GET', '113.190.210.92', '{"_pjax":"#pjax-container"}', '2018-11-17 18:12:45', '2018-11-17 18:12:45'),
+	(31, 3, 'system_admin', 'GET', '101.99.59.116', '[]', '2018-11-17 22:52:27', '2018-11-17 22:52:27'),
+	(32, 3, 'system_admin/shop_product', 'GET', '101.99.59.116', '{"_pjax":"#pjax-container"}', '2018-11-17 22:53:22', '2018-11-17 22:53:22'),
+	(33, 3, 'system_admin/shop_product/49', 'PUT', '101.99.59.116', '{"status":"off","_token":"enOVIA7jmRMPPc7OfQ3KXKkCXEx0u51wfInMvkpn","_method":"PUT"}', '2018-11-17 22:53:35', '2018-11-17 22:53:35'),
+	(34, 3, 'system_admin/shop_product/49', 'PUT', '101.99.59.116', '{"status":"on","_token":"enOVIA7jmRMPPc7OfQ3KXKkCXEx0u51wfInMvkpn","_method":"PUT"}', '2018-11-17 22:53:35', '2018-11-17 22:53:35'),
+	(35, 3, 'system_admin/shop_product/48', 'PUT', '101.99.59.116', '{"status":"off","_token":"enOVIA7jmRMPPc7OfQ3KXKkCXEx0u51wfInMvkpn","_method":"PUT"}', '2018-11-17 22:53:38', '2018-11-17 22:53:38'),
+	(36, 3, 'system_admin/shop_product/48', 'PUT', '101.99.59.116', '{"status":"on","_token":"enOVIA7jmRMPPc7OfQ3KXKkCXEx0u51wfInMvkpn","_method":"PUT"}', '2018-11-17 22:53:39', '2018-11-17 22:53:39'),
+	(37, 3, 'system_admin/shop_product', 'GET', '101.99.59.116', '{"_pjax":"#pjax-container"}', '2018-11-17 22:55:35', '2018-11-17 22:55:35'),
+	(38, 3, 'system_admin/shop_customer', 'GET', '101.99.59.116', '{"_pjax":"#pjax-container"}', '2018-11-17 22:55:40', '2018-11-17 22:55:40'),
+	(39, 3, 'system_admin/shop_shipping', 'GET', '101.99.59.116', '{"_pjax":"#pjax-container"}', '2018-11-17 22:55:44', '2018-11-17 22:55:44'),
+	(40, 3, 'system_admin/cms_page', 'GET', '101.99.59.116', '{"_pjax":"#pjax-container"}', '2018-11-17 22:55:46', '2018-11-17 22:55:46'),
+	(41, 3, 'system_admin/cms_news', 'GET', '101.99.59.116', '{"_pjax":"#pjax-container"}', '2018-11-17 22:55:47', '2018-11-17 22:55:47'),
+	(42, 3, 'system_admin/cms_page', 'GET', '101.99.59.116', '{"_pjax":"#pjax-container"}', '2018-11-17 22:55:49', '2018-11-17 22:55:49'),
+	(43, 3, 'system_admin/shop_special_price', 'GET', '101.99.59.116', '{"_pjax":"#pjax-container"}', '2018-11-17 22:55:50', '2018-11-17 22:55:50'),
+	(44, 3, 'system_admin/shop_special_price/create', 'GET', '101.99.59.193', '[]', '2018-11-17 23:19:01', '2018-11-17 23:19:01'),
+	(45, 3, 'system_admin/getInfoProduct', 'GET', '101.99.59.193', '{"id":null}', '2018-11-17 23:19:02', '2018-11-17 23:19:02'),
+	(46, 3, 'system_admin/shop_special_price', 'POST', '101.99.59.193', '{"product_id":null,"off":"0","price":"0","status":"off","date_start":null,"date_end":null,"comment":null,"_token":"enOVIA7jmRMPPc7OfQ3KXKkCXEx0u51wfInMvkpn","_previous_":"https:\\/\\/demo.s-cart.org\\/system_admin\\/shop_special_price"}', '2018-11-17 23:19:08', '2018-11-17 23:19:08'),
+	(47, 3, 'system_admin/banner', 'GET', '101.99.59.193', '{"_pjax":"#pjax-container"}', '2018-11-17 23:30:14', '2018-11-17 23:30:14'),
+	(48, 3, 'system_admin/documents', 'GET', '101.99.59.193', '{"_pjax":"#pjax-container"}', '2018-11-17 23:30:20', '2018-11-17 23:30:20'),
+	(49, 3, 'system_admin/config_layout/1/edit', 'GET', '101.99.59.193', '{"_pjax":"#pjax-container"}', '2018-11-17 23:30:23', '2018-11-17 23:30:23'),
+	(50, 3, 'system_admin/cms_page', 'GET', '101.99.59.193', '{"_pjax":"#pjax-container"}', '2018-11-17 23:31:21', '2018-11-17 23:31:21'),
+	(51, 3, 'system_admin/shop_product', 'GET', '101.99.59.193', '{"_pjax":"#pjax-container"}', '2018-11-17 23:31:23', '2018-11-17 23:31:23'),
+	(52, 3, 'system_admin/shop_brand', 'GET', '101.99.59.193', '{"_pjax":"#pjax-container"}', '2018-11-17 23:31:24', '2018-11-17 23:31:24'),
+	(53, 3, 'system_admin/shop_brand', 'GET', '101.99.59.193', '{"_pjax":"#pjax-container"}', '2018-11-17 23:31:25', '2018-11-17 23:31:25'),
+	(54, 3, 'system_admin/shop_vendor', 'GET', '101.99.59.193', '{"_pjax":"#pjax-container"}', '2018-11-17 23:31:26', '2018-11-17 23:31:26'),
+	(55, 3, 'system_admin/process/productImport', 'GET', '101.99.59.193', '{"_pjax":"#pjax-container"}', '2018-11-17 23:31:28', '2018-11-17 23:31:28'),
+	(56, 3, 'system_admin', 'GET', '101.99.59.193', '[]', '2018-11-17 23:31:39', '2018-11-17 23:31:39'),
+	(57, 3, 'system_admin/auth/logout', 'GET', '101.99.59.193', '[]', '2018-11-17 23:31:46', '2018-11-17 23:31:46'),
+	(58, 3, 'system_admin', 'GET', '101.99.59.193', '[]', '2018-11-17 23:32:05', '2018-11-17 23:32:05'),
+	(59, 3, 'system_admin/shop_order', 'GET', '101.99.59.193', '{"_pjax":"#pjax-container"}', '2018-11-17 23:32:15', '2018-11-17 23:32:15'),
+	(60, 3, 'system_admin/shop_category', 'GET', '101.99.59.193', '{"_pjax":"#pjax-container"}', '2018-11-17 23:32:18', '2018-11-17 23:32:18'),
+	(61, 3, 'system_admin/shop_product', 'GET', '101.99.59.193', '{"_pjax":"#pjax-container"}', '2018-11-17 23:32:20', '2018-11-17 23:32:20'),
+	(62, 3, 'system_admin/shop_brand', 'GET', '101.99.59.193', '{"_pjax":"#pjax-container"}', '2018-11-17 23:32:22', '2018-11-17 23:32:22'),
+	(63, 3, 'system_admin/locale/vi', 'POST', '101.99.59.193', '{"_token":"qjCrB0c7utxPxqMeUuYVkfb4OQc51LJNBeULHssI"}', '2018-11-17 23:32:51', '2018-11-17 23:32:51'),
+	(64, 3, 'system_admin/locale/en', 'POST', '101.99.59.193', '{"_token":"qjCrB0c7utxPxqMeUuYVkfb4OQc51LJNBeULHssI"}', '2018-11-17 23:32:54', '2018-11-17 23:32:54'),
+	(65, 3, 'system_admin', 'GET', '101.99.59.193', '[]', '2018-11-17 23:32:58', '2018-11-17 23:32:58'),
+	(66, 3, 'system_admin/shop_product', 'GET', '101.99.59.193', '{"_pjax":"#pjax-container"}', '2018-11-17 23:46:55', '2018-11-17 23:46:55'),
+	(67, 3, 'system_admin/shop_product', 'GET', '101.99.59.193', '{"_pjax":"#pjax-container"}', '2018-11-17 23:46:58', '2018-11-17 23:46:58'),
+	(68, 3, 'system_admin', 'GET', '129.45.105.32', '[]', '2018-11-18 01:14:49', '2018-11-18 01:14:49'),
+	(69, 3, 'system_admin/auth/setting', 'GET', '129.45.105.32', '[]', '2018-11-18 01:15:18', '2018-11-18 01:15:18'),
+	(70, 3, 'system_admin/shop_product', 'GET', '129.45.105.32', '{"_pjax":"#pjax-container"}', '2018-11-18 01:15:33', '2018-11-18 01:15:33'),
+	(71, 3, 'system_admin/shop_product/49', 'PUT', '129.45.105.32', '{"status":"off","_token":"Ri4gMdEj4xVO50bZbM6A29YsZclIkY8w6y0BS3U1","_method":"PUT"}', '2018-11-18 01:15:44', '2018-11-18 01:15:44'),
+	(72, 3, 'system_admin/process/productImport', 'GET', '129.45.105.32', '[]', '2018-11-18 01:18:53', '2018-11-18 01:18:53'),
+	(73, 3, 'system_admin/report/customer', 'GET', '129.45.105.32', '{"_pjax":"#pjax-container"}', '2018-11-18 01:19:03', '2018-11-18 01:19:03'),
+	(74, 3, 'system_admin/shop_customer', 'GET', '129.45.105.32', '{"_pjax":"#pjax-container"}', '2018-11-18 01:21:57', '2018-11-18 01:21:57'),
+	(75, 3, 'system_admin/shop_category', 'GET', '129.45.105.32', '{"_pjax":"#pjax-container"}', '2018-11-18 01:22:05', '2018-11-18 01:22:05'),
+	(76, 3, 'system_admin', 'GET', '129.45.105.32', '[]', '2018-11-18 01:55:59', '2018-11-18 01:55:59'),
+	(77, 3, 'system_admin/shop_shipping', 'GET', '129.45.105.32', '{"_pjax":"#pjax-container"}', '2018-11-18 01:56:18', '2018-11-18 01:56:18'),
+	(78, 3, 'system_admin/shop_shipping/1', 'DELETE', '129.45.105.32', '{"_method":"delete","_token":"Ri4gMdEj4xVO50bZbM6A29YsZclIkY8w6y0BS3U1"}', '2018-11-18 01:56:36', '2018-11-18 01:56:36'),
+	(79, 3, 'system_admin/shop_shipping', 'GET', '129.45.105.32', '{"_pjax":"#pjax-container"}', '2018-11-18 01:56:41', '2018-11-18 01:56:41'),
+	(80, 3, 'system_admin/documents', 'GET', '129.45.105.32', '{"_pjax":"#pjax-container"}', '2018-11-18 01:56:43', '2018-11-18 01:56:43'),
+	(81, 3, 'system_admin/banner', 'GET', '129.45.105.32', '{"_pjax":"#pjax-container"}', '2018-11-18 01:56:48', '2018-11-18 01:56:48'),
+	(82, 3, 'system_admin/banner/create', 'GET', '129.45.105.32', '[]', '2018-11-18 01:57:19', '2018-11-18 01:57:19'),
+	(83, 3, 'system_admin/banner', 'GET', '129.45.105.32', '{"_pjax":"#pjax-container"}', '2018-11-18 01:58:11', '2018-11-18 01:58:11'),
+	(84, 3, 'system_admin/banner', 'GET', '129.45.105.32', '{"_pjax":"#pjax-container","per_page":"30"}', '2018-11-18 01:58:56', '2018-11-18 01:58:56'),
+	(85, 3, 'system_admin/auth/setting', 'GET', '129.45.105.32', '[]', '2018-11-18 02:02:10', '2018-11-18 02:02:10'),
+	(86, 3, 'system_admin', 'GET', '129.45.105.32', '[]', '2018-11-18 02:02:19', '2018-11-18 02:02:19'),
+	(87, 3, 'system_admin', 'GET', '116.109.183.158', '[]', '2018-11-18 08:46:02', '2018-11-18 08:46:02'),
+	(88, 3, 'system_admin/shop_order', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container"}', '2018-11-18 08:46:05', '2018-11-18 08:46:05'),
+	(89, 3, 'system_admin/shop_order', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container","page":"2"}', '2018-11-18 08:46:17', '2018-11-18 08:46:17'),
+	(90, 3, 'system_admin/shop_order', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container","page":"3"}', '2018-11-18 08:46:19', '2018-11-18 08:46:19'),
+	(91, 3, 'system_admin/shop_order', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container","page":"1"}', '2018-11-18 08:46:22', '2018-11-18 08:46:22'),
+	(92, 3, 'system_admin/locale/vi', 'POST', '116.109.183.158', '{"_token":"vC2Plcd9tdIdwXKZrTDdiEFeaygGpTFQ7GKitIOm"}', '2018-11-18 08:46:38', '2018-11-18 08:46:38'),
+	(93, 3, 'system_admin', 'GET', '116.109.183.158', '[]', '2018-11-18 08:46:42', '2018-11-18 08:46:42'),
+	(94, 3, 'system_admin', 'GET', '116.109.183.158', '[]', '2018-11-18 08:46:54', '2018-11-18 08:46:54'),
+	(95, 3, 'system_admin', 'GET', '116.109.183.158', '[]', '2018-11-18 08:47:01', '2018-11-18 08:47:01'),
+	(96, 3, 'system_admin/auth/logout', 'GET', '116.109.183.158', '[]', '2018-11-18 08:47:29', '2018-11-18 08:47:29'),
+	(97, 1, 'system_admin', 'GET', '116.109.183.158', '[]', '2018-11-18 08:47:37', '2018-11-18 08:47:37'),
+	(98, 1, 'system_admin/auth/menu', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container"}', '2018-11-18 08:47:41', '2018-11-18 08:47:41'),
+	(99, 1, 'system_admin/auth/menu/53/edit', 'GET', '116.109.183.158', '[]', '2018-11-18 08:47:52', '2018-11-18 08:47:52'),
+	(100, 1, 'system_admin/auth/menu/53', 'PUT', '116.109.183.158', '{"parent_id":"55","title":"HTML Module","icon":"fa-bars","uri":"config_layout\\/1\\/edit","roles":[null],"permission":null,"_token":"YgS08xEUhwiigeqd5laDSHimdbmBbhZBLZnG9wX8","_method":"PUT","_previous_":"https:\\/\\/demo.s-cart.org\\/system_admin\\/auth\\/menu"}', '2018-11-18 08:47:58', '2018-11-18 08:47:58'),
+	(101, 1, 'system_admin/auth/menu/53/edit', 'GET', '116.109.183.158', '[]', '2018-11-18 08:47:58', '2018-11-18 08:47:58'),
+	(102, 1, 'system_admin/auth/menu/53', 'PUT', '116.109.183.158', '{"parent_id":"55","title":"HTML Module","icon":"fa-bars","uri":"config_layout\\/1\\/edit","roles":[null],"permission":"*","_token":"YgS08xEUhwiigeqd5laDSHimdbmBbhZBLZnG9wX8","_method":"PUT"}', '2018-11-18 08:48:40', '2018-11-18 08:48:40'),
+	(103, 1, 'system_admin/auth/menu/53/edit', 'GET', '116.109.183.158', '[]', '2018-11-18 08:48:40', '2018-11-18 08:48:40'),
+	(104, 1, 'system_admin/auth/menu/53/edit', 'GET', '116.109.183.158', '[]', '2018-11-18 08:54:57', '2018-11-18 08:54:57'),
+	(105, 1, 'system_admin/auth/menu/53', 'PUT', '116.109.183.158', '{"parent_id":"55","title":"HTML Module","icon":"fa-bars","uri":"config_layout\\/1\\/edit","roles":[null],"permission":null,"_token":"YgS08xEUhwiigeqd5laDSHimdbmBbhZBLZnG9wX8","_method":"PUT","_previous_":"https:\\/\\/demo.s-cart.org\\/system_admin\\/auth\\/menu"}', '2018-11-18 08:55:05', '2018-11-18 08:55:05'),
+	(106, 1, 'system_admin/auth/menu', 'GET', '116.109.183.158', '[]', '2018-11-18 08:55:05', '2018-11-18 08:55:05'),
+	(107, 1, 'system_admin/auth/menu', 'GET', '116.109.183.158', '[]', '2018-11-18 08:55:11', '2018-11-18 08:55:11'),
+	(108, 1, 'system_admin/config_layout/1/edit', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container"}', '2018-11-18 08:55:14', '2018-11-18 08:55:14'),
+	(109, 1, 'system_admin/config_layout/1/edit', 'GET', '116.109.183.158', '[]', '2018-11-18 08:57:48', '2018-11-18 08:57:48'),
+	(110, 1, 'system_admin', 'GET', '116.109.183.158', '[]', '2018-11-18 08:57:52', '2018-11-18 08:57:52'),
+	(111, 1, 'system_admin', 'GET', '116.109.183.158', '[]', '2018-11-18 08:59:23', '2018-11-18 08:59:23'),
+	(112, 1, 'system_admin', 'GET', '116.109.183.158', '[]', '2018-11-18 08:59:30', '2018-11-18 08:59:30'),
+	(113, 1, 'system_admin/shop_order', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container"}', '2018-11-18 08:59:38', '2018-11-18 08:59:38'),
+	(114, 1, 'system_admin/shop_order', 'GET', '116.109.183.158', '{"keyword":"anghiazx","_pjax":"#pjax-container"}', '2018-11-18 08:59:45', '2018-11-18 08:59:45'),
+	(115, 1, 'system_admin', 'GET', '116.109.183.158', '[]', '2018-11-18 09:00:00', '2018-11-18 09:00:00'),
+	(116, 1, 'system_admin/shop_order', 'GET', '116.109.183.158', '{"keyword":"anghiazx","_pjax":"#pjax-container"}', '2018-11-18 09:00:11', '2018-11-18 09:00:11'),
+	(117, 1, 'system_admin/cms_news', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container"}', '2018-11-18 09:04:28', '2018-11-18 09:04:28'),
+	(118, 1, 'system_admin/cms_page', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container"}', '2018-11-18 09:04:31', '2018-11-18 09:04:31'),
+	(119, 1, 'system_admin/shop_category', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container"}', '2018-11-18 09:04:34', '2018-11-18 09:04:34'),
+	(120, 1, 'system_admin/shop_product', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container"}', '2018-11-18 09:04:36', '2018-11-18 09:04:36'),
+	(121, 1, 'system_admin/report/product', 'GET', '116.109.183.158', '{"_pjax":"#pjax-container"}', '2018-11-18 09:04:43', '2018-11-18 09:04:43'),
+	(122, 1, 'system_admin', 'GET', '116.109.183.158', '[]', '2018-11-18 09:04:54', '2018-11-18 09:04:54'),
+	(123, 1, 'system_admin', 'GET', '116.109.183.158', '[]', '2018-11-18 09:05:02', '2018-11-18 09:05:02'),
+	(124, 1, 'system_admin', 'GET', '127.0.0.1', '[]', '2018-11-18 18:54:10', '2018-11-18 18:54:10'),
+	(125, 1, 'system_admin/auth/setting', 'GET', '127.0.0.1', '[]', '2018-11-18 18:54:22', '2018-11-18 18:54:22'),
+	(126, 1, 'system_admin/auth/setting', 'PUT', '127.0.0.1', '{"name":"Administrator","password":"admin","password_confirmation":"admin","_token":"aMdUQlDWJsoQay1EaIBGRtyN9zpxozkSEgrEz88m","_method":"PUT","_previous_":"http:\\/\\/demoshop.local\\/system_admin"}', '2018-11-18 18:54:31', '2018-11-18 18:54:31'),
+	(127, 1, 'system_admin/auth/setting', 'GET', '127.0.0.1', '[]', '2018-11-18 18:54:31', '2018-11-18 18:54:31'),
+	(128, 1, 'system_admin/auth/logout', 'GET', '127.0.0.1', '[]', '2018-11-18 18:54:38', '2018-11-18 18:54:38'),
+	(129, 1, 'system_admin', 'GET', '127.0.0.1', '[]', '2018-11-18 18:54:48', '2018-11-18 18:54:48'),
+	(130, 1, 'system_admin/shop_order', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2018-11-18 18:54:52', '2018-11-18 18:54:52'),
+	(131, 1, 'system_admin/shop_payment_status', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2018-11-18 18:55:02', '2018-11-18 18:55:02'),
+	(132, 1, 'system_admin/shop_promotion', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2018-11-18 18:55:05', '2018-11-18 18:55:05');
 /*!40000 ALTER TABLE `admin_operation_log` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.admin_permissions
@@ -230,8 +361,8 @@ CREATE TABLE IF NOT EXISTS `admin_users` (
 DELETE FROM `admin_users`;
 /*!40000 ALTER TABLE `admin_users` DISABLE KEYS */;
 INSERT INTO `admin_users` (`id`, `username`, `password`, `name`, `avatar`, `remember_token`, `created_at`, `updated_at`) VALUES
-	(1, 'admin', '$2y$10$wwXEVBZ9NHpeSoSSnipCLOhxbcI5UNTiF5U.3bGeoBFXR8NeLOF12', 'Administrator', NULL, 'Qc7pOAIMYmzYDz6Ew1sBD9QaDUoJ83kL8fzPx6yD6XdqkRdmpzkeB8zzlltR', '2018-01-12 17:27:40', '2018-11-15 06:39:31'),
-	(3, 'user', '$2y$10$Ao7Uey2z5jPFta/rZG51XuG1OZiWdlbdf3QSgsAjKn9Hfpcp14Ami', 'User', NULL, 'Mle9NHz93h50M8x42L5pqUxm406WTwpvDKxXQTSgMBHaR5qzI5BseTRkYZeM', '2018-01-12 18:05:28', '2018-09-23 18:56:26');
+	(1, 'admin', '$2y$10$28cAgXPLNSoXK9MBIpwJDuuEQ3801XeBkIMjp12FGEFvc6zJ8hL3u', 'Administrator', NULL, 'ysJzS2eVzqo22VmLydovOgdmA4OZOhtRrrs5T3SGpGic0Qbe1PD3fUXKbZwj', '2018-01-12 17:27:40', '2018-11-18 18:54:31'),
+	(3, 'user', '$2y$10$Ao7Uey2z5jPFta/rZG51XuG1OZiWdlbdf3QSgsAjKn9Hfpcp14Ami', 'User', NULL, 'uJDVZWNzZXrwvi2Bqy0WUonN9LFJXm3uUWvFrg2l9MUMgQ0sY566f5Larc7k', '2018-01-12 18:05:28', '2018-09-23 18:56:26');
 /*!40000 ALTER TABLE `admin_users` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.admin_user_permissions
@@ -494,12 +625,9 @@ INSERT INTO `config` (`id`, `code`, `key`, `value`, `sort`, `detail`) VALUES
 	(30, 'config', 'site_ssl', '0', 0, 'language.admin.enable_https'),
 	(31, 'config', 'admin_log', '0', 0, 'language.admin.enable_log_admin'),
 	(32, 'config', 'watermark', '1', 0, 'language.admin.enable_watermark'),
-	(33, 'payment_paypal', 'paypal_client_id', NULL, 0, 'language.admin.paypal_client_id'),
-	(34, 'payment_paypal', 'paypal_secret', NULL, 0, 'language.admin.paypal_secret'),
-	(35, 'payment_paypal', 'paypal_mode', 'sandbox', 8, 'language.admin.paypal_mode'),
 	(36, 'payment_paypal', 'paypal_log', '1', 0, 'language.admin.paypal_log'),
 	(37, 'payment_paypal', 'paypal_path_log', 'logs/paypal.log', 0, 'language.admin.paypal_path_log'),
-	(40, 'payment_paypal', 'paypal_status', '0', 9, 'language.admin.paypal_status'),
+	(40, 'payment_paypal', 'paypal_status', '1', 9, 'language.admin.paypal_status'),
 	(41, 'payment_paypal', 'paypal_currency', 'USD', 0, 'language.admin.paypal_currency'),
 	(42, 'payment_paypal', 'paypal_order_status_success', '1', 0, 'language.admin.paypal_order_status_success'),
 	(43, 'payment_paypal', 'paypal_order_status_faild', '5', 0, 'language.admin.paypal_order_status_faild'),
@@ -775,9 +903,9 @@ CREATE TABLE IF NOT EXISTS `shop_order` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.shop_order: ~46 rows (approximately)
+-- Dumping data for table s-cart.shop_order: ~48 rows (approximately)
 DELETE FROM `shop_order`;
 /*!40000 ALTER TABLE `shop_order` DISABLE KEYS */;
 INSERT INTO `shop_order` (`id`, `user_id`, `subtotal`, `shipping`, `discount`, `payment_status`, `shipping_status`, `status`, `tax`, `total`, `received`, `balance`, `toname`, `address1`, `address2`, `country`, `phone`, `email`, `comment`, `payment_method`, `transaction`, `created_at`, `updated_at`) VALUES
@@ -827,7 +955,9 @@ INSERT INTO `shop_order` (`id`, `user_id`, `subtotal`, `shipping`, `discount`, `
 	(128, 0, 115000, 20000, 0, 0, 0, 0, 0, 135000, 0, 135000, 'vinaenter', 'vinaenter', 'vinaenter', NULL, '0978735237', NULL, 'ccccccccccccccccc', 'cash', NULL, '2018-11-05 18:23:55', NULL),
 	(129, 0, 15000, 20000, 0, 0, 0, 0, 0, 35000, 0, 35000, 'fasdfasfasdf', 'ádfasdfasdf', 'sdfafasdfasdfasdf', NULL, '01673419334', NULL, NULL, 'cash', NULL, '2018-11-05 18:35:28', NULL),
 	(130, 5, 90000, 15000, -10000, 0, 1, 1, 0, 95000, -35000, 60000, 'Bao Khanh', '12/A3', 'TTh07', NULL, '09012345678', NULL, 'Comment', NULL, NULL, '2018-11-09 00:12:55', '2018-11-09 00:14:54'),
-	(131, 0, 10000, 20000, 0, 0, 0, 0, 0, 30000, 0, 30000, 'quang', 'sdf', 'fsdf', NULL, '01667133042', NULL, NULL, 'cash', NULL, '2018-11-13 15:08:31', NULL);
+	(131, 0, 10000, 20000, 0, 0, 0, 0, 0, 30000, 0, 30000, 'quang', 'sdf', 'fsdf', NULL, '01667133042', NULL, NULL, 'cash', NULL, '2018-11-13 15:08:31', NULL),
+	(132, 0, 15000, 20000, 0, 0, 0, 1, 0, 35000, 0, 35000, 'Hoang Ngoc Tu', '南陽市長岡', '南陽市長岡', NULL, '09012345678', NULL, 'dfg', 'paypal', 'PAY-66885678475620050LPWUANA', '2018-11-15 16:45:22', '2018-11-15 16:45:51'),
+	(133, 0, 15000, 20000, 0, 0, 0, 0, 0, 35000, 0, 35000, 'Trang', 'HCM', 'HCM', NULL, '09978998768', 'tranghiazxx@gmail.com', 'OK', 'cash', NULL, '2018-11-18 08:45:32', NULL);
 /*!40000 ALTER TABLE `shop_order` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_order_detail
@@ -846,9 +976,9 @@ CREATE TABLE IF NOT EXISTS `shop_order_detail` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=205 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=207 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.shop_order_detail: ~58 rows (approximately)
+-- Dumping data for table s-cart.shop_order_detail: ~60 rows (approximately)
 DELETE FROM `shop_order_detail`;
 /*!40000 ALTER TABLE `shop_order_detail` DISABLE KEYS */;
 INSERT INTO `shop_order_detail` (`id`, `order_id`, `product_id`, `name`, `price`, `qty`, `total_price`, `sku`, `type`, `option`, `created_at`, `updated_at`) VALUES
@@ -910,7 +1040,9 @@ INSERT INTO `shop_order_detail` (`id`, `order_id`, `product_id`, `name`, `price`
 	(201, 130, 32, 'Easy Polo Black Edition', 20000, 2, 40000, '3D-HOTWIRE1240', NULL, NULL, NULL, NULL),
 	(202, 130, 31, 'Easy Polo Black Edition', 10000, 4, 40000, '3D-TEFLONLOCK-M10', NULL, NULL, NULL, NULL),
 	(203, 130, 29, 'Easy Polo Black Edition', 10000, 1, 10000, '3D-TEFLONLOCK', NULL, NULL, NULL, NULL),
-	(204, 131, 49, 'Easy Polo Black Edition', 10000, 1, 10000, 'BX-5UTbnv', '[]', NULL, '2018-11-13 15:08:31', NULL);
+	(204, 131, 49, 'Easy Polo Black Edition', 10000, 1, 10000, 'BX-5UTbnv', '[]', NULL, '2018-11-13 15:08:31', NULL),
+	(205, 132, 48, 'Easy Polo Black Edition', 15000, 1, 15000, 'BX-5UT', '[]', NULL, '2018-11-15 16:45:22', NULL),
+	(206, 133, 48, 'Easy Polo Black Edition', 15000, 1, 15000, 'BX-5UT', '[]', NULL, '2018-11-18 08:45:32', NULL);
 /*!40000 ALTER TABLE `shop_order_detail` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_order_history
@@ -923,9 +1055,9 @@ CREATE TABLE IF NOT EXISTS `shop_order_history` (
   `user_id` int(11) NOT NULL DEFAULT '0',
   `add_date` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.shop_order_history: ~67 rows (approximately)
+-- Dumping data for table s-cart.shop_order_history: ~69 rows (approximately)
 DELETE FROM `shop_order_history`;
 /*!40000 ALTER TABLE `shop_order_history` DISABLE KEYS */;
 INSERT INTO `shop_order_history` (`id`, `order_id`, `content`, `admin_id`, `user_id`, `add_date`) VALUES
@@ -996,7 +1128,10 @@ INSERT INTO `shop_order_history` (`id`, `order_id`, `content`, `admin_id`, `user
 	(125, 130, 'Change <b>shipping_status</b> from <span style="color:blue">\'0\'</span> to <span style="color:red">\'1\'</span>', 1, 0, '2018-11-09 00:14:06'),
 	(126, 130, 'Change <b>status</b> from <span style="color:blue">\'0\'</span> to <span style="color:red">\'1\'</span>', 1, 0, '2018-11-09 00:14:11'),
 	(127, 130, 'Change <b>address1</b> from <span style="color:blue">\'12\'</span> to <span style="color:red">\'12/A3\'</span>', 1, 0, '2018-11-09 00:14:54'),
-	(128, 131, 'New order', 0, 0, '2018-11-13 15:08:31');
+	(128, 131, 'New order', 0, 0, '2018-11-13 15:08:31'),
+	(129, 132, 'New order', 0, 0, '2018-11-15 16:45:22'),
+	(130, 132, 'Transaction PAY-66885678475620050LPWUANA', 0, 0, '2018-11-15 16:45:51'),
+	(131, 133, 'New order', 0, 0, '2018-11-18 08:45:32');
 /*!40000 ALTER TABLE `shop_order_history` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_order_status
@@ -1031,9 +1166,9 @@ CREATE TABLE IF NOT EXISTS `shop_order_total` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=504 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=514 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.shop_order_total: ~295 rows (approximately)
+-- Dumping data for table s-cart.shop_order_total: ~305 rows (approximately)
 DELETE FROM `shop_order_total`;
 /*!40000 ALTER TABLE `shop_order_total` DISABLE KEYS */;
 INSERT INTO `shop_order_total` (`id`, `order_id`, `title`, `code`, `value`, `sort`, `created_at`, `updated_at`) VALUES
@@ -1336,7 +1471,17 @@ INSERT INTO `shop_order_total` (`id`, `order_id`, `title`, `code`, `value`, `sor
 	(500, 131, 'Shipping', 'shipping', 20000, 10, '2018-11-13 15:08:31', NULL),
 	(501, 131, 'Discount', 'discount', 0, 20, '2018-11-13 15:08:31', NULL),
 	(502, 131, 'Total', 'total', 30000, 100, '2018-11-13 15:08:31', NULL),
-	(503, 131, 'Received', 'received', 0, 200, '2018-11-13 15:08:31', NULL);
+	(503, 131, 'Received', 'received', 0, 200, '2018-11-13 15:08:31', NULL),
+	(504, 132, 'Sub total', 'subtotal', 15000, 1, '2018-11-15 16:45:22', NULL),
+	(505, 132, 'Shipping', 'shipping', 20000, 10, '2018-11-15 16:45:22', NULL),
+	(506, 132, 'Discount', 'discount', 0, 20, '2018-11-15 16:45:22', NULL),
+	(507, 132, 'Total', 'total', 35000, 100, '2018-11-15 16:45:22', NULL),
+	(508, 132, 'Received', 'received', 0, 200, '2018-11-15 16:45:22', NULL),
+	(509, 133, 'Sub total', 'subtotal', 15000, 1, '2018-11-18 08:45:32', NULL),
+	(510, 133, 'Shipping', 'shipping', 20000, 10, '2018-11-18 08:45:32', NULL),
+	(511, 133, 'Discount', 'discount', 0, 20, '2018-11-18 08:45:32', NULL),
+	(512, 133, 'Total', 'total', 35000, 100, '2018-11-18 08:45:32', NULL),
+	(513, 133, 'Received', 'received', 0, 200, '2018-11-18 08:45:32', NULL);
 /*!40000 ALTER TABLE `shop_order_total` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_payment_status
@@ -1388,46 +1533,46 @@ CREATE TABLE IF NOT EXISTS `shop_product` (
 DELETE FROM `shop_product`;
 /*!40000 ALTER TABLE `shop_product` DISABLE KEYS */;
 INSERT INTO `shop_product` (`id`, `sku`, `image`, `brand_id`, `vendor_id`, `category_id`, `category_other`, `price`, `cost`, `stock`, `sold`, `type`, `option`, `sort`, `status`, `view`, `date_lastview`, `date_available`, `created_at`, `updated_at`) VALUES
-	(3, 'MEGA2560', 'product/f2d9505d28f1b10f949cec466cada01e.jpeg', 1, 0, 7, NULL, 220000, 150000, 100, 0, 0, NULL, 0, 1, 9, '2018-11-15 00:20:11', NULL, '2018-01-15 14:57:31', '2018-11-15 00:20:11'),
-	(4, 'LEDFAN1', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 6, NULL, 190000, 100000, 100, 0, 1, NULL, 0, 1, 9, '2018-11-15 03:39:10', NULL, '2018-01-16 13:03:54', '2018-11-15 03:39:10'),
-	(5, 'CLOCKFAN1', 'product/15aa6b1f31b53a0177d7653761a45274.jpeg', 2, 0, 13, NULL, 420000, 320000, 100, 0, 1, NULL, 0, 1, 13, '2018-11-15 00:07:43', NULL, '2018-01-16 13:04:41', '2018-11-15 00:07:43'),
-	(6, 'CLOCKFAN2', 'product/0e1416d509af3712bd801404ca928702.jpeg', 1, 0, 13, NULL, 380000, 250000, 100, 0, 1, NULL, 0, 1, 30, '2018-11-15 01:00:40', NULL, '2018-02-02 14:52:50', '2018-11-15 01:00:40'),
-	(7, 'CLOCKFAN3', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 13, NULL, 320000, 250000, 100, 0, 1, NULL, 1, 1, 22, '2018-11-15 00:54:38', NULL, '2018-02-02 14:53:30', '2018-11-15 00:54:38'),
-	(8, 'TMC2208', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 6, 0, 11, NULL, 220000, 130000, 100, 0, 0, NULL, 1, 1, 21, '2018-11-14 23:56:36', NULL, '2018-02-02 14:53:30', '2018-11-14 23:56:36'),
-	(9, 'FILAMENT', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 15, NULL, 299000, 200000, 100, 0, 1, NULL, 1, 1, 22, '2018-11-15 00:49:16', NULL, '2018-02-02 14:53:30', '2018-11-15 00:49:16'),
-	(10, 'A4988', 'product/820283598735f98a9b23960821da438b.jpeg', 1, 0, 11, NULL, 39000, 20000, 100, 0, 0, NULL, 1, 1, 12, '2018-11-14 22:49:34', NULL, '2018-02-02 14:53:30', '2018-11-14 22:49:34'),
-	(11, 'ANYCUBIC-P', 'product/d63af407fa92299e163696a585566dc7.jpeg', 3, 0, 10, NULL, 4990000, 3500000, 100, 0, 0, NULL, 0, 1, 5, '2018-11-14 17:31:03', NULL, '2018-01-15 14:57:31', '2018-11-14 17:31:03'),
-	(12, '3DHLFD', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 12, NULL, 7990000, 5200000, 100, 0, 1, NULL, 0, 1, 11, '2018-11-15 02:16:52', NULL, '2018-01-15 14:57:31', '2018-11-15 02:16:52'),
-	(20, 'SS495A', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 2, 0, 14, NULL, 15000, 7000, 100, 0, 1, NULL, 0, 1, 31, '2018-11-14 22:51:39', NULL, '2018-01-15 14:57:31', '2018-11-14 22:51:39'),
-	(21, '3D-CARBON1.75', 'product/d05966a529efdd8d7b41ed9b687859b6.jpeg', 2, 0, 15, NULL, 390000, 15000, 100, 0, 1, NULL, 1, 1, 16, '2018-11-15 01:06:03', NULL, '2018-02-02 14:53:30', '2018-11-15 01:06:03'),
-	(22, '3D-GOLD1.75', 'product/eedfd153bf368919a134da17f22c8de7.jpeg', 2, 0, 15, NULL, 500000, 15000, 100, 0, 1, NULL, 1, 1, 20, '2018-11-15 00:49:51', NULL, '2018-04-12 15:05:37', '2018-11-15 00:49:51'),
-	(23, 'LCD12864-3D', 'product/a7a315526ecf7594731448d792714a11.jpeg', 2, 0, 11, NULL, 220000, 15000, 100, 0, 0, NULL, 0, 1, 9, '2018-11-14 19:26:50', NULL, '2018-08-11 13:33:37', '2018-11-14 19:26:50'),
-	(24, 'LCD2004-3D', 'product/9215506044b8a350fc082f5350b3653a.jpg', 2, 0, 11, NULL, 190000, 15000, 100, 0, 0, NULL, 0, 1, 7, '2018-11-14 20:11:43', NULL, '2018-08-11 13:39:31', '2018-11-14 20:11:43'),
-	(25, 'RAMPS1.5-3D', 'product/1d6cdd4473603c7a4d162067713b8da8.jpg', 2, 0, 11, NULL, 120000, 15000, 100, 0, 0, NULL, 0, 1, 3, '2018-11-14 19:50:44', NULL, '2018-08-11 13:41:25', '2018-11-14 19:50:44'),
-	(26, 'EFULL-3D', 'product/07e79f6546499878cba383dd5bfe977e.jpeg', 1, 0, 11, NULL, 890000, 15000, 100, 0, 0, NULL, 0, 1, 5, '2018-11-14 20:35:03', NULL, '2018-08-11 13:50:25', '2018-11-14 20:35:03'),
-	(27, 'ANYCUBIC-I3M', 'product/ea88b7078652909f3d6c5d445aa05f59.jpeg', 1, 0, 10, NULL, 7990000, 15000, 100, 0, 0, NULL, 0, 1, 19, '2018-11-15 00:17:29', NULL, '2018-08-22 16:26:00', '2018-11-15 00:17:29'),
-	(28, '3DNOZZLE', 'product/c25c81c852823f5ea8ba4250978217a5.jpeg', 1, 0, 11, NULL, 10000, 15000, 100, 0, 0, NULL, 0, 1, 3, '2018-11-15 03:05:45', NULL, '2018-08-24 04:21:48', '2018-11-15 03:05:45'),
-	(29, '3D-TEFLONLOCK', 'product/8e28f51184f0a96970c05185b1412fa1.jpeg', 1, 0, 12, NULL, 10000, 15000, 100, 0, 0, NULL, 0, 1, 16, '2018-11-14 20:37:41', NULL, '2018-08-24 04:32:48', '2018-11-14 20:37:41'),
-	(30, '3D-BELT-GT2', 'product/8f795b2335d42cdb7c7eafcfaf714cb2.jpeg', 1, 0, 11, NULL, 20000, 15000, 100, 0, 1, NULL, 0, 1, 24, '2018-11-15 02:51:00', NULL, '2018-08-24 04:35:39', '2018-11-15 02:51:00'),
-	(31, '3D-TEFLONLOCK-M10', 'product/0e1416d509af3712bd801404ca928702.jpeg', 2, 0, 11, NULL, 10000, 15000, 100, 0, 0, NULL, 0, 1, 7, '2018-11-14 19:48:19', NULL, '2018-08-24 04:39:03', '2018-11-14 19:48:19'),
-	(32, '3D-HOTWIRE1240', 'product/efd9fb910ba539c125b7c431a1ccc563.jpg', 0, 0, 11, NULL, 20000, 15000, 100, 0, 1, NULL, 0, 1, 17, '2018-11-14 20:59:28', NULL, '2018-08-24 04:40:54', '2018-11-14 20:59:28'),
-	(33, '3D-TEFTLON-24', 'product/a635cc2bdf5485ccb2c0cc9d186968b2.jpeg', 2, 0, 16, NULL, 15000, 15000, 100, 0, 0, NULL, 1, 1, 21, '2018-11-14 15:56:05', NULL, '2018-08-24 04:44:04', '2018-11-14 15:56:05'),
-	(34, '3D-TEFTLON-W24', 'product/a32f12e009ebf0d24ab264706ecbc15e.jpeg', 5, 0, 11, NULL, 20000, 15000, 100, 0, 1, NULL, 0, 1, 16, '2018-11-15 01:38:56', NULL, '2018-08-24 05:09:34', '2018-11-15 01:38:56'),
-	(35, '3D-SENSOR-NTC 100K', 'product/41c8f0d0111cd5a3f0538604233cbed8.jpeg', 4, 0, 10, NULL, 15000, 15000, 100, 0, 1, NULL, 0, 1, 13, '2018-11-15 01:40:54', NULL, '2018-08-24 05:13:58', '2018-11-15 01:40:54'),
-	(36, 'nRLF24L01+2.4HZ', 'product/820283598735f98a9b23960821da438b.jpeg', 3, 0, 11, NULL, 25000, 15000, 100, 0, 0, NULL, 0, 1, 19, '2018-11-15 02:14:28', NULL, '2018-08-24 06:07:15', '2018-11-15 02:14:28'),
-	(37, 'ARDUINO-NANO', 'product/da687e60e54bd7fc7eab5c76e7ec3754.jpeg', 1, 0, 17, NULL, 100000, 15000, 100, 0, 0, NULL, 0, 1, 12, '2018-11-15 02:16:22', NULL, '2018-08-24 06:25:48', '2018-11-15 02:16:22'),
-	(38, 'LEDSTRIP-5050RGB', 'product/61559578baf403e03565e73a14f845ce.jpeg', 1, 0, 9, NULL, 15000, 15000, 100, 0, 1, NULL, 0, 1, 41, '2018-11-15 03:37:26', NULL, '2018-08-24 06:33:31', '2018-11-15 03:37:26'),
-	(39, 'LEDSTRIP-S', 'product/c400aecd5c6d87782ac9af33dd7a5980.jpg', 4, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 11, '2018-11-14 16:48:31', NULL, '2018-08-24 08:46:21', '2018-11-14 16:48:31'),
-	(40, 'P10-IR', 'product/830d640cd17eba0bf186dc649d5c3053.jpeg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 12, '2018-11-10 02:34:32', NULL, '2018-08-24 08:49:49', '2018-11-10 02:34:32'),
-	(41, 'P10-IG', 'product/9d9aab8be8634708c9cf5b690fee74a4.jpeg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 1, NULL, 0, 1, 24, '2018-11-15 03:54:26', NULL, '2018-08-24 08:51:11', '2018-11-15 03:54:26'),
-	(42, 'P10-IB', 'product/98fafb9da683cd9ee854598f3f3a3bd5.jpeg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 12, '2018-11-09 23:54:31', NULL, '2018-08-24 08:52:58', '2018-11-09 23:54:31'),
-	(43, 'P10-IRGB', 'product/a111c060ebb6ffbbd2d34ae278501789.jpg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 8, '2018-11-09 05:43:03', NULL, '2018-08-24 08:54:45', '2018-11-09 05:43:03'),
-	(44, 'P10-IRG', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 1, NULL, 0, 1, 37, '2018-11-15 03:52:42', NULL, '2018-08-24 08:56:02', '2018-11-15 03:52:42'),
-	(45, 'LFF', 'product/3c8f613d30b4e487ef95a5e4cdea634c.jpeg', 0, 0, 6, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 44, '2018-11-15 03:23:41', NULL, '2018-08-24 08:58:42', '2018-11-15 03:23:41'),
-	(46, 'P2.5-I', 'product/949fa36ebd56593445fb61d141fd2a81.jpeg', 2, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 39, '2018-11-15 03:21:51', NULL, '2018-08-24 09:23:07', '2018-11-15 03:21:51'),
-	(47, 'BX-5U0', 'product/cd7aa3394c35330ed7f9e4095c6adb65.jpeg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 111, '2018-11-15 01:58:53', NULL, '2018-08-24 09:48:31', '2018-11-15 01:58:53'),
-	(48, 'BX-5UT', 'product/6ddd855403d127a9fed049d0ec335481.jpeg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 257, '2018-11-15 01:56:52', NULL, '2018-08-24 09:52:15', '2018-11-15 01:56:52'),
-	(49, 'BX-5UTbnv', 'product/0950df6d59696ad39a8e5505735f578c.jpeg', 2, 0, 2, NULL, 15000, 15000, 99, 1, 1, NULL, 0, 1, 138, '2018-11-15 01:22:30', '2018-09-19 00:00:00', '2018-09-03 08:05:59', '2018-11-15 01:22:30');
+	(3, 'MEGA2560', 'product/f2d9505d28f1b10f949cec466cada01e.jpeg', 1, 0, 7, NULL, 220000, 150000, 100, 0, 0, NULL, 0, 1, 16, '2018-11-18 04:39:59', NULL, '2018-01-15 14:57:31', '2018-11-18 04:39:59'),
+	(4, 'LEDFAN1', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 6, NULL, 190000, 100000, 100, 0, 1, NULL, 0, 1, 11, '2018-11-17 04:06:17', NULL, '2018-01-16 13:03:54', '2018-11-17 04:06:17'),
+	(5, 'CLOCKFAN1', 'product/15aa6b1f31b53a0177d7653761a45274.jpeg', 2, 0, 13, NULL, 420000, 320000, 100, 0, 1, NULL, 0, 1, 24, '2018-11-18 13:43:57', NULL, '2018-01-16 13:04:41', '2018-11-18 13:43:57'),
+	(6, 'CLOCKFAN2', 'product/0e1416d509af3712bd801404ca928702.jpeg', 1, 0, 13, NULL, 380000, 250000, 100, 0, 1, NULL, 0, 1, 34, '2018-11-18 13:58:30', NULL, '2018-02-02 14:52:50', '2018-11-18 13:58:30'),
+	(7, 'CLOCKFAN3', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 13, NULL, 320000, 250000, 100, 0, 1, NULL, 1, 1, 26, '2018-11-18 02:15:39', NULL, '2018-02-02 14:53:30', '2018-11-18 02:15:39'),
+	(8, 'TMC2208', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 6, 0, 11, NULL, 220000, 130000, 100, 0, 0, NULL, 1, 1, 29, '2018-11-18 02:29:04', NULL, '2018-02-02 14:53:30', '2018-11-18 02:29:04'),
+	(9, 'FILAMENT', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 15, NULL, 299000, 200000, 100, 0, 1, NULL, 1, 1, 29, '2018-11-18 06:29:51', NULL, '2018-02-02 14:53:30', '2018-11-18 06:29:51'),
+	(10, 'A4988', 'product/820283598735f98a9b23960821da438b.jpeg', 1, 0, 11, NULL, 39000, 20000, 100, 0, 0, NULL, 1, 1, 20, '2018-11-18 03:29:08', NULL, '2018-02-02 14:53:30', '2018-11-18 03:29:08'),
+	(11, 'ANYCUBIC-P', 'product/d63af407fa92299e163696a585566dc7.jpeg', 3, 0, 10, NULL, 4990000, 3500000, 100, 0, 0, NULL, 0, 1, 9, '2018-11-18 11:53:07', NULL, '2018-01-15 14:57:31', '2018-11-18 11:53:07'),
+	(12, '3DHLFD', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 12, NULL, 7990000, 5200000, 100, 0, 1, NULL, 0, 1, 13, '2018-11-18 12:32:44', NULL, '2018-01-15 14:57:31', '2018-11-18 12:32:44'),
+	(20, 'SS495A', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 2, 0, 14, NULL, 15000, 7000, 100, 0, 1, NULL, 0, 1, 37, '2018-11-18 17:51:45', NULL, '2018-01-15 14:57:31', '2018-11-18 17:51:45'),
+	(21, '3D-CARBON1.75', 'product/d05966a529efdd8d7b41ed9b687859b6.jpeg', 2, 0, 15, NULL, 390000, 15000, 100, 0, 1, NULL, 1, 1, 20, '2018-11-18 10:11:17', NULL, '2018-02-02 14:53:30', '2018-11-18 10:11:17'),
+	(22, '3D-GOLD1.75', 'product/eedfd153bf368919a134da17f22c8de7.jpeg', 2, 0, 15, NULL, 500000, 15000, 100, 0, 1, NULL, 1, 1, 24, '2018-11-18 00:14:57', NULL, '2018-04-12 15:05:37', '2018-11-18 00:14:57'),
+	(23, 'LCD12864-3D', 'product/a7a315526ecf7594731448d792714a11.jpeg', 2, 0, 11, NULL, 220000, 15000, 100, 0, 0, NULL, 0, 1, 12, '2018-11-18 10:35:52', NULL, '2018-08-11 13:33:37', '2018-11-18 10:35:52'),
+	(24, 'LCD2004-3D', 'product/9215506044b8a350fc082f5350b3653a.jpg', 2, 0, 11, NULL, 190000, 15000, 100, 0, 0, NULL, 0, 1, 10, '2018-11-17 15:37:41', NULL, '2018-08-11 13:39:31', '2018-11-17 15:37:41'),
+	(25, 'RAMPS1.5-3D', 'product/1d6cdd4473603c7a4d162067713b8da8.jpg', 2, 0, 11, NULL, 120000, 15000, 100, 0, 0, NULL, 0, 1, 17, '2018-11-18 01:08:33', NULL, '2018-08-11 13:41:25', '2018-11-18 01:08:33'),
+	(26, 'EFULL-3D', 'product/07e79f6546499878cba383dd5bfe977e.jpeg', 1, 0, 11, NULL, 890000, 15000, 100, 0, 0, NULL, 0, 1, 7, '2018-11-17 04:40:28', NULL, '2018-08-11 13:50:25', '2018-11-17 04:40:28'),
+	(27, 'ANYCUBIC-I3M', 'product/ea88b7078652909f3d6c5d445aa05f59.jpeg', 1, 0, 10, NULL, 7990000, 15000, 100, 0, 0, NULL, 0, 1, 28, '2018-11-18 05:39:36', NULL, '2018-08-22 16:26:00', '2018-11-18 05:39:36'),
+	(28, '3DNOZZLE', 'product/c25c81c852823f5ea8ba4250978217a5.jpeg', 1, 0, 11, NULL, 10000, 15000, 100, 0, 0, NULL, 0, 1, 5, '2018-11-18 12:01:45', NULL, '2018-08-24 04:21:48', '2018-11-18 12:01:45'),
+	(29, '3D-TEFLONLOCK', 'product/8e28f51184f0a96970c05185b1412fa1.jpeg', 1, 0, 12, NULL, 10000, 15000, 100, 0, 0, NULL, 0, 1, 27, '2018-11-18 12:16:53', NULL, '2018-08-24 04:32:48', '2018-11-18 12:16:53'),
+	(30, '3D-BELT-GT2', 'product/8f795b2335d42cdb7c7eafcfaf714cb2.jpeg', 1, 0, 11, NULL, 20000, 15000, 100, 0, 1, NULL, 0, 1, 35, '2018-11-18 12:23:52', NULL, '2018-08-24 04:35:39', '2018-11-18 12:23:52'),
+	(31, '3D-TEFLONLOCK-M10', 'product/0e1416d509af3712bd801404ca928702.jpeg', 2, 0, 11, NULL, 10000, 15000, 100, 0, 0, NULL, 0, 1, 8, '2018-11-17 05:06:57', NULL, '2018-08-24 04:39:03', '2018-11-17 05:06:57'),
+	(32, '3D-HOTWIRE1240', 'product/efd9fb910ba539c125b7c431a1ccc563.jpg', 0, 0, 11, NULL, 20000, 15000, 100, 0, 1, NULL, 0, 1, 24, '2018-11-18 12:47:17', NULL, '2018-08-24 04:40:54', '2018-11-18 12:47:17'),
+	(33, '3D-TEFTLON-24', 'product/a635cc2bdf5485ccb2c0cc9d186968b2.jpeg', 2, 0, 16, NULL, 15000, 15000, 100, 0, 0, NULL, 1, 1, 31, '2018-11-18 14:05:48', NULL, '2018-08-24 04:44:04', '2018-11-18 14:05:48'),
+	(34, '3D-TEFTLON-W24', 'product/a32f12e009ebf0d24ab264706ecbc15e.jpeg', 5, 0, 11, NULL, 20000, 15000, 100, 0, 1, NULL, 0, 1, 18, '2018-11-18 13:29:49', NULL, '2018-08-24 05:09:34', '2018-11-18 13:29:49'),
+	(35, '3D-SENSOR-NTC 100K', 'product/41c8f0d0111cd5a3f0538604233cbed8.jpeg', 4, 0, 10, NULL, 15000, 15000, 100, 0, 1, NULL, 0, 1, 16, '2018-11-18 13:37:02', NULL, '2018-08-24 05:13:58', '2018-11-18 13:37:02'),
+	(36, 'nRLF24L01+2.4HZ', 'product/820283598735f98a9b23960821da438b.jpeg', 3, 0, 11, NULL, 25000, 15000, 100, 0, 0, NULL, 0, 1, 24, '2018-11-18 12:53:47', NULL, '2018-08-24 06:07:15', '2018-11-18 12:53:47'),
+	(37, 'ARDUINO-NANO', 'product/da687e60e54bd7fc7eab5c76e7ec3754.jpeg', 1, 0, 17, NULL, 100000, 15000, 100, 0, 0, NULL, 0, 1, 17, '2018-11-18 13:01:45', NULL, '2018-08-24 06:25:48', '2018-11-18 13:01:45'),
+	(38, 'LEDSTRIP-5050RGB', 'product/61559578baf403e03565e73a14f845ce.jpeg', 1, 0, 9, NULL, 15000, 15000, 100, 0, 1, NULL, 0, 1, 55, '2018-11-18 06:59:57', NULL, '2018-08-24 06:33:31', '2018-11-18 06:59:57'),
+	(39, 'LEDSTRIP-S', 'product/c400aecd5c6d87782ac9af33dd7a5980.jpg', 4, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 22, '2018-11-18 11:46:18', NULL, '2018-08-24 08:46:21', '2018-11-18 11:46:18'),
+	(40, 'P10-IR', 'product/830d640cd17eba0bf186dc649d5c3053.jpeg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 19, '2018-11-18 03:39:16', NULL, '2018-08-24 08:49:49', '2018-11-18 03:39:16'),
+	(41, 'P10-IG', 'product/9d9aab8be8634708c9cf5b690fee74a4.jpeg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 1, NULL, 0, 1, 30, '2018-11-18 00:38:32', NULL, '2018-08-24 08:51:11', '2018-11-18 00:38:32'),
+	(42, 'P10-IB', 'product/98fafb9da683cd9ee854598f3f3a3bd5.jpeg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 23, '2018-11-18 01:38:44', NULL, '2018-08-24 08:52:58', '2018-11-18 01:38:44'),
+	(43, 'P10-IRGB', 'product/a111c060ebb6ffbbd2d34ae278501789.jpg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 16, '2018-11-18 01:28:53', NULL, '2018-08-24 08:54:45', '2018-11-18 01:28:53'),
+	(44, 'P10-IRG', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 1, NULL, 0, 1, 40, '2018-11-17 04:06:33', NULL, '2018-08-24 08:56:02', '2018-11-17 04:06:33'),
+	(45, 'LFF', 'product/3c8f613d30b4e487ef95a5e4cdea634c.jpeg', 0, 0, 6, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 59, '2018-11-18 10:01:08', NULL, '2018-08-24 08:58:42', '2018-11-18 10:01:08'),
+	(46, 'P2.5-I', 'product/949fa36ebd56593445fb61d141fd2a81.jpeg', 2, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 43, '2018-11-17 14:31:10', NULL, '2018-08-24 09:23:07', '2018-11-17 14:31:10'),
+	(47, 'BX-5U0', 'product/cd7aa3394c35330ed7f9e4095c6adb65.jpeg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 113, '2018-11-18 13:15:40', NULL, '2018-08-24 09:48:31', '2018-11-18 13:15:40'),
+	(48, 'BX-5UT', 'product/6ddd855403d127a9fed049d0ec335481.jpeg', 0, 0, 19, NULL, 15000, 15000, 98, 2, 0, NULL, 0, 1, 272, '2018-11-18 13:08:17', NULL, '2018-08-24 09:52:15', '2018-11-18 13:08:17'),
+	(49, 'BX-5UTbnv', 'product/0950df6d59696ad39a8e5505735f578c.jpeg', 2, 0, 2, NULL, 15000, 15000, 99, 1, 1, NULL, 0, 1, 147, '2018-11-18 13:51:26', '2018-09-19 00:00:00', '2018-09-03 08:05:59', '2018-11-18 13:51:26');
 /*!40000 ALTER TABLE `shop_product` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_product_description
