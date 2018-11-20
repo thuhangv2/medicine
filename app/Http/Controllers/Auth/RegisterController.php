@@ -50,7 +50,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'reg_name'     => 'required|string|max:255',
-            'reg_email'    => 'required|string|email|max:255|unique:users,email',
+            'reg_email'    => 'required|string|email|max:255|unique:' . (new User)->getTable() . ',email',
             'reg_password' => 'required|string|min:6|confirmed',
             'reg_phone'    => 'required|regex:/^0[^0][0-9\-]{7,13}$/',
             'reg_address1' => 'required|string|max:255',
