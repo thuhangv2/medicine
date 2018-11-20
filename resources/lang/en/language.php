@@ -3,20 +3,6 @@
 
 return [
     'all_product'       => 'All products',
-    'cart'              => [
-        'over'  => 'Product :item has exceeded the maximum number of allowed quantity.',
-        'exist' => 'This product exist in :instance',
-    ],
-
-    'coupon'            => [
-        'invalid'   => 'This code invalid!',
-        'over'      => 'You already used this code!',
-        'used'      => 'This code exceeds the number of times it is used!',
-        'undefined' => 'Error undefined!',
-        'not_allow' => 'You can not use Point in here!',
-        'value'     => 'This coupon have value :value for this order!',
-        'expire'    => 'Code expires!',
-    ],
 
     'my_profile'        => 'My profile',
     'notfound'          => 'Not found',
@@ -89,7 +75,8 @@ return [
         'hot_product'                  => 'Hot product',
         'new_product'                  => 'New product',
         'list_product'                 => 'List product',
-        'relation_product'             => 'Product releation',
+        'relation_product'             => 'Releation product',
+        'viewed_product'               => 'Viewed product',
         'enable_https'                 => 'Enable https',
         'enable_log_admin'             => 'Enable log admin',
         'enable_watermark'             => 'Use Watermark',
@@ -223,7 +210,29 @@ return [
         'used'        => 'Used',
         'expire'      => 'Expire',
         'history'     => 'History',
+        'exist'       => 'This code already exist!',
+        'validate'    => 'Code only use characters in 0-9a-zA-Z',
+        'example'     => 'Ex:',
+        'number_uses' => 'Number used',
+        'customer'    => 'Customer',
+        'used_at'     => 'Used at',
+        'content'     => 'Content',
+        'point'       => 'Points',
+        'cash'        => 'Cash',
+        '%'           => '%',
+        'note'        => 'Cash - discount with cash; Point - give points; % - discount rate',
+        'process'     => [
+            'invalid'   => 'This code invalid!',
+            'over'      => 'You already used this code!',
+            'used'      => 'This code exceeds the number of times it is used!',
+            'undefined' => 'Error undefined!',
+            'not_allow' => 'You can not use Point in here!',
+            'value'     => 'This coupon have value :value for this order!',
+            'expire'    => 'Code expires!',
+            'completed' => 'Order discount :value!',
+        ],
     ],
+
     'customer'          => [
         'name'         => 'Name',
         'phone'        => 'Phone',
@@ -240,4 +249,16 @@ return [
         'productImport'      => 'Import multiple product',
         'productImport_text' => 'Download file format',
     ],
+
+    'cart'              => [
+        'over'           => 'Product :item has exceeded the maximum number of allowed quantity.',
+        'exist'          => 'This product exist in :instance',
+        'apply'          => 'Apply',
+        'coupon'         => 'Coupon',
+        'remove_coupon'  => 'Remove coupon',
+        'payment_method' => 'Payment method',
+        'checkout'       => 'Checkout',
+        'coupon_empty'   => 'Coupon empty!',
+    ],
+
 ];

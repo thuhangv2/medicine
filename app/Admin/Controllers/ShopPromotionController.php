@@ -21,7 +21,7 @@ class ShopPromotionController extends Controller
      * @return Content
      */
     public $arrType = [
-        '0' => 'VNĐ',
+        '0' => 'Cash',
         '1' => 'Point',
         '2' => '%',
     ];
@@ -101,7 +101,7 @@ class ShopPromotionController extends Controller
                 $dataPromo = Promocode::find($this->id);
                 $html      = '<br>';
                 foreach ($dataPromo->users as $key => $value) {
-                    $html .= '<span style="padding-left:20px;"><i class="fa fa-angle-double-right"></i> Khách hàng ID' . $value->pivot->user_id . ' dùng lúc ' . $value->pivot->used_at . '.  Nội dung: ' . $value->pivot->log . '</span><br>';
+                    $html .= '<span style="padding-left:20px;"><i class="fa fa-angle-double-right"></i> ' . trans('language.promotion.customer') . ' ID' . $value->pivot->user_id . trans('language.promotion.used_at') . $value->pivot->used_at . '.  ' . trans('language.promotion.content') . ': ' . $value->pivot->log . '</span><br>';
                 }
                 return $html . "<br>";
             }, trans('language.promotion.history'));
@@ -122,15 +122,15 @@ class ShopPromotionController extends Controller
     protected function form()
     {
         return Admin::form(Promocode::class, function (Form $form) {
-            $form->text('code', 'Mã coupon')->rules(function ($form) {
-                return 'required|unique:promocodes,code,' . $form->model()->id . ',id';
-            }, ['required' => 'Bạn chưa nhập mã coupon', 'unique' => 'Mã coupon này đã có rồi'])->placeholder('Ví dụ: SAVEOFF2018,SAVE50,...')->help('Mã coupon là duy nhất. Viết liền, không dấu');
+            $form->text('code', trans('language.promotion.code'))->rules(function ($form) {
+                return 'required|regex:/(^([0-9A-Za-z]+)$)/|unique:promocodes,code,' . $form->model()->id . ',id';
+            }, ['unique' => trans('language.promotion.exist'), 'regex' => trans('language.promotion.validate')])->placeholder(trans('language.promotion.example') . ' SAVEOFF2018,SAVE50,...')->help(trans('language.promotion.validate'));
 
-            $form->number('reward', 'Giá trị');
-            $form->select('type', 'Loại')->options($this->arrType);
-            $form->text('data', 'Mô tả');
-            $form->number('number_uses', 'Số lần sử dụng')->default(1);
-            $form->datetime('expires_at', 'Ngày hết hạn');
+            $form->number('reward', trans('language.promotion.value'))->rules('numeric|min:0');
+            $form->select('type', trans('language.promotion.type'))->options($this->arrType)->help(trans('language.promotion.note'));
+            $form->text('data', trans('language.promotion.description'));
+            $form->number('number_uses', trans('language.promotion.maximum'))->default(1)->rules('numeric|min:0');
+            $form->datetime('expires_at', trans('language.promotion.expire'));
             $form->switch('status', trans('language.admin.status'));
             $form->disableViewCheck();
             $form->disableEditingCheck();

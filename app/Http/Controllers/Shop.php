@@ -558,7 +558,7 @@ class Shop extends GeneralController
                 if ($element['value'] != 0) {
                     $html .= "<tr class='showTotal'>
                          <th>" . $element['title'] . "</th>
-                        <td style='text-align: right' id='" . $element['code'] . "'>" . number_format($element['value']) . " VNĐ</td>
+                        <td style='text-align: right' id='" . $element['code'] . "'>" . number_format($element['value']) . "</td>
                     </tr>";
                 }
 
@@ -570,15 +570,15 @@ class Shop extends GeneralController
         if ($check['error'] == 1) {
             $error = 1;
             if ($check['msg'] == 'error_code_not_exist') {
-                $msg = trans('language.coupon.invalid');
+                $msg = trans('language.promotion.process.invalid');
             } elseif ($check['msg'] == 'error_code_cant_use') {
-                $msg = trans('language.coupon.over');
+                $msg = trans('language.promotion.process.over');
             } elseif ($check['msg'] == 'error_code_expired_disabled') {
-                $msg = trans('language.coupon.expire');
+                $msg = trans('language.promotion.process.expire');
             } elseif ($check['msg'] == 'error_user_used') {
-                $msg = trans('language.coupon.used');
+                $msg = trans('language.promotion.process.used');
             } else {
-                $msg = trans('language.coupon.undefined');
+                $msg = trans('language.promotion.process.undefined');
             }
 
         } else {
@@ -586,15 +586,15 @@ class Shop extends GeneralController
             if ($content['type'] === 1) {
                 //Point use in my page
                 $error = 1;
-                $msg   = trans('language.coupon.not_allow');
+                $msg   = trans('language.promotion.process.not_allow');
             } else {
                 $arrType = [
-                    '0' => 'VNĐ',
-                    '1' => 'Point',
-                    '2' => '%',
+                    '0' => trans('language.promotion.cash'),
+                    '1' => trans('language.promotion.point'),
+                    '2' => trans('language.promotion.%'),
                 ];
                 $error = 0;
-                $msg   = trans('language.coupon.not_allow', ['value' => number_format($content['reward']) . $arrType[$content['type']]]);
+                $msg   = trans('language.promotion.process.completed', ['value' => number_format($content['reward']) . ' ' . $arrType[$content['type']]]);
                 $request->session()->put('coupon', $code);
 
                 $objects   = array();
@@ -611,7 +611,7 @@ class Shop extends GeneralController
                         }
 
                         $html .= "<th>" . $element['title'] . "</th>
-                        <td style='text-align: right' id='" . $element['code'] . "'>" . number_format($element['value']) . " VNĐ</td>
+                        <td style='text-align: right' id='" . $element['code'] . "'>" . number_format($element['value']) . "</td>
                     </tr>";
                     }
 

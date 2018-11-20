@@ -3,20 +3,7 @@
 
 return [
     'all_product'       => 'Tất cả sản phẩm',
-    'cart'              => [
-        'over'  => 'Sản phẩm :item vượt quá số lượng cho phép.',
-        'exist' => 'Sản phẩm đã tồn tại trong :instance',
-    ],
 
-    'coupon'            => [
-        'invalid'   => 'Mã giảm giá không hợp lệ!',
-        'over'      => 'Mã giảm giá vượt quá số lần sử dụng!',
-        'used'      => 'Bạn đã sử dụng mã này rồi!',
-        'undefined' => 'Lỗi không xác định!',
-        'not_allow' => 'Bạn không thể sử Point ở đây!',
-        'value'     => 'Mã giảm giá có giá trị :value cho đơn hàng này!',
-        'expire'    => 'Mã hết hạn sử dụng!',
-    ],
     'my_profile'        => 'Trang quản lý cá nhân',
     'notfound'          => 'Không tìm thấy dữ liệu',
     'empty_product'     => 'Không có sản phẩm nào!',
@@ -88,6 +75,7 @@ return [
         'new_product'                  => 'Sản phẩm mới nhất',
         'list_product'                 => 'Danh sách sản phẩm',
         'relation_product'             => 'Sản phẩm liên quan',
+        'viewed_product'               => 'Sản phẩm đã xem',
         'enable_https'                 => 'Sử dụng https',
         'enable_log_admin'             => 'Bật log Admin',
         'enable_watermark'             => 'Chèn logo khi upload ảnh',
@@ -220,6 +208,26 @@ return [
         'used'        => 'Đã dùng',
         'expire'      => 'Hết hạn',
         'history'     => 'Lịch sử',
+        'exist'       => 'Mã này đã có rồi!',
+        'validate'    => 'Bạn chỉ được dùng chữ cái a-z và số',
+        'example'     => 'Ví dụ:',
+        'customer'    => 'Khách hàng',
+        'used_at'     => 'Dùng lúc',
+        'content'     => 'Nội dung',
+        'point'       => 'Điểm',
+        'cash'        => 'Tiền mặt',
+        '%'           => '%',
+        'note'        => 'Cash - giả giá tiền mặt; Point - tặng điểm cho khách; % - tỉ lệ giảm giá',
+        'process'     => [
+            'invalid'   => 'Mã giảm giá không hợp lệ!',
+            'over'      => 'Mã giảm giá vượt quá số lần sử dụng!',
+            'used'      => 'Bạn đã sử dụng mã này rồi!',
+            'undefined' => 'Lỗi không xác định!',
+            'not_allow' => 'Bạn không thể sử Point ở đây!',
+            'value'     => 'Mã giảm giá có giá trị :value cho đơn hàng này!',
+            'expire'    => 'Mã hết hạn sử dụng!',
+            'completed' => 'Đơn hàng giảm giá :value!',
+        ],
     ],
 
     'customer'          => [
@@ -237,6 +245,17 @@ return [
     'process'           => [
         'productImport'      => 'Thêm nhiều sản phẩm',
         'productImport_text' => 'Tải file mẫu ở đây',
+    ],
+
+    'cart'              => [
+        'over'           => 'Sản phẩm :item vượt quá số lượng cho phép.',
+        'exist'          => 'Sản phẩm đã tồn tại trong :instance',
+        'apply'          => 'Sử dụng',
+        'coupon'         => 'Mã giảm giá',
+        'remove_coupon'  => 'Xóa mã giảm giá',
+        'payment_method' => 'Phương thức thanh toán',
+        'checkout'       => 'Thanh toán',
+        'coupon_empty'   => 'Bạn chưa nhập mã giảm giá!',
     ],
 
 ];

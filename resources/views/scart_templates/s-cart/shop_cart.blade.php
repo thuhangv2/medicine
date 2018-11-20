@@ -146,7 +146,7 @@
 
                     @endforeach
 
-                    @if (!empty($configs['promotion_mode']) == 1 && auth()->user())
+                    @if (!empty($configs['promotion_mode']) == 1)
                         <tr>
                             <td colspan="2">
                                   <div class="form-group">
@@ -154,10 +154,10 @@
                                         $style = ($hasCoupon)?"display:inline;":"display: none;";
                                     @endphp
 
-                                    <label class="control-label" for="inputGroupSuccess3"><i class="fa fa-exchange" aria-hidden="true"></i> Coupon <span style="{{ $style }} cursor: pointer;" class="text-danger" id="removeCoupon">(remove coupon <i class="fa fa fa-times"></i>)</span></label>
+                                    <label class="control-label" for="inputGroupSuccess3"><i class="fa fa-exchange" aria-hidden="true"></i> {{ trans('language.cart.coupon') }} <span style="{{ $style }} cursor: pointer;" class="text-danger" id="removeCoupon">({{ trans('language.cart.remove_coupon') }} <i class="fa fa fa-times"></i>)</span></label>
                                     <div class="input-group">
                                       <input type="text" placeholder="Your coupon" class="form-control" id="coupon-value" aria-describedby="inputGroupSuccess3Status">
-                                      <span class="input-group-addon"  id="coupon-button" style="cursor: pointer;" data-loading-text="<i class='fa fa-spinner fa-spin'></i> checking">Apply</span>
+                                      <span class="input-group-addon"  id="coupon-button" style="cursor: pointer;" data-loading-text="<i class='fa fa-spinner fa-spin'></i> checking">{{ trans('language.cart.apply') }}</span>
                                     </div>
                                     <span class="status-coupon" style="display: none;" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                                     <div class="coupon-msg" style="text-align: left;padding-left: 10px;"></div>
@@ -167,7 +167,7 @@
                     @endif
                     <tr>
                         <td colspan="2">
-                            <i class="fa fa-credit-card-alt"></i> Payment method:<br>
+                            <i class="fa fa-credit-card-alt"></i> {{ trans('language.cart.payment_method') }}:<br>
                             <div class="form-group">
                                 @if (empty($configs['paypal_status']))
                                     <input type="hidden" name="payment_method" value="cash"><img src="{{ asset('images/cash.png') }}">
@@ -192,7 +192,7 @@
             </div>
             <div class="col-md-12 text-center">
                     <div class="pull-right">
-                        <button class="btn btn-success" id="submit-order" type="button" style="cursor: pointer;padding:10px 30px"><i class="fa fa-check"></i> Checkout</button>
+                        <button class="btn btn-success" id="submit-order" type="button" style="cursor: pointer;padding:10px 30px"><i class="fa fa-check"></i> {{ trans('language.cart.checkout') }}</button>
                     </div>
             </div>
         </div>
@@ -244,7 +244,7 @@ $('#submit-order').click(function(){
 $('#coupon-button').click(function() {
  var coupon = $('#coupon-value').val();
     if(coupon==''){
-        $('.coupon-msg').html('Bạn chưa nhập mã giảm giá').addClass('text-danger').show();
+        $('.coupon-msg').html('{{ trans('language.cart.coupon_empty') }}').addClass('text-danger').show();
     }else{
     $('#coupon-button').button('loading');
     setTimeout(function() {
