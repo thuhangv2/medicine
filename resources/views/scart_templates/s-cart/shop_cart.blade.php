@@ -146,7 +146,7 @@
 
                     @endforeach
 
-                    @if (!empty($configs['promotion_mode']) == 1)
+                    @if (!empty($configs['promotion_mode']) == 1 && (auth()->user() || empty($configs['promotion_login'])))
                         <tr>
                             <td colspan="2">
                                   <div class="form-group">

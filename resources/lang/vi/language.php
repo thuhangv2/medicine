@@ -53,6 +53,7 @@ return [
 
     'admin'             => [
         'paypal_client_id'             => 'Client ID',
+        'promotion_login'              => 'Phải đăng nhập để dùng coupon',
         'paypal_secret'                => 'Secret',
         'paypal_mode'                  => 'Paypal mode',
         'paypal_log'                   => 'Bật log',
@@ -219,14 +220,15 @@ return [
         '%'           => '%',
         'note'        => 'Cash - giả giá tiền mặt; Point - tặng điểm cho khách; % - tỉ lệ giảm giá',
         'process'     => [
-            'invalid'   => 'Mã giảm giá không hợp lệ!',
-            'over'      => 'Mã giảm giá vượt quá số lần sử dụng!',
-            'used'      => 'Bạn đã sử dụng mã này rồi!',
-            'undefined' => 'Lỗi không xác định!',
-            'not_allow' => 'Bạn không thể sử Point ở đây!',
-            'value'     => 'Mã giảm giá có giá trị :value cho đơn hàng này!',
-            'expire'    => 'Mã hết hạn sử dụng!',
-            'completed' => 'Đơn hàng giảm giá :value!',
+            'invalid'    => 'Mã giảm giá không hợp lệ!',
+            'over'       => 'Mã giảm giá vượt quá số lần sử dụng!',
+            'used'       => 'Bạn đã sử dụng mã này rồi!',
+            'undefined'  => 'Lỗi không xác định!',
+            'not_allow'  => 'Bạn không thể sử Point ở đây!',
+            'value'      => 'Mã giảm giá có giá trị :value cho đơn hàng này!',
+            'expire'     => 'Mã hết hạn sử dụng!',
+            'completed'  => 'Đơn hàng giảm giá :value!',
+            'must_login' => 'Bạn phải đăng nhập để sử dụng mã giảm giá này!',
         ],
     ],
 

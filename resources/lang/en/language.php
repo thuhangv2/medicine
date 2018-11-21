@@ -53,6 +53,7 @@ return [
     ],
 
     'admin'             => [
+        'promotion_login'              => 'Must login to use coupon',
         'paypal_client_id'             => 'Client ID',
         'paypal_secret'                => 'Secret',
         'paypal_mode'                  => 'Paypal mode',
@@ -222,14 +223,15 @@ return [
         '%'           => '%',
         'note'        => 'Cash - discount with cash; Point - give points; % - discount rate',
         'process'     => [
-            'invalid'   => 'This code invalid!',
-            'over'      => 'You already used this code!',
-            'used'      => 'This code exceeds the number of times it is used!',
-            'undefined' => 'Error undefined!',
-            'not_allow' => 'You can not use Point in here!',
-            'value'     => 'This coupon have value :value for this order!',
-            'expire'    => 'Code expires!',
-            'completed' => 'Order discount :value!',
+            'invalid'    => 'This code invalid!',
+            'over'       => 'You already used this code!',
+            'used'       => 'This code exceeds the number of times it is used!',
+            'undefined'  => 'Error undefined!',
+            'not_allow'  => 'You can not use Point in here!',
+            'value'      => 'This coupon have value :value for this order!',
+            'expire'     => 'Code expires!',
+            'completed'  => 'Order discount :value!',
+            'must_login' => 'You must login to use this coupon!',
         ],
     ],
 
