@@ -101,7 +101,7 @@ class Promocodes
      * @param string $code
      * @param string $uID
      *
-     * @return bool|\Lanhktc\Promocodes\Model\Promocode
+     * @return bool|\App\Scart\Promocodes\Model\Promocode
      */
     public function check($code, $uID = null)
     {

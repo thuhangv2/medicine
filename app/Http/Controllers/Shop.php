@@ -578,7 +578,7 @@ class Shop extends GeneralController
             } elseif ($check['msg'] == 'error_user_used') {
                 $msg = trans('language.promotion.process.used');
             } elseif ($check['msg'] == 'error_uID_input') {
-                $msg = trans('language.promotion.process.must_login');
+                $msg = trans('language.promotion.process.user_id_invalid');
             } elseif ($check['msg'] == 'error_login') {
                 $msg = trans('language.promotion.process.must_login');
             } else {

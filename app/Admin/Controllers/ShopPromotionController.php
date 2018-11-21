@@ -123,7 +123,7 @@ class ShopPromotionController extends Controller
     {
         return Admin::form(Promocode::class, function (Form $form) {
             $form->text('code', trans('language.promotion.code'))->rules(function ($form) {
-                return 'required|regex:/(^([0-9A-Za-z]+)$)/|unique:promocodes,code,' . $form->model()->id . ',id';
+                return 'required|regex:/(^([0-9A-Za-z\-]+)$)/|unique:promocodes,code,' . $form->model()->id . ',id';
             }, ['unique' => trans('language.promotion.exist'), 'regex' => trans('language.promotion.validate')])->placeholder(trans('language.promotion.example') . ' SAVEOFF2018,SAVE50,...')->help(trans('language.promotion.validate'));
 
             $form->number('reward', trans('language.promotion.value'))->rules('numeric|min:0');
