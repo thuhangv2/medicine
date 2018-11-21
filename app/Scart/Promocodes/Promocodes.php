@@ -95,19 +95,18 @@ class Promocodes
         return collect([]);
     }
 
-    /**
-     * Check promocode in database if it is valid.
-     *
-     * @param string $code
-     * @param string $uID
-     *
-     * @return bool|\App\Scart\Promocodes\Model\Promocode
-     */
-    public function check($code, $uID = null)
+/**
+ * [check description]
+ * @param  [type]  $code       [description]
+ * @param  [type]  $uID        [description]
+ * @param  boolean $couponAllowGuest [description]
+ * @return [type]              [description]
+ */
+    public function check($code, $uID = null, $couponAllowGuest = false)
     {
         if ($uID != null) {
             //if have value customer id
-            if (!$uID) {
+            if (!(int) $uID) {
                 return json_encode(['error' => 1, 'msg' => "error_uID_input"]);
             } else {
                 $uID = (int) $uID;
@@ -115,7 +114,11 @@ class Promocodes
         } else {
             //Check user  login
             if (!auth()->check()) {
-                return json_encode(['error' => 1, 'msg' => "error_login"]);
+                if (!$couponAllowGuest) {
+                    return json_encode(['error' => 1, 'msg' => "error_login"]);
+                } else {
+                    $uID = 0;
+                }
             } else {
                 //user id current
                 $uID = auth()->user()->id;
@@ -135,13 +138,14 @@ class Promocodes
         if ($promocode->status == 0 || $promocode->isExpired()) {
             return json_encode(['error' => 1, 'msg' => "error_code_expired_disabled"]);
         }
-
-        $arrUsers = [];
-        foreach ($promocode->users as $value) {
-            $arrUsers[] = $value->pivot->user_id;
-        }
-        if (in_array($uID, $arrUsers)) {
-            return json_encode(['error' => 1, 'msg' => "error_user_used"]);
+        if (!$couponAllowGuest) {
+            $arrUsers = [];
+            foreach ($promocode->users as $value) {
+                $arrUsers[] = $value->pivot->user_id;
+            }
+            if (in_array($uID, $arrUsers)) {
+                return json_encode(['error' => 1, 'msg' => "error_user_used"]);
+            }
         }
 
         return json_encode(['error' => 0, 'content' => $promocode]);
@@ -154,7 +158,7 @@ class Promocodes
  * @param  [type] $msg  [description]
  * @return [type]       [description]
  */
-    public function apply($code, $uID = null, $msg = null)
+    public function apply($code, $uID = null, $msg = null, $couponAllowGuest = false)
     {
 
         if ($uID != null) {
@@ -167,8 +171,12 @@ class Promocodes
         } else {
             //Check user  login
             if (!auth()->check()) {
-                return json_encode(['error' => 1, 'msg' => "error_login"]);
-            } else {
+                if (!$couponAllowGuest) {
+                    return json_encode(['error' => 1, 'msg' => "error_login"]);
+                } else {
+                    $uID = 0;
+                }
+            }{
                 //user id current
                 $uID = auth()->user()->id;
             }

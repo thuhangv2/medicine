@@ -224,8 +224,8 @@ return [
         'note'        => 'Cash - discount with cash; Point - give points; % - discount rate',
         'process'     => [
             'invalid'         => 'This code invalid!',
-            'over'            => 'You already used this code!',
-            'used'            => 'This code exceeds the number of times it is used!',
+            'over'            => 'This code exceeds the number of times it is used!',
+            'used'            => 'You already used this code!',
             'undefined'       => 'Error undefined!',
             'not_allow'       => 'You can not use Point in here!',
             'value'           => 'This coupon have value :value for this order!',

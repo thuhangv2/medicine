@@ -146,7 +146,7 @@
 
                     @endforeach
 
-                    @if (!empty($configs['promotion_mode']) == 1 && (auth()->user() || empty($configs['promotion_login'])))
+                    @if (!empty($configs['coupon_mode']) && (auth()->user() || !empty($configs['coupon_allow_guest'])))
                         <tr>
                             <td colspan="2">
                                   <div class="form-group">

@@ -279,7 +279,8 @@ class Shop extends GeneralController
             }
 
             if (!empty(session('coupon'))) {
-                \Promocodes::apply(session('coupon'), $uID = null, $msg = 'Order #' . $orderId); // apply coupon
+                $couponAllowGuest = empty($this->configs['coupon_allow_guest']) ? false : true;
+                \Promocodes::apply(session('coupon'), $uID = null, $msg = 'Order #' . $orderId, $couponAllowGuest); // apply coupon
                 $request->session()->forget('coupon'); //destroy coupon
             }
 
@@ -541,7 +542,8 @@ class Shop extends GeneralController
  */
     public function usePromotion(Request $request)
     {
-        if ($this->configs['promotion_mode'] != 1) {
+
+        if (!$this->configs['coupon_mode']) {
             return false;
         }
         $html   = '';
@@ -565,8 +567,8 @@ class Shop extends GeneralController
             }
             return json_encode(['html' => $html]);
         }
-
-        $check = json_decode(\Promocodes::check($code), true);
+        $couponAllowGuest = empty($this->configs['coupon_allow_guest']) ? false : true;
+        $check            = json_decode(\Promocodes::check($code, $uID = null, $couponAllowGuest), true);
         if ($check['error'] == 1) {
             $error = 1;
             if ($check['msg'] == 'error_code_not_exist') {
