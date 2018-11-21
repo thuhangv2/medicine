@@ -2,7 +2,6 @@
 
 namespace App\Admin\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Config;
 use App\Models\ShopOrderStatus;
 use Encore\Admin\Controllers\HasResourceActions;
@@ -14,7 +13,7 @@ use Encore\Admin\Layout\Row;
 use Encore\Admin\Widgets\Box;
 use Illuminate\Http\Request;
 
-class ConfigInfoController extends Controller
+class ConfigInfoController extends GeneralController
 {
     use HasResourceActions;
 

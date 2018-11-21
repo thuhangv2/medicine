@@ -2,7 +2,6 @@
 
 namespace App\Admin\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\ShopProduct;
 use App\Models\ShopSpecialPrice;
 use Encore\Admin\Controllers\HasResourceActions;
@@ -12,7 +11,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class ShopSpecialPriceController extends Controller
+class ShopSpecialPriceController extends GeneralController
 {
     use HasResourceActions;
 

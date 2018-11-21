@@ -2,7 +2,6 @@
 #app/Http/Admin/Controllers/CmsPageController.php
 namespace App\Admin\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\CmsPage;
 use App\Models\CmsPageDescription;
 use App\Models\Language;
@@ -13,7 +12,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class CmsPageController extends Controller
+class CmsPageController extends GeneralController
 {
     use HasResourceActions;
     /**

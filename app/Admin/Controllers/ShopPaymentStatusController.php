@@ -2,7 +2,6 @@
 
 namespace App\Admin\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\ShopPaymentStatus;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Facades\Admin;
@@ -11,7 +10,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class ShopPaymentStatusController extends Controller
+class ShopPaymentStatusController extends GeneralController
 {
     use HasResourceActions;
 

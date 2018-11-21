@@ -3,7 +3,6 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Extensions\ExcelExpoter;
-use App\Http\Controllers\Controller;
 use App\Models\ShopOrder;
 use App\Models\ShopOrderDetail;
 use App\Models\ShopOrderHistory;
@@ -22,7 +21,7 @@ use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 use Illuminate\Http\Request;
 
-class ShopOrderController extends Controller
+class ShopOrderController extends GeneralController
 {
     use HasResourceActions;
     public $statusPayment, $statusOrder, $statusShipping, $statusOrder2, $statusShipping2;

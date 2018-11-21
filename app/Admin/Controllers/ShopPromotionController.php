@@ -2,7 +2,6 @@
 
 namespace App\Admin\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Scart\Promocodes\Models\Promocode;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Facades\Admin;
@@ -11,7 +10,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class ShopPromotionController extends Controller
+class ShopPromotionController extends GeneralController
 {
     use HasResourceActions;
 

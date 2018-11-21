@@ -2,7 +2,6 @@
 #app/Admin/Controller/ShopProductController.php
 namespace App\Admin\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Config;
 use App\Models\Language;
 use App\Models\ShopBrand;
@@ -18,7 +17,7 @@ use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 use Illuminate\Http\Request;
 
-class ShopProductController extends Controller
+class ShopProductController extends GeneralController
 {
     use HasResourceActions;
     public $arrType = ['0' => 'Default', '1' => 'New'];

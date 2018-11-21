@@ -2,7 +2,6 @@
 #app/Http/Admin/Controllers/CmsNewsController.php
 namespace App\Admin\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\CmsNews;
 use App\Models\CmsNewsDescription;
 use App\Models\Language;
@@ -13,7 +12,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class CmsNewsController extends Controller
+class CmsNewsController extends GeneralController
 {
     use HasResourceActions;
 
