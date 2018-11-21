@@ -279,8 +279,7 @@ class Shop extends GeneralController
             }
 
             if (!empty(session('coupon'))) {
-                $couponAllowGuest = empty($this->configs['coupon_allow_guest']) ? false : true;
-                \Promocodes::apply(session('coupon'), $uID = null, $msg = 'Order #' . $orderId, $couponAllowGuest); // apply coupon
+                $return = \Promocodes::apply(session('coupon'), $uID = null, $msg = 'Order #' . $orderId); // apply coupon
                 $request->session()->forget('coupon'); //destroy coupon
             }
 
@@ -567,8 +566,7 @@ class Shop extends GeneralController
             }
             return json_encode(['html' => $html]);
         }
-        $couponAllowGuest = empty($this->configs['coupon_allow_guest']) ? false : true;
-        $check            = json_decode(\Promocodes::check($code, $uID = null, $couponAllowGuest), true);
+        $check = json_decode(\Promocodes::check($code), true);
         if ($check['error'] == 1) {
             $error = 1;
             if ($check['msg'] == 'error_code_not_exist') {
@@ -600,7 +598,7 @@ class Shop extends GeneralController
                     '2' => trans('language.promotion.%'),
                 ];
                 $error = 0;
-                $msg   = trans('language.promotion.process.completed', ['value' => number_format($content['reward']) . ' ' . $arrType[$content['type']]]);
+                $msg   = trans('language.promotion.process.completed');
                 $request->session()->put('coupon', $code);
 
                 $objects   = array();

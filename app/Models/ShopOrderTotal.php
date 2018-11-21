@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Config;
 use App\Models\ShopOrder;
 use App\Models\ShopShipping;
 use Cart;
@@ -162,10 +161,8 @@ class ShopOrderTotal extends Model
 
     public function getDiscount()
     {
-        $configs          = Config::pluck('value', 'code')->all();
-        $couponAllowGuest = empty($configs['coupon_allow_guest']) ? false : true;
-        $coupon           = session('coupon');
-        $check            = json_decode(Promocodes::check($coupon, $uID = null, $couponAllowGuest), true);
+        $coupon = session('coupon');
+        $check  = json_decode(Promocodes::check($coupon), true);
         if (empty($coupon) || $check['error'] == 1) {
             $arrDiscount = array(
                 'title' => 'Discount',
