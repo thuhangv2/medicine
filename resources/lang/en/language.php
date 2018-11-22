@@ -263,5 +263,11 @@ return [
         'checkout'       => 'Checkout',
         'coupon_empty'   => 'Coupon empty!',
     ],
-
+    'profile'           => [
+        'empty_order'  => 'You have no orders!',
+        'total'        => 'Total',
+        'status'       => 'Status',
+        'date_add'     => 'Date add',
+        'detail_order' => 'Detail order',
+    ],
 ];

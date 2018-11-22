@@ -261,4 +261,12 @@ return [
         'coupon_empty'   => 'Bạn chưa nhập mã giảm giá!',
     ],
 
+    'profile'           => [
+        'empty_order'  => 'Bạn chưa có đơn hàng nào!',
+        'total'        => 'Tổng giá',
+        'status'       => 'Trạng thái đơn hàng',
+        'date_add'     => 'Ngày mua',
+        'detail_order' => 'Chi tiết đơn hàng',
+    ],
+
 ];
