@@ -54,7 +54,7 @@ Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
                 </ul>
               </div>');
     }
-    if (Admin::user()->username == 'test') {
+    if (!empty(Admin::user()->username) && Admin::user()->username == 'test') {
         $navbar->left('<span style="font-size: 30px;
         color: #f3d80e;
         padding-left: 10%;
