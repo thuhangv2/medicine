@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Extensions\ExcelExpoter;
+use App\Http\Controllers\Controller;
 use App\User;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Facades\Admin;
@@ -11,7 +12,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class ShopCustomerController extends GeneralController
+class ShopCustomerController extends Controller
 {
     use HasResourceActions;
 

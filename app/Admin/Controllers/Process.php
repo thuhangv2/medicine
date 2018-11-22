@@ -2,6 +2,7 @@
 #app/Http/Admin/Controllers/Process.php
 namespace App\Admin\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\ShopProduct;
 use App\Models\ShopProductDescription;
 use App\Models\ShopSpecialPrice;
@@ -11,7 +12,7 @@ use Encore\Admin\Layout\Content;
 use Excel;
 use Illuminate\Http\Request;
 
-class Process extends GeneralController
+class Process extends Controller
 {
     use HasResourceActions;
     /**

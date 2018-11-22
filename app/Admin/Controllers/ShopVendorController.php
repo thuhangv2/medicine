@@ -2,6 +2,7 @@
 #app/Admin/Controller/ShopVendorController.php
 namespace App\Admin\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\ShopVendor;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Facades\Admin;
@@ -10,7 +11,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class ShopVendorController extends GeneralController
+class ShopVendorController extends Controller
 {
     use HasResourceActions;
 

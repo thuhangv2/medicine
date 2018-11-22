@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\ConfigGlobal;
 use App\Models\Language;
 use Encore\Admin\Controllers\HasResourceActions;
@@ -11,7 +12,7 @@ use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 use Illuminate\Support\MessageBag;
 
-class LanguageController extends GeneralController
+class LanguageController extends Controller
 {
     use HasResourceActions;
 

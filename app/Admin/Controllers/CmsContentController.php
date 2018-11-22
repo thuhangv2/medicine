@@ -2,6 +2,7 @@
 #app/Http/Admin/Controllers/CmsContentController.php
 namespace App\Admin\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\CmsCategory;
 use App\Models\CmsContent;
 use App\Models\CmsContentDescription;
@@ -13,7 +14,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class CmsContentController extends GeneralController
+class CmsContentController extends Controller
 {
     use HasResourceActions;
 

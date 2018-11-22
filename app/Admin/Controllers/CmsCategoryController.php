@@ -2,6 +2,7 @@
 #app/Http/Admin/Controllers/CmsCategoryController.php
 namespace App\Admin\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\CmsCategory;
 use App\Models\CmsCategoryDescription;
 use App\Models\Language;
@@ -12,7 +13,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class CmsCategoryController extends GeneralController
+class CmsCategoryController extends Controller
 {
     use HasResourceActions;
 

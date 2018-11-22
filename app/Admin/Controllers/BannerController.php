@@ -2,6 +2,7 @@
 #app/Http/Admin/Controllers/BannerController.php
 namespace App\Admin\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Facades\Admin;
@@ -10,7 +11,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class BannerController extends GeneralController
+class BannerController extends Controller
 {
     use HasResourceActions;
     /**

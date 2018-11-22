@@ -2,6 +2,7 @@
 #app/Admin/Controller/ConfigLayoutController.php
 namespace App\Admin\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\ConfigLayout;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
@@ -9,7 +10,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class ConfigLayoutController extends GeneralController
+class ConfigLayoutController extends Controller
 {
     use HasResourceActions;
 

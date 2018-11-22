@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\ConfigGlobal;
 use App\Models\Language;
 use Encore\Admin\Controllers\HasResourceActions;
@@ -10,7 +11,7 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 
-class ConfigGlobalController extends GeneralController
+class ConfigGlobalController extends Controller
 {
     use HasResourceActions;
 

@@ -2,6 +2,7 @@
 #app/Http/Admin/Controllers/ShopCategoryController.php
 namespace App\Admin\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Language;
 use App\Models\ShopCategory;
 use App\Models\ShopCategoryDescription;
@@ -12,7 +13,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class ShopCategoryController extends GeneralController
+class ShopCategoryController extends Controller
 {
     use HasResourceActions;
 
