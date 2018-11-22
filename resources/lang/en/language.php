@@ -268,6 +268,6 @@ return [
         'total'        => 'Total',
         'status'       => 'Status',
         'date_add'     => 'Date add',
-        'detail_order' => 'Detail order',
+        'detail_order' => 'Order detail',
     ],
 ];
