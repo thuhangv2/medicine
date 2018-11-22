@@ -53,7 +53,7 @@ return [
     ],
 
     'admin'             => [
-        'coupon_allow_guest'           => 'Allow to guest use coupon',
+        'promotion_login'              => 'Must login to use coupon',
         'paypal_client_id'             => 'Client ID',
         'paypal_secret'                => 'Secret',
         'paypal_mode'                  => 'Paypal mode',
@@ -230,7 +230,7 @@ return [
             'not_allow'       => 'You can not use Point in here!',
             'value'           => 'This coupon have value :value for this order!',
             'expire'          => 'Code expires!',
-            'completed'       => 'Use coupon success!',
+            'completed'       => 'Order discount :value!',
             'must_login'      => 'You must login to use this coupon!',
             'user_id_invalid' => 'User ID invalid!',
         ],

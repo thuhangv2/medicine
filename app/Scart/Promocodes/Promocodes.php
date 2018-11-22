@@ -2,7 +2,6 @@
 
 namespace App\Scart\Promocodes;
 
-use App\Models\Config;
 use App\Scart\Promocodes\Models\Promocode;
 use Carbon\Carbon;
 
@@ -29,7 +28,8 @@ class Promocodes
      */
     public function __construct()
     {
-        $this->codes  = Promocode::pluck('code')->toArray();
+        $this->codes = Promocode::pluck('code')->toArray();
+
         $this->length = substr_count(config('promocodes.mask'), '*');
     }
 
@@ -97,19 +97,28 @@ class Promocodes
 
 /**
  * [check description]
- * @param  [type] $code [description]
- * @param  [type] $uID  [description]
- * @return [type]       [description]
+ * @param  [type]  $code       [description]
+ * @param  [type]  $uID        [description]
+ * @param  boolean $couponAllowGuest [description]
+ * @return [type]              [description]
  */
-    public function check($code, $uID = null)
+    public function check($code, $uID = null, $couponAllowGuest = false)
     {
-        if ($uID) {
+        if ($uID != null) {
             //if have value customer id
-            $uID = (int) $uID;
+            if (!(int) $uID) {
+                return json_encode(['error' => 1, 'msg' => "error_uID_input"]);
+            } else {
+                $uID = (int) $uID;
+            }
         } else {
             //Check user  login
             if (!auth()->check()) {
-                return json_encode(['error' => 1, 'msg' => "error_login"]);
+                if (!$couponAllowGuest) {
+                    return json_encode(['error' => 1, 'msg' => "error_login"]);
+                } else {
+                    $uID = 0;
+                }
             } else {
                 //user id current
                 $uID = auth()->user()->id;
@@ -129,12 +138,14 @@ class Promocodes
         if ($promocode->status == 0 || $promocode->isExpired()) {
             return json_encode(['error' => 1, 'msg' => "error_code_expired_disabled"]);
         }
-        $arrUsers = [];
-        foreach ($promocode->users as $value) {
-            $arrUsers[] = $value->pivot->user_id;
-        }
-        if (in_array($uID, $arrUsers)) {
-            return json_encode(['error' => 1, 'msg' => "error_user_used"]);
+        if (!$couponAllowGuest) {
+            $arrUsers = [];
+            foreach ($promocode->users as $value) {
+                $arrUsers[] = $value->pivot->user_id;
+            }
+            if (in_array($uID, $arrUsers)) {
+                return json_encode(['error' => 1, 'msg' => "error_user_used"]);
+            }
         }
 
         return json_encode(['error' => 0, 'content' => $promocode]);
@@ -147,24 +158,36 @@ class Promocodes
  * @param  [type] $msg  [description]
  * @return [type]       [description]
  */
-    public function apply($code, $uID = null, $msg = null)
+    public function apply($code, $uID = null, $msg = null, $couponAllowGuest = false)
     {
-        if ($uID) {
-            $uID = (int) $uID;
+
+        if ($uID != null) {
+            //if have value customer id
+            if (!$uID) {
+                return json_encode(['error' => 1, 'msg' => "error_uID_input"]);
+            } else {
+                $uID = (int) $uID;
+            }
         } else {
             //Check user  login
             if (!auth()->check()) {
-                return json_encode(['error' => 1, 'msg' => "error_login"]);
-            } else {
+                if (!$couponAllowGuest) {
+                    return json_encode(['error' => 1, 'msg' => "error_login"]);
+                } else {
+                    $uID = 0;
+                }
+            }{
                 //user id current
                 $uID = auth()->user()->id;
             }
         }
 
         //check code valid
-        $checkCoupon = json_decode($this->check($code, $uID), true);
-        if ($checkCoupon['error'] === 0) {
+        $check = json_decode($this->check($code, $uID), true);
+
+        if ($check['error'] === 0) {
             $promocode = Promocode::byCode($code)->first();
+
             //users used code
             $arrUsers = $promocode->users()->pluck('id')->all();
             //if user not use

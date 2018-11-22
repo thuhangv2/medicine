@@ -146,7 +146,7 @@
 
                     @endforeach
 
-                    @if (!empty($configs['coupon_mode']))
+                    @if (!empty($configs['coupon_mode']) && (auth()->user() || !empty($configs['coupon_allow_guest'])))
                         <tr>
                             <td colspan="2">
                                   <div class="form-group">
@@ -156,8 +156,8 @@
 
                                     <label class="control-label" for="inputGroupSuccess3"><i class="fa fa-exchange" aria-hidden="true"></i> {{ trans('language.cart.coupon') }} <span style="{{ $style }} cursor: pointer;" class="text-danger" id="removeCoupon">({{ trans('language.cart.remove_coupon') }} <i class="fa fa fa-times"></i>)</span></label>
                                     <div class="input-group">
-                                      <input type="text" {{ (auth()->user())?'':'disabled' }} placeholder="Your coupon" class="form-control" id="coupon-value" aria-describedby="inputGroupSuccess3Status">
-                                      <span class="input-group-addon {{ (auth()->user())?'':'disabled' }}"  {{ (auth()->user())?'id="coupon-button"':'' }} style="cursor: pointer;" data-loading-text="<i class='fa fa-spinner fa-spin'></i> checking">{{ trans('language.cart.apply') }}</span>
+                                      <input type="text" placeholder="Your coupon" class="form-control" id="coupon-value" aria-describedby="inputGroupSuccess3Status">
+                                      <span class="input-group-addon"  id="coupon-button" style="cursor: pointer;" data-loading-text="<i class='fa fa-spinner fa-spin'></i> checking">{{ trans('language.cart.apply') }}</span>
                                     </div>
                                     <span class="status-coupon" style="display: none;" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                                     <div class="coupon-msg" style="text-align: left;padding-left: 10px;"></div>

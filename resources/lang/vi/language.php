@@ -53,7 +53,7 @@ return [
 
     'admin'             => [
         'paypal_client_id'             => 'Client ID',
-        'coupon_allow_guest'           => 'Sử dụng coupon không cần đăng nhập',
+        'promotion_login'              => 'Phải đăng nhập để dùng coupon',
         'paypal_secret'                => 'Secret',
         'paypal_mode'                  => 'Paypal mode',
         'paypal_log'                   => 'Bật log',
@@ -227,7 +227,7 @@ return [
             'not_allow'       => 'Bạn không thể sử Point ở đây!',
             'value'           => 'Mã giảm giá có giá trị :value cho đơn hàng này!',
             'expire'          => 'Mã hết hạn sử dụng!',
-            'completed'       => 'Sử dụng mã giảm giá thành công!',
+            'completed'       => 'Đơn hàng giảm giá :value!',
             'must_login'      => 'Bạn phải đăng nhập để sử dụng mã giảm giá này!',
             'user_id_invalid' => 'User ID không hợp lệ!',
         ],
