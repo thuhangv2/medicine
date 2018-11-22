@@ -114,5 +114,5 @@ composer create-project lanhktc/s-cart your-project "1.5.0"
 ## Demo:
 
 - Font-end : http://demo.s-cart.org
-- Back-end: http://demo.s-cart.org/system_admin   <code>User/pass: user/123456</code>
+- Back-end: http://demo.s-cart.org/system_admin   <code>User/pass: test/123456</code>
 
