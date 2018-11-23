@@ -392,7 +392,7 @@
     <div class="footer-bottom">
       <div class="container">
         <div class="row">
-          <p class="pull-left">Copyright © 2018 <a href="{{ config('scart.homepage') }}">S-CART {{ config('scart.version') }}</a> Inc. All rights reserved.</p>
+          <p class="pull-left">Copyright © 2018 <a href="{{ config('scart.homepage') }}">{{ config('scart.name') }} {{ config('scart.version') }}</a> Inc. All rights reserved.</p>
           <p class="pull-right">Hosted by  <span><a target="_blank" href="http://giaiphap247.com">GiaiPhap247</a></span></p>
         </div>
       </div>

@@ -53,7 +53,7 @@ return [
     ],
 
     'admin'             => [
-        'promotion_login'              => 'Must login to use coupon',
+        'coupon_allow_guest'           => 'Allow to guest use coupon',
         'paypal_client_id'             => 'Client ID',
         'paypal_secret'                => 'Secret',
         'paypal_mode'                  => 'Paypal mode',
@@ -183,7 +183,7 @@ return [
 
     'product'           => [
         'sku'          => 'SKU',
-        'sku_validate' => 'SKU only use characters in 0-9a-zA-Z and -',
+        'sku_validate' => 'SKU may only contain letters, numbers, and dashes.',
         'name'         => 'Product name',
         'price'        => 'Price',
         'quantity'     => 'Quantity',
@@ -212,7 +212,7 @@ return [
         'expire'      => 'Expire',
         'history'     => 'History',
         'exist'       => 'This code already exist!',
-        'validate'    => 'Code only use characters in 0-9 a-z A-Z  and -',
+        'validate'    => 'The may only contain letters, numbers, and dashes.',
         'example'     => 'Ex:',
         'number_uses' => 'Number used',
         'customer'    => 'Customer',
@@ -230,7 +230,7 @@ return [
             'not_allow'       => 'You can not use Point in here!',
             'value'           => 'This coupon have value :value for this order!',
             'expire'          => 'Code expires!',
-            'completed'       => 'Order discount :value!',
+            'completed'       => 'Use coupon success!',
             'must_login'      => 'You must login to use this coupon!',
             'user_id_invalid' => 'User ID invalid!',
         ],
@@ -263,5 +263,11 @@ return [
         'checkout'       => 'Checkout',
         'coupon_empty'   => 'Coupon empty!',
     ],
-
+    'profile'           => [
+        'empty_order'  => 'You have no orders!',
+        'total'        => 'Total',
+        'status'       => 'Status',
+        'date_add'     => 'Date add',
+        'detail_order' => 'Order detail',
+    ],
 ];
