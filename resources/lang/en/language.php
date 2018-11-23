@@ -183,7 +183,7 @@ return [
 
     'product'           => [
         'sku'          => 'SKU',
-        'sku_validate' => 'SKU only use characters in 0-9a-zA-Z and -',
+        'sku_validate' => 'SKU may only contain letters, numbers, and dashes.',
         'name'         => 'Product name',
         'price'        => 'Price',
         'quantity'     => 'Quantity',
@@ -212,7 +212,7 @@ return [
         'expire'      => 'Expire',
         'history'     => 'History',
         'exist'       => 'This code already exist!',
-        'validate'    => 'Code only use characters in 0-9 a-z A-Z  and -',
+        'validate'    => 'The may only contain letters, numbers, and dashes.',
         'example'     => 'Ex:',
         'number_uses' => 'Number used',
         'customer'    => 'Customer',

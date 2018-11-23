@@ -65,11 +65,7 @@ class LoginController extends Controller
         $this->validate($request, [
             'email'    => 'required|string|email',
             'password' => 'required|string',
-        ],
-            [
-                'required'    => 'Bạn chưa nhập thông tin',
-                'email.email' => 'Định dạng email chưa đúng',
-            ]);
+        ]);
     }
 
 }

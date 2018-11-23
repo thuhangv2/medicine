@@ -55,16 +55,7 @@ class RegisterController extends Controller
             'reg_phone'    => 'required|regex:/^0[^0][0-9\-]{7,13}$/',
             'reg_address1' => 'required|string|max:255',
             'reg_address2' => 'required|string|max:255',
-        ],
-            [
-                'required'               => 'Bạn chưa nhập thông tin',
-                'max'                    => 'Chiều dài tối đa :max kí tự',
-                'min'                    => 'Chiều dài tối thiểu :min kí tự',
-                'reg_email.unique'       => 'Email đã tồn tại',
-                'reg_email.email'        => 'Định dạng email không đúng',
-                'reg_password.confirmed' => 'Nhập lại mật khẩu bên dưới chưa đúng',
-                'reg_phone.regex'        => 'Số điện thoại chưa đúng',
-            ]
+        ]
         );
     }
 

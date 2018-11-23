@@ -218,7 +218,7 @@ return [
         'point'       => 'Điểm',
         'cash'        => 'Tiền mặt',
         '%'           => '%',
-        'note'        => 'Cash - giả giá tiền mặt; Point - tặng điểm cho khách; % - tỉ lệ giảm giá',
+        'note'        => 'Cash - giảm giá tiền mặt; Point - tặng điểm cho khách; % - tỉ lệ giảm giá',
         'process'     => [
             'invalid'         => 'Mã giảm giá không hợp lệ!',
             'over'            => 'Mã giảm giá vượt quá số lần sử dụng!',
