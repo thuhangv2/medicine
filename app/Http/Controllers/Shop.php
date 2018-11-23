@@ -600,7 +600,7 @@ class Shop extends GeneralController
                     '2' => trans('language.promotion.%'),
                 ];
                 $error = 0;
-                $msg   = trans('language.promotion.process.completed', ['value' => number_format($content['reward']) . ' ' . $arrType[$content['type']]]);
+                $msg   = trans('language.promotion.process.completed');
                 $request->session()->put('coupon', $code);
 
                 $objects   = array();

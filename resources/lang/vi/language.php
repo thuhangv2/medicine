@@ -53,7 +53,7 @@ return [
 
     'admin'             => [
         'paypal_client_id'             => 'Client ID',
-        'promotion_login'              => 'Phải đăng nhập để dùng coupon',
+        'coupon_allow_guest'           => 'Sử dụng coupon không cần đăng nhập',
         'paypal_secret'                => 'Secret',
         'paypal_mode'                  => 'Paypal mode',
         'paypal_log'                   => 'Bật log',
@@ -218,7 +218,7 @@ return [
         'point'       => 'Điểm',
         'cash'        => 'Tiền mặt',
         '%'           => '%',
-        'note'        => 'Cash - giả giá tiền mặt; Point - tặng điểm cho khách; % - tỉ lệ giảm giá',
+        'note'        => 'Cash - giảm giá tiền mặt; Point - tặng điểm cho khách; % - tỉ lệ giảm giá',
         'process'     => [
             'invalid'         => 'Mã giảm giá không hợp lệ!',
             'over'            => 'Mã giảm giá vượt quá số lần sử dụng!',
@@ -227,7 +227,7 @@ return [
             'not_allow'       => 'Bạn không thể sử Point ở đây!',
             'value'           => 'Mã giảm giá có giá trị :value cho đơn hàng này!',
             'expire'          => 'Mã hết hạn sử dụng!',
-            'completed'       => 'Đơn hàng giảm giá :value!',
+            'completed'       => 'Sử dụng mã giảm giá thành công!',
             'must_login'      => 'Bạn phải đăng nhập để sử dụng mã giảm giá này!',
             'user_id_invalid' => 'User ID không hợp lệ!',
         ],
@@ -259,6 +259,14 @@ return [
         'payment_method' => 'Phương thức thanh toán',
         'checkout'       => 'Thanh toán',
         'coupon_empty'   => 'Bạn chưa nhập mã giảm giá!',
+    ],
+
+    'profile'           => [
+        'empty_order'  => 'Bạn chưa có đơn hàng nào!',
+        'total'        => 'Tổng giá',
+        'status'       => 'Trạng thái đơn hàng',
+        'date_add'     => 'Ngày mua',
+        'detail_order' => 'Chi tiết đơn hàng',
     ],
 
 ];

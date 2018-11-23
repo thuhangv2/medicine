@@ -8,5 +8,5 @@
 
     </div>
     <!-- Default to the left -->
-    <strong><a href="{{ config('scart.homepage') }}">S-Cart</a></strong> {{ config('scart.title') }}
+    <strong><a href="{{ config('scart.homepage') }}">{{ config('scart.name') }}</a></strong> {{ config('scart.title') }}
 </footer>
