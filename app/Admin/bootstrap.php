@@ -54,7 +54,13 @@ Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
                 </ul>
               </div>');
     }
-
+    if (!empty(Admin::user()->username) && Admin::user()->username == 'test') {
+        $navbar->left('<span style="font-size: 30px;
+        color: #f3d80e;
+        padding-left: 10%;
+        z-index:999999;
+        font-weight: bold;">This user <span style="color:red">only</span> view</span>');
+    }
     $navbar->left(view('admin.search-bar'));
 
     $navbar->right('
