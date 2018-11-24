@@ -179,7 +179,7 @@ class ShopProduct extends Model
             ->where(function ($query) {
                 $query->where('date_start', '<=', date("Y-m-d"))
                     ->orWhereNull('date_start');
-            })
+            })->with('product')
         ;
         if ($random) {
             $special = $special->inRandomOrder();
