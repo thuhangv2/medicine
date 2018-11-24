@@ -43,12 +43,20 @@ class CmsNews extends Model
  */
     public function getThumb()
     {
-        $path_file = config('filesystems.disks.path_file', '');
-        if (!file_exists($path_file . '/thumb/' . $this->image)) {
-            return $path_file . '/' . $this->image;
+        if ($this->image) {
+            $path_file = config('filesystems.disks.path_file', '');
+            if (!file_exists($path_file . '/thumb/' . $this->image)) {
+                return $this->getImage();
+            } else {
+                if (!file_exists($path_file . '/thumb/' . $this->image)) {
+                } else {
+                    return $path_file . '/thumb/' . $this->image;
+                }
+            }
         } else {
-            return $path_file . '/thumb/' . $this->image;
+            return 'images/no-image.jpg';
         }
+
     }
 
 /**
@@ -57,8 +65,16 @@ class CmsNews extends Model
  */
     public function getImage()
     {
-        $path_file = config('filesystems.disks.path_file', '');
-        return $path_file . '/' . $this->image;
+        if ($this->image) {
+            $path_file = config('filesystems.disks.path_file', '');
+            if (!file_exists($path_file . '/' . $this->image)) {
+                return 'images/no-image.jpg';
+            } else {
+                return $path_file . '/' . $this->image;
+            }
+        } else {
+            return 'images/no-image.jpg';
+        }
 
     }
 /**
