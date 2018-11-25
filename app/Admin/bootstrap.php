@@ -27,6 +27,16 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid\Column;
 
+//Set language
+$configs_global = ConfigGlobal::first();
+config(['app.locale' => empty($configs_global['locale']) ? config('app.locale') : $configs_global['locale']]);
+if (!Session::has('locale')) {
+    session(['locale' => config('app.locale')]);
+}
+$currentLocale = in_array(session('locale'), Language::pluck('code')->all()) ? session('locale') : config('app.locale');
+app()->setLocale($currentLocale);
+//End language
+
 Column::extend('expand', Expands::class);
 
 Form::extend('ckeditor', CKEditor::class);
@@ -35,31 +45,16 @@ Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
     $configs_global = ConfigGlobal::first();
     $languages      = Language::where('status', 1)->get()->keyBy('code');
     $path_file      = config('filesystems.disks.path_file');
-    $htmlLang       = '';
-    $formLang       = '';
-
+    $htmlLang       = '<div style="margin:10px;" class="btn-group"><button type="button" class="dropdown-toggle usa" data-toggle="dropdown"><img src="/' . $path_file . '/' . $languages[app()->getLocale()]['icon'] . '" style="height: 25px;"><span class="caret"></span></button><ul class="dropdown-menu">';
     foreach ($languages as $key => $language) {
-        $formLang .= '<form id="form-lang-' . $key . '" action="' . url(config('admin.route.prefix') . '/locale/' . $key) . '" method="POST" style="display: none;">' . csrf_field() . '
-</form>';
-        $htmlLang .= '<li onClick="$(\'#form-lang-' . $key . '\').submit();"><img alt="' . $language['name'] . '" src="/' . $path_file . '/' . $language['icon'] . '" style="height: 25px;"></li>';
+        $htmlLang .= '<li><a href="' . url('locale/' . $key) . '"><img src="/' . $path_file . '/' . $language['icon'] . '" style="height: 25px;"></a></li>';
     }
+    $htmlLang .= '</ul></div>';
     if (count($languages) > 1) {
-        $navbar->left($formLang . '<div class="btn-group" style="margin:10px 0 0 20px;cursor:pointer;">
-                <span  class="dropdown-toggle usa" data-toggle="dropdown">
-                <img alt="' . $languages[$configs_global->locale]['name'] . '" src="/' . $path_file . '/' . $languages[$configs_global->locale]['icon'] . '" style="height: 25px;">
-                  <span class="caret"></span>
-                </span>
-                <ul class="dropdown-menu">
-                  ' . $htmlLang . '
-                </ul>
-              </div>');
+        $navbar->left($htmlLang);
     }
     if (!empty(Admin::user()->username) && Admin::user()->username == 'test') {
-        $navbar->left('<span style="font-size: 30px;
-        color: #f3d80e;
-        padding-left: 10%;
-        z-index:999999;
-        font-weight: bold;">This user <span style="color:red">only</span> view</span>');
+        $navbar->left(trans('language.admin.note_test'));
     }
     $navbar->left(view('admin.search-bar'));
 

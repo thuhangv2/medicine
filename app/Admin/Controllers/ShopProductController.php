@@ -162,7 +162,7 @@ class ShopProductController extends Controller
                 $form->currency('price', trans('language.product.price'))->symbol('VND')->options(['digits' => 0]);
                 $form->currency('cost', trans('language.product.price_cost'))->symbol('VND')->options(['digits' => 0]);
                 $form->number('stock', trans('language.product.stock'));
-                $form->text('sku', trans('language.admin.sku'))
+                $form->text('sku', trans('language.product.sku'))
                     ->rules(function ($form) {
                         return 'required|regex:/(^([0-9A-Za-z\-]+)$)/|unique:shop_product,sku,' . $form->model()->id . ',id';
                     }, ['regex' => trans('language.product.sku_validate')])

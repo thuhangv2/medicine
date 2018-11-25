@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\CmsPageDescription;
 use App\Models\Language;
+use Helper;
 use Illuminate\Database\Eloquent\Model;
 
 class CmsPage extends Model
@@ -41,6 +42,12 @@ class CmsPage extends Model
     {
         return empty($this->local()->content) ? '' : $this->local()->content;
     }
+
+    public function getUrl()
+    {
+        return url($this->uniquekey . '/' . Helper::strToUrl($this->title) . '.html');
+    }
+
 //Attributes
     public function getTitleAttribute()
     {

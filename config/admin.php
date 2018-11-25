@@ -52,7 +52,7 @@ return [
 
         'namespace'  => 'App\\Admin\\Controllers',
 
-        'middleware' => ['localizationAdmin', 'web', 'admin'],
+        'middleware' => ['web', 'admin'],
     ],
 
     /*

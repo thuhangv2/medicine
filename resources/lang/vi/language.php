@@ -52,6 +52,16 @@ return [
     ],
 
     'admin'             => [
+        'home_blogs'                   => 'Số blog/Trang chủ',
+        'home_contents'                => 'Số dịch vụ/Trang chủ',
+        'item_list'                    => 'Số item/Trang',
+        'item_relation'                => 'Số item liên quan/Trang',
+
+        'note_test'                    => '<span style="font-size: 30px;
+        color: #f3d80e;
+        padding-left: 10%;
+        z-index:999999;
+        font-weight: bold;">Tài khoản này <span style="color:red">chỉ được xem</span></span>',
         'paypal_client_id'             => 'Client ID',
         'coupon_allow_guest'           => 'Sử dụng coupon không cần đăng nhập',
         'paypal_secret'                => 'Secret',
@@ -268,5 +278,18 @@ return [
         'date_add'     => 'Ngày mua',
         'detail_order' => 'Chi tiết đơn hàng',
     ],
-
+    'config'            => [
+        'logo'        => 'Logo',
+        'title'       => 'Tên website',
+        'description' => 'Mô tả',
+        'keyword'     => 'Từ khóa',
+        'phone'       => 'Số điện thoại',
+        'long_phone'  => 'Số điện thoại dài',
+        'time_active' => 'Thời gian làm việc',
+        'address'     => 'Địa chỉ',
+        'email'       => 'Email',
+        'language'    => 'Ngôn ngữ mặc định',
+        'watermark'   => 'Chèn ảnh',
+        'template'    => 'Giao diện',
+    ],
 ];
