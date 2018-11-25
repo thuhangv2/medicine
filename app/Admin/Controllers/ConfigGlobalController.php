@@ -82,27 +82,35 @@ class ConfigGlobalController extends Controller
 
             $grid->html('&nbsp;');
 
-            $grid->logo('Logo')->image('', 50);
-            $grid->watermark('watermark')->image('', 50);
-            $grid->template('Template')->editable('select', $arrTemplates);
-            $grid->title('Title')->display(function ($text) {
+            $grid->logo(trans('language.config.logo'))->image('', 50);
+            $grid->watermark(trans('language.config.watermark'))->image('', 50);
+            $grid->template(trans('language.config.template'))->editable('select', $arrTemplates);
+            $grid->title(trans('language.config.title'))->display(function ($text) {
                 return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
             });
-            $grid->description(trans('language.admin.description'))->display(function ($text) {
+            $grid->description(trans('language.config.description'))->display(function ($text) {
                 return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
             });
-            $grid->keyword('Keywords')->display(function ($text) {
+            $grid->keyword(trans('language.config.keyword'))->display(function ($text) {
                 return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
             });
-            $grid->phone('Phone');
-            // $grid->long_phone('Long phone')->display(function ($text) {
-            //     return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
-            // });
-            $grid->address('Address')->display(function ($text) {
+            $grid->phone(trans('language.config.phone'));
+            $grid->long_phone(trans('language.config.long_phone'))->display(function ($text) {
                 return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
             });
-            $grid->email('Email')->display(function ($text) {
+            $grid->time_active(trans('language.config.time_active'))->display(function ($text) {
                 return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
+            });
+
+            $grid->address(trans('language.config.address'))->display(function ($text) {
+                return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
+            });
+            $grid->email(trans('language.config.email'))->display(function ($text) {
+                return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
+            });
+            $grid->locale(trans('language.config.language'))->display(function ($locale) {
+                $languages = Language::pluck('name', 'code')->all();
+                return $languages[$locale];
             });
 
             $grid->disableCreation();
@@ -136,16 +144,18 @@ class ConfigGlobalController extends Controller
         }
         return Admin::form(ConfigGlobal::class, function (Form $form) use ($arrTemplates) {
             $languages = Language::pluck('name', 'code')->all();
-            $form->image('logo', 'Logo')->removable();
-            $form->image('watermark', 'watermark')->removable();
-            $form->select('template', 'Template')->options($arrTemplates)->rules('required', ['required' => 'Please choose template']);
-            $form->text('title', 'Title');
-            $form->textarea('description', trans('language.admin.description'));
-            $form->text('keyword', 'Keywords');
-            $form->text('phone', 'Phone');
-            // $form->text('long_phone', 'Long phone');
-            $form->text('address', 'Address');
-            $form->text('email', 'Email');
+            $form->image('logo', trans('language.config.logo'))->removable();
+            $form->image('watermark', trans('language.config.watermark'))->removable();
+            $form->select('template', trans('language.config.template'))->options($arrTemplates)->rules('required', ['required' => 'Please choose template']);
+            $form->text('title', trans('language.config.title'));
+            $form->textarea('description', trans('language.config.description'));
+            $form->text('keyword', trans('language.config.keyword'));
+            $form->text('phone', trans('language.config.phone'));
+            $form->text('long_phone', trans('language.config.long_phone'));
+            $form->text('time_active', trans('language.config.time_active'));
+            $form->text('address', trans('language.config.address'));
+            $form->text('email', trans('language.config.email'));
+            $form->select('locale', trans('language.config.language'))->options($languages);
             $form->disableViewCheck();
             $form->disableEditingCheck();
             $form->tools(function (Form\Tools $tools) {

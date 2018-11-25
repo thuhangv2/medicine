@@ -53,6 +53,11 @@ return [
     ],
 
     'admin'             => [
+        'note_test'                    => '<span style="font-size: 30px;
+        color: #f3d80e;
+        padding-left: 10%;
+        z-index:999999;
+        font-weight: bold;">This user <span style="color:red">only</span> view</span>',
         'coupon_allow_guest'           => 'Allow to guest use coupon',
         'paypal_client_id'             => 'Client ID',
         'paypal_secret'                => 'Secret',
@@ -269,5 +274,20 @@ return [
         'status'       => 'Status',
         'date_add'     => 'Date add',
         'detail_order' => 'Order detail',
+    ],
+
+    'config'            => [
+        'logo'        => 'Logo',
+        'title'       => 'Title',
+        'description' => 'Description',
+        'keyword'     => 'Keyword',
+        'phone'       => 'Phone',
+        'long_phone'  => 'Long phone',
+        'time_active' => 'Time active',
+        'address'     => 'Address',
+        'email'       => 'Email',
+        'language'    => 'Default language',
+        'watermark'   => 'Watermark',
+        'template'    => 'Template',
     ],
 ];
