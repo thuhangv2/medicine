@@ -12,6 +12,7 @@ use App\Models\ConfigLayout;
 use App\Models\Language;
 use App\Models\ShopBrand;
 use App\Models\ShopCategory;
+use App\Models\ShopCurrency;
 use Illuminate\Http\Request;
 use View;
 
@@ -27,6 +28,7 @@ class GeneralController extends Controller
     public $categories;
     public $news;
     public $languages;
+    public $currencies;
 
     public function __construct()
     {
@@ -46,8 +48,6 @@ class GeneralController extends Controller
             ['address' => $configs_global['email'], 'name' => $configs_global['title']]]
         );
         //SMTP
-
-        config(['admin.operation_log.enable' => empty($configs['admin_log']) ? false : $configs['admin_log']]);
 
         //============end config====
 
@@ -71,6 +71,7 @@ class GeneralController extends Controller
         $this->categories     = ShopCategory::getCategories(0);
         $this->news           = (new CmsNews)->getItemsNews($limit = 6, $opt = 'paginate');
         $this->languages      = Language::where('status', 1)->get()->keyBy('code');
+        $this->currencies     = ShopCurrency::getAll();
 //Share variable
         View::share('path_file', $this->path_file);
         View::share('banners', $this->banners);
@@ -86,8 +87,11 @@ class GeneralController extends Controller
 
         View::share('news', $this->news);
         View::share('languages', $this->languages);
+        View::share('currencies', $this->currencies);
 //
         $this->middleware('localization');
+        $this->middleware('currency');
+
     }
 
 /**

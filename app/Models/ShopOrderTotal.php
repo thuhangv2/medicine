@@ -21,7 +21,7 @@ class ShopOrderTotal extends Model
  * @param  [int] $subtotal [description]
  * @return [array]           [description]
  */
-    public static function processDataTotal($objects = null, $subtotal = null)
+    public static function processDataTotal($objects = null, float $subtotal = null)
     {
         $subtotal = ($subtotal == null) ? Cart::subtotal() : $subtotal;
         $objects  = is_array($objects) ? $objects : [];
@@ -52,6 +52,12 @@ class ShopOrderTotal extends Model
         usort($objects, function ($a, $b) {
             return $a['sort'] > $b['sort'];
         });
+//Currency
+        foreach ($objects as $key => $object) {
+            $objects[$key]['value'] = \Helper::currencyRender($object['value']);
+        }
+//
+
         return $objects;
     }
 

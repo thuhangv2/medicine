@@ -41,6 +41,12 @@
         font-size: 17px;
         padding: 10px;
       }
+      .locale .dropdown-menu{
+          min-width: auto !important;
+      }
+      .locale button{
+          min-height: 30px !important;
+      }
     </style>
 </head><!--/head-->
 <body>
@@ -59,7 +65,7 @@
           </div>
           <div class="col-sm-6">
             <div class="btn-group pull-right">
-              <div class="btn-group">
+              <div class="btn-group locale">
                 @if (count($languages)>1)
                 <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown"><img src="{{ asset($path_file.'/'.$languages[app()->getLocale()]['icon']) }}" style="height: 25px;">
                   <span class="caret"></span>
@@ -70,19 +76,20 @@
                   @endforeach
                 </ul>
                 @endif
-
-
               </div>
-{{--                <div class="btn-group">
+              @if (count($currencies)>1)
+               <div class="btn-group locale">
                 <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                  DOLLAR
+                  {{ \App\Models\ShopCurrency::getCurrency()['name'] }}
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a href="#">Canadian Dollar</a></li>
-                  <li><a href="#">Pound</a></li>
+                  @foreach ($currencies as $key => $currency)
+                    <li><a href="{{ url('currency/'.$currency->code) }}">{{ $currency->name }}</a></li>
+                  @endforeach
                 </ul>
-              </div> --}}
+              </div>
+              @endif
             </div>
           </div>
         </div>

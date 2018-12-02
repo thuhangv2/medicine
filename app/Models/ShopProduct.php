@@ -7,7 +7,6 @@ use App\Models\Language;
 use App\Models\ShopProductDescription;
 use App\Models\ShopProductOption;
 use App\Models\ShopSpecialPrice;
-use Helper;
 use Illuminate\Database\Eloquent\Model;
 
 class ShopProduct extends Model
@@ -110,13 +109,13 @@ class ShopProduct extends Model
     {
 
         if ($this->price == $this->getPrice()) {
-            $str = '<span class="' . (($classNew) ? $classNew : 'new-price') . '">' . number_format($this->price) . '</span>';
+            $str = '<span class="' . (($classNew) ? $classNew : 'new-price') . '">' . \Helper::currencyRender($this->price) . '</span>';
             if ($divWrap != null) {
                 $str = '<div class="' . $divWrap . '">' . $str . '</div>';
             }
             return $str;
         } else {
-            $str = '<span class="' . (($classNew) ? $classNew : 'new-price') . '">' . number_format($this->getPrice()) . '</span><span class="' . (($classNew) ? $classOld : 'old-price') . '">' . number_format($this->price) . '</span>';
+            $str = '<span class="' . (($classNew) ? $classNew : 'new-price') . '">' . \Helper::currencyRender($this->getPrice()) . '</span><span class="' . (($classNew) ? $classOld : 'old-price') . '">' . \Helper::currencyRender($this->price) . '</span>';
             if ($divWrap != null) {
                 $str = '<div class="' . $divWrap . '">' . $str . '</div>';
             }
@@ -299,7 +298,7 @@ class ShopProduct extends Model
  */
     public function getUrl()
     {
-        return url('product/' . Helper::strToUrl($this->name) . '_' . $this->id . '.html');
+        return url('product/' . \Helper::strToUrl($this->name) . '_' . $this->id . '.html');
     }
 
 //Fields language

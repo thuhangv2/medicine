@@ -85,3 +85,8 @@ Route::get('locale/{code}', function ($code) {
     session(['locale' => $code]);
     return back();
 });
+//Currency
+Route::get('currency/{code}', function ($code) {
+    session(['currency' => $code]);
+    return back();
+});
