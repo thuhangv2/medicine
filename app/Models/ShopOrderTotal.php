@@ -15,16 +15,15 @@ class ShopOrderTotal extends Model
     public $table = 'shop_order_total';
 
 /**
- * Calculator value item total
- * Re-sort item tottal
- * @param  [array] $objects  [description]
- * @param  [int] $subtotal [description]
- * @return [array]           [description]
+ * [processDataTotal description]
+ * @param  array      $objects  [description]
+ * @param  float|null $subtotal [description]
+ * @param  boolean    $currency [description]
+ * @return [type]               [description]
  */
-    public static function processDataTotal($objects = null, float $subtotal = null)
+    public static function processDataTotal(array $objects = [], float $subtotal = null, $currency = true)
     {
         $subtotal = ($subtotal == null) ? Cart::subtotal() : $subtotal;
-        $objects  = is_array($objects) ? $objects : [];
         //Set subtotal
         $objects[] = [
             'title' => 'Sub total',
@@ -53,8 +52,10 @@ class ShopOrderTotal extends Model
             return $a['sort'] > $b['sort'];
         });
 //Currency
-        foreach ($objects as $key => $object) {
-            $objects[$key]['value'] = \Helper::currencyRender($object['value']);
+        if ($currency) {
+            foreach ($objects as $key => $object) {
+                $objects[$key]['value'] = \Helper::currencyRender($object['value']);
+            }
         }
 //
 

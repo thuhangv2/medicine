@@ -216,13 +216,12 @@ class Shop extends GeneralController
         }
 
         try {
-            $currency = ShopCurrency::getCurrrency();
             //Process total
             $objects        = array();
             $objects[]      = (new ShopOrderTotal)->getShipping(); //module shipping
             $objects[]      = (new ShopOrderTotal)->getDiscount(); //module discount
             $objects[]      = (new ShopOrderTotal)->getReceived(); //module reveived
-            $dataTotal      = ShopOrderTotal::processDataTotal($objects); //sumtotal and re-sort item total
+            $dataTotal      = ShopOrderTotal::processDataTotal($objects, null, false); //sumtotal and re-sort item total
             $subtotal       = (new ShopOrderTotal)->sumValueTotal('subtotal', $dataTotal);
             $shipping       = (new ShopOrderTotal)->sumValueTotal('shipping', $dataTotal); //sum shipping
             $discount       = (new ShopOrderTotal)->sumValueTotal('discount', $dataTotal); //sum discount
@@ -231,7 +230,8 @@ class Shop extends GeneralController
             $payment_method = empty($request->get('payment_method')) ? 'cash' : $request->get('payment_method');
             //end total
             DB::connection('mysql')->beginTransaction();
-            $arrOrder['user_id']         = empty(Auth::user()->id) ? 0 : Auth::user()->id;
+            $arrOrder['user_id'] = empty(Auth::user()->id) ? 0 : Auth::user()->id;
+
             $arrOrder['subtotal']        = $subtotal;
             $arrOrder['shipping']        = $shipping;
             $arrOrder['discount']        = $discount;
@@ -239,8 +239,8 @@ class Shop extends GeneralController
             $arrOrder['payment_status']  = 0;
             $arrOrder['shipping_status'] = 0;
             $arrOrder['status']          = 0;
-            $arrOrder['currency']        = $currency['code'];
-            $arrOrder['currency_value']  = $currency['value'];
+            $arrOrder['currency']        = \Helper::currencyCode();
+            $arrOrder['currency_value']  = \Helper::currencyRate();
             $arrOrder['total']           = $total;
             $arrOrder['balance']         = $total + $received;
             $arrOrder['toname']          = $request->get('toname');

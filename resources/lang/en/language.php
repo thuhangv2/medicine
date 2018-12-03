@@ -290,4 +290,17 @@ return [
         'watermark'   => 'Watermark',
         'template'    => 'Template',
     ],
+
+    'currency'          => [
+        'manager'      => 'Currency manager',
+        'code'         => 'Code',
+        'name'         => 'Name',
+        'symbol'       => 'Symbol',
+        'precision'    => 'Precision',
+        'rate'         => 'Exchange rate',
+        'thousands'    => 'Thousands separator',
+        'status'       => 'Status',
+        'sort'         => 'Sort',
+        'symbol_first' => 'Symbol first',
+    ],
 ];

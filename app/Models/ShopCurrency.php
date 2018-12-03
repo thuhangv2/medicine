@@ -99,16 +99,16 @@ class ShopCurrency extends Model
  * [render description]
  * @param  float   $money                [description]
  * @param  boolean $space_between_symbol [description]
- * @param  boolean $useSymbol            [description]
+ * @param  boolean $include_symbol       [description]
  * @return [type]                        [description]
  */
-    public static function render(float $money, $space_between_symbol = false, $useSymbol = true)
+    public static function render(float $money, $space_between_symbol = false, $include_symbol = true)
     {
         $value = self::getValue($money);
         if (self::$symbol_first) {
-            return (($useSymbol) ? self::$symbol : '') . (($space_between_symbol) ? ' ' : '') . self::format($value);
+            return (($include_symbol) ? self::$symbol : '') . (($space_between_symbol) ? ' ' : '') . self::format($value);
         } else {
-            return self::format($value) . (($space_between_symbol) ? ' ' : '') . (($useSymbol) ? self::$symbol : '');
+            return self::format($value) . (($space_between_symbol) ? ' ' : '') . (($include_symbol) ? self::$symbol : '');
         }
     }
 

@@ -292,4 +292,17 @@ return [
         'watermark'   => 'Chèn ảnh',
         'template'    => 'Giao diện',
     ],
+
+    'currency'          => [
+        'manager'      => 'Quản lý tiền tệ',
+        'code'         => 'Mã',
+        'name'         => 'Tên',
+        'symbol'       => 'Ký hiệu',
+        'precision'    => 'Số chữ số thập phân',
+        'rate'         => 'Tỉ giá',
+        'thousands'    => 'Dấu Ngăn cách phần nghìn',
+        'status'       => 'Trạng thái',
+        'sort'         => 'Sắp xếp',
+        'symbol_first' => 'Ký hiệu hiện đầu tiên',
+    ],
 ];
