@@ -78,11 +78,17 @@ class ShopCurrency extends Model
 /**
  * [getValue description]
  * @param  float  $money [description]
+ * @param  [type] $rate  [description]
  * @return [type]        [description]
  */
-    public static function getValue(float $money)
+    public static function getValue(float $money, $rate = null)
     {
-        return $money * self::$exchange_rate;
+        if ($rate) {
+            return $money * $rate;
+        } else {
+            return $money * self::$exchange_rate;
+        }
+
     }
 
 /**
@@ -98,17 +104,32 @@ class ShopCurrency extends Model
 /**
  * [render description]
  * @param  float   $money                [description]
+ * @param  [type]  $currency             [description]
+ * @param  [type]  $rate                 [description]
  * @param  boolean $space_between_symbol [description]
  * @param  boolean $include_symbol       [description]
  * @return [type]                        [description]
  */
-    public static function render(float $money, $space_between_symbol = false, $include_symbol = true)
+    public static function render(float $money, $currency = null, $rate = null, $space_between_symbol = false, $include_symbol = true)
     {
-        $value = self::getValue($money);
-        if (self::$symbol_first) {
-            return (($include_symbol) ? self::$symbol : '') . (($space_between_symbol) ? ' ' : '') . self::format($value);
+        $dataCurrency = self::getCurrency();
+
+        if ($currency) {
+            $checkCurrency = self::where('code', $currency)->first();
+            if ($checkCurrency) {
+                $dataCurrency = $checkCurrency;
+            }
+        }
+        $value = self::getValue($money, $rate);
+        if ($dataCurrency['symbol_first']) {
+            if ($money < 0) {
+                return '-' . (($include_symbol) ? $dataCurrency['symbol'] : '') . (($space_between_symbol) ? ' ' : '') . self::format(abs($value));
+            } else {
+                return (($include_symbol) ? $dataCurrency['symbol'] : '') . (($space_between_symbol) ? ' ' : '') . self::format($value);
+            }
+
         } else {
-            return self::format($value) . (($space_between_symbol) ? ' ' : '') . (($include_symbol) ? self::$symbol : '');
+            return self::format($value) . (($space_between_symbol) ? ' ' : '') . (($include_symbol) ? $dataCurrency['symbol'] : '');
         }
     }
 

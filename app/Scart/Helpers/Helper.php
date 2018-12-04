@@ -33,9 +33,9 @@ class Helper
             strtolower($str)));
     }
 
-    public static function currencyRender(float $money, $space_between_symbol = false, $useSymbol = true)
+    public static function currencyRender(float $money, $currency = null, $rate = null, $space_between_symbol = false, $useSymbol = true)
     {
-        return ShopCurrency::render($money, $space_between_symbol, $useSymbol);
+        return ShopCurrency::render($money, $currency, $rate, $space_between_symbol, $useSymbol);
     }
 
     public static function currencyValue(float $money)
