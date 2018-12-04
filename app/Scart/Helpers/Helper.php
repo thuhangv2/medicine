@@ -38,9 +38,9 @@ class Helper
         return ShopCurrency::render($money, $currency, $rate, $space_between_symbol, $useSymbol);
     }
 
-    public static function currencyValue(float $money)
+    public static function currencyValue(float $money, $rate = null)
     {
-        return ShopCurrency::getValue($money);
+        return ShopCurrency::getValue($money, $rate);
     }
     public static function currencyCode()
     {

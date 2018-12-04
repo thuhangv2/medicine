@@ -33,7 +33,12 @@
                 <tr>
           <th>{{ trans('language.order.shipping_address2') }}:</th><td><a href="#" class="updateInfoRequired" data-name="address2" data-type="text" data-pk="{{ $order->id }}" data-url="{{ route("order_update") }}" data-title="Địa chỉ 2" >{{ $order->address2 }}</a></td>
         </tr>
-
+        <tr>
+          <th>{{ trans('language.order.currency') }}:</th><td>{{ $order->currency }}</td>
+        </tr>
+        <tr>
+          <th>{{ trans('language.order.exchange_rate') }}:</th><td>{{ $order->exchange_rate }}</td>
+        </tr>
       </table>
     </div>
   <table class="table box  table-bordered table-responsive">
@@ -56,9 +61,9 @@
                 <td><span class="item_{{ $item->id }}_id">{{ $item->id }}</span></td>
                 <td><span class="item_{{ $item->id }}_sku">{{ $item->sku }}</span></td>
                 <td><span class="item_{{ $item->id }}_name">{{ $item->name }}</span></td>
-                <td align="right"><span class="item_{{ $item->id }}_price">{{ number_format($item->price) }}</span></td>
+                <td align="right"><span class="item_{{ $item->id }}_price">{{ \Helper::currencyRender($item->price,$order->currency,$order->exchange_rate) }}</span></td>
                 <td align="right">x <span class="item_{{ $item->id }}_qty">{{ number_format($item->qty) }}</span></td>
-                <td align="right"><span  class="item_{{ $item->id }}_total_price">{{ number_format($item->total_price) }}</span></td>
+                <td align="right"><span  class="item_{{ $item->id }}_total_price">{{ \Helper::currencyRender($item->total_price,$order->currency,$order->exchange_rate)}}</span></td>
                 <td><span  class="item_{{ $item->id }}_attr">{{ $item->option }}</span></td>
                 <td>
                     <button onclick="dataEdit({{ $item->id }});" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#editItem" data-placement="top" rel="tooltip" data-original-title="" title="Edit item"><span class="glyphicon glyphicon-pencil"></span>{{ trans('admin.edit') }}</button>
@@ -143,29 +148,29 @@
           <table   class="table table-bordered">
 @foreach ($dataTotal as $element)
   @if ($element['code'] =='subtotal')
-    <tr><td>{!! $element['title'] !!}:</td><td align="right" class="data-{{ $element['code'] }}">{{ number_format($element['value']) }}</td></tr>
+    <tr><td>{!! $element['title'] !!}:</td><td align="right" class="data-{{ $element['code'] }}">{{ \Helper::currencyValue($element['value'],$order->exchange_rate) }}</td></tr>
   @endif
   @if ($element['code'] =='shipping')
     <tr><td>{!! $element['title'] !!}:</td><td align="right"><a href="#" class="updatePrice data-{{ $element['code'] }}"  data-name="{{ $element['code'] }}" data-type="text" data-pk="{{ $element['id'] }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.shipping_price') }}">{{
-                      number_format($element['value']) }}</a></td></tr>
+                      \Helper::currencyValue($element['value'],$order->exchange_rate) }}</a></td></tr>
   @endif
   @if ($element['code'] =='discount')
     <tr><td>{!! $element['title'] !!}(-):</td><td align="right"><a href="#" class="updatePrice data-{{ $element['code'] }}" data-name="{{ $element['code'] }}" data-type="text" data-pk="{{ $element['id'] }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.discount') }}">{{
-                      number_format($element['value']) }}</a></td></tr>
+                      \Helper::currencyValue($element['value'],$order->exchange_rate) }}</a></td></tr>
   @endif
 
    @if ($element['code'] =='total')
-    <tr style="background:#f5f3f3;font-weight: bold;"><td>{!! $element['title'] !!}:</td><td align="right" class="data-{{ $element['code'] }}">{{ number_format($element['value']) }}</td></tr>
+    <tr style="background:#f5f3f3;font-weight: bold;"><td>{!! $element['title'] !!}:</td><td align="right" class="data-{{ $element['code'] }}">{{ \Helper::currencyValue($element['value'],$order->exchange_rate) }}</td></tr>
   @endif
 
   @if ($element['code'] =='received')
     <tr><td>{!! $element['title'] !!}(-):</td><td align="right"><a href="#" class="updatePrice data-{{ $element['code'] }}" data-name="{{ $element['code'] }}" data-type="text" data-pk="{{ $element['id'] }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.received') }}">{{
-                      number_format($element['value']) }}</a></td></tr>
+                      \Helper::currencyValue($element['value'],$order->exchange_rate) }}</a></td></tr>
   @endif
 
 @endforeach
 
-  <tr  {!! $style !!}  class="data-balance"><td>{{ trans('language.order.balance') }}:</td><td align="right">{{($order->balance === NULL)?number_format($order->total):number_format($order->balance) }}</td></tr>
+  <tr  {!! $style !!}  class="data-balance"><td>{{ trans('language.order.balance') }}:</td><td align="right">{{($order->balance === NULL)?\Helper::currencyValue($order->total,$order->exchange_rate):\Helper::currencyValue($order->balance,$order->exchange_rate) }}</td></tr>
   <tr id="update-status" style="display: none;"></tr>
         </table>
 
