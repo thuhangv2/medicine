@@ -240,7 +240,7 @@ class Shop extends GeneralController
             $arrOrder['shipping_status'] = 0;
             $arrOrder['status']          = 0;
             $arrOrder['currency']        = \Helper::currencyCode();
-            $arrOrder['currency_value']  = \Helper::currencyRate();
+            $arrOrder['exchange_rate']   = \Helper::currencyRate();
             $arrOrder['total']           = $total;
             $arrOrder['balance']         = $total + $received;
             $arrOrder['toname']          = $request->get('toname');
