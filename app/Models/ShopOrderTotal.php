@@ -18,10 +18,9 @@ class ShopOrderTotal extends Model
  * [processDataTotal description]
  * @param  array      $objects  [description]
  * @param  float|null $subtotal [description]
- * @param  boolean    $currency [description]
  * @return [type]               [description]
  */
-    public static function processDataTotal(array $objects = [], float $subtotal = null, $currency = true)
+    public static function processDataTotal(array $objects = [], float $subtotal = null)
     {
         $subtotal = ($subtotal == null) ? Cart::subtotal() : $subtotal;
         //Set subtotal
@@ -29,6 +28,7 @@ class ShopOrderTotal extends Model
             'title' => 'Sub total',
             'code'  => 'subtotal',
             'value' => $subtotal,
+            'text'  => $subtotal,
             'sort'  => 1,
         ];
         // set total
@@ -42,6 +42,7 @@ class ShopOrderTotal extends Model
             'title' => 'Total',
             'code'  => 'total',
             'value' => $total,
+            'text'  => $total,
             'sort'  => 100,
         );
 
@@ -52,10 +53,8 @@ class ShopOrderTotal extends Model
             return $a['sort'] > $b['sort'];
         });
 //Currency
-        if ($currency) {
-            foreach ($objects as $key => $object) {
-                $objects[$key]['value'] = \Helper::currencyRender($object['value']);
-            }
+        foreach ($objects as $key => $object) {
+            $objects[$key]['text'] = \Helper::currencyRender($object['text']);
         }
 //
 
@@ -154,6 +153,7 @@ class ShopOrderTotal extends Model
                 'title' => 'Shipping',
                 'code'  => 'shipping',
                 'value' => 0,
+                'text'  => 0,
                 'sort'  => 10,
             ];
         } else {
@@ -161,6 +161,7 @@ class ShopOrderTotal extends Model
                 'title' => 'Shipping',
                 'code'  => 'shipping',
                 'value' => $shipping->value,
+                'text'  => $shipping->value,
                 'sort'  => 10,
             ];
         }
@@ -178,6 +179,7 @@ class ShopOrderTotal extends Model
                 'title' => 'Discount',
                 'code'  => 'discount',
                 'value' => 0,
+                'text'  => 0,
                 'sort'  => 20,
             );
         } else {
@@ -192,6 +194,7 @@ class ShopOrderTotal extends Model
                 'title' => '<b>Code:</b> ' . $coupon . '',
                 'code'  => 'discount',
                 'value' => ($value > $subtotal) ? -$subtotal : -$value,
+                'text'  => ($value > $subtotal) ? -$subtotal : -$value,
                 'sort'  => 20,
             );
         }
@@ -204,6 +207,7 @@ class ShopOrderTotal extends Model
             'title' => 'Received',
             'code'  => 'received',
             'value' => 0,
+            'text'  => 0,
             'sort'  => 200,
         );
     }

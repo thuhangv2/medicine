@@ -139,7 +139,7 @@
                         <tr class="showTotal">
                      @endif
                              <th>{!! $element['title'] !!}</th>
-                            <td style="text-align: right" id="{{ $element['code'] }}">{{$element['value'] }}</td>
+                            <td style="text-align: right" id="{{ $element['code'] }}">{{$element['text'] }}</td>
                         </tr>
                     @endif
 

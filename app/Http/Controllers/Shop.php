@@ -221,7 +221,7 @@ class Shop extends GeneralController
             $objects[]      = (new ShopOrderTotal)->getShipping(); //module shipping
             $objects[]      = (new ShopOrderTotal)->getDiscount(); //module discount
             $objects[]      = (new ShopOrderTotal)->getReceived(); //module reveived
-            $dataTotal      = ShopOrderTotal::processDataTotal($objects, null, false); //sumtotal and re-sort item total
+            $dataTotal      = ShopOrderTotal::processDataTotal($objects); //sumtotal and re-sort item total
             $subtotal       = (new ShopOrderTotal)->sumValueTotal('subtotal', $dataTotal);
             $shipping       = (new ShopOrderTotal)->sumValueTotal('shipping', $dataTotal); //sum shipping
             $discount       = (new ShopOrderTotal)->sumValueTotal('discount', $dataTotal); //sum discount
