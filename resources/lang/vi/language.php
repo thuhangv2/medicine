@@ -185,6 +185,8 @@ return [
         'add_more'              => 'Thêm nhiều hơn',
         'search_keyword'        => 'Tìm từ khóa',
         'success'               => 'Đơn hàng thành công',
+        'currency'              => 'Loại tiền',
+        'currency_rate'         => 'Tỉ giá',
         'email'                 => [
             'new_title' => 'ĐƠN HÀNG MỚI',
         ],

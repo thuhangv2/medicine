@@ -181,6 +181,8 @@ return [
         'add_more'              => 'Add more',
         'search_keyword'        => 'Search keyword',
         'success'               => 'Order success',
+        'currency'              => 'Currency',
+        'currency_rate'         => 'Exchange rate',
         'email'                 => [
             'new_title' => 'NEW ORDER',
         ],
