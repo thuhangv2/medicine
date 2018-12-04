@@ -186,7 +186,7 @@ return [
         'search_keyword'        => 'Tìm từ khóa',
         'success'               => 'Đơn hàng thành công',
         'currency'              => 'Loại tiền',
-        'currency_rate'         => 'Tỉ giá',
+        'exchange_rate'         => 'Tỉ giá',
         'email'                 => [
             'new_title' => 'ĐƠN HÀNG MỚI',
         ],

@@ -126,6 +126,8 @@ class ShopOrderController extends Controller
             $grid->received(trans('language.order.received'))->display(function ($price) {
                 return number_format($price);
             });
+            $grid->currency(trans('language.order.currency'));
+            $grid->exchange_rate(trans('language.order.exchange_rate'));
             $statusOrder = $this->statusOrder;
             $grid->status(trans('language.admin.status'))->display(function ($status) use ($statusOrder) {
                 $style = "";

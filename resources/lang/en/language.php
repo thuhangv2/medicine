@@ -182,7 +182,7 @@ return [
         'search_keyword'        => 'Search keyword',
         'success'               => 'Order success',
         'currency'              => 'Currency',
-        'currency_rate'         => 'Exchange rate',
+        'exchange_rate'         => 'Exchange rate',
         'email'                 => [
             'new_title' => 'NEW ORDER',
         ],

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\ShopBrand;
 use App\Models\ShopCategory;
-use App\Models\ShopCurrency;
 use App\Models\ShopOrder;
 use App\Models\ShopOrderDetail;
 use App\Models\ShopOrderHistory;
@@ -265,11 +264,11 @@ class Shop extends GeneralController
                 $arrDetail['order_id']    = $orderId;
                 $arrDetail['product_id']  = $value->id;
                 $arrDetail['name']        = $value->name;
-                $arrDetail['price']       = ShopCurrency::getValue($value->price);
+                $arrDetail['price']       = $value->price;
                 $arrDetail['qty']         = $value->qty;
                 $arrDetail['type']        = $value->options->toJson();
                 $arrDetail['sku']         = $product->sku;
-                $arrDetail['total_price'] = ShopCurrency::getValue($value->price * $value->qty);
+                $arrDetail['total_price'] = $value->price * $value->qty;
                 $arrDetail['created_at']  = date('Y-m-d H:i:s');
                 ShopOrderDetail::insert($arrDetail);
                 //If product out of stock
