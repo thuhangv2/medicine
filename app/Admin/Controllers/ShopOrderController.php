@@ -294,10 +294,10 @@ JS;
  */
     public function postOrderUpdate(Request $request)
     {
-        $id           = $request->input('pk');
-        $field        = $request->input('name');
-        $value        = $request->input('value');
-        $order_origin = ShopOrder::find($id);
+        $id                 = $request->input('pk');
+        $field              = $request->input('name');
+        $value              = $request->input('value');
+        $order_total_origin = ShopOrderTotal::find($id);
         if ($field == 'shipping' || $field == 'discount' || $field == 'received') {
             $fieldTotal = [
                 'id'    => $id,
@@ -316,7 +316,7 @@ JS;
         //Add history
         $dataHistory = [
             'order_id' => $order_id,
-            'content'  => 'Change <b>' . $field . '</b> from <span style="color:blue">\'' . $order_origin[$field] . '\'</span> to <span style="color:red">\'' . $value . '\'</span>',
+            'content'  => 'Change <b>' . $field . '</b> from <span style="color:blue">\'' . $order_total_origin->value . '\'</span> to <span style="color:red">\'' . $value . '\'</span>',
             'admin_id' => Admin::user()->id,
             'add_date' => date('Y-m-d H:i:s'),
         ];
