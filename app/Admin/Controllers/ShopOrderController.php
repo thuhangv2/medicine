@@ -294,29 +294,34 @@ JS;
  */
     public function postOrderUpdate(Request $request)
     {
-        $id                 = $request->input('pk');
-        $field              = $request->input('name');
-        $value              = $request->input('value');
-        $order_total_origin = ShopOrderTotal::find($id);
+        $id    = $request->input('pk');
+        $field = $request->input('name');
+        $value = $request->input('value');
         if ($field == 'shipping' || $field == 'discount' || $field == 'received') {
-            $fieldTotal = [
+            $order_total_origin = ShopOrderTotal::find($id);
+            $order_id           = $order_total_origin->order_id;
+            $oldValue           = $order_total_origin->value;
+            $fieldTotal         = [
                 'id'    => $id,
                 'code'  => $field,
                 'value' => $value,
+                'text'  => \Helper::currencyOnlyRender($value),
             ];
-            $order_id = ShopOrderTotal::updateField($fieldTotal);
+            ShopOrderTotal::updateField($fieldTotal);
         } else {
             $arrFields = [
                 $field => $value,
             ];
             $order_id = $id;
+            $order    = ShopOrder::find($order_id);
+            $oldValue = $order->{$field};
             ShopOrder::updateInfo($order_id, $arrFields);
         }
 
         //Add history
         $dataHistory = [
             'order_id' => $order_id,
-            'content'  => 'Change <b>' . $field . '</b> from <span style="color:blue">\'' . $order_total_origin->value . '\'</span> to <span style="color:red">\'' . $value . '\'</span>',
+            'content'  => 'Change <b>' . $field . '</b> from <span style="color:blue">\'' . $oldValue . '\'</span> to <span style="color:red">\'' . $value . '\'</span>',
             'admin_id' => Admin::user()->id,
             'add_date' => date('Y-m-d H:i:s'),
         ];

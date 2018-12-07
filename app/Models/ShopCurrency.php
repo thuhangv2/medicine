@@ -133,6 +133,30 @@ class ShopCurrency extends Model
         }
     }
 
+/**
+ * [onlyRender description]
+ * @param  float   $money                [description]
+ * @param  [type]  $currency             [description]
+ * @param  boolean $space_between_symbol [description]
+ * @param  boolean $include_symbol       [description]
+ * @return [type]                        [description]
+ */
+    public static function onlyRender(float $money, $currency, $space_between_symbol = false, $include_symbol = true)
+    {
+
+        $checkCurrency = self::where('code', $currency)->first();
+        if ($dataCurrency['symbol_first']) {
+            if ($money < 0) {
+                return '-' . (($include_symbol) ? $dataCurrency['symbol'] : '') . (($space_between_symbol) ? ' ' : '') . self::format(abs($money));
+            } else {
+                return (($include_symbol) ? $dataCurrency['symbol'] : '') . (($space_between_symbol) ? ' ' : '') . self::format($money);
+            }
+
+        } else {
+            return self::format($money) . (($space_between_symbol) ? ' ' : '') . (($include_symbol) ? $dataCurrency['symbol'] : '');
+        }
+    }
+
     public function scopeSort($query)
     {
         return $query->orderBy('sort', 'desc')->orderBy('id', 'desc');

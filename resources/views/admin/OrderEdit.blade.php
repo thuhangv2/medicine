@@ -148,29 +148,26 @@
           <table   class="table table-bordered">
 @foreach ($dataTotal as $element)
   @if ($element['code'] =='subtotal')
-    <tr><td>{!! $element['title'] !!}:</td><td align="right" class="data-{{ $element['code'] }}">{{ \Helper::currencyValue($element['value'],$order->exchange_rate) }}</td></tr>
+    <tr><td>{!! $element['title'] !!}:</td><td align="right" class="data-{{ $element['code'] }}">{{ $element['value'] }}</td></tr>
   @endif
   @if ($element['code'] =='shipping')
-    <tr><td>{!! $element['title'] !!}:</td><td align="right"><a href="#" class="updatePrice data-{{ $element['code'] }}"  data-name="{{ $element['code'] }}" data-type="text" data-pk="{{ $element['id'] }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.shipping_price') }}">{{
-                      \Helper::currencyValue($element['value'],$order->exchange_rate) }}</a></td></tr>
+    <tr><td>{!! $element['title'] !!}:</td><td align="right"><a href="#" class="updatePrice data-{{ $element['code'] }}"  data-name="{{ $element['code'] }}" data-type="text" data-pk="{{ $element['id'] }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.shipping_price') }}">{{$element['value'] }}</a></td></tr>
   @endif
   @if ($element['code'] =='discount')
-    <tr><td>{!! $element['title'] !!}(-):</td><td align="right"><a href="#" class="updatePrice data-{{ $element['code'] }}" data-name="{{ $element['code'] }}" data-type="text" data-pk="{{ $element['id'] }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.discount') }}">{{
-                      \Helper::currencyValue($element['value'],$order->exchange_rate) }}</a></td></tr>
+    <tr><td>{!! $element['title'] !!}(-):</td><td align="right"><a href="#" class="updatePrice data-{{ $element['code'] }}" data-name="{{ $element['code'] }}" data-type="text" data-pk="{{ $element['id'] }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.discount') }}">{{$element['value'] }}</a></td></tr>
   @endif
 
    @if ($element['code'] =='total')
-    <tr style="background:#f5f3f3;font-weight: bold;"><td>{!! $element['title'] !!}:</td><td align="right" class="data-{{ $element['code'] }}">{{ \Helper::currencyValue($element['value'],$order->exchange_rate) }}</td></tr>
+    <tr style="background:#f5f3f3;font-weight: bold;"><td>{!! $element['title'] !!}:</td><td align="right" class="data-{{ $element['code'] }}">{{$element['value'] }}</td></tr>
   @endif
 
   @if ($element['code'] =='received')
-    <tr><td>{!! $element['title'] !!}(-):</td><td align="right"><a href="#" class="updatePrice data-{{ $element['code'] }}" data-name="{{ $element['code'] }}" data-type="text" data-pk="{{ $element['id'] }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.received') }}">{{
-                      \Helper::currencyValue($element['value'],$order->exchange_rate) }}</a></td></tr>
+    <tr><td>{!! $element['title'] !!}(-):</td><td align="right"><a href="#" class="updatePrice data-{{ $element['code'] }}" data-name="{{ $element['code'] }}" data-type="text" data-pk="{{ $element['id'] }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.received') }}">{{$element['value'] }}</a></td></tr>
   @endif
 
 @endforeach
 
-  <tr  {!! $style !!}  class="data-balance"><td>{{ trans('language.order.balance') }}:</td><td align="right">{{($order->balance === NULL)?\Helper::currencyValue($order->total,$order->exchange_rate):\Helper::currencyValue($order->balance,$order->exchange_rate) }}</td></tr>
+  <tr  {!! $style !!}  class="data-balance"><td>{{ trans('language.order.balance') }}:</td><td align="right">{{($order->balance === NULL)?$order->total:$order->balance }}</td></tr>
   <tr id="update-status" style="display: none;"></tr>
         </table>
 

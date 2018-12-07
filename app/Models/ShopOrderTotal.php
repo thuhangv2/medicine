@@ -54,7 +54,8 @@ class ShopOrderTotal extends Model
         });
 //Currency
         foreach ($objects as $key => $object) {
-            $objects[$key]['text'] = \Helper::currencyRender($object['text']);
+            $objects[$key]['value'] = \Helper::currencyValue($object['value']);
+            $objects[$key]['text']  = \Helper::currencyRender($object['text']);
         }
 //
 

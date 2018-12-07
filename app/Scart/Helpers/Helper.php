@@ -38,6 +38,11 @@ class Helper
         return ShopCurrency::render($money, $currency, $rate, $space_between_symbol, $useSymbol);
     }
 
+    public static function currencyOnlyRender(float $money, $currency, $space_between_symbol = false, $include_symbol = true)
+    {
+        return ShopCurrency::onlyRender($money, $currency, $space_between_symbol, $include_symbol);
+    }
+
     public static function currencyValue(float $money, $rate = null)
     {
         return ShopCurrency::getValue($money, $rate);
