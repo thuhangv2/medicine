@@ -101,7 +101,7 @@ class ShopOrderController extends Controller
 
             $grid->id('ID')->sortable();
             $grid->email('Email')->display(function ($email) {
-                return empty($email) ? 'N/A' : $email;
+                return empty($email) ? 'N/A' : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . $email . '</div>';
             });
             $grid->toname(trans('language.order.customer_name'))->expand(function () {
                 $html = '<br>';
@@ -112,19 +112,19 @@ class ShopOrderController extends Controller
                 return $html . "</span></span><br>";
             }, trans('language.order.shipping_address'));
             $grid->subtotal(trans('language.order.sub_total'))->display(function ($price) {
-                return ($price) ? \Helper::currencyOnlyRender($price, $this->currency) : 0;
+                return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
             });
             $grid->shipping(trans('language.order.shipping_price'))->display(function ($price) {
-                return ($price) ? \Helper::currencyOnlyRender($price, $this->currency) : 0;
+                return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
             });
             $grid->discount(trans('language.order.discount'))->display(function ($price) {
-                return ($price) ? \Helper::currencyOnlyRender($price, $this->currency) : 0;
+                return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
             });
             $grid->total(trans('language.order.total'))->display(function ($price) {
-                return ($price) ? \Helper::currencyOnlyRender($price, $this->currency) : 0;
+                return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
             });
             $grid->received(trans('language.order.received'))->display(function ($price) {
-                return ($price) ? \Helper::currencyOnlyRender($price, $this->currency) : 0;
+                return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
             });
             $grid->currency(trans('language.order.currency'));
             $grid->exchange_rate(trans('language.order.exchange_rate'));

@@ -82,7 +82,7 @@ class ShopProductController extends Controller
 
             $grid->id('ID')->sortable();
             $grid->image(trans('language.admin.image'))->image('', 50);
-            $grid->name(trans('language.product.product_name'))->sortable();
+            $grid->name(trans('language.product.product_name'));
             $grid->category()->name(trans('language.category'));
             $grid->cost(trans('language.product.price_cost'))->display(function ($price) {
                 return number_format($price);
