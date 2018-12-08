@@ -188,6 +188,7 @@ return [
         'currency'              => 'Loại tiền',
         'exchange_rate'         => 'Tỉ giá',
         'email'                 => [
+            'title'     => 'Email',
             'new_title' => 'ĐƠN HÀNG MỚI',
         ],
     ],

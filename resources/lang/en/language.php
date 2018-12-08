@@ -184,6 +184,7 @@ return [
         'currency'              => 'Currency',
         'exchange_rate'         => 'Exchange rate',
         'email'                 => [
+            'title'     => 'Email',
             'new_title' => 'NEW ORDER',
         ],
     ],
