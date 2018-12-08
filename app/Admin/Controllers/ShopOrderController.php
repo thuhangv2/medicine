@@ -112,19 +112,19 @@ class ShopOrderController extends Controller
                 return $html . "</span></span><br>";
             }, trans('language.order.shipping_address'));
             $grid->subtotal(trans('language.order.sub_total'))->display(function ($price) {
-                return ($price) ? \Helper::currencyRender($price, $this->currency, $this->exchange_rate) : 0;
+                return ($price) ? \Helper::currencyOnlyRender($price, $this->currency) : 0;
             });
             $grid->shipping(trans('language.order.shipping_price'))->display(function ($price) {
-                return ($price) ? \Helper::currencyRender($price, $this->currency, $this->exchange_rate) : 0;
+                return ($price) ? \Helper::currencyOnlyRender($price, $this->currency) : 0;
             });
             $grid->discount(trans('language.order.discount'))->display(function ($price) {
-                return ($price) ? \Helper::currencyRender($price, $this->currency, $this->exchange_rate) : 0;
+                return ($price) ? \Helper::currencyOnlyRender($price, $this->currency) : 0;
             });
             $grid->total(trans('language.order.total'))->display(function ($price) {
-                return ($price) ? \Helper::currencyRender($price, $this->currency, $this->exchange_rate) : 0;
+                return ($price) ? \Helper::currencyOnlyRender($price, $this->currency) : 0;
             });
             $grid->received(trans('language.order.received'))->display(function ($price) {
-                return ($price) ? \Helper::currencyRender($price, $this->currency, $this->exchange_rate) : 0;
+                return ($price) ? \Helper::currencyOnlyRender($price, $this->currency) : 0;
             });
             $grid->currency(trans('language.order.currency'));
             $grid->exchange_rate(trans('language.order.exchange_rate'));
