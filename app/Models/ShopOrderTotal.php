@@ -85,9 +85,9 @@ class ShopOrderTotal extends Model
     public static function updateField($field)
     {
         //Udate field
-        $upField = self::find($field['id']);
-        // $upField->title      = $field['title'];
+        $upField             = self::find($field['id']);
         $upField->value      = $field['value'];
+        $upField->text       = $field['text'];
         $upField->updated_at = date('Y-m-d H:i:s');
         $upField->save();
         $order_id = $upField->order_id;

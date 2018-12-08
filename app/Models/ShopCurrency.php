@@ -112,24 +112,27 @@ class ShopCurrency extends Model
  */
     public static function render(float $money, $currency = null, $rate = null, $space_between_symbol = false, $include_symbol = true)
     {
+        $space_symbol = ($space_between_symbol) ? ' ' : '';
         $dataCurrency = self::getCurrency();
-
         if ($currency) {
             $checkCurrency = self::where('code', $currency)->first();
             if ($checkCurrency) {
                 $dataCurrency = $checkCurrency;
             }
         }
+//Get currently value
         $value = self::getValue($money, $rate);
+
+        $symbol = ($include_symbol) ? $dataCurrency['symbol'] : '';
+
         if ($dataCurrency['symbol_first']) {
             if ($money < 0) {
-                return '-' . (($include_symbol) ? $dataCurrency['symbol'] : '') . (($space_between_symbol) ? ' ' : '') . self::format(abs($value));
+                return '-' . $symbol . $space_symbol . self::format(abs($value));
             } else {
-                return (($include_symbol) ? $dataCurrency['symbol'] : '') . (($space_between_symbol) ? ' ' : '') . self::format($value);
+                return $symbol . $space_symbol . self::format($value);
             }
-
         } else {
-            return self::format($value) . (($space_between_symbol) ? ' ' : '') . (($include_symbol) ? $dataCurrency['symbol'] : '');
+            return self::format($value) . $space_symbol . $symbol;
         }
     }
 
@@ -143,17 +146,18 @@ class ShopCurrency extends Model
  */
     public static function onlyRender(float $money, $currency, $space_between_symbol = false, $include_symbol = true)
     {
-
         $checkCurrency = self::where('code', $currency)->first();
-        if ($dataCurrency['symbol_first']) {
+        $space_symbol  = ($space_between_symbol) ? ' ' : '';
+        $symbol        = ($include_symbol) ? $checkCurrency['symbol'] : '';
+        if ($checkCurrency['symbol_first']) {
             if ($money < 0) {
-                return '-' . (($include_symbol) ? $dataCurrency['symbol'] : '') . (($space_between_symbol) ? ' ' : '') . self::format(abs($money));
+                return '-' . $symbol . $space_symbol . self::format(abs($money));
             } else {
-                return (($include_symbol) ? $dataCurrency['symbol'] : '') . (($space_between_symbol) ? ' ' : '') . self::format($money);
+                return $symbol . $space_symbol . self::format($money);
             }
 
         } else {
-            return self::format($money) . (($space_between_symbol) ? ' ' : '') . (($include_symbol) ? $dataCurrency['symbol'] : '');
+            return self::format($money) . $space_symbol . $symbol;
         }
     }
 

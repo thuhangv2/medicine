@@ -128,10 +128,9 @@
                           <td>{{ trans('language.order.history_content') }}</td>
                           <td>{{ trans('language.order.history_time') }}</td>
                         </tr>
-
-                      @foreach ($order->history as $history)
+                      @foreach ($order->history->sortKeysDesc()->all() as $history)
                         <tr>
-                          <td>{{ $history['admin_id'] }}</td>
+                          <td>{{ \Encore\Admin\Auth\Database\Administrator::find($history['admin_id'])->name??'' }}</td>
                           <td><div class="history">{!! $history['content'] !!}</div></td>
                           <td>{{ $history['add_date'] }}</td>
                         </tr>

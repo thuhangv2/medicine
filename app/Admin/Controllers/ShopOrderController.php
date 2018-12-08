@@ -301,11 +301,12 @@ JS;
             $order_total_origin = ShopOrderTotal::find($id);
             $order_id           = $order_total_origin->order_id;
             $oldValue           = $order_total_origin->value;
+            $order              = ShopOrder::find($order_id);
             $fieldTotal         = [
                 'id'    => $id,
                 'code'  => $field,
                 'value' => $value,
-                'text'  => \Helper::currencyOnlyRender($value),
+                'text'  => \Helper::currencyOnlyRender($value, $order->currency),
             ];
             ShopOrderTotal::updateField($fieldTotal);
         } else {
@@ -331,24 +332,24 @@ JS;
         // $updateSubTotal = ShopOrderTotal::updateSubTotal($id, $fields = array($field => $value));
 
         if ($order_id) {
-            $order = ShopOrder::find($order_id);
-            if ($order->balance == 0 && $order->total != 0) {
+            $orderUpdated = ShopOrder::find($order_id);
+            if ($orderUpdated->balance == 0 && $orderUpdated->total != 0) {
                 $style = 'style="color:#0e9e33;font-weight:bold;"';
             } else
-            if ($order->balance < 0) {
+            if ($orderUpdated->balance < 0) {
                 $style = 'style="color:#ff2f00;font-weight:bold;"';
             } else {
                 $style = 'style="font-weight:bold;"';
             }
-            $style_blance = '<tr ' . $style . ' class="data-balance"><td>' . trans('language.order.balance') . ':</td><td align="right">' . number_format($order->balance) . '</td></tr>';
+            $style_blance = '<tr ' . $style . ' class="data-balance"><td>' . trans('language.order.balance') . ':</td><td align="right">' . $orderUpdated->balance . '</td></tr>';
             return json_encode(['stt' => 1, 'msg' => [
-                'total'          => number_format($order->total),
-                'subtotal'       => number_format($order->subtotal),
-                'shipping'       => number_format($order->shipping),
-                'discount'       => number_format($order->discount),
-                'received'       => number_format($order->received),
+                'total'          => $orderUpdated->total,
+                'subtotal'       => $orderUpdated->subtotal,
+                'shipping'       => $orderUpdated->shipping,
+                'discount'       => $orderUpdated->discount,
+                'received'       => $orderUpdated->received,
                 'balance'        => $style_blance,
-                'payment_status' => ($order->payment_status == 2) ? '<span style="color:#0e9e33;font-weight:bold;">' . $this->statusPayment[$order->payment_status] . '</span>' : (($order->payment_status == 3) ? '<span style="color:#ff2f00;font-weight:bold;">' . $this->statusPayment[$order->payment_status] . '</span>' : $this->statusPayment[$order->payment_status]),
+                'payment_status' => ($orderUpdated->payment_status == 2) ? '<span style="color:#0e9e33;font-weight:bold;">' . $this->statusPayment[$orderUpdated->payment_status] . '</span>' : (($orderUpdated->payment_status == 3) ? '<span style="color:#ff2f00;font-weight:bold;">' . $this->statusPayment[$orderUpdated->payment_status] . '</span>' : $this->statusPayment[$orderUpdated->payment_status]),
             ],
             ]);
         } else {
