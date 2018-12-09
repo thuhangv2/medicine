@@ -79,7 +79,7 @@ class ShopSpecialPriceController extends Controller
                 return $product['name'] . "<br>(SKU: " . $product['sku'] . ")";
             });
             $grid->price(trans('language.admin.special_price'))->display(function ($price) {
-                return number_format($price) . ' VNĐ';
+                return number_format($price) . ' Bit';
             });
             $grid->date_start(trans('language.admin.date_start'))->display(function ($date) {
                 return ($date) ?? '<span style="color:red">NULL</span>';
@@ -118,11 +118,11 @@ class ShopSpecialPriceController extends Controller
 
             $form->html('
         <div class="input-group">
-        <span class="input-group-addon">VNĐ</span><input disabled style="width: 120px; text-align: right;" type="text" id="price-old"  value="0" class="form-control price">
+        <span class="input-group-addon">Bit</span><input disabled style="width: 120px; text-align: right;" type="text" id="price-old"  value="0" class="form-control price">
         </div>', trans('language.admin.origin_price'));
 
             $form->currency('off', trans('language.admin.discount_percent'))->symbol('%')->options(['digits' => 0])->default(0);
-            $form->currency('price', trans('language.admin.special_price'))->symbol('VND')->options(['digits' => 0])->default(0);
+            $form->currency('price', trans('language.admin.special_price'))->symbol('')->options(['digits' => 0])->default(0);
             $form->switch('status', trans('language.admin.status'));
             $form->datetime('date_start', trans('language.admin.date_start'));
             $form->datetime('date_end', trans('language.admin.date_end'));
@@ -177,7 +177,11 @@ class ShopSpecialPriceController extends Controller
         });
 
     $('#off').change(function(){
-    var newPrice = $('#price-old').val().replace(',','') * (100 - parseInt($('#off').val())) /100;
+        var offData = $('#off').val();
+        if(offData ===''){
+            $('#off').val(0);
+        }
+    var newPrice = parseInt($('#price-old').val().replace(',','')) * (100 - parseInt($('#off').val())) /100;
     $('#price').val(newPrice);
     });
 
