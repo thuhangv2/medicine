@@ -5,6 +5,7 @@
  */
 namespace App\Models;
 
+use Cart;
 use Illuminate\Database\Eloquent\Model;
 
 class ShopCurrency extends Model
@@ -159,6 +160,22 @@ class ShopCurrency extends Model
         } else {
             return self::format($money) . $space_symbol . $symbol;
         }
+    }
+/**
+ * [sumCart description]
+ * @param  [type]     $details [description]
+ * @param  float|null $rate    [description]
+ * @return [type]              [description]
+ */
+    public static function sumCart($details, float $rate = null)
+    {
+        $sum  = 0;
+        $rate = ($rate) ? $rate : self::$exchange_rate;
+        foreach ($details as $detail) {
+            $sum += $detail->qty * self::getValue($detail->price, $rate);
+        }
+        return $sum;
+
     }
 
     public function scopeSort($query)

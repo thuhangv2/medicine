@@ -20,43 +20,44 @@ class ShopOrderTotal extends Model
  * @param  float|null $subtotal [description]
  * @return [type]               [description]
  */
-    public static function processDataTotal(array $objects = [], float $subtotal = null)
+    public static function processDataTotal(array $objects = [])
     {
-        $subtotal = ($subtotal == null) ? Cart::subtotal() : $subtotal;
+
+        $subtotal = \Helper::currencySumCart(Cart::content());
+        //You can't use Cart::subtotal(), becase when use currency, Cart::subtotal() may be not equal $subtotal
+
         //Set subtotal
-        $objects[] = [
+        $arraySubtotal = [
             'title' => 'Sub total',
             'code'  => 'subtotal',
             'value' => $subtotal,
-            'text'  => $subtotal,
+            'text'  => \Helper::currencyOnlyRender($subtotal, \Helper::currencyCode()),
             'sort'  => 1,
         ];
         // set total
-        $total = 0;
-        foreach ($objects as $key => $value) {
-            if ($value['code'] != 'received') {
-                $total += $value['value'];
+        $total = $subtotal;
+        foreach ($objects as $key => $object) {
+            $objects[$key]['value'] = \Helper::currencyValue($object['value']);
+            $objects[$key]['text']  = \Helper::currencyRender($object['value']);
+            if ($object['code'] != 'received') {
+                $total += \Helper::currencyValue($object['value']);
             }
         }
         $arrayTotal = array(
             'title' => 'Total',
             'code'  => 'total',
             'value' => $total,
-            'text'  => $total,
+            'text'  => \Helper::currencyOnlyRender($total, \Helper::currencyCode()),
             'sort'  => 100,
         );
 
+        $objects[] = $arraySubtotal;
         $objects[] = $arrayTotal;
 
         //re-sort item total
         usort($objects, function ($a, $b) {
             return $a['sort'] > $b['sort'];
         });
-//Currency
-        foreach ($objects as $key => $object) {
-            $objects[$key]['value'] = \Helper::currencyValue($object['value']);
-            $objects[$key]['text']  = \Helper::currencyRender($object['text']);
-        }
 //
 
         return $objects;

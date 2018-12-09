@@ -61,11 +61,13 @@
                 <td><span class="item_{{ $item->id }}_id">{{ $item->id }}</span></td>
                 <td><span class="item_{{ $item->id }}_sku">{{ $item->sku }}</span></td>
                 <td><span class="item_{{ $item->id }}_name">{{ $item->name }}</span></td>
-                <td align="right"><span class="item_{{ $item->id }}_price">{{ \Helper::currencyRender($item->price,$order->currency,$order->exchange_rate) }}</span></td>
+                <td align="right"><span>{{ \Helper::currencyOnlyRender($item->price,$order->currency) }}</span></td>
                 <td align="right">x <span class="item_{{ $item->id }}_qty">{{ number_format($item->qty) }}</span></td>
-                <td align="right"><span  class="item_{{ $item->id }}_total_price">{{ \Helper::currencyRender($item->total_price,$order->currency,$order->exchange_rate)}}</span></td>
+                <td align="right"><span >{{ \Helper::currencyOnlyRender($item->total_price,$order->currency)}}</span></td>
                 <td><span  class="item_{{ $item->id }}_attr">{{ $item->option }}</span></td>
                 <td>
+                  <span style="display: none"  class="item_{{ $item->id }}_price">{{ $item->price }}</span>
+                  <span style="display: none"  class="item_{{ $item->id }}_total_price">{{ $item->total_price}}</span>
                     <button onclick="dataEdit({{ $item->id }});" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#editItem" data-placement="top" rel="tooltip" data-original-title="" title="Edit item"><span class="glyphicon glyphicon-pencil"></span>{{ trans('admin.edit') }}</button>
                      &nbsp;
                     <button  onclick="dataRemove({{ $item->id }});" class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#removeItem" data-placement="top" rel="tooltip" data-original-title="" title="Remove item"><span class="glyphicon glyphicon-remove"></span>{{ trans('admin.remove') }}</button>

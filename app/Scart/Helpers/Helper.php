@@ -42,7 +42,10 @@ class Helper
     {
         return ShopCurrency::onlyRender($money, $currency, $space_between_symbol, $include_symbol);
     }
-
+    public static function currencySumCart($details, float $rate = null)
+    {
+        return ShopCurrency::sumCart($details, $rate);
+    }
     public static function currencyValue(float $money, $rate = null)
     {
         return ShopCurrency::getValue($money, $rate);
