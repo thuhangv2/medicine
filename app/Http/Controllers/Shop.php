@@ -310,7 +310,7 @@ class Shop extends GeneralController
                         [
                         'name'     => $value->name,
                         'quantity' => $value->qty,
-                        'price'    => (int) $value->price,
+                        'price'    => \Helper::currencyValue($value->price),
                         'sku'      => $product->sku,
                     ];
                 }
@@ -318,17 +318,18 @@ class Shop extends GeneralController
                     [
                     'name'     => 'Shipping',
                     'quantity' => 1,
-                    'price'    => (int) $shipping,
+                    'price'    => $shipping,
                     'sku'      => 'shipping',
                 ];
                 $data_payment[] =
                     [
                     'name'     => 'Discount',
                     'quantity' => 1,
-                    'price'    => (int) $discount,
+                    'price'    => $discount,
                     'sku'      => 'discount',
                 ];
                 $data_payment['order_id'] = $orderId;
+                $data_payment['currency'] = \Helper::currencyCode();
                 return redirect('payment/paypal')->with('data_payment', $data_payment);
             } else {
                 return $this->completeOrder($orderId);
