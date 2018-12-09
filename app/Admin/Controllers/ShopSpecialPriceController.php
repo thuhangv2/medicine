@@ -79,7 +79,7 @@ class ShopSpecialPriceController extends Controller
                 return $product['name'] . "<br>(SKU: " . $product['sku'] . ")";
             });
             $grid->price(trans('language.admin.special_price'))->display(function ($price) {
-                return number_format($price) . ' Bit';
+                return number_format($price);
             });
             $grid->date_start(trans('language.admin.date_start'))->display(function ($date) {
                 return ($date) ?? '<span style="color:red">NULL</span>';
