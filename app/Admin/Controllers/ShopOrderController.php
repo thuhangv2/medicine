@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Admin\Extensions\ExcelExpoter;
 use App\Http\Controllers\Controller;
+use App\Models\ShopCurrency;
 use App\Models\ShopOrder;
 use App\Models\ShopOrderDetail;
 use App\Models\ShopOrderHistory;
@@ -25,11 +26,12 @@ use Illuminate\Http\Request;
 class ShopOrderController extends Controller
 {
     use HasResourceActions;
-    public $statusPayment, $statusOrder, $statusShipping, $statusOrder2, $statusShipping2;
+    public $statusPayment, $statusOrder, $statusShipping, $statusOrder2, $statusShipping2, $currency;
 
     public function __construct()
     {
         $this->statusOrder     = ShopOrderStatus::pluck('name', 'id')->all();
+        $this->currency        = ShopCurrency::pluck('name', 'code')->all();
         $this->statusPayment   = ShopPaymentStatus::pluck('name', 'id')->all();
         $this->statusShipping  = ShopShippingStatus::pluck('name', 'id')->all();
         $this->statusOrder2    = ShopOrderStatus::mapValue();
@@ -178,15 +180,23 @@ class ShopOrderController extends Controller
             foreach ($customers as $key => $value) {
                 $arrCustomer[$value['id']] = $value['name'] . "<" . $value['email'] . ">";
             }
-            $form->select('user_id', trans('language.order.select_customer'))->options($arrCustomer);
+            $form->select('user_id', trans('language.order.select_customer'))->options($arrCustomer)->rules('required');
             $form->text('toname', trans('language.order.shipping_name'));
             $form->text('address1', trans('language.order.shipping_address1'));
             $form->text('address2', trans('language.order.shipping_address2'));
             $form->mobile('phone', trans('language.order.shipping_phone'));
+            $form->select('currency', trans('language.order.currency'))->options($this->currency)->rules('required');
+            $form->number('exchange_rate', trans('language.order.exchange_rate'));
             $form->textarea('comment', trans('language.order.order_note'));
             $form->select('status', trans('language.admin.status'))->options($this->statusOrder);
-
+            $form->hidden('email');
             $form->divide();
+            $form->saving(function (Form $form) use ($customers) {
+                $checkCurrency = ShopCurrency::where('code', $form->currency)->first();
+                $checkUser     = User::find($form->user_id);
+                $form->email   = $checkUser->email;
+            });
+
             $form->saved(function (Form $form) {
                 $id         = $form->model()->id;
                 $checkTotal = ShopOrderTotal::where('order_id', $id)->first();
@@ -212,6 +222,7 @@ class ShopOrderController extends Controller
     {
         $urlgetInfoUser    = route('getInfoUser');
         $urlgetInfoProduct = route('getInfoProduct');
+        $currencies        = json_encode(ShopCurrency::pluck('exchange_rate', 'code')->all());
         return <<<JS
         $('[name="user_id"]').change(function(){
             id = $(this).val();
@@ -231,6 +242,12 @@ class ShopOrderController extends Controller
                     }
                 });
         });
+        $('[name="currency"]').change(function(){
+            var currency = $(this).val();
+            var jsonCurrency = $currencies;
+            $('[name="exchange_rate"]').val(jsonCurrency[currency]);
+        });
+
 
 JS;
     }
