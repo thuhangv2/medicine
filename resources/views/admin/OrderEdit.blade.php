@@ -37,7 +37,7 @@
           <th>{{ trans('language.order.currency') }}:</th><td>{{ $order->currency }}</td>
         </tr>
         <tr>
-          <th>{{ trans('language.order.exchange_rate') }}:</th><td>{{ $order->exchange_rate }}</td>
+          <th>{{ trans('language.order.exchange_rate') }}:</th><td>{{ ($order->exchange_rate)??1 }}</td>
         </tr>
       </table>
     </div>
@@ -329,12 +329,12 @@
     $('tr#addnew').before('<tr><td><select required onChange="selectProduct($(this));" class="form_id form-control" name="form_id[]"><option value="0">{{ trans('language.order.select_product') }}</option>@foreach ($products as $key => $value)<option  value="{{ $key }}" >{{ $value }}</option>@endforeach</select></td><td><input disabled class="form_sku form-control" name="form_sku[]" value=""></td><td><input class="form_qty form-control" name="form_qty[]" value=""></td><td><input class="form_price form-control" name="form_price[]" value=""></td><td><input class="form_attr form-control" name="form_attr[]" value=""></td><td> <span class="glyphicon glyphicon-remove btn btn-danger" onclick="removeItemForm(this);"></span></td></tr>');
   });
 
-    function removeItemForm(elmnt){
-      elmnt.closest('tr').remove();
+    function removeItemForm(element){
+      element.closest('tr').remove();
     }
 
-    function selectProduct(elemnt){
-        node = elemnt.closest('tr');
+    function selectProduct(element){
+        node = element.closest('tr');
         var id = parseInt(node.find('option:selected').eq(0).val());
         if(id == 0){
             node.find('[name="form_sku[]"]').val('');
@@ -353,7 +353,7 @@
                     var returnedData = JSON.parse(result);
                     node.find('[name="form_sku[]"]').val(returnedData.sku);
                     node.find('[name="form_qty[]"]').eq(0).val(1);
-                    node.find('[name="form_price[]"]').eq(0).val(returnedData.price);
+                    node.find('[name="form_price[]"]').eq(0).val(returnedData.price * {!! ($order->exchange_rate)??1 !!});
                     }
                 });
         }

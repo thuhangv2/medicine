@@ -260,18 +260,16 @@ class Shop extends GeneralController
             //End order total
 
             foreach (Cart::content() as $value) {
-                $product                    = ShopProduct::find($value->id);
-                $arrDetail['order_id']      = $orderId;
-                $arrDetail['product_id']    = $value->id;
-                $arrDetail['name']          = $value->name;
-                $arrDetail['price']         = \Helper::currencyValue($value->price);
-                $arrDetail['qty']           = $value->qty;
-                $arrDetail['type']          = $value->options->toJson();
-                $arrDetail['sku']           = $product->sku;
-                $arrDetail['currency']      = \Helper::currencyCode();
-                $arrDetail['exchange_rate'] = \Helper::currencyRate();
-                $arrDetail['total_price']   = \Helper::currencyValue($value->price) * $value->qty;
-                $arrDetail['created_at']    = date('Y-m-d H:i:s');
+                $product                  = ShopProduct::find($value->id);
+                $arrDetail['order_id']    = $orderId;
+                $arrDetail['product_id']  = $value->id;
+                $arrDetail['name']        = $value->name;
+                $arrDetail['price']       = \Helper::currencyValue($value->price);
+                $arrDetail['qty']         = $value->qty;
+                $arrDetail['type']        = $value->options->toJson();
+                $arrDetail['sku']         = $product->sku;
+                $arrDetail['total_price'] = \Helper::currencyValue($value->price) * $value->qty;
+                $arrDetail['created_at']  = date('Y-m-d H:i:s');
                 ShopOrderDetail::insert($arrDetail);
                 //If product out of stock
                 if (!$this->configs['product_buy_out_of_stock'] && $product->stock < $value->qty) {
