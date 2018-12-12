@@ -183,6 +183,7 @@ return [
         'success'               => 'Order success',
         'currency'              => 'Currency',
         'exchange_rate'         => 'Exchange rate',
+        'payment_method'        => 'Payment method',
         'email'                 => [
             'title'     => 'Email',
             'new_title' => 'NEW ORDER',

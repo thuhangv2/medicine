@@ -129,6 +129,8 @@ class ShopOrderController extends Controller
             $grid->received(trans('language.order.received'))->display(function ($price) {
                 return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
             });
+            $grid->payment_method(trans('language.order.payment_method'))->sortable();
+
             $grid->currency(trans('language.order.currency'));
             $grid->exchange_rate(trans('language.order.exchange_rate'));
             $statusOrder = $this->statusOrder;

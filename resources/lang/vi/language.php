@@ -187,6 +187,7 @@ return [
         'success'               => 'Đơn hàng thành công',
         'currency'              => 'Loại tiền',
         'exchange_rate'         => 'Tỉ giá',
+        'payment_method'        => 'Thanh toán',
         'email'                 => [
             'title'     => 'Email',
             'new_title' => 'ĐƠN HÀNG MỚI',
