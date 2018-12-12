@@ -752,7 +752,7 @@ class Shop extends GeneralController
                 $message->subject(trans('language.order.email.new_title') . '#' . $orderId);
             });
         } catch (\Exception $e) {
-            //
+            echo 'Error send mail';
         } //
         return redirect('cart.html')->with('message', trans('language.order.success'));
     }

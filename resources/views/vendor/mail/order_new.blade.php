@@ -68,30 +68,30 @@
                                     <td>{{ $key }}</td>
                                     <td>{{ $detail['sku'] }}</td>
                                     <td>{{ $detail['name'] }}</td>
-                                    <td>{{ number_format($detail['price']) }}</td>
+                                    <td>{{ \Helper::currencyRender($detail['price']) }}</td>
                                     <td>{{ number_format($detail['qty']) }}</td>
-                                    <td align="right">{{ number_format($detail['total_price']) }}</td>
+                                    <td align="right">{{ \Helper::currencyRender($detail['total_price']) }}</td>
                                 </tr>
                                 @endforeach
                                 <tr>
                                     <td colspan="2"></td>
                                     <td colspan="2" style="font-weight: bold;">Tổng tiền hàng</td>
-                                    <td colspan="2" align="right">{{ number_format($subtotal) }}</td>
+                                    <td colspan="2" align="right">{{ \Helper::currencyRender($subtotal) }}</td>
                                 </tr>
                                 <tr>
                                     <td colspan="2"></td>
                                     <td colspan="2" style="font-weight: bold;">Tiền vận chuyển</td>
-                                    <td colspan="2" align="right">{{ number_format($shipping) }}</td>
+                                    <td colspan="2" align="right">{{ \Helper::currencyRender($shipping) }}</td>
                                 </tr>
                                 <tr>
                                     <td colspan="2"></td>
                                     <td colspan="2" style="font-weight: bold;">Giảm giá</td>
-                                    <td colspan="2" align="right">{{ number_format($discount) }}</td>
+                                    <td colspan="2" align="right">{{ \Helper::currencyRender($discount) }}</td>
                                 </tr>
                                 <tr>
                                     <td colspan="2"></td>
                                     <td colspan="2" style="font-weight: bold;">Tổng tiền thanh toán</td>
-                                    <td colspan="2" align="right">{{ number_format($total) }}</td>
+                                    <td colspan="2" align="right">{{ \Helper::currencyRender($total) }}</td>
                                 </tr>
                             </table>
                         </td>
