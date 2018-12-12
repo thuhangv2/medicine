@@ -97,7 +97,10 @@
                 <table  class="table table-bordered">
                     <tr><th>{{ trans('language.order.order_status') }}:</th><td><a href="#" class="updateStatus" data-name="status" data-type="select" data-source ="{{ json_encode($statusOrder2) }}"  data-pk="{{ $order->id }}" data-value="{{ $order->status }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.order_status') }}">{{ $statusOrder[$order->status] }}</a></td></tr>
                     <tr><th>{{ trans('language.order.order_shipping_status') }}:</th><td><a href="#" class="updateStatus" data-name="shipping_status" data-type="select" data-source ="{{ json_encode($statusShipping2) }}"  data-pk="{{ $order->id }}" data-value="{{ $order->shipping_status }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.order_shipping_status') }}">{{ $statusShipping[$order->shipping_status] }}</a></td></tr>
-                    <tr><th>{{ trans('language.order.order_note') }}:</th>
+                    <tr><th>{{ trans('language.order.payment_method') }}:</th><td><a href="#" class="updateStatus" data-name="payment_method" data-type="select" data-source ="{{ json_encode(['cash'=>'Cash','paypal'=>'Paypal']) }}"  data-pk="{{ $order->id }}" data-value="{{ $order->payment_method }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.payment_method') }}">{{ $order->payment_method }}</a></td></tr>
+
+                    <tr>
+                      <th>{{ trans('language.order.order_note') }}:</th>
                       <td>
                         <a href="#" class="updateInfo" data-name="comment" data-type="textarea" data-pk="{{ $order->id }}" data-url="{{ route("order_update") }}" data-title="" >{{ $order->comment }}
                         </a>
