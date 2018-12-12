@@ -152,7 +152,7 @@
           <table   class="table table-bordered">
 @foreach ($dataTotal as $element)
   @if ($element['code'] =='subtotal')
-    <tr><td>{!! $element['title'] !!}:</td><td align="right" class="data-{{ $element['code'] }}">{{ $element['value'] }}</td></tr>
+    <tr><td>{!! $element['title'] !!}:</td><td align="right" class="data-{{ $element['code'] }}">{{ \Helper::currencyFormat($element['value']) }}</td></tr>
   @endif
   @if ($element['code'] =='shipping')
     <tr><td>{!! $element['title'] !!}:</td><td align="right"><a href="#" class="updatePrice data-{{ $element['code'] }}"  data-name="{{ $element['code'] }}" data-type="text" data-pk="{{ $element['id'] }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.shipping_price') }}">{{$element['value'] }}</a></td></tr>
@@ -162,7 +162,7 @@
   @endif
 
    @if ($element['code'] =='total')
-    <tr style="background:#f5f3f3;font-weight: bold;"><td>{!! $element['title'] !!}:</td><td align="right" class="data-{{ $element['code'] }}">{{$element['value'] }}</td></tr>
+    <tr style="background:#f5f3f3;font-weight: bold;"><td>{!! $element['title'] !!}:</td><td align="right" class="data-{{ $element['code'] }}">{{ \Helper::currencyFormat($element['value']) }}</td></tr>
   @endif
 
   @if ($element['code'] =='received')
@@ -171,7 +171,7 @@
 
 @endforeach
 
-  <tr  {!! $style !!}  class="data-balance"><td>{{ trans('language.order.balance') }}:</td><td align="right">{{($order->balance === NULL)?$order->total:$order->balance }}</td></tr>
+  <tr  {!! $style !!}  class="data-balance"><td>{{ trans('language.order.balance') }}:</td><td align="right">{{($order->balance === NULL)?\Helper::currencyFormat($order->total):\Helper::currencyFormat($order->balance) }}</td></tr>
   <tr id="update-status" style="display: none;"></tr>
         </table>
 

@@ -58,4 +58,9 @@ class Helper
     {
         return ShopCurrency::getRate();
     }
+    public static function currencyFormat(float $money)
+    {
+        return ShopCurrency::format($money);
+    }
+
 }

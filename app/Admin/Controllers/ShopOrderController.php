@@ -369,13 +369,13 @@ JS;
             } else {
                 $style = 'style="font-weight:bold;"';
             }
-            $style_blance = '<tr ' . $style . ' class="data-balance"><td>' . trans('language.order.balance') . ':</td><td align="right">' . $orderUpdated->balance . '</td></tr>';
+            $style_blance = '<tr ' . $style . ' class="data-balance"><td>' . trans('language.order.balance') . ':</td><td align="right">' . \Helper::currencyFormat($orderUpdated->balance) . '</td></tr>';
             return json_encode(['stt' => 1, 'msg' => [
-                'total'          => $orderUpdated->total,
-                'subtotal'       => $orderUpdated->subtotal,
-                'shipping'       => $orderUpdated->shipping,
-                'discount'       => $orderUpdated->discount,
-                'received'       => $orderUpdated->received,
+                'total'          => \Helper::currencyFormat($orderUpdated->total),
+                'subtotal'       => \Helper::currencyFormat($orderUpdated->subtotal),
+                'shipping'       => \Helper::currencyFormat($orderUpdated->shipping),
+                'discount'       => \Helper::currencyFormat($orderUpdated->discount),
+                'received'       => \Helper::currencyFormat($orderUpdated->received),
                 'balance'        => $style_blance,
                 'payment_status' => ($orderUpdated->payment_status == 2) ? '<span style="color:#0e9e33;font-weight:bold;">' . $this->statusPayment[$orderUpdated->payment_status] . '</span>' : (($orderUpdated->payment_status == 3) ? '<span style="color:#ff2f00;font-weight:bold;">' . $this->statusPayment[$orderUpdated->payment_status] . '</span>' : $this->statusPayment[$orderUpdated->payment_status]),
             ],
@@ -415,7 +415,7 @@ JS;
                     'qty'         => (int) $pQty[$key]['value'],
                     'option'      => $pAttr[$key]['value'],
                     'price'       => (int) $pPrice[$key]['value'],
-                    'total_price' => (int) $pPrice[$key]['value'] * (int) $pQty[$key]['value'],
+                    'total_price' => $pPrice[$key]['value'] * (int) $pQty[$key]['value'],
                     'sku'         => $product->sku,
                 );
             }
@@ -485,7 +485,7 @@ JS;
         if ($request->input('editItem-form') != 0) {
             $pId      = (int) $request->input('pId');
             $pQty     = (int) $request->input('pQty');
-            $pPrice   = (int) $request->input('pPrice');
+            $pPrice   = $request->input('pPrice');
             $pName    = $request->input('pName');
             $pAttr    = $request->input('pAttr');
             $order_id = (int) $request->input('editItem-form');
