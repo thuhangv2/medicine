@@ -10,9 +10,12 @@
 <a href="https://packagist.org/packages/lanhktc/s-cart"><img src="https://poser.pugx.org/lanhktc/s-cart/v/stable.svg" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/lanhktc/s-cart"><img src="https://poser.pugx.org/lanhktc/s-cart/license.svg" alt="License"></a>
 </p>
-<p align="center"><img src="https://s-cart.org/images/s-cart-1.jpg"></p>
-<p align="center"><img src="https://s-cart.org/images/s-cart-4-1.jpg"></p>
-<p align="center"><img src="https://s-cart.org/images/s-cart-4-2.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v20423/s-cart-1.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v20423/s-cart-2.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v20423/s-cart-3.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v20423/s-cart-4.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v20423/s-cart-5.jpg"></p>
+
 
 
 ## About S-cart
