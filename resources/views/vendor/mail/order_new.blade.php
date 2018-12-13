@@ -29,7 +29,7 @@
                 <table class="content" width="100%" cellpadding="0" cellspacing="0">
                     <tr>
                         <td class="header">
-                            {{ trans('language.mail.order.title_1',['website'=>config('app.name')]) }}
+                            {{ trans('language.email.order.title_1',['website'=>config('app.name')]) }}
 {{--                             <a href="{{ $url }}">
                                 {{ $slot }}
                             </a> --}}
@@ -43,25 +43,25 @@
                                 <!-- Body content -->
                                 <tr>
                                     <td>
-                                        <b>{{ trans('language.mail.order.order_id') }}</b>: {{ $id }}<br>
-                                        <b>{{ trans('language.mail.order.toname') }}</b>: {{ $toname }}<br>
-                                        <b>{{ trans('language.mail.order.address') }}</b>: {{ $address1.' '.$address2 }}<br>
-                                        <b>{{ trans('language.mail.order.phone') }}</b>: {{ $phone }}<br>
-                                        <b>{{ trans('language.mail.order.note') }}</b>: {{ $comment }}
+                                        <b>{{ trans('language.email.order.order_id') }}</b>: {{ $id }}<br>
+                                        <b>{{ trans('language.email.order.toname') }}</b>: {{ $toname }}<br>
+                                        <b>{{ trans('language.email.order.address') }}</b>: {{ $address1.' '.$address2 }}<br>
+                                        <b>{{ trans('language.email.order.phone') }}</b>: {{ $phone }}<br>
+                                        <b>{{ trans('language.email.order.note') }}</b>: {{ $comment }}
                                     </td>
                                 </tr>
                             </table>
                             <hr>
-                            <p style="text-align: center;">{{ trans('language.mail.order.order_detail') }}:<br>
+                            <p style="text-align: center;">{{ trans('language.email.order.order_detail') }}:<br>
                             ===================================<br></p>
                             <table class="inner-body" align="center" width="570" cellpadding="0" cellspacing="0" border="1">
                                 <tr>
-                                    <td>{{ trans('language.mail.order.sort') }}</td>
-                                    <td>{{ trans('language.mail.order.sku') }}</td>
-                                    <td>{{ trans('language.mail.order.name') }}</td>
-                                    <td>{{ trans('language.mail.order.note') }}</td>
-                                    <td>{{ trans('language.mail.order.qty') }}</td>
-                                    <td>{{ trans('language.mail.order.total') }}</td>
+                                    <td>{{ trans('language.email.order.sort') }}</td>
+                                    <td>{{ trans('language.email.order.sku') }}</td>
+                                    <td>{{ trans('language.email.order.name') }}</td>
+                                    <td>{{ trans('language.email.order.note') }}</td>
+                                    <td>{{ trans('language.email.order.qty') }}</td>
+                                    <td>{{ trans('language.email.order.total') }}</td>
                                 </tr>
                                 @foreach ($details as $key => $detail)
                                 <tr>
@@ -75,22 +75,22 @@
                                 @endforeach
                                 <tr>
                                     <td colspan="2"></td>
-                                    <td colspan="2" style="font-weight: bold;">{{ trans('language.mail.order.sub_total') }}</td>
+                                    <td colspan="2" style="font-weight: bold;">{{ trans('language.email.order.sub_total') }}</td>
                                     <td colspan="2" align="right">{{ \Helper::currencyRender($subtotal) }}</td>
                                 </tr>
                                 <tr>
                                     <td colspan="2"></td>
-                                    <td colspan="2" style="font-weight: bold;">{{ trans('language.mail.order.shipping_fee') }}</td>
+                                    <td colspan="2" style="font-weight: bold;">{{ trans('language.email.order.shipping_fee') }}</td>
                                     <td colspan="2" align="right">{{ \Helper::currencyRender($shipping) }}</td>
                                 </tr>
                                 <tr>
                                     <td colspan="2"></td>
-                                    <td colspan="2" style="font-weight: bold;">{{ trans('language.mail.order.discount') }}</td>
+                                    <td colspan="2" style="font-weight: bold;">{{ trans('language.email.order.discount') }}</td>
                                     <td colspan="2" align="right">{{ \Helper::currencyRender($discount) }}</td>
                                 </tr>
                                 <tr>
                                     <td colspan="2"></td>
-                                    <td colspan="2" style="font-weight: bold;">{{ trans('language.mail.order.order_total') }}</td>
+                                    <td colspan="2" style="font-weight: bold;">{{ trans('language.email.order.order_total') }}</td>
                                     <td colspan="2" align="right">{{ \Helper::currencyRender($total) }}</td>
                                 </tr>
                             </table>
