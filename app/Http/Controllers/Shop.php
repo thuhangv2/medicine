@@ -229,7 +229,8 @@ class Shop extends GeneralController
             $payment_method = empty($request->get('payment_method')) ? 'cash' : $request->get('payment_method');
             //end total
             DB::connection('mysql')->beginTransaction();
-            $arrOrder['user_id']         = empty(Auth::user()->id) ? 0 : Auth::user()->id;
+            $arrOrder['user_id'] = empty(Auth::user()->id) ? 0 : Auth::user()->id;
+
             $arrOrder['subtotal']        = $subtotal;
             $arrOrder['shipping']        = $shipping;
             $arrOrder['discount']        = $discount;
@@ -237,6 +238,8 @@ class Shop extends GeneralController
             $arrOrder['payment_status']  = 0;
             $arrOrder['shipping_status'] = 0;
             $arrOrder['status']          = 0;
+            $arrOrder['currency']        = \Helper::currencyCode();
+            $arrOrder['exchange_rate']   = \Helper::currencyRate();
             $arrOrder['total']           = $total;
             $arrOrder['balance']         = $total + $received;
             $arrOrder['toname']          = $request->get('toname');
@@ -261,11 +264,11 @@ class Shop extends GeneralController
                 $arrDetail['order_id']    = $orderId;
                 $arrDetail['product_id']  = $value->id;
                 $arrDetail['name']        = $value->name;
-                $arrDetail['price']       = $value->price;
+                $arrDetail['price']       = \Helper::currencyValue($value->price);
                 $arrDetail['qty']         = $value->qty;
                 $arrDetail['type']        = $value->options->toJson();
                 $arrDetail['sku']         = $product->sku;
-                $arrDetail['total_price'] = $value->price * $value->qty;
+                $arrDetail['total_price'] = \Helper::currencyValue($value->price) * $value->qty;
                 $arrDetail['created_at']  = date('Y-m-d H:i:s');
                 ShopOrderDetail::insert($arrDetail);
                 //If product out of stock
@@ -307,7 +310,7 @@ class Shop extends GeneralController
                         [
                         'name'     => $value->name,
                         'quantity' => $value->qty,
-                        'price'    => (int) $value->price,
+                        'price'    => \Helper::currencyValue($value->price),
                         'sku'      => $product->sku,
                     ];
                 }
@@ -315,17 +318,18 @@ class Shop extends GeneralController
                     [
                     'name'     => 'Shipping',
                     'quantity' => 1,
-                    'price'    => (int) $shipping,
+                    'price'    => $shipping,
                     'sku'      => 'shipping',
                 ];
                 $data_payment[] =
                     [
                     'name'     => 'Discount',
                     'quantity' => 1,
-                    'price'    => (int) $discount,
+                    'price'    => $discount,
                     'sku'      => 'discount',
                 ];
                 $data_payment['order_id'] = $orderId;
+                $data_payment['currency'] = \Helper::currencyCode();
                 return redirect('payment/paypal')->with('data_payment', $data_payment);
             } else {
                 return $this->completeOrder($orderId);
@@ -748,7 +752,7 @@ class Shop extends GeneralController
                 $message->subject(trans('language.order.email.new_title') . '#' . $orderId);
             });
         } catch (\Exception $e) {
-            //
+            echo 'Error send mail';
         } //
         return redirect('cart.html')->with('message', trans('language.order.success'));
     }

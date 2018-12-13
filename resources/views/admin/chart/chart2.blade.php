@@ -113,7 +113,7 @@ var chart = new Chart(ctx, {
                 },
                 scaleLabel: {
                      display: true,
-                     labelString: 'VNĐ',
+                     labelString: 'Bit',
                      fontSize: 15
                   }
             }

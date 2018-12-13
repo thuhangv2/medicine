@@ -185,7 +185,11 @@ return [
         'add_more'              => 'Thêm nhiều hơn',
         'search_keyword'        => 'Tìm từ khóa',
         'success'               => 'Đơn hàng thành công',
+        'currency'              => 'Loại tiền',
+        'exchange_rate'         => 'Tỉ giá',
+        'payment_method'        => 'Thanh toán',
         'email'                 => [
+            'title'     => 'Email',
             'new_title' => 'ĐƠN HÀNG MỚI',
         ],
     ],
@@ -292,4 +296,40 @@ return [
         'watermark'   => 'Chèn ảnh',
         'template'    => 'Giao diện',
     ],
+
+    'currency'          => [
+        'manager'      => 'Quản lý tiền tệ',
+        'code'         => 'Mã',
+        'name'         => 'Tên',
+        'symbol'       => 'Ký hiệu',
+        'precision'    => 'Số chữ số thập phân',
+        'rate'         => 'Tỉ giá',
+        'thousands'    => 'Dấu Ngăn cách phần nghìn',
+        'status'       => 'Trạng thái',
+        'sort'         => 'Sắp xếp',
+        'symbol_first' => 'Ký hiệu hiện đầu tiên',
+    ],
+
+    'email'             => [
+        'order' => [
+            'title_1'      => 'Xin chào! :website trang web có đơn hàng mới!',
+            'order_id'     => 'Mã đơn hàng',
+            'toname'       => 'Tên khách hàng',
+            'address'      => 'Địa chỉ',
+            'phone'        => 'Điện thoại',
+            'note'         => 'Ghi chú',
+            'order_detail' => 'Chi tiết đặt hàng',
+            'sort'         => 'Thứ tự',
+            'sku'          => 'SKU',
+            'name'         => 'Tên',
+            'qty'          => 'Số lượng',
+            'total'        => 'Tổng',
+            'sub_total'    => 'Tiền hàng',
+            'shipping_fee' => 'Phí vận chuyển',
+            'discount'     => 'Giảm giá',
+            'order_total'  => 'Tổng số đơn hàng',
+
+        ],
+    ],
+
 ];

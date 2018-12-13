@@ -33,11 +33,13 @@ class PayPalController extends Controller
     {
         $data     = session('data_payment');
         $order_id = $data['order_id'];
+        $currency = $data['currency'];
         unset($data['order_id']);
+        unset($data['currency']);
         session()->forget('data_payment');
         $transactionDescription = "From website";
         $paypalCheckoutUrl      = $this->paypalSvc
-        // ->setCurrency('eur')
+            ->setCurrency($currency)
             ->setReturnUrl(url('payment/return/' . $order_id))
             ->setCancelUrl(url('cart.html'))
             ->setItem($data)

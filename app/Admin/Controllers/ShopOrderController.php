@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Admin\Extensions\ExcelExpoter;
 use App\Http\Controllers\Controller;
+use App\Models\ShopCurrency;
 use App\Models\ShopOrder;
 use App\Models\ShopOrderDetail;
 use App\Models\ShopOrderHistory;
@@ -25,11 +26,12 @@ use Illuminate\Http\Request;
 class ShopOrderController extends Controller
 {
     use HasResourceActions;
-    public $statusPayment, $statusOrder, $statusShipping, $statusOrder2, $statusShipping2;
+    public $statusPayment, $statusOrder, $statusShipping, $statusOrder2, $statusShipping2, $currency;
 
     public function __construct()
     {
         $this->statusOrder     = ShopOrderStatus::pluck('name', 'id')->all();
+        $this->currency        = ShopCurrency::pluck('name', 'code')->all();
         $this->statusPayment   = ShopPaymentStatus::pluck('name', 'id')->all();
         $this->statusShipping  = ShopShippingStatus::pluck('name', 'id')->all();
         $this->statusOrder2    = ShopOrderStatus::mapValue();
@@ -101,31 +103,36 @@ class ShopOrderController extends Controller
 
             $grid->id('ID')->sortable();
             $grid->email('Email')->display(function ($email) {
-                return empty($email) ? 'N/A' : $email;
+                return empty($email) ? 'N/A' : '<div style="max-width:150px; overflow:auto;word-wrap: break-word;">' . $email . '</div>';
             });
-            $grid->toname(trans('language.order.customer_name'))->expand(function () {
-                $html = '<br>';
-                $html .= '<span style="padding-left:20px;">' . trans('language.order.shipping_name') . ': ' . $this->toname . '</span><br>';
-                $html .= '<span style="padding-left:20px;">' . trans('language.order.shipping_address') . ': ' . $this->address1 . ' ' . $this->address2 . '</span><br>';
-                $html .= '<span style="padding-left:20px;">' . trans('language.order.shipping_phone') . ': ' . $this->phone . '</span><br>';
-                $html .= (!empty($this->comment)) ? '<span style="padding-left:20px;"><span style="color:red;font-weight:bold;">' . trans('language.order.note') . ':</span> ' . $this->comment : '';
-                return $html . "</span></span><br>";
-            }, trans('language.order.shipping_address'));
+            // $grid->toname(trans('language.order.customer_name'))->expand(function () {
+            //     $html = '<br>';
+            //     $html .= '<span style="padding-left:20px;">' . trans('language.order.email.title') . ': ' . $this->email . '</span><br>';
+            //     $html .= '<span style="padding-left:20px;">' . trans('language.order.shipping_name') . ': ' . $this->toname . '</span><br>';
+            //     $html .= '<span style="padding-left:20px;">' . trans('language.order.shipping_address') . ': ' . $this->address1 . ' ' . $this->address2 . '</span><br>';
+            //     $html .= '<span style="padding-left:20px;">' . trans('language.order.shipping_phone') . ': ' . $this->phone . '</span><br>';
+            //     $html .= (!empty($this->comment)) ? '<span style="padding-left:20px;"><span style="color:red;font-weight:bold;">' . trans('language.order.note') . ':</span> ' . $this->comment : '';
+            //     return $html . "</span></span><br>";
+            // }, trans('language.order.shipping_address'));
             $grid->subtotal(trans('language.order.sub_total'))->display(function ($price) {
-                return number_format($price);
+                return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
             });
             $grid->shipping(trans('language.order.shipping_price'))->display(function ($price) {
-                return number_format($price);
+                return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
             });
             $grid->discount(trans('language.order.discount'))->display(function ($price) {
-                return number_format($price);
+                return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
             });
             $grid->total(trans('language.order.total'))->display(function ($price) {
-                return number_format($price);
+                return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
             });
             $grid->received(trans('language.order.received'))->display(function ($price) {
-                return number_format($price);
+                return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
             });
+            $grid->payment_method(trans('language.order.payment_method'))->sortable();
+
+            $grid->currency(trans('language.order.currency'));
+            $grid->exchange_rate(trans('language.order.exchange_rate'));
             $statusOrder = $this->statusOrder;
             $grid->status(trans('language.admin.status'))->display(function ($status) use ($statusOrder) {
                 $style = "";
@@ -175,15 +182,23 @@ class ShopOrderController extends Controller
             foreach ($customers as $key => $value) {
                 $arrCustomer[$value['id']] = $value['name'] . "<" . $value['email'] . ">";
             }
-            $form->select('user_id', trans('language.order.select_customer'))->options($arrCustomer);
+            $form->select('user_id', trans('language.order.select_customer'))->options($arrCustomer)->rules('required');
             $form->text('toname', trans('language.order.shipping_name'));
             $form->text('address1', trans('language.order.shipping_address1'));
             $form->text('address2', trans('language.order.shipping_address2'));
             $form->mobile('phone', trans('language.order.shipping_phone'));
+            $form->select('currency', trans('language.order.currency'))->options($this->currency)->rules('required');
+            $form->number('exchange_rate', trans('language.order.exchange_rate'));
             $form->textarea('comment', trans('language.order.order_note'));
             $form->select('status', trans('language.admin.status'))->options($this->statusOrder);
-
+            $form->hidden('email');
             $form->divide();
+            $form->saving(function (Form $form) use ($customers) {
+                $checkCurrency = ShopCurrency::where('code', $form->currency)->first();
+                $checkUser     = User::find($form->user_id);
+                $form->email   = $checkUser->email;
+            });
+
             $form->saved(function (Form $form) {
                 $id         = $form->model()->id;
                 $checkTotal = ShopOrderTotal::where('order_id', $id)->first();
@@ -209,6 +224,7 @@ class ShopOrderController extends Controller
     {
         $urlgetInfoUser    = route('getInfoUser');
         $urlgetInfoProduct = route('getInfoProduct');
+        $currencies        = json_encode(ShopCurrency::pluck('exchange_rate', 'code')->all());
         return <<<JS
         $('[name="user_id"]').change(function(){
             id = $(this).val();
@@ -228,6 +244,12 @@ class ShopOrderController extends Controller
                     }
                 });
         });
+        $('[name="currency"]').change(function(){
+            var currency = $(this).val();
+            var jsonCurrency = $currencies;
+            $('[name="exchange_rate"]').val(jsonCurrency[currency]);
+        });
+
 
 JS;
     }
@@ -281,9 +303,17 @@ JS;
             return 'no data';
         }
         $products = ShopProduct::getArrayProductName();
-        return view('admin.OrderEdit')->with([
-            "order" => $order, "products" => $products, "statusOrder" => $this->statusOrder, "statusPayment" => $this->statusPayment, "statusShipping" => $this->statusShipping, "statusOrder2" => $this->statusOrder2, "statusShipping2" => $this->statusShipping2, 'dataTotal' => ShopOrderTotal::getTotal($id),
-        ])->render();
+        return view('admin.OrderEdit')->with(
+            [
+                "order"           => $order,
+                "products"        => $products,
+                "statusOrder"     => $this->statusOrder,
+                "statusPayment"   => $this->statusPayment,
+                "statusShipping"  => $this->statusShipping,
+                "statusOrder2"    => $this->statusOrder2,
+                "statusShipping2" => $this->statusShipping2,
+                'dataTotal'       => ShopOrderTotal::getTotal($id),
+            ])->render();
     }
 /**
  * [postOrderUpdate description]
@@ -292,29 +322,35 @@ JS;
  */
     public function postOrderUpdate(Request $request)
     {
-        $id           = $request->input('pk');
-        $field        = $request->input('name');
-        $value        = $request->input('value');
-        $order_origin = ShopOrder::find($id);
+        $id    = $request->input('pk');
+        $field = $request->input('name');
+        $value = $request->input('value');
         if ($field == 'shipping' || $field == 'discount' || $field == 'received') {
-            $fieldTotal = [
+            $order_total_origin = ShopOrderTotal::find($id);
+            $order_id           = $order_total_origin->order_id;
+            $oldValue           = $order_total_origin->value;
+            $order              = ShopOrder::find($order_id);
+            $fieldTotal         = [
                 'id'    => $id,
                 'code'  => $field,
                 'value' => $value,
+                'text'  => \Helper::currencyOnlyRender($value, $order->currency),
             ];
-            $order_id = ShopOrderTotal::updateField($fieldTotal);
+            ShopOrderTotal::updateField($fieldTotal);
         } else {
             $arrFields = [
                 $field => $value,
             ];
             $order_id = $id;
+            $order    = ShopOrder::find($order_id);
+            $oldValue = $order->{$field};
             ShopOrder::updateInfo($order_id, $arrFields);
         }
 
         //Add history
         $dataHistory = [
             'order_id' => $order_id,
-            'content'  => 'Change <b>' . $field . '</b> from <span style="color:blue">\'' . $order_origin[$field] . '\'</span> to <span style="color:red">\'' . $value . '\'</span>',
+            'content'  => 'Change <b>' . $field . '</b> from <span style="color:blue">\'' . $oldValue . '\'</span> to <span style="color:red">\'' . $value . '\'</span>',
             'admin_id' => Admin::user()->id,
             'add_date' => date('Y-m-d H:i:s'),
         ];
@@ -324,24 +360,24 @@ JS;
         // $updateSubTotal = ShopOrderTotal::updateSubTotal($id, $fields = array($field => $value));
 
         if ($order_id) {
-            $order = ShopOrder::find($order_id);
-            if ($order->balance == 0 && $order->total != 0) {
+            $orderUpdated = ShopOrder::find($order_id);
+            if ($orderUpdated->balance == 0 && $orderUpdated->total != 0) {
                 $style = 'style="color:#0e9e33;font-weight:bold;"';
             } else
-            if ($order->balance < 0) {
+            if ($orderUpdated->balance < 0) {
                 $style = 'style="color:#ff2f00;font-weight:bold;"';
             } else {
                 $style = 'style="font-weight:bold;"';
             }
-            $style_blance = '<tr ' . $style . ' class="data-balance"><td>' . trans('language.order.balance') . ':</td><td align="right">' . number_format($order->balance) . '</td></tr>';
+            $style_blance = '<tr ' . $style . ' class="data-balance"><td>' . trans('language.order.balance') . ':</td><td align="right">' . \Helper::currencyFormat($orderUpdated->balance) . '</td></tr>';
             return json_encode(['stt' => 1, 'msg' => [
-                'total'          => number_format($order->total),
-                'subtotal'       => number_format($order->subtotal),
-                'shipping'       => number_format($order->shipping),
-                'discount'       => number_format($order->discount),
-                'received'       => number_format($order->received),
+                'total'          => \Helper::currencyFormat($orderUpdated->total),
+                'subtotal'       => \Helper::currencyFormat($orderUpdated->subtotal),
+                'shipping'       => \Helper::currencyFormat($orderUpdated->shipping),
+                'discount'       => \Helper::currencyFormat($orderUpdated->discount),
+                'received'       => \Helper::currencyFormat($orderUpdated->received),
                 'balance'        => $style_blance,
-                'payment_status' => ($order->payment_status == 2) ? '<span style="color:#0e9e33;font-weight:bold;">' . $this->statusPayment[$order->payment_status] . '</span>' : (($order->payment_status == 3) ? '<span style="color:#ff2f00;font-weight:bold;">' . $this->statusPayment[$order->payment_status] . '</span>' : $this->statusPayment[$order->payment_status]),
+                'payment_status' => ($orderUpdated->payment_status == 2) ? '<span style="color:#0e9e33;font-weight:bold;">' . $this->statusPayment[$orderUpdated->payment_status] . '</span>' : (($orderUpdated->payment_status == 3) ? '<span style="color:#ff2f00;font-weight:bold;">' . $this->statusPayment[$orderUpdated->payment_status] . '</span>' : $this->statusPayment[$orderUpdated->payment_status]),
             ],
             ]);
         } else {
@@ -379,7 +415,7 @@ JS;
                     'qty'         => (int) $pQty[$key]['value'],
                     'option'      => $pAttr[$key]['value'],
                     'price'       => (int) $pPrice[$key]['value'],
-                    'total_price' => (int) $pPrice[$key]['value'] * (int) $pQty[$key]['value'],
+                    'total_price' => $pPrice[$key]['value'] * (int) $pQty[$key]['value'],
                     'sku'         => $product->sku,
                 );
             }
@@ -449,7 +485,7 @@ JS;
         if ($request->input('editItem-form') != 0) {
             $pId      = (int) $request->input('pId');
             $pQty     = (int) $request->input('pQty');
-            $pPrice   = (int) $request->input('pPrice');
+            $pPrice   = $request->input('pPrice');
             $pName    = $request->input('pName');
             $pAttr    = $request->input('pAttr');
             $order_id = (int) $request->input('editItem-form');

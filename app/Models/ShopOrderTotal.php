@@ -15,43 +15,51 @@ class ShopOrderTotal extends Model
     public $table = 'shop_order_total';
 
 /**
- * Calculator value item total
- * Re-sort item tottal
- * @param  [array] $objects  [description]
- * @param  [int] $subtotal [description]
- * @return [array]           [description]
+ * [processDataTotal description]
+ * @param  array      $objects  [description]
+ * @param  float|null $subtotal [description]
+ * @return [type]               [description]
  */
-    public static function processDataTotal($objects = null, $subtotal = null)
+    public static function processDataTotal(array $objects = [])
     {
-        $subtotal = ($subtotal == null) ? Cart::subtotal() : $subtotal;
-        $objects  = is_array($objects) ? $objects : [];
+
+        $subtotal = \Helper::currencySumCart(Cart::content());
+        //You can't use Cart::subtotal(), becase when use currency, Cart::subtotal() may be not equal $subtotal
+
         //Set subtotal
-        $objects[] = [
+        $arraySubtotal = [
             'title' => 'Sub total',
             'code'  => 'subtotal',
             'value' => $subtotal,
+            'text'  => \Helper::currencyOnlyRender($subtotal, \Helper::currencyCode()),
             'sort'  => 1,
         ];
         // set total
-        $total = 0;
-        foreach ($objects as $key => $value) {
-            if ($value['code'] != 'received') {
-                $total += $value['value'];
+        $total = $subtotal;
+        foreach ($objects as $key => $object) {
+            $objects[$key]['value'] = \Helper::currencyValue($object['value']);
+            $objects[$key]['text']  = \Helper::currencyRender($object['value']);
+            if ($object['code'] != 'received') {
+                $total += \Helper::currencyValue($object['value']);
             }
         }
         $arrayTotal = array(
             'title' => 'Total',
             'code'  => 'total',
             'value' => $total,
+            'text'  => \Helper::currencyOnlyRender($total, \Helper::currencyCode()),
             'sort'  => 100,
         );
 
+        $objects[] = $arraySubtotal;
         $objects[] = $arrayTotal;
 
         //re-sort item total
         usort($objects, function ($a, $b) {
             return $a['sort'] > $b['sort'];
         });
+//
+
         return $objects;
     }
 
@@ -78,9 +86,9 @@ class ShopOrderTotal extends Model
     public static function updateField($field)
     {
         //Udate field
-        $upField = self::find($field['id']);
-        // $upField->title      = $field['title'];
+        $upField             = self::find($field['id']);
         $upField->value      = $field['value'];
+        $upField->text       = $field['text'];
         $upField->updated_at = date('Y-m-d H:i:s');
         $upField->save();
         $order_id = $upField->order_id;
@@ -147,6 +155,7 @@ class ShopOrderTotal extends Model
                 'title' => 'Shipping',
                 'code'  => 'shipping',
                 'value' => 0,
+                'text'  => 0,
                 'sort'  => 10,
             ];
         } else {
@@ -154,6 +163,7 @@ class ShopOrderTotal extends Model
                 'title' => 'Shipping',
                 'code'  => 'shipping',
                 'value' => $shipping->value,
+                'text'  => $shipping->value,
                 'sort'  => 10,
             ];
         }
@@ -171,6 +181,7 @@ class ShopOrderTotal extends Model
                 'title' => 'Discount',
                 'code'  => 'discount',
                 'value' => 0,
+                'text'  => 0,
                 'sort'  => 20,
             );
         } else {
@@ -185,6 +196,7 @@ class ShopOrderTotal extends Model
                 'title' => '<b>Code:</b> ' . $coupon . '',
                 'code'  => 'discount',
                 'value' => ($value > $subtotal) ? -$subtotal : -$value,
+                'text'  => ($value > $subtotal) ? -$subtotal : -$value,
                 'sort'  => 20,
             );
         }
@@ -197,6 +209,7 @@ class ShopOrderTotal extends Model
             'title' => 'Received',
             'code'  => 'received',
             'value' => 0,
+            'text'  => 0,
             'sort'  => 200,
         );
     }

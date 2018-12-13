@@ -57,7 +57,7 @@
         </td>
         <td>{!! $product->showPrice() !!}</td>
         <td><input style="width: 70px;" type="number" onChange="updateCart('{{$item->rowId}}',{{ $item->id }});" class="item-qty" id="item-{{$item->id}}" name="qty-{{$item->id}}" value="{{$item->qty}}"><span class="text-danger item-qty-{{$item->id}}" style="display: none;"></span></td>
-        <td align="right">{{number_format($item->subtotal)}}</td>
+        <td align="right">{{\Helper::currencyRender($item->subtotal)}}</td>
         <td>
             <a onClick="return confirm('Confirm?')" title="Remove Item" alt="Remove Item" class="cart_quantity_delete" href="{{url("removeItem/$item->rowId")}}"><i class="fa fa-times"></i></a>
         </td>
@@ -138,9 +138,8 @@
                      @else
                         <tr class="showTotal">
                      @endif
-
                              <th>{!! $element['title'] !!}</th>
-                            <td style="text-align: right" id="{{ $element['code'] }}">{{number_format($element['value']) }}</td>
+                            <td style="text-align: right" id="{{ $element['code'] }}">{{$element['text'] }}</td>
                         </tr>
                     @endif
 

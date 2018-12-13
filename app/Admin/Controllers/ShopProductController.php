@@ -82,7 +82,7 @@ class ShopProductController extends Controller
 
             $grid->id('ID')->sortable();
             $grid->image(trans('language.admin.image'))->image('', 50);
-            $grid->name(trans('language.product.product_name'))->sortable();
+            $grid->name(trans('language.product.product_name'));
             $grid->category()->name(trans('language.category'));
             $grid->cost(trans('language.product.price_cost'))->display(function ($price) {
                 return number_format($price);
@@ -159,8 +159,8 @@ class ShopProductController extends Controller
                 $form->select('category_id', trans('language.admin.shop_category'))->options($arrCate)
                     ->rules('required');
                 $form->image('image', trans('language.admin.image'))->uniqueName()->move('product');
-                $form->currency('price', trans('language.product.price'))->symbol('VND')->options(['digits' => 0]);
-                $form->currency('cost', trans('language.product.price_cost'))->symbol('VND')->options(['digits' => 0]);
+                $form->currency('price', trans('language.product.price'))->symbol('')->options(['digits' => 0]);
+                $form->currency('cost', trans('language.product.price_cost'))->symbol('')->options(['digits' => 0]);
                 $form->number('stock', trans('language.product.stock'));
                 $form->text('sku', trans('language.product.sku'))
                     ->rules(function ($form) {

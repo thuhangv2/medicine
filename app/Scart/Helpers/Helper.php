@@ -1,6 +1,8 @@
 <?php
 namespace App\Scart;
 
+use App\Models\ShopCurrency;
+
 class Helper
 {
     public static function strToUrl($str)
@@ -30,4 +32,35 @@ class Helper
             array('', '-', ''),
             strtolower($str)));
     }
+
+    public static function currencyRender(float $money, $currency = null, $rate = null, $space_between_symbol = false, $useSymbol = true)
+    {
+        return ShopCurrency::render($money, $currency, $rate, $space_between_symbol, $useSymbol);
+    }
+
+    public static function currencyOnlyRender(float $money, $currency, $space_between_symbol = false, $include_symbol = true)
+    {
+        return ShopCurrency::onlyRender($money, $currency, $space_between_symbol, $include_symbol);
+    }
+    public static function currencySumCart($details, float $rate = null)
+    {
+        return ShopCurrency::sumCart($details, $rate);
+    }
+    public static function currencyValue(float $money, $rate = null)
+    {
+        return ShopCurrency::getValue($money, $rate);
+    }
+    public static function currencyCode()
+    {
+        return ShopCurrency::getCode();
+    }
+    public static function currencyRate()
+    {
+        return ShopCurrency::getRate();
+    }
+    public static function currencyFormat(float $money)
+    {
+        return ShopCurrency::format($money);
+    }
+
 }

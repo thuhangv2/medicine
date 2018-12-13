@@ -33,7 +33,12 @@
                 <tr>
           <th>{{ trans('language.order.shipping_address2') }}:</th><td><a href="#" class="updateInfoRequired" data-name="address2" data-type="text" data-pk="{{ $order->id }}" data-url="{{ route("order_update") }}" data-title="Địa chỉ 2" >{{ $order->address2 }}</a></td>
         </tr>
-
+        <tr>
+          <th>{{ trans('language.order.currency') }}:</th><td>{{ $order->currency }}</td>
+        </tr>
+        <tr>
+          <th>{{ trans('language.order.exchange_rate') }}:</th><td>{{ ($order->exchange_rate)??1 }}</td>
+        </tr>
       </table>
     </div>
   <table class="table box  table-bordered table-responsive">
@@ -56,11 +61,13 @@
                 <td><span class="item_{{ $item->id }}_id">{{ $item->id }}</span></td>
                 <td><span class="item_{{ $item->id }}_sku">{{ $item->sku }}</span></td>
                 <td><span class="item_{{ $item->id }}_name">{{ $item->name }}</span></td>
-                <td align="right"><span class="item_{{ $item->id }}_price">{{ number_format($item->price) }}</span></td>
+                <td align="right"><span>{{ \Helper::currencyOnlyRender($item->price,$order->currency) }}</span></td>
                 <td align="right">x <span class="item_{{ $item->id }}_qty">{{ number_format($item->qty) }}</span></td>
-                <td align="right"><span  class="item_{{ $item->id }}_total_price">{{ number_format($item->total_price) }}</span></td>
+                <td align="right"><span >{{ \Helper::currencyOnlyRender($item->total_price,$order->currency)}}</span></td>
                 <td><span  class="item_{{ $item->id }}_attr">{{ $item->option }}</span></td>
                 <td>
+                  <span style="display: none"  class="item_{{ $item->id }}_price">{{ $item->price }}</span>
+                  <span style="display: none"  class="item_{{ $item->id }}_total_price">{{ $item->total_price}}</span>
                     <button onclick="dataEdit({{ $item->id }});" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#editItem" data-placement="top" rel="tooltip" data-original-title="" title="Edit item"><span class="glyphicon glyphicon-pencil"></span>{{ trans('admin.edit') }}</button>
                      &nbsp;
                     <button  onclick="dataRemove({{ $item->id }});" class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#removeItem" data-placement="top" rel="tooltip" data-original-title="" title="Remove item"><span class="glyphicon glyphicon-remove"></span>{{ trans('admin.remove') }}</button>
@@ -90,7 +97,10 @@
                 <table  class="table table-bordered">
                     <tr><th>{{ trans('language.order.order_status') }}:</th><td><a href="#" class="updateStatus" data-name="status" data-type="select" data-source ="{{ json_encode($statusOrder2) }}"  data-pk="{{ $order->id }}" data-value="{{ $order->status }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.order_status') }}">{{ $statusOrder[$order->status] }}</a></td></tr>
                     <tr><th>{{ trans('language.order.order_shipping_status') }}:</th><td><a href="#" class="updateStatus" data-name="shipping_status" data-type="select" data-source ="{{ json_encode($statusShipping2) }}"  data-pk="{{ $order->id }}" data-value="{{ $order->shipping_status }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.order_shipping_status') }}">{{ $statusShipping[$order->shipping_status] }}</a></td></tr>
-                    <tr><th>{{ trans('language.order.order_note') }}:</th>
+                    <tr><th>{{ trans('language.order.payment_method') }}:</th><td><a href="#" class="updateStatus" data-name="payment_method" data-type="select" data-source ="{{ json_encode(['cash'=>'Cash','paypal'=>'Paypal']) }}"  data-pk="{{ $order->id }}" data-value="{{ $order->payment_method }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.payment_method') }}">{{ $order->payment_method }}</a></td></tr>
+
+                    <tr>
+                      <th>{{ trans('language.order.order_note') }}:</th>
                       <td>
                         <a href="#" class="updateInfo" data-name="comment" data-type="textarea" data-pk="{{ $order->id }}" data-url="{{ route("order_update") }}" data-title="" >{{ $order->comment }}
                         </a>
@@ -123,10 +133,9 @@
                           <td>{{ trans('language.order.history_content') }}</td>
                           <td>{{ trans('language.order.history_time') }}</td>
                         </tr>
-
-                      @foreach ($order->history as $history)
+                      @foreach ($order->history->sortKeysDesc()->all() as $history)
                         <tr>
-                          <td>{{ $history['admin_id'] }}</td>
+                          <td>{{ \Encore\Admin\Auth\Database\Administrator::find($history['admin_id'])->name??'' }}</td>
                           <td><div class="history">{!! $history['content'] !!}</div></td>
                           <td>{{ $history['add_date'] }}</td>
                         </tr>
@@ -143,29 +152,26 @@
           <table   class="table table-bordered">
 @foreach ($dataTotal as $element)
   @if ($element['code'] =='subtotal')
-    <tr><td>{!! $element['title'] !!}:</td><td align="right" class="data-{{ $element['code'] }}">{{ number_format($element['value']) }}</td></tr>
+    <tr><td>{!! $element['title'] !!}:</td><td align="right" class="data-{{ $element['code'] }}">{{ \Helper::currencyFormat($element['value']) }}</td></tr>
   @endif
   @if ($element['code'] =='shipping')
-    <tr><td>{!! $element['title'] !!}:</td><td align="right"><a href="#" class="updatePrice data-{{ $element['code'] }}"  data-name="{{ $element['code'] }}" data-type="text" data-pk="{{ $element['id'] }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.shipping_price') }}">{{
-                      number_format($element['value']) }}</a></td></tr>
+    <tr><td>{!! $element['title'] !!}:</td><td align="right"><a href="#" class="updatePrice data-{{ $element['code'] }}"  data-name="{{ $element['code'] }}" data-type="text" data-pk="{{ $element['id'] }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.shipping_price') }}">{{$element['value'] }}</a></td></tr>
   @endif
   @if ($element['code'] =='discount')
-    <tr><td>{!! $element['title'] !!}(-):</td><td align="right"><a href="#" class="updatePrice data-{{ $element['code'] }}" data-name="{{ $element['code'] }}" data-type="text" data-pk="{{ $element['id'] }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.discount') }}">{{
-                      number_format($element['value']) }}</a></td></tr>
+    <tr><td>{!! $element['title'] !!}(-):</td><td align="right"><a href="#" class="updatePrice data-{{ $element['code'] }}" data-name="{{ $element['code'] }}" data-type="text" data-pk="{{ $element['id'] }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.discount') }}">{{$element['value'] }}</a></td></tr>
   @endif
 
    @if ($element['code'] =='total')
-    <tr style="background:#f5f3f3;font-weight: bold;"><td>{!! $element['title'] !!}:</td><td align="right" class="data-{{ $element['code'] }}">{{ number_format($element['value']) }}</td></tr>
+    <tr style="background:#f5f3f3;font-weight: bold;"><td>{!! $element['title'] !!}:</td><td align="right" class="data-{{ $element['code'] }}">{{ \Helper::currencyFormat($element['value']) }}</td></tr>
   @endif
 
   @if ($element['code'] =='received')
-    <tr><td>{!! $element['title'] !!}(-):</td><td align="right"><a href="#" class="updatePrice data-{{ $element['code'] }}" data-name="{{ $element['code'] }}" data-type="text" data-pk="{{ $element['id'] }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.received') }}">{{
-                      number_format($element['value']) }}</a></td></tr>
+    <tr><td>{!! $element['title'] !!}(-):</td><td align="right"><a href="#" class="updatePrice data-{{ $element['code'] }}" data-name="{{ $element['code'] }}" data-type="text" data-pk="{{ $element['id'] }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.received') }}">{{$element['value'] }}</a></td></tr>
   @endif
 
 @endforeach
 
-  <tr  {!! $style !!}  class="data-balance"><td>{{ trans('language.order.balance') }}:</td><td align="right">{{($order->balance === NULL)?number_format($order->total):number_format($order->balance) }}</td></tr>
+  <tr  {!! $style !!}  class="data-balance"><td>{{ trans('language.order.balance') }}:</td><td align="right">{{($order->balance === NULL)?\Helper::currencyFormat($order->total):\Helper::currencyFormat($order->balance) }}</td></tr>
   <tr id="update-status" style="display: none;"></tr>
         </table>
 
@@ -326,12 +332,12 @@
     $('tr#addnew').before('<tr><td><select required onChange="selectProduct($(this));" class="form_id form-control" name="form_id[]"><option value="0">{{ trans('language.order.select_product') }}</option>@foreach ($products as $key => $value)<option  value="{{ $key }}" >{{ $value }}</option>@endforeach</select></td><td><input disabled class="form_sku form-control" name="form_sku[]" value=""></td><td><input class="form_qty form-control" name="form_qty[]" value=""></td><td><input class="form_price form-control" name="form_price[]" value=""></td><td><input class="form_attr form-control" name="form_attr[]" value=""></td><td> <span class="glyphicon glyphicon-remove btn btn-danger" onclick="removeItemForm(this);"></span></td></tr>');
   });
 
-    function removeItemForm(elmnt){
-      elmnt.closest('tr').remove();
+    function removeItemForm(element){
+      element.closest('tr').remove();
     }
 
-    function selectProduct(elemnt){
-        node = elemnt.closest('tr');
+    function selectProduct(element){
+        node = element.closest('tr');
         var id = parseInt(node.find('option:selected').eq(0).val());
         if(id == 0){
             node.find('[name="form_sku[]"]').val('');
@@ -350,7 +356,7 @@
                     var returnedData = JSON.parse(result);
                     node.find('[name="form_sku[]"]').val(returnedData.sku);
                     node.find('[name="form_qty[]"]').eq(0).val(1);
-                    node.find('[name="form_price[]"]').eq(0).val(returnedData.price);
+                    node.find('[name="form_price[]"]').eq(0).val(returnedData.price * {!! ($order->exchange_rate)??1 !!});
                     }
                 });
         }
