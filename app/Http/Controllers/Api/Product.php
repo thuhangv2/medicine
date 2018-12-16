@@ -14,37 +14,35 @@ class Product extends \App\Http\Controllers\Controller
     public $start;
     public $orderBy;
     public $sort;
-/**
- * Header required when call API:
-connection: example hrnb_api,biz_api
-apikey:
- *
- * @param Request $request [description]
- */
+    public $apiName;
+    public $secretKey;
+    public $model;
+
     public function __construct(Request $request)
     {
-        $ipClient      = $request->ip();
-        $method        = $request->method();
-        $headers       = getallheaders();
-        $apiName       = $request->route()->getName();
-        $secretKey     = $headers['api_secret'] ?? '';
-        $data          = $request->all();
-        $this->limit   = empty($data['limit']) ? 10 : $data['limit'];
-        $this->start   = $data['start'] ?? 0;
-        $this->orderBy = empty($data['orderBy']) ? [] : explode(',', $data['orderBy']);
-        $this->sort    = $data['sort'] ?? 'ASC';
+        $ipClient        = $request->ip();
+        $method          = $request->method();
+        $headers         = getallheaders();
+        $this->secretKey = $headers['api_secret'] ?? '';
+        $this->apiName   = $headers['api_name'] ?? '';
+        $data            = $request->all();
+        $this->limit     = empty($data['limit']) ? 10 : $data['limit'];
+        $this->start     = empty($data['start']) ? 0 : (int) $data['start'];
+        $this->orderBy   = empty($data['orderBy']) ? [] : explode(',', $data['orderBy']);
+        $this->sort      = $data['sort'] ?? 'ASC';
+        $this->model     = empty($data['model']) ? '' : $data['model'];
 
         $error = array();
 
         //Check API
-        $checkApi = ShopApi::where('name', $apiName)->first();
+        $checkApi = ShopApi::where('name', $this->apiName)->first();
         if (!$checkApi || $checkApi->type === 'private') {
 //==============Process when Api is inactive or not found ============
             $error = array(
                 'error'  => 1,
-                'code'   => 403,
+                'code'   => 404,
                 'detail' => 'Api name not found or private',
-                'msg'    => 'Access denied',
+                'msg'    => 'Not found',
             );
             header('Content-Type: application/json');
             echo json_encode($error, JSON_UNESCAPED_UNICODE);
@@ -54,7 +52,7 @@ apikey:
 //==============Process when Api is active============
             //Check Token
             $apiId          = $checkApi->id;
-            $checkSecretKey = ShopApiProcess::where('secret_key', $secretKey)->where('api_id', $apiId)->first();
+            $checkSecretKey = ShopApiProcess::where('secret_key', $this->secretKey)->where('api_id', $apiId)->first();
             if (!$checkSecretKey) {
                 $error = array(
                     'error'  => 1,
@@ -95,7 +93,7 @@ apikey:
                     $error = array(
                         'error'  => 1,
                         'code'   => 403,
-                        'detail' => 'Secret key ' . $secretKey . ' expire!',
+                        'detail' => 'Secret key ' . $this->secretKey . ' expire!',
                         'msg'    => 'Access denied',
                     );
                 }
@@ -113,6 +111,16 @@ apikey:
             $this->hiddenFields = $checkApi->hidden_default;
         }
 
+    }
+
+    public function index()
+    {
+        if ($this->apiName == 'api_product_list') {
+            return $this->list();
+        }
+        if ($this->apiName == 'api_product_detail') {
+            return $this->detail($this->model);
+        }
     }
 
 /**

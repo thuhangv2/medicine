@@ -20,6 +20,5 @@ Route::group([
     'prefix'    => 'product',
     'namespace' => 'api',
 ], function () {
-    Route::get('list', 'Product@list')->name('api_product_list');
-    Route::get('detail/{sku}', 'Product@detail')->name('api_product_detail');
+    Route::get('/', 'Product@index')->name('api_product');
 });
