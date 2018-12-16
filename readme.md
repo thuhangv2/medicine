@@ -35,6 +35,7 @@ Free Open source E-commerce use Laravel framework for Business
 - Multi-language
 
 ======= SHOPPING =======
+- Api manager
 - Currencies
 - Customer sign up
 - Purchase history

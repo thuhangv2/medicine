@@ -1,6 +1,10 @@
 <!-- Main Header -->
 <header class="main-header">
-
+<style>
+.table-padding td{
+    padding:5px;
+}
+</style>
     <!-- Logo -->
     <a href="{{ admin_base_path('/') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
