@@ -14,6 +14,7 @@ use App\Models\ShopBrand;
 use App\Models\ShopCategory;
 use App\Models\ShopCurrency;
 use Illuminate\Http\Request;
+use Mail;
 use View;
 
 class GeneralController extends Controller
