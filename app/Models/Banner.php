@@ -1,5 +1,5 @@
 <?php
-
+#app/Models/Banner.php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;

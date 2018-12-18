@@ -43,6 +43,7 @@ Route::post('/contact.html', 'Shop@postContact');
 //========end shop ================
 
 //======cms==================
+Route::post('/subscribe', 'Cms@emailSubscribe')->name('subscribe');
 Route::get('/news.html', 'Cms@news');
 Route::get('/news/{name}_{id}.html', 'Cms@news_detail');
 Route::get('/blogs.html', 'Cms@news');
