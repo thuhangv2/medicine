@@ -24,7 +24,7 @@ class ShopApiController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->row(trans('language.api.guide'))
+            ->row('<span style="font-size:20px;">' . trans('language.api.guide') . '</span><br>')
             ->header(trans('language.api.manager'))
             ->description(' ')
             ->body($this->grid());
