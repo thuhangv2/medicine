@@ -23,8 +23,8 @@ class Product extends \App\Http\Controllers\Controller
         $ipClient        = $request->ip();
         $method          = $request->method();
         $headers         = getallheaders();
-        $this->secretKey = $headers['api_secret'] ?? '';
-        $this->apiName   = $headers['api_name'] ?? '';
+        $this->secretKey = $headers['apiSecret'] ?? '';
+        $this->apiName   = $headers['apiName'] ?? '';
         $data            = $request->all();
         $this->limit     = empty($data['limit']) ? 10 : $data['limit'];
         $this->start     = empty($data['start']) ? 0 : (int) $data['start'];
