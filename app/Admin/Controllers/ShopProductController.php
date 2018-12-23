@@ -82,7 +82,7 @@ class ShopProductController extends Controller
 
             $grid->id('ID')->sortable();
             $grid->image(trans('language.admin.image'))->image('', 50);
-            $grid->name(trans('language.product.product_name'));
+            $grid->name(trans('language.product.product_name'))->sortable();
             $grid->category()->name(trans('language.category'));
             $grid->cost(trans('language.product.price_cost'))->display(function ($price) {
                 return number_format($price);
@@ -113,6 +113,14 @@ class ShopProductController extends Controller
         </div>');
             });
 
+            $grid->model()->leftJoin('shop_product_description', 'shop_product_description.product_id', '=', 'shop_product.id')
+                ->where('lang_id', session('locale_id'));
+            $grid->expandFilter();
+            $grid->filter(function ($filter) {
+                $filter->disableIdFilter();
+                $filter->like('name', trans('language.product.name'));
+
+            });
         });
     }
 
