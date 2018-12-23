@@ -337,7 +337,7 @@ return [
         'manager'             => 'Quản lý API',
         'name'                => 'Tên',
         'name_help'           => 'Là tên trong router của API: route/api.php',
-        'hidden_default'      => 'Trường ẩn',
+        'hidden_default'      => 'Trường ẩn mặc định',
         'hidden_default_help' => 'Ẩn các field này nếu "Loại Api" là "public"',
         'type'                => 'Loại Api',
         'type_help'           => 'private: chỉ sử dụng trên local, secrect: yêu cầu khóa bí mật, public: không yêu cầu bảo mật',

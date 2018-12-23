@@ -97,9 +97,16 @@ class ShopApiController extends Controller
             <td>' . trans('language.api.status') . '</td>
             </tr>';
                 foreach ($secrets as $key => $secret) {
+                    $html_hidden_fileds = '';
+                    if ($secret['hidden_fileds']) {
+                        $fields = explode(',', $secret['hidden_fileds']);
+                        foreach ($fields as $key => $value) {
+                            $html_hidden_fileds .= ' <span class="label label-primary">' . $value . '</span> ';
+                        }
+                    }
                     $html .= '<tr>
                     <td>' . $secret['secret_key'] . '</td>
-                    <td>' . $secret['hidden_fileds'] . '</td>
+                    <td>' . $html_hidden_fileds . '</td>
                     <td>' . (($secret['ip_allow']) ? str_replace(',', '<br>', $secret['ip_allow']) : '') . '</td>
                     <td>' . (($secret['ip_deny']) ? str_replace(',', '<br>', $secret['ip_deny']) : '') . '</td>
                     <td>' . $secret['created_at'] . '</td>
