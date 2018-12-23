@@ -16,9 +16,6 @@
  * Admin::js('/packages/prettydocs/js/main.js');
  *
  */
-Encore\Admin\Form::forget(['map', 'editor']);
-//custome template admin
-app('view')->prependNamespace('admin', resource_path('views/admin'));
 use App\Admin\Extensions\Column\Expands;
 use App\Admin\Extensions\Form\CKEditor;
 use App\Models\ConfigGlobal;
@@ -29,21 +26,25 @@ use Encore\Admin\Grid\Column;
 
 //Set language
 $configs_global = ConfigGlobal::first();
-config(['app.locale' => empty($configs_global['locale']) ? config('app.locale') : $configs_global['locale']]);
+$languages      = Language::where('status', 1)->get()->keyBy('code');
 if (!Session::has('locale')) {
-    session(['locale' => config('app.locale')]);
+    $detectLocale = empty($configs_global['locale']) ? config('app.locale') : $configs_global['locale'];
+} else {
+    $detectLocale = session('locale');
 }
-$currentLocale = in_array(session('locale'), Language::pluck('code')->all()) ? session('locale') : config('app.locale');
+$currentLocale = array_key_exists($detectLocale, $languages->toArray()) ? $detectLocale : $languages->first()->code;
+session(['locale' => $currentLocale, 'locale_id' => $languages[$currentLocale]['id']]);
 app()->setLocale($currentLocale);
 //End language
-
+Encore\Admin\Form::forget(['map', 'editor']);
+//custome template admin
+app('view')->prependNamespace('admin', resource_path('views/admin'));
 Column::extend('expand', Expands::class);
 
 Form::extend('ckeditor', CKEditor::class);
 //end Ckeditor
-Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
+Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) use ($languages) {
     $configs_global = ConfigGlobal::first();
-    $languages      = Language::where('status', 1)->get()->keyBy('code');
     $path_file      = config('filesystems.disks.path_file');
     $htmlLang       = '<div style="margin:10px;" class="btn-group"><button type="button" class="dropdown-toggle usa" data-toggle="dropdown"><img src="/' . $path_file . '/' . $languages[app()->getLocale()]['icon'] . '" style="height: 25px;"><span class="caret"></span></button><ul class="dropdown-menu">';
     foreach ($languages as $key => $language) {

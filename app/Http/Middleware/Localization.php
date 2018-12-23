@@ -18,13 +18,18 @@ class Localization
      */
     public function handle($request, Closure $next)
     {
+//Set language
         $configs_global = ConfigGlobal::first();
-        config(['app.locale' => empty($configs_global['locale']) ? config('app.locale') : $configs_global['locale']]);
+        $languages      = Language::where('status', 1)->get()->keyBy('code');
         if (!Session::has('locale')) {
-            session(['locale' => config('app.locale')]);
+            $detectLocale = empty($configs_global['locale']) ? config('app.locale') : $configs_global['locale'];
+        } else {
+            $detectLocale = session('locale');
         }
-        $currentLocale = in_array(session('locale'), Language::pluck('code')->all()) ? session('locale') : config('app.locale');
+        $currentLocale = array_key_exists($detectLocale, $languages->toArray()) ? $detectLocale : $languages->first()->code;
+        session(['locale' => $currentLocale, 'locale_id' => $languages[$currentLocale]['id']]);
         app()->setLocale($currentLocale);
+//End language
         return $next($request);
     }
 }
