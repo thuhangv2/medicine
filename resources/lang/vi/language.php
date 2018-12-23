@@ -352,6 +352,8 @@ return [
         'created_at'          => 'Ngày tạo',
         'updated_at'          => 'Ngày cập nhật',
         'guide'               => 'Vui lòng xem hướng dẫn API ở đây <a target=_new href="https://s-cart.org/guide.html">HERE</a>',
+        'no_hidden'           => 'Không có trường ẩn',
+        'no_secret'           => 'Không có khóa bí mật',
     ],
 
 ];

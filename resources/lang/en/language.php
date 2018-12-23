@@ -348,5 +348,7 @@ return [
         'created_at'          => 'Created at',
         'updated_at'          => 'Updated at',
         'guide'               => 'Please read document in <a target=_new href="https://s-cart.org/guide.html">HERE</a>',
+        'no_hidden'           => 'No hidden',
+        'no_secret'           => 'No secret',
     ],
 ];

@@ -67,10 +67,25 @@ class ShopApiController extends Controller
         $grid = new Grid(new ShopApi);
         $grid->id('ID')->sortable();
         $grid->name(trans('language.api.name'))->sortable();
-        $grid->hidden_default(trans('language.api.hidden_default'));
+        $checkHidden = 0;
+        $grid->hidden_default(trans('language.api.hidden_default'))->display(function ($field) use ($checkHidden) {
+            if ($field) {
+                $html   = '';
+                $fields = explode(',', $field);
+                foreach ($fields as $key => $value) {
+                    $html .= ' <span class="label label-primary">' . $value . '</span> ';
+                }
+                $checkHidden = 1;
+                return $html;
+            } else {
+                return trans('language.api.no_hidden');
+            }
+        });
         $grid->secrets(trans('language.api.secret_key'))->expand(function () {
             $secrets = $this->secrets;
-            $html    = '
+            $html    = '';
+            if ($secrets->count()) {
+                $html .= '
             <table width="100%" class="table-padding" border=1 style="border: 1px solid #d0bcbc;"><tr>
             <td>' . trans('language.api.secret_key') . '</td>
             <td>' . trans('language.api.hidden_fileds') . '</td>
@@ -81,7 +96,6 @@ class ShopApiController extends Controller
             <td>' . trans('language.api.exp') . '</td>
             <td>' . trans('language.api.status') . '</td>
             </tr>';
-            if ($secrets) {
                 foreach ($secrets as $key => $secret) {
                     $html .= '<tr>
                     <td>' . $secret['secret_key'] . '</td>
@@ -94,9 +108,13 @@ class ShopApiController extends Controller
                     <td>' . (($secret['status']) ? '<span class="label label-primary">ON</span>' : '<span class="label label-warning">OFF</span>') . '</td>
                     </tr>';
                 }
+                $html .= "</table>";
+            } else {
+                $html .= '<p class="table-padding text-center">' . trans('language.api.no_secret') . '</p>';
             }
-            return $html . "</table>";
+            return $html;
         }, trans('language.admin.detail'));
+        $checkHidden = 0;
 
         $grid->type(trans('language.api.type'))->display(function ($type) {
             $style = "";

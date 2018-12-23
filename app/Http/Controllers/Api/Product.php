@@ -37,7 +37,7 @@ class Product extends \App\Http\Controllers\Controller
         //Check API
         $checkApi = ShopApi::where('name', $this->apiName)->first();
         if (!$checkApi || $checkApi->type === 'private') {
-//==============Process when Api is inactive or not found ============
+//==============Process when Api is private or not found ============
             $error = array(
                 'error'  => 1,
                 'code'   => 404,
@@ -49,7 +49,7 @@ class Product extends \App\Http\Controllers\Controller
             exit;
         }
         if ($checkApi->type === 'secret') {
-//==============Process when Api is active============
+//==============Process when Api is secret============
             //Check Token
             $apiId          = $checkApi->id;
             $checkSecretKey = ShopApiProcess::where('secret_key', $this->secretKey)->where('api_id', $apiId)->first();
@@ -113,6 +113,10 @@ class Product extends \App\Http\Controllers\Controller
 
     }
 
+/**
+ * [index description]
+ * @return [type] [description]
+ */
     public function index()
     {
         if ($this->apiName == 'api_product_list') {

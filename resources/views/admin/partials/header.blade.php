@@ -4,6 +4,9 @@
 .table-padding td{
     padding:5px;
 }
+.table-padding{
+    background: #f9f8d8;
+}
 </style>
     <!-- Logo -->
     <a href="{{ admin_base_path('/') }}" class="logo">
