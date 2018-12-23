@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::group([
     'prefix'    => 'product',
-    'namespace' => 'api',
+    'namespace' => 'Api',
 ], function () {
     Route::get('/', 'Product@index');
 });
