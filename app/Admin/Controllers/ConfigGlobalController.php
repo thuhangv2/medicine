@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\ConfigGlobal;
 use App\Models\Language;
+use App\Models\ShopCurrency;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
@@ -113,7 +114,10 @@ class ConfigGlobalController extends Controller
                 $languages = Language::pluck('name', 'code')->all();
                 return $languages[$locale];
             });
-
+            $grid->currency(trans('language.config.currency'))->display(function ($currency) {
+                $currencies = ShopCurrency::pluck('name', 'code')->all();
+                return $currencies[$currency];
+            });
             $grid->disableCreation();
             $grid->disableExport();
             $grid->disableRowSelector();
@@ -144,7 +148,8 @@ class ConfigGlobalController extends Controller
             }
         }
         return Admin::form(ConfigGlobal::class, function (Form $form) use ($arrTemplates) {
-            $languages = Language::pluck('name', 'code')->all();
+            $languages  = Language::pluck('name', 'code')->all();
+            $currencies = ShopCurrency::where('status', 1)->pluck('name', 'code')->all();
             $form->image('logo', trans('language.config.logo'))->removable();
             if (\Helper::configs()['watermark']) {
                 $form->image('watermark', trans('language.config.watermark'))->removable();
@@ -159,6 +164,7 @@ class ConfigGlobalController extends Controller
             $form->text('address', trans('language.config.address'));
             $form->text('email', trans('language.config.email'));
             $form->select('locale', trans('language.config.language'))->options($languages);
+            $form->select('currency', trans('language.config.currency'))->options($currencies)->rules('required');
             $form->disableViewCheck();
             $form->disableEditingCheck();
             $form->tools(function (Form\Tools $tools) {
