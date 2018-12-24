@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use App\Models\CmsNews;
 use App\Models\CmsPage;
+use App\Models\CmsSubscribe;
 use App\Models\Config;
 use App\Models\ConfigGlobal;
 use App\Models\ConfigLayout;
@@ -14,6 +15,7 @@ use App\Models\ShopBrand;
 use App\Models\ShopCategory;
 use App\Models\ShopCurrency;
 use Illuminate\Http\Request;
+use Mail;
 use View;
 
 class GeneralController extends Controller
@@ -189,4 +191,24 @@ class GeneralController extends Controller
         return CmsPage::where('uniquekey', $key)->where('status', 1)->first();
     }
 
+/**
+ * [emailSubscribe description]
+ * @param  Request $request [description]
+ * @return [type]           [description]
+ */
+    public function emailSubscribe(Request $request)
+    {
+        $validator = $request->validate([
+            'email' => 'required|email',
+        ], [
+            'email.required' => trans('validation.required'),
+            'email.email'    => trans('validation.email'),
+        ]);
+        $data       = $request->all();
+        $checkEmail = CmsSubscribe::where('email', $data['email'])->first();
+        if (!$checkEmail) {
+            CmsSubscribe::insert(['email' => $data['email']]);
+        }
+        return json_encode(['error' => 0]);
+    }
 }

@@ -158,9 +158,10 @@ class ShopProduct extends Model
     public static function getSearch($keyword, $limit = 12)
     {
         return self::where('status', 1)
+            ->leftJoin('shop_product_description', 'shop_product_description.product_id', 'shop_product.id')
             ->where(function ($sql) use ($keyword) {
-                $sql->where('name', 'like', '%' . $keyword . '%')
-                    ->orWhere('sku', 'like', '%' . $keyword . '%');
+                $sql->where('shop_product_description.name', 'like', '%' . $keyword . '%')
+                    ->orWhere('shop_product.sku', 'like', '%' . $keyword . '%');
             })
             ->orderBy('id', 'desc')
             ->paginate($limit);

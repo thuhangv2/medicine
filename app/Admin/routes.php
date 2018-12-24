@@ -36,6 +36,7 @@ Route::group([
     $router->resource('shop_special_price', ShopSpecialPriceController::class);
     $router->resource('shop_promotion', ShopPromotionController::class);
     $router->resource('shop_shipping', ShopShippingController::class);
+    $router->resource('shop_api', ShopApiController::class);
     $router->get('/getInfoUser', 'ShopOrderController@getInfoUser')->name('getInfoUser');
     $router->get('/getInfoProduct', 'ShopOrderController@getInfoProduct')->name('getInfoProduct');
     $router->get('/shop_order_edit/{id}', 'ShopOrderController@detailOrder')->name('order_edit_get');
