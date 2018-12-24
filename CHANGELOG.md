@@ -1,4 +1,10 @@
 # Release Notes
+## v2.0.5 (2018-12-25)
+### Add
+> API manager
+### Fixed
+> Error search name product front-end and back-end
+
 ## v2.0.4.23 (2018-12-13)
 ### Add
 > Currency
