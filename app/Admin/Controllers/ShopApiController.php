@@ -64,22 +64,29 @@ class ShopApiController extends Controller
      */
     protected function grid()
     {
+        $arrApi = [
+            'api_order_detail'   => url('/') . '/api/order',
+            'api_order_list'     => url('/') . '/api/order',
+            'api_product_detail' => url('/') . '/api/product',
+            'api_product_list'   => url('/') . '/api/product',
+        ];
         $grid = new Grid(new ShopApi);
         $grid->id('ID')->sortable();
         $grid->name(trans('language.api.name'))->sortable();
-        $checkHidden = 0;
-        $grid->hidden_default(trans('language.api.hidden_default'))->display(function ($field) use ($checkHidden) {
+        $grid->hidden_default(trans('language.api.hidden_default'))->display(function ($field) {
             if ($field) {
                 $html   = '';
                 $fields = explode(',', $field);
                 foreach ($fields as $key => $value) {
                     $html .= ' <span class="label label-primary">' . $value . '</span> ';
                 }
-                $checkHidden = 1;
                 return $html;
             } else {
                 return trans('language.api.no_hidden');
             }
+        });
+        $grid->html('URL')->display(function () use ($arrApi) {
+            return $arrApi[$this->name];
         });
         $grid->secrets(trans('language.api.secret_key'))->expand(function () {
             $secrets = $this->secrets;
@@ -121,7 +128,6 @@ class ShopApiController extends Controller
             }
             return $html;
         }, trans('language.admin.detail'));
-        $checkHidden = 0;
 
         $grid->type(trans('language.api.type'))->display(function ($type) {
             $style = "";

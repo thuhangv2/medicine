@@ -16,9 +16,19 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//Api product
 Route::group([
     'prefix'    => 'product',
     'namespace' => 'Api',
 ], function () {
     Route::get('/', 'Product@index');
+});
+
+//Api order
+Route::group([
+    'prefix'    => 'order',
+    'namespace' => 'Api',
+], function () {
+    Route::get('/', 'Order@index');
 });
