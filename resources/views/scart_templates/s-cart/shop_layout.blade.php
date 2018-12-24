@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{{ empty($description)?'':$description }}">
     <meta name="keyword" content="{{ empty($keyword)?'':$keyword }}">
-    <meta property="fb:app_id" content="{{ $configs_global['site_fb_appID'] }}" />
+    <meta property="fb:app_id" content="{{ $configsGlobal['site_fb_appID'] }}" />
     <title>{{ empty($title)?'':$title }}</title>
     <meta property="og:image" content="{{ !empty($og_image)?$og_image:asset('images/org.jpg') }}" />
     <meta property="og:url" content="{{ \Request::fullUrl() }}" />
@@ -58,8 +58,8 @@
           <div class="col-sm-6">
             <div class="contactinfo">
               <ul class="nav nav-pills">
-                <li><a href="#"><i class="fa fa-phone"></i> {{ $configs_global['phone'] }}</a></li>
-                <li><a href="#"><i class="fa fa-envelope"></i> {{ $configs_global['email'] }}</a></li>
+                <li><a href="#"><i class="fa fa-phone"></i> {{ $configsGlobal['phone'] }}</a></li>
+                <li><a href="#"><i class="fa fa-envelope"></i> {{ $configsGlobal['email'] }}</a></li>
               </ul>
             </div>
           </div>
@@ -341,7 +341,7 @@
           <div class="col-sm-3">
             <div class="address">
               <img src="{{ asset($theme_asset.'/images/home/map.png') }}" alt="" />
-              <p>{{ $configs_global['address'] }}</p>
+              <p>{{ $configsGlobal['address'] }}</p>
             </div>
           </div>
         </div>
@@ -385,9 +385,9 @@
             <div class="single-widget">
               <h2>{{ trans('language.about') }}</h2>
               <ul class="nav nav-pills nav-stacked">
-                <li><a href="#">Address: {{ $configs_global['address'] }}</a></li>
-                <li><a href="#">Hotline: {{ $configs_global['long_phone'] }}</a></li>
-                <li><a href="#">Email: {{ $configs_global['email'] }}</a></li>
+                <li><a href="#">Address: {{ $configsGlobal['address'] }}</a></li>
+                <li><a href="#">Hotline: {{ $configsGlobal['long_phone'] }}</a></li>
+                <li><a href="#">Email: {{ $configsGlobal['email'] }}</a></li>
             </ul>
             </div>
           </div>

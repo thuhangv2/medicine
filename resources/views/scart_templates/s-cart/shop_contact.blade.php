@@ -87,10 +87,10 @@
                     <div class="contact-info">
                         <h2 class="title text-center">{{ trans('language.contact_form.info') }}</h2>
                         <address>
-                            <p>{{ $configs_global['title'] }}</p>
-                            <p>{{ $configs_global['address'] }}</p>
-                            <p>{{ $configs_global['long_phone'] }}</p>
-                            <p>{{ $configs_global['email'] }}</p>
+                            <p>{{ $configsGlobal['title'] }}</p>
+                            <p>{{ $configsGlobal['address'] }}</p>
+                            <p>{{ $configsGlobal['long_phone'] }}</p>
+                            <p>{{ $configsGlobal['email'] }}</p>
                         </address>
                         <div class="social-networks">
                             <h2 class="title text-center">Social Networking</h2>

@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\ConfigGlobal;
 use App\Models\ShopCurrency;
 use Closure;
 use Session;
@@ -18,11 +17,11 @@ class Currency
      */
     public function handle($request, Closure $next)
     {
-        $configs_global = ConfigGlobal::first();
+        $configsGlobal = \Helper::configsGlobal();
         if (Session::has('currency')) {
             ShopCurrency::setCode(session('currency'));
         } else {
-            ShopCurrency::setCode($configs_global['currency']);
+            ShopCurrency::setCode($configsGlobal['currency']);
         }
         return $next($request);
     }

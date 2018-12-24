@@ -83,17 +83,18 @@ class ConfigGlobalController extends Controller
             $grid->html('&nbsp;');
 
             $grid->logo(trans('language.config.logo'))->image('', 50);
-            $grid->watermark(trans('language.config.watermark'))->image('', 50);
+            if (\Helper::configs()['watermark']) {
+                $grid->watermark(trans('language.config.watermark'))->image('', 50);
+            }
             $grid->template(trans('language.config.template'))->editable('select', $arrTemplates);
-            $grid->title(trans('language.config.title'))->display(function ($text) {
-                return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
-            });
-            $grid->description(trans('language.config.description'))->display(function ($text) {
-                return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
-            });
-            $grid->keyword(trans('language.config.keyword'))->display(function ($text) {
-                return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
-            });
+            $grid->description(trans('language.config.description'))->expand(function () {
+                $html = '<div class="padding5">';
+                $html .= '<b>' . trans('language.config.title') . ': </b>' . $this->title . '<br>';
+                $html .= '<b>' . trans('language.config.description') . ': </b>' . $this->description . '<br>';
+                $html .= '<b>' . trans('language.config.keyword') . ': </b>' . $this->keyword . '<br>';
+                $html .= '</div>';
+                return $html;
+            }, trans('language.admin.detail'));
             $grid->phone(trans('language.config.phone'));
             $grid->long_phone(trans('language.config.long_phone'))->display(function ($text) {
                 return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
@@ -145,7 +146,9 @@ class ConfigGlobalController extends Controller
         return Admin::form(ConfigGlobal::class, function (Form $form) use ($arrTemplates) {
             $languages = Language::pluck('name', 'code')->all();
             $form->image('logo', trans('language.config.logo'))->removable();
-            $form->image('watermark', trans('language.config.watermark'))->removable();
+            if (\Helper::configs()['watermark']) {
+                $form->image('watermark', trans('language.config.watermark'))->removable();
+            }
             $form->select('template', trans('language.config.template'))->options($arrTemplates)->rules('required', ['required' => 'Please choose template']);
             $form->text('title', trans('language.config.title'));
             $form->textarea('description', trans('language.config.description'));

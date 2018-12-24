@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\ConfigGlobal;
 use App\Models\Language;
 use Closure;
 use Session;
@@ -19,10 +18,10 @@ class Localization
     public function handle($request, Closure $next)
     {
 //Set language
-        $configs_global = ConfigGlobal::first();
-        $languages      = Language::where('status', 1)->get()->keyBy('code');
+        $configsGlobal = \Helper::configsGlobal();
+        $languages     = Language::where('status', 1)->get()->keyBy('code');
         if (!Session::has('locale')) {
-            $detectLocale = empty($configs_global['locale']) ? config('app.locale') : $configs_global['locale'];
+            $detectLocale = empty($configsGlobal['locale']) ? config('app.locale') : $configsGlobal['locale'];
         } else {
             $detectLocale = session('locale');
         }

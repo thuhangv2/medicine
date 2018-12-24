@@ -1,7 +1,7 @@
 <!-- Main Header -->
 <header class="main-header">
 <style>
-.table-padding td{
+.table-padding td,.padding5{
     padding:5px;
 }
 .table-padding{

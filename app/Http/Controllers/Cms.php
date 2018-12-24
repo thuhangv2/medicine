@@ -22,8 +22,8 @@ class Cms extends GeneralController
         return view($this->theme . '.cms_news',
             array(
                 'title'       => trans('language.blog'),
-                'description' => $this->configs_global['description'],
-                'keyword'     => $this->configs_global['keyword'],
+                'description' => $this->configsGlobal['description'],
+                'keyword'     => $this->configsGlobal['keyword'],
                 'news'        => $this->news,
                 'og_image'    => $this->logo,
             )
@@ -39,8 +39,8 @@ class Cms extends GeneralController
                 array(
                     'title'          => $title,
                     'news_currently' => $news_currently,
-                    'description'    => $this->configs_global['description'],
-                    'keyword'        => $this->configs_global['keyword'],
+                    'description'    => $this->configsGlobal['description'],
+                    'keyword'        => $this->configsGlobal['keyword'],
                     'blogs'          => (new CmsNews)->getItemsNews($limit = 4),
                     'og_image'       => url($this->path_file . '/' . $news_currently->image),
                 )
@@ -50,7 +50,7 @@ class Cms extends GeneralController
                 array(
                     'title'       => trans('language.not_found'),
                     'description' => '',
-                    'keyword'     => $this->configs_global['keyword'],
+                    'keyword'     => $this->configsGlobal['keyword'],
                 )
             );
         }

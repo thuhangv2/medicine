@@ -8,7 +8,6 @@ use App\Models\CmsNews;
 use App\Models\CmsPage;
 use App\Models\CmsSubscribe;
 use App\Models\Config;
-use App\Models\ConfigGlobal;
 use App\Models\ConfigLayout;
 use App\Models\Language;
 use App\Models\ShopBrand;
@@ -21,7 +20,7 @@ use View;
 class GeneralController extends Controller
 {
     public $configs;
-    public $configs_global;
+    public $configsGlobal;
     public $theme;
     public $theme_asset;
     public $path_file;
@@ -36,10 +35,9 @@ class GeneralController extends Controller
     {
         //=======Config====
         //Config for  SMTP
-        $configs        = Config::pluck('value', 'key')->all();
-        $configs_global = ConfigGlobal::first();
-        // config(['app.locale' => empty($configs_global['locale']) ? config('app.locale') : $configs_global['locale']]);
-        config(['app.name' => $configs_global['title']]);
+        $configs       = \Helper::configs();
+        $configsGlobal = \Helper::configsGlobal();
+        config(['app.name' => $configsGlobal['title']]);
         config(['mail.driver' => ($configs['smtp_mode']) ? 'smtp' : 'sendmail']);
         config(['mail.host' => empty($configs['smtp_host']) ? env('MAIL_HOST', '') : $configs['smtp_host']]);
         config(['mail.port' => empty($configs['smtp_port']) ? env('MAIL_PORT', '') : $configs['smtp_port']]);
@@ -47,7 +45,7 @@ class GeneralController extends Controller
         config(['mail.username' => empty($configs['smtp_user']) ? env('MAIL_USERNAME', '') : $configs['smtp_user']]);
         config(['mail.password' => empty($configs['smtp_password']) ? env('MAIL_PASSWORD', '') : $configs['smtp_password']]);
         config(['mail.from' =>
-            ['address' => $configs_global['email'], 'name' => $configs_global['title']]]
+            ['address' => $configsGlobal['email'], 'name' => $configsGlobal['title']]]
         );
         //SMTP
 
@@ -62,24 +60,24 @@ class GeneralController extends Controller
 
         $host = request()->getHost();
         config(['app.url' => 'http://' . $host]);
-        $this->path_file      = config('filesystems.disks.path_file', '');
-        $this->configs_global = $configs_global;
-        $this->configs        = $configs;
-        $this->theme_asset    = 'scart_templates/' . $this->configs_global['template'];
-        $this->theme          = 'scart_templates.' . $this->configs_global['template'];
-        $this->banners        = Banner::where('status', 1)->orderBy('sort', 'desc')->orderBy('id', 'desc')->get();
-        $this->logo           = url($this->path_file . '/' . $this->configs_global['logo']);
-        $this->brands         = ShopBrand::getBrands();
-        $this->categories     = ShopCategory::getCategories(0);
-        $this->news           = (new CmsNews)->getItemsNews($limit = 6, $opt = 'paginate');
-        $this->languages      = Language::where('status', 1)->get()->keyBy('code');
-        $this->currencies     = ShopCurrency::getAll();
+        $this->path_file     = config('filesystems.disks.path_file', '');
+        $this->configsGlobal = $configsGlobal;
+        $this->configs       = $configs;
+        $this->theme_asset   = 'scart_templates/' . $this->configsGlobal['template'];
+        $this->theme         = 'scart_templates.' . $this->configsGlobal['template'];
+        $this->banners       = Banner::where('status', 1)->orderBy('sort', 'desc')->orderBy('id', 'desc')->get();
+        $this->logo          = url($this->path_file . '/' . $this->configsGlobal['logo']);
+        $this->brands        = ShopBrand::getBrands();
+        $this->categories    = ShopCategory::getCategories(0);
+        $this->news          = (new CmsNews)->getItemsNews($limit = 6, $opt = 'paginate');
+        $this->languages     = Language::where('status', 1)->get()->keyBy('code');
+        $this->currencies    = ShopCurrency::getAll();
 //Share variable
         View::share('path_file', $this->path_file);
         View::share('banners', $this->banners);
         View::share('layouts', ConfigLayout::first());
         View::share('configs', $this->configs);
-        View::share('configs_global', $this->configs_global);
+        View::share('configsGlobal', $this->configsGlobal);
         View::share('theme_asset', $this->theme_asset);
         View::share('theme', $this->theme);
         View::share('logo', $this->logo);
@@ -108,7 +106,7 @@ class GeneralController extends Controller
                 'title'       => trans('language.contact'),
                 'description' => '',
                 'page'        => $page,
-                'keyword'     => $this->configs_global['keyword'],
+                'keyword'     => $this->configsGlobal['keyword'],
                 'og_image'    => $this->logo,
             )
         );
@@ -141,7 +139,7 @@ class GeneralController extends Controller
             $data            = $request->all();
             $data['content'] = str_replace("\n", "<br>", $data['content']);
             Mail::send('vendor.mail.contact', $data, function ($message) use ($data) {
-                $message->to($this->configs_global['email'], $this->configs_global['title']);
+                $message->to($this->configsGlobal['email'], $this->configsGlobal['title']);
                 $message->replyTo($data['email'], $data['name']);
                 $message->subject($data['title']);
             });
@@ -166,7 +164,7 @@ class GeneralController extends Controller
                 array(
                     'title'       => $page->title,
                     'description' => '',
-                    'keyword'     => $this->configs_global['keyword'],
+                    'keyword'     => $this->configsGlobal['keyword'],
                     'page'        => $page,
                 ));
         } else {
@@ -174,7 +172,7 @@ class GeneralController extends Controller
                 array(
                     'title'       => trans('language.not_found'),
                     'description' => '',
-                    'keyword'     => $this->configs_global['keyword'],
+                    'keyword'     => $this->configsGlobal['keyword'],
 
                 )
             );

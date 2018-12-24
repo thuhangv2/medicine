@@ -34,9 +34,9 @@ class Shop extends GeneralController
     {
         return view($this->theme . '.shop_home',
             array(
-                'title'        => $this->configs_global['title'],
-                'description'  => $this->configs_global['description'],
-                'keyword'      => $this->configs_global['keyword'],
+                'title'        => $this->configsGlobal['title'],
+                'description'  => $this->configsGlobal['description'],
+                'keyword'      => $this->configsGlobal['keyword'],
                 'banners'      => $this->banners,
                 'products_new' => (new ShopProduct)->getProducts($type = null, $limit = $this->configs['product_new'], $opt = null),
                 'products_hot' => (new ShopProduct)->getProducts($type = 1, $limit = $this->configs['product_hot'], $opt = 'random'),
@@ -58,7 +58,7 @@ class Shop extends GeneralController
                 array(
                     'title'        => $category->name,
                     'description'  => $category->description,
-                    'keyword'      => $this->configs_global['keyword'],
+                    'keyword'      => $this->configsGlobal['keyword'],
                     'categorySelf' => $category,
                     'products'     => $products,
                     'og_image'     => url($category->getImage()),
@@ -69,7 +69,7 @@ class Shop extends GeneralController
                 array(
                     'title'       => trans('messages.notfound'),
                     'description' => '',
-                    'keyword'     => $this->configs_global['keyword'],
+                    'keyword'     => $this->configsGlobal['keyword'],
                 )
             );
         }
@@ -89,8 +89,8 @@ class Shop extends GeneralController
             return view($this->theme . '.shop_products_list',
                 array(
                     'title'       => trans('language.all_product'),
-                    'description' => $this->configs_global['description'],
-                    'keyword'     => $this->configs_global['keyword'],
+                    'description' => $this->configsGlobal['description'],
+                    'keyword'     => $this->configsGlobal['keyword'],
                     'products'    => $products,
                 )
             );
@@ -99,7 +99,7 @@ class Shop extends GeneralController
                 array(
                     'title'       => trans('messages.notfound'),
                     'description' => '',
-                    'keyword'     => $this->configs_global['keyword'],
+                    'keyword'     => $this->configsGlobal['keyword'],
                 )
             );
         }
@@ -131,7 +131,7 @@ class Shop extends GeneralController
                 array(
                     'title'              => $product->name,
                     'description'        => $product->description,
-                    'keyword'            => $this->configs_global['keyword'],
+                    'keyword'            => $this->configsGlobal['keyword'],
                     'product'            => $product,
                     'productsToCategory' => (new ShopCategory)->getProductsToCategory($id = $product->category_id, $limit = $this->configs['product_relation'], $opt = 'random'),
                     'og_image'           => url($product->getImage()),
@@ -142,7 +142,7 @@ class Shop extends GeneralController
                 array(
                     'title'       => trans('messages.notfound'),
                     'description' => '',
-                    'keyword'     => $this->configs_global['keyword'],
+                    'keyword'     => $this->configsGlobal['keyword'],
                 )
             );
         }
@@ -747,8 +747,8 @@ class Shop extends GeneralController
         try {
             $data = ShopOrder::with('details')->find($orderId)->toArray();
             Mail::send('vendor.mail.order_new', $data, function ($message) use ($orderId) {
-                $message->to($this->configs_global['email'], $this->configs_global['title']);
-                $message->replyTo($this->configs_global['email'], $this->configs_global['title']);
+                $message->to($this->configsGlobal['email'], $this->configsGlobal['title']);
+                $message->replyTo($this->configsGlobal['email'], $this->configsGlobal['title']);
                 $message->subject(trans('language.order.email.new_title') . '#' . $orderId);
             });
         } catch (\Exception $e) {

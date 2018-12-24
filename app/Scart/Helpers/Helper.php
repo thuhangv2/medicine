@@ -1,6 +1,8 @@
 <?php
 namespace App\Scart;
 
+use App\Models\Config;
+use App\Models\ConfigGlobal;
 use App\Models\ShopCurrency;
 
 class Helper
@@ -61,6 +63,14 @@ class Helper
     public static function currencyFormat(float $money)
     {
         return ShopCurrency::format($money);
+    }
+    public static function configs()
+    {
+        return Config::pluck('value', 'key')->all();
+    }
+    public static function configsGlobal()
+    {
+        return ConfigGlobal::first();
     }
 
 }
