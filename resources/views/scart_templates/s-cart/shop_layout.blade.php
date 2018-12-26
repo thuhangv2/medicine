@@ -80,7 +80,7 @@
               @if (count($currencies)>1)
                <div class="btn-group locale">
                 <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                  {{ \App\Models\ShopCurrency::getCurrency()['name'] }}
+                  {{ \Helper::getCurrency()['name'] }}
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">

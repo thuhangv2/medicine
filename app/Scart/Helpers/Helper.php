@@ -64,6 +64,10 @@ class Helper
     {
         return ShopCurrency::format($money);
     }
+    public static function getCurrency()
+    {
+        return ShopCurrency::getCurrency();
+    }
     public static function configs()
     {
         return Config::pluck('value', 'key')->all();
