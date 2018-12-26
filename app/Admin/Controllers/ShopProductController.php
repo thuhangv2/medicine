@@ -220,12 +220,11 @@ class ShopProductController extends Controller
                     }
                 }
                 //end lang
-                $config          = \App\Models\Config::pluck('value', 'key')->all();
                 $product         = ShopProduct::find($id);
                 $file_path_admin = config('filesystems.path_file.admin.root');
                 try {
                     if (!file_exists($file_path_admin . '/thumb/' . $product->image)) {
-                        if (!empty($config['watermark'])) {
+                        if (!empty(\Helper::configs()['watermark'])) {
                             \Image::make($file_path_admin . '/' . $product->image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $product->image);
                         }
                         //thumbnail
@@ -239,7 +238,7 @@ class ShopProductController extends Controller
                     if (($product->images)) {
                         foreach ($product->images as $key => $image) {
                             if (!file_exists($file_path_admin . '/thumb/' . $image->image)) {
-                                if (!empty($config['watermark'])) {
+                                if (!empty(\Helper::configs()['watermark'])) {
                                     \Image::make($file_path_admin . '/' . $image->image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $image->image);
                                 }
                                 //thumbnail
@@ -256,7 +255,7 @@ class ShopProductController extends Controller
                     if (($product->options)) {
                         foreach ($product->options as $key => $image) {
                             if (!file_exists($file_path_admin . '/thumb/' . $image->opt_image)) {
-                                if (!empty($config['watermark'])) {
+                                if (!empty(\Helper::configs()['watermark'])) {
                                     \Image::make($file_path_admin . '/' . $image->opt_image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $image->opt_image);
                                 }
                                 //thumbnail
