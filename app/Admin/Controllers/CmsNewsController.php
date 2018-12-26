@@ -151,12 +151,11 @@ class CmsNewsController extends Controller
             }
 
             //end lang
-            $config = \App\Models\Config::pluck('value', 'key')->all();
 
             $file_path_admin = config('filesystems.disks.admin.root');
             try {
                 if (!file_exists($file_path_admin . '/thumb/' . $form->model()->image)) {
-                    if (!empty($config['watermark'])) {
+                    if (!empty(\Helper::configs()['watermark'])) {
                         \Image::make($file_path_admin . '/' . $form->model()->image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $form->model()->image);
                     }
                     //thumbnail
