@@ -99,7 +99,7 @@ class CmsContentController extends Controller
     protected function form()
     {
         $form      = new Form(new CmsContent);
-        $languages = Language::where('status', 1)->get();
+        $languages = Language::getLanguages();
         $form->tab(trans('language.product.product_info'), function ($form) use ($languages) {
 //Language
             $arrParameters = request()->route()->parameters();
@@ -109,7 +109,9 @@ class CmsContentController extends Controller
                 if ($idCheck) {
                     $langDescriptions = CmsContentDescription::where('cms_content_id', $idCheck)->where('lang_id', $language->id)->first();
                 }
-                $form->html('<b>' . $language->name . '</b> <img style="height:25px" src="/' . config('filesystems.disks.path_file') . '/' . $language->icon . '">');
+                if ($languages->count() > 1) {
+                    $form->html('<b>' . $language->name . '</b> <img style="height:25px" src="/' . config('filesystems.disks.path_file') . '/' . $language->icon . '">');
+                }
                 $form->text($language->code . '__title', trans('language.admin.title'))->rules('required', ['required' => trans('validation.required')])->default(!empty($langDescriptions->title) ? $langDescriptions->title : null);
                 $form->text($language->code . '__keyword', trans('language.admin.keyword'))->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
                 $form->text($language->code . '__description', trans('language.admin.description'))->rules('max:300', ['max' => trans('validation.max')])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
