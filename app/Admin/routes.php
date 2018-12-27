@@ -14,16 +14,22 @@ Route::group([
     $router->resource('banner', BannerController::class);
     $router->resource('language', LanguageController::class);
     $router->resource('currencies', CurrencyController::class);
-
+//Config
     $router->resource('config_info', ConfigInfoController::class);
     $router->resource('config_global', ConfigGlobalController::class);
     $router->resource('config_layout', ConfigLayoutController::class);
-
+    $router->any('/config_updateConfigField', 'ConfigInfoController@updateConfigField')
+        ->name('updateConfigField');
+//Cms
     $router->resource('cms_category', CmsCategoryController::class);
     $router->resource('cms_content', CmsContentController::class);
     $router->resource('cms_news', CmsNewsController::class);
     $router->resource('cms_page', CmsPageController::class);
+    $router->get('/ckfinder', function () {
+        return view('admin.ckfinder');
+    });
 
+//Shop
     $router->resource('shop_customer', ShopCustomerController::class);
     $router->resource('shop_order', ShopOrderController::class);
     $router->resource('shop_product', ShopProductController::class);
@@ -37,16 +43,14 @@ Route::group([
     $router->resource('shop_promotion', ShopPromotionController::class);
     $router->resource('shop_shipping', ShopShippingController::class);
     $router->resource('shop_api', ShopApiController::class);
-    $router->get('/getInfoUser', 'ShopOrderController@getInfoUser')->name('getInfoUser');
-    $router->get('/getInfoProduct', 'ShopOrderController@getInfoProduct')->name('getInfoProduct');
+    $router->get('/shop_getInfoUser', 'ShopOrderController@getInfoUser')->name('getInfoUser');
+    $router->get('/shop_getInfoProduct', 'ShopOrderController@getInfoProduct')->name('getInfoProduct');
     $router->get('/shop_order_edit/{id}', 'ShopOrderController@detailOrder')->name('order_edit_get');
     $router->post('/shop_order_edit', 'ShopOrderController@postOrderEdit')->name('order_edit_post');
     $router->any('/shop_order_update', 'ShopOrderController@postOrderUpdate')->name('order_update');
-    $router->get('/ckfinder', function () {
-        return view('admin.ckfinder');
-    });
-//Update config
-    $router->any('/updateConfigField', 'ConfigInfoController@updateConfigField')->name('updateConfigField');
+    $router->resource('shop_attribute_group', ShopAttributeGroupController::class);
+    $router->resource('shop_attribute_detail', ShopAttributeDetailController::class);
+
 //Language
     $router->post('locale/{code}', function ($code) {
         \App\Models\ConfigGlobal::first()->update(['locale' => $code]);
