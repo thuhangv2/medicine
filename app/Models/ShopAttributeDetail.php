@@ -9,8 +9,4 @@ class ShopAttributeDetail extends Model
     public $timestamps = false;
     public $table      = 'shop_attribute_detail';
     protected $guarded = ['*'];
-    public function group()
-    {
-        return $this->belongsTo(ShopAttributeGroup::class, 'attribute_id', 'id');
-    }
 }

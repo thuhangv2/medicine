@@ -1,4 +1,11 @@
 # Release Notes
+## v2.0.5.1 (2018-12-29)
+### Add
+> Product addtributes
+### Optimize
+> Global config
+
+
 ## v2.0.5 (2018-12-25)
 ### Add
 > API manager

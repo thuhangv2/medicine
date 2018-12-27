@@ -5,6 +5,8 @@ namespace App\Admin\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Config;
 use App\Models\Language;
+use App\Models\ShopAttributeDetail;
+use App\Models\ShopAttributeGroup;
 use App\Models\ShopBrand;
 use App\Models\ShopCategory;
 use App\Models\ShopProduct;
@@ -190,6 +192,68 @@ class ShopProductController extends Controller
                     $form->image('image', trans('language.admin.sub_image'))->uniqueName()->move('product_slide');
                 });
 
+            })->tab(trans('language.product.attribute'), function ($form) use ($id) {
+                $groups = ShopAttributeGroup::pluck('name', 'id')->all();
+                $html   = '';
+                foreach ($groups as $key => $group) {
+                    ${'group_' . $key} = ShopAttributeDetail::where('product_id', $id)->where('attribute_id', $key)->get();
+                    $html .= '
+                        <table class="table box  table-bordered table-responsive">
+                            <thead>
+                              <tr>
+                                <th colspan="4">' . $group . '</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                      <tr>
+                                        <td><span> ' . trans('language.attribute.detail_name') . ' ' . $group . '</span></td>
+                                        <td></td>
+                                      </tr>';
+                    if (count(${'group_' . $key}) == 0) {
+                        $html .= '<tr id="no-item-' . $key . '">
+                                <td colspan="4" align="center" style="color:#cc2a2a">' . trans('language.attribute.no_item') . '</td>
+                              </tr>';
+                    } else {
+
+                        foreach (${'group_' . $key} as $key2 => $value2) {
+                            $html .= '
+                                      <tr>
+                                        <td>
+                                        <span><div class="input-group"><input  type="text" name="group[' . $key . '][name][]" value="' . $value2['name'] . '" class="form-control" placeholder="' . trans('language.attribute.detail_name') . '"></div></span>
+                                        </td>
+                                        <td>
+                                         <button onclick="removeItemForm(this);" class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal"  data-placement="top" rel="tooltip" data-original-title="" title="Remove item"><span class="glyphicon glyphicon-remove"></span>' . trans('admin.remove') . '</button>
+                                        </td>
+                                      </tr>';
+                        }
+                    }
+
+                    $html .= '
+                               <tr id="addnew-' . $key . '">
+                                <td colspan="8">  <button type="button" class="btn btn-sm btn-success"  onclick="morItem(' . $key . ');" rel="tooltip" data-original-title="" title="Add new item"><i class="fa fa-plus"></i> ' . trans('language.attribute.add_more') . '</button>
+                        </td>
+                              </tr>
+                        <tr>
+                        </tr>
+                            </tbody>
+                          </table>';
+                }
+                $detail_name = trans('language.attribute.detail_name');
+                $script      = <<<SCRIPT
+<script>
+                function morItem(id){
+                        $("#no-item-"+id).remove();
+                    $("tr#addnew-"+id).before("<tr><td><span><span class=\"input-group\"><input  type=\"text\" name=\"group["+id+"][name][]\" value=\"\" class=\"form-control\" placeholder=\"$detail_name\"></span></span></td><td><button onclick=\"removeItemForm(this);\" class=\"btn btn-danger btn-xs\" data-title=\"Delete\" data-toggle=\"modal\"  data-placement=\"top\" rel=\"tooltip\" data-original-title=\"\" title=\"Remove item\"><span class=\"glyphicon glyphicon-remove\"></span>Xóa bỏ</button></td></tr>");
+                    }
+
+                    function removeItemForm(elmnt){
+                      elmnt.closest("tr").remove();
+                    }
+
+                </script>
+SCRIPT;
+                $form->html($html . $script);
+
             });
 
             $arrData = array();
@@ -271,6 +335,19 @@ class ShopProductController extends Controller
 
                 } catch (\Exception $e) {
                     echo $e->getMessage();
+                }
+
+                ShopAttributeDetail::where('product_id', $id)->delete();
+                $groups = $form->group;
+                if (count($groups) > 0) {
+                    foreach ($groups as $attID => $group) {
+                        foreach ($group['name'] as $key => $value) {
+                            if ($value != '') {
+                                ShopAttributeDetail::insert(['name' => $value, 'attribute_id' => $attID, 'product_id' => $id]);
+                            }
+
+                        }
+                    }
                 }
 
             });

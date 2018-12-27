@@ -35,17 +35,18 @@ Free Open source E-commerce use Laravel framework for Business
 - Multi-language
 
 ======= SHOPPING =======
-- Api manager
-- Currencies
+
 - Customer sign up
 - Purchase history
 - Process cart
 - Discount
 - Shipping fee
 - Payment: paypal
-- Manage product: price sale, cost price, promotion price, quantity, multi images ..
+- Manage product: price sale, cost price, promotion price, quantity, multi images, attributes ..
 - Categories product
 - Brand product
+- Api manager
+- Currencies
 
 ======= SYSTEM MANAGEMENT =======
 

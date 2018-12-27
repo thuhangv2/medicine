@@ -49,7 +49,6 @@ Route::group([
     $router->post('/shop_order_edit', 'ShopOrderController@postOrderEdit')->name('order_edit_post');
     $router->any('/shop_order_update', 'ShopOrderController@postOrderUpdate')->name('order_update');
     $router->resource('shop_attribute_group', ShopAttributeGroupController::class);
-    $router->resource('shop_attribute_detail', ShopAttributeDetailController::class);
 
 //Language
     $router->post('locale/{code}', function ($code) {

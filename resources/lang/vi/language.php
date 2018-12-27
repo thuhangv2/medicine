@@ -356,5 +356,15 @@ return [
         'no_hidden'           => 'Không có trường ẩn',
         'no_secret'           => 'Không có khóa bí mật',
     ],
-
+    'attribute'         => [
+        'group'       => 'Nhóm thuộc tính',
+        'group_name'  => 'Tên nhóm',
+        'status'      => 'Trạng thái',
+        'sort'        => 'Thứ tự',
+        'type'        => 'Loại',
+        'detail'      => 'Thuộc tính',
+        'detail_name' => 'Tên thuộc tính',
+        'no_item'     => 'Không có thuộc tính nào!',
+        'add_more'    => 'Thêm thuộc tính',
+    ],
 ];

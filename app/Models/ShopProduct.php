@@ -62,6 +62,11 @@ class ShopProduct extends Model
     {
         return $this->hasMany('App\Models\ShopSpecialPrice', 'product_id', 'id');
     }
+    public function attributeDetails()
+    {
+        return $this->hasMany(ShopAttributeDetail::class, 'product_id', 'id');
+    }
+
 /**
  * [getPrice description]
  * @param  [type] $id      [description]
@@ -223,6 +228,7 @@ class ShopProduct extends Model
             $product->likes()->delete();
             $product->images()->delete();
             $product->descriptions()->delete();
+            $product->attributeDetails()->delete();
         });
     }
 
