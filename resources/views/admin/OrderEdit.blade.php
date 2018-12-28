@@ -91,7 +91,6 @@
                 <th>{{ trans('language.product.price') }}</th>
                 <th style="width: 100px;">{{ trans('language.product.quantity') }}</th>
                 <th>{{ trans('language.product.total_price') }}</th>
-                <th>{{ trans('language.product.attribute') }}</th>
                 <th>{{ trans('admin.action') }}</th>
               </tr>
             </thead>
@@ -100,11 +99,21 @@
                       <tr>
                         <span style="display: none;"  class="item_{{ $item->id }}_id">{{ $item->id }}</span>
                         <td><span class="item_{{ $item->id }}_sku">{{ $item->sku }}</span></td>
-                        <td><span class="item_{{ $item->id }}_name">{{ $item->name }}</span></td>
+                        <td><span class="item_{{ $item->id }}_name">{{ $item->name }}
+                          @php
+                          $html = '';
+                            if($item->attribute){
+                              $array = json_decode($item->attribute,true);
+                                  foreach ($array as $key => $element){
+                                    $html .= '<br><b>'.$key.'</b> : <i>'.implode(',', $element).'</i>';
+                                  }
+                            }
+                          @endphp
+                        {!! $html !!}
+                        </span></td>
                         <td align="right"><span>{{ \Helper::currencyOnlyRender($item->price,$order->currency) }}</span></td>
                         <td>x <span class="item_{{ $item->id }}_qty">{{ number_format($item->qty) }}</span></td>
                         <td align="right"><span >{{ \Helper::currencyOnlyRender($item->total_price,$order->currency)}}</span></td>
-                        <td><span  class="item_{{ $item->id }}_attr">{{ $item->option }}</span></td>
                         <td>
                           <span style="display: none"  class="item_{{ $item->id }}_price">{{ $item->price }}</span>
                           <span style="display: none"  class="item_{{ $item->id }}_total_price">{{ $item->total_price}}</span>
@@ -304,7 +313,6 @@
               <td><input type="text" class="form_attr form-control" name="form_attr[]" value=""></td>
               <td></td>
             </tr>
-
 
            <tr id="addnew">
               <td>
