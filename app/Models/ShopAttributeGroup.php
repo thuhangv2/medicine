@@ -8,7 +8,7 @@ class ShopAttributeGroup extends Model
 {
     public $timestamps = false;
     public $table      = 'shop_attribute_group';
-    public function attributeDetails()
+    public function attDetails()
     {
         return $this->hasMany(ShopAttributeDetail::class, 'attribute_id', 'id');
     }
@@ -17,7 +17,7 @@ class ShopAttributeGroup extends Model
     {
         parent::boot();
         static::deleting(function ($group) {
-            $group->attributeDetails()->delete();
+            $group->attDetails()->delete();
         });
     }
 

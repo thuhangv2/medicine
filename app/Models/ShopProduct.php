@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Config;
 use App\Models\Language;
+use App\Models\ShopAttributeGroup;
 use App\Models\ShopProductDescription;
 use App\Models\ShopProductOption;
 use App\Models\ShopSpecialPrice;
@@ -62,7 +63,7 @@ class ShopProduct extends Model
     {
         return $this->hasMany('App\Models\ShopSpecialPrice', 'product_id', 'id');
     }
-    public function attributeDetails()
+    public function attDetails()
     {
         return $this->hasMany(ShopAttributeDetail::class, 'product_id', 'id');
     }
@@ -228,7 +229,7 @@ class ShopProduct extends Model
             $product->likes()->delete();
             $product->images()->delete();
             $product->descriptions()->delete();
-            $product->attributeDetails()->delete();
+            $product->attDetails()->delete();
         });
     }
 
@@ -370,6 +371,30 @@ class ShopProduct extends Model
     public function getPercentDiscount()
     {
         return round((($this->price - $this->getPrice()) / $this->price) * 100);
+    }
+
+    public function renderAttDetails()
+    {
+
+        $html           = '';
+        return $details = $this->attDetails->groupBy('attribute_id');
+        if ($details) {
+            foreach ($details as $groupKey => $groupDetails) {
+                $group = ShopAttributeGroup::find($groupKey);
+                if ($group->type == 'radio') {
+                    $html .= $group->name;
+                    foreach ($groupDetails as $detail) {
+                        $html .= '<div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="' . $detail->id . '">
+  <label class="form-check-label" for="inlineRadio1">' . $detail->name . '</label>
+</div>';
+                    }
+
+                }
+
+                # code...
+            }
+        }
     }
 
 }
