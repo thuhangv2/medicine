@@ -375,26 +375,16 @@ class ShopProduct extends Model
 
     public function renderAttDetails()
     {
-
-        $html           = '';
-        return $details = $this->attDetails->groupBy('attribute_id');
-        if ($details) {
-            foreach ($details as $groupKey => $groupDetails) {
-                $group = ShopAttributeGroup::find($groupKey);
-                if ($group->type == 'radio') {
-                    $html .= $group->name;
-                    foreach ($groupDetails as $detail) {
-                        $html .= '<div class="form-check form-check-inline">
-  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="' . $detail->id . '">
-  <label class="form-check-label" for="inlineRadio1">' . $detail->name . '</label>
-</div>';
-                    }
-
-                }
-
-                # code...
+        $html    = '';
+        $details = $this->attDetails->groupBy('attribute_id');
+        $groups  = ShopAttributeGroup::pluck('name', 'id')->all();
+        foreach ($details as $key => $detailsGroup) {
+            $html .= '<br><b><label>' . $groups[$key] . '</label></b>: ';
+            foreach ($detailsGroup as $k => $detail) {
+                $html .= '<label class="radio-inline"><input ' . (($k == 0) ? "checked" : "") . ' type="radio" name="form_attr[' . $key . ']" value="' . $detail->id . '">' . $detail->name . '</label> ';
             }
         }
+        return $html;
     }
 
 }

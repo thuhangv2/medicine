@@ -43,12 +43,21 @@ Route::group([
     $router->resource('shop_promotion', ShopPromotionController::class);
     $router->resource('shop_shipping', ShopShippingController::class);
     $router->resource('shop_api', ShopApiController::class);
-    $router->get('/shop_getInfoUser', 'ShopOrderController@getInfoUser')->name('getInfoUser');
-    $router->get('/shop_getInfoProduct', 'ShopOrderController@getInfoProduct')->name('getInfoProduct');
-    $router->get('/shop_order_edit/{id}', 'ShopOrderController@detailOrder')->name('order_edit_get');
-    $router->post('/shop_order_edit', 'ShopOrderController@postOrderEdit')->name('order_edit_post');
-    $router->any('/shop_order_update', 'ShopOrderController@postOrderUpdate')->name('order_update');
     $router->resource('shop_attribute_group', ShopAttributeGroupController::class);
+
+    $router->group(['prefix' => 'get_info'], function ($router) {
+        $router->get('productInfo', 'ShopOrderController@getInfoProduct')->name('getInfoProduct');
+        $router->get('userInfo', 'ShopOrderController@getInfoUser')->name('getInfoUser');
+        $router->get('itemInfo', 'ShopOrderController@getInfoItem')->name('getInfoItem');
+    });
+
+    $router->group(['prefix' => 'shop_order_edit'], function ($router) {
+        $router->get('/{id}', 'ShopOrderController@detailOrder')->name('order_edit_get');
+        $router->post('/order_add_item', 'ShopOrderController@postAddItem')->name('order_add_item');
+        $router->post('/order_edit_item', 'ShopOrderController@postEditItem')->name('order_edit_item');
+        $router->post('/order_delete_item', 'ShopOrderController@postDeleteItem')->name('order_delete_item');
+        $router->any('/shop_order_update', 'ShopOrderController@postOrderUpdate')->name('order_update');
+    });
 
 //Language
     $router->post('locale/{code}', function ($code) {

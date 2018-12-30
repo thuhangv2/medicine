@@ -11,11 +11,11 @@
   margin: 10px auto;
 }
 .td-title{
-  width: 30%;
+  width: 35%;
   font-weight: bold;
 }
 .td-title-normal{
-  width: 30%;
+  width: 35%;
 }
 </style>
 <div class="container box">
@@ -82,7 +82,7 @@
 @endphp
   <div class="row">
     <div class="col-sm-6">
-      <div class=" table-responsive">
+      <div class="table-responsive">
         <table class="table table-bordered">
             <thead>
               <tr>
@@ -102,10 +102,10 @@
                         <td><span class="item_{{ $item->id }}_name">{{ $item->name }}
                           @php
                           $html = '';
-                            if($item->attribute){
+                            if($item->attribute && is_array(json_decode($item->attribute,true))){
                               $array = json_decode($item->attribute,true);
                                   foreach ($array as $key => $element){
-                                    $html .= '<br><b>'.$key.'</b> : <i>'.implode(',', $element).'</i>';
+                                    $html .= '<br><b>'.$attributesGroup[$key].'</b> : <i>'.$element.'</i>';
                                   }
                             }
                           @endphp
@@ -117,9 +117,9 @@
                         <td>
                           <span style="display: none"  class="item_{{ $item->id }}_price">{{ $item->price }}</span>
                           <span style="display: none"  class="item_{{ $item->id }}_total_price">{{ $item->total_price}}</span>
-                            <button onclick="dataEdit({{ $item->id }});" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#editItem" data-placement="top" rel="tooltip" data-original-title="" title="Edit item"><span class="glyphicon glyphicon-pencil"></span>{{ trans('admin.edit') }}</button>
+                            <button onclick="dataEdit({{ $item->id }});" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#editItem" data-placement="top" rel="tooltip" data-original-title="" title="Edit item"><span class="glyphicon glyphicon-pencil"></span></button>
                              &nbsp;
-                            <button  onclick="dataRemove({{ $item->id }});" class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#removeItem" data-placement="top" rel="tooltip" data-original-title="" title="Remove item"><span class="glyphicon glyphicon-remove"></span>{{ trans('admin.remove') }}</button>
+                            <button  onclick="dataRemove({{ $item->id }});" class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#removeItem" data-placement="top" rel="tooltip" data-original-title="" title="Remove item"><span class="glyphicon glyphicon-remove"></span></button>
                         </td>
                       </tr>
                 @endforeach
@@ -127,8 +127,8 @@
           </table>
         </div>
 
-    <div class="margin10">
-        <button  type="button" class="btn btn-sm btn-success" data-title="Add new" data-toggle="modal" data-target="#addItem" data-placement="top" rel="tooltip" data-original-title="" title="Add new item"><i class="fa fa-plus"></i> {{ trans('language.product.add_product') }}</button>
+    <div class="margin10" id="add-item">
+        <button  type="button" class="btn btn-sm btn-success" id="add-item-button"  title="{ trans('language.product.add_product') }}"><i class="fa fa-plus"></i> {{ trans('language.product.add_product') }}</button>
     </div>
 
 
@@ -156,9 +156,9 @@
                       @if (count($order->history))
                         <table  class="table table-bordered" id="history">
                           <tr>
-                            <td>{{ trans('language.order.history_staff') }}</td>
-                            <td>{{ trans('language.order.history_content') }}</td>
-                            <td>{{ trans('language.order.history_time') }}</td>
+                            <th>{{ trans('language.order.history_staff') }}</th>
+                            <th>{{ trans('language.order.history_content') }}</th>
+                            <th>{{ trans('language.order.history_time') }}</th>
                           </tr>
                         @foreach ($order->history->sortKeysDesc()->all() as $history)
                           <tr>
@@ -209,7 +209,6 @@
 
 
 
-
 <div class="modal fade" id="removeItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -245,7 +244,7 @@
       </div>
       <div class="modal-body">
         <form>
-            <input type="hidden" name="editItem-form" value="">
+            <input type="hidden" name="edit_order" value="">
           <table width="100%">
             <tr>
               <th style="width: 100px;">{{ trans('language.product.sku') }}</th>
@@ -256,13 +255,13 @@
               <th>{{ trans('language.product.attribute') }}</th>
             </tr>
             <tr>
-              <input  type="hidden" name="form_id" value="">
-              <td><input   type="text" disabled class="form_sku form-control" name="form_sku" value=""></td>
-              <td><input  type="text" class="form_name form-control" name="form_name" value=""></td>
-              <td><input type="number" class="form_qty form-control" name="form_qty" value=""></td>
-              <td><input  type="number" class="form_price form-control" name="form_price" value=""></td>
-              <td><input  type="number" disabled class="form_total_price form-control" name="form_total_price" value=""></td>
-              <td><input  type="text" class="form_attr form-control" name="form_attr" value=""></td>
+              <input  type="hidden" class="edit_id" name="edit_id" value="">
+              <td><input   type="text" disabled class="edit_sku form-control" name="edit_sku" value=""></td>
+              <td><input  type="text" class="edit_name form-control" name="edit_name" value=""></td>
+              <td><input type="number" class="edit_qty form-control" name="edit_qty" value=""></td>
+              <td><input  type="number" class="edit_price form-control" name="edit_price" value=""></td>
+              <td><input  type="number" disabled class="edit_total_price form-control" name="edit_total_price" value=""></td>
+              <td><input  type="text" class="edit_attr form-control" name="edit_attr" value=""></td>
             </tr>
           </table>
         </form>
@@ -276,99 +275,137 @@
 </div>
 
 
-<div class="modal fade " id="addItem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg " role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title" id="exampleModalLabel">{{ trans('language.product.add_product') }}</h2>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-            {{ csrf_field() }}
-            <input type="hidden" name="addItem-form" value="{{ $order->id }}">
+@php
+  $selectProduct = '<form id="addItem-form">
+      '.csrf_field().'
           <table width="100%">
+          <input type="hidden" name="add_order" value="'.$order->id.'">
             <tr>
-              <th>{{ trans('language.product.name') }}</th>
-              <th style="width: 150px;">{{ trans('language.product.sku') }}</th>
-              <th style="width: 70px;">{{ trans('language.product.quantity') }}</th>
-              <th>{{ trans('language.product.price') }}</th>
-              <th>{{ trans('language.product.attribute') }}</th>
-              <th style="width: 50px;"></th>
+              <th>'.trans('language.product.name').'</th>
+              <th style="width: 150px;">'.trans('language.product.sku').'</th>
+              <th style="width: 70px;">'.trans('language.product.quantity').'</th>
+              <th>'.trans('language.product.price').'</th>
             </tr>
             <tr>
               <td>
-                <select required onChange="selectProduct($(this));" class="form_id form-control" name="form_id[]">
-                <option value="0">{{ trans('language.order.select_product') }}</option>
-                @foreach ($products as $key => $value)
-                    <option  value="{{ $key }}" >{{ $value }}</option>
-                @endforeach
+                <select required onChange="selectProduct($(this));" class="add_id form-control" name="add_id">
+                <option value="0">'.trans('language.order.select_product').'</option>';
+                foreach ($products as $key => $value){
+  $selectProduct .='<option  value="'.$key.'" >'.$value.'</option>';
+                }
+  $selectProduct .='
               </select>
             </td>
-              <td><input type="text" disabled class="form_sku form-control" name="form_sku[]" value=""></td>
-              <td><input required type="number" class="form_qty form-control" name="form_qty[]" value=""></td>
-              <td><input required type="text" class="form_price form-control" name="form_price[]" value=""></td>
-              <td><input type="text" class="form_attr form-control" name="form_attr[]" value=""></td>
+              <td><input type="text" disabled class="add_sku form-control" name="add_sku" value=""></td>
+              <td><input required type="number" class="add_qty form-control" name="add_qty" value=""></td>
+              <td><input required type="text" class="add_price form-control" name="add_price" value=""></td>
               <td></td>
             </tr>
+          <tr>
+            <td colspan="4" class="add_attr"></td>
+          </tr>
+          </table></form>';
+        $selectProduct = str_replace("\n", '', $selectProduct);
+        $selectProduct = str_replace("\t", '', $selectProduct);
+        $selectProduct = str_replace("\r", '', $selectProduct);
+@endphp
 
-           <tr id="addnew">
-              <td>
-                <p></p>
-                  <button type="button" class="btn btn-sm btn-success" id="more-item"><i class="fa fa-plus"></i> {{ trans('language.order.add_more') }}</button>
-              </td>
-            </tr>
-          </table>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('admin.close') }}</button>
-        <button type="button" class="btn btn-primary" id="addItem-button">{{ trans('admin.new') }}</button>
-      </div>
-    </div>
-  </div>
-</div>
+
+
+
 
 <script type="text/javascript">
-   function dataRemove(id){
-    $('#removeItem [name="form_id"]').val(id);
-  }
 
+
+//Edit item
+//
   function dataEdit(id){
-    $('#editItem [name="editItem-form"]').val({{ $order->id }});
-    $('#editItem .form_id').val($('.item_'+id+'_id').html().toString().replace(/,/g,''));
-    $('#editItem .form_sku').val($('.item_'+id+'_sku').html().toString().replace(/,/g,''));
-    $('#editItem .form_name').val($('.item_'+id+'_name').html().toString().replace(/,/g,''));
-    $('#editItem .form_qty').val($('.item_'+id+'_qty').html().toString().replace(/,/g,''));
-    $('#editItem .form_price').val($('.item_'+id+'_price').html().toString().replace(/,/g,''));
-    $('#editItem .form_attr').val($('.item_'+id+'_attr').html());
-    $('#editItem .form_total_price').val($('.item_'+id+'_total_price').html().toString().replace(/,/g,''));
-    $('#editItem .form_price,#editItem .form_qty').change(function(){
-      $('#editItem .form_total_price').val(
-        parseInt($('#editItem .form_qty').val()) * parseInt($('#editItem .form_price').val())
+        $.ajax({
+            url:'{{ route("getInfoItem") }}',
+            type:'get',
+            dataType:'json',
+            data:{
+                'id':id,
+            },
+            success: function(data){
+              $('#editItem [name="edit_order"]').val(data.order_id);
+              $('#editItem [name="edit_id"]').val(data.id);
+              $('#editItem [name="edit_sku"]').val(data.sku);
+              $('#editItem [name="edit_name"]').val(data.name);
+              $('#editItem [name="edit_qty"]').val(data.qty);
+              $('#editItem [name="edit_price"]').val(data.price);
+              $('#editItem [name="edit_attr"]').val(data.attribute);
+              $('#editItem [name="edit_total_price"]').val(data.total_price);
+            }
+        });
+
+    $('#editItem [name="edit_price"],#editItem [name="edit_qty"]').change(function(){
+      $('#editItem [name="edit_total_price"]').val(
+        parseInt($('#editItem [name="edit_qty"]').val()) * parseInt($('#editItem [name="edit_price"]').val())
         );
     });
   }
 
+    $('#editItem-button').click(function(){
+        $.ajax({
+            url:'{{ route("order_edit_item") }}',
+            type:'post',
+            dataType:'json',
+            data:{
+                'pOrder':$('#editItem [name="edit_order"]').val(),
+                'pId':$('#editItem [name="edit_id"]').val(),
+                'pName':$('#editItem [name="edit_name"]').val(),
+                'pQty':$('#editItem [name="edit_qty"]').val(),
+                'pPrice':$('#editItem [name="edit_price"]').val(),
+                'pAttr':$('#editItem [name="edit_attr"]').val(),
+                '_token': "{{ csrf_token() }}",
+            },
+            success: function(result){
+                if(parseInt(result.error) ==0){
+                    location.reload();
+                }else{
+                    alert(result.msg);
+                }
+            }
+        });
+    });
+//End edit item
 
-  $('#more-item').click(function(){
-    $('tr#addnew').before('<tr><td><select required onChange="selectProduct($(this));" class="form_id form-control" name="form_id[]"><option value="0">{{ trans('language.order.select_product') }}</option>@foreach ($products as $key => $value)<option  value="{{ $key }}" >{{ $value }}</option>@endforeach</select></td><td><input disabled class="form_sku form-control" name="form_sku[]" value=""></td><td><input class="form_qty form-control" name="form_qty[]" value=""></td><td><input class="form_price form-control" name="form_price[]" value=""></td><td><input class="form_attr form-control" name="form_attr[]" value=""></td><td> <span class="glyphicon glyphicon-remove btn btn-danger" onclick="removeItemForm(this);"></span></td></tr>');
-  });
+//Remove item order
+       function dataRemove(id){
+        $('#removeItem [name="form_id"]').val(id);
+      }
 
-    function removeItemForm(element){
-      element.closest('tr').remove();
-    }
+        $('#removeItem-button').click(function(){
+        $.ajax({
+            url:'{{ route("order_delete_item") }}',
+            type:'post',
+            dataType:'json',
+            data:{
+                'pId':$('#removeItem [name="form_id"]').val(),
+                '_token': "{{ csrf_token() }}",
+            },
+            success: function(result){
+                if(parseInt(result.error) ==0){
+                    location.reload();
+                }else{
+                    alert('Error');
+                }
+            }
+        });
+    });
+//End remove item order
 
+
+//Add item
     function selectProduct(element){
         node = element.closest('tr');
         var id = parseInt(node.find('option:selected').eq(0).val());
         if(id == 0){
-            node.find('[name="form_sku[]"]').val('');
-            node.find('[name="form_qty[]"]').eq(0).val('');
-            node.find('[name="form_price[]"]').eq(0).val('');
-            node.find('[name="form_attr[]"]').eq(0).val('');
+            node.find('[name="add_sku"]').val('');
+            node.find('[name="add_qty"]').eq(0).val('');
+            node.find('[name="add_price"]').eq(0).val('');
+            node.next().find('.add_attr').html('');
         }else{
                 $.ajax({
                 url : '{{ route('getInfoProduct') }}',
@@ -379,82 +416,43 @@
                 },
                 success: function(result){
                     var returnedData = JSON.parse(result);
-                    node.find('[name="form_sku[]"]').val(returnedData.sku);
-                    node.find('[name="form_qty[]"]').eq(0).val(1);
-                    node.find('[name="form_price[]"]').eq(0).val(returnedData.price * {!! ($order->exchange_rate)??1 !!});
+                    node.find('[name="add_sku"]').val(returnedData.sku);
+                    node.find('[name="add_qty"]').eq(0).val(1);
+                    node.find('[name="add_price"]').eq(0).val(returnedData.price * {!! ($order->exchange_rate)??1 !!});
+                    node.next().find('.add_attr').eq(0).html(returnedData.renderAttDetails);
                     }
                 });
         }
 
     }
 
-    $('#editItem-button').click(function(){
-        $.ajax({
-            url:'{{ route("order_edit_post") }}',
-            type:'post',
-            dataType:'json',
-            data:{
-                'editItem-form':$('#editItem [name="editItem-form"]').val(),
-                'pId':$('#editItem [name="form_id"]').val(),
-                'pName':$('#editItem [name="form_name"]').val(),
-                'pQty':$('#editItem [name="form_qty"]').val(),
-                'pPrice':$('#editItem [name="form_price"]').val(),
-                'pAttr':$('#editItem [name="form_attr"]').val(),
-                '_token': "{{ csrf_token() }}",
-            },
-            success: function(result){
-                if(parseInt(result.stt) ==1){
-                    location.reload();
-                }else{
-                    alert('Error');
+$('#add-item-button').click(function() {
+  var checkForm = $('#addItem-form').length;
+  if(checkForm){
+              $.ajax({
+                url:'{{ route("order_add_item") }}',
+                type:'post',
+                dataType:'json',
+                data:$('form#addItem-form').serialize(),
+                success: function(result){
+                    if(parseInt(result.error) ==0){
+                        location.reload();
+                        // $('#addItem-form').remove();
+                        // var html = '{!! $selectProduct !!}';
+                        // $(this).before(html);
+                    }else{
+                        alert(result.msg);
+                    }
                 }
-            }
-        });
-    });
+            });
+        }else{
+          var html = '{!! $selectProduct !!}';
+          $('#add-item').before(html);
+        }
 
-        $('#removeItem-button').click(function(){
-        $.ajax({
-            url:'{{ route("order_edit_post") }}',
-            type:'post',
-            dataType:'json',
-            data:{
-                'removeItem-form':1,
-                'pId':$('#removeItem [name="form_id"]').val(),
-                '_token': "{{ csrf_token() }}",
-            },
-            success: function(result){
-                if(parseInt(result.stt) ==1){
-                    location.reload();
-                }else{
-                    alert('Error');
-                }
-            }
-        });
-    });
-
-        $('#addItem-button').click(function(){
-        $.ajax({
-            url:'{{ route("order_edit_post") }}',
-            type:'post',
-            dataType:'json',
-            data:{
-                'addItem-form':$('[name="addItem-form"]').val(),
-                'pId':$('[name="form_id[]"]').serializeArray(),
-                'pQty':$('[name="form_qty[]"]').serializeArray(),
-                'pPrice':$('[name="form_price[]"]').serializeArray(),
-                'pAttr':$('[name="form_attr[]"]').serializeArray(),
-                '_token': "{{ csrf_token() }}",
-
-            },
-            success: function(result){
-                if(parseInt(result.stt) ==1){
-                    location.reload();
-                }else{
-                    alert(result.msg);
-                }
-            }
-        });
-    });
+});
+//End add item
+//
 
 $(document).ready(function() {
     $('.updateInfo').editable({});
@@ -508,15 +506,5 @@ $(document).ready(function() {
     }
     });
 });
-
-
-function toggleIcon(e) {
-    $(e.target)
-        .prev('.panel-heading')
-        .find(".more-less")
-        .toggleClass('glyphicon-plus glyphicon-minus');
-}
-$('.panel-group').on('hidden.bs.collapse', toggleIcon);
-$('.panel-group').on('shown.bs.collapse', toggleIcon);
 
 </script>

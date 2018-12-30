@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Admin\Extensions\ExcelExpoter;
 use App\Http\Controllers\Controller;
+use App\Models\ShopAttributeGroup;
 use App\Models\ShopCurrency;
 use App\Models\ShopOrder;
 use App\Models\ShopOrderDetail;
@@ -36,6 +37,7 @@ class ShopOrderController extends Controller
         $this->statusShipping  = ShopShippingStatus::pluck('name', 'id')->all();
         $this->statusOrder2    = ShopOrderStatus::mapValue();
         $this->statusShipping2 = ShopShippingStatus::mapValue();
+
     }
 
     /**
@@ -253,6 +255,18 @@ class ShopOrderController extends Controller
 
 JS;
     }
+
+    public function show($id)
+    {
+        return Admin::content(function (Content $content) use ($id) {
+            $content->header('');
+            $content->description('');
+            $content->body(Admin::show(ShopOrder::findOrFail($id), function (Show $show) {
+                $show->id('ID');
+            }));
+        });
+    }
+
 /**
  * [getInfoUser description]
  * @param  Request $request [description]
@@ -273,12 +287,29 @@ JS;
         $id  = $request->input('id');
         $sku = $request->input('sku');
         if ($id) {
-            return ShopProduct::find($id)->toJson();
+            $product = ShopProduct::find($id);
         } else {
-            return ShopProduct::where('sku', $sku)->first()->toJson();
+            $product = ShopProduct::where('sku', $sku)->first();
         }
-
+        $arrayReturn                     = $product->toArray();
+        $arrayReturn['renderAttDetails'] = $product->renderAttDetails();
+        return json_encode($arrayReturn);
     }
+/**
+ * [getInfoItem description]
+ * @param  Request $request [description]
+ * @return [type]           [description]
+ */
+    public function getInfoItem(Request $request)
+    {
+        $id = $request->input('id');
+        if ($id) {
+            $item = ShopOrderDetail::find($id);
+        }
+        $arrayReturn = $item->toArray();
+        return json_encode($arrayReturn);
+    }
+
 /**
  * [detailOrder description]
  * @param  [type] $id [description]
@@ -313,6 +344,7 @@ JS;
                 "statusOrder2"    => $this->statusOrder2,
                 "statusShipping2" => $this->statusShipping2,
                 'dataTotal'       => ShopOrderTotal::getTotal($id),
+                'attributesGroup' => ShopAttributeGroup::pluck('name', 'id')->all(),
             ])->render();
     }
 /**
@@ -386,45 +418,44 @@ JS;
     }
 
 /**
- * [postOrderEdit description]
+ * [postAddItem description]
  * @param  Request $request [description]
  * @return [type]           [description]
  */
-    public function postOrderEdit(Request $request)
+    public function postAddItem(Request $request)
     {
-        //Add new item
-        if ((int) $request->input('addItem-form') != 0) {
-            $order_id = (int) $request->input('addItem-form');
-            $pQty     = $request->input('pQty');
-            $pAttr    = $request->input('pAttr');
-            $pId      = $request->input('pId');
-            $pPrice   = $request->input('pPrice');
-            $arrData  = array();
-            $listNew  = array();
-            foreach ($pId as $key => $value) {
-                if ($value['value'] == 0) {
-                    continue;
+        $data     = $request->all();
+        $order_id = $data['add_order'] ?? 0;
+        $pQty     = $data['add_qty'] ?? 0;
+        $pAttr    = $data['add_attr'] ?? null;
+        $pId      = $data['add_id'] ?? 0;
+        $pPrice   = $data['add_price'] ?? 0;
+        $arrData  = array();
+        if ($pId != 0) {
+            $product    = ShopProduct::find($pId);
+            $attDetails = $product->attDetails->pluck('name', 'id')->all();
+            if (is_array($pAttr)) {
+                foreach ($pAttr as $key => $value) {
+                    $pAttr[$key] = $attDetails[$value];
                 }
-
-                $product                  = ShopProduct::find($value['value']);
-                $listNew[$value['value']] = $product->name;
-                $arrData[]                = array(
-                    'order_id'    => $order_id,
-                    'product_id'  => $value['value'],
-                    'name'        => $product->name,
-                    'qty'         => (int) $pQty[$key]['value'],
-                    'option'      => $pAttr[$key]['value'],
-                    'price'       => (int) $pPrice[$key]['value'],
-                    'total_price' => $pPrice[$key]['value'] * (int) $pQty[$key]['value'],
-                    'sku'         => $product->sku,
-                );
+                $pAttr = json_encode($pAttr);
             }
+            $arrData = array(
+                'order_id'    => $order_id,
+                'product_id'  => $pId,
+                'name'        => $product->name,
+                'qty'         => (int) $pQty,
+                'price'       => (int) $pPrice,
+                'total_price' => $pPrice * (int) $pQty,
+                'sku'         => $product->sku,
+                'attribute'   => $pAttr,
+            );
             $rs = (new ShopOrderDetail)->insert($arrData);
 
             //Add history
             $dataHistory = [
                 'order_id' => $order_id,
-                'content'  => 'Add product (' . implode(",", $listNew) . ')',
+                'content'  => 'Add product ' . $product->name,
                 'admin_id' => Admin::user()->id,
                 'add_date' => date('Y-m-d H:i:s'),
             ];
@@ -437,99 +468,97 @@ JS;
             $updateSubTotal = ShopOrderTotal::updateSubTotal($order_id, empty($subtotal) ? 0 : $subtotal);
             //end update total price
             if ($rs && $updateSubTotal === 1) {
-                return json_encode(['stt' => 1, 'msg' => '']);
+                return json_encode(['error' => 0, 'msg' => '']);
             } else {
-                return json_encode(['stt' => 0, 'msg' => 'Error: ' . $updateSubTotal]);
+                return json_encode(['error' => 1, 'msg' => 'Error: ' . $updateSubTotal]);
             }
         }
-        //end add new item
-        //=======================
-
-        //Remove item
-        if ($request->input('removeItem-form') == 1) {
-            $pId        = (int) $request->input('pId');
-            $itemDetail = (new ShopOrderDetail)->where('id', $pId)->first();
-            $order_id   = $itemDetail->order_id;
-            $product_id = $itemDetail->product_id;
-            $qty        = $itemDetail->qty;
-            $rs         = $itemDetail->delete(); //Remove item from shop order detail
-            //Update total price
-            $subtotal = ShopOrderDetail::select(DB::raw('sum(total_price) as subtotal'))
-                ->where('order_id', $order_id)
-                ->first()->subtotal;
-            $updateSubTotal = ShopOrderTotal::updateSubTotal($order_id, empty($subtotal) ? 0 : $subtotal);
-            $item           = ShopProduct::find($product_id);
-            $item->stock    = $item->stock + $qty; // Restore stock
-            $item->sold     = $item->sold - $qty; // Subtract sold
-            $item->save();
-
-            //Add history
-            $dataHistory = [
-                'order_id' => $order_id,
-                'content'  => 'Remove product pID#' . $pId,
-                'admin_id' => Admin::user()->id,
-                'add_date' => date('Y-m-d H:i:s'),
-            ];
-            ShopOrderHistory::insert($dataHistory);
-
-            //end update total price
-            if ($rs && $updateSubTotal === 1) {
-                return json_encode(['stt' => 1, 'msg' => '']);
-            } else {
-                return json_encode(['stt' => 0, 'msg' => 'Error: ' . $updateSubTotal]);
-            }
-        }
-        //end remove Item
-
-        //Edit item
-        if ($request->input('editItem-form') != 0) {
-            $pId      = (int) $request->input('pId');
-            $pQty     = (int) $request->input('pQty');
-            $pPrice   = $request->input('pPrice');
-            $pName    = $request->input('pName');
-            $pAttr    = $request->input('pAttr');
-            $order_id = (int) $request->input('editItem-form');
-            $data     = array(
-                'qty'         => $pQty,
-                'price'       => $pPrice,
-                'name'        => $pName,
-                'total_price' => $pQty * $pPrice,
-                'option'      => $pAttr,
-            );
-            $rs = (new ShopOrderDetail)->updateDetail($pId, $data);
-
-            //Add history
-            $dataHistory = [
-                'order_id' => $order_id,
-                'content'  => trans('language.product.edit_product') . ' #' . $pId,
-                'admin_id' => Admin::user()->id,
-                'add_date' => date('Y-m-d H:i:s'),
-            ];
-            ShopOrderHistory::insert($dataHistory);
-
-            //Update total price
-            $subtotal = ShopOrderDetail::select(DB::raw('sum(total_price) as subtotal'))
-                ->where('order_id', $order_id)
-                ->first()->subtotal;
-            $rs2 = ShopOrderTotal::updateSubTotal($order_id, $subtotal);
-            //end update total price
-            if ($rs && $rs2 === 1) {
-                return json_encode(['stt' => 1, 'msg' => '']);
-            } else {
-                return json_encode(['stt' => 0, 'msg' => 'Error: ' . $rs2]);
-            }
-        }
-        //End edit item
-
     }
-    public function show($id)
+
+/**
+ * [postEditItem description]
+ * @param  Request $request [description]
+ * @return [type]           [description]
+ */
+    public function postEditItem(Request $request)
     {
-        return Admin::content(function (Content $content) use ($id) {
-            $content->header('');
-            $content->description('');
-            $content->body(Admin::show(ShopOrder::findOrFail($id), function (Show $show) {
-                $show->id('ID');
-            }));
-        });
+        $data   = $request->all();
+        $pQty   = $data['pQty'] ?? 0;
+        $pAttr  = $data['pAttr'] ?? null;
+        $pId    = $data['pId'] ?? 0;
+        $pPrice = $data['pPrice'] ?? 0;
+        $pOrder = $data['pOrder'] ?? 0;
+        $pName  = $data['pName'] ?? '';
+        $data   = array(
+            'qty'         => $pQty,
+            'price'       => $pPrice,
+            'name'        => $pName,
+            'total_price' => $pQty * $pPrice,
+            'attribute'   => $pAttr,
+        );
+        try {
+            $rs = (new ShopOrderDetail)->updateDetail($pId, $data);
+            //Add history
+            $dataHistory = [
+                'order_id' => $pOrder,
+                'content'  => trans('language.product.edit_product') . ' #' . $pId . ': Data ' . json_encode($data),
+                'admin_id' => Admin::user()->id,
+                'add_date' => date('Y-m-d H:i:s'),
+            ];
+            ShopOrderHistory::insert($dataHistory);
+
+            //Update total price
+            $subtotal = ShopOrderDetail::select(DB::raw('sum(total_price) as subtotal'))
+                ->where('order_id', $pOrder)
+                ->first()->subtotal;
+            ShopOrderTotal::updateSubTotal($pOrder, $subtotal);
+            //end update total price
+            $arrayReturn = ['error' => 0, 'msg' => ''];
+        } catch (\Exception $e) {
+            $arrayReturn = ['error' => 1, 'msg' => $e->getMessage()];
+        }
+        return json_encode($arrayReturn);
     }
+
+/**
+ * [postDeleteItem description]
+ * @param  Request $request [description]
+ * @return [type]           [description]
+ */
+    public function postDeleteItem(Request $request)
+    {
+        $data       = $request->all();
+        $pId        = $data['pId'] ?? 0;
+        $itemDetail = (new ShopOrderDetail)->where('id', $pId)->first();
+        $order_id   = $itemDetail->order_id;
+        $product_id = $itemDetail->product_id;
+        $qty        = $itemDetail->qty;
+        $rs         = $itemDetail->delete(); //Remove item from shop order detail
+        //Update total price
+        $subtotal = ShopOrderDetail::select(DB::raw('sum(total_price) as subtotal'))
+            ->where('order_id', $order_id)
+            ->first()->subtotal;
+        $updateSubTotal = ShopOrderTotal::updateSubTotal($order_id, empty($subtotal) ? 0 : $subtotal);
+        $item           = ShopProduct::find($product_id);
+        $item->stock    = $item->stock + $qty; // Restore stock
+        $item->sold     = $item->sold - $qty; // Subtract sold
+        $item->save();
+
+        //Add history
+        $dataHistory = [
+            'order_id' => $order_id,
+            'content'  => 'Remove item pID#' . $pId,
+            'admin_id' => Admin::user()->id,
+            'add_date' => date('Y-m-d H:i:s'),
+        ];
+        ShopOrderHistory::insert($dataHistory);
+
+        //end update total price
+        if ($rs && $updateSubTotal === 1) {
+            return json_encode(['error' => 0, 'msg' => '']);
+        } else {
+            return json_encode(['error' => 1, 'msg' => 'Error: ' . $updateSubTotal]);
+        }
+    }
+
 }
