@@ -373,10 +373,15 @@ class ShopProduct extends Model
         return round((($this->price - $this->getPrice()) / $this->price) * 100);
     }
 
+    public function attGroupBy()
+    {
+        return $this->attDetails->groupBy('attribute_id');
+    }
+
     public function renderAttDetails()
     {
         $html    = '';
-        $details = $this->attDetails->groupBy('attribute_id');
+        $details = $this->attGroupBy();
         $groups  = ShopAttributeGroup::pluck('name', 'id')->all();
         foreach ($details as $key => $detailsGroup) {
             $html .= '<br><b><label>' . $groups[$key] . '</label></b>: ';

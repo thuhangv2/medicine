@@ -30,7 +30,7 @@ class Cms extends GeneralController
         );
     }
 
-    public function news_detail($name, $id)
+    public function newsDetail($name, $id)
     {
         $news_currently = CmsNews::find($id);
         if ($news_currently) {

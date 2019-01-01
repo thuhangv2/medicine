@@ -17,7 +17,7 @@ Route::get('index.html', 'Shop@index');
 Route::get('/login.html', 'Shop@showLogin');
 Route::get('/shop/{name}_{id}.html', 'Shop@productToCategory');
 Route::get('/product/{name}_{id}.html', 'Shop@productDetail');
-Route::get('/brand/{name}_{id}/{category?}', 'Shop@product_brands');
+Route::get('/brand/{name}_{id}/{category?}', 'Shop@productBrand');
 Route::get('/profile.html', [
     'middleware' => 'auth',
     'uses'       => 'Shop@profile',
@@ -25,13 +25,13 @@ Route::get('/profile.html', [
 Route::get('/products.html', 'Shop@allProducts');
 Route::get('/wishlist.html', 'Shop@wishlist');
 Route::get('/compare.html', 'Shop@compare');
-Route::get('/cart.html', 'Shop@cart');
-Route::post('/cart.html', 'Shop@cart');
+Route::get('/cart.html', 'Shop@getCart');
+Route::post('/cart.html', 'Shop@postCart')->name('postCart');
 Route::get('/search.html', 'Shop@search');
 Route::get('/removeItem/{id}', 'Shop@removeItem');
-Route::get('/removeItem_wishlist/{id}', 'Shop@removeItem_wishlist');
-Route::get('/removeItem_compare/{id}', 'Shop@removeItem_compare');
-Route::get('/clear-cart', 'Shop@clear_cart');
+Route::get('/removeItemWishlist/{id}', 'Shop@removeItemWishlist')->name('removeItemWishlist');
+Route::get('/removeItemCompare/{id}', 'Shop@removeItemCompare')->name('removeItemCompare');
+Route::get('/clearCart', 'Shop@clearCart')->name('clearCart');
 Route::post('/addToCart', 'Shop@addToCart');
 Route::post('/updateToCart', 'Shop@updateToCart');
 Route::post('/storeOrder', 'Shop@storeOrder');
@@ -45,9 +45,9 @@ Route::post('/contact.html', 'Shop@postContact');
 //======cms==================
 Route::post('/subscribe', 'Cms@emailSubscribe')->name('subscribe');
 Route::get('/news.html', 'Cms@news');
-Route::get('/news/{name}_{id}.html', 'Cms@news_detail');
+Route::get('/news/{name}_{id}.html', 'Cms@newsDetail');
 Route::get('/blogs.html', 'Cms@news');
-Route::get('/blog/{name}_{id}.html', 'Cms@news_detail');
+Route::get('/blog/{name}_{id}.html', 'Cms@newsDetail');
 Route::get('/{key}.html', 'Cms@pages');
 //=====end cms =========
 

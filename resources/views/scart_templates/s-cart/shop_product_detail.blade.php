@@ -8,7 +8,7 @@
               <div class="view-product">
                 <img src="{{ asset($product->getImage()) }}" alt="" />
               </div>
-          @if (count($product->images)>0)
+          @if ($product->images->count())
               <div id="similar-product" class="carousel slide" data-ride="carousel">
                   <!-- Wrapper for slides -->
                   <div class="carousel-inner">
@@ -38,7 +38,7 @@
           @endif
             </div>
 
-        <form id="buy_block" action="{{ action('Shop@cart') }}" method="post">
+        <form id="buy_block" action="{{ route('postCart') }}" method="post">
           {{ csrf_field() }}
           <input type="hidden" name="product_id" value="{{ $product->id }}" />
             <div class="col-sm-7">
@@ -59,6 +59,29 @@
                     {{trans('language.add_to_cart')}}
                   </button>
                 </span>
+                @if ($product->attGroupBy())
+                <div class="form-group">
+                  @foreach ($product->attGroupBy() as $keyAtt => $attributes)
+                    @if ($attributesGroup[$keyAtt]['type'] =='select')
+                    <div class="input-group">
+                      <label>{{ $attributesGroup[$keyAtt]['name'] }}:</label>
+                       <select class="form-control" style="max-width: 100px;" name="attribute[{{ $keyAtt }}]">
+                        @foreach ($attributes as $attribute)
+                          <option value="{{ $attribute->name }}" {{ ($k ==0)?'selected':'' }}> {{ $attribute->name }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    @elseif($attributesGroup[$keyAtt]['type'] =='radio')
+                     <div class="input-group">
+                      <label>{{ $attributesGroup[$keyAtt]['name'] }}:</label><br>
+                      @foreach ($attributes as $k => $attribute)
+                        <label class="radio-inline"><input type="radio" name="attribute[{{ $keyAtt }}]" value="{{ $attribute->name }}" {{ ($k ==0)?'checked':'' }}> {{ $attribute->name }}</label>
+                      @endforeach
+                    </div>
+                    @endif
+                  @endforeach
+                </div>
+                @endif
                 <p><b>Availability:</b>
                 @if ($configs['show_date_available'] && $product->date_available >= date('Y-m-d H:i:s'))
                 {{ $product->date_available }}

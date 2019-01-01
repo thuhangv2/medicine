@@ -33,12 +33,12 @@
     <thead>
       <tr  style="background: #eaebec">
         <th style="width: 50px;">No.</th>
-        <th style="width: 100px;">SKU</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th >Qty</th>
-        <th>Total price</th>
-        <th>Remove</th>
+        <th style="width: 100px;">{{ trans('language.product.sku') }}</th>
+        <th>{{ trans('language.product.name') }}</th>
+        <th>{{ trans('language.product.price') }}</th>
+        <th >{{ trans('language.product.quantity') }}</th>
+        <th>{{ trans('language.product.total_price') }}</th>
+        <th>{{ trans('language.cart.delete') }}</th>
       </tr>
     </thead>
     <tbody>
@@ -52,7 +52,16 @@
         <td >{{ $n }}</td>
         <td>{{ $product->sku }}</td>
         <td>
-            {{ $product->name }}<br>
+            {{ $product->getName() }}<br>
+{{-- Process attributes --}}
+            @if ($item->options->att)
+            (
+                @foreach ($item->options->att as $keyAtt => $att)
+                    <b>{{ $attributesGroup[$keyAtt]['name'] }}</b>: <i>{{ $att }}</i> ;
+                @endforeach
+            )<br>
+            @endif
+{{-- //end Process attributes --}}
             <a href="{{$product->getUrl() }}"><img width="100" src="{{asset($product->getImage())}}" alt=""></a>
         </td>
         <td>{!! $product->showPrice() !!}</td>
@@ -68,10 +77,10 @@
         <tr  style="background: #eaebec">
             <td colspan="7">
                  <div class="pull-left">
-                <button class="btn btn-default" type="button" style="cursor: pointer;padding:10px 30px" onClick="location.href='{{ url('/') }}'"><i class="fa fa-arrow-left"></i> Back</button>
+                <button class="btn btn-default" type="button" style="cursor: pointer;padding:10px 30px" onClick="location.href='{{ url('/') }}'"><i class="fa fa-arrow-left"></i>{{ trans('language.cart.back') }}</button>
                 </div>
                  <div class="pull-right">
-                <a onClick="return confirm('Confirm ?')" href="{{url('clear-cart')}}"><button class="btn" type="button" style="cursor: pointer;padding:10px 30px">Remove all </button></a>
+                <a onClick="return confirm('Confirm ?')" href="{{route('clearCart')}}"><button class="btn" type="button" style="cursor: pointer;padding:10px 30px">{{ trans('language.cart.remove_all') }}</button></a>
                 </div>
             </td>
         </tr>
@@ -85,13 +94,13 @@
             <table class="table  table-bordered table-responsive">
                 <tr>
                     <td class="form-group{{ $errors->has('toname') ? ' has-error' : '' }}">
-                        <label for="phone" class="control-label"><i class="fa fa-user"></i> To name:</label> <input name="toname" type="text" placeholder="To name" value="{{ (Auth::user() && !old('toname'))?Auth::user()->name: old('toname')}}">
+                        <label for="phone" class="control-label"><i class="fa fa-user"></i> {{ trans('language.cart.to_name') }}:</label> <input name="toname" type="text" placeholder="{{ trans('language.cart.to_name') }}" value="{{ (Auth::user() && !old('toname'))?Auth::user()->name: old('toname')}}">
                             @if($errors->has('toname'))
                                 <span class="help-block">{{ $errors->first('toname') }}</span>
                             @endif
                         </td>
                     <td class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
-                        <label for="phone" class="control-label"><i class="fa fa-volume-control-phone"></i> Phone:</label> <input name="phone" type="text" placeholder="Phone" value="{{ (Auth::user() && !old('phone'))?Auth::user()->phone: old('phone')}}">
+                        <label for="phone" class="control-label"><i class="fa fa-volume-control-phone"></i> {{ trans('language.cart.phone') }}:</label> <input name="phone" type="text" placeholder="{{ trans('language.cart.phone') }}" value="{{ (Auth::user() && !old('phone'))?Auth::user()->phone: old('phone')}}">
                             @if($errors->has('phone'))
                                 <span class="help-block">{{ $errors->first('phone') }}</span>
                             @endif
@@ -99,7 +108,7 @@
                 </tr>
                 <tr>
                     <td colspan="2" class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                        <label for="email" class="control-label"><i class="fa fa-user"></i> Email:</label> <input name="email" type="text" placeholder="Email" value="{{ (Auth::user() && !old('email'))?Auth::user()->email: old('email')}}">
+                        <label for="email" class="control-label"><i class="fa fa-user"></i> {{ trans('language.cart.email') }}:</label> <input name="email" type="text" placeholder="{{ trans('language.cart.email') }}" value="{{ (Auth::user() && !old('email'))?Auth::user()->email: old('email')}}">
                             @if($errors->has('email'))
                                 <span class="help-block">{{ $errors->first('email') }}</span>
                             @endif
@@ -108,19 +117,19 @@
                 </tr>
 
                 <tr>
-                    <td class="form-group{{ $errors->has('address1') ? ' has-error' : '' }}"><label for="address1" class="control-label"><i class="fa fa-home"></i> Address 1:</label> <input name="address1" type="text" placeholder="Address 1" value="{{ (Auth::user() && !old('address1'))?Auth::user()->address1: old('address1')}}">
+                    <td class="form-group{{ $errors->has('address1') ? ' has-error' : '' }}"><label for="address1" class="control-label"><i class="fa fa-home"></i> {{ trans('language.cart.address1') }}:</label> <input name="address1" type="text" placeholder="{{ trans('language.cart.address1') }}" value="{{ (Auth::user() && !old('address1'))?Auth::user()->address1: old('address1')}}">
                             @if($errors->has('address1'))
                                 <span class="help-block">{{ $errors->first('address1') }}</span>
                             @endif</td>
-                    <td class="form-group{{ $errors->has('address2') ? ' has-error' : '' }}"><label for="address2" class="control-label"><i class="fa fa-university"></i> Address 2</label><input name="address2" type="text" placeholder="Address 2" value="{{ (Auth::user() && !old('address2'))?Auth::user()->address2: old('address2')}}">
+                    <td class="form-group{{ $errors->has('address2') ? ' has-error' : '' }}"><label for="address2" class="control-label"><i class="fa fa-university"></i> {{ trans('language.cart.address2') }}</label><input name="address2" type="text" placeholder="{{ trans('language.cart.address2') }}" value="{{ (Auth::user() && !old('address2'))?Auth::user()->address2: old('address2')}}">
                             @if($errors->has('address2'))
                                 <span class="help-block">{{ $errors->first('address2') }}</span>
                             @endif</td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <label  class="control-label"><i class="fa fa-file-image-o"></i> Comment:</label>
-                        <textarea rows="5" name="comment" placeholder="Comment...."></textarea>
+                        <label  class="control-label"><i class="fa fa-file-image-o"></i> {{ trans('language.cart.note') }}:</label>
+                        <textarea rows="5" name="comment" placeholder="{{ trans('language.cart.note') }}...."></textarea>
                     </td>
 
                 </tr>

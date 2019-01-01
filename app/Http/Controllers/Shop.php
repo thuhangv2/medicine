@@ -2,6 +2,7 @@
 #app/Http/Controller/Shop.php
 namespace App\Http\Controllers;
 
+use App\Models\ShopAttributeGroup;
 use App\Models\ShopBrand;
 use App\Models\ShopCategory;
 use App\Models\ShopOrder;
@@ -133,6 +134,7 @@ class Shop extends GeneralController
                     'description'        => $product->description,
                     'keyword'            => $this->configsGlobal['keyword'],
                     'product'            => $product,
+                    'attributesGroup'    => ShopAttributeGroup::all()->keyBy('id'),
                     'productsToCategory' => (new ShopCategory)->getProductsToCategory($id = $product->category_id, $limit = $this->configs['product_relation'], $opt = 'random'),
                     'og_image'           => url($product->getImage()),
                 )
@@ -164,24 +166,6 @@ class Shop extends GeneralController
             'orders'      => $orders,
             'statusOrder' => $statusOrder,
         ));
-    }
-
-/**
- * Get list product follow brands
- * @param  int $id brand
- * @return view
- */
-    public function product_brands($name, $id)
-    {
-        $brand = ShopBrand::find($id);
-        return view($this->theme . '.shop_products_list',
-            array(
-                'title'       => $brand->name,
-                'description' => '',
-                'keyword'     => '',
-                'products'    => $brand->products()->paginate(9),
-            )
-        );
     }
 
 /**
@@ -266,7 +250,7 @@ class Shop extends GeneralController
                 $arrDetail['name']        = $value->name;
                 $arrDetail['price']       = \Helper::currencyValue($value->price);
                 $arrDetail['qty']         = $value->qty;
-                $arrDetail['type']        = $value->options->toJson();
+                $arrDetail['attribute']   = ($value->options->att) ? json_encode($value->options->att) : null;
                 $arrDetail['sku']         = $product->sku;
                 $arrDetail['total_price'] = \Helper::currencyValue($value->price) * $value->qty;
                 $arrDetail['created_at']  = date('Y-m-d H:i:s');
@@ -354,9 +338,10 @@ class Shop extends GeneralController
         if (!$request->ajax()) {
             return redirect('/cart.html');
         }
-        $instance = empty($request->get('instance')) ? 'default' : $request->get('instance');
-        $id       = $request->get('id');
-        $product  = ShopProduct::find($id);
+        $instance   = $request->get('instance') ?? 'default';
+        $id         = $request->get('id');
+        $product    = ShopProduct::find($id);
+        $attributes = $request->get('attributes') ?? '';
         if ($instance == 'default') {
             //Cart
             //Condition:
@@ -364,15 +349,15 @@ class Shop extends GeneralController
             //2. Instock or allow order out of stock
             //3. Date availabe
             if ($product->status != 0
-                and ($this->configs['product_preorder'] == 1 || $product->date_available == null || date('Y-m-d H:i:s') >= $product->date_available)
-                and ($this->configs['product_buy_out_of_stock'] || $product->stock)) {
+                && ($this->configs['product_preorder'] == 1 || $product->date_available == null || date('Y-m-d H:i:s') >= $product->date_available)
+                && ($this->configs['product_buy_out_of_stock'] || $product->stock)) {
                 Cart::add(
                     array(
-                        'id'    => $id,
-                        'name'  => $product->name,
-                        'qty'   => 1,
-                        'price' => $product->getPrice($id),
-
+                        'id'        => $id,
+                        'name'      => $product->name,
+                        'qty'       => 1,
+                        'price'     => $product->getPrice($id),
+                        'attribute' => $attributes,
                     )
                 );
             }
@@ -410,8 +395,9 @@ class Shop extends GeneralController
     }
 
 /**
- * [addToCart description]
- * @param Request $request [description]
+ * [updateToCart description]
+ * @param  Request $request [description]
+ * @return [type]           [description]
  */
     public function updateToCart(Request $request)
     {
@@ -437,41 +423,49 @@ class Shop extends GeneralController
 
     }
 /**
- * [cart description]
+ * [postCart description]
  * @param  Request $request [description]
  * @return [type]           [description]
  */
-    public function cart(Request $request)
+    public function postCart(Request $request)
     {
-//===update/ add new item to cart
-        if ($request->isMethod('post')) {
-            $product_id = $request->get('product_id');
-            $opt_sku    = empty($request->get('opt_sku')) ? null : $request->get('opt_sku');
-            $qty        = $request->get('qty');
-            $product    = ShopProduct::find($product_id);
-            //Condition:
-            //Active
-            //In of stock or allow order out of stock
-            //Date availabe
-            if ($product->status != 0 and
-                ($this->configs['product_preorder'] == 1 || $product->date_available == null || date('Y-m-d H:i:s') >= $product->date_available) and
-                ($this->configs['product_display_out_of_stock'] || $product->stock > 0)) {
-                $options = array();
-                if ($opt_sku != $product->sku && $opt_sku) {
-                    $options[] = $opt_sku;
-                }
-                Cart::add(
-                    array(
-                        'id'      => $product_id,
-                        'name'    => $product->name,
-                        'qty'     => $qty,
-                        'price'   => (new ShopProduct)->getPrice($product_id, $opt_sku),
-                        'options' => $options,
-                    )
-                );
+        $data       = $request->all();
+        $product_id = $data['product_id'];
+        $opt_sku    = $data['opt_sku'] ?? null;
+        $attribute  = $data['attribute'] ?? null;
+        $qty        = $data['qty'];
+        $product    = ShopProduct::find($product_id);
+        //Condition:
+        //Active
+        //In of stock or allow order out of stock
+        //Date availabe
+        if ($product->status != 0 &&
+            ($this->configs['product_preorder'] == 1 || $product->date_available == null || date('Y-m-d H:i:s') >= $product->date_available) &&
+            ($this->configs['product_display_out_of_stock'] || $product->stock > 0)) {
+            $options = array();
+            if ($opt_sku != $product->sku && $opt_sku) {
+                $options['opt'] = $opt_sku;
             }
-
+            $options['att'] = $attribute;
+            Cart::add(
+                array(
+                    'id'      => $product_id,
+                    'name'    => $product->name,
+                    'qty'     => $qty,
+                    'price'   => (new ShopProduct)->getPrice($product_id, $opt_sku),
+                    'options' => $options,
+                )
+            );
         }
+        return redirect('/cart.html');
+    }
+
+/**
+ * [getCart description]
+ * @return [type] [description]
+ */
+    public function getCart()
+    {
 //====================================================
         $objects   = array();
         $objects[] = (new ShopOrderTotal)->getShipping();
@@ -484,12 +478,13 @@ class Shop extends GeneralController
         }
         return view($this->theme . '.shop_cart',
             array(
-                'title'       => trans('language.cart_title'),
-                'description' => '',
-                'keyword'     => '',
-                'cart'        => Cart::content(),
-                'dataTotal'   => ShopOrderTotal::processDataTotal($objects),
-                'hasCoupon'   => $hasCoupon,
+                'title'           => trans('language.cart_title'),
+                'description'     => '',
+                'keyword'         => '',
+                'cart'            => Cart::content(),
+                'dataTotal'       => ShopOrderTotal::processDataTotal($objects),
+                'hasCoupon'       => $hasCoupon,
+                'attributesGroup' => ShopAttributeGroup::all()->keyBy('id'),
             )
         );
     }
@@ -530,10 +525,10 @@ class Shop extends GeneralController
     }
 
 /**
- * [clear_cart description]
+ * [clearCart description]
  * @return [type] [description]
  */
-    public function clear_cart()
+    public function clearCart()
     {
         Cart::destroy();
         return redirect('/cart.html');
@@ -655,7 +650,7 @@ class Shop extends GeneralController
  * @param  [type] $id [description]
  * @return [type]     [description]
  */
-    public function removeItem_wishlist($id = null)
+    public function removeItemWishlist($id = null)
     {
         if ($id === null) {
             return redirect('wishlist.html');
@@ -669,11 +664,11 @@ class Shop extends GeneralController
     }
 
 /**
- * [removeItem_compare description]
+ * [removeItemCompare description]
  * @param  [type] $id [description]
  * @return [type]     [description]
  */
-    public function removeItem_compare($id = null)
+    public function removeItemCompare($id = null)
     {
         if ($id === null) {
             return redirect('compare.html');
@@ -757,4 +752,22 @@ class Shop extends GeneralController
         return redirect('cart.html')->with('message', trans('language.order.success'));
     }
 
+/**
+ * [productBrand description]
+ * @param  [type] $name [description]
+ * @param  [type] $id   [description]
+ * @return [type]       [description]
+ */
+    public function productBrand($name, $id)
+    {
+        $brand = ShopBrand::find($id);
+        return view($this->theme . '.shop_products_list',
+            array(
+                'title'       => $brand->name,
+                'description' => '',
+                'keyword'     => '',
+                'products'    => $brand->products()->paginate(9),
+            )
+        );
+    }
 }

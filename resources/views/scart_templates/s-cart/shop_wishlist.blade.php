@@ -38,7 +38,7 @@
         </td>
         <td>{!! $product->showPrice() !!}</td>
         <td>
-            <a onClick="return confirm('Confirm')" title="Remove Item" alt="Remove Item" class="cart_quantity_delete" href="{{url("removeItem_wishlist/$item->rowId")}}"><i class="fa fa-times"></i></a>
+            <a onClick="return confirm('Confirm')" title="Remove Item" alt="Remove Item" class="cart_quantity_delete" href="{{url("removeItemWishlist/$item->rowId")}}"><i class="fa fa-times"></i></a>
         </td>
     </tr>
     @endforeach

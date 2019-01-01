@@ -274,6 +274,15 @@ return [
         'payment_method' => 'Phương thức thanh toán',
         'checkout'       => 'Thanh toán',
         'coupon_empty'   => 'Bạn chưa nhập mã giảm giá!',
+        'delete'         => 'Xóa',
+        'remove_all'     => 'Xóa tất cả',
+        'back'           => 'Trở lại',
+        'to_name'        => 'Người nhận',
+        'phone'          => 'Số điện thoại',
+        'email'          => 'Email',
+        'address1'       => 'Quận/Huyện',
+        'address2'       => 'Số nhà',
+        'note'           => 'Ghi chú đơn hàng',
     ],
 
     'profile'           => [
