@@ -342,7 +342,7 @@ SCRIPT;
 
                 ShopAttributeDetail::where('product_id', $id)->delete();
                 $groups = $form->group;
-                if (count($groups) > 0) {
+                if ($groups > 0) {
                     foreach ($groups as $attID => $group) {
                         foreach ($group['name'] as $key => $value) {
                             if ($value != '') {
