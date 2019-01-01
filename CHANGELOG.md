@@ -1,9 +1,11 @@
 # Release Notes
-## v2.0.5.1 (2018-12-29)
+## v2.0.5.1 (2019-1-1)
 ### Add
 > Product addtributes
 ### Optimize
 > Global config
+### Fixed
+> Error prev versions
 
 
 ## v2.0.5 (2018-12-25)
