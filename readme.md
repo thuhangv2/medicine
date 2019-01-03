@@ -10,11 +10,12 @@
 <a href="https://packagist.org/packages/lanhktc/s-cart"><img src="https://poser.pugx.org/lanhktc/s-cart/v/stable.svg" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/lanhktc/s-cart"><img src="https://poser.pugx.org/lanhktc/s-cart/license.svg" alt="License"></a>
 </p>
-<p align="center"><img src="https://s-cart.org/images/screen/v20423/s-cart-1.jpg"></p>
-<p align="center"><img src="https://s-cart.org/images/screen/v20423/s-cart-2.jpg"></p>
-<p align="center"><img src="https://s-cart.org/images/screen/v20423/s-cart-3.jpg"></p>
-<p align="center"><img src="https://s-cart.org/images/screen/v20423/s-cart-4.jpg"></p>
-<p align="center"><img src="https://s-cart.org/images/screen/v20423/s-cart-5.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v205/s-cart-1.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v205/product-detail.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v205/s-cart-2.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v205/s-cart-3.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v205/s-cart-4.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v205/s-cart-5.jpg"></p>
 
 
 
@@ -22,8 +23,8 @@
 Free Open source E-commerce use Laravel framework for Business
 
 ## Technology
-- Core Laravel framework: https://laravel.com/
-- Laravel-admin : http://laravel-admin.org/
+- Core <a href="https://laravel.com">Laravel Framework 1.5x</a>
+- Back-end <a href="http://laravel-admin.org">Laravel Admin</a>
 - In addition, s-cart also integrates other free open source libraries.
 
 ## List Functions of S-cart
@@ -64,7 +65,7 @@ Free Open source E-commerce use Laravel framework for Business
 
 ## Requirements:
 
-Version 2.0.4, 2.0.3, 2.0.2 & 1.6:
+Version 2.0.5, 2.0.4, 2.0.3, 2.0.2 & 1.6:
 
 > Core laravel framework 5.6. Requirements::
 
