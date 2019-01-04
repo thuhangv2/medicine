@@ -25,6 +25,7 @@ Route::group([
     $router->resource('cms_content', CmsContentController::class);
     $router->resource('cms_news', CmsNewsController::class);
     $router->resource('cms_page', CmsPageController::class);
+    $router->resource('cms_layout', CmsLayoutController::class);
     $router->get('/ckfinder', function () {
         return view('admin.ckfinder');
     });
