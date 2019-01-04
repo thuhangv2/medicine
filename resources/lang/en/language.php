@@ -362,6 +362,7 @@ return [
         'no_secret'           => 'No secret',
     ],
     'attribute'         => [
+        'manager'     => 'Attribute manager',
         'group'       => 'Attribute group',
         'group_name'  => 'Group name',
         'status'      => 'Status',

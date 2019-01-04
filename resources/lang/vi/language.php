@@ -366,6 +366,7 @@ return [
         'no_secret'           => 'Không có khóa bí mật',
     ],
     'attribute'         => [
+        'manager'     => 'Quản lý thuộc tính',
         'group'       => 'Nhóm thuộc tính',
         'group_name'  => 'Tên nhóm',
         'status'      => 'Trạng thái',

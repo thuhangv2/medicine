@@ -23,8 +23,8 @@ class ShopAttributeGroupController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->header('Index')
-            ->description('description')
+            ->header(trans('language.attribute.manager'))
+            ->description(' ')
             ->body($this->grid());
     }
 
@@ -38,8 +38,8 @@ class ShopAttributeGroupController extends Controller
     public function show($id, Content $content)
     {
         return $content
-            ->header('Detail')
-            ->description('description')
+            ->header(trans('language.attribute.manager'))
+            ->description(' ')
             ->body($this->detail($id));
     }
 
@@ -53,8 +53,8 @@ class ShopAttributeGroupController extends Controller
     public function edit($id, Content $content)
     {
         return $content
-            ->header('Edit')
-            ->description('description')
+            ->header(trans('language.attribute.manager'))
+            ->description(' ')
             ->body($this->form()->edit($id));
     }
 
@@ -67,8 +67,8 @@ class ShopAttributeGroupController extends Controller
     public function create(Content $content)
     {
         return $content
-            ->header('Create')
-            ->description('description')
+            ->header(trans('language.attribute.manager'))
+            ->description(' ')
             ->body($this->form());
     }
 
@@ -82,10 +82,10 @@ class ShopAttributeGroupController extends Controller
         $grid = new Grid(new ShopAttributeGroup);
 
         $grid->id('Id');
-        $grid->name('Name');
-        $grid->status('Status');
-        $grid->sort('Sort');
-        $grid->type('Type');
+        $grid->name(trans('language.attribute.group_name'));
+        $grid->status(trans('language.attribute.status'));
+        $grid->sort(trans('language.attribute.sort'));
+        $grid->type(trans('language.attribute.type'));
 
         return $grid;
     }
@@ -101,10 +101,10 @@ class ShopAttributeGroupController extends Controller
         $show = new Show(ShopAttributeGroup::findOrFail($id));
 
         $show->id('Id');
-        $show->name('Name');
-        $show->status('Status');
-        $show->sort('Sort');
-        $show->type('Type');
+        $show->name(trans('language.attribute.group_name'));
+        $show->status(trans('language.attribute.status'));
+        $show->sort(trans('language.attribute.sort'));
+        $show->type(trans('language.attribute.type'));
 
         return $show;
     }
@@ -118,10 +118,10 @@ class ShopAttributeGroupController extends Controller
     {
         $form = new Form(new ShopAttributeGroup);
 
-        $form->text('name', 'Name');
-        $form->switch('status', 'Status');
-        $form->switch('sort', 'Sort');
-        $form->text('type', 'Type');
+        $form->text('name', trans('language.attribute.group_name'))->rules('required');
+        $form->switch('status', trans('language.attribute.status'));
+        $form->number('sort', trans('language.attribute.sort'));
+        $form->select('type', trans('language.attribute.type'))->options(['radio' => 'Radio', 'select' => 'Select'])->rules('required');
 
         return $form;
     }
