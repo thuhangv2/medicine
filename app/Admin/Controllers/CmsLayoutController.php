@@ -135,8 +135,10 @@ class CmsLayoutController extends Controller
         });
         $grid->page_display(trans('language.layout.page_display'))->display(function ($value) use ($arrDisplay) {
             $html = '';
-            foreach ($value as $key => $v) {
-                $html .= '+' . $arrDisplay[$v] . '<br>';
+            if ($value) {
+                foreach ($value as $key => $v) {
+                    $html .= '+' . $arrDisplay[$v] . '<br>';
+                }
             }
             return $html;
         })->style('max-width:200px;word-break:break-all;');
