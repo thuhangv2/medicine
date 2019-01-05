@@ -144,7 +144,7 @@ class CmsLayoutController extends Controller
         })->style('max-width:200px;word-break:break-all;');
         $grid->html('Html')->display(function ($value) {
             return htmlentities($value);
-        });
+        })->style('max-width:200px;word-break:break-all;');
         $grid->status(trans('language.layout.status'))->switch();
         $grid->sort(trans('language.layout.sort'));
 
