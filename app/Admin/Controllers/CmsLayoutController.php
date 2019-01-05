@@ -135,7 +135,7 @@ class CmsLayoutController extends Controller
         });
         $grid->page_display(trans('language.layout.page_display'))->display(function ($value) use ($arrDisplay) {
             $html = '';
-            if ($value) {
+            if (is_array($value)) {
                 foreach ($value as $key => $v) {
                     $html .= '+' . $arrDisplay[$v] . '<br>';
                 }
