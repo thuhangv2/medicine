@@ -35,4 +35,13 @@ class CmsLayout extends Model
         }
 
     }
+
+    public static function getLayout()
+    {
+        return self::where('status', 1)
+            ->orderBy('sort', 'desc')
+            ->get()
+            ->groupBy('position');
+    }
+
 }
