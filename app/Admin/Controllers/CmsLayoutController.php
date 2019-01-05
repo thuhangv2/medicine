@@ -130,7 +130,7 @@ class CmsLayoutController extends Controller
 
         $grid->id('Id');
         $grid->name(trans('language.layout.name'));
-        $grid->position('Position')->display(function ($value) use ($arrPosition) {
+        $grid->position(trans('language.layout.position'))->display(function ($value) use ($arrPosition) {
             return htmlentities($arrPosition[$value]);
         });
         $grid->page_display(trans('language.layout.page_display'))->display(function ($value) use ($arrDisplay) {
