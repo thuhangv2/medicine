@@ -66,8 +66,8 @@ class BannerController extends Controller
         $grid->image(trans('language.admin.image'))->image('', 50);
         $grid->url('URL');
         $grid->html('HTML')->display(function ($text) {
-            return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
-        });
+            return htmlentities($text);
+        })->style('max-width:200px;word-break:break-all;');
         $grid->status(trans('language.admin.status'))->switch();
         $grid->sort(trans('language.admin.sort'))->sortable();
         $grid->disableRowSelector();
