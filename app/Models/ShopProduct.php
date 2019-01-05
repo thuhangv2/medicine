@@ -240,7 +240,7 @@ class ShopProduct extends Model
  */
     public function getCategoryOtherAttribute($category_other)
     {
-        if (is_string($category_other)) {
+        if (is_string($category_other) && $category_other) {
             return explode(',', $category_other);
         } else {
             return $category_other;

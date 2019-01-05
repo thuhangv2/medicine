@@ -15,7 +15,7 @@ class CmsLayout extends Model
      */
     public function getPageDisplayAttribute($page_display)
     {
-        if (is_string($page_display)) {
+        if (is_string($page_display) && $page_display) {
             return explode(',', $page_display);
         } else {
             return $page_display;
