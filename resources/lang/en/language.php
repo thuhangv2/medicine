@@ -374,6 +374,7 @@ return [
         'add_more'    => 'Add more',
     ],
     'layout'            => [
+        'all_page'       => 'All page',
         'manager'        => 'Layout manager',
         'name'           => 'Layout name',
         'position'       => 'Layout position',

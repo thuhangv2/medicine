@@ -379,6 +379,7 @@ return [
     ],
 
     'layout'            => [
+        'all_page'       => 'Tất cả các trang',
         'manager'        => 'Quản lý layout',
         'name'           => 'Tên layout',
         'position'       => 'Vị trí',
