@@ -131,21 +131,21 @@ class CmsLayoutController extends Controller
         $grid->id('Id');
         $grid->name(trans('language.layout.name'));
         $grid->position('Position')->display(function ($value) use ($arrPosition) {
-            if ($value) {
-                return trans('language.layout.all_page');
-            } else {
-                return htmlentities($arrPosition[$value]);
-            }
-
+            return htmlentities($arrPosition[$value]);
         });
         $grid->page_display(trans('language.layout.page_display'))->display(function ($value) use ($arrDisplay) {
-            $html = '';
-            if (is_array($value) && $value) {
-                foreach ($value as $key => $v) {
-                    $html .= '+' . $arrDisplay[$v] . '<br>';
+            if (!$value) {
+                return trans('language.layout.all_page');
+            } else {
+                $html = '';
+                if (is_array($value)) {
+                    foreach ($value as $key => $v) {
+                        $html .= '+' . $arrDisplay[$v] . '<br>';
+                    }
                 }
+                return $html;
             }
-            return $html;
+
         })->style('max-width:200px;word-break:break-all;');
         $grid->html('Html')->display(function ($value) {
             return htmlentities($value);
