@@ -377,4 +377,32 @@ return [
         'no_item'     => 'Không có thuộc tính nào!',
         'add_more'    => 'Thêm thuộc tính',
     ],
+
+    'layout'            => [
+        'manager'        => 'Quản lý layout',
+        'name'           => 'Tên layout',
+        'position'       => 'Vị trí',
+        'page_display'   => 'Trang hiển thị',
+        'status'         => 'Trạng thái',
+        'sort'           => 'Sắp xếp',
+        'header'         => 'Header -  Trong cặp thẻ <head></head>',
+        'top'            => 'Top - Dưới thẻ <body>',
+        'footer'         => 'Footer - Trên thẻ <footer>',
+        'bottom'         => 'Bottom - Trên thẻ </body>',
+        'home'           => 'Trang chủ',
+        'cms_list'       => 'Trang danh sách blog',
+        'cms_detail'     => 'Trang blog chi tiết',
+        'cms_page'       => 'Trang độc lập',
+        'about'          => 'Trang giới thiệu',
+        'contact'        => 'Trang liên hệ',
+        'product_list'   => 'Trang danh sách sản phẩm',
+        'product_detail' => 'Trang chi tiết sản phẩm',
+        'shop_cart'      => 'Trang giỏ hàng',
+        'shop_account'   => 'Trang tài khoản: login, register, forgot..',
+        'shop_profile'   => 'Trang tài khoản khách hàng',
+        'shop_compare'   => 'Trang so sánh sản phẩm',
+        'shop_wishlist'  => 'Trang sản phầm yêu thích',
+
+    ],
+
 ];
