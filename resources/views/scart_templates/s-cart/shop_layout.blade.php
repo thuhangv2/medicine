@@ -12,6 +12,11 @@
     <meta property="og:type" content="Website" />
     <meta property="og:title" content="{{ empty($title)?'':$title }}" />
     <meta property="og:description" content="{{ empty($description)?'':$description }}" />
+  @isset ($layouts['meta'])
+    @foreach ( $layouts['meta']  as $element)
+      {!! $element->html !!}
+    @endforeach
+  @endisset
     <link href="{{ asset($theme_asset.'/css/bootstrap.min.css')}}"" rel="stylesheet">
     <link href="{{ asset($theme_asset.'/css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{ asset($theme_asset.'/css/prettyPhoto.css')}}" rel="stylesheet">

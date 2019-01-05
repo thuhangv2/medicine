@@ -13,6 +13,7 @@ use Encore\Admin\Show;
 class CmsLayoutController extends Controller
 {
     use HasResourceActions;
+    const META   = 'meta';
     const TOP    = 'top';
     const HEADER = 'header';
     const BOTTOM = 'bottom';
@@ -52,6 +53,7 @@ class CmsLayoutController extends Controller
             self::SHOP_WISHLIST  => trans('language.layout.shop_wishlist'),
         ];
         $this->arrPosition = [
+            self::META   => trans('language.layout.meta'),
             self::HEADER => trans('language.layout.header'),
             self::TOP    => trans('language.layout.top'),
             self::BOTTOM => trans('language.layout.bottom'),
