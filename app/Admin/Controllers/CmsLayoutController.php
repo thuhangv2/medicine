@@ -56,8 +56,8 @@ class CmsLayoutController extends Controller
             self::META   => trans('language.layout.meta'),
             self::HEADER => trans('language.layout.header'),
             self::TOP    => trans('language.layout.top'),
-            self::BOTTOM => trans('language.layout.bottom'),
             self::FOOTER => trans('language.layout.footer'),
+            self::BOTTOM => trans('language.layout.bottom'),
         ];
     }
 
