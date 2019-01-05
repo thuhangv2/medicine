@@ -191,7 +191,11 @@ class CmsLayoutController extends Controller
         $form->textarea('html', 'Html');
         $form->switch('status', trans('language.layout.status'));
         $form->number('sort', trans('language.layout.sort'));
-
+        $form->disableViewCheck();
+        $form->disableEditingCheck();
+        $form->tools(function (Form\Tools $tools) {
+            $tools->disableView();
+        });
         return $form;
     }
 }
