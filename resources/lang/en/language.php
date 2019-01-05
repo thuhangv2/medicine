@@ -357,7 +357,7 @@ return [
         'ip_deny'             => 'IPs deny',
         'created_at'          => 'Created at',
         'updated_at'          => 'Updated at',
-        'guide'               => 'Please read document in <a target=_new href="https://s-cart.org/guide.html">HERE</a>',
+        'guide'               => 'Read document in <a target=_new href="https://s-cart.org/guide/api.html">HERE</a>',
         'no_hidden'           => 'No hidden',
         'no_secret'           => 'No secret',
     ],
@@ -398,6 +398,7 @@ return [
         'shop_profile'   => 'Profile page',
         'shop_compare'   => 'Compare page',
         'shop_wishlist'  => 'Wishlist page',
+        'guide'          => 'Read document in <a target=_new href="https://s-cart.org/guide/layout.html">HERE</a>',
 
     ],
 

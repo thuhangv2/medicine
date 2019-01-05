@@ -68,6 +68,7 @@ class CmsLayoutController extends Controller
     public function index(Content $content)
     {
         return $content
+            ->row('<span style="font-size:20px;">' . trans('language.layout.guide') . '</span><br>')
             ->header(trans('language.layout.manager'))
             ->description(' ')
             ->body($this->grid());
@@ -152,7 +153,16 @@ class CmsLayoutController extends Controller
         })->style('max-width:200px;word-break:break-all;');
         $grid->status(trans('language.layout.status'))->switch();
         $grid->sort(trans('language.layout.sort'));
-
+        $grid->disableRowSelector();
+        $grid->disableFilter();
+        $grid->tools(function ($tools) {
+            $tools->disableRefreshButton();
+        });
+        $grid->disableExport();
+        $grid->actions(function ($actions) {
+            $actions->disableView();
+        });
+        $grid->model()->orderBy('id', 'desc');
         return $grid;
     }
 
