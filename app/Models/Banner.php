@@ -17,4 +17,11 @@ class Banner extends Model
         return $path_file . '/' . $this->image;
 
     }
+//Scort
+    public function scopeSort($query, $column = null)
+    {
+        $column = $column ?? 'sort';
+        return $query->orderBy($column, 'asc')->orderBy('id', 'desc');
+    }
+
 }

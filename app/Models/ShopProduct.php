@@ -157,7 +157,7 @@ class ShopProduct extends Model
         if ($opt == 'random') {
             return $query->inRandomOrder()->limit($limit)->get();
         } else {
-            return $query->orderBy('id', 'desc')->limit($limit)->get();
+            return $query->sort()->limit($limit)->get();
         }
     }
 
@@ -169,7 +169,7 @@ class ShopProduct extends Model
                 $sql->where('shop_product_description.name', 'like', '%' . $keyword . '%')
                     ->orWhere('shop_product.sku', 'like', '%' . $keyword . '%');
             })
-            ->orderBy('id', 'desc')
+            ->sort()
             ->paginate($limit);
     }
 
@@ -391,5 +391,10 @@ class ShopProduct extends Model
         }
         return $html;
     }
-
+//Scort
+    public function scopeSort($query, $column = null)
+    {
+        $column = $column ?? 'sort';
+        return $query->orderBy($column, 'asc')->orderBy('id', 'desc');
+    }
 }

@@ -16,7 +16,7 @@ class ShopVendor extends Model
     }
     public static function getVendor()
     {
-        return self::where('status', 1)->orderBy('id', 'desc')->orderBy('sort', 'desc')->get();
+        return self::where('status', 1)->sort()->get();
     }
 
     /**
@@ -37,5 +37,12 @@ class ShopVendor extends Model
         $path_file = config('filesystems.disks.path_file', '');
         return $path_file . '/' . $this->image;
 
+    }
+
+    //Scort
+    public function scopeSort($query, $column = null)
+    {
+        $column = $column ?? 'sort';
+        return $query->orderBy($column, 'asc')->orderBy('id', 'desc');
     }
 }

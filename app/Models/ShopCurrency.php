@@ -178,14 +178,14 @@ class ShopCurrency extends Model
 
     }
 
-    public function scopeSort($query)
-    {
-        return $query->orderBy('sort', 'desc')->orderBy('id', 'desc');
-    }
-
     public static function getAll()
     {
         return self::where('status', 1)->sort()->get();
     }
-
+//Scort
+    public function scopeSort($query, $column = null)
+    {
+        $column = $column ?? 'sort';
+        return $query->orderBy($column, 'asc')->orderBy('id', 'desc');
+    }
 }

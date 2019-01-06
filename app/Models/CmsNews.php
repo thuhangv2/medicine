@@ -26,7 +26,7 @@ class CmsNews extends Model
     }
     public function getItemsNews($limit = null, $opt = null)
     {
-        $query = (new CmsNews)->where('status', 1)->orderBy('sort', 'desc')->orderBy('id', 'desc');
+        $query = (new CmsNews)->where('status', 1)->sort();
         if (!(int) $limit) {
             return $query->get();
         } else
@@ -124,5 +124,10 @@ class CmsNews extends Model
         return $this->getContent();
 
     }
-
+//Scort
+    public function scopeSort($query, $column = null)
+    {
+        $column = $column ?? 'sort';
+        return $query->orderBy($column, 'asc')->orderBy('id', 'desc');
+    }
 }

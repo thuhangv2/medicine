@@ -93,7 +93,7 @@ class CmsCategory extends Model
     {
         $arrChild   = $this->arrChild($id);
         $arrChild[] = $id;
-        $query      = (new CmsContent)->where('status', 1)->whereIn('category_id', $arrChild)->orderBy('sort', 'desc')->orderBy('id', 'desc');
+        $query      = (new CmsContent)->where('status', 1)->whereIn('category_id', $arrChild)->sort();
         if (!(int) $limit) {
             return $query->get();
         } else
@@ -111,7 +111,7 @@ class CmsCategory extends Model
  */
     public static function getCategories($parent)
     {
-        return self::where('status', 1)->where('parent', $parent)->orderBy('sort', 'desc')->orderBy('id', 'desc')->get();
+        return self::where('status', 1)->where('parent', $parent)->sort()->get();
     }
 
 /**
@@ -190,4 +190,10 @@ class CmsCategory extends Model
 
     }
 
+//Scort
+    public function scopeSort($query, $column = null)
+    {
+        $column = $column ?? 'sort';
+        return $query->orderBy($column, 'asc')->orderBy('id', 'desc');
+    }
 }

@@ -65,7 +65,7 @@ class GeneralController extends Controller
         $this->configs       = $configs;
         $this->theme_asset   = 'scart_templates/' . $this->configsGlobal['template'];
         $this->theme         = 'scart_templates.' . $this->configsGlobal['template'];
-        $this->banners       = Banner::where('status', 1)->orderBy('sort', 'desc')->orderBy('id', 'desc')->get();
+        $this->banners       = Banner::where('status', 1)->sort()->get();
         $this->logo          = url($this->path_file . '/' . $this->configsGlobal['logo']);
         $this->brands        = ShopBrand::getBrands();
         $this->categories    = ShopCategory::getCategories(0);

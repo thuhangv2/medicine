@@ -85,7 +85,7 @@ class Shop extends GeneralController
     public function allProducts()
     {
         $products = ShopProduct::where('status', 1)
-            ->orderBy('id', 'desc')->paginate($this->configs['product_list']);
+            ->sort()->paginate($this->configs['product_list']);
         if ($products) {
             return view($this->theme . '.shop_products_list',
                 array(
@@ -158,7 +158,7 @@ class Shop extends GeneralController
     {
         $user        = Auth::user();
         $id          = $user->id;
-        $orders      = ShopOrder::with('orderTotal')->where('user_id', $id)->orderBy('id', 'desc')->get();
+        $orders      = ShopOrder::with('orderTotal')->where('user_id', $id)->sort()->get();
         $statusOrder = ShopOrderStatus::pluck('name', 'id')->all();
         return view($this->theme . '.shop_profile')->with(array(
             'title'       => trans('language.my_profile'),

@@ -101,7 +101,7 @@ class ShopCategory extends Model
         $arrChild[] = $id;
         $query      = (new ShopProduct)->where('status', 1)->whereIn('category_id', $arrChild)
             ->orWhereRaw('category_other like "' . $id . ',%" or category_other like "%,' . $id . '" or category_other like "%,' . $id . ',%"')
-            ->orderBy('sort', 'desc')->orderBy('id', 'desc');
+            ->sort();
         //Hidden product out of stock
         if ((int) Config::select('value')->where('key', 'product_display_out_of_stock')->first()->value == 0) {
             $query = $query->where('stock', '>', 0);
@@ -126,7 +126,7 @@ class ShopCategory extends Model
  */
     public static function getCategories($parent)
     {
-        return self::where('status', 1)->where('parent', $parent)->orderBy('sort', 'desc')->orderBy('id', 'desc')->get();
+        return self::where('status', 1)->where('parent', $parent)->sort()->get();
     }
 
     protected static function boot()
@@ -223,4 +223,12 @@ class ShopCategory extends Model
         return $this->getDescription();
 
     }
+
+//Scort
+    public function scopeSort($query, $column = null)
+    {
+        $column = $column ?? 'sort';
+        return $query->orderBy($column, 'asc')->orderBy('id', 'desc');
+    }
+
 }
