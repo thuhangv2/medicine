@@ -20,6 +20,10 @@ class Localization
 //Set language
         $configsGlobal = \Helper::configsGlobal();
         $languages     = Language::where('status', 1)->get()->keyBy('code');
+        $requestLocale = $request->get('lang');
+        if ($requestLocale) {
+            $detectLocale = $requestLocale;
+        } else
         if (!Session::has('locale')) {
             $detectLocale = empty($configsGlobal['locale']) ? config('app.locale') : $configsGlobal['locale'];
         } else {

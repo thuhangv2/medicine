@@ -83,8 +83,19 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 //================================
 //Language
 Route::get('locale/{code}', function ($code) {
+    $strQuery  = explode('?', url()->previous());
+    $arrParams = [];
+    if (!empty($strQuery[1])) {
+        parse_str($strQuery[1], $arrParams);
+        unset($arrParams['lang']);
+    }
+    if ($arrParams) {
+        $url = url('') . '?' . http_build_query($arrParams);
+    } else {
+        $url = url('');
+    }
     session(['locale' => $code]);
-    return back();
+    return redirect($url);
 });
 //Currency
 Route::get('currency/{code}', function ($code) {

@@ -114,7 +114,7 @@
         <div class="row">
           <div class="col-sm-4">
             <div class="logo pull-left">
-              <a href="{{ url('/') }}"><img style="width: 150px;" src="{{ $logo }}" alt="" /></a>
+              <a href="{{ url('/') }}"><img style="width: 150px;" src="{{ asset($logo) }}" alt="" /></a>
             </div>
           </div>
           <div class="col-sm-8">

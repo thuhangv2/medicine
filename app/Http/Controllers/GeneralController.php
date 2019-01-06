@@ -66,7 +66,7 @@ class GeneralController extends Controller
         $this->theme_asset   = 'scart_templates/' . $this->configsGlobal['template'];
         $this->theme         = 'scart_templates.' . $this->configsGlobal['template'];
         $this->banners       = Banner::where('status', 1)->sort()->get();
-        $this->logo          = url($this->path_file . '/' . $this->configsGlobal['logo']);
+        $this->logo          = $this->path_file . '/' . $this->configsGlobal['logo'];
         $this->brands        = ShopBrand::getBrands();
         $this->categories    = ShopCategory::getCategories(0);
         $this->news          = (new CmsNews)->getItemsNews($limit = 6, $opt = 'paginate');
