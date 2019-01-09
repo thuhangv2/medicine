@@ -90,9 +90,9 @@ Route::get('locale/{code}', function ($code) {
         unset($arrParams['lang']);
     }
     if ($arrParams) {
-        $url = url('') . '?' . http_build_query($arrParams);
+        $url = $strQuery[0] . '?' . http_build_query($arrParams);
     } else {
-        $url = url('');
+        $url = $strQuery[0];
     }
     session(['locale' => $code]);
     return redirect($url);

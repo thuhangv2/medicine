@@ -1,4 +1,5 @@
 # Release Notes
+## v2.0.5.2 (2019-1-9)
 ## v2.0.5.1 (2019-1-1)
 ### Add
 > Product addtributes

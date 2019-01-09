@@ -27,6 +27,10 @@ use Encore\Admin\Grid\Column;
 //Set language
 $configs_global = ConfigGlobal::first();
 $languages      = Language::where('status', 1)->get()->keyBy('code');
+$requestLocale  = $request->get('lang');
+if ($requestLocale) {
+    $detectLocale = $requestLocale;
+} else
 if (!Session::has('locale')) {
     $detectLocale = empty($configs_global['locale']) ? config('app.locale') : $configs_global['locale'];
 } else {
