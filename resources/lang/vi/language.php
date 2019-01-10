@@ -407,5 +407,12 @@ return [
         'guide'          => 'Hướng dẫn sử dụng <a target=_new href="https://s-cart.org/guide/layout.html">Ở Đây</a>',
 
     ],
-
+    'total'             => [
+        'sub_total' => 'Tiền hàng',
+        'total'     => 'Tổng tiền',
+        'shipping'  => 'Phí vẫn chuyển',
+        'discount'  => 'Giảm giá',
+        'received'  => 'Đã nhận',
+        'balance'   => 'Còn lại',
+    ],
 ];

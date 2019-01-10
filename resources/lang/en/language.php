@@ -402,5 +402,12 @@ return [
         'guide'          => 'Read document in <a target=_new href="https://s-cart.org/guide/layout.html">HERE</a>',
 
     ],
-
+    'total'             => [
+        'sub_total' => 'Sub Total',
+        'total'     => 'Total',
+        'shipping'  => 'Shipping Fee',
+        'discount'  => 'Discount',
+        'received'  => 'Received',
+        'balance'   => 'Balance',
+    ],
 ];

@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Models\Config;
+use App\Models\Extension\Shipping as Shipping;
 use App\Models\ShopOrder;
-use App\Models\ShopShipping;
 use Cart;
 use Illuminate\Database\Eloquent\Model;
 use Promocodes;
@@ -28,7 +28,7 @@ class ShopOrderTotal extends Model
 
         //Set subtotal
         $arraySubtotal = [
-            'title' => 'Sub total',
+            'title' => trans('language.total.sub_total'),
             'code'  => 'subtotal',
             'value' => $subtotal,
             'text'  => \Helper::currencyOnlyRender($subtotal, \Helper::currencyCode()),
@@ -44,7 +44,7 @@ class ShopOrderTotal extends Model
             }
         }
         $arrayTotal = array(
-            'title' => 'Total',
+            'title' => trans('language.total.total'),
             'code'  => 'total',
             'value' => $total,
             'text'  => \Helper::currencyOnlyRender($total, \Helper::currencyCode()),
@@ -149,10 +149,10 @@ class ShopOrderTotal extends Model
     public function getShipping()
     {
         $subtotal = Cart::subtotal();
-        $shipping = ShopShipping::find(1);
+        $shipping = Shipping\ShippingStandard::find(1);
         if ($subtotal >= $shipping->free || $shipping->status == 0) {
             $arrShipping = [
-                'title' => 'Shipping',
+                'title' => trans('language.total.shipping'),
                 'code'  => 'shipping',
                 'value' => 0,
                 'text'  => 0,
@@ -160,7 +160,7 @@ class ShopOrderTotal extends Model
             ];
         } else {
             $arrShipping = [
-                'title' => 'Shipping',
+                'title' => trans('language.total.shipping'),
                 'code'  => 'shipping',
                 'value' => $shipping->value,
                 'text'  => $shipping->value,
@@ -178,7 +178,7 @@ class ShopOrderTotal extends Model
         $check            = json_decode(Promocodes::check($coupon, $uID = null, $couponAllowGuest), true);
         if (empty($coupon) || $check['error'] == 1) {
             $arrDiscount = array(
-                'title' => 'Discount',
+                'title' => trans('language.total.discount'),
                 'code'  => 'discount',
                 'value' => 0,
                 'text'  => 0,
@@ -206,7 +206,7 @@ class ShopOrderTotal extends Model
     public function getReceived()
     {
         return array(
-            'title' => 'Received',
+            'title' => trans('language.total.received'),
             'code'  => 'received',
             'value' => 0,
             'text'  => 0,

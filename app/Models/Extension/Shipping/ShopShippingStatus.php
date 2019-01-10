@@ -1,6 +1,6 @@
 <?php
-
-namespace App\Models;
+#App\Models\Extension\Shipping\ShopShippingStatus.php
+namespace App\Models\Extension\Shipping;
 
 use Illuminate\Database\Eloquent\Model;
 
