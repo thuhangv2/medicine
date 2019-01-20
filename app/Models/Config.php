@@ -9,9 +9,9 @@ class Config extends Model
     public $timestamps = false;
     public $table      = 'config';
 
-    public static function getExtensionsShipping($all = null)
+    public static function getExtensionsGroup($group, $all = false)
     {
-        $return = self::where('code', 'module_shipping');
+        $return = self::where('code', $group);
         if (!$all) {
             $return = $return->where('value', 1);
         }
@@ -19,14 +19,5 @@ class Config extends Model
             ->get()->keyBy('key');
         return $return;
     }
-    public static function getExtensionsPayment($all = null)
-    {
-        $return = self::where('code', 'module_payment');
-        if (!$all) {
-            $return = $return->where('value', 1);
-        }
-        $return = $return->orderBy('sort', 'asc')
-            ->get()->keyBy('key');
-        return $return;
-    }
+
 }

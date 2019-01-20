@@ -5,11 +5,10 @@ namespace App\Http\Controllers\Extensions\Shipping;
 use App\Models\Config;
 use App\Models\Extension\Shipping\ShippingStandard as ShippingStandardModel;
 
-//
 class ShippingStandard extends \App\Http\Controllers\Controller
 {
     protected $configKey  = 'ShippingStandard';
-    protected $configCode = 'module_shipping';
+    protected $configCode = 'shipping';
     public $title;
     const ALLOW  = 1;
     const DENIED = 0;
@@ -101,7 +100,9 @@ class ShippingStandard extends \App\Http\Controllers\Controller
 
     public function config()
     {
-        return $this->grid();
+        return view('admin.Extensions.Shipping.ShippingStandard')->with(
+            [
+            ])->render();
     }
 
 }

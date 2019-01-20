@@ -5,7 +5,6 @@ namespace App\Admin\Controllers;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Facades\Admin;
-use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Illuminate\Http\Request;
 
@@ -28,15 +27,15 @@ class ExtensionsController extends Controller
         ];
 
     }
-    public function index($extensionGroup, Content $content)
+    public function index($group, Content $content)
     {
         $action       = request('action');
         $extensionKey = request('extensionKey');
         if ($action == 'config' && $extensionKey != '') {
-            $namespace = $this->namespaceGroup[$extensionGroup] . '\\' . $extensionKey;
+            $namespace = $this->namespaceGroup[$group] . '\\' . $extensionKey;
             $body      = (new $namespace)->config();
         } else {
-            $body = $this->{$extensionGroup}();
+            $body = $this->extensionsGroup($group);
         }
         return $content
             ->header(trans('language.extensions.manager'))
@@ -44,19 +43,18 @@ class ExtensionsController extends Controller
             ->body($body);
     }
 
-    /**
-     * Make a grid builder.
-     *
-     * @return Grid
-     */
-    protected function shipping()
+/**
+ * [extensionsGroup description]
+ * @param  [type] $group [description]
+ * @return [type]        [description]
+ */
+    protected function extensionsGroup($group)
     {
-        $type                = 'shipping';
-        $extensionsInstalled = \Helper::getExtensionsShipping($all = true);
-        $extensions          = \FindClass::extensions($type);
-        $namespace           = $this->namespaceGroup[$type];
-        $title               = trans('language.extensions.' . $type);
-        return $this->render($extensionsInstalled, $extensions, $namespace, $title, $type);
+        $extensionsInstalled = \Helper::getExtensionsGroup($group, $all = true);
+        $extensions          = \FindClass::extensions($group);
+        $namespace           = $this->namespaceGroup[$group];
+        $title               = trans('language.extensions.' . $group);
+        return $this->render($extensionsInstalled, $extensions, $namespace, $title, $group);
     }
 
 /**
@@ -65,10 +63,10 @@ class ExtensionsController extends Controller
  * @param  [type] $extensions          [description]
  * @param  [type] $namespace           [description]
  * @param  [type] $title               [description]
- * @param  [type] $type                [description]
+ * @param  [type] $group                [description]
  * @return [type]                      [description]
  */
-    public function render($extensionsInstalled, $extensions, $namespace, $title, $type)
+    public function render($extensionsInstalled, $extensions, $namespace, $title, $group)
     {
         return view('admin.ExtensionsManager')->with(
             [
@@ -76,41 +74,41 @@ class ExtensionsController extends Controller
                 "namespace"           => $namespace,
                 "extensionsInstalled" => $extensionsInstalled,
                 "extensions"          => $extensions,
-                "type"                => $type,
+                "type"                => $group,
             ])->render();
     }
 
-    public function installExtension(Request $request)
+    public function installExtension()
     {
-        $key       = $request->get('key');
-        $type      = $request->get('type');
+        $key       = request('key');
+        $type      = request('type');
         $namespace = $this->namespaceGroup[$type];
         $class     = $namespace . '\\' . $key;
         $response  = (new $class)->install();
         return json_encode($response);
     }
-    public function uninstallExtension(Request $request)
+    public function uninstallExtension()
     {
-        $key       = $request->get('key');
-        $type      = $request->get('type');
+        $key       = request('key');
+        $type      = request('type');
         $namespace = $this->namespaceGroup[$type];
         $class     = $namespace . '\\' . $key;
         $response  = (new $class)->uninstall();
         return json_encode($response);
     }
-    public function enableExtension(Request $request)
+    public function enableExtension()
     {
-        $key       = $request->get('key');
-        $type      = $request->get('type');
+        $key       = request('key');
+        $type      = request('type');
         $namespace = $this->namespaceGroup[$type];
         $class     = $namespace . '\\' . $key;
         $response  = (new $class)->enable();
         return json_encode($response);
     }
-    public function disableExtension(Request $request)
+    public function disableExtension()
     {
-        $key       = $request->get('key');
-        $type      = $request->get('type');
+        $key       = request('key');
+        $type      = request('type');
         $namespace = $this->namespaceGroup[$type];
         $class     = $namespace . '\\' . $key;
         $response  = (new $class)->disable();

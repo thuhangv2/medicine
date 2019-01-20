@@ -7,21 +7,14 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-                <div class="row">
-                  <div class="col-sm-6"></div>
-                  <div class="col-sm-6"></div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-12">
-                    <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+             <table id="example2" class="table table-bordered table-hover">
                 <thead>
-                <tr role="row">
-                  <th class="sorting_desc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" aria-sort="descending">{{ trans('language.extensions.code') }}</th>
-                  <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">{{ trans('language.extensions.name') }}</th>
-                  <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">{{ trans('language.extensions.sort') }}</th>
-                  <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">{{ trans('language.extensions.status') }}</th>
-                  <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">{{ trans('language.extensions.action') }}</th>
+                <tr>
+                  <th>{{ trans('language.extensions.code') }}</th>
+                  <th>{{ trans('language.extensions.name') }}</th>
+                  <th>{{ trans('language.extensions.sort') }}</th>
+                  <th>{{ trans('language.extensions.status') }}</th>
+                  <th>{{ trans('language.extensions.action') }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -48,19 +41,16 @@
                       }
                     }
                   @endphp
-                    <tr role="row" class="{{ ($key % 2 == 0)?'even':'odd'}}">
-                      <td class="sorting_{{ $key }}">{{ $extension }}</td>
-                      <td class="">{{ (new $extensionClass)->title }}</td>
-                      <td class="">{{ isset($extensionsInstalled[$extension]['sort'])?$extensionsInstalled[$extension]['sort']:'' }}</td>
-                      <td class="">{{ $extensionStatusTitle }}</td>
+                    <tr>
+                      <td>{{ $extension }}</td>
+                      <td>{{ (new $extensionClass)->title }}</td>
+                      <td>{{ isset($extensionsInstalled[$extension]['sort'])?$extensionsInstalled[$extension]['sort']:'' }}</td>
+                      <td>{{ $extensionStatusTitle }}</td>
                       <td>{!! $extensionAction !!}</td>
                     </tr>
                   @endforeach
                 </tbody>
               </table>
-            </div>
-          </div>
-            </div>
             </div>
             <!-- /.box-body -->
           </div>

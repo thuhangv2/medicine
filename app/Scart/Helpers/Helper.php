@@ -83,13 +83,9 @@ class Helper
     //End config
 
     //Extensions
-    public static function getExtensionsShipping($all = false)
+    public static function getExtensionsGroup($group, $all = false)
     {
-        return Config::getExtensionsShipping($all);
-    }
-    public static function getExtensionsPayment($all = false)
-    {
-        return Config::getExtensionsPayment($all);
+        return Config::getExtensionsGroup($group, $all);
     }
     //End Extensions
 }

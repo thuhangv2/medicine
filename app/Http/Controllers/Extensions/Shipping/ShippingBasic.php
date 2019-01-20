@@ -7,7 +7,7 @@ use App\Models\Config;
 class ShippingBasic extends \App\Http\Controllers\Controller
 {
     protected $configKey  = 'ShippingBasic';
-    protected $configCode = 'module_shipping';
+    protected $configCode = 'shipping';
     public $title;
     const ALLOW  = 1;
     const DENIED = 0;

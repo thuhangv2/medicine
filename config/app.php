@@ -250,6 +250,9 @@ return [
             'MAIL_HOST',
             'MAIL_USERNAME',
             'MAIL_PASSWORD',
+            'PAYPAL_CLIENT_ID',
+            'PAYPAL_SECRET',
+            'PAYPAL_MODE',
         ],
 
         '_SERVER' => [
@@ -263,6 +266,10 @@ return [
             'DOCUMENT_ROOT',
             'CONTEXT_DOCUMENT_ROOT',
             'SCRIPT_FILENAME',
+            'PAYPAL_CLIENT_ID',
+            'PAYPAL_SECRET',
+            'PAYPAL_MODE',
+
         ],
         '_POST'   => [
             'password',
