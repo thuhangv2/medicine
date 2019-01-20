@@ -466,11 +466,11 @@ class Shop extends GeneralController
  */
     public function getCart()
     {
-        $moduleShipping = \Helper::getModuleShipping();
+        $moduleShipping = \Helper::getExtensionsShipping();
         $shippingMethod = array();
         foreach ($moduleShipping as $key => $module) {
             $moduleClass                    = '\App\Http\Controllers\Extensions\Shipping\\' . $module['key'];
-            $shippingMethod[$module['key']] = (new $moduleClass)->getShipping();
+            $shippingMethod[$module['key']] = (new $moduleClass)->getData();
         }
 
         // dd($shipping);

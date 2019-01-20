@@ -37,13 +37,13 @@
                         $extensionStatus = 1;
                         $extensionStatusTitle = trans('language.extensions.actived');
                         $extensionAction ='<span onClick="disableExtension($(this),\''.$extension.'\');" title="'.trans('language.extensions.disable').'" type="button" class="btn btn-flat btn-warning btn-flat"><i class="fa fa-power-off"></i></span>&nbsp;
-                              <span title="'.trans('language.extensions.config').'" class="btn btn-flat btn-primary"><i class="fa fa-edit"></i></span>&nbsp;
+                              <a href="'.url()->current().'?action=config&extensionKey='.$extension.'"><span title="'.trans('language.extensions.config').'" class="btn btn-flat btn-primary"><i class="fa fa-gears"></i></span>&nbsp;</a>
                               <span onClick="uninstallExtension($(this),\''.$extension.'\');" title="'.trans('language.extensions.remove').'" class="btn btn-flat btn-danger"><i class="fa fa-trash"></i></span>';
                       }else{
                         $extensionStatus = 0;
                         $extensionStatusTitle = trans('language.extensions.disabled');
                         $extensionAction = '<span onClick="enableExtension($(this),\''.$extension.'\');" title="'.trans('language.extensions.enable').'" type="button" class="btn btn-flat btn-primary"><i class="fa fa-paper-plane"></i></span>&nbsp;
-                              <span title="'.trans('language.extensions.config').'" class="btn btn-flat btn-primary"><i class="fa fa-edit"></i></span>&nbsp;
+                              <a href="'.url()->current().'?action=config&extensionKey='.$extension.'"><span title="'.trans('language.extensions.config').'" class="btn btn-flat btn-primary"><i class="fa fa-gears"></i></span>&nbsp;</a>
                               <span onClick="uninstallExtension($(this),\''.$extension.'\');" title="'.trans('language.extensions.remove').'" class="btn btn-flat btn-danger"><i class="fa fa-trash"></i></span>';
                       }
                     }
@@ -51,7 +51,7 @@
                     <tr role="row" class="{{ ($key % 2 == 0)?'even':'odd'}}">
                       <td class="sorting_{{ $key }}">{{ $extension }}</td>
                       <td class="">{{ (new $extensionClass)->title }}</td>
-                      <td class="">{{ isset($extensionsInstalled[$extension]['sort'])?(int)$extensionsInstalled[$extension]['value']:'' }}</td>
+                      <td class="">{{ isset($extensionsInstalled[$extension]['sort'])?$extensionsInstalled[$extension]['sort']:'' }}</td>
                       <td class="">{{ $extensionStatusTitle }}</td>
                       <td>{!! $extensionAction !!}</td>
                     </tr>

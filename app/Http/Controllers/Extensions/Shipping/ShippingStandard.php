@@ -5,41 +5,42 @@ namespace App\Http\Controllers\Extensions\Shipping;
 use App\Models\Config;
 use App\Models\Extension\Shipping\ShippingStandard as ShippingStandardModel;
 
+//
 class ShippingStandard extends \App\Http\Controllers\Controller
 {
     protected $configKey  = 'ShippingStandard';
     protected $configCode = 'module_shipping';
     public $title;
-    const POSITION_IN_MODULE = 10;
+    const ALLOW  = 1;
+    const DENIED = 0;
 
     public function __construct()
     {
         $this->title = trans('Extensions/Shipping/' . $this->configKey . '.title');
-
     }
 
-    public function getModule()
+    public function getData()
     {
-        return $this->processModule();
+        return $this->processData();
     }
 
-    public function processModule()
+    public function processData()
     {
         $subtotal = \Cart::subtotal();
         $shipping = ShippingStandardModel::find(1);
         if ($subtotal >= $shipping->free) {
             $arrShipping = [
-                'code'  => $this->configKey,
-                'title' => $this->title,
-                'value' => 0,
-                'sort'  => self::POSITION_IN_MODULE,
+                'code'       => $this->configKey,
+                'title'      => $this->title,
+                'value'      => 0,
+                'permission' => self::ALLOW,
             ];
         } else {
             $arrShipping = [
-                'code'  => $this->configKey,
-                'title' => $this->title,
-                'value' => $shipping->value,
-                'sort'  => self::POSITION_IN_MODULE,
+                'code'       => $this->configKey,
+                'title'      => $this->title,
+                'value'      => $shipping->value,
+                'permission' => self::ALLOW,
             ];
 
         }
@@ -97,4 +98,10 @@ class ShippingStandard extends \App\Http\Controllers\Controller
         }
         return $return;
     }
+
+    public function config()
+    {
+        return $this->grid();
+    }
+
 }

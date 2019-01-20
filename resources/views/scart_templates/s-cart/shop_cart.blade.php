@@ -141,7 +141,7 @@
     <div class="col-md-12">
         @foreach ($shippingMethod as $key => $shipping)
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="shippingMethod"  value="{{ $shipping['code'] }}" {{ ($shipping['status'])?'':'disabled' }}>
+              <input class="form-check-input" type="radio" name="shippingMethod"  value="{{ $shipping['code'] }}" {{ ($shipping['permission'])?'':'disabled' }}>
               <label class="form-check-label" for="exampleRadios">
                 {{ $shipping['title'] }} ({{ \Helper::currencyRender($shipping['value']) }})
               </label>

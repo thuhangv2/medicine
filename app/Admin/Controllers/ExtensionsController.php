@@ -28,12 +28,20 @@ class ExtensionsController extends Controller
         ];
 
     }
-    public function index($extension, Content $content)
+    public function index($extensionGroup, Content $content)
     {
+        $action       = request('action');
+        $extensionKey = request('extensionKey');
+        if ($action == 'config' && $extensionKey != '') {
+            $namespace = $this->namespaceGroup[$extensionGroup] . '\\' . $extensionKey;
+            $body      = (new $namespace)->config();
+        } else {
+            $body = $this->{$extensionGroup}();
+        }
         return $content
             ->header(trans('language.extensions.manager'))
             ->description(' ')
-            ->body($this->{$extension}());
+            ->body($body);
     }
 
     /**

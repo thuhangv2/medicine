@@ -12,7 +12,12 @@ use Session;
 
 class ShopOrderTotal extends Model
 {
-    public $table = 'shop_order_total';
+    public $table           = 'shop_order_total';
+    const POSITION_SUBTOTAL = 1;
+    const POSITION_SHIPPING = 10;
+    const POSITION_DISCOUNT = 20;
+    const POSITION_TOTAL    = 100;
+    const POSITION_RECEIVED = 200;
 
 /**
  * [processDataTotal description]
@@ -22,7 +27,6 @@ class ShopOrderTotal extends Model
  */
     public static function processDataTotal(array $objects = [])
     {
-
         $subtotal = \Helper::currencySumCart(Cart::content());
         //You can't use Cart::subtotal(), becase when use currency, Cart::subtotal() may be not equal $subtotal
 
@@ -32,7 +36,7 @@ class ShopOrderTotal extends Model
             'code'  => 'subtotal',
             'value' => $subtotal,
             'text'  => \Helper::currencyOnlyRender($subtotal, \Helper::currencyCode()),
-            'sort'  => 1,
+            'sort'  => self::POSITION_SUBTOTAL,
         ];
         // set total
         $total = $subtotal;
@@ -48,7 +52,7 @@ class ShopOrderTotal extends Model
             'code'  => 'total',
             'value' => $total,
             'text'  => \Helper::currencyOnlyRender($total, \Helper::currencyCode()),
-            'sort'  => 100,
+            'sort'  => self::POSITION_TOTAL,
         );
 
         $objects[] = $arraySubtotal;
@@ -153,18 +157,18 @@ class ShopOrderTotal extends Model
             'code'  => 'shipping',
             'value' => 0,
             'text'  => 0,
-            'sort'  => 10,
+            'sort'  => self::POSITION_SHIPPING,
         ];
         $shippingMethod = session('shippingMethod') ?? '';
         if ($shippingMethod) {
             $moduleClass          = '\App\Http\Controllers\Extensions\Shipping\\' . $shippingMethod;
-            $returnModuleShipping = (new $moduleClass)->getShipping();
+            $returnModuleShipping = (new $moduleClass)->getData();
             $arrShipping          = [
                 'title' => $returnModuleShipping['title'],
                 'code'  => 'shipping',
                 'value' => $returnModuleShipping['value'],
                 'text'  => $returnModuleShipping['value'],
-                'sort'  => 10,
+                'sort'  => self::POSITION_SHIPPING,
             ];
         }
         return $arrShipping;
@@ -182,7 +186,7 @@ class ShopOrderTotal extends Model
                 'code'  => 'discount',
                 'value' => 0,
                 'text'  => 0,
-                'sort'  => 20,
+                'sort'  => self::POSITION_DISCOUNT,
             );
         } else {
             $arrType = [
@@ -197,7 +201,7 @@ class ShopOrderTotal extends Model
                 'code'  => 'discount',
                 'value' => ($value > $subtotal) ? -$subtotal : -$value,
                 'text'  => ($value > $subtotal) ? -$subtotal : -$value,
-                'sort'  => 20,
+                'sort'  => self::POSITION_DISCOUNT,
             );
         }
         return $arrDiscount;
@@ -210,7 +214,7 @@ class ShopOrderTotal extends Model
             'code'  => 'received',
             'value' => 0,
             'text'  => 0,
-            'sort'  => 200,
+            'sort'  => self::POSITION_RECEIVED,
         );
     }
 
