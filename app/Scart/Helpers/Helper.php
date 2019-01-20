@@ -35,6 +35,7 @@ class Helper
             strtolower($str)));
     }
 
+    //Currency
     public static function currencyRender(float $money, $currency = null, $rate = null, $space_between_symbol = false, $useSymbol = true)
     {
         return ShopCurrency::render($money, $currency, $rate, $space_between_symbol, $useSymbol);
@@ -68,6 +69,9 @@ class Helper
     {
         return ShopCurrency::getCurrency();
     }
+    //End currency
+
+    //Value config
     public static function configs()
     {
         return Config::pluck('value', 'key')->all();
@@ -76,5 +80,16 @@ class Helper
     {
         return ConfigGlobal::first();
     }
+    //End config
 
+    //Extensions
+    public static function getExtensionsShipping($all = false)
+    {
+        return Config::getExtensionsShipping($all);
+    }
+    public static function getExtensionsPayment($all = false)
+    {
+        return Config::getExtensionsPayment($all);
+    }
+    //End Extensions
 }

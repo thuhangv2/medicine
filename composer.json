@@ -16,6 +16,7 @@
         "encore/laravel-admin": "^1.5",
         "fideloper/proxy": "^4.0",
         "gloudemans/shoppingcart": "^2.4",
+        "gnugat/nomo-spaco": "~0.4",
         "laravel/framework": "5.6.*",
         "laravel/tinker": "^1.0",
         "maatwebsite/excel": "2.*",

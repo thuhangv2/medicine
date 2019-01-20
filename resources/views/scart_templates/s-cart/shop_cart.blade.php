@@ -88,6 +88,7 @@
   </table>
   </div>
 <form class="shipping_address" id="form-order" role="form" method="POST" action="{{ url('storeOrder') }}">
+
 <div class="row">
     <div class="col-md-6">
             {{ csrf_field() }}
@@ -134,6 +135,23 @@
 
                 </tr>
             </table>
+
+
+<div class="row">
+    <div class="col-md-12">
+        @foreach ($shippingMethod as $key => $shipping)
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="shippingMethod"  value="{{ $shipping['code'] }}" {{ ($shipping['status'])?'':'disabled' }}>
+              <label class="form-check-label" for="exampleRadios">
+                {{ $shipping['title'] }} ({{ \Helper::currencyRender($shipping['value']) }})
+              </label>
+            </div>
+        @endforeach
+    </div>
+</div>
+
+
+
     </div>
     <div class="col-md-6">
         <div class="row">

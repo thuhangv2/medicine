@@ -148,22 +148,22 @@ class ShopOrderTotal extends Model
 
     public function getShipping()
     {
-        $subtotal = Cart::subtotal();
-        $shipping = Shipping\ShippingStandard::find(1);
-        if ($subtotal >= $shipping->free || $shipping->status == 0) {
-            $arrShipping = [
-                'title' => trans('language.total.shipping'),
+        $arrShipping = [
+            'title' => trans('language.total.shipping'),
+            'code'  => 'shipping',
+            'value' => 0,
+            'text'  => 0,
+            'sort'  => 10,
+        ];
+        $shippingMethod = session('shippingMethod') ?? '';
+        if ($shippingMethod) {
+            $moduleClass          = '\App\Http\Controllers\Extensions\Shipping\\' . $shippingMethod;
+            $returnModuleShipping = (new $moduleClass)->getShipping();
+            $arrShipping          = [
+                'title' => $returnModuleShipping['title'],
                 'code'  => 'shipping',
-                'value' => 0,
-                'text'  => 0,
-                'sort'  => 10,
-            ];
-        } else {
-            $arrShipping = [
-                'title' => trans('language.total.shipping'),
-                'code'  => 'shipping',
-                'value' => $shipping->value,
-                'text'  => $shipping->value,
+                'value' => $returnModuleShipping['value'],
+                'text'  => $returnModuleShipping['value'],
                 'sort'  => 10,
             ];
         }

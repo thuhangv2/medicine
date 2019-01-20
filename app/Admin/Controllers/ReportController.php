@@ -1,5 +1,5 @@
 <?php
-#app/Http/Admin/Controllers/Report.php
+#app/Http/Admin/Controllers/ReportController.php
 namespace App\Admin\Controllers;
 
 use App\Admin\Extensions\ExcelExpoter;
@@ -11,7 +11,7 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 
-class Report extends Controller
+class ReportController extends Controller
 {
     use HasResourceActions;
     /**

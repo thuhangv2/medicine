@@ -60,16 +60,26 @@ Route::group([
         $router->put('/shop_order_update', 'ShopOrderController@postOrderUpdate')->name('order_update');
     });
 
+//Extensions
+    $router->group(['prefix' => 'extensions'], function ($router) {
+        $router->get('/{extension}', 'ExtensionsController@index');
+        $router->post('/installExtension', 'ExtensionsController@installExtension')->name('installExtension');
+        $router->post('/uninstallExtension', 'ExtensionsController@uninstallExtension')->name('uninstallExtension');
+        $router->post('/enableExtension', 'ExtensionsController@enableExtension')->name('enableExtension');
+        $router->post('/disableExtension', 'ExtensionsController@disableExtension')->name('disableExtension');
+    });
+//
+
 //Language
     $router->post('locale/{code}', function ($code) {
         \App\Models\ConfigGlobal::first()->update(['locale' => $code]);
         return back();
     });
-    $router->get('/report/{key}', 'Report@index');
-
+//
+    $router->get('/report/{key}', 'ReportController@index');
     //Process Simpe
     $router->prefix('process')->group(function ($router) {
-        $router->any('/productImport', 'Process@importProduct');
+        $router->any('/productImport', 'ProcessController@importProduct');
     });
 
 });

@@ -1,5 +1,5 @@
 <?php
-#app/Http/Admin/Controllers/Process.php
+#app/Http/Admin/Controllers/ProcessController.php
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -12,7 +12,7 @@ use Encore\Admin\Layout\Content;
 use Excel;
 use Illuminate\Http\Request;
 
-class Process extends Controller
+class ProcessController extends Controller
 {
     use HasResourceActions;
     /**

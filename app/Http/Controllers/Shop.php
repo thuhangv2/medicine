@@ -466,7 +466,15 @@ class Shop extends GeneralController
  */
     public function getCart()
     {
-//====================================================
+        $moduleShipping = \Helper::getModuleShipping();
+        $shippingMethod = array();
+        foreach ($moduleShipping as $key => $module) {
+            $moduleClass                    = '\App\Http\Controllers\Extensions\Shipping\\' . $module['key'];
+            $shippingMethod[$module['key']] = (new $moduleClass)->getShipping();
+        }
+
+        // dd($shipping);
+        //====================================================
         $objects   = array();
         $objects[] = (new ShopOrderTotal)->getShipping();
         $objects[] = (new ShopOrderTotal)->getDiscount();
@@ -485,6 +493,8 @@ class Shop extends GeneralController
                 'dataTotal'       => ShopOrderTotal::processDataTotal($objects),
                 'hasCoupon'       => $hasCoupon,
                 'attributesGroup' => ShopAttributeGroup::all()->keyBy('id'),
+                'shippingMethod'  => $shippingMethod,
+
             )
         );
     }

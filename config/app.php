@@ -238,6 +238,7 @@ return [
         //scart
         'Promocodes'   => App\Scart\Promocodes\Facades\Promocodes::class,
         'Helper'       => App\Scart\Helper::class,
+        'FindClass'    => App\Scart\FindClass::class,
     ],
 
     'debug_blacklist' => [
