@@ -14,7 +14,6 @@ Auth::routes();
 //============================
 Route::get('/', 'Shop@index');
 Route::get('index.html', 'Shop@index');
-Route::get('/login.html', 'Shop@showLogin');
 Route::get('/shop/{name}_{id}.html', 'Shop@productToCategory');
 Route::get('/product/{name}_{id}.html', 'Shop@productDetail');
 Route::get('/brand/{name}_{id}/{category?}', 'Shop@productBrand');
