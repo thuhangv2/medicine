@@ -83,9 +83,9 @@ class Helper
     //End config
 
     //Extensions
-    public static function getExtensionsGroup($group, $all = false)
+    public static function getExtensionsGroup($group, $onlyActive = true)
     {
-        return Config::getExtensionsGroup($group, $all);
+        return Config::getExtensionsGroup($group, $onlyActive);
     }
     //End Extensions
 }

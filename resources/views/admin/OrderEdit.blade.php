@@ -128,7 +128,7 @@
         </div>
 
     <div class="margin10" id="add-item">
-        <button  type="button" class="btn btn-sm btn-success" id="add-item-button"  title="{ trans('language.product.add_product') }}"><i class="fa fa-plus"></i> {{ trans('language.product.add_product') }}</button>
+        <button  type="button" class="btn btn-sm btn-success" id="add-item-button"  title="{{trans('language.product.add_product') }}"><i class="fa fa-plus"></i> {{ trans('language.product.add_product') }}</button>
     </div>
 
 
@@ -437,9 +437,6 @@ $('#add-item-button').click(function() {
                 success: function(result){
                     if(parseInt(result.error) ==0){
                         location.reload();
-                        // $('#addItem-form').remove();
-                        // var html = '{!! $selectProduct !!}';
-                        // $(this).before(html);
                     }else{
                         alert(result.msg);
                     }

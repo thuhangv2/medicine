@@ -102,7 +102,23 @@ class ShippingStandard extends \App\Http\Controllers\Controller
     {
         return view('admin.Extensions.Shipping.ShippingStandard')->with(
             [
+                'title' => trans('Extensions/Shipping/' . $this->configKey . '.title'),
+                'data'  => ShippingStandardModel::all(),
             ])->render();
+    }
+
+    public function process($data)
+    {
+        $return = ['error' => 0, 'msg' => ''];
+        if (isset($data['_method']) && strtolower($data['_method']) == 'put') {
+            $process = ShippingStandardModel::where('id', $data['pk'])->update([$data['name'] => $data['value']]);
+        } elseif (isset($data['action']) && strtolower($data['action']) == 'add-new') {
+            $process = ShippingStandardModel::insert(['min_amount' => $data['amount'], 'fee' => $data['fee']]);
+        }
+        if (!$process) {
+            $return = ['error' => 1, 'msg' => 'Error update'];
+        }
+        return $return;
     }
 
 }

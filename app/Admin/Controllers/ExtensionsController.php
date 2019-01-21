@@ -50,7 +50,7 @@ class ExtensionsController extends Controller
  */
     protected function extensionsGroup($group)
     {
-        $extensionsInstalled = \Helper::getExtensionsGroup($group, $all = true);
+        $extensionsInstalled = \Helper::getExtensionsGroup($group, $onlyActive = false);
         $extensions          = \FindClass::extensions($group);
         $namespace           = $this->namespaceGroup[$group];
         $title               = trans('language.extensions.' . $group);
@@ -74,15 +74,15 @@ class ExtensionsController extends Controller
                 "namespace"           => $namespace,
                 "extensionsInstalled" => $extensionsInstalled,
                 "extensions"          => $extensions,
-                "type"                => $group,
+                "group"               => $group,
             ])->render();
     }
 
     public function installExtension()
     {
         $key       = request('key');
-        $type      = request('type');
-        $namespace = $this->namespaceGroup[$type];
+        $group     = request('group');
+        $namespace = $this->namespaceGroup[$group];
         $class     = $namespace . '\\' . $key;
         $response  = (new $class)->install();
         return json_encode($response);
@@ -90,8 +90,8 @@ class ExtensionsController extends Controller
     public function uninstallExtension()
     {
         $key       = request('key');
-        $type      = request('type');
-        $namespace = $this->namespaceGroup[$type];
+        $group     = request('group');
+        $namespace = $this->namespaceGroup[$group];
         $class     = $namespace . '\\' . $key;
         $response  = (new $class)->uninstall();
         return json_encode($response);
@@ -99,8 +99,8 @@ class ExtensionsController extends Controller
     public function enableExtension()
     {
         $key       = request('key');
-        $type      = request('type');
-        $namespace = $this->namespaceGroup[$type];
+        $group     = request('group');
+        $namespace = $this->namespaceGroup[$group];
         $class     = $namespace . '\\' . $key;
         $response  = (new $class)->enable();
         return json_encode($response);
@@ -108,10 +108,18 @@ class ExtensionsController extends Controller
     public function disableExtension()
     {
         $key       = request('key');
-        $type      = request('type');
-        $namespace = $this->namespaceGroup[$type];
+        $group     = request('group');
+        $namespace = $this->namespaceGroup[$group];
         $class     = $namespace . '\\' . $key;
         $response  = (new $class)->disable();
+        return json_encode($response);
+    }
+    public function processExtension($group, $key)
+    {
+        $data      = request()->all();
+        $namespace = $this->namespaceGroup[$group];
+        $class     = $namespace . '\\' . $key;
+        $response  = (new $class)->process($data);
         return json_encode($response);
     }
 }

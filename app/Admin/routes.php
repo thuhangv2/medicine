@@ -62,11 +62,12 @@ Route::group([
 
 //Extensions
     $router->group(['prefix' => 'extensions'], function ($router) {
-        $router->get('/{extensionGroup}', 'ExtensionsController@index');
+        $router->get('/{extensionGroup}', 'ExtensionsController@index')->name('extensionGroup');
         $router->post('/installExtension', 'ExtensionsController@installExtension')->name('installExtension');
         $router->post('/uninstallExtension', 'ExtensionsController@uninstallExtension')->name('uninstallExtension');
         $router->post('/enableExtension', 'ExtensionsController@enableExtension')->name('enableExtension');
         $router->post('/disableExtension', 'ExtensionsController@disableExtension')->name('disableExtension');
+        $router->match(['put', 'post'], '/processExtension/{extensionGroup}/{extension}', 'ExtensionsController@processExtension')->name('processExtension');
     });
 //
 

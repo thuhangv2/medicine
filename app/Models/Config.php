@@ -9,10 +9,16 @@ class Config extends Model
     public $timestamps = false;
     public $table      = 'config';
 
-    public static function getExtensionsGroup($group, $all = false)
+/**
+ * [getExtensionsGroup description]
+ * @param  [type]  $group      [description]
+ * @param  boolean $onlyActive [description]
+ * @return [type]              [description]
+ */
+    public static function getExtensionsGroup($group, $onlyActive = true)
     {
         $return = self::where('code', $group);
-        if (!$all) {
+        if ($onlyActive) {
             $return = $return->where('value', 1);
         }
         $return = $return->orderBy('sort', 'asc')

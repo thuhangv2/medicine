@@ -72,7 +72,7 @@
         data: {
           "_token": "{{ csrf_token() }}",
           "key":key,
-          "type":"{{ $type }}"
+          "group":"{{ $group }}"
         },
         success: function (response) {
           console.log(response);
@@ -95,7 +95,7 @@
         data: {
           "_token": "{{ csrf_token() }}",
           "key":key,
-          "type":"{{ $type }}"
+          "group":"{{ $group }}"
         },
         success: function (response) {
           console.log(response);
@@ -117,7 +117,7 @@
         data: {
           "_token": "{{ csrf_token() }}",
           "key":key,
-          "type":"{{ $type }}"
+          "group":"{{ $group }}"
         },
         success: function (response) {
           console.log(response);
@@ -139,7 +139,7 @@
         data: {
           "_token": "{{ csrf_token() }}",
           "key":key,
-          "type":"{{ $type }}"
+          "group":"{{ $group }}"
         },
         success: function (response) {
           console.log(response);
