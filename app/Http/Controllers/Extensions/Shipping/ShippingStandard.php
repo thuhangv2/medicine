@@ -26,8 +26,8 @@ class ShippingStandard extends \App\Http\Controllers\Controller
     public function processData()
     {
         $subtotal = \Cart::subtotal();
-        $shipping = ShippingStandardModel::find(1);
-        if ($subtotal >= $shipping->free) {
+        $shipping = ShippingStandardModel::first();
+        if ($subtotal >= $shipping->shipping_free) {
             $arrShipping = [
                 'code'       => $this->configKey,
                 'title'      => $this->title,
@@ -38,7 +38,7 @@ class ShippingStandard extends \App\Http\Controllers\Controller
             $arrShipping = [
                 'code'       => $this->configKey,
                 'title'      => $this->title,
-                'value'      => $shipping->value,
+                'value'      => $shipping->fee,
                 'permission' => self::ALLOW,
             ];
 
@@ -57,16 +57,17 @@ class ShippingStandard extends \App\Http\Controllers\Controller
                 [
                     'code'   => $this->configCode,
                     'key'    => $this->configKey,
-                    'sort'   => 0,
-                    'value'  => 1, //Enable extension
+                    'sort'   => 0, // Sort extensions in group
+                    'value'  => 1, //1- Enable extension; 0 - Disable
                     'detail' => 'Extensions/Shipping/' . $this->configKey . '.title',
                 ]
             );
             if (!$process) {
                 $return = ['error' => 1, 'msg' => 'Error when install'];
+            } else {
+                $return = (new ShippingStandardModel)->installExtension();
             }
         }
-
         return $return;
     }
 
@@ -77,6 +78,7 @@ class ShippingStandard extends \App\Http\Controllers\Controller
         if (!$process) {
             $return = ['error' => 1, 'msg' => 'Error when uninstall'];
         }
+        (new ShippingStandardModel)->uninstallExtension();
         return $return;
     }
     public function enable()
@@ -103,18 +105,14 @@ class ShippingStandard extends \App\Http\Controllers\Controller
         return view('admin.Extensions.Shipping.ShippingStandard')->with(
             [
                 'title' => trans('Extensions/Shipping/' . $this->configKey . '.title'),
-                'data'  => ShippingStandardModel::all(),
+                'data'  => ShippingStandardModel::first(),
             ])->render();
     }
 
     public function process($data)
     {
-        $return = ['error' => 0, 'msg' => ''];
-        if (isset($data['_method']) && strtolower($data['_method']) == 'put') {
-            $process = ShippingStandardModel::where('id', $data['pk'])->update([$data['name'] => $data['value']]);
-        } elseif (isset($data['action']) && strtolower($data['action']) == 'add-new') {
-            $process = ShippingStandardModel::insert(['min_amount' => $data['amount'], 'fee' => $data['fee']]);
-        }
+        $return  = ['error' => 0, 'msg' => ''];
+        $process = ShippingStandardModel::where('id', $data['pk'])->update([$data['name'] => $data['value']]);
         if (!$process) {
             $return = ['error' => 1, 'msg' => 'Error update'];
         }

@@ -10,25 +10,17 @@
              <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th width="40%">{{ trans('Extensions/Shipping/ShippingStandard.min_amount') }}</th>
                   <th width="40%">{{ trans('Extensions/Shipping/ShippingStandard.fee') }}</th>
+                  <th width="40%">{{ trans('Extensions/Shipping/ShippingStandard.shipping_free') }}</th>
                 </tr>
                 </thead>
                 <tbody>
-                  @foreach ($data as $key => $record)
                     <tr>
-                      <td><a href="#" class="updateData" data-name="min_amount" data-type="text" data-pk="{{ $record['id'] }}" data-url="{{ route('processExtension',['group'=>'shipping','key'=>'ShippingStandard']) }}" data-title="{{ trans('Extensions/Shipping/ShippingStandard.min_amount') }}">{{ $record['min_amount'] }}</a></td>
-                      <td><a href="#" class="updateData" data-name="fee" data-type="text" data-pk="{{ $record['id'] }}" data-url="{{ route('processExtension',['group'=>'shipping','key'=>'ShippingStandard']) }}" data-title="{{ trans('Extensions/Shipping/ShippingStandard.fee') }}">{{ $record['fee'] }}</a></td>
+                      <td><a href="#" class="updateData" data-name="fee" data-type="text" data-pk="{{ $data['id'] }}" data-url="{{ route('processExtension',['group'=>'shipping','key'=>'ShippingStandard']) }}" data-title="{{ trans('Extensions/Shipping/ShippingStandard.fee') }}">{{ $data['fee'] }}</a></td>
+                      <td><a href="#" class="updateData" data-name="shipping_free" data-type="text" data-pk="{{ $data['id'] }}" data-url="{{ route('processExtension',['group'=>'shipping','key'=>'ShippingStandard']) }}" data-title="{{ trans('Extensions/Shipping/ShippingStandard.shipping_free') }}">{{ $data['shipping_free'] }}</a></td>
                     </tr>
-                  @endforeach
-                  <tr id="add-item"></tr>
                 </tbody>
                 <tfoot>
-                  <tr>
-                    <td colspan="4">
-                          <button  type="button" class="btn btn-sm btn-success" id="add-item-button"  title="{{ trans('Extensions/Shipping/ShippingStandard.add_more') }}"><i class="fa fa-plus"></i> {{ trans('Extensions/Shipping/ShippingStandard.add_more') }}</button>
-                    </td>
-                  </tr>
                 </tfoot>
               </table>
             </div>
@@ -62,34 +54,6 @@ $(document).ready(function() {
         }
     }
     });
-
-});
-
-$('#add-item-button').click(function() {
-  var checkForm = $('#addItem-form').length;
-  if(checkForm){
-              $.ajax({
-                url:'{{ route('processExtension',['group'=>'shipping','key'=>'ShippingStandard']) }}',
-                type:'post',
-                dataType:'json',
-                data:{
-                  'action':'add-new',
-                  'amount': $('#amount').val(),
-                  'fee':$('#fee').val(),
-                  '_token':'{{ csrf_token() }}'
-                },
-                success: function(result){
-                    if(parseInt(result.error) ==0){
-                        location.reload();
-                    }else{
-                        alert(result.msg);
-                    }
-                }
-            });
-        }else{
-          var html = '<tr id="addItem-form"><td><input id="amount" type="number" size="4"></td><td><input id="fee" type="number" size="4"></td><td><span title="{{ trans('Extensions/Shipping/ShippingStandard.min_amount') }}" class="btn btn-flat btn-danger remove"><i class="fa fa-trash"></i></span></td></tr>';
-          $('#add-item').before(html);
-        }
 
 });
 
