@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'title' => 'Shipping TEST',
+    'title' => 'Shipping demo',
 ];

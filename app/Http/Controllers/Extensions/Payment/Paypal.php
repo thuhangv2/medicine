@@ -1,20 +1,22 @@
 <?php
-#app\Http\Controller\Extension\Shipping\ShippingBasic.php
-namespace App\Http\Controllers\Extensions\Shipping;
+#app\Http\Controller\Extension\Payment\Paypal.php
+namespace App\Http\Controllers\Extensions\Payment;
 
 use App\Models\Config;
+use App\Models\Extension\Payment\Paypal as PaypalModel;
+use App\Models\ShopOrderStatus;
 
-class ShippingBasic extends \App\Http\Controllers\Controller
+class Paypal extends \App\Http\Controllers\Controller
 {
-    protected $configKey  = 'ShippingBasic';
-    protected $configCode = 'Shipping';
+    protected $configKey  = 'Paypal';
+    protected $configCode = 'Payment';
     public $title;
     const ALLOW  = 1;
     const DENIED = 0;
+
     public function __construct()
     {
         $this->title = trans('Extensions/' . $this->configCode . '/' . $this->configKey . '.title');
-
     }
 
     public function getData()
@@ -24,13 +26,13 @@ class ShippingBasic extends \App\Http\Controllers\Controller
 
     public function processData()
     {
-        $arrShipping = [
+        $arrPayment = [
             'code'       => $this->configKey,
             'title'      => $this->title,
-            'value'      => 200,
+            'fee'        => 0, //Fee when use this payment method
             'permission' => self::ALLOW,
         ];
-        return $arrShipping;
+        return $arrPayment;
     }
 
     public function install()
@@ -44,16 +46,17 @@ class ShippingBasic extends \App\Http\Controllers\Controller
                 [
                     'code'   => $this->configCode,
                     'key'    => $this->configKey,
-                    'sort'   => 0,
-                    'value'  => 1, //Enable extension
-                    'detail' => $this->title,
+                    'sort'   => 0, // Sort extensions in group
+                    'value'  => 1, //1- Enable extension; 0 - Disable
+                    'detail' => 'Extensions/' . $this->configCode . '/' . $this->configKey . '.title',
                 ]
             );
             if (!$process) {
                 $return = ['error' => 1, 'msg' => 'Error when install'];
+            } else {
+                $return = (new PaypalModel)->installExtension();
             }
         }
-
         return $return;
     }
 
@@ -64,6 +67,7 @@ class ShippingBasic extends \App\Http\Controllers\Controller
         if (!$process) {
             $return = ['error' => 1, 'msg' => 'Error when uninstall'];
         }
+        (new PaypalModel)->uninstallExtension();
         return $return;
     }
     public function enable()
@@ -84,9 +88,27 @@ class ShippingBasic extends \App\Http\Controllers\Controller
         }
         return $return;
     }
+
     public function config()
     {
-        //
+        return view('admin.Extensions.' . $this->configCode . '.' . $this->configKey)->with(
+            [
+                'group'           => $this->configCode,
+                'key'             => $this->configKey,
+                'title'           => $this->title,
+                'jsonStatusOrder' => json_encode(ShopOrderStatus::mapValue()),
+                'data'            => PaypalModel::first(),
+            ])->render();
+    }
+
+    public function process($data)
+    {
+        $return  = ['error' => 0, 'msg' => ''];
+        $process = PaypalModel::where('id', $data['pk'])->update([$data['name'] => $data['value']]);
+        if (!$process) {
+            $return = ['error' => 1, 'msg' => 'Error update'];
+        }
+        return $return;
     }
 
 }

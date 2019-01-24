@@ -1,20 +1,20 @@
 <?php
-#app\Http\Controller\Extension\Shipping\ShippingBasic.php
-namespace App\Http\Controllers\Extensions\Shipping;
+#app\Http\Controller\Extension\Payment\Paypal.php
+namespace App\Http\Controllers\Extensions\Payment;
 
 use App\Models\Config;
 
-class ShippingBasic extends \App\Http\Controllers\Controller
+class COD extends \App\Http\Controllers\Controller
 {
-    protected $configKey  = 'ShippingBasic';
-    protected $configCode = 'Shipping';
+    protected $configKey  = 'COD';
+    protected $configCode = 'Payment';
     public $title;
     const ALLOW  = 1;
     const DENIED = 0;
+
     public function __construct()
     {
         $this->title = trans('Extensions/' . $this->configCode . '/' . $this->configKey . '.title');
-
     }
 
     public function getData()
@@ -24,13 +24,13 @@ class ShippingBasic extends \App\Http\Controllers\Controller
 
     public function processData()
     {
-        $arrShipping = [
+        $arrPayment = [
             'code'       => $this->configKey,
             'title'      => $this->title,
-            'value'      => 200,
+            'fee'        => 0, //Fee when use this payment method
             'permission' => self::ALLOW,
         ];
-        return $arrShipping;
+        return $arrPayment;
     }
 
     public function install()
@@ -44,16 +44,15 @@ class ShippingBasic extends \App\Http\Controllers\Controller
                 [
                     'code'   => $this->configCode,
                     'key'    => $this->configKey,
-                    'sort'   => 0,
-                    'value'  => 1, //Enable extension
-                    'detail' => $this->title,
+                    'sort'   => 0, // Sort extensions in group
+                    'value'  => 1, //1- Enable extension; 0 - Disable
+                    'detail' => 'Extensions/' . $this->configCode . '/' . $this->configKey . '.title',
                 ]
             );
             if (!$process) {
                 $return = ['error' => 1, 'msg' => 'Error when install'];
             }
         }
-
         return $return;
     }
 
@@ -84,9 +83,15 @@ class ShippingBasic extends \App\Http\Controllers\Controller
         }
         return $return;
     }
+
     public function config()
     {
-        //
+//
+    }
+
+    public function process($data)
+    {
+//
     }
 
 }

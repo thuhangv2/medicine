@@ -104,12 +104,12 @@ class ConfigInfoController extends Controller
 
     public function viewSMTPConfig()
     {
-        $paypal = Config::where('code', 'smtp')->orderBy('sort', 'desc')->get();
-        if ($paypal === null) {
+        $configs = Config::where('code', 'smtp')->orderBy('sort', 'desc')->get();
+        if ($configs === null) {
             return trans('language.no_data');
         }
         $fields = [];
-        foreach ($paypal as $key => $field) {
+        foreach ($configs as $key => $field) {
             $data['title']    = $field->detail;
             $data['field']    = $field->key;
             $data['key']      = $field->key;
@@ -147,12 +147,12 @@ class ConfigInfoController extends Controller
 
     public function viewDisplayConfig()
     {
-        $paypal = Config::where('code', 'display')->orderBy('sort', 'desc')->get();
-        if ($paypal === null) {
+        $configs = Config::where('code', 'display')->orderBy('sort', 'desc')->get();
+        if ($configs === null) {
             return trans('language.no_data');
         }
         $fields = [];
-        foreach ($paypal as $key => $field) {
+        foreach ($configs as $key => $field) {
             $data['title']    = $field->detail;
             $data['field']    = $field->key;
             $data['key']      = $field->key;

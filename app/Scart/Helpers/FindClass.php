@@ -15,10 +15,11 @@ class FindClass
 
         return new FqcnRepository($fileRepository, $parserFactory);
     }
-    public static function extensions($type = null)
+    public static function extensions($group = null)
     {
+        $group      = strtolower($group);
         $arrModules = [];
-        $path       = app_path() . '/http/controllers/extensions/' . $type;
+        $path       = app_path() . '/http/controllers/extensions/' . $group;
         $modules    = self::start()->findIn($path);
         if ($modules) {
             foreach ($modules as $key => $module) {
@@ -30,9 +31,10 @@ class FindClass
         return $arrModules;
     }
 
-    public static function findExtensions($type = null, $module = null)
+    public static function findExtensions($group = null, $module = null)
     {
-        $path = app_path() . '/http/controllers/extensions/' . $type;
+        $group = strtolower($group);
+        $path  = app_path() . '/http/controllers/extensions/' . $group;
         if ($module) {
             return self::start()->findInFor($path, $module);
         } else {

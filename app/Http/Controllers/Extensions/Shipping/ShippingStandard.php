@@ -8,14 +8,14 @@ use App\Models\Extension\Shipping\ShippingStandard as ShippingStandardModel;
 class ShippingStandard extends \App\Http\Controllers\Controller
 {
     protected $configKey  = 'ShippingStandard';
-    protected $configCode = 'shipping';
+    protected $configCode = 'Shipping';
     public $title;
     const ALLOW  = 1;
     const DENIED = 0;
 
     public function __construct()
     {
-        $this->title = trans('Extensions/Shipping/' . $this->configKey . '.title');
+        $this->title = trans('Extensions/' . $this->configCode . '/' . $this->configKey . '.title');
     }
 
     public function getData()
@@ -59,7 +59,7 @@ class ShippingStandard extends \App\Http\Controllers\Controller
                     'key'    => $this->configKey,
                     'sort'   => 0, // Sort extensions in group
                     'value'  => 1, //1- Enable extension; 0 - Disable
-                    'detail' => 'Extensions/Shipping/' . $this->configKey . '.title',
+                    'detail' => $this->title,
                 ]
             );
             if (!$process) {
@@ -102,9 +102,11 @@ class ShippingStandard extends \App\Http\Controllers\Controller
 
     public function config()
     {
-        return view('admin.Extensions.Shipping.ShippingStandard')->with(
+        return view('admin.Extensions.' . $this->configCode . '.' . $this->configKey)->with(
             [
-                'title' => trans('Extensions/Shipping/' . $this->configKey . '.title'),
+                'group' => $this->configCode,
+                'key'   => $this->configKey,
+                'title' => $this->title,
                 'data'  => ShippingStandardModel::first(),
             ])->render();
     }

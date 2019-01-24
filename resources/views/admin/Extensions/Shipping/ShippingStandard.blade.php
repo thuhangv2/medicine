@@ -3,7 +3,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">{{ trans('Extensions/Shipping/ShippingStandard.title') }}</h3>
+              <h3 class="box-title">{{ $title }}</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -16,8 +16,8 @@
                 </thead>
                 <tbody>
                     <tr>
-                      <td><a href="#" class="updateData" data-name="fee" data-type="text" data-pk="{{ $data['id'] }}" data-url="{{ route('processExtension',['group'=>'shipping','key'=>'ShippingStandard']) }}" data-title="{{ trans('Extensions/Shipping/ShippingStandard.fee') }}">{{ $data['fee'] }}</a></td>
-                      <td><a href="#" class="updateData" data-name="shipping_free" data-type="text" data-pk="{{ $data['id'] }}" data-url="{{ route('processExtension',['group'=>'shipping','key'=>'ShippingStandard']) }}" data-title="{{ trans('Extensions/Shipping/ShippingStandard.shipping_free') }}">{{ $data['shipping_free'] }}</a></td>
+                      <td><a href="#" class="updateData_num" data-name="fee" data-type="text" data-pk="{{ $data['id'] }}" data-url="{{ route('processExtension',['group'=>'shipping','key'=>'ShippingStandard']) }}" data-title="{{ trans('Extensions/Shipping/ShippingStandard.fee') }}">{{ $data['fee'] }}</a></td>
+                      <td><a href="#" class="updateData_num" data-name="shipping_free" data-type="text" data-pk="{{ $data['id'] }}" data-url="{{ route('processExtension',['group'=>$group,'key'=>$key]) }}" data-title="{{ trans('Extensions/Shipping/ShippingStandard.shipping_free') }}">{{ $data['shipping_free'] }}</a></td>
                     </tr>
                 </tbody>
                 <tfoot>
@@ -36,11 +36,11 @@
 </section>
 <script type="text/javascript">
 $(document).ready(function() {
-    $(".updateData").on("shown", function(e, editable) {
+    $(".updateData_num").on("shown", function(e, editable) {
       var value = $(this).text().replace(/,/g, "");
       editable.input.$input.val(parseInt(value));
     });
-    $('.updateData').editable({
+    $('.updateData_num').editable({
     ajaxOptions: {
     type: 'put',
     dataType: 'json'
