@@ -181,7 +181,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Scart\ScartServiceProvider::class,
-        App\Scart\Promocodes\PromocodesServiceProvider::class,
 
     ],
 
@@ -236,7 +235,6 @@ return [
         'Image'        => Intervention\Image\Facades\Image::class,
         'Excel'        => Maatwebsite\Excel\Facades\Excel::class,
         //scart
-        'Promocodes'   => App\Scart\Promocodes\Facades\Promocodes::class,
         'Helper'       => App\Scart\Helper::class,
         'FindClass'    => App\Scart\FindClass::class,
     ],

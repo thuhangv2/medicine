@@ -9,11 +9,13 @@ class ShippingBasic extends \App\Http\Controllers\Controller
     protected $configKey  = 'ShippingBasic';
     protected $configCode = 'Shipping';
     public $title;
+    public $image;
     const ALLOW  = 1;
     const DENIED = 0;
     public function __construct()
     {
         $this->title = trans('Extensions/' . $this->configCode . '/' . $this->configKey . '.title');
+        $this->image = 'images/Extensions/' . $this->configCode . '/' . $this->configKey . '.png';
 
     }
 
@@ -25,10 +27,11 @@ class ShippingBasic extends \App\Http\Controllers\Controller
     public function processData()
     {
         $arrShipping = [
-            'code'       => $this->configKey,
             'title'      => $this->title,
-            'value'      => 200,
+            'code'       => $this->configKey,
+            'image'      => $this->image,
             'permission' => self::ALLOW,
+            'value'      => 200,
         ];
         return $arrShipping;
     }
@@ -88,5 +91,8 @@ class ShippingBasic extends \App\Http\Controllers\Controller
     {
         //
     }
-
+    public function process($data)
+    {
+//
+    }
 }

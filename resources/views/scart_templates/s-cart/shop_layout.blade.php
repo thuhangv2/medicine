@@ -155,13 +155,13 @@
             </div>
             <div class="mainmenu pull-left">
               <ul class="nav navbar-nav collapse navbar-collapse">
-                <li><a href="{{ url('/') }}" class="active">{{ trans('language.home') }}</a></li>
+                <li><a href="{{ route('home') }}" class="active">{{ trans('language.home') }}</a></li>
                 <li class="dropdown"><a href="#">{{ trans('language.shop') }}<i class="fa fa-angle-down"></i></a>
                     <ul role="menu" class="sub-menu">
-                        <li><a href="{{ url('products.html') }}">{{ trans('language.all_product') }}</a></li>
-                        <li><a href="{{ url('compare.html') }}">{{ trans('language.compare') }}</a></li>
-                        <li><a href="{{ url('cart.html') }}">{{ trans('language.cart_title') }}</a></li>
-                        <li><a href="{{ url('login.html') }}">{{ trans('language.login') }}</a></li>
+                        <li><a href="{{ route('products') }}">{{ trans('language.all_product') }}</a></li>
+                        <li><a href="{{ route('compare') }}">{{ trans('language.compare') }}</a></li>
+                        <li><a href="{{ route('cart') }}">{{ trans('language.cart_title') }}</a></li>
+                        <li><a href="{{ route('login') }}">{{ trans('language.login') }}</a></li>
                     </ul>
                 </li>
                 <li><a href="{{ url('blogs.html') }}">{{ trans('language.blog') }}</a></li>
@@ -172,7 +172,7 @@
           </div>
           <div class="col-sm-3">
             <div class="search_box pull-right">
-              <form id="searchbox" method="get" action="{{ url('search.html') }}" >
+              <form id="searchbox" method="get" action="{{ route('search') }}" >
                 <div class="input-group">
                   <input type="text" class="form-control" placeholder="{{ trans('language.search_form.keyword') }}..." name="keyword">
                 </div>
@@ -483,7 +483,7 @@
                 }
 
         $.ajax({
-            url: '{{ action('Shop@addToCart') }}',
+            url: '{{ route('addToCart') }}',
             type: 'POST',
             dataType: 'json',
             data: {id: id,instance:instance, _token:'{{ csrf_token() }}'},

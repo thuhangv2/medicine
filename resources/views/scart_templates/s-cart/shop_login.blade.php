@@ -11,7 +11,7 @@
                 <div class="col-sm-4 col-sm-offset-1">
                     <div class="login-form"><!--login form-->
                         <h2>Login to your account</h2>
-                        <form action="{{ route('login') }}" method="post"  class="box">
+                        <form action="{{ route('postLogin') }}" method="post"  class="box">
                             {!! csrf_field() !!}
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <label for="email" class="control-label">Your email</label>
@@ -39,7 +39,7 @@
                                 Keep me signed in
                             </span> --}}
                         <p class="lost_password form-group">
-                            <a class="btn btn-link" href="{{ url('forgot.html') }}">
+                            <a class="btn btn-link" href="{{ route('forgot') }}">
                                 Forgot password?
                             </a>
                             <br>
@@ -54,7 +54,7 @@
                 <div class="col-sm-4">
                     <div class="signup-form"><!--sign up form-->
                         <h2>New User Signup!</h2>
-                        <form action="{{url('register')}}" method="post"  class="box">
+                        <form action="{{route('postRegister')}}" method="post"  class="box">
                             {!! csrf_field() !!}
                 <div class="form_content {{ (old('check_red'))?'in':'' }}" id="collapseExample">
                     <div class="form-group{{ $errors->has('reg_name') ? ' has-error' : '' }}">

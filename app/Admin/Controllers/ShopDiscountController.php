@@ -3,7 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Scart\Promocodes\Models\Promocode;
+use App\Models\Extension\Total\Discount as DiscountModel;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
@@ -11,7 +11,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class ShopPromotionController extends Controller
+class ShopDiscountController extends Controller
 {
     use HasResourceActions;
 
@@ -76,7 +76,7 @@ class ShopPromotionController extends Controller
      */
     protected function grid()
     {
-        return Admin::grid(Promocode::class, function (Grid $grid) {
+        return Admin::grid(DiscountModel::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
             $grid->code(trans('language.promotion.code'));
@@ -98,11 +98,15 @@ class ShopPromotionController extends Controller
             $grid->number_uses(trans('language.promotion.maximum'));
             $grid->used(trans('language.promotion.used'));
             $grid->users(trans('language.promotion.history'))->expand(function () {
-                $dataPromo = Promocode::find($this->id);
-                $html      = '<br>';
-                foreach ($dataPromo->users as $key => $value) {
-                    $html .= '<span style="padding-left:20px;"><i class="fa fa-angle-double-right"></i> ' . trans('language.promotion.customer') . ' ID' . $value->pivot->user_id . trans('language.promotion.used_at') . $value->pivot->used_at . '.  ' . trans('language.promotion.content') . ': ' . $value->pivot->log . '</span><br>';
+                $html      = '';
+                $dataPromo = DiscountModel::find($this->id);
+                if ($dataPromo) {
+                    $html = '<br>';
+                    foreach ($dataPromo->users as $key => $value) {
+                        $html .= '<span style="padding-left:20px;"><i class="fa fa-angle-double-right"></i> ' . trans('language.promotion.customer') . ' ID' . $value->pivot->user_id . trans('language.promotion.used_at') . $value->pivot->used_at . '.  ' . trans('language.promotion.content') . ': ' . $value->pivot->log . '</span><br>';
+                    }
                 }
+
                 return $html . "<br>";
             }, trans('language.promotion.history'));
             $grid->status()->switch();
@@ -121,9 +125,9 @@ class ShopPromotionController extends Controller
      */
     protected function form()
     {
-        return Admin::form(Promocode::class, function (Form $form) {
+        return Admin::form(DiscountModel::class, function (Form $form) {
             $form->text('code', trans('language.promotion.code'))->rules(function ($form) {
-                return 'required|regex:/(^([0-9A-Za-z\-]+)$)/|unique:promocodes,code,' . $form->model()->id . ',id';
+                return 'required|regex:/(^([0-9A-Za-z\-]+)$)/|unique:shop_discount,code,' . $form->model()->id . ',id';
             }, ['unique' => trans('language.promotion.exist'), 'regex' => trans('language.promotion.validate')])->placeholder(trans('language.promotion.example') . ' SAVEOFF2018,SAVE50,...')->help(trans('language.promotion.validate'));
 
             $form->number('reward', trans('language.promotion.value'))->rules('numeric|min:0');
@@ -145,7 +149,7 @@ class ShopPromotionController extends Controller
         return Admin::content(function (Content $content) use ($id) {
             $content->header('');
             $content->description('');
-            $content->body(Admin::show(Promocode::findOrFail($id), function (Show $show) {
+            $content->body(Admin::show(DiscountModel::findOrFail($id), function (Show $show) {
                 $show->id('ID');
             }));
         });

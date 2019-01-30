@@ -41,16 +41,16 @@ Route::group([
     $router->resource('shop_payment_status', ShopPaymentStatusController::class);
     $router->resource('shop_shipping_status', ShopShipingStatusController::class);
     $router->resource('shop_special_price', ShopSpecialPriceController::class);
-    $router->resource('shop_promotion', ShopPromotionController::class);
-    $router->resource('shop_shipping', ShopShippingController::class);
     $router->resource('shop_api', ShopApiController::class);
     $router->resource('shop_attribute_group', ShopAttributeGroupController::class);
 
+//Get info
     $router->group(['prefix' => 'get_info'], function ($router) {
         $router->get('productInfo', 'ShopOrderController@getInfoProduct')->name('getInfoProduct');
         $router->get('userInfo', 'ShopOrderController@getInfoUser')->name('getInfoUser');
         $router->get('itemInfo', 'ShopOrderController@getInfoItem')->name('getInfoItem');
     });
+//
 
     $router->group(['prefix' => 'shop_order_edit'], function ($router) {
         $router->get('/{id}', 'ShopOrderController@detailOrder')->name('order_edit_get');
@@ -69,6 +69,9 @@ Route::group([
         $router->post('/disableExtension', 'ExtensionsController@disableExtension')->name('disableExtension');
         $router->match(['put', 'post'], '/processExtension/{extensionGroup}/{extension}', 'ExtensionsController@processExtension')->name('processExtension');
     });
+    //Extension Total/Discount
+    $router->resource('shop_discount', ShopDiscountController::class)->names('configDiscount');
+
 //
 
 //Language
@@ -77,10 +80,11 @@ Route::group([
         return back();
     });
 //
-    $router->get('/report/{key}', 'ReportController@index');
-    //Process Simpe
+
+//Process Simpe
     $router->prefix('process')->group(function ($router) {
         $router->any('/productImport', 'ProcessController@importProduct');
     });
 
+    $router->get('/report/{key}', 'ReportController@index');
 });

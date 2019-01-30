@@ -10,12 +10,14 @@ class ShippingStandard extends \App\Http\Controllers\Controller
     protected $configKey  = 'ShippingStandard';
     protected $configCode = 'Shipping';
     public $title;
+    public $image;
     const ALLOW  = 1;
     const DENIED = 0;
 
     public function __construct()
     {
         $this->title = trans('Extensions/' . $this->configCode . '/' . $this->configKey . '.title');
+        $this->image = 'images/Extensions/' . $this->configCode . '/' . $this->configKey . '.png';
     }
 
     public function getData()
@@ -29,17 +31,19 @@ class ShippingStandard extends \App\Http\Controllers\Controller
         $shipping = ShippingStandardModel::first();
         if ($subtotal >= $shipping->shipping_free) {
             $arrShipping = [
-                'code'       => $this->configKey,
                 'title'      => $this->title,
-                'value'      => 0,
+                'code'       => $this->configKey,
+                'image'      => $this->image,
                 'permission' => self::ALLOW,
+                'value'      => 0,
             ];
         } else {
             $arrShipping = [
-                'code'       => $this->configKey,
                 'title'      => $this->title,
-                'value'      => $shipping->fee,
+                'code'       => $this->configKey,
+                'image'      => $this->image,
                 'permission' => self::ALLOW,
+                'value'      => $shipping->fee,
             ];
 
         }

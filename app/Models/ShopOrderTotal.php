@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\Config;
 use App\Models\Extension\Shipping as Shipping;
 use App\Models\ShopOrder;
 use Cart;
 use Illuminate\Database\Eloquent\Model;
-use Promocodes;
 use Session;
 
 class ShopOrderTotal extends Model
@@ -38,14 +36,20 @@ class ShopOrderTotal extends Model
             'text'  => \Helper::currencyOnlyRender($subtotal, \Helper::currencyCode()),
             'sort'  => self::POSITION_SUBTOTAL,
         ];
+
         // set total
         $total = $subtotal;
         foreach ($objects as $key => $object) {
-            $objects[$key]['value'] = \Helper::currencyValue($object['value']);
-            $objects[$key]['text']  = \Helper::currencyRender($object['value']);
-            if ($object['code'] != 'received') {
-                $total += \Helper::currencyValue($object['value']);
+            if ($object) {
+                $objects[$key]['value'] = \Helper::currencyValue($object['value']);
+                $objects[$key]['text']  = \Helper::currencyRender($object['value']);
+                if ($object['code'] != 'received') {
+                    $total += \Helper::currencyValue($object['value']);
+                }
+            } else {
+                unset($objects[$key]);
             }
+
         }
         $arrayTotal = array(
             'title' => trans('language.total.total'),
@@ -152,13 +156,7 @@ class ShopOrderTotal extends Model
 
     public function getShipping()
     {
-        $arrShipping = [
-            'title' => trans('language.total.shipping'),
-            'code'  => 'shipping',
-            'value' => 0,
-            'text'  => 0,
-            'sort'  => self::POSITION_SHIPPING,
-        ];
+        $arrShipping    = [];
         $shippingMethod = session('shippingMethod') ?? '';
         if ($shippingMethod) {
             $moduleClass          = '\App\Http\Controllers\Extensions\Shipping\\' . $shippingMethod;
@@ -174,35 +172,43 @@ class ShopOrderTotal extends Model
         return $arrShipping;
     }
 
+    public function getPayment()
+    {
+        $arrPayment    = [];
+        $paymentMethod = session('paymentMethod') ?? '';
+        if ($paymentMethod) {
+            $moduleClass         = '\App\Http\Controllers\Extensions\Payment\\' . $paymentMethod;
+            $returnModulePayment = (new $moduleClass)->getData();
+            $arrPayment          = [
+                'title'  => $returnModulePayment['title'],
+                'method' => $paymentMethod,
+            ];
+        }
+        return $arrPayment;
+    }
+
     public function getDiscount()
     {
-        $configs          = Config::pluck('value', 'code')->all();
-        $couponAllowGuest = empty($configs['coupon_allow_guest']) ? false : true;
-        $coupon           = session('coupon');
-        $check            = json_decode(Promocodes::check($coupon, $uID = null, $couponAllowGuest), true);
-        if (empty($coupon) || $check['error'] == 1) {
-            $arrDiscount = array(
-                'title' => trans('language.total.discount'),
+        $arrDiscount = [];
+        $arrDiscount = array(
+            'title' => trans('language.total.discount'),
+            'code'  => 'discount',
+            'value' => 0,
+            'text'  => 0,
+            'sort'  => self::POSITION_DISCOUNT,
+        );
+
+        $Discount = session('Discount') ?? '';
+        if ($Discount) {
+            $moduleClass          = '\App\Http\Controllers\Extensions\Total\\' . $Discount;
+            $returnModuleDiscount = (new $moduleClass)->getData();
+            $arrDiscount          = [
+                'title' => $returnModuleDiscount['title'],
                 'code'  => 'discount',
-                'value' => 0,
-                'text'  => 0,
+                'value' => $returnModuleDiscount['value'],
+                'text'  => $returnModuleDiscount['value'],
                 'sort'  => self::POSITION_DISCOUNT,
-            );
-        } else {
-            $arrType = [
-                '0' => 'Cash',
-                '1' => 'Point',
-                '2' => '%',
             ];
-            $subtotal    = Cart::subtotal();
-            $value       = ($check['content']['type'] == '2') ? floor($subtotal * $check['content']['reward'] / 100) : $check['content']['reward'];
-            $arrDiscount = array(
-                'title' => '<b>Code:</b> ' . $coupon . '',
-                'code'  => 'discount',
-                'value' => ($value > $subtotal) ? -$subtotal : -$value,
-                'text'  => ($value > $subtotal) ? -$subtotal : -$value,
-                'sort'  => self::POSITION_DISCOUNT,
-            );
         }
         return $arrDiscount;
     }

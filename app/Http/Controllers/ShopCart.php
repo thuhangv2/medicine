@@ -1,14 +1,11 @@
 <?php
-#app/Http/Controller/Shop.php
+#app/Http/Controller/ShopCart.php
 namespace App\Http\Controllers;
 
 use App\Models\ShopAttributeGroup;
-use App\Models\ShopBrand;
-use App\Models\ShopCategory;
 use App\Models\ShopOrder;
 use App\Models\ShopOrderDetail;
 use App\Models\ShopOrderHistory;
-use App\Models\ShopOrderStatus;
 use App\Models\ShopOrderTotal;
 use App\Models\ShopProduct;
 use App\User;
@@ -20,152 +17,12 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
-class Shop extends GeneralController
+class ShopCart extends GeneralController
 {
     public function __construct()
     {
         parent::__construct();
 
-    }
-/**
- * [index description]
- * @return [type] [description]
- */
-    public function index(Request $request)
-    {
-        return view($this->theme . '.shop_home',
-            array(
-                'title'        => $this->configsGlobal['title'],
-                'description'  => $this->configsGlobal['description'],
-                'keyword'      => $this->configsGlobal['keyword'],
-                'banners'      => $this->banners,
-                'products_new' => (new ShopProduct)->getProducts($type = null, $limit = $this->configs['product_new'], $opt = null),
-                'products_hot' => (new ShopProduct)->getProducts($type = 1, $limit = $this->configs['product_hot'], $opt = 'random'),
-            )
-        );
-    }
-
-/**
- * [productToCategory description]
- * @param  [type] $key [description]
- * @return [type]      [description]
- */
-    public function productToCategory($name, $id)
-    {
-        $category = (new ShopCategory)->find($id);
-        if ($category) {
-            $products = $category->getProductsToCategory($id = $category->id, $limit = $this->configs['product_list'], $opt = 'paginate');
-            return view($this->theme . '.shop_products_list',
-                array(
-                    'title'        => $category->name,
-                    'description'  => $category->description,
-                    'keyword'      => $this->configsGlobal['keyword'],
-                    'categorySelf' => $category,
-                    'products'     => $products,
-                    'og_image'     => url($category->getImage()),
-                )
-            );
-        } else {
-            return view($this->theme . '.notfound',
-                array(
-                    'title'       => trans('messages.notfound'),
-                    'description' => '',
-                    'keyword'     => $this->configsGlobal['keyword'],
-                )
-            );
-        }
-
-    }
-
-/**
- * All products
- * @param  [type] $key [description]
- * @return [type]      [description]
- */
-    public function allProducts()
-    {
-        $products = ShopProduct::where('status', 1)
-            ->sort()->paginate($this->configs['product_list']);
-        if ($products) {
-            return view($this->theme . '.shop_products_list',
-                array(
-                    'title'       => trans('language.all_product'),
-                    'description' => $this->configsGlobal['description'],
-                    'keyword'     => $this->configsGlobal['keyword'],
-                    'products'    => $products,
-                )
-            );
-        } else {
-            return view($this->theme . '.notfound',
-                array(
-                    'title'       => trans('messages.notfound'),
-                    'description' => '',
-                    'keyword'     => $this->configsGlobal['keyword'],
-                )
-            );
-        }
-
-    }
-
-/**
- * [productDetail description]
- * @param  [type] $name [description]
- * @param  [type] $id   [description]
- * @return [type]       [description]
- */
-    public function productDetail($name, $id)
-    {
-        $product = ShopProduct::find($id);
-        if ($product && $product->status && ($this->configs['product_display_out_of_stock'] || $product->stock > 0)) {
-            //Update last view
-            $product->view += 1;
-            $product->date_lastview = date('Y-m-d H:i:s');
-            $product->save();
-            $arrlastView      = empty(\Cookie::get('productsLastView')) ? array() : json_decode(\Cookie::get('productsLastView'), true);
-            $arrlastView[$id] = date('Y-m-d H:i:s');
-            arsort($arrlastView);
-            \Cookie::queue('productsLastView', json_encode($arrlastView), (86400 * 30));
-            //End last viewed
-
-            //Check product available
-            return view($this->theme . '.shop_product_detail',
-                array(
-                    'title'              => $product->name,
-                    'description'        => $product->description,
-                    'keyword'            => $this->configsGlobal['keyword'],
-                    'product'            => $product,
-                    'attributesGroup'    => ShopAttributeGroup::all()->keyBy('id'),
-                    'productsToCategory' => (new ShopCategory)->getProductsToCategory($id = $product->category_id, $limit = $this->configs['product_relation'], $opt = 'random'),
-                    'og_image'           => url($product->getImage()),
-                )
-            );
-        } else {
-            return view($this->theme . '.notfound',
-                array(
-                    'title'       => trans('messages.notfound'),
-                    'description' => '',
-                    'keyword'     => $this->configsGlobal['keyword'],
-                )
-            );
-        }
-
-    }
-    /**
-     * [profile description]
-     * @return [type] [description]
-     */
-    public function profile()
-    {
-        $user        = Auth::user();
-        $id          = $user->id;
-        $orders      = ShopOrder::with('orderTotal')->where('user_id', $id)->sort()->get();
-        $statusOrder = ShopOrderStatus::pluck('name', 'id')->all();
-        return view($this->theme . '.shop_profile')->with(array(
-            'title'       => trans('language.my_profile'),
-            'user'        => $user,
-            'orders'      => $orders,
-            'statusOrder' => $statusOrder,
-        ));
     }
 
 /**
@@ -176,11 +33,11 @@ class Shop extends GeneralController
     public function storeOrder(Request $request)
     {
         if (Cart::count() == 0) {
-            return redirect('/');
+            return redirect()->route('home');
         }
         //Not allow for guest
         if (!$this->configs['shop_allow_guest'] && !Auth::user()) {
-            return redirect('login');
+            return redirect()->route('login');
         } //
 
         $messages = [
@@ -257,18 +114,12 @@ class Shop extends GeneralController
                 ShopOrderDetail::insert($arrDetail);
                 //If product out of stock
                 if (!$this->configs['product_buy_out_of_stock'] && $product->stock < $value->qty) {
-                    return redirect('/')->with('error', trans('language.cart.over', ['item' => $product->sku]));
+                    return redirect()->route('home')->with('error', trans('language.cart.over', ['item' => $product->sku]));
                 } //
                 $product->stock -= $value->qty;
                 $product->sold += $value->qty;
                 $product->save();
 
-            }
-
-            if (!empty(session('coupon'))) {
-                $couponAllowGuest = empty($this->configs['coupon_allow_guest']) ? false : true;
-                \Promocodes::apply(session('coupon'), $uID = null, $msg = 'Order #' . $orderId, $couponAllowGuest); // apply coupon
-                $request->session()->forget('coupon'); //destroy coupon
             }
 
             //Add history
@@ -314,7 +165,7 @@ class Shop extends GeneralController
                 ];
                 $data_payment['order_id'] = $orderId;
                 $data_payment['currency'] = \Helper::currencyCode();
-                return redirect('payment/paypal')->with('data_payment', $data_payment);
+                return redirect()->route('paypal')->with('data_payment', $data_payment);
             } else {
                 return $this->completeOrder($orderId);
             }
@@ -336,7 +187,7 @@ class Shop extends GeneralController
     public function addToCart(Request $request)
     {
         if (!$request->ajax()) {
-            return redirect('/cart.html');
+            return redirect()->route('cart');
         }
         $instance   = $request->get('instance') ?? 'default';
         $id         = $request->get('id');
@@ -402,7 +253,7 @@ class Shop extends GeneralController
     public function updateToCart(Request $request)
     {
         if (!$request->ajax()) {
-            return redirect('/cart.html');
+            return redirect()->route('cart');
         }
         $id      = $request->get('id');
         $rowId   = $request->get('rowId');
@@ -457,7 +308,7 @@ class Shop extends GeneralController
                 )
             );
         }
-        return redirect('/cart.html');
+        return redirect()->route('cart');
     }
 
 /**
@@ -466,19 +317,88 @@ class Shop extends GeneralController
  */
     public function getCart()
     {
+        //Shipping
         $moduleShipping = \Helper::getExtensionsGroup('shipping');
         $shippingMethod = array();
         foreach ($moduleShipping as $key => $module) {
             $moduleClass                    = '\App\Http\Controllers\Extensions\Shipping\\' . $module['key'];
             $shippingMethod[$module['key']] = (new $moduleClass)->getData();
         }
+        //Payment
+        $modulePayment = \Helper::getExtensionsGroup('payment');
+        $paymentMethod = array();
+        foreach ($modulePayment as $key => $module) {
+            $moduleClass                   = '\App\Http\Controllers\Extensions\Payment\\' . $module['key'];
+            $paymentMethod[$module['key']] = (new $moduleClass)->getData();
+        }
+        //Total
+        $moduleTotal = \Helper::getExtensionsGroup('total');
+        $totalMethod = array();
+        foreach ($moduleTotal as $key => $module) {
+            $moduleClass                 = '\App\Http\Controllers\Extensions\Total\\' . $module['key'];
+            $totalMethod[$module['key']] = (new $moduleClass)->getData();
+        }
+        //Other
+        $moduleOther = \Helper::getExtensionsGroup('other');
+        $otherMethod = array();
+        foreach ($moduleOther as $key => $module) {
+            $moduleClass                 = '\App\Http\Controllers\Extensions\Other\\' . $module['key'];
+            $otherMethod[$module['key']] = (new $moduleClass)->getData();
+        }
 
-        // dd($shipping);
+        //====================================================
+        $objects           = array();
+        $objects[]         = (new ShopOrderTotal)->getShipping();
+        $objects[]         = (new ShopOrderTotal)->getDiscount();
+        $objects[]         = (new ShopOrderTotal)->getReceived();
+        $extensionDiscount = $totalMethod['Discount'] ?? '';
+        if (!empty(session('Discount'))) {
+            $hasCoupon = true;
+        } else {
+            $hasCoupon = false;
+        }
+        return view($this->theme . '.shop_cart',
+            array(
+                'title'             => trans('language.cart_title'),
+                'description'       => '',
+                'keyword'           => '',
+                'cart'              => Cart::content(),
+                'attributesGroup'   => ShopAttributeGroup::all()->keyBy('id'),
+                'shippingMethod'    => $shippingMethod,
+                'paymentMethod'     => $paymentMethod,
+                'totalMethod'       => $totalMethod,
+                'otherMethod'       => $otherMethod,
+                'dataTotal'         => ShopOrderTotal::processDataTotal($objects),
+                'hasCoupon'         => $hasCoupon,
+                'extensionDiscount' => $extensionDiscount,
+            )
+        );
+    }
+
+/**
+ * [getCheckout description]
+ * @return [type] [description]
+ */
+    public function getCheckout()
+    {
+        $moduleShipping = \Helper::getExtensionsGroup('shipping');
+        $shippingMethod = array();
+        foreach ($moduleShipping as $key => $module) {
+            $moduleClass                    = '\App\Http\Controllers\Extensions\Shipping\\' . $module['key'];
+            $shippingMethod[$module['key']] = (new $moduleClass)->getData();
+        }
+        $modulePayment = \Helper::getExtensionsGroup('payment');
+        $paymentMethod = array();
+        foreach ($modulePayment as $key => $module) {
+            $moduleClass                   = '\App\Http\Controllers\Extensions\Payment\\' . $module['key'];
+            $paymentMethod[$module['key']] = (new $moduleClass)->getData();
+        }
         //====================================================
         $objects   = array();
         $objects[] = (new ShopOrderTotal)->getShipping();
         $objects[] = (new ShopOrderTotal)->getDiscount();
         $objects[] = (new ShopOrderTotal)->getReceived();
+
         if (!empty(session('coupon'))) {
             $hasCoupon = true;
         } else {
@@ -499,6 +419,58 @@ class Shop extends GeneralController
         );
     }
 
+/**
+ * Process checkout
+ * @param  Request $request [description]
+ * @return [type]           [description]
+ */
+    public function postCheckout(Request $request)
+    {
+        if (Cart::count() == 0) {
+            return redirect()->route('home');
+        }
+        //Not allow for guest
+        if (!$this->configs['shop_allow_guest'] && !Auth::user()) {
+            return redirect()->route('login');
+        } //
+
+        $messages = [
+            'max'      => trans('validation.max.string'),
+            'required' => trans('validation.required'),
+        ];
+        $v = Validator::make($request->all(), [
+            'toname'         => 'required|max:100',
+            'address1'       => 'required|max:100',
+            'address2'       => 'required|max:100',
+            'phone'          => 'required|regex:/^0[^0][0-9\-]{7,13}$/',
+            'email'          => 'required|string|email|max:255',
+            'shippingMethod' => 'required',
+            'paymentMethod'  => 'required',
+        ], $messages);
+        if ($v->fails()) {
+            return redirect()->back()->withInput()->withErrors($v->errors());
+        }
+
+        session(['shippingMedthod' => request('shippingMedthod')]);
+        session(['paymentMedthod' => request('paymentMedthod')]);
+        session(['shippingAddress' => json_encode([
+            'toname'         => $request->get('toname'),
+            'email'          => $request->get('email'),
+            'address1'       => $request->get('address1'),
+            'address2'       => $request->get('address2'),
+            'phone'          => $request->get('phone'),
+            'payment_method' => $payment_method,
+            'comment'        => $request->get('comment'),
+        ]
+        )]);
+
+        if (!empty(session('coupon'))) {
+            $couponAllowGuest = empty($this->configs['coupon_allow_guest']) ? false : true;
+            \Promocodes::apply(session('coupon'), $uID = null, $msg = 'Order #' . $orderId, $couponAllowGuest); // apply coupon
+            $request->session()->forget('coupon'); //destroy coupon
+        }
+
+    }
 /**
  * [wishlist description]
  * @return [type] [description]
@@ -541,101 +513,7 @@ class Shop extends GeneralController
     public function clearCart()
     {
         Cart::destroy();
-        return redirect('/cart.html');
-    }
-
-/**
- * [usePromotion description]
- * @param  Request $request [description]
- * @return [type]           [description]
- */
-    public function usePromotion(Request $request)
-    {
-
-        if (!$this->configs['coupon_mode']) {
-            return false;
-        }
-        $html   = '';
-        $code   = $request->get('code');
-        $action = $request->get('action');
-        if ($action === 'remove') {
-            $request->session()->forget('coupon'); //destroy coupon
-            $objects   = array();
-            $objects[] = (new ShopOrderTotal)->getShipping();
-            $objects[] = (new ShopOrderTotal)->getDiscount();
-            $objects[] = (new ShopOrderTotal)->getReceived();
-            $dataTotal = ShopOrderTotal::processDataTotal($objects);
-            foreach ($dataTotal as $key => $element) {
-                if ($element['value'] != 0) {
-                    $html .= "<tr class='showTotal'>
-                         <th>" . $element['title'] . "</th>
-                        <td style='text-align: right' id='" . $element['code'] . "'>" . number_format($element['value']) . "</td>
-                    </tr>";
-                }
-
-            }
-            return json_encode(['html' => $html]);
-        }
-        $couponAllowGuest = empty($this->configs['coupon_allow_guest']) ? false : true;
-        $check            = json_decode(\Promocodes::check($code, $uID = null, $couponAllowGuest), true);
-        if ($check['error'] == 1) {
-            $error = 1;
-            if ($check['msg'] == 'error_code_not_exist') {
-                $msg = trans('language.promotion.process.invalid');
-            } elseif ($check['msg'] == 'error_code_cant_use') {
-                $msg = trans('language.promotion.process.over');
-            } elseif ($check['msg'] == 'error_code_expired_disabled') {
-                $msg = trans('language.promotion.process.expire');
-            } elseif ($check['msg'] == 'error_user_used') {
-                $msg = trans('language.promotion.process.used');
-            } elseif ($check['msg'] == 'error_uID_input') {
-                $msg = trans('language.promotion.process.user_id_invalid');
-            } elseif ($check['msg'] == 'error_login') {
-                $msg = trans('language.promotion.process.must_login');
-            } else {
-                $msg = trans('language.promotion.process.undefined');
-            }
-
-        } else {
-            $content = $check['content'];
-            if ($content['type'] === 1) {
-                //Point use in my page
-                $error = 1;
-                $msg   = trans('language.promotion.process.not_allow');
-            } else {
-                $arrType = [
-                    '0' => trans('language.promotion.cash'),
-                    '1' => trans('language.promotion.point'),
-                    '2' => trans('language.promotion.%'),
-                ];
-                $error = 0;
-                $msg   = trans('language.promotion.process.completed');
-                $request->session()->put('coupon', $code);
-
-                $objects   = array();
-                $objects[] = (new ShopOrderTotal)->getShipping();
-                $objects[] = (new ShopOrderTotal)->getDiscount();
-                $objects[] = (new ShopOrderTotal)->getReceived();
-                $dataTotal = ShopOrderTotal::processDataTotal($objects);
-                foreach ($dataTotal as $key => $element) {
-                    if ($element['value'] != 0) {
-                        if ($element['code'] == 'total') {
-                            $html .= "<tr class='showTotal'  style='background:#f5f3f3;font-weight: bold;'>";
-                        } else {
-                            $html .= "<tr class='showTotal'>";
-                        }
-
-                        $html .= "<th>" . $element['title'] . "</th>
-                        <td style='text-align: right' id='" . $element['code'] . "'>" . number_format($element['value']) . "</td>
-                    </tr>";
-                    }
-
-                }
-            }
-
-        }
-        return json_encode(['error' => $error, 'msg' => $msg, 'html' => $html]);
-
+        return redirect()->route('cart');
     }
 
 /**
@@ -651,8 +529,7 @@ class Shop extends GeneralController
         if (array_key_exists($id, Cart::content()->toArray())) {
             Cart::remove($id);
         }
-
-        return redirect('cart.html');
+        return redirect()->route('cart');
     }
 
 /**
@@ -663,14 +540,13 @@ class Shop extends GeneralController
     public function removeItemWishlist($id = null)
     {
         if ($id === null) {
-            return redirect('wishlist.html');
+            return redirect()->route('wishlist');
         }
 
         if (array_key_exists($id, Cart::instance('wishlist')->content()->toArray())) {
             Cart::instance('wishlist')->remove($id);
         }
-
-        return redirect('wishlist.html');
+        return redirect()->route('wishlist');
     }
 
 /**
@@ -681,69 +557,13 @@ class Shop extends GeneralController
     public function removeItemCompare($id = null)
     {
         if ($id === null) {
-            return redirect('compare.html');
+            return redirect()->route('compare');
         }
 
         if (array_key_exists($id, Cart::instance('compare')->content()->toArray())) {
             Cart::instance('compare')->remove($id);
         }
-
-        return redirect('compare.html');
-    }
-
-/**
- * [search description]
- * @param  Request $request [description]
- * @return [type]           [description]
- */
-    public function search(Request $request)
-    {
-        $keyword = $request->get('keyword');
-        return view($this->theme . '.shop_products_list',
-            array(
-                'title'    => trans('language.search') . ': ' . $keyword,
-                'products' => ShopProduct::getSearch($keyword),
-            ));
-    }
-
-/**
- * [login description]
- * @return [type] [description]
- */
-    public function login()
-    {
-        if (Auth::user()) {
-            return Redirect::away('/');
-        }
-        return view($this->theme . '.shop_login',
-            array(
-                'title' => trans('language.login'),
-            )
-        );
-    }
-/**
- * [logout description]
- * @return [type] [description]
- */
-    public function logout()
-    {
-        Auth::logout();
-        return Redirect::away('login');
-    }
-/**
- * [login description]
- * @return [type] [description]
- */
-    public function forgot()
-    {
-        if (Auth::user()) {
-            return Redirect::away('/');
-        }
-        return view($this->theme . '.shop_forgot',
-            array(
-                'title' => trans('language.for_got_password'),
-            )
-        );
+        return redirect()->route('compare');
     }
 
     public function completeOrder($orderId)
@@ -759,25 +579,7 @@ class Shop extends GeneralController
         } catch (\Exception $e) {
             echo 'Error send mail';
         } //
-        return redirect('cart.html')->with('message', trans('language.order.success'));
+        return redirect()->route('cart')->with('message', trans('language.order.success'));
     }
 
-/**
- * [productBrand description]
- * @param  [type] $name [description]
- * @param  [type] $id   [description]
- * @return [type]       [description]
- */
-    public function productBrand($name, $id)
-    {
-        $brand = ShopBrand::find($id);
-        return view($this->theme . '.shop_products_list',
-            array(
-                'title'       => $brand->name,
-                'description' => '',
-                'keyword'     => '',
-                'products'    => $brand->products()->paginate(9),
-            )
-        );
-    }
 }

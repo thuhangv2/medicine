@@ -4,17 +4,19 @@ namespace App\Http\Controllers\Extensions\Payment;
 
 use App\Models\Config;
 
-class COD extends \App\Http\Controllers\Controller
+class Cash extends \App\Http\Controllers\Controller
 {
-    protected $configKey  = 'COD';
+    protected $configKey  = 'Cash';
     protected $configCode = 'Payment';
     public $title;
+    public $image;
     const ALLOW  = 1;
     const DENIED = 0;
 
     public function __construct()
     {
         $this->title = trans('Extensions/' . $this->configCode . '/' . $this->configKey . '.title');
+        $this->image = 'images/Extensions/' . $this->configCode . '/' . $this->configKey . '.png';
     }
 
     public function getData()
@@ -25,9 +27,9 @@ class COD extends \App\Http\Controllers\Controller
     public function processData()
     {
         $arrPayment = [
-            'code'       => $this->configKey,
             'title'      => $this->title,
-            'fee'        => 0, //Fee when use this payment method
+            'code'       => $this->configKey,
+            'image'      => $this->image,
             'permission' => self::ALLOW,
         ];
         return $arrPayment;

@@ -12,67 +12,58 @@
  */
 Auth::routes();
 //============================
-Route::get('/', 'Shop@index');
-Route::get('index.html', 'Shop@index');
-Route::get('/shop/{name}_{id}.html', 'Shop@productToCategory');
-Route::get('/product/{name}_{id}.html', 'Shop@productDetail');
-Route::get('/brand/{name}_{id}/{category?}', 'Shop@productBrand');
+Route::get('/', 'ShopFront@index')->name('home');
+Route::get('index.html', 'ShopFront@index');
+Route::get('/shop/{name}_{id}.html', 'ShopFront@productToCategory');
+Route::get('/product/{name}_{id}.html', 'ShopFront@productDetail');
+Route::get('/brand/{name}_{id}/{category?}', 'ShopFront@productBrand');
 Route::get('/profile.html', [
     'middleware' => 'auth',
-    'uses'       => 'Shop@profile',
+    'uses'       => 'ShopFront@profile',
 ]);
-Route::get('/products.html', 'Shop@allProducts');
-Route::get('/wishlist.html', 'Shop@wishlist');
-Route::get('/compare.html', 'Shop@compare');
-Route::get('/cart.html', 'Shop@getCart');
-Route::post('/cart.html', 'Shop@postCart')->name('postCart');
-Route::get('/search.html', 'Shop@search');
-Route::get('/removeItem/{id}', 'Shop@removeItem');
-Route::get('/removeItemWishlist/{id}', 'Shop@removeItemWishlist')->name('removeItemWishlist');
-Route::get('/removeItemCompare/{id}', 'Shop@removeItemCompare')->name('removeItemCompare');
-Route::get('/clearCart', 'Shop@clearCart')->name('clearCart');
-Route::post('/addToCart', 'Shop@addToCart');
-Route::post('/updateToCart', 'Shop@updateToCart');
-Route::post('/storeOrder', 'Shop@storeOrder');
-Route::get('/login.html', 'Shop@login');
-Route::get('/forgot.html', 'Shop@forgot');
-Route::post('/usePromotion', 'Shop@usePromotion');
-Route::get('/contact.html', 'Shop@getContact');
-Route::post('/contact.html', 'Shop@postContact');
+
+//Front
+Route::get('/products.html', 'ShopFront@allProducts')->name('products');
+Route::get('/search.html', 'ShopFront@search')->name('search');
+Route::get('/forgot.html', 'ShopFront@forgot')->name('forgot');
+Route::get('/contact.html', 'ShopFront@getContact')->name('contact');
+Route::post('/contact.html', 'ShopFront@postContact');
+//End Front
+
+//Cart
+Route::get('/wishlist.html', 'ShopCart@wishlist')->name('wishlist');
+Route::get('/compare.html', 'ShopCart@compare')->name('compare');
+Route::get('/cart.html', 'ShopCart@getCart')->name('cart');
+Route::post('/cart.html', 'ShopCart@postCart')->name('postCart');
+Route::get('/checkout.html', 'ShopCart@getCheckout')->name('checkout');
+Route::post('/checkout.html', 'ShopCart@postCheckout')->name('postCheckout');
+Route::get('/removeItem/{id}', 'ShopCart@removeItem')->name('removeItem');
+Route::get('/removeItemWishlist/{id}', 'ShopCart@removeItemWishlist')->name('removeItemWishlist');
+Route::get('/removeItemCompare/{id}', 'ShopCart@removeItemCompare')->name('removeItemCompare');
+Route::get('/clearCart', 'ShopCart@clearCart')->name('clearCart');
+Route::post('/addToCart', 'ShopCart@addToCart')->name('addToCart');
+Route::post('/updateToCart', 'ShopCart@updateToCart')->name('updateToCart');
+Route::post('/storeOrder', 'ShopCart@storeOrder')->name('storeOrder');
+//End cart
+
+Route::prefix('extension')->group(function () {
+    Route::post('/useDiscount', 'Extensions\Total\Discount@useDiscount')->name('useDiscount');
+});
+
 //========end shop ================
 
-//======cms==================
-Route::post('/subscribe', 'Cms@emailSubscribe')->name('subscribe');
-Route::get('/news.html', 'Cms@news');
-Route::get('/news/{name}_{id}.html', 'Cms@newsDetail');
-Route::get('/blogs.html', 'Cms@news');
-Route::get('/blog/{name}_{id}.html', 'Cms@newsDetail');
-Route::get('/{key}.html', 'Cms@pages');
-//=====end cms =========
-
 Route::prefix('payment')->group(function () {
-    Route::get('paypal', 'PayPalController@index');
+    Route::get('paypal', 'PayPalController@index')->name('paypal');
     Route::get('return/{order_id}', 'PayPalController@getReturn');
 });
 
 //===========auth==============
-// Authentication Routes...
-// Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::get('login', function () {
-    return redirect('login.html');
-})->name('login');
-Route::post('login', 'Auth\LoginController@login');
-Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('/login.html', 'ShopFront@login')->name('login');
+Route::post('/login.html', 'Auth\LoginController@login')->name('postLogin');
+Route::redirect('/login', '/login.html', 301);
+Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+Route::post('/register', 'Auth\RegisterController@register')->name('postRegister');
 
-// Registration Routes...
-// Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-Route::get('register', function () {
-    return redirect('login.html');
-})->name('register');
-Route::post('register', 'Auth\RegisterController@register');
-
-// Password Reset Routes...
-// Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 Route::get('password/reset', function () {
     return redirect('forgot.html');
 })->name('password.request');
@@ -101,3 +92,12 @@ Route::get('currency/{code}', function ($code) {
     session(['currency' => $code]);
     return back();
 });
+
+//======cms==================
+Route::post('/subscribe', 'Cms@emailSubscribe')->name('subscribe');
+Route::get('/news.html', 'Cms@news')->name('news');
+Route::get('/news/{name}_{id}.html', 'Cms@newsDetail')->name('newsDetail');
+Route::get('/blogs.html', 'Cms@news');
+Route::get('/blog/{name}_{id}.html', 'Cms@newsDetail');
+Route::get('/{key}.html', 'Cms@pages');
+//=====end cms =========
