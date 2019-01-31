@@ -30,6 +30,8 @@ class ShopCart extends GeneralController
  */
     public function getCart()
     {
+        session()->forget('paymentMethod'); //destroy shippingMethod
+        session()->forget('shippingMethod'); //destroy shippingMethod
         //Shipping
         $moduleShipping = \Helper::getExtensionsGroup('shipping');
         $shippingMethod = array();
@@ -381,40 +383,22 @@ class ShopCart extends GeneralController
  */
     public function getCheckout()
     {
-        $moduleShipping = \Helper::getExtensionsGroup('shipping');
-        $shippingMethod = array();
-        foreach ($moduleShipping as $key => $module) {
-            $moduleClass                    = '\App\Http\Controllers\Extensions\Shipping\\' . $module['key'];
-            $shippingMethod[$module['key']] = (new $moduleClass)->getData();
-        }
-        $modulePayment = \Helper::getExtensionsGroup('payment');
-        $paymentMethod = array();
-        foreach ($modulePayment as $key => $module) {
-            $moduleClass                   = '\App\Http\Controllers\Extensions\Payment\\' . $module['key'];
-            $paymentMethod[$module['key']] = (new $moduleClass)->getData();
+        if (!session('shippingMethod') || !session('paymentMethod') || !session('shippingAddress')) {
+            return redirect()->route('cart');
         }
         //====================================================
         $objects   = array();
         $objects[] = (new ShopOrderTotal)->getShipping();
         $objects[] = (new ShopOrderTotal)->getDiscount();
         $objects[] = (new ShopOrderTotal)->getReceived();
-
-        if (!empty(session('coupon'))) {
-            $hasCoupon = true;
-        } else {
-            $hasCoupon = false;
-        }
-        return view($this->theme . '.shop_cart',
+        return view($this->theme . '.shop_checkout',
             array(
                 'title'           => trans('language.cart_title'),
                 'description'     => '',
                 'keyword'         => '',
                 'cart'            => Cart::content(),
                 'dataTotal'       => ShopOrderTotal::processDataTotal($objects),
-                'hasCoupon'       => $hasCoupon,
                 'attributesGroup' => ShopAttributeGroup::all()->keyBy('id'),
-                'shippingMethod'  => $shippingMethod,
-
             )
         );
     }
@@ -450,9 +434,8 @@ class ShopCart extends GeneralController
         if ($v->fails()) {
             return redirect()->back()->withInput()->withErrors($v->errors());
         }
-
-        session(['shippingMedthod' => request('shippingMedthod')]);
-        session(['paymentMedthod' => request('paymentMedthod')]);
+        session(['shippingMethod' => request('shippingMethod')]);
+        session(['paymentMethod' => request('paymentMethod')]);
         session(['shippingAddress' => json_encode([
             'toname'   => $request->get('toname'),
             'email'    => $request->get('email'),
@@ -462,6 +445,8 @@ class ShopCart extends GeneralController
             'comment'  => $request->get('comment'),
         ]
         )]);
+        // dd(session()->all());
+        return redirect()->route('checkout');
     }
 /**
  * [wishlist description]

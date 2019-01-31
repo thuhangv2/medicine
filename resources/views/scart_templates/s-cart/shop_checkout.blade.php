@@ -1,7 +1,6 @@
 @extends($theme.'.shop_layout')
 @section('banner')
 @endsection
-
 @section('main')
 <section>
     <div class="container">
@@ -88,7 +87,7 @@
     </tfoot>
   </table>
   </div>
-<form class="shipping_address" id="form-order" role="form" method="POST" action="{{ route('storeOrder') }}">
+<form class="shipping_address" id="form-order" role="form" method="POST" action="{{ route('postCheckout') }}">
 <div class="row">
     <div class="col-md-6">
             {{ csrf_field() }}
@@ -136,24 +135,12 @@
                 </tr>
             </table>
 
-
-<div class="row">
-    <div class="col-md-12">
-        @foreach ($shippingMethod as $key => $shipping)
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="shippingMethod"  value="{{ $shipping['code'] }}" {{ ($shipping['permission'])?'':'disabled' }}>
-              <label class="form-check-label" for="exampleRadios">
-                {{ $shipping['title'] }} ({{ \Helper::currencyRender($shipping['value']) }})
-              </label>
-            </div>
-        @endforeach
-    </div>
-</div>
-
-
-
     </div>
     <div class="col-md-6">
+
+
+
+{{-- Total --}}
         <div class="row">
             <div class="col-md-12">
                 <table class="table box table-bordered" id="showTotal">
@@ -171,45 +158,91 @@
                     @endif
 
                     @endforeach
-
-                    @if (!empty($configs['coupon_mode']))
-                        <tr>
-                            <td colspan="2">
-                                  <div class="form-group">
-                                    @php
-                                        $style = ($hasCoupon)?"display:inline;":"display: none;";
-                                    @endphp
-
-                                    <label class="control-label" for="inputGroupSuccess3"><i class="fa fa-exchange" aria-hidden="true"></i> {{ trans('language.cart.coupon') }} <span style="{{ $style }} cursor: pointer;" class="text-danger" id="removeCoupon">({{ trans('language.cart.remove_coupon') }} <i class="fa fa fa-times"></i>)</span></label>
-                                    <div class="input-group">
-                                      <input type="text" {{ (auth()->user())?'':'disabled' }} placeholder="Your coupon" class="form-control" id="coupon-value" aria-describedby="inputGroupSuccess3Status">
-                                      <span class="input-group-addon {{ (auth()->user())?'':'disabled' }}"  {{ (auth()->user())?'id="coupon-button"':'' }} style="cursor: pointer;" data-loading-text="<i class='fa fa-spinner fa-spin'></i> checking">{{ trans('language.cart.apply') }}</span>
-                                    </div>
-                                    <span class="status-coupon" style="display: none;" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-                                    <div class="coupon-msg" style="text-align: left;padding-left: 10px;"></div>
-                                  </div>
-                            </td>
-                        </tr>
-                    @endif
-                    <tr>
-                        <td colspan="2">
-                            <i class="fa fa-credit-card-alt"></i> {{ trans('language.cart.payment_method') }}:<br>
-                            <div class="form-group">
-                                @foreach ($shippingMethod as $element)
-                                    <input type="hidden" name="payment_method" value="{{ $element['code'] }}"><img src="{{ asset($element['image']) }}">
-                                @endforeach
-                            </div>
-
-                        </td>
-                    </tr>
                 </table>
+
+{{-- Coupon --}}
+        @if ($extensionDiscount)
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label class="control-label" for="inputGroupSuccess3"><i class="fa fa-exchange" aria-hidden="true"></i> {{ trans('language.cart.coupon') }}
+                        <span style="display:inline; cursor: pointer; display: {{ ($hasCoupon)?'inline':'none' }}" class="text-danger" id="removeCoupon">({{ trans('language.cart.remove_coupon') }} <i class="fa fa fa-times"></i>)</span>
+                    </label>
+                    <div id="coupon-group" class="input-group">
+                      <input type="text" {{ ($extensionDiscount['permission'])?'':'disabled' }} placeholder="Your coupon" class="form-control" id="coupon-value" aria-describedby="inputGroupSuccess3Status">
+                      <span class="input-group-addon {{ ($extensionDiscount['permission'])?'':'disabled' }}"  {!! ($extensionDiscount['permission'])?'id="coupon-button"':'' !!} style="cursor: pointer;" data-loading-text="<i class='fa fa-spinner fa-spin'></i> checking">{{ trans('language.cart.apply') }}</span>
+                    </div>
+                    <span class="status-coupon" style="display: none;" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                    <div class="coupon-msg" style="text-align: left;padding-left: 10px;"></div>
+                  </div>
+              </div>
+        @endif
+
+{{-- //End coupon --}}
+
+
+{{-- Shipping method --}}
+
+        <div class="row">
+            <div class="col-md-12">
+                    <div class="form-group {{ $errors->has('shippingMethod') ? ' has-error' : '' }}">
+                        <h3 class="control-label"><i class="fa fa-credit-card-alt"></i> {{ trans('language.cart.shipping_method') }}:<br></h3>
+                        @if($errors->has('shippingMethod'))
+                            <span class="help-block">{{ $errors->first('shippingMethod') }}</span>
+                        @endif
+                    </div>
+
+                    <div class="form-group">
+                        @foreach ($shippingMethod as $key => $shipping)
+                            <div>
+                                <label class="radio-inline">
+                                 <input type="radio" name="shippingMethod" value="{{ $shipping['code'] }}"  {{ (old('shippingMethod') == $key)?'checked':'' }} style="position: relative;" {{ ($shipping['permission'])?'':'disabled' }}>
+                                 {{ $shipping['title'] }} ({{ \Helper::currencyRender($shipping['value']) }})
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
             </div>
+        </div>
+{{-- //Shipping method --}}
+
+
+{{-- Payment method --}}
+        <div class="row">
+            <div class="col-md-12">
+                    <div class="form-group {{ $errors->has('paymentMethod') ? ' has-error' : '' }}">
+                        <h3 class="control-label"><i class="fa fa-credit-card-alt"></i> {{ trans('language.cart.payment_method') }}:<br></h3>
+                        @if($errors->has('paymentMethod'))
+                            <span class="help-block">{{ $errors->first('paymentMethod') }}</span>
+                        @endif
+                    </div>
+                    <div class="form-group">
+                        @foreach ($paymentMethod as $key => $payment)
+                            <div>
+                                <label class="radio-inline">
+                                 <input type="radio" name="paymentMethod" value="{{ $payment['code'] }}"  {{ (old('paymentMethod') == $key)?'checked':'' }} style="position: relative;" {{ ($payment['permission'])?'':'disabled' }}>
+                                 <img title="{{ $shipping['title'] }}" alt="{{ $shipping['title'] }}" src="{{ asset($payment['image']) }}" style="width: 120px;">
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+            </div>
+        </div>
+{{-- //Payment method --}}
+            </div>
+        </div>
+{{-- End total --}}
+
+
+        <div class="row">
             <div class="col-md-12 text-center">
                     <div class="pull-right">
                         <button class="btn btn-success" id="submit-order" type="button" style="cursor: pointer;padding:10px 30px"><i class="fa fa-check"></i> {{ trans('language.cart.checkout') }}</button>
                     </div>
             </div>
         </div>
+
+
+
     </div>
 </div>
 </form>
