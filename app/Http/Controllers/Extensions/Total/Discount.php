@@ -46,7 +46,7 @@ class Discount extends \App\Http\Controllers\Controller
             'permission' => (auth()->user()) ? self::ALLOW : self::DENIED,
         ];
 
-        $configs            = Config::pluck('value', 'code')->all();
+        $configs            = \Helper::configs();
         $DiscountAllowGuest = empty($configs['coupon_allow_guest']) ? false : true;
         $Discount           = session('Discount');
         $check              = json_decode($this->check($Discount, $uID = null, $DiscountAllowGuest), true);
@@ -64,7 +64,7 @@ class Discount extends \App\Http\Controllers\Controller
                 '1' => 'Point',
                 '2' => '%',
             ];
-            $subtotal    = Cart::subtotal();
+            $subtotal    = \Cart::subtotal();
             $value       = ($check['content']['type'] == '2') ? floor($subtotal * $check['content']['reward'] / 100) : $check['content']['reward'];
             $arrDiscount = array(
                 'title'      => '<b>' . $this->title . ':</b> ' . $Discount . '',
@@ -433,27 +433,9 @@ class Discount extends \App\Http\Controllers\Controller
  */
     public function useDiscount()
     {
-        $html   = '';
-        $code   = request('code');
-        $action = request('action');
-        if ($action === 'remove') {
-            session()->forget('coupon'); //destroy coupon
-            $objects   = array();
-            $objects[] = (new ShopOrderTotal)->getShipping();
-            $objects[] = (new ShopOrderTotal)->getDiscount();
-            $objects[] = (new ShopOrderTotal)->getReceived();
-            $dataTotal = ShopOrderTotal::processDataTotal($objects);
-            foreach ($dataTotal as $key => $element) {
-                if ($element['value'] != 0) {
-                    $html .= "<tr class='showTotal'>
-                         <th>" . $element['title'] . "</th>
-                        <td style='text-align: right' id='" . $element['code'] . "'>" . number_format($element['value']) . "</td>
-                    </tr>";
-                }
+        $html = '';
+        $code = request('code');
 
-            }
-            return json_encode(['html' => $html]);
-        }
         $couponAllowGuest = empty($this->configs['coupon_allow_guest']) ? false : true;
         $check            = json_decode($this->check($code, $uID = null, $couponAllowGuest), true);
         if ($check['error'] == 1) {
@@ -488,7 +470,7 @@ class Discount extends \App\Http\Controllers\Controller
                 ];
                 $error = 0;
                 $msg   = trans('language.promotion.process.completed');
-                session(['coupon' => $code]);
+                session(['Discount' => $code]);
 
                 $objects   = array();
                 $objects[] = (new ShopOrderTotal)->getShipping();
@@ -514,5 +496,26 @@ class Discount extends \App\Http\Controllers\Controller
         }
         return json_encode(['error' => $error, 'msg' => $msg, 'html' => $html]);
 
+    }
+
+    public function removeDiscount()
+    {
+        $html = '';
+        session()->forget('Discount'); //destroy coupon
+        $objects   = array();
+        $objects[] = (new ShopOrderTotal)->getShipping();
+        $objects[] = (new ShopOrderTotal)->getDiscount();
+        $objects[] = (new ShopOrderTotal)->getReceived();
+        $dataTotal = ShopOrderTotal::processDataTotal($objects);
+        foreach ($dataTotal as $key => $element) {
+            if ($element['value'] != 0) {
+                $html .= "<tr class='showTotal'>
+                         <th>" . $element['title'] . "</th>
+                        <td style='text-align: right' id='" . $element['code'] . "'>" . number_format($element['value']) . "</td>
+                    </tr>";
+            }
+
+        }
+        return json_encode(['html' => $html]);
     }
 }

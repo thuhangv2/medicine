@@ -24,6 +24,107 @@ class ShopCart extends GeneralController
         parent::__construct();
 
     }
+/**
+ * [getCart description]
+ * @return [type] [description]
+ */
+    public function getCart()
+    {
+        //Shipping
+        $moduleShipping = \Helper::getExtensionsGroup('shipping');
+        $shippingMethod = array();
+        foreach ($moduleShipping as $key => $module) {
+            $moduleClass                    = '\App\Http\Controllers\Extensions\Shipping\\' . $module['key'];
+            $shippingMethod[$module['key']] = (new $moduleClass)->getData();
+        }
+        //Payment
+        $modulePayment = \Helper::getExtensionsGroup('payment');
+        $paymentMethod = array();
+        foreach ($modulePayment as $key => $module) {
+            $moduleClass                   = '\App\Http\Controllers\Extensions\Payment\\' . $module['key'];
+            $paymentMethod[$module['key']] = (new $moduleClass)->getData();
+        }
+        //Total
+        $moduleTotal = \Helper::getExtensionsGroup('total');
+        $totalMethod = array();
+        foreach ($moduleTotal as $key => $module) {
+            $moduleClass                 = '\App\Http\Controllers\Extensions\Total\\' . $module['key'];
+            $totalMethod[$module['key']] = (new $moduleClass)->getData();
+        }
+        //Other
+        $moduleOther = \Helper::getExtensionsGroup('other');
+        $otherMethod = array();
+        foreach ($moduleOther as $key => $module) {
+            $moduleClass                 = '\App\Http\Controllers\Extensions\Other\\' . $module['key'];
+            $otherMethod[$module['key']] = (new $moduleClass)->getData();
+        }
+
+        //====================================================
+        $objects           = array();
+        $objects[]         = (new ShopOrderTotal)->getShipping();
+        $objects[]         = (new ShopOrderTotal)->getDiscount();
+        $objects[]         = (new ShopOrderTotal)->getReceived();
+        $extensionDiscount = $totalMethod['Discount'] ?? '';
+        if (!empty(session('Discount'))) {
+            $hasCoupon = true;
+        } else {
+            $hasCoupon = false;
+        }
+        return view($this->theme . '.shop_cart',
+            array(
+                'title'             => trans('language.cart_title'),
+                'description'       => '',
+                'keyword'           => '',
+                'cart'              => Cart::content(),
+                'attributesGroup'   => ShopAttributeGroup::all()->keyBy('id'),
+                'shippingMethod'    => $shippingMethod,
+                'paymentMethod'     => $paymentMethod,
+                'totalMethod'       => $totalMethod,
+                'otherMethod'       => $otherMethod,
+                'dataTotal'         => ShopOrderTotal::processDataTotal($objects),
+                'hasCoupon'         => $hasCoupon,
+                'extensionDiscount' => $extensionDiscount,
+            )
+        );
+    }
+
+/**
+ * [postCart description]
+ * @param  Request $request [description]
+ * @return [type]           [description]
+ */
+    public function postCart(Request $request)
+    {
+        $data       = $request->all();
+        $product_id = $data['product_id'];
+        $opt_sku    = $data['opt_sku'] ?? null;
+        $attribute  = $data['attribute'] ?? null;
+        $qty        = $data['qty'];
+        $product    = ShopProduct::find($product_id);
+        //Condition:
+        //Active
+        //In of stock or allow order out of stock
+        //Date availabe
+        if ($product->status != 0 &&
+            ($this->configs['product_preorder'] == 1 || $product->date_available == null || date('Y-m-d H:i:s') >= $product->date_available) &&
+            ($this->configs['product_display_out_of_stock'] || $product->stock > 0)) {
+            $options = array();
+            if ($opt_sku != $product->sku && $opt_sku) {
+                $options['opt'] = $opt_sku;
+            }
+            $options['att'] = $attribute;
+            Cart::add(
+                array(
+                    'id'      => $product_id,
+                    'name'    => $product->name,
+                    'qty'     => $qty,
+                    'price'   => (new ShopProduct)->getPrice($product_id, $opt_sku),
+                    'options' => $options,
+                )
+            );
+        }
+        return redirect()->route('cart');
+    }
 
 /**
  * [storeOrder description]
@@ -273,107 +374,6 @@ class ShopCart extends GeneralController
         }
 
     }
-/**
- * [postCart description]
- * @param  Request $request [description]
- * @return [type]           [description]
- */
-    public function postCart(Request $request)
-    {
-        $data       = $request->all();
-        $product_id = $data['product_id'];
-        $opt_sku    = $data['opt_sku'] ?? null;
-        $attribute  = $data['attribute'] ?? null;
-        $qty        = $data['qty'];
-        $product    = ShopProduct::find($product_id);
-        //Condition:
-        //Active
-        //In of stock or allow order out of stock
-        //Date availabe
-        if ($product->status != 0 &&
-            ($this->configs['product_preorder'] == 1 || $product->date_available == null || date('Y-m-d H:i:s') >= $product->date_available) &&
-            ($this->configs['product_display_out_of_stock'] || $product->stock > 0)) {
-            $options = array();
-            if ($opt_sku != $product->sku && $opt_sku) {
-                $options['opt'] = $opt_sku;
-            }
-            $options['att'] = $attribute;
-            Cart::add(
-                array(
-                    'id'      => $product_id,
-                    'name'    => $product->name,
-                    'qty'     => $qty,
-                    'price'   => (new ShopProduct)->getPrice($product_id, $opt_sku),
-                    'options' => $options,
-                )
-            );
-        }
-        return redirect()->route('cart');
-    }
-
-/**
- * [getCart description]
- * @return [type] [description]
- */
-    public function getCart()
-    {
-        //Shipping
-        $moduleShipping = \Helper::getExtensionsGroup('shipping');
-        $shippingMethod = array();
-        foreach ($moduleShipping as $key => $module) {
-            $moduleClass                    = '\App\Http\Controllers\Extensions\Shipping\\' . $module['key'];
-            $shippingMethod[$module['key']] = (new $moduleClass)->getData();
-        }
-        //Payment
-        $modulePayment = \Helper::getExtensionsGroup('payment');
-        $paymentMethod = array();
-        foreach ($modulePayment as $key => $module) {
-            $moduleClass                   = '\App\Http\Controllers\Extensions\Payment\\' . $module['key'];
-            $paymentMethod[$module['key']] = (new $moduleClass)->getData();
-        }
-        //Total
-        $moduleTotal = \Helper::getExtensionsGroup('total');
-        $totalMethod = array();
-        foreach ($moduleTotal as $key => $module) {
-            $moduleClass                 = '\App\Http\Controllers\Extensions\Total\\' . $module['key'];
-            $totalMethod[$module['key']] = (new $moduleClass)->getData();
-        }
-        //Other
-        $moduleOther = \Helper::getExtensionsGroup('other');
-        $otherMethod = array();
-        foreach ($moduleOther as $key => $module) {
-            $moduleClass                 = '\App\Http\Controllers\Extensions\Other\\' . $module['key'];
-            $otherMethod[$module['key']] = (new $moduleClass)->getData();
-        }
-
-        //====================================================
-        $objects           = array();
-        $objects[]         = (new ShopOrderTotal)->getShipping();
-        $objects[]         = (new ShopOrderTotal)->getDiscount();
-        $objects[]         = (new ShopOrderTotal)->getReceived();
-        $extensionDiscount = $totalMethod['Discount'] ?? '';
-        if (!empty(session('Discount'))) {
-            $hasCoupon = true;
-        } else {
-            $hasCoupon = false;
-        }
-        return view($this->theme . '.shop_cart',
-            array(
-                'title'             => trans('language.cart_title'),
-                'description'       => '',
-                'keyword'           => '',
-                'cart'              => Cart::content(),
-                'attributesGroup'   => ShopAttributeGroup::all()->keyBy('id'),
-                'shippingMethod'    => $shippingMethod,
-                'paymentMethod'     => $paymentMethod,
-                'totalMethod'       => $totalMethod,
-                'otherMethod'       => $otherMethod,
-                'dataTotal'         => ShopOrderTotal::processDataTotal($objects),
-                'hasCoupon'         => $hasCoupon,
-                'extensionDiscount' => $extensionDiscount,
-            )
-        );
-    }
 
 /**
  * [getCheckout description]
@@ -427,7 +427,7 @@ class ShopCart extends GeneralController
     public function postCheckout(Request $request)
     {
         if (Cart::count() == 0) {
-            return redirect()->route('home');
+            return redirect()->route('cart');
         }
         //Not allow for guest
         if (!$this->configs['shop_allow_guest'] && !Auth::user()) {
@@ -454,22 +454,14 @@ class ShopCart extends GeneralController
         session(['shippingMedthod' => request('shippingMedthod')]);
         session(['paymentMedthod' => request('paymentMedthod')]);
         session(['shippingAddress' => json_encode([
-            'toname'         => $request->get('toname'),
-            'email'          => $request->get('email'),
-            'address1'       => $request->get('address1'),
-            'address2'       => $request->get('address2'),
-            'phone'          => $request->get('phone'),
-            'payment_method' => $payment_method,
-            'comment'        => $request->get('comment'),
+            'toname'   => $request->get('toname'),
+            'email'    => $request->get('email'),
+            'address1' => $request->get('address1'),
+            'address2' => $request->get('address2'),
+            'phone'    => $request->get('phone'),
+            'comment'  => $request->get('comment'),
         ]
         )]);
-
-        if (!empty(session('coupon'))) {
-            $couponAllowGuest = empty($this->configs['coupon_allow_guest']) ? false : true;
-            \Promocodes::apply(session('coupon'), $uID = null, $msg = 'Order #' . $orderId, $couponAllowGuest); // apply coupon
-            $request->session()->forget('coupon'); //destroy coupon
-        }
-
     }
 /**
  * [wishlist description]

@@ -48,6 +48,7 @@ Route::post('/storeOrder', 'ShopCart@storeOrder')->name('storeOrder');
 
 Route::prefix('extension')->group(function () {
     Route::post('/useDiscount', 'Extensions\Total\Discount@useDiscount')->name('useDiscount');
+    Route::post('/removeDiscount', 'Extensions\Total\Discount@removeDiscount')->name('removeDiscount');
 });
 
 //========end shop ================

@@ -166,9 +166,7 @@
                 <div class="row">
                   <div class="form-group col-md-6">
                     <label class="control-label" for="inputGroupSuccess3"><i class="fa fa-exchange" aria-hidden="true"></i> {{ trans('language.cart.coupon') }}
-                    @if ($hasCoupon)
-                        <span style="display:inline; cursor: pointer;" class="text-danger" id="removeCoupon">({{ trans('language.cart.remove_coupon') }} <i class="fa fa fa-times"></i>)</span>
-                    @endif
+                        <span style="display:inline; cursor: pointer; display: {{ ($hasCoupon)?'inline':'none' }}" class="text-danger" id="removeCoupon">({{ trans('language.cart.remove_coupon') }} <i class="fa fa fa-times"></i>)</span>
                     </label>
                     <div id="coupon-group" class="input-group">
                       <input type="text" {{ ($extensionDiscount['permission'])?'':'disabled' }} placeholder="Your coupon" class="form-control" id="coupon-value" aria-describedby="inputGroupSuccess3Status">
@@ -337,11 +335,10 @@ $('#coupon-button').click(function() {
 });
 $('#removeCoupon').click(function() {
         $.ajax({
-            url: '{{ route('useDiscount') }}',
+            url: '{{ route('removeDiscount') }}',
             type: 'POST',
             dataType: 'json',
             data: {
-                action: "remove",
                 _token: "{{ csrf_token() }}",
             },
         })
