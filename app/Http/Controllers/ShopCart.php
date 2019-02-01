@@ -62,16 +62,6 @@ class ShopCart extends GeneralController
                 $totalMethod[$module['key']] = (new $moduleClass)->getData();
             }
         }
-        //Other
-        $moduleOther  = \Helper::getExtensionsGroup('other');
-        $sourcesOther = \FindClass::extensions('other');
-        $otherMethod  = array();
-        foreach ($moduleOther as $key => $module) {
-            if (in_array($module['key'], $sourcesOther)) {
-                $moduleClass                 = '\App\Http\Controllers\Extensions\Other\\' . $module['key'];
-                $otherMethod[$module['key']] = (new $moduleClass)->getData();
-            }
-        }
 
         //====================================================
         $objects           = array();
@@ -115,7 +105,6 @@ class ShopCart extends GeneralController
                 'shippingMethod'    => $shippingMethod,
                 'paymentMethod'     => $paymentMethod,
                 'totalMethod'       => $totalMethod,
-                'otherMethod'       => $otherMethod,
                 'dataTotal'         => ShopOrderTotal::processDataTotal($objects),
                 'hasCoupon'         => $hasCoupon,
                 'extensionDiscount' => $extensionDiscount,
@@ -538,7 +527,7 @@ class ShopCart extends GeneralController
     public function removeItem($id = null)
     {
         if ($id === null) {
-            return redirect('cart.html');
+            return redirect()->route('cart');
         }
 
         if (array_key_exists($id, Cart::content()->toArray())) {

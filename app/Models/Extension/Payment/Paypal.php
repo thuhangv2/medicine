@@ -25,7 +25,7 @@ class Paypal extends Model
             try {
                 Schema::create($this->table, function (Blueprint $table) {
                     $table->increments('id');
-                    $table->string('paypal_log');
+                    $table->integer('paypal_log');
                     $table->string('paypal_path_log');
                     $table->string('paypal_mode');
                     $table->string('paypal_logLevel');
@@ -35,7 +35,7 @@ class Paypal extends Model
                 });
                 $this->insert(
                     [
-                        'paypal_log'                  => 'true',
+                        'paypal_log'                  => 0,
                         'paypal_path_log'             => 'logs/paypal.log',
                         'paypal_currency'             => 'USD',
                         'paypal_order_status_success' => 1,
