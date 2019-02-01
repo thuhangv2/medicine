@@ -17,9 +17,9 @@ class FindClass
     }
     public static function extensions($group = null)
     {
-        $group      = strtolower($group);
+        $group      = ucfirst($group);
         $arrModules = [];
-        $path       = app_path() . '/http/controllers/extensions/' . $group;
+        $path       = app_path() . '/http/controllers/Extensions/' . $group;
         $modules    = self::start()->findIn($path);
         if ($modules) {
             foreach ($modules as $key => $module) {
@@ -33,8 +33,8 @@ class FindClass
 
     public static function findExtensions($group = null, $module = null)
     {
-        $group = strtolower($group);
-        $path  = app_path() . '/http/controllers/extensions/' . $group;
+        $group = ucfirst($group);
+        $path  = app_path() . '/http/controllers/Extensions/' . $group;
         if ($module) {
             return self::start()->findInFor($path, $module);
         } else {
