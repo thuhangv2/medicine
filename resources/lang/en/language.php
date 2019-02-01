@@ -272,6 +272,7 @@ return [
         'payment_method'  => 'Payment method',
         'shipping_method' => 'Shipping method',
         'checkout'        => 'Checkout',
+        'confirm'         => 'Complete Order',
         'coupon_empty'    => 'Coupon empty!',
         'delete'          => 'Delete',
         'remove_all'      => 'Remove all',

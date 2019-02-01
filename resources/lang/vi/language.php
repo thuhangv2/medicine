@@ -274,6 +274,7 @@ return [
         'payment_method'  => 'Phương thức thanh toán',
         'shipping_method' => 'Phương thức vận chuyển',
         'checkout'        => 'Thanh toán',
+        'confirm'         => 'Hoàn thành đơn hàng',
         'coupon_empty'    => 'Bạn chưa nhập mã giảm giá!',
         'delete'          => 'Xóa',
         'remove_all'      => 'Xóa tất cả',

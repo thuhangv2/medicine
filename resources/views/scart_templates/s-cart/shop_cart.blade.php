@@ -221,7 +221,7 @@
                             <div>
                                 <label class="radio-inline">
                                  <input type="radio" name="paymentMethod" value="{{ $payment['code'] }}"  {{ (old('paymentMethod') == $key)?'checked':'' }} style="position: relative;" {{ ($payment['permission'])?'':'disabled' }}>
-                                 <img title="{{ $shipping['title'] }}" alt="{{ $shipping['title'] }}" src="{{ asset($payment['image']) }}" style="width: 120px;">
+                                 <img title="{{ $payment['title'] }}" alt="{{ $payment['title'] }}" src="{{ asset($payment['image']) }}" style="width: 120px;">
                                 </label>
                             </div>
                         @endforeach

@@ -91,6 +91,90 @@ class ShopCart extends GeneralController
     }
 
 /**
+ * [getCheckout description]
+ * @return [type] [description]
+ */
+    public function getCheckout()
+    {
+        if (!session('shippingMethod') || !session('paymentMethod') || !session('shippingAddress')) {
+            return redirect()->route('cart');
+        }
+        //====================================================
+        $payment             = session('paymentMethod');
+        $shipping            = session('shippingMethod');
+        $address             = session('shippingAddress');
+        $classShippingMethod = '\App\Http\Controllers\Extensions\Shipping\\' . $shipping;
+        $shippingMethod      = (new $classShippingMethod)->getData();
+        $classPaymentMethod  = '\App\Http\Controllers\Extensions\Payment\\' . $payment;
+        $paymentMethod       = (new $classPaymentMethod)->getData();
+        $objects             = array();
+        $objects[]           = (new ShopOrderTotal)->getShipping();
+        $objects[]           = (new ShopOrderTotal)->getDiscount();
+        $objects[]           = (new ShopOrderTotal)->getReceived();
+        $dataTotal           = ShopOrderTotal::processDataTotal($objects);
+        session()->forget('paymentMethod'); //destroy shippingMethod
+        session()->forget('shippingMethod'); //destroy shippingMethod
+        return view($this->theme . '.shop_checkout',
+            array(
+                'title'           => trans('language.cart_title'),
+                'description'     => '',
+                'keyword'         => '',
+                'cart'            => Cart::content(),
+                'dataTotal'       => $dataTotal,
+                'paymentMethod'   => $paymentMethod,
+                'shippingMethod'  => $shippingMethod,
+                'attributesGroup' => ShopAttributeGroup::all()->keyBy('id'),
+            )
+        );
+    }
+
+/**
+ * Process checkout
+ * @param  Request $request [description]
+ * @return [type]           [description]
+ */
+    public function postCheckout(Request $request)
+    {
+        if (Cart::count() == 0) {
+            return redirect()->route('cart');
+        }
+        //Not allow for guest
+        if (!$this->configs['shop_allow_guest'] && !Auth::user()) {
+            return redirect()->route('login');
+        } //
+
+        $messages = [
+            'max'      => trans('validation.max.string'),
+            'required' => trans('validation.required'),
+        ];
+        $v = Validator::make($request->all(), [
+            'toname'         => 'required|max:100',
+            'address1'       => 'required|max:100',
+            'address2'       => 'required|max:100',
+            'phone'          => 'required|regex:/^0[^0][0-9\-]{7,13}$/',
+            'email'          => 'required|string|email|max:255',
+            'shippingMethod' => 'required',
+            'paymentMethod'  => 'required',
+        ], $messages);
+        if ($v->fails()) {
+            return redirect()->back()->withInput()->withErrors($v->errors());
+        }
+        session(['shippingMethod' => request('shippingMethod')]);
+        session(['paymentMethod' => request('paymentMethod')]);
+        session(['shippingAddress' => json_encode([
+            'toname'   => $request->get('toname'),
+            'email'    => $request->get('email'),
+            'address1' => $request->get('address1'),
+            'address2' => $request->get('address2'),
+            'phone'    => $request->get('phone'),
+            'comment'  => $request->get('comment'),
+        ]
+        )]);
+        // dd(session()->all());
+        return redirect()->route('checkout');
+    }
+
+/**
  * [postCart description]
  * @param  Request $request [description]
  * @return [type]           [description]
@@ -377,77 +461,6 @@ class ShopCart extends GeneralController
 
     }
 
-/**
- * [getCheckout description]
- * @return [type] [description]
- */
-    public function getCheckout()
-    {
-        if (!session('shippingMethod') || !session('paymentMethod') || !session('shippingAddress')) {
-            return redirect()->route('cart');
-        }
-        //====================================================
-        $objects   = array();
-        $objects[] = (new ShopOrderTotal)->getShipping();
-        $objects[] = (new ShopOrderTotal)->getDiscount();
-        $objects[] = (new ShopOrderTotal)->getReceived();
-        return view($this->theme . '.shop_checkout',
-            array(
-                'title'           => trans('language.cart_title'),
-                'description'     => '',
-                'keyword'         => '',
-                'cart'            => Cart::content(),
-                'dataTotal'       => ShopOrderTotal::processDataTotal($objects),
-                'attributesGroup' => ShopAttributeGroup::all()->keyBy('id'),
-            )
-        );
-    }
-
-/**
- * Process checkout
- * @param  Request $request [description]
- * @return [type]           [description]
- */
-    public function postCheckout(Request $request)
-    {
-        if (Cart::count() == 0) {
-            return redirect()->route('cart');
-        }
-        //Not allow for guest
-        if (!$this->configs['shop_allow_guest'] && !Auth::user()) {
-            return redirect()->route('login');
-        } //
-
-        $messages = [
-            'max'      => trans('validation.max.string'),
-            'required' => trans('validation.required'),
-        ];
-        $v = Validator::make($request->all(), [
-            'toname'         => 'required|max:100',
-            'address1'       => 'required|max:100',
-            'address2'       => 'required|max:100',
-            'phone'          => 'required|regex:/^0[^0][0-9\-]{7,13}$/',
-            'email'          => 'required|string|email|max:255',
-            'shippingMethod' => 'required',
-            'paymentMethod'  => 'required',
-        ], $messages);
-        if ($v->fails()) {
-            return redirect()->back()->withInput()->withErrors($v->errors());
-        }
-        session(['shippingMethod' => request('shippingMethod')]);
-        session(['paymentMethod' => request('paymentMethod')]);
-        session(['shippingAddress' => json_encode([
-            'toname'   => $request->get('toname'),
-            'email'    => $request->get('email'),
-            'address1' => $request->get('address1'),
-            'address2' => $request->get('address2'),
-            'phone'    => $request->get('phone'),
-            'comment'  => $request->get('comment'),
-        ]
-        )]);
-        // dd(session()->all());
-        return redirect()->route('checkout');
-    }
 /**
  * [wishlist description]
  * @return [type] [description]
