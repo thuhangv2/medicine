@@ -36,7 +36,7 @@ Route::get('/compare.html', 'ShopCart@compare')->name('compare');
 Route::get('/cart.html', 'ShopCart@getCart')->name('cart');
 Route::post('/cart.html', 'ShopCart@postCart')->name('postCart');
 Route::get('/checkout.html', 'ShopCart@getCheckout')->name('checkout');
-Route::post('/checkout.html', 'ShopCart@postCheckout')->name('postCheckout');
+Route::post('/checkout.html', 'ShopCart@processCart')->name('processCart');
 Route::get('/removeItem/{id}', 'ShopCart@removeItem')->name('removeItem');
 Route::get('/removeItemWishlist/{id}', 'ShopCart@removeItemWishlist')->name('removeItemWishlist');
 Route::get('/removeItemCompare/{id}', 'ShopCart@removeItemCompare')->name('removeItemCompare');
@@ -49,14 +49,13 @@ Route::post('/storeOrder', 'ShopCart@storeOrder')->name('storeOrder');
 Route::prefix('extension')->group(function () {
     Route::post('/useDiscount', 'Extensions\Total\Discount@useDiscount')->name('useDiscount');
     Route::post('/removeDiscount', 'Extensions\Total\Discount@removeDiscount')->name('removeDiscount');
+    Route::prefix('payment')->group(function () {
+        Route::get('paypal', 'Extensions\Payment\Paypal@index')->name('paypal');
+        Route::get('return/{order_id}', 'Extensions\Payment\Paypal@getReturn')->name('returnPaypal');
+    });
 });
 
 //========end shop ================
-
-Route::prefix('payment')->group(function () {
-    Route::get('paypal', 'PayPalController@index')->name('paypal');
-    Route::get('return/{order_id}', 'PayPalController@getReturn');
-});
 
 //===========auth==============
 Route::get('/login.html', 'ShopFront@login')->name('login');

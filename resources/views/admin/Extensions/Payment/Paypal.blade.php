@@ -9,8 +9,13 @@
             <div class="box-body">
              <table id="example2" class="table table-bordered table-hover">
               <tr>
+                <th width="40%">{{ trans('Extensions/Payment/Paypal.paypal_mode') }}</th>
+                <td><a href="#" class="updateData" data-name="paypal_mode" data-type="select" data-pk="{{ $data['id'] }}" data-url="{{ route('processExtension',['group'=>$group,'key'=>$key]) }}" data-title="{{ trans('Extensions/Payment/Paypal.paypal_mode') }}" data-value="{{ $data['paypal_mode'] }}" data-source ='[{"value":"sandbox","text":"SandBox"},{"value":"live","text":"Live"}]'</a></td>
+              </tr>
+
+              <tr>
                 <th width="40%">{{ trans('Extensions/Payment/Paypal.paypal_log') }}</th>
-                <td><a href="#" class="updateData" data-name="paypal_log" data-type="select" data-pk="{{ $data['id'] }}" data-url="{{ route('processExtension',['group'=>$group,'key'=>$key]) }}" data-title="{{ trans('Extensions/Payment/Paypal.paypal_log') }}" data-value="{{ $data['paypal_log'] }}" data-source ='[{"value":"0","text":"OFF"},{"value":"1","text":"ON"}]'</a></td>
+                <td><a href="#" class="updateData" data-name="paypal_log" data-type="select" data-pk="{{ $data['id'] }}" data-url="{{ route('processExtension',['group'=>$group,'key'=>$key]) }}" data-title="{{ trans('Extensions/Payment/Paypal.paypal_log') }}" data-value="{{ $data['paypal_log'] }}" data-source ='[{"value":"false","text":"OFF"},{"value":"true","text":"ON"}]'</a></td>
               </tr>
               <tr>
                 <th width="40%">{{ trans('Extensions/Payment/Paypal.paypal_path_log') }}</th>
@@ -22,12 +27,17 @@
               </tr>
               <tr>
                 <th width="40%">{{ trans('Extensions/Payment/Paypal.paypal_order_status_success') }}</th>
-                <td><a href="#" class="updateData" data-name="paypal_order_status_success" data-type="select" data-pk="{{ $data['id'] }}" data-source="{{ $jsonStatusOrder }}" data-value="{{ $data['paypal_order_status_success'] }}" data-url="{{ route('processExtension',['group'=>$group,'key'=>$key]) }}" data-title="{{ trans('Extensions/Payment/Paypal.paypal_order_status_success') }}"></a></td>
+                <td><a href="#" class="updateData_num" data-name="paypal_order_status_success" data-type="select" data-pk="{{ $data['id'] }}" data-source="{{ $jsonStatusOrder }}" data-value="{{ $data['paypal_order_status_success'] }}" data-url="{{ route('processExtension',['group'=>$group,'key'=>$key]) }}" data-title="{{ trans('Extensions/Payment/Paypal.paypal_order_status_success') }}"></a></td>
               </tr>
               <tr>
                 <th width="40%">{{ trans('Extensions/Payment/Paypal.paypal_order_status_faild') }}</th>
-                <td><a href="#" class="updateData" data-name="paypal_order_status_faild" data-type="select" data-pk="{{ $data['id'] }}" data-source="{{ $jsonStatusOrder }}" data-value="{{ $data['paypal_order_status_faild'] }}" data-url="{{ route('processExtension',['group'=>$group,'key'=>$key]) }}" data-title="{{ trans('Extensions/Payment/Paypal.paypal_order_status_faild') }}"></a></td>
+                <td><a href="#" class="updateData_num" data-name="paypal_order_status_faild" data-type="select" data-pk="{{ $data['id'] }}" data-source="{{ $jsonStatusOrder }}" data-value="{{ $data['paypal_order_status_faild'] }}" data-url="{{ route('processExtension',['group'=>$group,'key'=>$key]) }}" data-title="{{ trans('Extensions/Payment/Paypal.paypal_order_status_faild') }}"></a></td>
               </tr>
+              <tr>
+                <th width="40%">{{ trans('Extensions/Payment/Paypal.paypal_logLevel') }}</th>
+                <td><a href="#" class="updateData" data-name="paypal_logLevel" data-type="select" data-pk="{{ $data['id'] }}" data-url="{{ route('processExtension',['group'=>$group,'key'=>$key]) }}" data-title="{{ trans('Extensions/Payment/Paypal.paypal_logLevel') }}" data-value="{{ $data['paypal_logLevel'] }}" data-source ='[{"value":"DEBUG","text":"DEBUG (not allow live)"},{"value":"INFO","text":"INFO"},{"value":"ERROR","text":"ERROR"},{"value":"WARNING","text":"WARNING"}]'</a></td>
+              </tr>
+
               </table>
             </div>
             <!-- /.box-body -->
@@ -42,11 +52,7 @@
 </section>
 <script type="text/javascript">
 $(document).ready(function() {
-    $(".updateData_num").on("shown", function(e, editable) {
-      var value = $(this).text().replace(/,/g, "");
-      editable.input.$input.val(parseInt(value));
-    });
-    $('.updateData,.updateData_num').editable({
+    $('.updateData_num').editable({
     ajaxOptions: {
     type: 'put',
     dataType: 'json'
@@ -60,7 +66,17 @@ $(document).ready(function() {
         }
     }
     });
-
+    $('.updateData').editable({
+    ajaxOptions: {
+    type: 'put',
+    dataType: 'json'
+    },
+    validate: function(value) {
+        if (value == '') {
+            return '{{  trans('language.admin.not_empty') }}';
+        }
+    }
+    });
 });
 
 </script>

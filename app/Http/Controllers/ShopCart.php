@@ -30,35 +30,47 @@ class ShopCart extends GeneralController
  */
     public function getCart()
     {
-        session()->forget('paymentMethod'); //destroy shippingMethod
+        session()->forget('paymentMethod'); //destroy paymentMethod
         session()->forget('shippingMethod'); //destroy shippingMethod
         //Shipping
-        $moduleShipping = \Helper::getExtensionsGroup('shipping');
-        $shippingMethod = array();
+        $moduleShipping  = \Helper::getExtensionsGroup('shipping');
+        $sourcesShipping = \FindClass::extensions('shipping');
+        $shippingMethod  = array();
         foreach ($moduleShipping as $key => $module) {
-            $moduleClass                    = '\App\Http\Controllers\Extensions\Shipping\\' . $module['key'];
-            $shippingMethod[$module['key']] = (new $moduleClass)->getData();
+            if (in_array($module['key'], $sourcesShipping)) {
+                $moduleClass                    = '\App\Http\Controllers\Extensions\Shipping\\' . $module['key'];
+                $shippingMethod[$module['key']] = (new $moduleClass)->getData();
+            }
         }
         //Payment
-        $modulePayment = \Helper::getExtensionsGroup('payment');
-        $paymentMethod = array();
+        $modulePayment  = \Helper::getExtensionsGroup('payment');
+        $sourcesPayment = \FindClass::extensions('payment');
+        $paymentMethod  = array();
         foreach ($modulePayment as $key => $module) {
-            $moduleClass                   = '\App\Http\Controllers\Extensions\Payment\\' . $module['key'];
-            $paymentMethod[$module['key']] = (new $moduleClass)->getData();
+            if (in_array($module['key'], $sourcesPayment)) {
+                $moduleClass                   = '\App\Http\Controllers\Extensions\Payment\\' . $module['key'];
+                $paymentMethod[$module['key']] = (new $moduleClass)->getData();
+            }
         }
         //Total
-        $moduleTotal = \Helper::getExtensionsGroup('total');
-        $totalMethod = array();
+        $moduleTotal  = \Helper::getExtensionsGroup('total');
+        $sourcesTotal = \FindClass::extensions('total');
+        $totalMethod  = array();
         foreach ($moduleTotal as $key => $module) {
-            $moduleClass                 = '\App\Http\Controllers\Extensions\Total\\' . $module['key'];
-            $totalMethod[$module['key']] = (new $moduleClass)->getData();
+            if (in_array($module['key'], $sourcesTotal)) {
+                $moduleClass                 = '\App\Http\Controllers\Extensions\Total\\' . $module['key'];
+                $totalMethod[$module['key']] = (new $moduleClass)->getData();
+            }
         }
         //Other
-        $moduleOther = \Helper::getExtensionsGroup('other');
-        $otherMethod = array();
+        $moduleOther  = \Helper::getExtensionsGroup('other');
+        $sourcesOther = \FindClass::extensions('other');
+        $otherMethod  = array();
         foreach ($moduleOther as $key => $module) {
-            $moduleClass                 = '\App\Http\Controllers\Extensions\Other\\' . $module['key'];
-            $otherMethod[$module['key']] = (new $moduleClass)->getData();
+            if (in_array($module['key'], $sourcesOther)) {
+                $moduleClass                 = '\App\Http\Controllers\Extensions\Other\\' . $module['key'];
+                $otherMethod[$module['key']] = (new $moduleClass)->getData();
+            }
         }
 
         //====================================================
@@ -72,6 +84,27 @@ class ShopCart extends GeneralController
         } else {
             $hasCoupon = false;
         }
+        $user = Auth::user();
+        if ($user) {
+            $addressDefaul = [
+                'toname'   => $user->name,
+                'email'    => $user->email,
+                'address1' => $user->address1,
+                'address2' => $user->address2,
+                'phone'    => $user->phone,
+                'comment'  => '',
+            ];
+        } else {
+            $addressDefaul = [
+                'toname'   => '',
+                'email'    => '',
+                'address1' => '',
+                'address2' => '',
+                'phone'    => '',
+                'comment'  => '',
+            ];
+        }
+        $shippingAddress = session('shippingAddress') ? json_decode(session('shippingAddress'), true) : $addressDefaul;
         return view($this->theme . '.shop_cart',
             array(
                 'title'             => trans('language.cart_title'),
@@ -86,54 +119,17 @@ class ShopCart extends GeneralController
                 'dataTotal'         => ShopOrderTotal::processDataTotal($objects),
                 'hasCoupon'         => $hasCoupon,
                 'extensionDiscount' => $extensionDiscount,
+                'shippingAddress'   => $shippingAddress,
             )
         );
     }
 
 /**
- * [getCheckout description]
- * @return [type] [description]
- */
-    public function getCheckout()
-    {
-        if (!session('shippingMethod') || !session('paymentMethod') || !session('shippingAddress')) {
-            return redirect()->route('cart');
-        }
-        //====================================================
-        $payment             = session('paymentMethod');
-        $shipping            = session('shippingMethod');
-        $address             = session('shippingAddress');
-        $classShippingMethod = '\App\Http\Controllers\Extensions\Shipping\\' . $shipping;
-        $shippingMethod      = (new $classShippingMethod)->getData();
-        $classPaymentMethod  = '\App\Http\Controllers\Extensions\Payment\\' . $payment;
-        $paymentMethod       = (new $classPaymentMethod)->getData();
-        $objects             = array();
-        $objects[]           = (new ShopOrderTotal)->getShipping();
-        $objects[]           = (new ShopOrderTotal)->getDiscount();
-        $objects[]           = (new ShopOrderTotal)->getReceived();
-        $dataTotal           = ShopOrderTotal::processDataTotal($objects);
-        session()->forget('paymentMethod'); //destroy shippingMethod
-        session()->forget('shippingMethod'); //destroy shippingMethod
-        return view($this->theme . '.shop_checkout',
-            array(
-                'title'           => trans('language.cart_title'),
-                'description'     => '',
-                'keyword'         => '',
-                'cart'            => Cart::content(),
-                'dataTotal'       => $dataTotal,
-                'paymentMethod'   => $paymentMethod,
-                'shippingMethod'  => $shippingMethod,
-                'attributesGroup' => ShopAttributeGroup::all()->keyBy('id'),
-            )
-        );
-    }
-
-/**
- * Process checkout
+ * Process Cart
  * @param  Request $request [description]
  * @return [type]           [description]
  */
-    public function postCheckout(Request $request)
+    public function processCart(Request $request)
     {
         if (Cart::count() == 0) {
             return redirect()->route('cart');
@@ -172,6 +168,47 @@ class ShopCart extends GeneralController
         )]);
         // dd(session()->all());
         return redirect()->route('checkout');
+    }
+
+/**
+ * [getCheckout description]
+ * @return [type] [description]
+ */
+    public function getCheckout()
+    {
+        if (!session('shippingMethod') || !session('paymentMethod') || !session('shippingAddress')) {
+            return redirect()->route('cart');
+        }
+        //====================================================
+        $payment             = session('paymentMethod');
+        $shipping            = session('shippingMethod');
+        $address             = session('shippingAddress');
+        $classShippingMethod = '\App\Http\Controllers\Extensions\Shipping\\' . $shipping;
+        $shippingMethod      = (new $classShippingMethod)->getData();
+        $classPaymentMethod  = '\App\Http\Controllers\Extensions\Payment\\' . $payment;
+        $paymentMethod       = (new $classPaymentMethod)->getData();
+        $objects             = array();
+        $objects[]           = (new ShopOrderTotal)->getShipping();
+        $objects[]           = (new ShopOrderTotal)->getDiscount();
+        $objects[]           = (new ShopOrderTotal)->getReceived();
+        $dataTotal           = ShopOrderTotal::processDataTotal($objects);
+        session()->forget('paymentMethod'); //destroy paymentMethod
+        session()->forget('shippingMethod'); //destroy shippingMethod
+        return view($this->theme . '.shop_checkout',
+            array(
+                'title'           => trans('language.checkout_title'),
+                'description'     => '',
+                'keyword'         => '',
+                'cart'            => Cart::content(),
+                'dataTotal'       => $dataTotal,
+                'paymentMethod'   => $paymentMethod,
+                'shippingMethod'  => $shippingMethod,
+                'payment'         => $payment,
+                'shipping'        => $shipping,
+                'address'         => json_decode($address, true),
+                'attributesGroup' => ShopAttributeGroup::all()->keyBy('id'),
+            )
+        );
     }
 
 /**
@@ -226,35 +263,23 @@ class ShopCart extends GeneralController
         if (!$this->configs['shop_allow_guest'] && !Auth::user()) {
             return redirect()->route('login');
         } //
-
-        $messages = [
-            'max'      => trans('validation.max.string'),
-            'required' => trans('validation.required'),
-        ];
-        $v = Validator::make($request->all(), [
-            'toname'   => 'required|max:100',
-            'address1' => 'required|max:100',
-            'address2' => 'required|max:100',
-            'phone'    => 'required|regex:/^0[^0][0-9\-]{7,13}$/',
-            'email'    => 'required|string|email|max:255',
-        ], $messages);
-        if ($v->fails()) {
-            return redirect()->back()->withInput()->withErrors($v->errors());
+        $data = request()->all();
+        if (!$data) {
+            return redirect()->route('cart');
+        } else {
+            $dataTotal = json_decode($data['dataTotal'], true);
+            $address   = json_decode($data['address'], true);
+            $payment   = $data['payment'];
+            $shipping  = $data['shipping'];
         }
-
         try {
             //Process total
-            $objects        = array();
-            $objects[]      = (new ShopOrderTotal)->getShipping(); //module shipping
-            $objects[]      = (new ShopOrderTotal)->getDiscount(); //module discount
-            $objects[]      = (new ShopOrderTotal)->getReceived(); //module reveived
-            $dataTotal      = ShopOrderTotal::processDataTotal($objects); //sumtotal and re-sort item total
             $subtotal       = (new ShopOrderTotal)->sumValueTotal('subtotal', $dataTotal);
             $shipping       = (new ShopOrderTotal)->sumValueTotal('shipping', $dataTotal); //sum shipping
             $discount       = (new ShopOrderTotal)->sumValueTotal('discount', $dataTotal); //sum discount
             $received       = (new ShopOrderTotal)->sumValueTotal('received', $dataTotal); //sum received
             $total          = (new ShopOrderTotal)->sumValueTotal('total', $dataTotal);
-            $payment_method = empty($request->get('payment_method')) ? 'cash' : $request->get('payment_method');
+            $payment_method = $payment;
             //end total
             DB::connection('mysql')->beginTransaction();
             $arrOrder['user_id'] = empty(Auth::user()->id) ? 0 : Auth::user()->id;
@@ -270,13 +295,13 @@ class ShopCart extends GeneralController
             $arrOrder['exchange_rate']   = \Helper::currencyRate();
             $arrOrder['total']           = $total;
             $arrOrder['balance']         = $total + $received;
-            $arrOrder['toname']          = $request->get('toname');
-            $arrOrder['email']           = $request->get('email');
-            $arrOrder['address1']        = $request->get('address1');
-            $arrOrder['address2']        = $request->get('address2');
-            $arrOrder['phone']           = $request->get('phone');
+            $arrOrder['toname']          = $address['toname'];
+            $arrOrder['email']           = $address['email'];
+            $arrOrder['address1']        = $address['address1'];
+            $arrOrder['address2']        = $address['address2'];
+            $arrOrder['phone']           = $address['phone'];
             $arrOrder['payment_method']  = $payment_method;
-            $arrOrder['comment']         = $request->get('comment');
+            $arrOrder['comment']         = $address['comment'];
             $arrOrder['created_at']      = date('Y-m-d H:i:s');
 
             //Insert to Order
@@ -324,7 +349,7 @@ class ShopCart extends GeneralController
             DB::connection('mysql')->commit();
 
             //Process paypal
-            if ($payment_method == 'paypal') {
+            if ($payment_method === 'Paypal') {
                 $data_payment = [];
                 foreach ($dataItems as $value) {
                     $product        = ShopProduct::find($value->id);
@@ -558,6 +583,20 @@ class ShopCart extends GeneralController
 
     public function completeOrder($orderId)
     {
+        //Process Discount
+        $codeDiscount = session('Discount') ?? '';
+        if ($codeDiscount) {
+            if (!empty(\Helper::configs()['Discount'])) {
+                $moduleClass          = '\App\Http\Controllers\Extensions\Total\Discount';
+                $returnModuleDiscount = (new $moduleClass)->apply($codeDiscount, $uID = auth()->user()->id, $msg = 'Order #' . $orderId, $couponAllowGuest = false);
+            }
+        }
+        //End discount
+        session()->forget('paymentMethod'); //destroy paymentMethod
+        session()->forget('shippingMethod'); //destroy shippingMethod
+        session()->forget('totalMethod'); //destroy totalMethod
+        session()->forget('otherMethod'); //destroy otherMethod
+        session()->forget('Discount'); //destroy Discount
         //Send email
         try {
             $data = ShopOrder::with('details')->find($orderId)->toArray();

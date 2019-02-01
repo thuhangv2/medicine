@@ -1,8 +1,7 @@
 <?php
+namespace App\Providers\Extensions\Payment;
 
-namespace App\Scart\Payment;
-
-use App\Models\Config;
+use App\Models\Extension\Payment\Paypal as PaypalModel;
 use PayPal\Api\Amount;
 use PayPal\Api\Item;
 use PayPal\Api\ItemList;
@@ -32,25 +31,28 @@ class PayPalService
 
     public function __construct()
     {
-        $paypal_env    = config('paypal');
-        $paypalConfigs = Config::where('code', 'payment_paypal')->pluck('value', 'key');
+        $checkTableExist = (new PaypalModel)->checkTableExist();
+        if ($checkTableExist) {
+            $paypalConfigs    = PaypalModel::first();
+            $paypal_env       = config('paypal');
+            $this->apiContext = new ApiContext(
+                new OAuthTokenCredential(
+                    $paypal_env['client_id'],
+                    $paypal_env['secret']
+                )
+            );
+            $this->apiContext->setConfig([
+                'mode'                   => $paypalConfigs['paypal_mode'],
+                'http.ConnectionTimeOut' => 30,
+                'log.logEnabled'         => $paypalConfigs['paypal_log'],
+                'log.FileName'           => storage_path() . '/' . $paypalConfigs['paypal_path_log'],
+                'log.LogLevel'           => $paypalConfigs['paypal_logLevel'],
+            ]);
+            $this->paymentCurrency = $paypalConfigs['paypal_currency'];
 
-        $this->apiContext = new ApiContext(
-            new OAuthTokenCredential(
-                $paypal_env['client_id'],
-                $paypal_env['secret']
-            )
-        );
-        $this->apiContext->setConfig([
-            'mode'                   => $paypal_env['settings']['mode'],
-            'http.ConnectionTimeOut' => 30,
-            'log.logEnabled'         => $paypalConfigs['paypal_log'],
-            'log.FileName'           => storage_path() . '/' . $paypalConfigs['paypal_path_log'],
-            'log.LogLevel'           => 'WARNING',
-        ]);
-        $this->paymentCurrency = $paypalConfigs['paypal_currency'];
+            $this->totalAmount = 0;
+        }
 
-        $this->totalAmount = 0;
     }
 
 /**
@@ -84,10 +86,7 @@ class PayPalService
  */
     public function setItem($itemData)
     {
-        // Kiểm tra xem item được thêm vào là một hay một
-        // mảng các item. Nếu chỉ là 1 item, thì chúng ta sẽ
-        // cho nó thành một mảng item rồi foreach. Việc này giúp
-        // chúng ta có thể thêm một hay nhiều item cùng lúc
+
         if (count($itemData) === count($itemData, COUNT_RECURSIVE)) {
             $itemData = [$itemData];
         }
@@ -96,16 +95,12 @@ class PayPalService
         foreach ($itemData as $data) {
             $item = new Item();
 
-            // Set tên của item
             $item->setName($data['name'])
-                ->setCurrency($this->paymentCurrency) // Đơn vị tiền của item
-                ->setSku($data['sku']) // ID của item
-                ->setQuantity($data['quantity']) // Số lượng
-                ->setPrice($data['price']); // Giá
-            // Thêm item vào danh sách
+                ->setCurrency($this->paymentCurrency)
+                ->setSku($data['sku']) //
+                ->setQuantity($data['quantity'])
+                ->setPrice($data['price']);
             $this->itemList[] = $item;
-            // Tính tổng đơn hàng
-
             $this->totalAmount += $data['price'] * $data['quantity'];
 
         }

@@ -8,4 +8,6 @@ return [
     'paypal_currency'             => 'Loại tiền',
     'paypal_order_status_success' => 'Trạng thái thành công',
     'paypal_order_status_faild'   => 'Trạng thái thất bại',
+    'paypal_logLevel'             => 'Level log',
+    'paypal_mode'                 => 'Paypal mode',
 ];

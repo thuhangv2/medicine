@@ -12,6 +12,8 @@ class ShippingBasic extends \App\Http\Controllers\Controller
     public $image;
     const ALLOW  = 1;
     const DENIED = 0;
+    const ON     = 1;
+    const OFF    = 0;
     public function __construct()
     {
         $this->title = trans('Extensions/' . $this->configCode . '/' . $this->configKey . '.title');
@@ -48,7 +50,7 @@ class ShippingBasic extends \App\Http\Controllers\Controller
                     'code'   => $this->configCode,
                     'key'    => $this->configKey,
                     'sort'   => 0,
-                    'value'  => 1, //Enable extension
+                    'value'  => self::ON, //Enable extension
                     'detail' => $this->title,
                 ]
             );
@@ -72,7 +74,7 @@ class ShippingBasic extends \App\Http\Controllers\Controller
     public function enable()
     {
         $return  = ['error' => 0, 'msg' => ''];
-        $process = (new Config)->where('key', $this->configKey)->update(['value' => 1]);
+        $process = (new Config)->where('key', $this->configKey)->update(['value' => self::ON]);
         if (!$process) {
             $return = ['error' => 1, 'msg' => 'Error enable'];
         }
@@ -81,7 +83,7 @@ class ShippingBasic extends \App\Http\Controllers\Controller
     public function disable()
     {
         $return  = ['error' => 0, 'msg' => ''];
-        $process = (new Config)->where('key', $this->configKey)->update(['value' => 0]);
+        $process = (new Config)->where('key', $this->configKey)->update(['value' => self::OFF]);
         if (!$process) {
             $return = ['error' => 1, 'msg' => 'Error disable'];
         }
