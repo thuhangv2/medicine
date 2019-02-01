@@ -51,7 +51,7 @@ class ShippingBasic extends \App\Http\Controllers\Controller
                     'key'    => $this->configKey,
                     'sort'   => 0,
                     'value'  => self::ON, //Enable extension
-                    'detail' => $this->title,
+                    'detail' => 'Extensions/' . $this->configCode . '/' . $this->configKey . '.title',
                 ]
             );
             if (!$process) {

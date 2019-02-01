@@ -64,7 +64,7 @@ class ShippingStandard extends \App\Http\Controllers\Controller
                     'key'    => $this->configKey,
                     'sort'   => 0, // Sort extensions in group
                     'value'  => self::ON, //1- Enable extension; 0 - Disable
-                    'detail' => $this->title,
+                    'detail' => 'Extensions/' . $this->configCode . '/' . $this->configKey . '.title',
                 ]
             );
             if (!$process) {
