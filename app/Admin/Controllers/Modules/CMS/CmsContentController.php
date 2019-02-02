@@ -1,10 +1,11 @@
 <?php
-#app/Http/Admin/Controllers/CmsNewsController.php
-namespace App\Admin\Controllers;
+#app/Http/Admin/Controllers/Modules/CMS/CmsContentController.php
+namespace App\Admin\Controllers\Modules\CMS;
 
 use App\Http\Controllers\Controller;
-use App\Models\CmsNews;
-use App\Models\CmsNewsDescription;
+use App\Models\CmsCategory;
+use App\Models\CmsContent;
+use App\Models\CmsContentDescription;
 use App\Models\Language;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Facades\Admin;
@@ -13,7 +14,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class CmsNewsController extends Controller
+class CmsContentController extends Controller
 {
     use HasResourceActions;
 
@@ -25,7 +26,7 @@ class CmsNewsController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->header(trans('language.admin.cms_news'))
+            ->header(trans('language.admin.cms_content'))
             ->description(' ')
             ->body($this->grid());
     }
@@ -39,7 +40,7 @@ class CmsNewsController extends Controller
     public function edit($id, Content $content)
     {
         return $content
-            ->header(trans('language.admin.cms_news'))
+            ->header(trans('language.admin.cms_content'))
             ->description(' ')
             ->body($this->form()->edit($id));
     }
@@ -52,7 +53,7 @@ class CmsNewsController extends Controller
     public function create(Content $content)
     {
         return $content
-            ->header(trans('language.admin.cms_news'))
+            ->header(trans('language.admin.cms_content'))
             ->description(' ')
             ->body($this->form());
     }
@@ -64,11 +65,14 @@ class CmsNewsController extends Controller
      */
     protected function grid()
     {
-        $grid = new Grid(new CmsNews);
+        $grid = new Grid(new CmsContent);
 
         $grid->id('ID')->sortable();
         $grid->title(trans('language.admin.title'))->sortable();
         $grid->image(trans('language.admin.image'))->image('', 50);
+        $grid->category(trans('language.category'))->display(function ($cate) {
+            return $cate['title'];
+        });
         $grid->status(trans('language.admin.status'))->switch();
         $grid->created_at(trans('language.admin.created_at'));
         $grid->updated_at(trans('language.admin.last_modify'));
@@ -94,36 +98,43 @@ class CmsNewsController extends Controller
      */
     protected function form()
     {
-        $form = new Form(new CmsNews);
+        $form      = new Form(new CmsContent);
+        $languages = Language::getLanguages();
+        $form->tab(trans('language.product.product_info'), function ($form) use ($languages) {
 //Language
-        $arrParameters = request()->route()->parameters();
-        $idCheck       = (int) end($arrParameters);
-        $languages     = Language::getLanguages();
-        $arrFields     = array();
-        foreach ($languages as $key => $language) {
-            if ($idCheck) {
-                $langDescriptions = CmsNewsDescription::where('cms_news_id', $idCheck)->where('lang_id', $language->id)->first();
+            $arrParameters = request()->route()->parameters();
+            $idCheck       = (int) end($arrParameters);
+            $arrFields     = array();
+            foreach ($languages as $key => $language) {
+                if ($idCheck) {
+                    $langDescriptions = CmsContentDescription::where('cms_content_id', $idCheck)->where('lang_id', $language->id)->first();
+                }
+                if ($languages->count() > 1) {
+                    $form->html('<b>' . $language->name . '</b> <img style="height:25px" src="/' . config('filesystems.disks.path_file') . '/' . $language->icon . '">');
+                }
+                $form->text($language->code . '__title', trans('language.admin.title'))->rules('required', ['required' => trans('validation.required')])->default(!empty($langDescriptions->title) ? $langDescriptions->title : null);
+                $form->text($language->code . '__keyword', trans('language.admin.keyword'))->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
+                $form->text($language->code . '__description', trans('language.admin.description'))->rules('max:300', ['max' => trans('validation.max')])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
+                $form->ckeditor($language->code . '__content', trans('language.admin.content'))->default(!empty($langDescriptions->content) ? $langDescriptions->content : null)->rules('required');
+                $arrFields[] = $language->code . '__title';
+                $arrFields[] = $language->code . '__keyword';
+                $arrFields[] = $language->code . '__description';
+                $arrFields[] = $language->code . '__content';
+                $form->divide();
             }
-            if ($languages->count() > 1) {
-                $form->html('<b>' . $language->name . '</b> <img style="height:25px" src="/' . config('filesystems.disks.path_file') . '/' . $language->icon . '">');
-            }
-            $form->text($language->code . '__title', trans('language.admin.title'))->rules('required', ['required' => trans('validation.required')])->default(!empty($langDescriptions->title) ? $langDescriptions->title : null);
-            $form->text($language->code . '__keyword', trans('language.admin.keyword'))->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
-            $form->text($language->code . '__description', trans('language.admin.description'))->rules('max:300', ['max' => trans('validation.max')])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
-            $form->ckeditor($language->code . '__content', trans('language.admin.content'))->default(!empty($langDescriptions->content) ? $langDescriptions->content : null);
-            $arrFields[] = $language->code . '__title';
-            $arrFields[] = $language->code . '__keyword';
-            $arrFields[] = $language->code . '__description';
-            $arrFields[] = $language->code . '__content';
-            $form->divide();
-        }
-        $form->ignore($arrFields);
+            $form->ignore($arrFields);
 //end language
+            $arrCate = (new CmsCategory)->getTreeCategory();
+            $form->select('category_id', trans('language.category'))->options($arrCate)->rules('required');
+            $form->image('image', trans('language.admin.image'))->uniqueName()->move('cms_content')->removable();
+            $form->switch('status', trans('language.admin.status'));
+            $form->number('sort', trans('language.admin.sort'));
+        })->tab(trans('language.admin.sub_image'), function ($form) {
+            $form->hasMany('images', ' ', function (Form\NestedForm $form) {
+                $form->image('image', trans('language.admin.sub_image'))->uniqueName()->move('product_slide');
+            });
 
-        $form->image('image', trans('language.admin.image'))->uniqueName()->move('cms_content')->removable();
-        $form->switch('status', trans('language.admin.status'));
-        $form->number('sort', trans('language.admin.sort'));
-
+        });
         $arrData = array();
         $form->saving(function (Form $form) use ($languages, &$arrData) {
             //Lang
@@ -145,10 +156,10 @@ class CmsNewsController extends Controller
                 if (array_filter($arrData[$language->code], function ($v, $k) {
                     return $v != null;
                 }, ARRAY_FILTER_USE_BOTH)) {
-                    $arrData[$language->code]['cms_news_id'] = $id;
-                    $arrData[$language->code]['lang_id']     = $language->id;
-                    CmsNewsDescription::where('lang_id', $arrData[$language->code]['lang_id'])->where('cms_news_id', $arrData[$language->code]['cms_news_id'])->delete();
-                    CmsNewsDescription::insert($arrData[$language->code]);
+                    $arrData[$language->code]['lang_id']        = $language->id;
+                    $arrData[$language->code]['cms_content_id'] = $id;
+                    CmsContentDescription::where('lang_id', $arrData[$language->code]['lang_id'])->where('cms_content_id', $arrData[$language->code]['cms_content_id'])->delete();
+                    CmsContentDescription::insert($arrData[$language->code]);
                 }
             }
 
@@ -167,6 +178,22 @@ class CmsNewsController extends Controller
                     });
                     $image_thumb->save($file_path_admin . '/thumb/' . $form->model()->image);
                     //end thumb
+                }
+                if (($content->images)) {
+                    foreach ($content->images as $key => $image) {
+                        if (!file_exists($file_path_admin . '/thumb/' . $image->image)) {
+                            if (!empty(\Helper::configs()['watermark'])) {
+                                \Image::make($file_path_admin . '/' . $image->image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $image->image);
+                            }
+                            //thumbnail
+                            $image_thumb = \Image::make($file_path_admin . '/' . $image->image);
+                            $image_thumb->resize(250, null, function ($constraint) {
+                                $constraint->aspectRatio();
+                            });
+                            $image_thumb->save($file_path_admin . '/thumb/' . $image->image);
+                            //end thumb
+                        }
+                    }
                 }
 
             } catch (\Exception $e) {

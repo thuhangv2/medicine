@@ -21,10 +21,7 @@ Route::group([
     $router->any('/config_updateConfigField', 'ConfigInfoController@updateConfigField')
         ->name('updateConfigField');
 //Cms
-    $router->resource('cms_category', CmsCategoryController::class);
-    $router->resource('cms_content', CmsContentController::class);
-    $router->resource('cms_news', CmsNewsController::class);
-    $router->resource('cms_page', CmsPageController::class);
+
     $router->resource('cms_layout', CmsLayoutController::class);
     $router->get('/ckfinder', function () {
         return view('admin.ckfinder');
@@ -60,6 +57,13 @@ Route::group([
         $router->put('/shop_order_update', 'ShopOrderController@postOrderUpdate')->name('order_update');
     });
 
+    $router->group(['prefix' => 'modules/cms', 'namespace' => 'Modules\\CMS'], function ($router) {
+        $router->resource('cms_category', CmsCategoryController::class);
+        $router->resource('cms_content', CmsContentController::class);
+        $router->resource('cms_news', CmsNewsController::class);
+        $router->resource('cms_page', CmsPageController::class);
+    });
+
 //Extensions
     $router->group(['prefix' => 'extensions'], function ($router) {
         $router->get('/{extensionGroup}', 'ExtensionsController@index')->name('extensionGroup');
@@ -70,7 +74,7 @@ Route::group([
         $router->match(['put', 'post'], '/processExtension/{extensionGroup}/{extension}', 'ExtensionsController@processExtension')->name('processExtension');
     });
     //Extension Total/Discount
-    $router->resource('shop_discount', ShopDiscountController::class)->names('configDiscount');
+    $router->resource('shop_discount', Extensions\Total\Discount::class)->names('configDiscount');
 
 //
 

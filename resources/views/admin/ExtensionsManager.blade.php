@@ -18,6 +18,11 @@
                 </tr>
                 </thead>
                 <tbody>
+                  @if (!$extensions)
+                    <tr>
+                      <td colspan="5" style="text-align: center;color: red;">Empty extension!</td>
+                    </tr>
+                  @else
                   @foreach ($extensions as $key => $extension)
                   @php
                     $extensionClass = $namespace.'\\'.$extension;
@@ -49,6 +54,7 @@
                       <td>{!! $extensionAction !!}</td>
                     </tr>
                   @endforeach
+                  @endif
                 </tbody>
               </table>
             </div>
@@ -131,25 +137,30 @@
       });
   }
   function uninstallExtension(obj,key) {
-      obj.button('loading');
-      $.ajax({
-        type: 'POST',
-        dataType:'json',
-        url: '{{ route('uninstallExtension') }}',
-        data: {
-          "_token": "{{ csrf_token() }}",
-          "key":key,
-          "group":"{{ $group }}"
-        },
-        success: function (response) {
-          console.log(response);
-          if(parseInt(response.error) ==0){
-              location.reload();
-          }else{
-              obj.button('reset');
-              alert(response.msg);
-          }
-        }
-      });
+    var checkstr =  confirm('are you sure you want to uninstall this?');
+      if(checkstr == true){
+            obj.button('loading');
+            $.ajax({
+              type: 'POST',
+              dataType:'json',
+              url: '{{ route('uninstallExtension') }}',
+              data: {
+                "_token": "{{ csrf_token() }}",
+                "key":key,
+                "group":"{{ $group }}"
+              },
+              success: function (response) {
+                console.log(response);
+                if(parseInt(response.error) ==0){
+                    location.reload();
+                }else{
+                    obj.button('reset');
+                    alert(response.msg);
+                }
+              }
+            });
+      }else{
+      return false;
+      }
   }
 </script>
