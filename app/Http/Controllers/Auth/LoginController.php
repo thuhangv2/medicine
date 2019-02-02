@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\GeneralController as GeneralController;
 use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -48,6 +49,26 @@ class LoginController extends Controller
             'email'    => 'required|string|email',
             'password' => 'required|string',
         ]);
+    }
+    public function showLoginForm()
+    {
+        if (Auth::user()) {
+            return redirect()->route('home');
+        }
+        return view((new GeneralController)->theme . '.shop_login',
+            array(
+                'title' => trans('language.login'),
+            )
+        );
+    }
+
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        return $this->loggedOut($request) ?: redirect()->route('login');
     }
 
 }

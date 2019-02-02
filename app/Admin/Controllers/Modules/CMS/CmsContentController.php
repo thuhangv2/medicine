@@ -1,6 +1,6 @@
 <?php
-#app/Http/Admin/Controllers/Modules/CMS/CmsContentController.php
-namespace App\Admin\Controllers\Modules\CMS;
+#app/Http/Admin/Controllers/Modules/Cms/CmsContentController.php
+namespace App\Admin\Controllers\Modules\Cms;
 
 use App\Http\Controllers\Controller;
 use App\Models\CmsCategory;

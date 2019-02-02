@@ -20,7 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //Api product
 Route::group([
     'prefix'    => 'product',
-    'namespace' => 'Api',
+    'namespace' => 'Modules\Api',
 ], function () {
     Route::get('/', 'Product@index');
 });
@@ -28,7 +28,7 @@ Route::group([
 //Api order
 Route::group([
     'prefix'    => 'order',
-    'namespace' => 'Api',
+    'namespace' => 'Modules\Api',
 ], function () {
     Route::get('/', 'Order@index');
 });

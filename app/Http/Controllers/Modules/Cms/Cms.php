@@ -1,10 +1,10 @@
 <?php
-#app/Http/Controller/Cms.php
-namespace App\Http\Controllers;
+#app/Http/Controller/Modules/Cms/Cms.php
+namespace App\Http\Controllers\Modules\Cms;
 
 use App\Models\CmsNews;
 
-class Cms extends GeneralController
+class Cms extends \App\Http\Controllers\GeneralController
 {
 
     public function __construct()

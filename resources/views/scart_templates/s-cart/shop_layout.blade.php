@@ -114,18 +114,18 @@
         <div class="row">
           <div class="col-sm-4">
             <div class="logo pull-left">
-              <a href="{{ url('/') }}"><img style="width: 150px;" src="{{ asset($logo) }}" alt="" /></a>
+              <a href="{{ route('home') }}"><img style="width: 150px;" src="{{ asset($logo) }}" alt="" /></a>
             </div>
           </div>
           <div class="col-sm-8">
             <div class="shop-menu pull-right">
               <ul class="nav navbar-nav">
-                <li><a href="{{ url('profile.html') }}"><i class="fa fa-user"></i> {{ trans('language.account') }}</a></li>
-                <li><a href="{{ url('wishlist.html') }}"><span style="border-radius: 3px;padding: 5px;" class="label_top label-warning shopping-wishlist" id="count_wishlist">{{ Cart::instance('wishlist')->count() }}</span><i class="fa fa-star"></i> {{ trans('language.wishlist') }}</a></li>
-                <li><a href="{{ url('compare.html') }}"><span style="border-radius: 3px;padding: 5px;" class="label_top label-warning shopping-compare" id="count_compare">{{ Cart::instance('compare')->count() }}</span><i class="fa fa-crosshairs"></i> {{ trans('language.compare') }}</a></li>
-                <li><a href="{{ url('cart.html') }}"><span style="border-radius: 3px;padding: 5px;" class="label_top label-warning shopping-cart" id="count_cart">{{ Cart::instance('default')->count() }}</span><i class="fa fa-shopping-cart"></i> {{ trans('language.cart_title') }}</a></li>
+                <li><a href="{{ route('profile') }}"><i class="fa fa-user"></i> {{ trans('language.account') }}</a></li>
+                <li><a href="{{ route('wishlist') }}"><span style="border-radius: 3px;padding: 5px;" class="label_top label-warning shopping-wishlist" id="count_wishlist">{{ Cart::instance('wishlist')->count() }}</span><i class="fa fa-star"></i> {{ trans('language.wishlist') }}</a></li>
+                <li><a href="{{ route('compare') }}"><span style="border-radius: 3px;padding: 5px;" class="label_top label-warning shopping-compare" id="count_compare">{{ Cart::instance('compare')->count() }}</span><i class="fa fa-crosshairs"></i> {{ trans('language.compare') }}</a></li>
+                <li><a href="{{ route('cart') }}"><span style="border-radius: 3px;padding: 5px;" class="label_top label-warning shopping-cart" id="count_cart">{{ Cart::instance('default')->count() }}</span><i class="fa fa-shopping-cart"></i> {{ trans('language.cart_title') }}</a></li>
                 @guest
-                <li><a href="{{ url('login.html') }}"><i class="fa fa-lock"></i> {{ trans('language.login') }}</a></li>
+                <li><a href="{{ route('login') }}"><i class="fa fa-lock"></i> {{ trans('language.login') }}</a></li>
                 @else
                 <li><a href="{{ route('logout') }}" rel="nofollow" onclick="event.preventDefault();
                    document.getElementById('logout-form').submit();"><i class="fa fa-power-off"></i> {{ trans('language.logout') }}</a></li>

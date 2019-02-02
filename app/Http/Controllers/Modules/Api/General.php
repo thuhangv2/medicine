@@ -1,6 +1,6 @@
 <?php
-#app/Http/Controller/Api/General.php
-namespace App\Http\Controllers\Api;
+#app/Http/Controller/Api/Modules/General.php
+namespace App\Http\Controllers\Modules\Api;
 
 use App\Models\ShopApi;
 use App\Models\ShopApiProcess;

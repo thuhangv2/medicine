@@ -1,6 +1,6 @@
 <?php
-#app/Http/Admin/Controllers/Modules/CMS/CmsPageController.php
-namespace App\Admin\Controllers\Modules\CMS;
+#app/Http/Admin/Controllers/Modules/Cms/CmsPageController.php
+namespace App\Admin\Controllers\Modules\Cms;
 
 use App\Http\Controllers\Controller;
 use App\Models\CmsPage;

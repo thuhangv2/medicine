@@ -11,7 +11,6 @@ use App\Models\ShopProduct;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 
 class ShopFront extends GeneralController
 {
@@ -194,46 +193,6 @@ class ShopFront extends GeneralController
                 'title'    => trans('language.search') . ': ' . $keyword,
                 'products' => ShopProduct::getSearch($keyword),
             ));
-    }
-
-/**
- * [login description]
- * @return [type] [description]
- */
-    public function login()
-    {
-        if (Auth::user()) {
-            return redirect()->route('home');
-        }
-        return view($this->theme . '.shop_login',
-            array(
-                'title' => trans('language.login'),
-            )
-        );
-    }
-/**
- * [logout description]
- * @return [type] [description]
- */
-    public function logout()
-    {
-        Auth::logout();
-        return redirect()->route('login');
-    }
-/**
- * [login description]
- * @return [type] [description]
- */
-    public function forgot()
-    {
-        if (Auth::user()) {
-            return redirect()->route('home');
-        }
-        return view($this->theme . '.shop_forgot',
-            array(
-                'title' => trans('language.for_got_password'),
-            )
-        );
     }
 
 }

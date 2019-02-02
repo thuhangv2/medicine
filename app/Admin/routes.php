@@ -12,6 +12,7 @@ Route::group([
 
     $router->get('/', 'HomeController@index');
     $router->resource('banner', BannerController::class);
+    $router->resource('cms_layout', CmsLayoutController::class);
     $router->resource('language', LanguageController::class);
     $router->resource('currencies', CurrencyController::class);
 //Config
@@ -20,9 +21,6 @@ Route::group([
     $router->resource('config_layout', ConfigLayoutController::class);
     $router->any('/config_updateConfigField', 'ConfigInfoController@updateConfigField')
         ->name('updateConfigField');
-//Cms
-
-    $router->resource('cms_layout', CmsLayoutController::class);
     $router->get('/ckfinder', function () {
         return view('admin.ckfinder');
     });
@@ -55,13 +53,13 @@ Route::group([
         $router->post('/order_delete_item', 'ShopOrderController@postDeleteItem')->name('order_delete_item');
         $router->put('/shop_order_update', 'ShopOrderController@postOrderUpdate')->name('order_update');
     });
-
+//Modules
     $router->group(['prefix' => 'modules', 'namespace' => 'Modules'], function ($router) {
-        $router->resource('cms/cms_category', CMS\CmsCategoryController::class);
-        $router->resource('cms/cms_content', CMS\CmsContentController::class);
-        $router->resource('cms/cms_news', CMS\CmsNewsController::class);
-        $router->resource('cms/cms_page', CMS\CmsPageController::class);
-        $router->resource('api/shop_api', API\ShopApiController::class);
+        $router->resource('cms/cms_category', Cms\CmsCategoryController::class);
+        $router->resource('cms/cms_content', Cms\CmsContentController::class);
+        $router->resource('cms/cms_news', Cms\CmsNewsController::class);
+        $router->resource('cms/cms_page', Cms\CmsPageController::class);
+        $router->resource('api/shop_api', Api\ShopApiController::class);
     });
 
 //Extensions

@@ -1,27 +1,28 @@
 <?php
-#app/Http/Controller/Api/Order.php
-namespace App\Http\Controllers\Api;
+#app/Http/Controller/Modules/Api/Product.php
+namespace App\Http\Controllers\Modules\Api;
 
-use App\Models\ShopOrder;
+use App\Models\ShopProduct;
 use Illuminate\Http\Request;
 
-class Order extends General
+class Product extends General
 {
+
     public $limit;
     public $start;
     public $orderBy;
     public $sort;
-    public $order_id;
+    public $model;
 
     public function __construct(Request $request)
     {
         parent::__construct($request);
-        $data           = $this->data;
-        $this->limit    = empty($data['limit']) ? 10 : $data['limit'];
-        $this->start    = empty($data['start']) ? 0 : (int) $data['start'];
-        $this->orderBy  = empty($data['orderBy']) ? [] : explode(',', $data['orderBy']);
-        $this->sort     = $data['sort'] ?? 'ASC';
-        $this->order_id = empty($data['order_id']) ? '' : $data['order_id'];
+        $data          = $this->data;
+        $this->limit   = empty($data['limit']) ? 10 : $data['limit'];
+        $this->start   = empty($data['start']) ? 0 : (int) $data['start'];
+        $this->orderBy = empty($data['orderBy']) ? [] : explode(',', $data['orderBy']);
+        $this->sort    = $data['sort'] ?? 'ASC';
+        $this->model   = empty($data['model']) ? '' : $data['model'];
 
     }
 
@@ -31,11 +32,11 @@ class Order extends General
  */
     public function index()
     {
-        if ($this->apiName == 'api_order_list') {
+        if ($this->apiName == 'api_product_list') {
             return $this->list();
         }
-        if ($this->apiName == 'api_order_detail') {
-            return $this->detail($this->order_id);
+        if ($this->apiName == 'api_product_detail') {
+            return $this->detail($this->model);
         }
     }
 
@@ -48,7 +49,7 @@ class Order extends General
         $start        = $this->start;
         $orderBy      = $this->orderBy;
         $sort         = $this->sort;
-        $query        = ShopOrder::with('details');
+        $query        = ShopProduct::with('descriptions', 'images', 'options', 'specialPrice');
         $hiddenFields = empty($this->hiddenFields) ? [] : explode(',', $this->hiddenFields);
 //Order by
         if ($orderBy) {
@@ -74,9 +75,9 @@ class Order extends General
  * @param  [type] $sku [description]
  * @return [type]      [description]
  */
-    public function detail($order_id)
+    public function detail($sku)
     {
-        $query = ShopOrder::with('details')->where('id', $order_id)->first();
+        $query = ShopProduct::with('descriptions', 'images', 'options', 'specialPrice')->where('sku', $sku)->first();
         if ($query) {
             $hiddenFields = empty($this->hiddenFields) ? [] : explode(',', $this->hiddenFields);
             $query->setAppends([]);
@@ -88,7 +89,7 @@ class Order extends General
             $error = array(
                 'error'  => 1,
                 'code'   => 404,
-                'detail' => 'Order not found!',
+                'detail' => 'Product not found!',
                 'msg'    => 'Not found',
             );
             return json_encode($error);
