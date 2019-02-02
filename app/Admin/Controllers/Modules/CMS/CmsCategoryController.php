@@ -1,5 +1,5 @@
 <?php
-#app/Http/Admin/Controllers/Mpdules/CMS/CmsCategoryController.php
+#app/Http/Admin/Controllers/Modules/CMS/CmsCategoryController.php
 namespace App\Admin\Controllers\Modules\CMS;
 
 use App\Http\Controllers\Controller;

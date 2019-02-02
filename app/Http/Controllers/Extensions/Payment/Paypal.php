@@ -113,7 +113,7 @@ class Paypal extends \App\Http\Controllers\Controller
             ])->render();
     }
 
-    public function process($data)
+    public function processConfig($data)
     {
         $return  = ['error' => 0, 'msg' => ''];
         $process = PaypalModel::where('id', $data['pk'])->update([$data['name'] => $data['value']]);

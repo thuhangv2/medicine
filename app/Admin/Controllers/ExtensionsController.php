@@ -119,7 +119,7 @@ class ExtensionsController extends Controller
         $data      = request()->all();
         $namespace = $this->namespaceGroup[$group];
         $class     = $namespace . '\\' . $key;
-        $response  = (new $class)->process($data);
+        $response  = (new $class)->processConfig($data);
         return json_encode($response);
     }
 }

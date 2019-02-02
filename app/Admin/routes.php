@@ -38,7 +38,6 @@ Route::group([
     $router->resource('shop_payment_status', ShopPaymentStatusController::class);
     $router->resource('shop_shipping_status', ShopShipingStatusController::class);
     $router->resource('shop_special_price', ShopSpecialPriceController::class);
-    $router->resource('shop_api', ShopApiController::class);
     $router->resource('shop_attribute_group', ShopAttributeGroupController::class);
 
 //Get info
@@ -57,11 +56,12 @@ Route::group([
         $router->put('/shop_order_update', 'ShopOrderController@postOrderUpdate')->name('order_update');
     });
 
-    $router->group(['prefix' => 'modules/cms', 'namespace' => 'Modules\\CMS'], function ($router) {
-        $router->resource('cms_category', CmsCategoryController::class);
-        $router->resource('cms_content', CmsContentController::class);
-        $router->resource('cms_news', CmsNewsController::class);
-        $router->resource('cms_page', CmsPageController::class);
+    $router->group(['prefix' => 'modules', 'namespace' => 'Modules'], function ($router) {
+        $router->resource('cms/cms_category', CMS\CmsCategoryController::class);
+        $router->resource('cms/cms_content', CMS\CmsContentController::class);
+        $router->resource('cms/cms_news', CMS\CmsNewsController::class);
+        $router->resource('cms/cms_page', CMS\CmsPageController::class);
+        $router->resource('api/shop_api', API\ShopApiController::class);
     });
 
 //Extensions

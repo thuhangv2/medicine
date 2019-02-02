@@ -37,26 +37,20 @@ class Discount extends \App\Http\Controllers\Controller
 
     public function processData()
     {
+        $uID         = auth()->user()->id;
         $arrDiscount = [
             'title'      => $this->title,
             'code'       => $this->configKey,
             'image'      => $this->image,
-            'permission' => (auth()->user()) ? self::ALLOW : self::DENIED,
+            'permission' => ($uID) ? self::ALLOW : self::DENIED,
+            'value'      => 0,
         ];
 
         $configs            = \Helper::configs();
         $DiscountAllowGuest = empty($configs['coupon_allow_guest']) ? false : true;
         $Discount           = session('Discount');
-        $check              = json_decode($this->discountService->check($Discount, $uID = null, $DiscountAllowGuest), true);
-        if (empty($Discount) || $check['error'] == 1) {
-            $arrDiscount = array(
-                'title'      => $this->title,
-                'code'       => $this->configKey,
-                'image'      => $this->image,
-                'permission' => (auth()->user()) ? self::ALLOW : self::DENIED,
-                'value'      => 0,
-            );
-        } else {
+        $check              = json_decode($this->discountService->check($Discount, $uID, $DiscountAllowGuest), true);
+        if (!empty($Discount) && !$check['error']) {
             $arrType = [
                 '0' => 'Cash',
                 '1' => 'Point',
@@ -68,7 +62,7 @@ class Discount extends \App\Http\Controllers\Controller
                 'title'      => '<b>' . $this->title . ':</b> ' . $Discount . '',
                 'code'       => $this->configKey,
                 'image'      => $this->image,
-                'permission' => (auth()->user()) ? self::ALLOW : self::DENIED,
+                'permission' => ($uID) ? self::ALLOW : self::DENIED,
                 'value'      => ($value > $subtotal) ? -$subtotal : -$value,
             );
         }
@@ -133,7 +127,7 @@ class Discount extends \App\Http\Controllers\Controller
     {
         return redirect()->route('configDiscount.index');
     }
-    public function process($data)
+    public function processConfig($data)
     {
 //Process
     }

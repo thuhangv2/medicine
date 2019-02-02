@@ -116,7 +116,7 @@ class ShippingStandard extends \App\Http\Controllers\Controller
             ])->render();
     }
 
-    public function process($data)
+    public function processConfig($data)
     {
         $return  = ['error' => 0, 'msg' => ''];
         $process = ShippingStandardModel::where('id', $data['pk'])->update([$data['name'] => $data['value']]);

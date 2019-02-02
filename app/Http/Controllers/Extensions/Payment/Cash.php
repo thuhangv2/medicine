@@ -92,7 +92,7 @@ class Cash extends \App\Http\Controllers\Controller
 //
     }
 
-    public function process($data)
+    public function processConfig($data)
     {
 //
     }
