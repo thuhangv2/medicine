@@ -37,7 +37,7 @@ class Discount extends \App\Http\Controllers\Controller
 
     public function processData()
     {
-        $uID         = auth()->user()->id;
+        $uID         = auth()->user()->id ?? 0;
         $arrDiscount = [
             'title'      => $this->title,
             'code'       => $this->configKey,
