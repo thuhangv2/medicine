@@ -12,13 +12,13 @@
  */
 Auth::routes();
 //============================
+
+//Front
 Route::get('/', 'ShopFront@index')->name('home');
 Route::get('index.html', 'ShopFront@index');
 Route::get('/shop/{name}_{id}.html', 'ShopFront@productToCategory');
 Route::get('/product/{name}_{id}.html', 'ShopFront@productDetail');
 Route::get('/brand/{name}_{id}/{category?}', 'ShopFront@productBrand');
-
-//Front
 Route::get('/products.html', 'ShopFront@allProducts')->name('products');
 Route::get('/search.html', 'ShopFront@search')->name('search');
 Route::get('/contact.html', 'ShopFront@getContact')->name('contact');
@@ -51,21 +51,30 @@ Route::prefix('extension')->group(function () {
 });
 Route::group(['namespace' => 'Auth', 'prefix' => 'member'], function ($router) {
     $router->get('/login.html', 'LoginController@showLoginForm')->name('login');
-    $router->get('/register.html', 'LoginController@showLoginForm')->name('register');
     $router->post('/login.html', 'LoginController@login')->name('postLogin');
+    $router->get('/register.html', 'LoginController@showLoginForm')->name('register');
+    $router->post('/register.html', 'RegisterController@register')->name('postRegister');
     $router->redirect('/login', '/login.html', 301);
     $router->post('/logout', 'LoginController@logout')->name('logout');
-    $router->post('/register', 'RegisterController@register')->name('postRegister');
     $router->post('/password/email', 'ForgotPasswordController@sendResetLinkEmail')->name('password.email');
     $router->post('/password/reset', 'ResetPasswordController@reset');
     $router->get('/password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset');
     $router->get('/forgot.html', 'ForgotPasswordController@showLinkRequestForm')->name('forgot');
 });
+
 Route::get('/profile.html', [
     'middleware' => 'auth',
     'uses'       => 'ShopFront@profile',
 ])->name('profile');
 //========end shop ================
+Route::group(['namespace' => 'Modules'], function ($router) {
+    $router->post('/subscribe', 'Cms\Cms@emailSubscribe')->name('subscribe');
+    $router->get('/news.html', 'Cms\Cms@news')->name('news');
+    $router->get('/news/{name}_{id}.html', 'Cms\Cms@newsDetail')->name('newsDetail');
+    $router->get('/blogs.html', 'Cms\Cms@news');
+    $router->get('/blog/{name}_{id}.html', 'Cms\Cms@newsDetail');
+    $router->get('/{key}.html', 'Cms\Cms@pages');
+});
 
 //Language
 Route::get('locale/{code}', function ($code) {
@@ -87,13 +96,4 @@ Route::get('locale/{code}', function ($code) {
 Route::get('currency/{code}', function ($code) {
     session(['currency' => $code]);
     return back();
-});
-
-Route::group(['namespace' => 'Modules'], function ($router) {
-    $router->post('/subscribe', 'Cms\Cms@emailSubscribe')->name('subscribe');
-    $router->get('/news.html', 'Cms\Cms@news')->name('news');
-    $router->get('/news/{name}_{id}.html', 'Cms\Cms@newsDetail')->name('newsDetail');
-    $router->get('/blogs.html', 'Cms\Cms@news');
-    $router->get('/blog/{name}_{id}.html', 'Cms\Cms@newsDetail');
-    $router->get('/{key}.html', 'Cms\Cms@pages');
 });
