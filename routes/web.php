@@ -62,7 +62,7 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'member'], function ($router) {
     $router->get('/forgot.html', 'ForgotPasswordController@showLinkRequestForm')->name('forgot');
 });
 
-Route::get('/profile.html', [
+Route::get('/member/profile.html', [
     'middleware' => 'auth',
     'uses'       => 'ShopFront@profile',
 ])->name('profile');
