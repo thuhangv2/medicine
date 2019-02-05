@@ -324,7 +324,15 @@ JS;
         if ($order === null) {
             return 'no data';
         }
-        $products = ShopProduct::getArrayProductName();
+        $products         = ShopProduct::getArrayProductName();
+        $paymentMethodTmp = \Helper::getExtensionsGroup('payment', $onlyActive = false);
+        foreach ($paymentMethodTmp as $key => $value) {
+            $paymentMethod[$key] = trans($value->detail);
+        }
+        $shippingMethodTmp = \Helper::getExtensionsGroup('shipping', $onlyActive = false);
+        foreach ($shippingMethodTmp as $key => $value) {
+            $shippingMethod[$key] = trans($value->detail);
+        }
         return view('admin.OrderEdit')->with(
             [
                 "order"           => $order,
@@ -336,6 +344,8 @@ JS;
                 "statusShipping2" => $this->statusShipping2,
                 'dataTotal'       => ShopOrderTotal::getTotal($id),
                 'attributesGroup' => ShopAttributeGroup::pluck('name', 'id')->all(),
+                'paymentMethod'   => $paymentMethod,
+                'shippingMethod'  => $shippingMethod,
             ])->render();
     }
 /**

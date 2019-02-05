@@ -71,7 +71,6 @@ Route::group([
         $router->post('/disableExtension', 'ExtensionsController@disableExtension')->name('disableExtension');
         $router->match(['put', 'post'], '/processExtension/{extensionGroup}/{extension}', 'ExtensionsController@processExtension')->name('processExtension');
     });
-    //Extension Total/Discount
     $router->resource('shop_discount', Extensions\Total\Discount::class)->names('configDiscount');
 
 //
@@ -85,8 +84,7 @@ Route::group([
 
 //Process Simpe
     $router->prefix('process')->group(function ($router) {
-        $router->any('/productImport', 'ProcessController@importProduct');
+        $router->any('/productImport', 'ProcessController@importProduct')->name('productImport');
     });
-
     $router->get('/report/{key}', 'ReportController@index');
 });
