@@ -100,7 +100,7 @@ class ShopPageController extends Controller
         $arrFields     = array();
         foreach ($languages as $key => $language) {
             if ($idCheck) {
-                $langDescriptions = ShopPageDescription::where('cms_page_id', $idCheck)->where('lang_id', $language->id)->first();
+                $langDescriptions = ShopPageDescription::where('page_id', $idCheck)->where('lang_id', $language->id)->first();
             }
             if ($languages->count() > 1) {
                 $form->html('<b>' . $language->name . '</b> <img style="height:25px" src="/' . config('filesystems.disks.path_file') . '/' . $language->icon . '">');
@@ -157,9 +157,9 @@ class ShopPageController extends Controller
                 if (array_filter($arrData[$language->code], function ($v, $k) {
                     return $v != null;
                 }, ARRAY_FILTER_USE_BOTH)) {
-                    $arrData[$language->code]['cms_page_id'] = $id;
-                    $arrData[$language->code]['lang_id']     = $language->id;
-                    ShopPageDescription::where('lang_id', $arrData[$language->code]['lang_id'])->where('cms_page_id', $arrData[$language->code]['cms_page_id'])->delete();
+                    $arrData[$language->code]['page_id'] = $id;
+                    $arrData[$language->code]['lang_id'] = $language->id;
+                    ShopPageDescription::where('lang_id', $arrData[$language->code]['lang_id'])->where('page_id', $arrData[$language->code]['page_id'])->delete();
                     ShopPageDescription::insert($arrData[$language->code]);
                 }
             }
