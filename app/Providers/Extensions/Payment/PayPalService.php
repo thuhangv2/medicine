@@ -35,10 +35,12 @@ class PayPalService
         if ($checkTableExist) {
             $paypalConfigs    = PaypalModel::first();
             $paypal_env       = config('paypal');
+            $client_id        = empty($paypalConfigs['paypal_client_id']) ? $paypal_env['client_id'] : $paypalConfigs['paypal_client_id'];
+            $secret           = empty($paypalConfigs['paypal_secrect']) ? $paypal_env['secret'] : $paypalConfigs['paypal_secrect'];
             $this->apiContext = new ApiContext(
                 new OAuthTokenCredential(
-                    $paypal_env['client_id'],
-                    $paypal_env['secret']
+                    $client_id,
+                    $secret
                 )
             );
             $this->apiContext->setConfig([
