@@ -9,8 +9,8 @@ return [
     'empty_product'     => 'No product!',
     'no_data'           => 'No data!',
     'empty_entry'       => 'No entry!',
-    'not_found'         => 'Sorry! We can\'t find that page!',
-
+    'page_not_found'    => 'Sorry! We can\'t find this page!',
+    'item_not_found'    => 'Sorry! Data you request cannot be found!',
     'cart_title'        => 'Shopping cart',
     'checkout_title'    => 'Checkout order',
     'wishlist'          => 'Wishlist',

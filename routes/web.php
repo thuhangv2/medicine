@@ -98,3 +98,4 @@ Route::get('/contact.html', 'ShopFront@getContact')->name('contact');
 Route::post('/contact.html', 'ShopFront@postContact')->name('postContact');
 Route::get('/{key}.html', 'ShopFront@pages')->name('pages'); //Please keep this route (pages) at the bottom
 //End Front
+Route::fallback('ShopFront@pageNotFound');

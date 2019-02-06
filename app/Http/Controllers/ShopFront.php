@@ -59,13 +59,7 @@ class ShopFront extends GeneralController
                 )
             );
         } else {
-            return view($this->theme . '.notfound',
-                array(
-                    'title'       => trans('messages.notfound'),
-                    'description' => '',
-                    'keyword'     => $this->configsGlobal['keyword'],
-                )
-            );
+            return $this->itemNotFound();
         }
 
     }
@@ -79,25 +73,14 @@ class ShopFront extends GeneralController
     {
         $products = ShopProduct::where('status', 1)
             ->sort()->paginate($this->configs['product_list']);
-        if ($products) {
-            return view($this->theme . '.shop_products_list',
-                array(
-                    'title'       => trans('language.all_product'),
-                    'description' => $this->configsGlobal['description'],
-                    'keyword'     => $this->configsGlobal['keyword'],
-                    'products'    => $products,
-                )
-            );
-        } else {
-            return view($this->theme . '.notfound',
-                array(
-                    'title'       => trans('messages.notfound'),
-                    'description' => '',
-                    'keyword'     => $this->configsGlobal['keyword'],
-                )
-            );
-        }
-
+        return view($this->theme . '.shop_products_list',
+            array(
+                'title'       => trans('language.all_product'),
+                'description' => $this->configsGlobal['description'],
+                'keyword'     => $this->configsGlobal['keyword'],
+                'products'    => $products,
+            )
+        );
     }
 
 /**
@@ -133,13 +116,7 @@ class ShopFront extends GeneralController
                 )
             );
         } else {
-            return view($this->theme . '.notfound',
-                array(
-                    'title'       => trans('messages.notfound'),
-                    'description' => '',
-                    'keyword'     => $this->configsGlobal['keyword'],
-                )
-            );
+            return $this->itemNotFound();
         }
 
     }
@@ -270,14 +247,7 @@ class ShopFront extends GeneralController
                     'page'        => $page,
                 ));
         } else {
-            return view($this->theme . '.notfound',
-                array(
-                    'title'       => trans('language.not_found'),
-                    'description' => '',
-                    'keyword'     => $this->configsGlobal['keyword'],
-
-                )
-            );
+            return $this->pageNotFound();
         }
     }
 

@@ -20,7 +20,7 @@ class ShopPage extends Model
     public function local()
     {
         $lang = Language::pluck('id', 'code')->all();
-        return ShopPageDescription::where('shop_page_id', $this->id)
+        return ShopPageDescription::where('page_id', $this->id)
             ->where('lang_id', $lang[app()->getLocale()])
             ->first();
     }

@@ -113,4 +113,29 @@ class GeneralController extends Controller
         }
         return json_encode(['error' => 0]);
     }
+
+    public function pageNotFound()
+    {
+        return view($this->theme . '.notfound',
+            array(
+                'title'       => '404 - Page not found',
+                'msg'         => trans('language.page_not_found'),
+                'description' => '',
+                'keyword'     => $this->configsGlobal['keyword'],
+
+            )
+        );
+    }
+    public function itemNotFound()
+    {
+        return view($this->theme . '.notfound',
+            array(
+                'title'       => '404 - Item not found',
+                'msg'         => trans('language.item_not_found'),
+                'description' => '',
+                'keyword'     => $this->configsGlobal['keyword'],
+
+            )
+        );
+    }
 }
