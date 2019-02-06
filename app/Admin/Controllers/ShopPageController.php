@@ -1,11 +1,11 @@
 <?php
-#app/Http/Admin/Controllers/Modules/Cms/CmsPageController.php
-namespace App\Admin\Controllers\Modules\Cms;
+#app/Http/Admin/Controllers/ShopPageController.php
+namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\CmsPage;
-use App\Models\CmsPageDescription;
 use App\Models\Language;
+use App\Models\ShopPage;
+use App\Models\ShopPageDescription;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
@@ -13,7 +13,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class CmsPageController extends Controller
+class ShopPageController extends Controller
 {
     use HasResourceActions;
     /**
@@ -64,7 +64,7 @@ class CmsPageController extends Controller
      */
     protected function grid()
     {
-        $grid = new Grid(new CmsPage);
+        $grid = new Grid(new ShopPage);
         $grid->id('ID')->sortable();
         $grid->title(trans('language.admin.page_name'))->sortable();
         $grid->status(trans('language.admin.status'))->switch();
@@ -92,7 +92,7 @@ class CmsPageController extends Controller
      */
     protected function form()
     {
-        $form = new Form(new CmsPage);
+        $form = new Form(new ShopPage);
 //Language
         $arrParameters = request()->route()->parameters();
         $idCheck       = (int) end($arrParameters);
@@ -100,7 +100,7 @@ class CmsPageController extends Controller
         $arrFields     = array();
         foreach ($languages as $key => $language) {
             if ($idCheck) {
-                $langDescriptions = CmsPageDescription::where('cms_page_id', $idCheck)->where('lang_id', $language->id)->first();
+                $langDescriptions = ShopPageDescription::where('cms_page_id', $idCheck)->where('lang_id', $language->id)->first();
             }
             if ($languages->count() > 1) {
                 $form->html('<b>' . $language->name . '</b> <img style="height:25px" src="/' . config('filesystems.disks.path_file') . '/' . $language->icon . '">');
@@ -159,8 +159,8 @@ class CmsPageController extends Controller
                 }, ARRAY_FILTER_USE_BOTH)) {
                     $arrData[$language->code]['cms_page_id'] = $id;
                     $arrData[$language->code]['lang_id']     = $language->id;
-                    CmsPageDescription::where('lang_id', $arrData[$language->code]['lang_id'])->where('cms_page_id', $arrData[$language->code]['cms_page_id'])->delete();
-                    CmsPageDescription::insert($arrData[$language->code]);
+                    ShopPageDescription::where('lang_id', $arrData[$language->code]['lang_id'])->where('cms_page_id', $arrData[$language->code]['cms_page_id'])->delete();
+                    ShopPageDescription::insert($arrData[$language->code]);
                 }
             }
 
@@ -193,7 +193,7 @@ class CmsPageController extends Controller
      */
     protected function detail($id)
     {
-        $show = new Show(CmsPage::findOrFail($id));
+        $show = new Show(ShopPage::findOrFail($id));
         return $show;
     }
 

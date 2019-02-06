@@ -1,16 +1,16 @@
 <?php
-#app/Models/CmsPage.php
+#app/Models/ShopPage.php
 namespace App\Models;
 
-use App\Models\CmsPageDescription;
 use App\Models\Language;
+use App\Models\ShopPageDescription;
 use Helper;
 use Illuminate\Database\Eloquent\Model;
 
-class CmsPage extends Model
+class ShopPage extends Model
 {
     public $timestamps = false;
-    public $table      = 'cms_page';
+    public $table      = 'shop_page';
     protected $appends = [
         'title',
         'keyword',
@@ -20,7 +20,7 @@ class CmsPage extends Model
     public function local()
     {
         $lang = Language::pluck('id', 'code')->all();
-        return CmsPageDescription::where('cms_page_id', $this->id)
+        return ShopPageDescription::where('shop_page_id', $this->id)
             ->where('lang_id', $lang[app()->getLocale()])
             ->first();
     }

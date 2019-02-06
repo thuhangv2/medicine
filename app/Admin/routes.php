@@ -37,6 +37,7 @@ Route::group([
     $router->resource('shop_shipping_status', ShopShipingStatusController::class);
     $router->resource('shop_special_price', ShopSpecialPriceController::class);
     $router->resource('shop_attribute_group', ShopAttributeGroupController::class);
+    $router->resource('shop_page', ShopPageController::class);
 
 //Get info
     $router->group(['prefix' => 'get_info'], function ($router) {
@@ -58,7 +59,6 @@ Route::group([
         $router->resource('cms/cms_category', Cms\CmsCategoryController::class);
         $router->resource('cms/cms_content', Cms\CmsContentController::class);
         $router->resource('cms/cms_news', Cms\CmsNewsController::class);
-        $router->resource('cms/cms_page', Cms\CmsPageController::class);
         $router->resource('api/shop_api', Api\ShopApiController::class);
     });
 

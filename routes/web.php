@@ -13,18 +13,6 @@
 Auth::routes();
 //============================
 
-//Front
-Route::get('/', 'ShopFront@index')->name('home');
-Route::get('index.html', 'ShopFront@index');
-Route::get('/shop/{name}_{id}.html', 'ShopFront@productToCategory');
-Route::get('/product/{name}_{id}.html', 'ShopFront@productDetail');
-Route::get('/brand/{name}_{id}/{category?}', 'ShopFront@productBrand');
-Route::get('/products.html', 'ShopFront@allProducts')->name('products');
-Route::get('/search.html', 'ShopFront@search')->name('search');
-Route::get('/contact.html', 'ShopFront@getContact')->name('contact');
-Route::post('/contact.html', 'ShopFront@postContact');
-//End Front
-
 //Cart
 Route::get('/wishlist.html', 'ShopCart@wishlist')->name('wishlist');
 Route::get('/compare.html', 'ShopCart@compare')->name('compare');
@@ -67,13 +55,13 @@ Route::get('/member/profile.html', [
     'uses'       => 'ShopFront@profile',
 ])->name('profile');
 //========end shop ================
+
 Route::group(['namespace' => 'Modules'], function ($router) {
     $router->post('/subscribe', 'Cms\Cms@emailSubscribe')->name('subscribe');
     $router->get('/news.html', 'Cms\Cms@news')->name('news');
     $router->get('/news/{name}_{id}.html', 'Cms\Cms@newsDetail')->name('newsDetail');
     $router->get('/blogs.html', 'Cms\Cms@news');
     $router->get('/blog/{name}_{id}.html', 'Cms\Cms@newsDetail');
-    $router->get('/{key}.html', 'Cms\Cms@pages');
 });
 
 //Language
@@ -97,3 +85,16 @@ Route::get('currency/{code}', function ($code) {
     session(['currency' => $code]);
     return back();
 });
+
+//Front
+Route::get('/', 'ShopFront@index')->name('home');
+Route::get('index.html', 'ShopFront@index');
+Route::get('/shop/{name}_{id}.html', 'ShopFront@productToCategory')->name('category');
+Route::get('/product/{name}_{id}.html', 'ShopFront@productDetail')->name('product');
+Route::get('/brand/{name}_{id}/{category?}', 'ShopFront@productBrand')->name('brand');
+Route::get('/products.html', 'ShopFront@allProducts')->name('products');
+Route::get('/search.html', 'ShopFront@search')->name('search');
+Route::get('/contact.html', 'ShopFront@getContact')->name('contact');
+Route::post('/contact.html', 'ShopFront@postContact')->name('postContact');
+Route::get('/{key}.html', 'ShopFront@pages')->name('pages'); //Please keep this route (pages) at the bottom
+//End Front

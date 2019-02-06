@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use App\Models\CmsLayout;
 use App\Models\CmsNews;
-use App\Models\CmsPage;
 use App\Models\CmsSubscribe;
 use App\Models\Config;
 use App\Models\Language;
@@ -92,101 +91,6 @@ class GeneralController extends Controller
         $this->middleware('localization');
         $this->middleware('currency');
 
-    }
-
-/**
- * [getContact description]
- * @return [type] [description]
- */
-    public function getContact()
-    {
-        $page = $this->getPage('contact');
-        return view($this->theme . '.shop_contact',
-            array(
-                'title'       => trans('language.contact'),
-                'description' => '',
-                'page'        => $page,
-                'keyword'     => $this->configsGlobal['keyword'],
-                'og_image'    => $this->logo,
-            )
-        );
-    }
-
-/**
- * [postContact description]
- * @param  Request $request [description]
- * @return [type]           [description]
- */
-    public function postContact(Request $request)
-    {
-        $validator = $request->validate([
-            'name'    => 'required',
-            'title'   => 'required',
-            'content' => 'required',
-            'email'   => 'required|email',
-            'phone'   => 'required|regex:/^0[^0][0-9\-]{7,13}$/',
-        ], [
-            'name.required'    => trans('validation.required'),
-            'content.required' => trans('validation.required'),
-            'title.required'   => trans('validation.required'),
-            'email.required'   => trans('validation.required'),
-            'email.email'      => trans('validation.email'),
-            'phone.required'   => trans('validation.required'),
-            'phone.regex'      => trans('validation.phone'),
-        ]);
-        //Send email
-        try {
-            $data            = $request->all();
-            $data['content'] = str_replace("\n", "<br>", $data['content']);
-            Mail::send('vendor.mail.contact', $data, function ($message) use ($data) {
-                $message->to($this->configsGlobal['email'], $this->configsGlobal['title']);
-                $message->replyTo($data['email'], $data['name']);
-                $message->subject($data['title']);
-            });
-            return redirect('contact.html')->with('message', trans('language.thank_contact'));
-
-        } catch (\Exception $e) {
-            echo $e->getMessage();
-        } //
-
-    }
-
-/**
- * [pages description]
- * @param  [type] $key [description]
- * @return [type]      [description]
- */
-    public function pages($key = null)
-    {
-        $page = $this->getPage($key);
-        if ($page) {
-            return view($this->theme . '.cms_page',
-                array(
-                    'title'       => $page->title,
-                    'description' => '',
-                    'keyword'     => $this->configsGlobal['keyword'],
-                    'page'        => $page,
-                ));
-        } else {
-            return view($this->theme . '.notfound',
-                array(
-                    'title'       => trans('language.not_found'),
-                    'description' => '',
-                    'keyword'     => $this->configsGlobal['keyword'],
-
-                )
-            );
-        }
-    }
-
-/**
- * [getPage description]
- * @param  [type] $key [description]
- * @return [type]      [description]
- */
-    public function getPage($key = null)
-    {
-        return CmsPage::where('uniquekey', $key)->where('status', 1)->first();
     }
 
 /**
