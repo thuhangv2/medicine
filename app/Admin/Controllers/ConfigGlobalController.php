@@ -92,8 +92,7 @@ class ConfigGlobalController extends Controller
 
             $languages = Language::getLanguages();
             $grid->descriptions(trans('language.config.description'))->expand(function () use ($languages) {
-                $html = '';
-                $html .= '<div class="padding5" border=1 style="border: 1px solid #d0bcbc;"><tr>
+                $html = '<table width="100%" class="table-padding padding5" border=1 style="border: 1px solid #d0bcbc;"><tr>
             <td>' . trans('language.config.language') . '</td>
             <td>' . trans('language.config.title') . '</td>
             <td>' . trans('language.config.description') . '</td>
@@ -108,6 +107,7 @@ class ConfigGlobalController extends Controller
             <td>' . $langDescriptions['keyword'] . '</td>
             </tr>';
                 }
+                $html .= '</table>';
                 return $html;
             }, trans('language.admin.detail'));
 
