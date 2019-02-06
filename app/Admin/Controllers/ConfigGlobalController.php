@@ -74,9 +74,9 @@ class ConfigGlobalController extends Controller
     protected function grid()
     {
         $arrTemplates = [];
-        foreach (glob("scart_templates/*") as $value) {
+        foreach (glob("templates/*") as $value) {
             if (is_dir($value)) {
-                $template                = explode('scart_templates/', $value)[1];
+                $template                = explode('templates/', $value)[1];
                 $arrTemplates[$template] = $template;
             }
         }
@@ -156,9 +156,9 @@ class ConfigGlobalController extends Controller
     protected function form()
     {
         $arrTemplates = [];
-        foreach (glob("scart_templates/*") as $value) {
+        foreach (glob("templates/*") as $value) {
             if (is_dir($value)) {
-                $template                = explode('scart_templates/', $value)[1];
+                $template                = explode('templates/', $value)[1];
                 $arrTemplates[$template] = $template;
             }
         }
