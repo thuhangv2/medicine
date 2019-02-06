@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\ConfigGlobal;
+use App\Models\ConfigGlobalDescription;
 use App\Models\Language;
 use App\Models\ShopCurrency;
 use Encore\Admin\Controllers\HasResourceActions;
@@ -88,14 +89,28 @@ class ConfigGlobalController extends Controller
                 $grid->watermark(trans('language.config.watermark'))->image('', 50);
             }
             $grid->template(trans('language.config.template'))->editable('select', $arrTemplates);
-            $grid->description(trans('language.config.description'))->expand(function () {
-                $html = '<div class="padding5">';
-                $html .= '<b>' . trans('language.config.title') . ': </b>' . $this->title . '<br>';
-                $html .= '<b>' . trans('language.config.description') . ': </b>' . $this->description . '<br>';
-                $html .= '<b>' . trans('language.config.keyword') . ': </b>' . $this->keyword . '<br>';
-                $html .= '</div>';
+
+            $languages = Language::getLanguages();
+            $grid->descriptions(trans('language.config.description'))->expand(function () use ($languages) {
+                $html = '';
+                $html .= '<div class="padding5" border=1 style="border: 1px solid #d0bcbc;"><tr>
+            <td>' . trans('language.config.language') . '</td>
+            <td>' . trans('language.config.title') . '</td>
+            <td>' . trans('language.config.description') . '</td>
+            <td>' . trans('language.config.keyword') . '</td>
+            </tr>';
+                foreach ($languages as $key => $lang) {
+                    $langDescriptions = ConfigGlobalDescription::where('config_id', $this->id)->where('lang_id', $key)->first();
+                    $html .= '<tr>
+            <td>' . $lang['name'] . '</td>
+            <td>' . $langDescriptions['title'] . '</td>
+            <td>' . $langDescriptions['description'] . '</td>
+            <td>' . $langDescriptions['keyword'] . '</td>
+            </tr>';
+                }
                 return $html;
             }, trans('language.admin.detail'));
+
             $grid->phone(trans('language.config.phone'));
             $grid->long_phone(trans('language.config.long_phone'))->display(function ($text) {
                 return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
@@ -147,32 +162,82 @@ class ConfigGlobalController extends Controller
                 $arrTemplates[$template] = $template;
             }
         }
-        return Admin::form(ConfigGlobal::class, function (Form $form) use ($arrTemplates) {
-            $languages  = Language::pluck('name', 'code')->all();
-            $currencies = ShopCurrency::where('status', 1)->pluck('name', 'code')->all();
-            $form->image('logo', trans('language.config.logo'))->removable();
-            if (\Helper::configs()['watermark']) {
-                $form->image('watermark', trans('language.config.watermark'))->removable();
-            }
-            $form->select('template', trans('language.config.template'))->options($arrTemplates)->rules('required', ['required' => 'Please choose template']);
-            $form->text('title', trans('language.config.title'));
-            $form->textarea('description', trans('language.config.description'));
-            $form->text('keyword', trans('language.config.keyword'));
-            $form->text('phone', trans('language.config.phone'));
-            $form->text('long_phone', trans('language.config.long_phone'));
-            $form->text('time_active', trans('language.config.time_active'));
-            $form->text('address', trans('language.config.address'));
-            $form->text('email', trans('language.config.email'));
-            $form->select('locale', trans('language.config.language'))->options($languages);
-            $form->select('currency', trans('language.config.currency'))->options($currencies)->rules('required');
-            $form->disableViewCheck();
-            $form->disableEditingCheck();
-            $form->tools(function (Form\Tools $tools) {
-                $tools->disableView();
-                $tools->disableDelete();
-            });
+        $currencies = ShopCurrency::where('status', 1)->pluck('name', 'code')->all();
+        $form       = new Form(new ConfigGlobal);
+        $form->image('logo', trans('language.config.logo'))->removable();
+        if (\Helper::configs()['watermark']) {
+            $form->image('watermark', trans('language.config.watermark'))->removable();
+        }
+        $form->select('template', trans('language.config.template'))->options($arrTemplates)->rules('required', ['required' => 'Please choose template']);
+//Language
+        $languages   = Language::getLanguages();
+        $arrLanguage = [];
+        foreach ($languages as $key => $value) {
+            $arrLanguage[$value->code] = $value->name;
+        }
+        $arrParameters = request()->route()->parameters();
+        $idCheck       = (int) end($arrParameters);
 
+        $arrFields = array();
+        foreach ($languages as $key => $language) {
+            if ($idCheck) {
+                $langDescriptions = ConfigGlobalDescription::where('config_id', $idCheck)->where('lang_id', $language->id)->first();
+            }
+            if ($languages->count() > 1) {
+                $form->html('<b>' . $language->name . '</b> <img style="height:25px" src="/' . config('filesystems.disks.path_file') . '/' . $language->icon . '">');
+            }
+
+            $form->text($language->code . '__title', trans('language.config.title'))->rules('required', ['required' => trans('validation.required')])->default(!empty($langDescriptions->title) ? $langDescriptions->title : null);
+            $form->text($language->code . '__keyword', trans('language.config.keyword'))->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
+            $form->textarea($language->code . '__description', trans('language.config.description'))->rules('max:300', ['max' => trans('validation.max')])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
+            $arrFields[] = $language->code . '__title';
+            $arrFields[] = $language->code . '__keyword';
+            $arrFields[] = $language->code . '__description';
+            $form->divide();
+        }
+        $form->ignore($arrFields);
+//end language
+        $form->text('phone', trans('language.config.phone'));
+        $form->text('long_phone', trans('language.config.long_phone'));
+        $form->text('time_active', trans('language.config.time_active'));
+        $form->text('address', trans('language.config.address'));
+        $form->text('email', trans('language.config.email'));
+        $form->select('locale', trans('language.config.language'))->options($arrLanguage);
+        $form->select('currency', trans('language.config.currency'))->options($currencies)->rules('required');
+        $form->disableViewCheck();
+        $form->disableEditingCheck();
+        $form->tools(function (Form\Tools $tools) {
+            $tools->disableView();
+            $tools->disableDelete();
         });
+
+        $arrData = array();
+        $form->saving(function (Form $form) use ($languages, &$arrData) {
+            //Lang
+            foreach ($languages as $key => $language) {
+                $arrData[$language->code]['title']       = request($language->code . '__title');
+                $arrData[$language->code]['keyword']     = request($language->code . '__keyword');
+                $arrData[$language->code]['description'] = request($language->code . '__description');
+            }
+            //end lang
+        });
+
+        //saved
+        $form->saved(function (Form $form) use ($languages, &$arrData) {
+            $id = $form->model()->id;
+            //Lang
+            foreach ($languages as $key => $language) {
+                if (array_filter($arrData[$language->code], function ($v, $k) {
+                    return $v != null;
+                }, ARRAY_FILTER_USE_BOTH)) {
+                    $arrData[$language->code]['config_id'] = $id;
+                    $arrData[$language->code]['lang_id']   = $language->id;
+                    ConfigGlobalDescription::where('lang_id', $arrData[$language->code]['lang_id'])->where('config_id', $arrData[$language->code]['config_id'])->delete();
+                    ConfigGlobalDescription::insert($arrData[$language->code]);
+                }
+            }
+        });
+        return $form;
     }
 
     public function show($id)
