@@ -74,7 +74,7 @@ class ShopCart extends GeneralController
         } else {
             $hasCoupon = false;
         }
-        $user = Auth::user();
+        $user = auth()->user();
         if ($user) {
             $addressDefaul = [
                 'toname'   => $user->name,
@@ -109,6 +109,7 @@ class ShopCart extends GeneralController
                 'hasCoupon'         => $hasCoupon,
                 'extensionDiscount' => $extensionDiscount,
                 'shippingAddress'   => $shippingAddress,
+                'uID'               => $user->id ?? 0,
             )
         );
     }
@@ -124,7 +125,7 @@ class ShopCart extends GeneralController
             return redirect()->route('cart');
         }
         //Not allow for guest
-        if (!$this->configs['shop_allow_guest'] && !Auth::user()) {
+        if (!$this->configs['shop_allow_guest'] && !auth()->user()) {
             return redirect()->route('login');
         } //
 
@@ -249,7 +250,7 @@ class ShopCart extends GeneralController
             return redirect()->route('home');
         }
         //Not allow for guest
-        if (!$this->configs['shop_allow_guest'] && !Auth::user()) {
+        if (!$this->configs['shop_allow_guest'] && !auth()->user()) {
             return redirect()->route('login');
         } //
         $data = request()->all();
@@ -271,7 +272,7 @@ class ShopCart extends GeneralController
             $payment_method = $payment;
             //end total
             DB::connection('mysql')->beginTransaction();
-            $arrOrder['user_id'] = empty(Auth::user()->id) ? 0 : Auth::user()->id;
+            $arrOrder['user_id'] = auth()->user()->id ?? 0;
 
             $arrOrder['subtotal']        = $subtotal;
             $arrOrder['shipping']        = $shipping;
@@ -327,14 +328,45 @@ class ShopCart extends GeneralController
             $dataHistory = [
                 'order_id' => $orderId,
                 'content'  => 'New order',
-                'user_id'  => empty(Auth::user()->id) ? 0 : Auth::user()->id,
+                'user_id'  => auth()->user()->id ?? 0,
                 'add_date' => date('Y-m-d H:i:s'),
             ];
             ShopOrderHistory::insert($dataHistory);
 
+            //Process Discount
+            $codeDiscount = session('Discount') ?? '';
+            if ($codeDiscount) {
+                if (!empty(\Helper::configs()['Discount'])) {
+                    $moduleClass             = '\App\Http\Controllers\Extensions\Total\Discount';
+                    $uID                     = auth()->user()->id ?? 0;
+                    $returnModuleDiscount    = (new $moduleClass)->apply($codeDiscount, $uID, $msg = 'Order #' . $orderId);
+                    $arrReturnModuleDiscount = json_decode($returnModuleDiscount, true);
+                    if ($arrReturnModuleDiscount['error'] == 1) {
+                        if ($arrReturnModuleDiscount['msg'] == 'error_code_not_exist') {
+                            $msg = trans('language.promotion.process.invalid');
+                        } elseif ($arrReturnModuleDiscount['msg'] == 'error_code_cant_use') {
+                            $msg = trans('language.promotion.process.over');
+                        } elseif ($arrReturnModuleDiscount['msg'] == 'error_code_expired_disabled') {
+                            $msg = trans('language.promotion.process.expire');
+                        } elseif ($arrReturnModuleDiscount['msg'] == 'error_user_used') {
+                            $msg = trans('language.promotion.process.used');
+                        } elseif ($arrReturnModuleDiscount['msg'] == 'error_uID_input') {
+                            $msg = trans('language.promotion.process.user_id_invalid');
+                        } elseif ($arrReturnModuleDiscount['msg'] == 'error_login') {
+                            $msg = trans('language.promotion.process.must_login');
+                        } else {
+                            $msg = trans('language.promotion.process.undefined');
+                        }
+                        return redirect()->route('cart')->with(['error_discount' => $msg]);
+                    }
+                }
+            }
+            //End process Discount
+
             $dataItems = Cart::content();
             Cart::destroy(); // destroy cart
 
+            //End discount
             DB::connection('mysql')->commit();
 
             //Process paypal
@@ -572,15 +604,6 @@ class ShopCart extends GeneralController
 
     public function completeOrder($orderId)
     {
-        //Process Discount
-        $codeDiscount = session('Discount') ?? '';
-        if ($codeDiscount) {
-            if (!empty(\Helper::configs()['Discount'])) {
-                $moduleClass          = '\App\Http\Controllers\Extensions\Total\Discount';
-                $returnModuleDiscount = (new $moduleClass)->apply($codeDiscount, $uID = auth()->user()->id, $msg = 'Order #' . $orderId, $couponAllowGuest = false);
-            }
-        }
-        //End discount
         session()->forget('paymentMethod'); //destroy paymentMethod
         session()->forget('shippingMethod'); //destroy shippingMethod
         session()->forget('totalMethod'); //destroy totalMethod

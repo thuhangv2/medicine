@@ -168,12 +168,12 @@
                     <label class="control-label" for="inputGroupSuccess3"><i class="fa fa-exchange" aria-hidden="true"></i> {{ trans('language.cart.coupon') }}
                         <span style="display:inline; cursor: pointer; display: {{ ($hasCoupon)?'inline':'none' }}" class="text-danger" id="removeCoupon">({{ trans('language.cart.remove_coupon') }} <i class="fa fa fa-times"></i>)</span>
                     </label>
-                    <div id="coupon-group" class="input-group">
+                    <div id="coupon-group" class="input-group {{ Session::has('error_discount')?'has-error':'' }}">
                       <input type="text" {{ ($extensionDiscount['permission'])?'':'disabled' }} placeholder="Your coupon" class="form-control" id="coupon-value" aria-describedby="inputGroupSuccess3Status">
                       <span class="input-group-addon {{ ($extensionDiscount['permission'])?'':'disabled' }}"  {!! ($extensionDiscount['permission'])?'id="coupon-button"':'' !!} style="cursor: pointer;" data-loading-text="<i class='fa fa-spinner fa-spin'></i> checking">{{ trans('language.cart.apply') }}</span>
                     </div>
                     <span class="status-coupon" style="display: none;" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-                    <div class="coupon-msg" style="text-align: left;padding-left: 10px;"></div>
+                    <div class="coupon-msg  {{ Session::has('error_discount')?'text-danger':'' }}" style="text-align: left;padding-left: 10px;">{{ Session::has('error_discount')?Session::get('error_discount'):'' }}</div>
                   </div>
               </div>
         @endif
@@ -303,6 +303,7 @@ $('#coupon-button').click(function() {
             dataType: 'json',
             data: {
                 code: coupon,
+                uID: {{ $uID }},
                 _token: "{{ csrf_token() }}",
             },
         })

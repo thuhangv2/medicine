@@ -42,14 +42,13 @@ class Discount extends \App\Http\Controllers\Controller
             'title'      => $this->title,
             'code'       => $this->configKey,
             'image'      => $this->image,
-            'permission' => ($uID) ? self::ALLOW : self::DENIED,
+            'permission' => self::ALLOW,
             'value'      => 0,
         ];
 
-        $configs            = \Helper::configs();
-        $DiscountAllowGuest = empty($configs['coupon_allow_guest']) ? false : true;
-        $Discount           = session('Discount');
-        $check              = json_decode($this->discountService->check($Discount, $uID, $DiscountAllowGuest), true);
+        $configs  = \Helper::configs();
+        $Discount = session('Discount');
+        $check    = json_decode($this->discountService->check($Discount, $uID), true);
         if (!empty($Discount) && !$check['error']) {
             $arrType = [
                 '0' => 'Cash',
@@ -62,7 +61,7 @@ class Discount extends \App\Http\Controllers\Controller
                 'title'      => '<b>' . $this->title . ':</b> ' . $Discount . '',
                 'code'       => $this->configKey,
                 'image'      => $this->image,
-                'permission' => ($uID) ? self::ALLOW : self::DENIED,
+                'permission' => self::ALLOW,
                 'value'      => ($value > $subtotal) ? -$subtotal : -$value,
             );
         }
@@ -129,7 +128,7 @@ class Discount extends \App\Http\Controllers\Controller
     }
     public function processConfig($data)
     {
-//Process
+        //Process
     }
     public function useDiscount()
     {
@@ -139,8 +138,8 @@ class Discount extends \App\Http\Controllers\Controller
     {
         return $this->discountService->removeDiscount();
     }
-    public function apply($code, $uID = null, $msg = null, $couponAllowGuest = false)
+    public function apply($code, $uID = null, $msg = null)
     {
-        return $this->discountService->apply($code, $uID, $msg, $couponAllowGuest);
+        return $this->discountService->apply($code, $uID, $msg);
     }
 }

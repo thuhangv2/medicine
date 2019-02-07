@@ -232,6 +232,8 @@ return [
         'customer'    => 'Khách hàng',
         'used_at'     => 'Dùng lúc',
         'content'     => 'Nội dung',
+        'login'       => 'Yêu cầu đăng nhập',
+        'status'      => 'Trạng thái',
         'point'       => 'Điểm',
         'cash'        => 'Tiền mặt',
         '%'           => '%',

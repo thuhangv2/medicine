@@ -12,7 +12,7 @@ class Discount extends Model
     public $timestamps    = false;
     public $table         = 'shop_discount';
     public $table_related = 'shop_discount_user';
-    protected $fillable   = ['code', 'reward', 'type', 'expires_at', 'number_uses', 'used', 'status'];
+    protected $fillable   = ['code', 'reward', 'type', 'expires_at', 'number_uses', 'used', 'status', 'login'];
     protected $dates      = ['expires_at'];
     public function __construct(array $attributes = [])
     {
@@ -43,6 +43,7 @@ class Discount extends Model
                     $table->integer('number_uses')->default(1);
                     $table->integer('used')->default(0);
                     $table->tinyInteger('status')->default(1);
+                    $table->integer('login')->default(0);
                     $table->timestamp('expires_at')->nullable();
                 });
             } catch (\Exception $e) {
@@ -59,7 +60,6 @@ class Discount extends Model
                     $table->integer('discount_id');
                     $table->text('log')->nullable();
                     $table->timestamp('used_at')->nullable();
-                    $table->primary(['user_id', 'discount_id']);
                 });
             } catch (\Exception $e) {
                 $return2 = ['error' => 1, 'msg' => $e->getMessage()];

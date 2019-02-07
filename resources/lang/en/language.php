@@ -230,6 +230,8 @@ return [
         'customer'    => 'Customer',
         'used_at'     => 'Used at',
         'content'     => 'Content',
+        'login'       => 'Login require',
+        'status'      => 'Status',
         'point'       => 'Points',
         'cash'        => 'Cash',
         '%'           => '%',
