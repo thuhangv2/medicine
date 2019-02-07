@@ -17,6 +17,15 @@
                 <th width="40%">{{ trans('Extensions/Payment/Paypal.paypal_log') }}</th>
                 <td><a href="#" class="updateData_num" data-name="paypal_log" data-type="select" data-pk="{{ $data['id'] }}" data-url="{{ route('processExtension',['group'=>$group,'key'=>$key]) }}" data-title="{{ trans('Extensions/Payment/Paypal.paypal_log') }}" data-value="{{ $data['paypal_log'] }}" data-source ='[{"value":0,"text":"OFF"},{"value":1,"text":"ON"}]'</a></td>
               </tr>
+
+              <tr>
+                <th width="40%">{{ trans('Extensions/Payment/Paypal.paypal_client_id') }}</th>
+                <td><a href="#" class="updateData" data-name="paypal_client_id" data-type="text" data-pk="{{ $data['id'] }}" data-url="{{ route('processExtension',['group'=>$group,'key'=>$key]) }}" data-title="{{ trans('Extensions/Payment/Paypal.paypal_client_id') }}">{{ $data['paypal_client_id'] }}</a></td>
+              </tr>
+              <tr>
+                <th width="40%">{{ trans('Extensions/Payment/Paypal.paypal_secrect') }}</th>
+                <td><a href="#" class="updateData" data-name="paypal_secrect" data-type="password" data-pk="{{ $data['id'] }}" data-url="{{ route('processExtension',['group'=>$group,'key'=>$key]) }}" data-value="{{ $data['paypal_secrect'] }}" data-title="{{ trans('Extensions/Payment/Paypal.paypal_secrect') }}"></a></td>
+              </tr>
               <tr>
                 <th width="40%">{{ trans('Extensions/Payment/Paypal.paypal_path_log') }}</th>
                 <td><a href="#" class="updateData" data-name="paypal_path_log" data-type="text" data-pk="{{ $data['id'] }}" data-url="{{ route('processExtension',['group'=>$group,'key'=>$key]) }}" data-title="{{ trans('Extensions/Payment/Paypal.paypal_path_log') }}">{{ $data['paypal_path_log'] }}</a></td>
