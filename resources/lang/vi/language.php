@@ -37,7 +37,7 @@ return [
     'date_available'    => 'Ngày bán',
     'default_available' => 'Mặc đính, cho phép mua từ ngày đăng bán.',
     'vendor'            => 'Nhà cung cấp',
-
+    'view_more'         => 'Xem đầy đủ',
     'contact_form'      => [
         'title'   => 'Form liên hệ',
         'info'    => 'Thông tin liên hệ',

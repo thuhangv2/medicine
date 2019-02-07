@@ -37,6 +37,7 @@ return [
     'date_available'    => 'Date available',
     'default_available' => 'Allows purchase from creation date as default.',
     'vendor'            => 'Vendor',
+    'view_more'         => 'View more',
 
     'contact_form'      => [
         'title'   => 'Get in touch',

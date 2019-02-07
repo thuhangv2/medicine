@@ -21,7 +21,7 @@
                       <h3 class="entry-title"><a href="{{ $blog->getUrl() }}">{{ $blog->title }}</a></h3>
                       <div class="entry-meta-data"> <span class="author">  <span class="date"><i class="pe-7s-date"></i>&nbsp; {{ $blog->created_at }}</span> </div>
                       <div class="entry-excerpt">{{ $blog->description }}</div>
-                      <a href="{{ $blog->getUrl() }}" class="button read-more">read full&nbsp; <i class="fa fa-angle-double-right"></i></a> </div>
+                      <a href="{{ $blog->getUrl() }}" class="button read-more">{{ trans('language.view_more') }}&nbsp; <i class="fa fa-angle-double-right"></i></a> </div>
                   </div>
                 </article>
                 <hr>
