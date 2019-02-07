@@ -191,7 +191,7 @@ class ShopCategory extends Model
 
     public function getUrl()
     {
-        return url('shop/' . Helper::strToUrl($this->name) . '_' . $this->id . '.html');
+        return route('category', ['name' => Helper::strToUrl($this->name), 'id' => $this->id]);
     }
 
 //Fields language

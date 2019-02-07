@@ -25,7 +25,7 @@ class ShopBrand extends Model
      */
     public function getUrl()
     {
-        return url('brand/' . Helper::strToUrl($this->name) . '_' . $this->id . '.html');
+        return route('brand', ['name' => Helper::strToUrl($this->name), 'id' => $this->id]);
     }
 
     /**

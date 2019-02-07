@@ -239,7 +239,7 @@ class ShopFront extends GeneralController
     {
         $page = $this->getPage($key);
         if ($page) {
-            return view($this->theme . '.cms_page',
+            return view($this->theme . '.shop_page',
                 array(
                     'title'       => $page->title,
                     'description' => '',

@@ -306,7 +306,7 @@ class ShopProduct extends Model
  */
     public function getUrl()
     {
-        return url('product/' . \Helper::strToUrl($this->name) . '_' . $this->id . '.html');
+        return route('product', ['name' => \Helper::strToUrl($this->name), 'id' => $this->id]);
     }
 
 //Fields language

@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Models\Language;
 use App\Models\ShopPageDescription;
-use Helper;
 use Illuminate\Database\Eloquent\Model;
 
 class ShopPage extends Model
@@ -45,7 +44,7 @@ class ShopPage extends Model
 
     public function getUrl()
     {
-        return url($this->uniquekey . '/' . Helper::strToUrl($this->title) . '.html');
+        return route('pages', ['name' => $this->uniquekey]);
     }
 
 //Attributes

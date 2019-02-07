@@ -83,7 +83,7 @@ class CmsNews extends Model
  */
     public function getUrl()
     {
-        return url('blog/' . Helper::strToUrl($this->title) . '_' . $this->id . '.html');
+        return route('newsDetail', ['name' => Helper::strToUrl($this->title), 'id' => $this->id]);
     }
 
     //Fields language

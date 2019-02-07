@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{{ empty($description)?'':$description }}">
-    <meta name="keyword" content="{{ empty($keyword)?'':$keyword }}">
+    <meta name="description" content="{{ $description??'' }}">
+    <meta name="keyword" content="{{ $keyword??'' }}">
     <meta property="fb:app_id" content="{{ $configsGlobal['site_fb_appID'] }}" />
-    <title>{{ empty($title)?'':$title }}</title>
+    <title>{{$title??''}}</title>
     <meta property="og:image" content="{{ !empty($og_image)?$og_image:asset('images/org.jpg') }}" />
     <meta property="og:url" content="{{ \Request::fullUrl() }}" />
     <meta property="og:type" content="Website" />
-    <meta property="og:title" content="{{ empty($title)?'':$title }}" />
-    <meta property="og:description" content="{{ empty($description)?'':$description }}" />
+    <meta property="og:title" content="{{ $title??'' }}" />
+    <meta property="og:description" content="{{ $description??'' }}" />
   @isset ($layouts['meta'])
     @foreach ( $layouts['meta']  as $element)
       {!! $element->html !!}
@@ -164,9 +164,9 @@
                         <li><a href="{{ route('login') }}">{{ trans('language.login') }}</a></li>
                     </ul>
                 </li>
-                <li><a href="{{ url('blogs.html') }}">{{ trans('language.blog') }}</a></li>
-                <li><a href="{{ url('about.html') }}">{{ trans('language.about') }}</a></li>
-                <li><a href="{{ url('contact.html') }}">{{ trans('language.contact') }}</a></li>
+                <li><a href="{{ route('news') }}">{{ trans('language.blog') }}</a></li>
+                <li><a href="{{ route('pages',['key'=>'about']) }}">{{ trans('language.about') }}</a></li>
+                <li><a href="{{ route('contact') }}">{{ trans('language.contact') }}</a></li>
               </ul>
             </div>
           </div>

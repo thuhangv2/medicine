@@ -33,7 +33,7 @@
             <hr>
             {!! $product->description !!}
             <hr>
-            <a onClick="return confirm('Confirm')" title="Remove Item" alt="Remove Item" class="cart_quantity_delete" href="{{url("removeItemCompare/$item->rowId")}}"><i class="fa fa-times"></i></a>
+            <a onClick="return confirm('Confirm')" title="Remove Item" alt="Remove Item" class="cart_quantity_delete" href="{{route("removeItemCompare",['id'=>$item->rowId])}}"><i class="fa fa-times"></i></a>
        </td>
        @if ($n % 4 == 0)
       </tr>
