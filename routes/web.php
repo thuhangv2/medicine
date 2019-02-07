@@ -13,22 +13,6 @@
 Auth::routes();
 //============================
 
-//Cart
-Route::get('/wishlist.html', 'ShopCart@wishlist')->name('wishlist');
-Route::get('/compare.html', 'ShopCart@compare')->name('compare');
-Route::get('/cart.html', 'ShopCart@getCart')->name('cart');
-Route::post('/cart.html', 'ShopCart@postCart')->name('postCart');
-Route::get('/checkout.html', 'ShopCart@getCheckout')->name('checkout');
-Route::post('/checkout.html', 'ShopCart@processCart')->name('processCart');
-Route::get('/removeItem/{id}', 'ShopCart@removeItem')->name('removeItem');
-Route::get('/removeItemWishlist/{id}', 'ShopCart@removeItemWishlist')->name('removeItemWishlist');
-Route::get('/removeItemCompare/{id}', 'ShopCart@removeItemCompare')->name('removeItemCompare');
-Route::get('/clearCart', 'ShopCart@clearCart')->name('clearCart');
-Route::post('/addToCart', 'ShopCart@addToCart')->name('addToCart');
-Route::post('/updateToCart', 'ShopCart@updateToCart')->name('updateToCart');
-Route::post('/storeOrder', 'ShopCart@storeOrder')->name('storeOrder');
-//End cart
-
 Route::prefix('extension')->group(function () {
     Route::post('/useDiscount', 'Extensions\Total\Discount@useDiscount')->name('useDiscount');
     Route::post('/removeDiscount', 'Extensions\Total\Discount@removeDiscount')->name('removeDiscount');
@@ -87,6 +71,22 @@ Route::get('currency/{code}', function ($code) {
     session(['currency' => $code]);
     return back();
 });
+
+//Cart
+Route::get('/wishlist.html', 'ShopCart@wishlist')->name('wishlist');
+Route::get('/compare.html', 'ShopCart@compare')->name('compare');
+Route::get('/cart.html', 'ShopCart@getCart')->name('cart');
+Route::post('/cart.html', 'ShopCart@postCart')->name('postCart');
+Route::get('/checkout.html', 'ShopCart@getCheckout')->name('checkout');
+Route::post('/checkout.html', 'ShopCart@processCart')->name('processCart');
+Route::get('/removeItem/{id}', 'ShopCart@removeItem')->name('removeItem');
+Route::get('/removeItemWishlist/{id}', 'ShopCart@removeItemWishlist')->name('removeItemWishlist');
+Route::get('/removeItemCompare/{id}', 'ShopCart@removeItemCompare')->name('removeItemCompare');
+Route::get('/clearCart', 'ShopCart@clearCart')->name('clearCart');
+Route::post('/addToCart', 'ShopCart@addToCart')->name('addToCart');
+Route::post('/updateToCart', 'ShopCart@updateToCart')->name('updateToCart');
+Route::post('/storeOrder', 'ShopCart@storeOrder')->name('storeOrder');
+//End cart
 
 //Front
 Route::get('/', 'ShopFront@index')->name('home');
