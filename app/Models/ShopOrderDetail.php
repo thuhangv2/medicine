@@ -10,12 +10,12 @@ class ShopOrderDetail extends Model
     protected $fillable = ['product_id', 'price', 'order_id', 'qty', 'total_price', 'sku', 'option'];
     public function order()
     {
-        return $this->belongsTo('App\Models\ShopOrder', 'order_id', 'id');
+        return $this->belongsTo(ShopOrder::class, 'order_id', 'id');
     }
 
     public function product()
     {
-        return $this->belongsTo('App\Models\ShopProduct', 'product_id', 'id');
+        return $this->belongsTo(ShopProduct::class, 'product_id', 'id');
     }
 
     public function updateDetail($id, $data)

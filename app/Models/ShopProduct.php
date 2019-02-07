@@ -30,28 +30,28 @@ class ShopProduct extends Model
     }
     public function brand()
     {
-        return $this->belongsTo('App\Models\ShopBrand', 'brand_id', 'id');
+        return $this->belongsTo(ShopBrand::class, 'brand_id', 'id');
     }
     public function vendor()
     {
-        return $this->belongsTo('App\Models\ShopVendor', 'vendor_id', 'id');
+        return $this->belongsTo(ShopVendor::class, 'vendor_id', 'id');
     }
     public function category()
     {
-        return $this->belongsTo('App\Models\ShopCategory', 'category_id', 'id');
+        return $this->belongsTo(ShopCategory::class, 'category_id', 'id');
     }
 
     public function images()
     {
-        return $this->hasMany('App\Models\ShopImage', 'product_id', 'id');
+        return $this->hasMany(ShopImage::class, 'product_id', 'id');
     }
     public function likes()
     {
-        return $this->hasMany('App\Models\ShopProductLike', 'product_id', 'id');
+        return $this->hasMany(ShopProductLike::class, 'product_id', 'id');
     }
     public function descriptions()
     {
-        return $this->hasMany('App\Models\ShopProductDescription', 'product_id', 'id');
+        return $this->hasMany(ShopProductDescription::class, 'product_id', 'id');
     }
 
     public function options()
@@ -61,7 +61,7 @@ class ShopProduct extends Model
 
     public function specialPrice()
     {
-        return $this->hasMany('App\Models\ShopSpecialPrice', 'product_id', 'id');
+        return $this->hasMany(ShopSpecialPrice::class, 'product_id', 'id');
     }
     public function attDetails()
     {
