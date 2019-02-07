@@ -10,7 +10,7 @@
              <table id="example2" class="table table-bordered table-hover">
               <tr>
                 <th width="40%">{{ trans('Extensions/Payment/Paypal.paypal_mode') }}</th>
-                <td><a href="#" class="updateData" data-name="paypal_mode" data-type="select" data-pk="{{ $data['id'] }}" data-url="{{ route('processExtension',['group'=>$group,'key'=>$key]) }}" data-title="{{ trans('Extensions/Payment/Paypal.paypal_mode') }}" data-value="{{ $data['paypal_mode'] }}" data-source ='[{"value":"sandbox","text":"SandBox"},{"value":"live","text":"Live"}]'</a></td>
+                <td><a href="#" class="updateData" data-name="paypal_mode" data-type="select" data-pk="{{ $data['id'] }}" data-url="{{ route('processExtension',['group'=>$group,'key'=>$key]) }}" data-title="{{ trans('Extensions/Payment/Paypal.paypal_mode') }}" data-value="{{ $data['paypal_mode'] }}" data-source ='[{"value":"sandbox","text":"Sandbox"},{"value":"live","text":"Live"}]'</a></td>
               </tr>
 
               <tr>
