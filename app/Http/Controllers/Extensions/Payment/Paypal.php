@@ -163,7 +163,7 @@ class Paypal extends \App\Http\Controllers\Controller
                 $dataHistory = [
                     'order_id' => $order_id,
                     'content'  => 'Transaction ' . $paymentStatus->id,
-                    'user_id'  => empty(\Auth::user()->id) ? 0 : \Auth::user()->id,
+                    'user_id'  => auth()->user()->id ?? 0,
                     'add_date' => date('Y-m-d H:i:s'),
                 ];
                 ShopOrderHistory::insert($dataHistory);
@@ -178,20 +178,4 @@ class Paypal extends \App\Http\Controllers\Controller
 
     }
 
-    public function paymentList()
-    {
-        $limit  = 10;
-        $offset = 0;
-
-        $paymentList = $this->paypalSvc->getPaymentList($limit, $offset);
-
-        dd($paymentList);
-    }
-
-    public function paymentDetail($paymentId)
-    {
-        $paymentDetails = $this->paypalSvc->getPaymentDetails($paymentId);
-
-        dd($paymentDetails);
-    }
 }
