@@ -177,7 +177,6 @@
                   </div>
               </div>
         @endif
-
 {{-- //End coupon --}}
 
 
@@ -289,76 +288,75 @@ $('#submit-order').click(function(){
     $(this).prop('disabled',true);
 });
 
-$('#coupon-button').click(function() {
- var coupon = $('#coupon-value').val();
-    if(coupon==''){
-        $('#coupon-group').addClass('has-error');
-        $('.coupon-msg').html('{{ trans('language.cart.coupon_empty') }}').addClass('text-danger').show();
-    }else{
-    $('#coupon-button').button('loading');
-    setTimeout(function() {
-        $.ajax({
-            url: '{{ route('useDiscount') }}',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                code: coupon,
-                uID: {{ $uID }},
-                _token: "{{ csrf_token() }}",
-            },
-        })
-        .done(function(result) {
-                $('#coupon-value').val('');
-                $('.coupon-msg').removeClass('text-danger');
-                $('.coupon-msg').removeClass('text-success');
-                $('#coupon-group').removeClass('has-error');
-                $('.coupon-msg').hide();
-            if(result.error ==1){
-                $('#coupon-group').addClass('has-error');
-                $('.coupon-msg').html(result.msg).addClass('text-danger').show();
-            }else{
-                $('#removeCoupon').show();
-                $('.coupon-msg').html(result.msg).addClass('text-success').show();
-                $('.showTotal').remove();
-                $('#showTotal').prepend(result.html);
-            }
-        })
-        .fail(function() {
-            console.log("error");
-        })
-       $('#coupon-button').button('reset');
-   }, 2000);
-    }
+@if ($extensionDiscount)
+    $('#coupon-button').click(function() {
+     var coupon = $('#coupon-value').val();
+        if(coupon==''){
+            $('#coupon-group').addClass('has-error');
+            $('.coupon-msg').html('{{ trans('language.cart.coupon_empty') }}').addClass('text-danger').show();
+        }else{
+        $('#coupon-button').button('loading');
+        setTimeout(function() {
+            $.ajax({
+                url: '{{ route('useDiscount') }}',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    code: coupon,
+                    uID: {{ $uID }},
+                    _token: "{{ csrf_token() }}",
+                },
+            })
+            .done(function(result) {
+                    $('#coupon-value').val('');
+                    $('.coupon-msg').removeClass('text-danger');
+                    $('.coupon-msg').removeClass('text-success');
+                    $('#coupon-group').removeClass('has-error');
+                    $('.coupon-msg').hide();
+                if(result.error ==1){
+                    $('#coupon-group').addClass('has-error');
+                    $('.coupon-msg').html(result.msg).addClass('text-danger').show();
+                }else{
+                    $('#removeCoupon').show();
+                    $('.coupon-msg').html(result.msg).addClass('text-success').show();
+                    $('.showTotal').remove();
+                    $('#showTotal').prepend(result.html);
+                }
+            })
+            .fail(function() {
+                console.log("error");
+            })
+           $('#coupon-button').button('reset');
+       }, 2000);
+        }
 
-
-
-
-});
-$('#removeCoupon').click(function() {
-        $.ajax({
-            url: '{{ route('removeDiscount') }}',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                _token: "{{ csrf_token() }}",
-            },
-        })
-        .done(function(result) {
-                $('#removeCoupon').hide();
-                $('#coupon-value').val('');
-                $('.coupon-msg').removeClass('text-danger');
-                $('.coupon-msg').removeClass('text-success');
-                $('.coupon-msg').hide();
-                $('.showTotal').remove();
-                $('#showTotal').prepend(result.html);
-        })
-        .fail(function() {
-            console.log("error");
-        })
-        // .always(function() {
-        //     console.log("complete");
-        // });
-});
+    });
+    $('#removeCoupon').click(function() {
+            $.ajax({
+                url: '{{ route('removeDiscount') }}',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                },
+            })
+            .done(function(result) {
+                    $('#removeCoupon').hide();
+                    $('#coupon-value').val('');
+                    $('.coupon-msg').removeClass('text-danger');
+                    $('.coupon-msg').removeClass('text-success');
+                    $('.coupon-msg').hide();
+                    $('.showTotal').remove();
+                    $('#showTotal').prepend(result.html);
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            // .always(function() {
+            //     console.log("complete");
+            // });
+    });
+@endif
 
 </script>
 @endpush

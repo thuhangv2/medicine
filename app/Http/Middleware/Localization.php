@@ -25,7 +25,7 @@ class Localization
             $detectLocale = $requestLocale;
         } else
         if (!Session::has('locale')) {
-            $detectLocale = empty($configsGlobal['locale']) ? config('app.locale') : $configsGlobal['locale'];
+            $detectLocale = $configsGlobal['locale'] ?? config('app.locale');
         } else {
             $detectLocale = session('locale');
         }

@@ -87,9 +87,6 @@ class GeneralController extends Controller
         View::share('news', $this->news);
         View::share('languages', $this->languages);
         View::share('currencies', $this->currencies);
-//
-        $this->middleware('localization');
-        $this->middleware('currency');
 
     }
 

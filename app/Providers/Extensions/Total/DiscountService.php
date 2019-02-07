@@ -318,9 +318,8 @@ class DiscountService
                         } else {
                             $html .= "<tr class='showTotal'>";
                         }
-
                         $html .= "<th>" . $element['title'] . "</th>
-                        <td style='text-align: right' id='" . $element['code'] . "'>" . number_format($element['value']) . "</td>
+                        <td style='text-align: right' id='" . $element['code'] . "'>" . $element['text'] . "</td>
                     </tr>";
                     }
 
@@ -345,10 +344,9 @@ class DiscountService
             if ($element['value'] != 0) {
                 $html .= "<tr class='showTotal'>
                          <th>" . $element['title'] . "</th>
-                        <td style='text-align: right' id='" . $element['code'] . "'>" . number_format($element['value']) . "</td>
+                        <td style='text-align: right' id='" . $element['code'] . "'>" . $element['text'] . "</td>
                     </tr>";
             }
-
         }
         return json_encode(['html' => $html]);
     }
