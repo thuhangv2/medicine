@@ -13,18 +13,7 @@
 Auth::routes();
 //============================
 Route::group(
-    [
-        'middleware' => ['localization', 'currency'],
-    ], function () {
-        Route::prefix('extension')->group(function () {
-            Route::post('/useDiscount', 'Extensions\Total\Discount@useDiscount')->name('useDiscount');
-            Route::post('/removeDiscount', 'Extensions\Total\Discount@removeDiscount')->name('removeDiscount');
-            Route::prefix('payment')->group(function () {
-                Route::get('paypal', 'Extensions\Payment\Paypal@index')->name('paypal');
-                Route::get('return/{order_id}', 'Extensions\Payment\Paypal@getReturn')->name('returnPaypal');
-            });
-        });
-
+    ['middleware' => ['localization', 'currency']], function () {
 //--Auth
         Route::group(['namespace' => 'Auth', 'prefix' => 'member'], function ($router) {
             $router->get('/login.html', 'LoginController@showLoginForm')->name('login');
@@ -43,14 +32,6 @@ Route::group(
             'middleware' => 'auth',
             'uses'       => 'ShopFront@profile',
         ])->name('profile');
-
-//Module
-        Route::group(['namespace' => 'Modules'], function ($router) {
-            $router->post('/subscribe', 'Cms\Cms@emailSubscribe')->name('subscribe');
-            $router->get('/news.html', 'Cms\Cms@news')->name('news');
-            $router->get('/news/{name}_{id}.html', 'Cms\Cms@newsDetail')->name('newsDetail');
-        });
-//End module
 
 //Language
         Route::get('locale/{code}', function ($code) {
@@ -101,6 +82,7 @@ Route::group(
         Route::get('/search.html', 'ShopFront@search')->name('search');
         Route::get('/contact.html', 'ShopFront@getContact')->name('contact');
         Route::post('/contact.html', 'ShopFront@postContact')->name('postContact');
+        Route::post('/subscribe', 'ShopFront@emailSubscribe')->name('subscribe');
 //--Please keep 2 lines route (pages + pageNotFound) at the bottom
         Route::get('/{key}.html', 'ShopFront@pages')->name('pages');
         Route::fallback('ShopFront@pageNotFound')->name('pageNotFound');

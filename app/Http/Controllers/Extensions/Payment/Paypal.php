@@ -124,6 +124,11 @@ class Paypal extends \App\Http\Controllers\Controller
     }
 
 //===========process===
+    /**
+     * Send data to Paypal
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
     public function index(Request $request)
     {
         $data     = session('data_payment');
@@ -138,8 +143,6 @@ class Paypal extends \App\Http\Controllers\Controller
             ->setReturnUrl(route('returnPaypal', ['order_id' => $order_id]))
             ->setCancelUrl(route('cart'))
             ->setItem($data)
-        // ->setItem($data[0])
-        // ->setItem($data[1])
             ->createPayment($transactionDescription);
         if ($paypalCheckoutUrl) {
             return redirect($paypalCheckoutUrl);
@@ -147,10 +150,14 @@ class Paypal extends \App\Http\Controllers\Controller
             $paypalConfigs = PaypalModel::first();
             ShopOrder::find($order_id)->update(['status' => $paypalConfigs['paypal_order_status_faild']]);
             return redirect()->route('cart');
-
         }
     }
 
+/**
+ * [getReturn description]
+ * @param  [type] $order_id [description]
+ * @return [type]           [description]
+ */
     public function getReturn($order_id)
     {
         if (!empty(session('paypal_payment_id'))) {
@@ -171,7 +178,6 @@ class Paypal extends \App\Http\Controllers\Controller
             } else {
                 return redirect()->route('cart')->with(['error' => 'Have an error paypal']);
             }
-
         } else {
             return redirect()->route('cart')->with(['error' => 'Can\'t get payment id']);
         }
