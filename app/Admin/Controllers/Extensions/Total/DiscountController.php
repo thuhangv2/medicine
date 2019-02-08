@@ -1,5 +1,5 @@
 <?php
-#app/Http/Admin/Controllers/Extensions/Total/Discount.php
+#app/Http/Admin/Controllers/Extensions/Total/DiscountController.php
 namespace App\Admin\Controllers\Extensions\Total;
 
 use App\Http\Controllers\Controller;
@@ -11,7 +11,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class Discount extends Controller
+class DiscountController extends Controller
 {
     use HasResourceActions;
 

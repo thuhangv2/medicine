@@ -80,7 +80,7 @@ Route::group([
         $router->post('/disableExtension', 'ExtensionsController@disableExtension')->name('disableExtension');
         $router->match(['put', 'post'], '/processExtension/{extensionGroup}/{extension}', 'ExtensionsController@processExtension')->name('processExtension');
     });
-    $router->resource('shop_discount', Extensions\Total\Discount::class)->names('configDiscount');
+    $router->resource('shop_discount', Extensions\Total\DiscountController::class)->names('configDiscount');
 //end extensions
 
 //Language
