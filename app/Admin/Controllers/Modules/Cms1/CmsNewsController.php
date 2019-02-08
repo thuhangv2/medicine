@@ -1,5 +1,6 @@
 <?php
 #app/Http/Admin/Controllers/Modules/Cms/CmsNewsController.php
+
 namespace App\Admin\Controllers\Modules\Cms;
 
 use App\Http\Controllers\Controller;
