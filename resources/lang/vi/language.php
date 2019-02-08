@@ -447,8 +447,8 @@ return [
 
     'modules'           => [
         'manager'     => 'Quản lý module',
-        'Cms'         => 'Cms content',
-        'Api'         => 'Api',
+        'Cms'         => 'Các module CMS',
+        'Api'         => 'Các module Api',
         'Other'       => 'Module khác',
         'code'        => 'Mã code',
         'name'        => 'Tên chức năng',

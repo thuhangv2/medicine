@@ -37,8 +37,8 @@ class Discount extends \App\Http\Controllers\Controller
 
     public function processData()
     {
-        $uID         = auth()->user()->id ?? 0;
-        $arrDiscount = [
+        $uID     = auth()->user()->id ?? 0;
+        $arrData = [
             'title'      => $this->title,
             'code'       => $this->configKey,
             'image'      => $this->image,
@@ -55,9 +55,9 @@ class Discount extends \App\Http\Controllers\Controller
                 '1' => 'Point',
                 '2' => '%',
             ];
-            $subtotal    = \Cart::subtotal();
-            $value       = ($check['content']['type'] == '2') ? floor($subtotal * $check['content']['reward'] / 100) : $check['content']['reward'];
-            $arrDiscount = array(
+            $subtotal = \Cart::subtotal();
+            $value    = ($check['content']['type'] == '2') ? floor($subtotal * $check['content']['reward'] / 100) : $check['content']['reward'];
+            $arrData  = array(
                 'title'      => '<b>' . $this->title . ':</b> ' . $Discount . '',
                 'code'       => $this->configKey,
                 'image'      => $this->image,
@@ -65,7 +65,7 @@ class Discount extends \App\Http\Controllers\Controller
                 'value'      => ($value > $subtotal) ? -$subtotal : -$value,
             );
         }
-        return $arrDiscount;
+        return $arrData;
     }
 
     public function install()

@@ -3,8 +3,12 @@
 namespace App\Models\Modules\Cms;
 
 use App\Models\Language;
+use App\Models\Modules\Cms\CmsCategory;
 use App\Models\Modules\Cms\CmsContentDescription;
+use App\Models\Modules\Cms\CmsImage;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CmsContent extends Model
 {
@@ -25,12 +29,12 @@ class CmsContent extends Model
 
     public function category()
     {
-        return $this->belongsTo('App\Models\CmsCategory', 'category_id', 'id');
+        return $this->belongsTo(CmsCategory::class, 'category_id', 'id');
     }
 
     public function images()
     {
-        return $this->hasMany('App\Models\CmsImage', 'content_id', 'id');
+        return $this->hasMany(CmsImage::class, 'content_id', 'id');
     }
 
 /**
@@ -120,6 +124,38 @@ class CmsContent extends Model
     {
         return $this->getContent();
 
+    }
+
+//=========================
+
+    public function uninstallExtension()
+    {
+        if (Schema::hasTable($this->table)) {
+            Schema::drop($this->table);
+        }
+    }
+
+    public function installExtension()
+    {
+        $return = ['error' => 0, 'msg' => 'Install modules success'];
+        if (!Schema::hasTable($this->table)) {
+            try {
+                Schema::create($this->table, function (Blueprint $table) {
+                    $table->increments('id');
+                    $table->integer('category_id')->default(0);
+                    $table->string('image', 100)->nullable();
+                    $table->tinyInteger('sort')->default(0);
+                    $table->tinyInteger('status')->default(0);
+                    $table->timestamp('created_at')->nullable();
+                    $table->timestamp('updated_at')->nullable();
+                });
+            } catch (\Exception $e) {
+                $return = ['error' => 1, 'msg' => $e->getMessage()];
+            }
+        } else {
+            $return = ['error' => 1, 'msg' => 'Table ' . $this->table . ' exist!'];
+        }
+        return $return;
     }
 
 }

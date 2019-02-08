@@ -3,9 +3,9 @@
 namespace App\Admin\Controllers\Modules\Cms;
 
 use App\Http\Controllers\Controller;
-use App\Models\CmsCategory;
-use App\Models\CmsCategoryDescription;
 use App\Models\Language;
+use App\Models\Modules\Cms\CmsCategory;
+use App\Models\Modules\Cms\CmsCategoryDescription;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;

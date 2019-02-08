@@ -1,15 +1,18 @@
 <?php
-#app/Http/Controller/Modules/Cms/News.php
+#app/Http/Controller/Modules/Cms/Content.php
 namespace App\Http\Controllers\Modules\Cms;
 
 use App\Models\Config;
-use App\Models\Modules\Cms\CmsNews;
-use App\Models\Modules\Cms\CmsNewsDescription;
+use App\Models\Modules\Cms\CmsCategory;
+use App\Models\Modules\Cms\CmsCategoryDescription;
+use App\Models\Modules\Cms\CmsContent;
+use App\Models\Modules\Cms\CmsContentDescription;
+use App\Models\Modules\Cms\CmsImage;
 use Encore\Admin\Auth\Database\Menu;
 
-class News extends \App\Http\Controllers\GeneralController
+class Content extends \App\Http\Controllers\GeneralController
 {
-    protected $configKey  = 'News';
+    protected $configKey  = 'Content';
     protected $configCode = 'Cms';
     public $title;
     const ON  = 1;
@@ -62,15 +65,28 @@ class News extends \App\Http\Controllers\GeneralController
                         'icon'      => 'fa-coffee',
                     ]);
                 }
-                (new CmsNews)->installExtension();
-                (new CmsNewsDescription)->installExtension();
-                Menu::insert([
-                    'order'     => 10,
-                    'parent_id' => 100,
-                    'title'     => 'Blog & News',
-                    'icon'      => 'fa-file-powerpoint-o',
-                    'uri'       => 'modules/cms/cms_news',
-                ]);
+                (new CmsCategory)->installExtension();
+                (new CmsCategoryDescription)->installExtension();
+                (new CmsContent)->installExtension();
+                (new CmsContentDescription)->installExtension();
+                (new CmsImage)->installExtension();
+                Menu::insert(
+                    [
+                        'order'     => 10,
+                        'parent_id' => 100,
+                        'title'     => 'Cms categories',
+                        'icon'      => 'fa-folder-open-o',
+                        'uri'       => 'modules/cms/cms_category',
+                    ]);
+                Menu::insert(
+                    [
+                        'order'     => 10,
+                        'parent_id' => 100,
+                        'title'     => 'Cms contents',
+                        'icon'      => 'fa-copy',
+                        'uri'       => 'modules/cms/cms_content',
+                    ]
+                );
             }
         }
         return $return;
@@ -83,13 +99,14 @@ class News extends \App\Http\Controllers\GeneralController
         if (!$process) {
             $return = ['error' => 1, 'msg' => 'Error when uninstall'];
         }
-
-        //Drop table
-        (new CmsNews)->uninstallExtension();
-        (new CmsNewsDescription)->uninstallExtension();
-
+        (new CmsCategory)->uninstallExtension();
+        (new CmsCategoryDescription)->uninstallExtension();
+        (new CmsContent)->uninstallExtension();
+        (new CmsContentDescription)->uninstallExtension();
+        (new CmsImage)->uninstallExtension();
         //Remove menu
-        (new Menu)->where('uri', 'modules/cms/cms_news')->delete();
+        (new Menu)->where('uri', 'modules/cms/cms_category')->delete();
+        (new Menu)->where('uri', 'modules/cms/cms_content')->delete();
         if (!(new Menu)->where('parent_id', 100)->count()) {
             (new Menu)->find(100)->delete();
         }
@@ -132,7 +149,7 @@ class News extends \App\Http\Controllers\GeneralController
  */
     public function news()
     {
-        $news = (new CmsNews)->getItemsNews($limit = $this->configs['product_new'], $opt = 'paginate');
+        $news = (new CmsNewsModel)->getItemsNews($limit = $this->configs['product_new'], $opt = 'paginate');
         return view($this->theme . '.cms_news',
             array(
                 'title'       => trans('language.blog'),
@@ -146,7 +163,7 @@ class News extends \App\Http\Controllers\GeneralController
 
     public function newsDetail($name, $id)
     {
-        $news_currently = CmsNews::find($id);
+        $news_currently = CmsNewsModel::find($id);
         if ($news_currently) {
             $title = ($news_currently) ? $news_currently->title : trans('language.not_found');
             return view($this->theme . '.cms_news_detail',
@@ -155,7 +172,7 @@ class News extends \App\Http\Controllers\GeneralController
                     'news_currently' => $news_currently,
                     'description'    => $this->configsGlobal['description'],
                     'keyword'        => $this->configsGlobal['keyword'],
-                    'blogs'          => (new CmsNews)->getItemsNews($limit = 4),
+                    'blogs'          => (new CmsNewsModel)->getItemsNews($limit = 4),
                     'og_image'       => url($this->path_file . '/' . $news_currently->image),
                 )
             );

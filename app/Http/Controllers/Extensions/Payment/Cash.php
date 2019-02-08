@@ -27,13 +27,13 @@ class Cash extends \App\Http\Controllers\Controller
 
     public function processData()
     {
-        $arrPayment = [
+        $arrData = [
             'title'      => $this->title,
             'code'       => $this->configKey,
             'image'      => $this->image,
             'permission' => self::ALLOW,
         ];
-        return $arrPayment;
+        return $arrData;
     }
 
     public function install()

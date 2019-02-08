@@ -28,14 +28,14 @@ class ShippingBasic extends \App\Http\Controllers\Controller
 
     public function processData()
     {
-        $arrShipping = [
+        $arrData = [
             'title'      => $this->title,
             'code'       => $this->configKey,
             'image'      => $this->image,
             'permission' => self::ALLOW,
             'value'      => 200,
         ];
-        return $arrShipping;
+        return $arrData;
     }
 
     public function install()

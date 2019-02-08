@@ -31,7 +31,7 @@ class ShippingStandard extends \App\Http\Controllers\Controller
         $subtotal = \Cart::subtotal();
         $shipping = ShippingStandardModel::first();
         if ($subtotal >= $shipping->shipping_free) {
-            $arrShipping = [
+            $arrData = [
                 'title'      => $this->title,
                 'code'       => $this->configKey,
                 'image'      => $this->image,
@@ -39,7 +39,7 @@ class ShippingStandard extends \App\Http\Controllers\Controller
                 'value'      => 0,
             ];
         } else {
-            $arrShipping = [
+            $arrData = [
                 'title'      => $this->title,
                 'code'       => $this->configKey,
                 'image'      => $this->image,
@@ -48,7 +48,7 @@ class ShippingStandard extends \App\Http\Controllers\Controller
             ];
 
         }
-        return $arrShipping;
+        return $arrData;
     }
 
     public function install()

@@ -441,8 +441,8 @@ return [
     ],
     'modules'           => [
         'manager'     => 'Modules manager',
-        'Cms'         => 'Cms content',
-        'Api'         => 'Api',
+        'Cms'         => 'Cms modules',
+        'Api'         => 'Api modules',
         'Other'       => 'Other modules',
         'code'        => 'Code',
         'name'        => 'Name',

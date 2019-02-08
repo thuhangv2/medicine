@@ -4,7 +4,10 @@ namespace App\Models\Modules\Cms;
 
 use App\Models\Language;
 use App\Models\Modules\Cms\CmsCategoryDescription;
+use App\Models\Modules\Cms\CmsContent;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CmsCategory extends Model
 {
@@ -25,7 +28,7 @@ class CmsCategory extends Model
 
     public function contents()
     {
-        return $this->hasMany('App\Models\CmsContent', 'category_id', 'id');
+        return $this->hasMany(CmsContent::class, 'category_id', 'id');
     }
 
     public function getTreeCategory($root = 0)
@@ -196,4 +199,35 @@ class CmsCategory extends Model
         $column = $column ?? 'sort';
         return $query->orderBy($column, 'asc')->orderBy('id', 'desc');
     }
+
+//=========================
+
+    public function uninstallExtension()
+    {
+        if (Schema::hasTable($this->table)) {
+            Schema::drop($this->table);
+        }
+    }
+
+    public function installExtension()
+    {
+        $return = ['error' => 0, 'msg' => 'Install modules success'];
+        if (!Schema::hasTable($this->table)) {
+            try {
+                Schema::create($this->table, function (Blueprint $table) {
+                    $table->increments('id');
+                    $table->string('image', 100)->nullable();
+                    $table->tinyInteger('parent')->default(0);
+                    $table->tinyInteger('sort')->default(0);
+                    $table->tinyInteger('status')->default(0);
+                });
+            } catch (\Exception $e) {
+                $return = ['error' => 1, 'msg' => $e->getMessage()];
+            }
+        } else {
+            $return = ['error' => 1, 'msg' => 'Table ' . $this->table . ' exist!'];
+        }
+        return $return;
+    }
+
 }
