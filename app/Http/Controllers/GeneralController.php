@@ -5,13 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use App\Models\CmsLayout;
-use App\Models\CmsNews;
-use App\Models\CmsSubscribe;
 use App\Models\Config;
 use App\Models\Language;
 use App\Models\ShopBrand;
 use App\Models\ShopCategory;
 use App\Models\ShopCurrency;
+use App\Models\Subscribe;
 use Illuminate\Http\Request;
 use Mail;
 use View;
@@ -26,7 +25,6 @@ class GeneralController extends Controller
     public $logo;
     public $brands;
     public $categories;
-    public $news;
     public $languages;
     public $currencies;
 
@@ -68,7 +66,6 @@ class GeneralController extends Controller
         $this->logo          = $this->path_file . '/' . $this->configsGlobal['logo'];
         $this->brands        = ShopBrand::getBrands();
         $this->categories    = ShopCategory::getCategories(0);
-        $this->news          = (new CmsNews)->getItemsNews($limit = 6, $opt = 'paginate');
         $this->languages     = Language::where('status', 1)->get()->keyBy('code');
         $this->currencies    = ShopCurrency::getAll();
 //Share variable
@@ -83,8 +80,6 @@ class GeneralController extends Controller
 
         View::share('categories', $this->categories);
         View::share('brands', $this->brands);
-
-        View::share('news', $this->news);
         View::share('languages', $this->languages);
         View::share('currencies', $this->currencies);
 
@@ -104,9 +99,9 @@ class GeneralController extends Controller
             'email.email'    => trans('validation.email'),
         ]);
         $data       = $request->all();
-        $checkEmail = CmsSubscribe::where('email', $data['email'])->first();
+        $checkEmail = Subscribe::where('email', $data['email'])->first();
         if (!$checkEmail) {
-            CmsSubscribe::insert(['email' => $data['email']]);
+            Subscribe::insert(['email' => $data['email']]);
         }
         return json_encode(['error' => 0]);
     }

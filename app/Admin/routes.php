@@ -55,12 +55,21 @@ Route::group([
         $router->put('/shop_order_update', 'ShopOrderController@postOrderUpdate')->name('order_update');
     });
 //Modules
+    $router->group(['prefix' => 'modules'], function ($router) {
+        $router->get('/{modulesGroup}', 'ModulesController@index')->name('modulesGroup');
+        $router->post('/installModule', 'ModulesController@installModule')->name('installModule');
+        $router->post('/uninstallModule', 'ModulesController@uninstallModule')->name('uninstallModule');
+        $router->post('/enableModule', 'ModulesController@enableModule')->name('enableModule');
+        $router->post('/disableModule', 'ModulesController@disableModule')->name('disableModule');
+        $router->match(['put', 'post'], '/processModule/{moduleGroup}/{module}', 'ModulesController@processModule')->name('processModule');
+    });
     $router->group(['prefix' => 'modules', 'namespace' => 'Modules'], function ($router) {
         $router->resource('cms/cms_category', Cms\CmsCategoryController::class);
         $router->resource('cms/cms_content', Cms\CmsContentController::class);
-        $router->resource('cms/cms_news', Cms\CmsNewsController::class);
+        $router->resource('cms/cms_news', Cms\CmsNewsController::class)->names('news');
         $router->resource('api/shop_api', Api\ShopApiController::class);
     });
+//End module
 
 //Extensions
     $router->group(['prefix' => 'extensions'], function ($router) {
@@ -72,8 +81,7 @@ Route::group([
         $router->match(['put', 'post'], '/processExtension/{extensionGroup}/{extension}', 'ExtensionsController@processExtension')->name('processExtension');
     });
     $router->resource('shop_discount', Extensions\Total\Discount::class)->names('configDiscount');
-
-//
+//end extensions
 
 //Language
     $router->post('locale/{code}', function ($code) {

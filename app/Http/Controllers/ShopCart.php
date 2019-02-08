@@ -34,7 +34,7 @@ class ShopCart extends GeneralController
         session()->forget('shippingMethod'); //destroy shippingMethod
         //Shipping
         $moduleShipping  = \Helper::getExtensionsGroup('shipping');
-        $sourcesShipping = \FindClass::extensions('shipping');
+        $sourcesShipping = \FindClass::classNames('Extensions', 'shipping');
         $shippingMethod  = array();
         foreach ($moduleShipping as $key => $module) {
             if (in_array($module['key'], $sourcesShipping)) {
@@ -44,7 +44,7 @@ class ShopCart extends GeneralController
         }
         //Payment
         $modulePayment  = \Helper::getExtensionsGroup('payment');
-        $sourcesPayment = \FindClass::extensions('payment');
+        $sourcesPayment = \FindClass::classNames('Extensions', 'payment');
         $paymentMethod  = array();
         foreach ($modulePayment as $key => $module) {
             if (in_array($module['key'], $sourcesPayment)) {
@@ -54,7 +54,7 @@ class ShopCart extends GeneralController
         }
         //Total
         $moduleTotal  = \Helper::getExtensionsGroup('total');
-        $sourcesTotal = \FindClass::extensions('total');
+        $sourcesTotal = \FindClass::classNames('Extensions', 'total');
         $totalMethod  = array();
         foreach ($moduleTotal as $key => $module) {
             if (in_array($module['key'], $sourcesTotal)) {

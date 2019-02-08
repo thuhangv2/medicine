@@ -1,5 +1,5 @@
 <?php
-#app/Http/Admin/Controllers/ExtensionsController.php
+#app/Http/Admin/Controllers/ModulesController.php
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -8,7 +8,7 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
 use Illuminate\Http\Request;
 
-class ExtensionsController extends Controller
+class ModulesController extends Controller
 {
     use HasResourceActions;
     public $namespaceGroup;
@@ -20,65 +20,64 @@ class ExtensionsController extends Controller
     public function __construct()
     {
         $this->namespaceGroup = [
-            'Shipping' => '\App\Http\Controllers\Extensions\Shipping',
-            'Payment'  => '\App\Http\Controllers\Extensions\Payment',
-            'Total'    => '\App\Http\Controllers\Extensions\Total',
-            'Other'    => '\App\Http\Controllers\Extensions\Other',
+            'Cms'   => '\App\Http\Controllers\Modules\Cms',
+            'Api'   => '\App\Http\Controllers\Modules\Api',
+            'Other' => '\App\Http\Controllers\Modules\Other',
         ];
 
     }
     public function index($group, Content $content)
     {
-        $action       = request('action');
-        $extensionKey = request('extensionKey');
-        if ($action == 'config' && $extensionKey != '') {
-            $namespace = $this->namespaceGroup[$group] . '\\' . $extensionKey;
+        $action    = request('action');
+        $moduleKey = request('moduleKey');
+        if ($action == 'config' && $moduleKey != '') {
+            $namespace = $this->namespaceGroup[$group] . '\\' . $moduleKey;
             $body      = (new $namespace)->config();
         } else {
-            $body = $this->extensionsGroup($group);
+            $body = $this->modulesGroup($group);
         }
         return $content
-            ->header(trans('language.extensions.manager'))
+            ->header(trans('language.modules.manager'))
             ->description(' ')
             ->body($body);
     }
 
 /**
- * [extensionsGroup description]
+ * [modulesGroup description]
  * @param  [type] $group [description]
  * @return [type]        [description]
  */
-    protected function extensionsGroup($group)
+    protected function modulesGroup($group)
     {
-        $extensionsInstalled = \Helper::getExtensionsGroup($group, $onlyActive = false);
-        $extensions          = \FindClass::classNames('Extensions', $group);
-        $namespace           = $this->namespaceGroup[$group];
-        $title               = trans('language.extensions.' . $group);
-        return $this->render($extensionsInstalled, $extensions, $namespace, $title, $group);
+        $modulesInstalled = \Helper::getExtensionsGroup($group, $onlyActive = false);
+        $modules          = \FindClass::classNames('Modules', $group);
+        $namespace        = $this->namespaceGroup[$group];
+        $title            = trans('language.modules.' . $group);
+        return $this->render($modulesInstalled, $modules, $namespace, $title, $group);
     }
 
 /**
  * [render description]
- * @param  [type] $extensionsInstalled [description]
- * @param  [type] $extensions          [description]
+ * @param  [type] $modulesInstalled [description]
+ * @param  [type] $modules          [description]
  * @param  [type] $namespace           [description]
  * @param  [type] $title               [description]
  * @param  [type] $group                [description]
  * @return [type]                      [description]
  */
-    public function render($extensionsInstalled, $extensions, $namespace, $title, $group)
+    public function render($modulesInstalled, $modules, $namespace, $title, $group)
     {
-        return view('admin.ExtensionsManager')->with(
+        return view('admin.ModulesManager')->with(
             [
-                "title"               => $title,
-                "namespace"           => $namespace,
-                "extensionsInstalled" => $extensionsInstalled,
-                "extensions"          => $extensions,
-                "group"               => $group,
+                "title"            => $title,
+                "namespace"        => $namespace,
+                "modulesInstalled" => $modulesInstalled,
+                "modules"          => $modules,
+                "group"            => $group,
             ])->render();
     }
 
-    public function installExtension()
+    public function installModule()
     {
         $key       = request('key');
         $group     = request('group');
@@ -87,7 +86,7 @@ class ExtensionsController extends Controller
         $response  = (new $class)->install();
         return json_encode($response);
     }
-    public function uninstallExtension()
+    public function uninstallModule()
     {
         $key       = request('key');
         $group     = request('group');
@@ -96,7 +95,7 @@ class ExtensionsController extends Controller
         $response  = (new $class)->uninstall();
         return json_encode($response);
     }
-    public function enableExtension()
+    public function enableModule()
     {
         $key       = request('key');
         $group     = request('group');
@@ -105,7 +104,7 @@ class ExtensionsController extends Controller
         $response  = (new $class)->enable();
         return json_encode($response);
     }
-    public function disableExtension()
+    public function disableModule()
     {
         $key       = request('key');
         $group     = request('group');
@@ -114,7 +113,7 @@ class ExtensionsController extends Controller
         $response  = (new $class)->disable();
         return json_encode($response);
     }
-    public function processExtension($group, $key)
+    public function processModule($group, $key)
     {
         $data      = request()->all();
         $namespace = $this->namespaceGroup[$group];

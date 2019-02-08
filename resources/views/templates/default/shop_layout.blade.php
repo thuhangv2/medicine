@@ -164,7 +164,9 @@
                         <li><a href="{{ route('login') }}">{{ trans('language.login') }}</a></li>
                     </ul>
                 </li>
+                @if (!empty($configs['News']))
                 <li><a href="{{ route('news') }}">{{ trans('language.blog') }}</a></li>
+                @endif
                 <li><a href="{{ route('pages',['key'=>'about']) }}">{{ trans('language.about') }}</a></li>
                 <li><a href="{{ route('contact') }}">{{ trans('language.contact') }}</a></li>
               </ul>

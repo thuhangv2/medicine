@@ -1,11 +1,13 @@
 <?php
-#app/Models/CmsNews.php
-namespace App\Models;
+#app/Models/Modules/Cms/CmsNews.php
+namespace App\Models\Modules\Cms;
 
-use App\Models\CmsNewsDescription;
 use App\Models\Language;
+use App\Models\Modules\Cms\CmsNewsDescription;
 use Helper;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CmsNews extends Model
 {
@@ -130,4 +132,36 @@ class CmsNews extends Model
         $column = $column ?? 'sort';
         return $query->orderBy($column, 'asc')->orderBy('id', 'desc');
     }
+
+//=========================
+
+    public function uninstallExtension()
+    {
+        if (Schema::hasTable($this->table)) {
+            Schema::drop($this->table);
+        }
+    }
+
+    public function installExtension()
+    {
+        $return = ['error' => 0, 'msg' => 'Install modules success'];
+        if (!Schema::hasTable($this->table)) {
+            try {
+                Schema::create($this->table, function (Blueprint $table) {
+                    $table->increments('id');
+                    $table->string('image', 200)->nullable();
+                    $table->tinyInteger('sort')->default(0);
+                    $table->tinyInteger('status')->default(0);
+                    $table->timestamp('created_at')->nullable();
+                    $table->timestamp('updated_at')->nullable();
+                });
+            } catch (\Exception $e) {
+                $return = ['error' => 1, 'msg' => $e->getMessage()];
+            }
+        } else {
+            $return = ['error' => 1, 'msg' => 'Table ' . $this->table . ' exist!'];
+        }
+        return $return;
+    }
+
 }
