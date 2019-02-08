@@ -3,7 +3,6 @@
 Route::group(
     [
         'middleware' => ['localization', 'currency'],
-        'prefix'     => 'extension/payment',
         'namespace'  => 'Modules',
     ], function () {
         Route::get('/news.html', 'Cms\Cms@news')->name('news');
