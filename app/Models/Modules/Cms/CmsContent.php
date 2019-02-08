@@ -84,7 +84,7 @@ class CmsContent extends Model
  */
     public function getUrl()
     {
-        return url('cms/' . \Helper::strToUrl($this->category->title) . '/' . \Helper::strToUrl($this->title) . '_' . $this->id . '.html');
+        return route('cmsContent', ['name' => \Helper::strToUrl($this->title), 'id' => $this->id]);
     }
 
     //Fields language
@@ -125,7 +125,12 @@ class CmsContent extends Model
         return $this->getContent();
 
     }
-
+//Scort
+    public function scopeSort($query, $column = null)
+    {
+        $column = $column ?? 'sort';
+        return $query->orderBy($column, 'asc')->orderBy('id', 'desc');
+    }
 //=========================
 
     public function uninstallExtension()

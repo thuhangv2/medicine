@@ -167,6 +167,20 @@
                 @if (!empty($configs['News']))
                 <li><a href="{{ route('news') }}">{{ trans('language.blog') }}</a></li>
                 @endif
+
+                @if (!empty($configs['Content']))
+                <li class="dropdown"><a href="#">{{ trans('language.cms_category') }}<i class="fa fa-angle-down"></i></a>
+                    <ul role="menu" class="sub-menu">
+                      @php
+                        $cmsCategories = (new \App\Models\Modules\Cms\CmsCategory)->where('status',1)->get();
+                      @endphp
+                      @foreach ($cmsCategories as $cmsCategory)
+                        <li><a href="{{ $cmsCategory->getUrl() }}">{{ $cmsCategory->title }}</a></li>
+                      @endforeach
+                    </ul>
+                </li>
+                @endif
+
                 <li><a href="{{ route('pages',['key'=>'about']) }}">{{ trans('language.about') }}</a></li>
                 <li><a href="{{ route('contact') }}">{{ trans('language.contact') }}</a></li>
               </ul>
@@ -198,10 +212,10 @@
 
 @if ($configs['site_status'])
   @yield('notice')
-  @yield('breadcrumb')
   <section>
     <div class="container">
       <div class="row">
+        @yield('breadcrumb')
         @section('main')
         <div class="col-sm-3">
           <div class="left-sidebar">

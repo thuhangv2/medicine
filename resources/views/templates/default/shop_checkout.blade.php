@@ -164,6 +164,13 @@
 @endsection
 
 @section('breadcrumb')
+    <div class="breadcrumbs">
+        <ol class="breadcrumb">
+          <li><a href="{{ route('home') }}">Home</a></li>
+          <li><a href="{{ route('cart') }}">{{ trans('language.cart_title') }}</a></li>
+          <li class="active">{{ $title }}</li>
+        </ol>
+      </div>
 @endsection
 
 @push('scripts')

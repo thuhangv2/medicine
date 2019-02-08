@@ -147,33 +147,33 @@ class Content extends \App\Http\Controllers\GeneralController
  * [news description]
  * @return [type] [description]
  */
-    public function news()
+    public function category($name, $id)
     {
-        $news = (new CmsNewsModel)->getItemsNews($limit = $this->configs['product_new'], $opt = 'paginate');
-        return view($this->theme . '.cms_news',
+        $category_currently = CmsCategory::find($id);
+        $entries            = (new CmsCategory)->getContentsToCategory($id, $limit = $this->configs['product_new'], $opt = 'paginate');
+        return view($this->theme . '.cms_category',
             array(
-                'title'       => trans('language.blog'),
-                'description' => $this->configsGlobal['description'],
-                'keyword'     => $this->configsGlobal['keyword'],
-                'news'        => $news,
+                'title'       => $category_currently->title,
+                'description' => $category_currently['description'],
+                'keyword'     => $category_currently['keyword'],
+                'entries'     => $entries,
                 'og_image'    => $this->logo,
             )
         );
     }
 
-    public function newsDetail($name, $id)
+    public function content($name, $id)
     {
-        $news_currently = CmsNewsModel::find($id);
-        if ($news_currently) {
-            $title = ($news_currently) ? $news_currently->title : trans('language.not_found');
-            return view($this->theme . '.cms_news_detail',
+        $entry_currently = CmsContent::find($id);
+        if ($entry_currently) {
+            $title = ($entry_currently) ? $entry_currently->title : trans('language.not_found');
+            return view($this->theme . '.cms_entry_detail',
                 array(
-                    'title'          => $title,
-                    'news_currently' => $news_currently,
-                    'description'    => $this->configsGlobal['description'],
-                    'keyword'        => $this->configsGlobal['keyword'],
-                    'blogs'          => (new CmsNewsModel)->getItemsNews($limit = 4),
-                    'og_image'       => url($this->path_file . '/' . $news_currently->image),
+                    'title'           => $title,
+                    'entry_currently' => $entry_currently,
+                    'description'     => $entry_currently['description'],
+                    'keyword'         => $entry_currently['keyword'],
+                    'og_image'        => url($this->path_file . '/' . $entry_currently->image),
                 )
             );
         } else {

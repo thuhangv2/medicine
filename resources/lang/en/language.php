@@ -28,6 +28,7 @@ return [
     'contact'           => 'Contact us',
     'about'             => 'About us',
     'shop'              => 'Shop',
+    'cms_category'      => 'CMS categories',
     'category'          => 'Category',
     'brands'            => 'Brands',
     'maintenance'       => 'Sorry! We are currently doing site maintenance!',

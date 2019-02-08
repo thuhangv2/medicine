@@ -6,7 +6,7 @@
     <div class="container">
         <div class="row">
             <h2 class="title text-center">{{ $title }}</h2>
-            {!! $news_currently->content !!}
+            {!! $entry_currently->content !!}
         </div>
     </div>
 </section>
@@ -15,7 +15,7 @@
 @section('breadcrumb')
     <div class="breadcrumbs">
         <ol class="breadcrumb">
-          <li><a href="{{ route('home') }}">Home</a></li>
+          <li><a href="{{ $entry_currently->category->getUrl() }}">{{ $entry_currently->category->title }}</a></li>
           <li class="active">{{ $title }}</li>
         </ol>
       </div>

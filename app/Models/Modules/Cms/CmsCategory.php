@@ -160,7 +160,7 @@ class CmsCategory extends Model
 
     public function getUrl()
     {
-        return url('cms/' . \Helper::strToUrl($this->title) . '_' . $this->id . '.html');
+        return route('cmsCategory', ['name' => \Helper::strToUrl($this->title), 'id' => $this->id]);
     }
 
     //Fields language

@@ -28,6 +28,7 @@ return [
     'contact'           => 'Liên hệ',
     'about'             => 'Giới thiệu',
     'shop'              => 'Cửa hàng',
+    'cms_category'      => 'Danh mục CMS',
     'category'          => 'Danh mục',
     'brands'            => 'Nhãn hiệu',
     'maintenance'       => 'Xin lỗi, website đang bảo trì',
