@@ -28,14 +28,7 @@ class ModulesController extends Controller
     }
     public function index($group, Content $content)
     {
-        $action    = request('action');
-        $moduleKey = request('moduleKey');
-        if ($action == 'config' && $moduleKey != '') {
-            $namespace = $this->namespaceGroup[$group] . '\\' . $moduleKey;
-            $body      = (new $namespace)->config();
-        } else {
-            $body = $this->modulesGroup($group);
-        }
+        $body = $this->modulesGroup($group);
         return $content
             ->header(trans('language.modules.manager'))
             ->description(' ')

@@ -35,13 +35,11 @@
                         $moduleStatus = 1;
                         $moduleStatusTitle = trans('language.modules.actived');
                         $moduleAction ='<span onClick="disableModule($(this),\''.$module.'\');" title="'.trans('language.modules.disable').'" type="button" class="btn btn-flat btn-warning btn-flat"><i class="fa fa-power-off"></i></span>&nbsp;
-                              <a href="'.url()->current().'?action=config&moduleKey='.$module.'"><span title="'.trans('language.modules.config').'" class="btn btn-flat btn-primary"><i class="fa fa-gears"></i></span>&nbsp;</a>
                               <span onClick="uninstallModule($(this),\''.$module.'\');" title="'.trans('language.modules.remove').'" class="btn btn-flat btn-danger"><i class="fa fa-trash"></i></span>';
                       }else{
                         $moduleStatus = 0;
                         $moduleStatusTitle = trans('language.modules.disabled');
                         $moduleAction = '<span onClick="enableModule($(this),\''.$module.'\');" title="'.trans('language.modules.enable').'" type="button" class="btn btn-flat btn-primary"><i class="fa fa-paper-plane"></i></span>&nbsp;
-                              <a href="'.url()->current().'?action=config&moduleKey='.$module.'"><span title="'.trans('language.modules.config').'" class="btn btn-flat btn-primary"><i class="fa fa-gears"></i></span>&nbsp;</a>
                               <span onClick="uninstallModule($(this),\''.$module.'\');" title="'.trans('language.modules.remove').'" class="btn btn-flat btn-danger"><i class="fa fa-trash"></i></span>';
                       }
                     }

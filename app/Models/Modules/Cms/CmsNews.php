@@ -4,6 +4,7 @@ namespace App\Models\Modules\Cms;
 
 use App\Models\Language;
 use App\Models\Modules\Cms\CmsNewsDescription;
+use Encore\Admin\Auth\Database\Menu;
 use Helper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
@@ -139,6 +140,10 @@ class CmsNews extends Model
     {
         if (Schema::hasTable($this->table)) {
             Schema::drop($this->table);
+            (new Menu)->where('uri', 'modules/cms/cms_news')->delete();
+            if (!(new Menu)->where('parent_id', 100)->count()) {
+                (new Menu)->find(100)->delete();
+            }
         }
     }
 
@@ -155,6 +160,24 @@ class CmsNews extends Model
                     $table->timestamp('created_at')->nullable();
                     $table->timestamp('updated_at')->nullable();
                 });
+                $checkMenu = Menu::find('100');
+                if (!$checkMenu) {
+                    Menu::insert([
+                        'id'        => 100,
+                        'order'     => 9,
+                        'parent_id' => 0,
+                        'title'     => 'CMS Manager',
+                        'icon'      => 'fa-coffee',
+                    ]);
+                }
+                Menu::insert([
+                    'order'     => 10,
+                    'parent_id' => 100,
+                    'title'     => 'Blog & News',
+                    'icon'      => 'fa-file-powerpoint-o',
+                    'uri'       => 'modules/cms/cms_news',
+                ]);
+
             } catch (\Exception $e) {
                 $return = ['error' => 1, 'msg' => $e->getMessage()];
             }
