@@ -1,13 +1,13 @@
 <?php
-#app/Models/CmsLayout.php
+#app/Models/Layout.php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CmsLayout extends Model
+class Layout extends Model
 {
     public $timestamps = false;
-    public $table      = 'cms_layout';
+    public $table      = 'layout';
     /**
      * Get value field page_display same array
      * @param  [type] $page_display [description]

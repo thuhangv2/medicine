@@ -12,13 +12,12 @@ Route::group([
 
     $router->get('/', 'HomeController@index');
     $router->resource('banner', BannerController::class);
-    $router->resource('cms_layout', CmsLayoutController::class);
+    $router->resource('layout', LayoutController::class);
     $router->resource('language', LanguageController::class);
     $router->resource('currencies', CurrencyController::class);
 //Config
     $router->resource('config_info', ConfigInfoController::class);
     $router->resource('config_global', ConfigGlobalController::class);
-    $router->resource('config_layout', ConfigLayoutController::class);
     $router->any('/config_updateConfigField', 'ConfigInfoController@updateConfigField')
         ->name('updateConfigField');
     $router->get('/ckfinder', function () {

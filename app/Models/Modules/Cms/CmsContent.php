@@ -1,9 +1,9 @@
 <?php
-#app/Models/CmsContent.php
-namespace App\Models;
+#app/Models/Modules/Cms/CmsContent.php
+namespace App\Models\Modules\Cms;
 
-use App\Models\CmsContentDescription;
 use App\Models\Language;
+use App\Models\Modules\Cms\CmsContentDescription;
 use Illuminate\Database\Eloquent\Model;
 
 class CmsContent extends Model

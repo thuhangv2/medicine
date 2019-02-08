@@ -1,9 +1,9 @@
 <?php
-#app/Models/CmsCategory.php
-namespace App\Models;
+#app/Models/Modules/Cms/CmsCategory.php
+namespace App\Models\Modules\Cms;
 
-use App\Models\CmsCategoryDescription;
 use App\Models\Language;
+use App\Models\Modules\Cms\CmsCategoryDescription;
 use Illuminate\Database\Eloquent\Model;
 
 class CmsCategory extends Model

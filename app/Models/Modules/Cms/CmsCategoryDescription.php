@@ -1,6 +1,6 @@
 <?php
-#app/Models/CmsCategoryDescription.php
-namespace App\Models;
+#app/Models/Modules/Cms/CmsCategoryDescription.php
+namespace App\Models\Modules\Cms;
 
 use Illuminate\Database\Eloquent\Model;
 

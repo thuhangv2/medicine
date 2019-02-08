@@ -1,16 +1,16 @@
 <?php
-#app/Http/Admin/Controllers/CmsLayoutController.php
+#app/Http/Admin/Controllers/LayoutController.php
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\CmsLayout;
+use App\Models\Layout;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class CmsLayoutController extends Controller
+class LayoutController extends Controller
 {
     use HasResourceActions;
     const META   = 'meta';
@@ -129,7 +129,7 @@ class CmsLayoutController extends Controller
     {
         $arrDisplay  = $this->arrDisplay;
         $arrPosition = $this->arrPosition;
-        $grid        = new Grid(new CmsLayout);
+        $grid        = new Grid(new Layout);
 
         $grid->id('Id');
         $grid->name(trans('language.layout.name'));
@@ -176,7 +176,7 @@ class CmsLayoutController extends Controller
      */
     protected function detail($id)
     {
-        $show = new Show(CmsLayout::findOrFail($id));
+        $show = new Show(Layout::findOrFail($id));
         $show->id('Id');
         $show->name(trans('language.layout.name'));
         $show->position(trans('language.layout.position'));
@@ -195,8 +195,7 @@ class CmsLayoutController extends Controller
      */
     protected function form()
     {
-
-        $form = new Form(new CmsLayout);
+        $form = new Form(new Layout);
         $form->text('name', trans('language.layout.name'))->rules('required');
         $form->select('position', trans('language.layout.position'))->options($this->arrPosition)->rules('required');
         $form->listbox('page_display', trans('language.layout.page_display'))->options($this->arrDisplay);
