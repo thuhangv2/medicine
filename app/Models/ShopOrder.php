@@ -11,11 +11,11 @@ class ShopOrder extends Model
     protected $fillable = ['transaction', 'payment_method', 'status'];
     public function details()
     {
-        return $this->hasMany('App\Models\ShopOrderDetail', 'order_id', 'id');
+        return $this->hasMany(ShopOrderDetail::class, 'order_id', 'id');
     }
     public function orderTotal()
     {
-        return $this->hasMany('App\Models\ShopOrderTotal', 'order_id', 'id');
+        return $this->hasMany(ShopOrderTotal::class, 'order_id', 'id');
     }
 
     public function customer()
@@ -24,15 +24,15 @@ class ShopOrder extends Model
     }
     public function orderStatus()
     {
-        return $this->hasOne('App\Models\ShopOrderStatus', 'status', 'id');
+        return $this->hasOne(ShopOrderStatus::class, 'status', 'id');
     }
     public function paymentStatus()
     {
-        return $this->hasOne('App\Models\ShopPaymentStatus', 'payment_status', 'id');
+        return $this->hasOne(ShopPaymentStatus::class, 'payment_status', 'id');
     }
     public function history()
     {
-        return $this->hasMany('App\Models\ShopOrderHistory', 'order_id', 'id');
+        return $this->hasMany(ShopOrderHistory::class, 'order_id', 'id');
     }
     protected static function boot()
     {
@@ -66,9 +66,8 @@ class ShopOrder extends Model
         return self::where('id', $order_id)->update($arrFields);
     }
 //Scort
-    public function scopeSort($query, $column = null)
+    public function scopeSort($query)
     {
-        $column = $column ?? 'sort';
-        return $query->orderBy($column, 'asc')->orderBy('id', 'desc');
+        return $query->orderBy('id', 'desc');
     }
 }

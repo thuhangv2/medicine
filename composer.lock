@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0df8f263e3658e9532785c0c7241d82d",
+    "content-hash": "1ac0bd17af184c73234915c0be1d5510",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -842,6 +842,55 @@
                 "shoppingcart"
             ],
             "time": "2018-02-17T09:34:00+00:00"
+        },
+        {
+            "name": "gnugat/nomo-spaco",
+            "version": "v0.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gnugat/nomo-spaco.git",
+                "reference": "b4485a25ef76d42d0ac12b1b2f2844eafe92ad48"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gnugat/nomo-spaco/zipball/b4485a25ef76d42d0ac12b1b2f2844eafe92ad48",
+                "reference": "b4485a25ef76d42d0ac12b1b2f2844eafe92ad48",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "~2.0"
+            },
+            "bin": [
+                "bin/nomo-spaco"
+            ],
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "Gnugat\\NomoSpaco\\": "src/Gnugat/NomoSpaco"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Loïc Chardonnet",
+                    "email": "loic.chardonnet@gmail.com",
+                    "homepage": "http://gnugat.github.io",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Displays the declared fully qualified classnames of a project",
+            "keywords": [
+                "available",
+                "detect",
+                "fully qualified classname"
+            ],
+            "time": "2018-07-20T12:50:45+00:00"
         },
         {
             "name": "guzzlehttp/psr7",

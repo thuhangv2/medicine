@@ -11,7 +11,7 @@ class ShopImage extends Model
     protected $fillable = ['id', 'image', 'product_id', 'status'];
     public function product()
     {
-        return $this->belongsTo('App\Models\ShopProduct', 'product_id', 'id');
+        return $this->belongsTo(ShopProduct::class, 'product_id', 'id');
     }
 
     /**

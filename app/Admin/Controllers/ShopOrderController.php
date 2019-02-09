@@ -107,15 +107,6 @@ class ShopOrderController extends Controller
             $grid->email('Email')->display(function ($email) {
                 return empty($email) ? 'N/A' : '<div style="max-width:150px; overflow:auto;word-wrap: break-word;">' . $email . '</div>';
             });
-            // $grid->toname(trans('language.order.customer_name'))->expand(function () {
-            //     $html = '<br>';
-            //     $html .= '<span style="padding-left:20px;">' . trans('language.order.email.title') . ': ' . $this->email . '</span><br>';
-            //     $html .= '<span style="padding-left:20px;">' . trans('language.order.shipping_name') . ': ' . $this->toname . '</span><br>';
-            //     $html .= '<span style="padding-left:20px;">' . trans('language.order.shipping_address') . ': ' . $this->address1 . ' ' . $this->address2 . '</span><br>';
-            //     $html .= '<span style="padding-left:20px;">' . trans('language.order.shipping_phone') . ': ' . $this->phone . '</span><br>';
-            //     $html .= (!empty($this->comment)) ? '<span style="padding-left:20px;"><span style="color:red;font-weight:bold;">' . trans('language.order.note') . ':</span> ' . $this->comment : '';
-            //     return $html . "</span></span><br>";
-            // }, trans('language.order.shipping_address'));
             $grid->subtotal(trans('language.order.sub_total'))->display(function ($price) {
                 return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
             });
@@ -333,7 +324,15 @@ JS;
         if ($order === null) {
             return 'no data';
         }
-        $products = ShopProduct::getArrayProductName();
+        $products         = ShopProduct::getArrayProductName();
+        $paymentMethodTmp = \Helper::getExtensionsGroup('payment', $onlyActive = false);
+        foreach ($paymentMethodTmp as $key => $value) {
+            $paymentMethod[$key] = trans($value->detail);
+        }
+        $shippingMethodTmp = \Helper::getExtensionsGroup('shipping', $onlyActive = false);
+        foreach ($shippingMethodTmp as $key => $value) {
+            $shippingMethod[$key] = trans($value->detail);
+        }
         return view('admin.OrderEdit')->with(
             [
                 "order"           => $order,
@@ -345,6 +344,8 @@ JS;
                 "statusShipping2" => $this->statusShipping2,
                 'dataTotal'       => ShopOrderTotal::getTotal($id),
                 'attributesGroup' => ShopAttributeGroup::pluck('name', 'id')->all(),
+                'paymentMethod'   => $paymentMethod,
+                'shippingMethod'  => $shippingMethod,
             ])->render();
     }
 /**

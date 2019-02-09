@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\GeneralController as GeneralController;
 use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -27,27 +28,9 @@ class LoginController extends Controller
      *
      * @var string
      */
-    // protected $redirectTo = '/home';
     // protected $redirectTo = '/';
     protected function redirectTo()
     {
-        // try {
-        //     $uID              = empty(Auth::user()->id) ? 0 : Auth::user()->id;
-        //     $productsLastView = empty(\Cookie::get('productsLastView')) ? array() : json_decode(\Cookie::get('productsLastView'), true);
-        //     if (count($productsLastView)) {
-        //         foreach ($productsLastView as $key => $value) {
-        //             $checkLastView = DB::table('shop_product_recent_view')->where('user_id', $uID)->where('product_id', $key)->count();
-        //             if ($checkLastView) {
-        //                 DB::table('shop_product_recent_view')->where('user_id', $uID)->where('product_id', $key)->update(['created_at' => date('Y-m-d H:i:s', $value)]);
-        //             } else {
-        //                 DB::table('shop_product_recent_view')->insert(['user_id' => $uID, 'product_id' => $key, 'created_at' => date('Y-m-d H:i:s', $value)]);
-        //             }
-        //         }
-        //     }
-        // } catch (Exception $e) {
-        //     echo $e->getMessage();
-        // }
-
         return '/';
     }
     /**
@@ -66,6 +49,26 @@ class LoginController extends Controller
             'email'    => 'required|string|email',
             'password' => 'required|string',
         ]);
+    }
+    public function showLoginForm()
+    {
+        if (Auth::user()) {
+            return redirect()->route('home');
+        }
+        return view((new GeneralController)->theme . '.shop_login',
+            array(
+                'title' => trans('language.login'),
+            )
+        );
+    }
+
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        return $this->loggedOut($request) ?: redirect()->route('login');
     }
 
 }

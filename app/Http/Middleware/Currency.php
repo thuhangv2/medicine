@@ -18,11 +18,7 @@ class Currency
     public function handle($request, Closure $next)
     {
         $configsGlobal = \Helper::configsGlobal();
-        if (Session::has('currency')) {
-            ShopCurrency::setCode(session('currency'));
-        } else {
-            ShopCurrency::setCode($configsGlobal['currency']);
-        }
+        ShopCurrency::setCode(session('currency') ?? $configsGlobal['currency']);
         return $next($request);
     }
 }

@@ -108,7 +108,7 @@ class ShopProductController extends Controller
             $grid->tools(function ($tools) {
                 $tools->append('<div class="pull-right">
 <div class="btn-group pull-right" style="margin-right: 10px">
-    <a href="/' . config('admin.route.prefix') . '/process/productImport" class="btn btn-sm btn-success" title="New">
+    <a href="' . route('productImport') . '" class="btn btn-sm btn-success" title="New">
         <i class="fa fa-save"></i><span class="hidden-xs">&nbsp;&nbsp;&nbsp;' . trans('language.product.import_multi') . '</span>
     </a>
 </div>
@@ -242,11 +242,12 @@ class ShopProductController extends Controller
                           </table>';
                 }
                 $detail_name = trans('language.attribute.detail_name');
+                $remove      = trans('admin.remove');
                 $script      = <<<SCRIPT
 <script>
                 function morItem(id){
                         $("#no-item-"+id).remove();
-                    $("tr#addnew-"+id).before("<tr><td><span><span class=\"input-group\"><input  type=\"text\" name=\"group["+id+"][name][]\" value=\"\" class=\"form-control\" placeholder=\"$detail_name\"></span></span></td><td><button onclick=\"removeItemForm(this);\" class=\"btn btn-danger btn-xs\" data-title=\"Delete\" data-toggle=\"modal\"  data-placement=\"top\" rel=\"tooltip\" data-original-title=\"\" title=\"Remove item\"><span class=\"glyphicon glyphicon-remove\"></span>Xóa bỏ</button></td></tr>");
+                    $("tr#addnew-"+id).before("<tr><td><span><span class=\"input-group\"><input  type=\"text\" name=\"group["+id+"][name][]\" value=\"\" class=\"form-control\" placeholder=\"$detail_name\"></span></span></td><td><button onclick=\"removeItemForm(this);\" class=\"btn btn-danger btn-xs\" data-title=\"Delete\" data-toggle=\"modal\"  data-placement=\"top\" rel=\"tooltip\" data-original-title=\"\" title=\"Remove item\"><span class=\"glyphicon glyphicon-remove\"></span> $remove</button></td></tr>");
                     }
 
                     function removeItemForm(elmnt){

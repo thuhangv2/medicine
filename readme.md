@@ -3,7 +3,7 @@
 </p>
 <p align="center">Open source e-commerce for business use laravel framework</p>
 <p align="center">
-<a href="http://demo.s-cart.org">Demo</a> | <a href="https://s-cart.org">Home page</a> | <a href="https://s-cart.org/page/installation.html">Installation</a> | <a href="https://s-cart.org/guide.html">Document</a>
+<a href="http://demo.s-cart.org">Demo</a> | <a href="https://s-cart.org">Home page</a> | <a href="https://s-cart.org/installation.html">Installation</a> | <a href="https://s-cart.org/guide.html">Document</a>
 </p>
 <p align="center">
 <a href="https://packagist.org/packages/lanhktc/s-cart"><img src="https://poser.pugx.org/lanhktc/s-cart/d/total.svg" alt="Total Downloads"></a>
@@ -48,6 +48,7 @@ Free Open source E-commerce use Laravel framework for Business
 - Brand product
 - Api manager
 - Currencies
+- Modularization functions
 
 ======= SYSTEM MANAGEMENT =======
 

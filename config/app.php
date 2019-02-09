@@ -181,7 +181,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Scart\ScartServiceProvider::class,
-        App\Scart\Promocodes\PromocodesServiceProvider::class,
 
     ],
 
@@ -236,8 +235,8 @@ return [
         'Image'        => Intervention\Image\Facades\Image::class,
         'Excel'        => Maatwebsite\Excel\Facades\Excel::class,
         //scart
-        'Promocodes'   => App\Scart\Promocodes\Facades\Promocodes::class,
         'Helper'       => App\Scart\Helper::class,
+        'FindClass'    => App\Scart\FindClass::class,
     ],
 
     'debug_blacklist' => [
@@ -249,6 +248,9 @@ return [
             'MAIL_HOST',
             'MAIL_USERNAME',
             'MAIL_PASSWORD',
+            'PAYPAL_CLIENT_ID',
+            'PAYPAL_SECRET',
+            'PAYPAL_MODE',
         ],
 
         '_SERVER' => [
@@ -262,6 +264,10 @@ return [
             'DOCUMENT_ROOT',
             'CONTEXT_DOCUMENT_ROOT',
             'SCRIPT_FILENAME',
+            'PAYPAL_CLIENT_ID',
+            'PAYPAL_SECRET',
+            'PAYPAL_MODE',
+
         ],
         '_POST'   => [
             'password',
