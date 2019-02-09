@@ -1,4 +1,15 @@
 # Release Notes
+## v2.1.0 (2019-02-09)
+### Add
+> Support for integrated extension from 3rd party
+> Support for integrated modules from 3rd party
+### Optimize
+> Route
+> Controller
+### Fixed
+> Error prev versions
+
+
 ## v2.0.5.2 (2019-1-9)
 ## v2.0.5.1 (2019-1-1)
 ### Add
