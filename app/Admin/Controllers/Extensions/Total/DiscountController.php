@@ -2,8 +2,8 @@
 #app/Http/Admin/Controllers/Extensions/Total/DiscountController.php
 namespace App\Admin\Controllers\Extensions\Total;
 
+use App\Extensions\Total\Models\Discount as DiscountModel;
 use App\Http\Controllers\Controller;
-use App\Models\Extension\Total\Discount as DiscountModel;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;

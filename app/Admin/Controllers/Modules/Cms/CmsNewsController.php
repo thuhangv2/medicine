@@ -5,8 +5,8 @@ namespace App\Admin\Controllers\Modules\Cms;
 
 use App\Http\Controllers\Controller;
 use App\Models\Language;
-use App\Models\Modules\Cms\CmsNews;
-use App\Models\Modules\Cms\CmsNewsDescription;
+use App\Modules\Cms\Models\CmsNews;
+use App\Modules\Cms\Models\CmsNewsDescription;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
