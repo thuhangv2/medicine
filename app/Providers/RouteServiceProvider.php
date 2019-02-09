@@ -38,6 +38,8 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapApiRoutes();
 
         $this->mapWebRoutes();
+        $this->mapExtensionsRoutes();
+        $this->mapBottomRoutes();
 
         //
     }
@@ -51,7 +53,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-        Route::middleware('web')
+        Route::middleware(['web', 'localization', 'currency'])
             ->namespace($this->namespace)
             ->group(base_path('routes/web.php'));
     }
@@ -69,5 +71,27 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware('api')
             ->namespace($this->namespace)
             ->group(base_path('routes/api.php'));
+    }
+
+    protected function mapExtensionsRoutes()
+    {
+        Route::middleware(['web', 'localization', 'currency'])
+            ->group(function () {
+                foreach (glob(base_path() . '/routes/extension/web/*.php') as $filename) {
+                    require_once $filename;
+                }
+            });
+    }
+
+    protected function mapBottomRoutes()
+    {
+        Route::middleware(['web', 'localization', 'currency'])
+            ->namespace($this->namespace)
+            ->group(function () {
+                //--Please keep 2 lines route (pages + pageNotFound) at the bottom
+                Route::get('/{key}.html', 'ShopFront@pages')->name('pages');
+                Route::fallback('ShopFront@pageNotFound')->name('pageNotFound');
+                //--end keep
+            });
     }
 }

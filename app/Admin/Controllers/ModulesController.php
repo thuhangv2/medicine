@@ -20,9 +20,9 @@ class ModulesController extends Controller
     public function __construct()
     {
         $this->namespaceGroup = [
-            'Cms'   => '\App\Http\Controllers\Modules\Cms',
-            'Api'   => '\App\Http\Controllers\Modules\Api',
-            'Other' => '\App\Http\Controllers\Modules\Other',
+            'Cms'   => '\App\Modules\Cms\Controllers',
+            'Api'   => '\App\Modules\Api\Controllers',
+            'Other' => '\App\Modules\Other\Controllers',
         ];
 
     }

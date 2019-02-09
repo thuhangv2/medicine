@@ -19,7 +19,7 @@ class FindClass
     {
         $group      = ucfirst($group);
         $arrModules = [];
-        $path       = app_path() . '/Http/Controllers/' . $folder . '/' . $group;
+        $path       = app_path() . '/' . $folder . '/' . $group . '/Controllers';
         $modules    = self::start()->findIn($path);
         if ($modules) {
             foreach ($modules as $key => $module) {
@@ -34,7 +34,7 @@ class FindClass
     public static function findClassNames($folder, $group = null, $module = null)
     {
         $group = ucfirst($group);
-        $path  = app_path() . '/Http/Controllers/' . $folder . '/' . $group;
+        $path  = app_path() . '/' . $folder . '/' . $group . '/Controllers';
         if ($module) {
             return self::start()->findInFor($path, $module);
         } else {

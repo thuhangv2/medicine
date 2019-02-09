@@ -172,7 +172,7 @@
                 <li class="dropdown"><a href="#">{{ trans('language.cms_category') }}<i class="fa fa-angle-down"></i></a>
                     <ul role="menu" class="sub-menu">
                       @php
-                        $cmsCategories = (new \App\Models\Modules\Cms\CmsCategory)->where('status',1)->get();
+                        $cmsCategories = (new \App\Modules\Cms\Models\CmsCategory)->where('status',1)->get();
                       @endphp
                       @foreach ($cmsCategories as $cmsCategory)
                         <li><a href="{{ $cmsCategory->getUrl() }}">{{ $cmsCategory->title }}</a></li>

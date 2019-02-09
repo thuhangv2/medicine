@@ -20,11 +20,11 @@
 
               <tr>
                 <th width="40%">{{ trans('Extensions/Payment/Paypal.paypal_client_id') }}</th>
-                <td><a href="#" class="updateData" data-name="paypal_client_id" data-type="text" data-pk="{{ $data['id'] }}" data-url="{{ route('processExtension',['group'=>$group,'key'=>$key]) }}" data-title="{{ trans('Extensions/Payment/Paypal.paypal_client_id') }}">{{ $data['paypal_client_id'] }}</a></td>
+                <td><a href="#" class="updateData_can_empty" data-name="paypal_client_id" data-type="text" data-pk="{{ $data['id'] }}" data-url="{{ route('processExtension',['group'=>$group,'key'=>$key]) }}" data-value="{{ $data['paypal_client_id'] }}" data-title="{{ trans('Extensions/Payment/Paypal.paypal_client_id') }}"></a></td>
               </tr>
               <tr>
                 <th width="40%">{{ trans('Extensions/Payment/Paypal.paypal_secrect') }}</th>
-                <td><a href="#" class="updateData" data-name="paypal_secrect" data-type="password" data-pk="{{ $data['id'] }}" data-url="{{ route('processExtension',['group'=>$group,'key'=>$key]) }}" data-value="{{ $data['paypal_secrect'] }}" data-title="{{ trans('Extensions/Payment/Paypal.paypal_secrect') }}"></a></td>
+                <td><a href="#" class="updateData_can_empty" data-name="paypal_secrect" data-type="password" data-pk="{{ $data['id'] }}" data-url="{{ route('processExtension',['group'=>$group,'key'=>$key]) }}" data-value="{{ $data['paypal_secrect'] }}" data-title="{{ trans('Extensions/Payment/Paypal.paypal_secrect') }}"></a></td>
               </tr>
               <tr>
                 <th width="40%">{{ trans('Extensions/Payment/Paypal.paypal_path_log') }}</th>
@@ -75,6 +75,7 @@ $(document).ready(function() {
         }
     }
     });
+
     $('.updateData').editable({
     ajaxOptions: {
     type: 'put',
@@ -84,6 +85,13 @@ $(document).ready(function() {
         if (value == '') {
             return '{{  trans('language.admin.not_empty') }}';
         }
+    }
+    });
+
+    $('.updateData_can_empty').editable({
+    ajaxOptions: {
+    type: 'put',
+    dataType: 'json'
     }
     });
 });

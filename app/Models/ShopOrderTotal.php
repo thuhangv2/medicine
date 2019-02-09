@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Extension\Shipping as Shipping;
 use App\Models\ShopOrder;
 use Cart;
 use Illuminate\Database\Eloquent\Model;
@@ -95,7 +94,7 @@ class ShopOrderTotal extends Model
         $arrShipping    = [];
         $shippingMethod = session('shippingMethod') ?? '';
         if ($shippingMethod) {
-            $moduleClass          = '\App\Http\Controllers\Extensions\Shipping\\' . $shippingMethod;
+            $moduleClass          = '\App\Extensions\Shipping\Controllers\\' . $shippingMethod;
             $returnModuleShipping = (new $moduleClass)->getData();
             $arrShipping          = [
                 'title' => $returnModuleShipping['title'],
@@ -113,7 +112,7 @@ class ShopOrderTotal extends Model
         $arrPayment    = [];
         $paymentMethod = session('paymentMethod') ?? '';
         if ($paymentMethod) {
-            $moduleClass         = '\App\Http\Controllers\Extensions\Payment\\' . $paymentMethod;
+            $moduleClass         = '\App\Extensions\Payment\Controllers\\' . $paymentMethod;
             $returnModulePayment = (new $moduleClass)->getData();
             $arrPayment          = [
                 'title'  => $returnModulePayment['title'],
@@ -134,7 +133,7 @@ class ShopOrderTotal extends Model
             'sort'  => self::POSITION_DISCOUNT,
         );
         if (!empty(\Helper::configs()['Discount'])) {
-            $moduleClass          = '\App\Http\Controllers\Extensions\Total\Discount';
+            $moduleClass          = '\App\Extensions\Total\Controllers\Discount';
             $returnModuleDiscount = (new $moduleClass)->getData();
             $arrDiscount          = [
                 'title' => $returnModuleDiscount['title'],

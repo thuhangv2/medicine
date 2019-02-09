@@ -38,7 +38,7 @@ class ShopCart extends GeneralController
         $shippingMethod  = array();
         foreach ($moduleShipping as $key => $module) {
             if (in_array($module['key'], $sourcesShipping)) {
-                $moduleClass                    = '\App\Http\Controllers\Extensions\Shipping\\' . $module['key'];
+                $moduleClass                    = '\App\Extensions\Shipping\Controllers\\' . $module['key'];
                 $shippingMethod[$module['key']] = (new $moduleClass)->getData();
             }
         }
@@ -48,7 +48,7 @@ class ShopCart extends GeneralController
         $paymentMethod  = array();
         foreach ($modulePayment as $key => $module) {
             if (in_array($module['key'], $sourcesPayment)) {
-                $moduleClass                   = '\App\Http\Controllers\Extensions\Payment\\' . $module['key'];
+                $moduleClass                   = 'App\Extensions\Payment\Controllers\\' . $module['key'];
                 $paymentMethod[$module['key']] = (new $moduleClass)->getData();
             }
         }
@@ -58,7 +58,7 @@ class ShopCart extends GeneralController
         $totalMethod  = array();
         foreach ($moduleTotal as $key => $module) {
             if (in_array($module['key'], $sourcesTotal)) {
-                $moduleClass                 = '\App\Http\Controllers\Extensions\Total\\' . $module['key'];
+                $moduleClass                 = '\App\Extensions\Total\Controllers\\' . $module['key'];
                 $totalMethod[$module['key']] = (new $moduleClass)->getData();
             }
         }
@@ -173,9 +173,9 @@ class ShopCart extends GeneralController
         $payment             = session('paymentMethod');
         $shipping            = session('shippingMethod');
         $address             = session('shippingAddress');
-        $classShippingMethod = '\App\Http\Controllers\Extensions\Shipping\\' . $shipping;
+        $classShippingMethod = '\App\Extensions\Shipping\Controllers\\' . $shipping;
         $shippingMethod      = (new $classShippingMethod)->getData();
-        $classPaymentMethod  = '\App\Http\Controllers\Extensions\Payment\\' . $payment;
+        $classPaymentMethod  = '\App\Extensions\Payment\Controllers\\' . $payment;
         $paymentMethod       = (new $classPaymentMethod)->getData();
         $objects             = array();
         $objects[]           = (new ShopOrderTotal)->getShipping();
@@ -337,7 +337,7 @@ class ShopCart extends GeneralController
             $codeDiscount = session('Discount') ?? '';
             if ($codeDiscount) {
                 if (!empty(\Helper::configs()['Discount'])) {
-                    $moduleClass             = '\App\Http\Controllers\Extensions\Total\Discount';
+                    $moduleClass             = '\App\Extensions\Total\Controllers\Discount';
                     $uID                     = auth()->user()->id ?? 0;
                     $returnModuleDiscount    = (new $moduleClass)->apply($codeDiscount, $uID, $msg = 'Order #' . $orderId);
                     $arrReturnModuleDiscount = json_decode($returnModuleDiscount, true);
@@ -433,7 +433,9 @@ class ShopCart extends GeneralController
             //2. Instock or allow order out of stock
             //3. Date availabe
             if ($product->status != 0
-                && ($this->configs['product_preorder'] == 1 || $product->date_available == null || date('Y-m-d H:i:s') >= $product->date_available)
+                && ($this->configs['product_preorder'] == 1 ||
+                    $product->date_available == null ||
+                    date('Y-m-d H:i:s') >= $product->date_available)
                 && ($this->configs['product_buy_out_of_stock'] || $product->stock)) {
                 Cart::add(
                     array(
