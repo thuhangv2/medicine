@@ -8,6 +8,7 @@ class ShippingBasic extends \App\Http\Controllers\Controller
 {
     protected $configKey  = 'ShippingBasic';
     protected $configCode = 'Shipping';
+    protected $configType = 'Extensions';
     public $title;
     public $image;
     const ALLOW  = 1;
@@ -49,6 +50,7 @@ class ShippingBasic extends \App\Http\Controllers\Controller
                 [
                     'code'   => $this->configCode,
                     'key'    => $this->configKey,
+                    'type'   => $this->configType,
                     'sort'   => 0,
                     'value'  => self::ON, //Enable extension
                     'detail' => 'Extensions/' . $this->configCode . '/' . $this->configKey . '.title',

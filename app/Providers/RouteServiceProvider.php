@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Config;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -36,12 +37,9 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapApiRoutes();
-
-        $this->mapWebRoutes();
         $this->mapExtensionsApiRoutes();
         $this->mapExtensionsRoutes();
-        $this->mapBottomRoutes();
-
+        $this->mapWebRoutes();
         //
     }
 
@@ -78,8 +76,15 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::middleware(['web', 'localization', 'currency'])
             ->group(function () {
-                foreach (glob(base_path() . '/routes/extension/web/*.php') as $filename) {
-                    require_once $filename;
+                $arrExts = Config::where('value', 1)
+                    ->whereIn('type', ['Modules', 'Extensions'])
+                    ->get()
+                    ->toArray();
+                foreach ($arrExts as $arrExt) {
+                    $filename = base_path() . '/app/' . $arrExt['type'] . '/' . $arrExt['code'] . '/Route/' . $arrExt['key'] . '.php';
+                    if (file_exists($filename)) {
+                        require_once $filename;
+                    }
                 }
             });
     }
@@ -89,21 +94,13 @@ class RouteServiceProvider extends ServiceProvider
         Route::prefix('api')
             ->middleware('api')
             ->group(function () {
-                foreach (glob(base_path() . '/routes/extension/api/*.php') as $filename) {
-                    require_once $filename;
-                }
-            });
-    }
+                Route::group([
+                    'namespace' => 'App\Modules\Api',
+                ], function () {
+                    Route::get('/product', 'Product@index');
+                    Route::get('/order', 'Order@index');
+                });
 
-    protected function mapBottomRoutes()
-    {
-        Route::middleware(['web', 'localization', 'currency'])
-            ->namespace($this->namespace)
-            ->group(function () {
-                //--Please keep 2 lines route (pages + pageNotFound) at the bottom
-                Route::get('/{key}.html', 'ShopFront@pages')->name('pages');
-                Route::fallback('ShopFront@pageNotFound')->name('pageNotFound');
-                //--end keep
             });
     }
 }

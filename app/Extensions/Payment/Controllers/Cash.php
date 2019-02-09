@@ -8,6 +8,7 @@ class Cash extends \App\Http\Controllers\Controller
 {
     protected $configKey  = 'Cash';
     protected $configCode = 'Payment';
+    protected $configType = 'Extensions';
     public $title;
     public $image;
     const ALLOW  = 1;
@@ -47,6 +48,7 @@ class Cash extends \App\Http\Controllers\Controller
                 [
                     'code'   => $this->configCode,
                     'key'    => $this->configKey,
+                    'type'   => $this->configType,
                     'sort'   => 0, // Sort extensions in group
                     'value'  => self::ON, //1- Enable extension; 0 - Disable
                     'detail' => 'Extensions/' . $this->configCode . '/' . $this->configKey . '.title',

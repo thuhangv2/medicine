@@ -10,6 +10,7 @@ class Discount extends \App\Http\Controllers\Controller
 {
     protected $configKey  = 'Discount';
     protected $configCode = 'Total';
+    protected $configType = 'Extensions';
     public $title;
     public $image;
     const ALLOW  = 1;
@@ -79,6 +80,7 @@ class Discount extends \App\Http\Controllers\Controller
                 [
                     'code'   => $this->configCode,
                     'key'    => $this->configKey,
+                    'type'   => $this->configType,
                     'sort'   => 0,
                     'value'  => self::ON, //Enable extension
                     'detail' => 'Extensions/' . $this->configCode . '/' . $this->configKey . '.title',

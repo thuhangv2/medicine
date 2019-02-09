@@ -82,4 +82,9 @@ Route::get('/search.html', 'ShopFront@search')->name('search');
 Route::get('/contact.html', 'ShopFront@getContact')->name('contact');
 Route::post('/contact.html', 'ShopFront@postContact')->name('postContact');
 Route::post('/subscribe', 'ShopFront@emailSubscribe')->name('subscribe');
+//--Please keep 2 lines route (pages + pageNotFound) at the bottom
+Route::get('/{key}.html', 'ShopFront@pages')->name('pages');
+Route::fallback('ShopFront@pageNotFound')->name('pageNotFound');
+//--end keep
+
 //End Front

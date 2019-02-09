@@ -11,6 +11,7 @@ class News extends \App\Http\Controllers\GeneralController
 {
     protected $configKey  = 'News';
     protected $configCode = 'Cms';
+    protected $configType = 'Modules';
     public $title;
     const ON  = 1;
     const OFF = 0;
@@ -45,6 +46,7 @@ class News extends \App\Http\Controllers\GeneralController
                 [
                     'code'   => $this->configCode,
                     'key'    => $this->configKey,
+                    'type'   => $this->configType,
                     'value'  => self::ON, //1- Enable extension; 0 - Disable
                     'detail' => 'Modules/' . $this->configCode . '/' . $this->configKey . '.title',
                 ]
