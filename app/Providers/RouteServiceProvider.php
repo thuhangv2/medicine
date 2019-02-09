@@ -38,6 +38,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapApiRoutes();
 
         $this->mapWebRoutes();
+        $this->mapExtensionsApiRoutes();
         $this->mapExtensionsRoutes();
         $this->mapBottomRoutes();
 
@@ -78,6 +79,17 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware(['web', 'localization', 'currency'])
             ->group(function () {
                 foreach (glob(base_path() . '/routes/extension/web/*.php') as $filename) {
+                    require_once $filename;
+                }
+            });
+    }
+
+    protected function mapExtensionsApiRoutes()
+    {
+        Route::prefix('api')
+            ->middleware('api')
+            ->group(function () {
+                foreach (glob(base_path() . '/routes/extension/api/*.php') as $filename) {
                     require_once $filename;
                 }
             });

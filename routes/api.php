@@ -16,6 +16,3 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-foreach (glob(base_path() . '/routes/extension/api/*.php') as $filename) {
-    require_once $filename;
-}
