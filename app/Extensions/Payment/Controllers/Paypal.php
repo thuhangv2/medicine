@@ -13,9 +13,9 @@ use Illuminate\Http\Request;
 
 class Paypal extends \App\Http\Controllers\Controller
 {
-    protected $configKey  = 'Paypal';
-    protected $configCode = 'Payment';
     protected $configType = 'Extensions';
+    protected $configCode = 'Payment';
+    protected $configKey  = 'Paypal';
     public $title;
     public $image;
     const ALLOW  = 1;
@@ -26,8 +26,8 @@ class Paypal extends \App\Http\Controllers\Controller
 
     public function __construct()
     {
-        $this->title     = trans('Extensions/' . $this->configCode . '/' . $this->configKey . '.title');
-        $this->image     = 'images/Extensions/' . $this->configCode . '/' . $this->configKey . '.png';
+        $this->title     = trans($this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title');
+        $this->image     = 'images/' . $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.png';
         $this->paypalSvc = new PayPalSvc;
     }
 
@@ -61,7 +61,7 @@ class Paypal extends \App\Http\Controllers\Controller
                     'type'   => $this->configType,
                     'sort'   => 0, // Sort extensions in group
                     'value'  => self::ON, //1- Enable extension; 0 - Disable
-                    'detail' => 'Extensions/' . $this->configCode . '/' . $this->configKey . '.title',
+                    'detail' => $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title',
                 ]
             );
             if (!$process) {
@@ -104,7 +104,7 @@ class Paypal extends \App\Http\Controllers\Controller
 
     public function config()
     {
-        return view('admin.Extensions.' . $this->configCode . '.' . $this->configKey)->with(
+        return view('admin.' . $this->configType . '.' . $this->configCode . '.' . $this->configKey)->with(
             [
                 'group'           => $this->configCode,
                 'key'             => $this->configKey,

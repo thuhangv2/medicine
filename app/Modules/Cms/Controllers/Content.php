@@ -12,16 +12,17 @@ use Encore\Admin\Auth\Database\Menu;
 
 class Content extends \App\Http\Controllers\GeneralController
 {
-    protected $configKey  = 'Content';
-    protected $configCode = 'Cms';
     protected $configType = 'Modules';
+    protected $configCode = 'Cms';
+    protected $configKey  = 'Content';
+
     public $title;
     const ON  = 1;
     const OFF = 0;
     public function __construct()
     {
         parent::__construct();
-        $this->title = trans('Modules/' . $this->configCode . '/' . $this->configKey . '.title');
+        $this->title = trans($this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title');
 
     }
     public function getData()

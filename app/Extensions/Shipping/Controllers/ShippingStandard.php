@@ -7,9 +7,10 @@ use App\Models\Config;
 
 class ShippingStandard extends \App\Http\Controllers\Controller
 {
-    protected $configKey  = 'ShippingStandard';
-    protected $configCode = 'Shipping';
     protected $configType = 'Extensions';
+    protected $configCode = 'Shipping';
+    protected $configKey  = 'ShippingStandard';
+
     public $title;
     public $image;
     const ALLOW  = 1;
@@ -18,8 +19,8 @@ class ShippingStandard extends \App\Http\Controllers\Controller
     const OFF    = 0;
     public function __construct()
     {
-        $this->title = trans('Extensions/' . $this->configCode . '/' . $this->configKey . '.title');
-        $this->image = 'images/Extensions/' . $this->configCode . '/' . $this->configKey . '.png';
+        $this->title = trans($this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title');
+        $this->image = 'images/' . $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.png';
     }
 
     public function getData()
@@ -66,7 +67,7 @@ class ShippingStandard extends \App\Http\Controllers\Controller
                     'type'   => $this->configType,
                     'sort'   => 0, // Sort extensions in group
                     'value'  => self::ON, //1- Enable extension; 0 - Disable
-                    'detail' => 'Extensions/' . $this->configCode . '/' . $this->configKey . '.title',
+                    'detail' => $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title',
                 ]
             );
             if (!$process) {
@@ -109,7 +110,7 @@ class ShippingStandard extends \App\Http\Controllers\Controller
 
     public function config()
     {
-        return view('admin.Extensions.' . $this->configCode . '.' . $this->configKey)->with(
+        return view('admin.' . $this->configType . '.' . $this->configCode . '.' . $this->configKey)->with(
             [
                 'group' => $this->configCode,
                 'key'   => $this->configKey,

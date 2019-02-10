@@ -9,16 +9,17 @@ use Encore\Admin\Auth\Database\Menu;
 
 class News extends \App\Http\Controllers\GeneralController
 {
-    protected $configKey  = 'News';
-    protected $configCode = 'Cms';
     protected $configType = 'Modules';
+    protected $configCode = 'Cms';
+    protected $configKey  = 'News';
+
     public $title;
     const ON  = 1;
     const OFF = 0;
     public function __construct()
     {
         parent::__construct();
-        $this->title = trans('Modules/' . $this->configCode . '/' . $this->configKey . '.title');
+        $this->title = trans($this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title');
 
     }
     public function getData()

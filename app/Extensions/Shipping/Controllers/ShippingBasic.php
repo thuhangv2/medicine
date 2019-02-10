@@ -6,9 +6,10 @@ use App\Models\Config;
 
 class ShippingBasic extends \App\Http\Controllers\Controller
 {
-    protected $configKey  = 'ShippingBasic';
-    protected $configCode = 'Shipping';
     protected $configType = 'Extensions';
+    protected $configCode = 'Shipping';
+    protected $configKey  = 'ShippingBasic';
+
     public $title;
     public $image;
     const ALLOW  = 1;
@@ -17,9 +18,8 @@ class ShippingBasic extends \App\Http\Controllers\Controller
     const OFF    = 0;
     public function __construct()
     {
-        $this->title = trans('Extensions/' . $this->configCode . '/' . $this->configKey . '.title');
-        $this->image = 'images/Extensions/' . $this->configCode . '/' . $this->configKey . '.png';
-
+        $this->title = trans($this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title');
+        $this->image = 'images/' . $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.png';
     }
 
     public function getData()
@@ -53,7 +53,7 @@ class ShippingBasic extends \App\Http\Controllers\Controller
                     'type'   => $this->configType,
                     'sort'   => 0,
                     'value'  => self::ON, //Enable extension
-                    'detail' => 'Extensions/' . $this->configCode . '/' . $this->configKey . '.title',
+                    'detail' => $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title',
                 ]
             );
             if (!$process) {
