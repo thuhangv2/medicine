@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Banner extends Model
 {
-    public $table = 'cms_banner';
+    public $table = 'banner';
     /**
      * [getImage description]
      * @return [type] [description]
