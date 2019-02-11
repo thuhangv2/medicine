@@ -3,19 +3,21 @@
 </p>
 <p align="center">Open source e-commerce for business use laravel framework</p>
 <p align="center">
-<a href="http://demo.s-cart.org">Demo</a> | <a href="https://s-cart.org">Home page</a> | <a href="https://s-cart.org/page/installation.html">Installation</a> | <a href="https://s-cart.org/guide.html">Document</a>
+<a href="http://demo.s-cart.org">Demo</a> | <a href="https://s-cart.org">Home page</a> | <a href="https://s-cart.org/installation.html">Installation</a> | <a href="https://s-cart.org/guide.html">Document</a>
 </p>
 <p align="center">
 <a href="https://packagist.org/packages/lanhktc/s-cart"><img src="https://poser.pugx.org/lanhktc/s-cart/d/total.svg" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/lanhktc/s-cart"><img src="https://poser.pugx.org/lanhktc/s-cart/v/stable.svg" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/lanhktc/s-cart"><img src="https://poser.pugx.org/lanhktc/s-cart/license.svg" alt="License"></a>
 </p>
-<p align="center"><img src="https://s-cart.org/images/screen/v205/s-cart-1.jpg"></p>
-<p align="center"><img src="https://s-cart.org/images/screen/v205/product-detail.jpg"></p>
-<p align="center"><img src="https://s-cart.org/images/screen/v205/s-cart-2.jpg"></p>
-<p align="center"><img src="https://s-cart.org/images/screen/v205/s-cart-3.jpg"></p>
-<p align="center"><img src="https://s-cart.org/images/screen/v205/s-cart-4.jpg"></p>
-<p align="center"><img src="https://s-cart.org/images/screen/v205/s-cart-5.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v210/s-cart-1.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v210/product-detail.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v210/s-cart-2.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v210/s-cart-3.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v210/s-cart-4.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v210/s-cart-5.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v210/s-cart-6.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v210/s-cart-7.jpg"></p>
 
 
 
@@ -29,25 +31,17 @@ Free Open source E-commerce use Laravel framework for Business
 
 ## List Functions of S-cart
 
-======= CMS CONTENT =======
-
-- Manage blogs and news
-- Manage pages: contact, introduction ...
-- Multi-language
-
 ======= SHOPPING =======
 
+- Multi-language
+- Currencies
 - Customer sign up
 - Purchase history
 - Process cart
-- Discount
-- Shipping fee
-- Payment: paypal
 - Manage product: price sale, cost price, promotion price, quantity, multi images, attributes ..
 - Categories product
 - Brand product
 - Api manager
-- Currencies
 
 ======= SYSTEM MANAGEMENT =======
 
@@ -62,10 +56,23 @@ Free Open source E-commerce use Laravel framework for Business
 - Configure email SMTP
 - System configuration: turn off website, hide / show products
 
+======= EXTENSIONS =======
+
+- Shipping
+- Discount
+- Payment
+...Support for integrated extension from 3rd party
+
+======= MODULES =======
+
+- Blog/News
+- Cms content: content categories, entries
+...Support for integrated modules from 3rd party
+
 
 ## Requirements:
 
-Version 2.0.5, 2.0.4, 2.0.3, 2.0.2 & 1.6:
+Version 1.6 ~ 2.1.0:
 
 > Core laravel framework 5.6. Requirements::
 
@@ -101,10 +108,10 @@ Install last version S-cart
 composer create-project lanhktc/s-cart
 ```
 
-or, install a specific version of S-cart, ex 1.5.0
+or, install a specific version of S-cart, ex 2.1.0
 
 ```
-composer create-project lanhktc/s-cart your-project "1.5.0"
+composer create-project lanhktc/s-cart your-project "2.1.0"
 ```
 
 

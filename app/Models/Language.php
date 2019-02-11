@@ -10,6 +10,6 @@ class Language extends Model
     public $timestamps = false;
     public static function getLanguages()
     {
-        return self::where('status', 1)->get();
+        return self::where('status', 1)->get()->keyBy('id');
     }
 }

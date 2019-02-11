@@ -2,17 +2,22 @@
 
 namespace App\Models;
 
-use App\Models\Config;
 use App\Models\ShopOrder;
-use App\Models\ShopShipping;
 use Cart;
 use Illuminate\Database\Eloquent\Model;
-use Promocodes;
-use Session;
 
 class ShopOrderTotal extends Model
 {
-    public $table = 'shop_order_total';
+    public $table           = 'shop_order_total';
+    const POSITION_SUBTOTAL = 1;
+    const POSITION_SHIPPING = 10;
+    const POSITION_DISCOUNT = 20;
+    const POSITION_TOTAL    = 100;
+    const POSITION_RECEIVED = 200;
+    const NOT_YET_PAY       = 0;
+    const PART_PAY          = 1;
+    const PAID              = 2;
+    const NEED_REFUND       = 3;
 
 /**
  * [processDataTotal description]
@@ -22,33 +27,38 @@ class ShopOrderTotal extends Model
  */
     public static function processDataTotal(array $objects = [])
     {
-
         $subtotal = \Helper::currencySumCart(Cart::content());
         //You can't use Cart::subtotal(), becase when use currency, Cart::subtotal() may be not equal $subtotal
 
         //Set subtotal
         $arraySubtotal = [
-            'title' => 'Sub total',
+            'title' => trans('language.total.sub_total'),
             'code'  => 'subtotal',
             'value' => $subtotal,
             'text'  => \Helper::currencyOnlyRender($subtotal, \Helper::currencyCode()),
-            'sort'  => 1,
+            'sort'  => self::POSITION_SUBTOTAL,
         ];
+
         // set total
         $total = $subtotal;
         foreach ($objects as $key => $object) {
-            $objects[$key]['value'] = \Helper::currencyValue($object['value']);
-            $objects[$key]['text']  = \Helper::currencyRender($object['value']);
-            if ($object['code'] != 'received') {
-                $total += \Helper::currencyValue($object['value']);
+            if ($object) {
+                $objects[$key]['value'] = \Helper::currencyValue($object['value']);
+                $objects[$key]['text']  = \Helper::currencyRender($object['value']);
+                if ($object['code'] != 'received') {
+                    $total += \Helper::currencyValue($object['value']);
+                }
+            } else {
+                unset($objects[$key]);
             }
+
         }
         $arrayTotal = array(
-            'title' => 'Total',
+            'title' => trans('language.total.total'),
             'code'  => 'total',
             'value' => $total,
             'text'  => \Helper::currencyOnlyRender($total, \Helper::currencyCode()),
-            'sort'  => 100,
+            'sort'  => self::POSITION_TOTAL,
         );
 
         $objects[] = $arraySubtotal;
@@ -63,6 +73,149 @@ class ShopOrderTotal extends Model
         return $objects;
     }
 
+    /**
+     * Get sum value in order total
+     * @param  string $code      [description]
+     * @param  arra $dataTotal [description]
+     * @return int            [description]
+     */
+    public function sumValueTotal($code, $dataTotal)
+    {
+        $keys  = array_keys(array_column($dataTotal, 'code'), $code);
+        $value = 0;
+        foreach ($keys as $key => $object) {
+            $value += $dataTotal[$object]['value'];
+        }
+        return $value;
+    }
+
+    public function getShipping()
+    {
+        $arrShipping    = [];
+        $shippingMethod = session('shippingMethod') ?? '';
+        if ($shippingMethod) {
+            $moduleClass          = '\App\Extensions\Shipping\Controllers\\' . $shippingMethod;
+            $returnModuleShipping = (new $moduleClass)->getData();
+            $arrShipping          = [
+                'title' => $returnModuleShipping['title'],
+                'code'  => 'shipping',
+                'value' => $returnModuleShipping['value'],
+                'text'  => $returnModuleShipping['value'],
+                'sort'  => self::POSITION_SHIPPING,
+            ];
+        }
+        return $arrShipping;
+    }
+
+    public function getPayment()
+    {
+        $arrPayment    = [];
+        $paymentMethod = session('paymentMethod') ?? '';
+        if ($paymentMethod) {
+            $moduleClass         = '\App\Extensions\Payment\Controllers\\' . $paymentMethod;
+            $returnModulePayment = (new $moduleClass)->getData();
+            $arrPayment          = [
+                'title'  => $returnModulePayment['title'],
+                'method' => $paymentMethod,
+            ];
+        }
+        return $arrPayment;
+    }
+
+    public function getDiscount()
+    {
+        $arrDiscount = [];
+        $arrDiscount = array(
+            'title' => trans('language.total.discount'),
+            'code'  => 'discount',
+            'value' => 0,
+            'text'  => 0,
+            'sort'  => self::POSITION_DISCOUNT,
+        );
+        if (!empty(\Helper::configs()['Discount'])) {
+            $moduleClass          = '\App\Extensions\Total\Controllers\Discount';
+            $returnModuleDiscount = (new $moduleClass)->getData();
+            $arrDiscount          = [
+                'title' => $returnModuleDiscount['title'],
+                'code'  => 'discount',
+                'value' => $returnModuleDiscount['value'],
+                'text'  => $returnModuleDiscount['value'],
+                'sort'  => self::POSITION_DISCOUNT,
+            ];
+        }
+
+        return $arrDiscount;
+    }
+
+    public function getReceived()
+    {
+        return array(
+            'title' => trans('language.total.received'),
+            'code'  => 'received',
+            'value' => 0,
+            'text'  => 0,
+            'sort'  => self::POSITION_RECEIVED,
+        );
+    }
+
+/**
+ * Get item order total, then re-sort
+ * @param  [int] $order_id [description]
+ * @return [array]           [description]
+ */
+    public static function getTotal($order_id)
+    {
+        $objects = self::where('order_id', $order_id)->get()->toArray();
+        usort($objects, function ($a, $b) {
+            return $a['sort'] > $b['sort'];
+        });
+        return $objects;
+    }
+
+/**
+ * [updateSubTotal description]
+ * @param  [type] $order_id [description]
+ * @param  [type] $subtotal_value    [description]
+ * @return [type]           [description]
+ */
+    public static function updateSubTotal($order_id, $subtotal_value)
+    {
+
+        try {
+            $order           = ShopOrder::find($order_id);
+            $order->subtotal = $subtotal_value;
+            $total           = $subtotal_value + $order->discount + $order->shipping;
+            $balance         = $total + $order->received;
+            $payment_status  = 0;
+            if ($balance == $total) {
+                $payment_status = NOT_YET_PAY; //Not pay
+            } elseif ($balance < 0) {
+                $payment_status = NEED_REFUND; //Need refund
+            } elseif ($balance == 0) {
+                $payment_status = PAID; //Paid
+            } else {
+                $payment_status = PART_PAY; //Part pay
+            }
+            $order->payment_status = $payment_status;
+            $order->total          = $total;
+            $order->balance        = $balance;
+            $order->save();
+
+            //Update total
+            $updateTotal        = self::where('order_id', $order_id)->where('code', 'total')->first();
+            $updateTotal->value = $total;
+            $updateTotal->save();
+            //Update Subtotal
+            $updateSubTotal        = self::where('order_id', $order_id)->where('code', 'subtotal')->first();
+            $updateSubTotal->value = $subtotal_value;
+            $updateSubTotal->save();
+
+            return 1;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+
+    }
 /**
  * Insert item order total
  * @param  [type] $data     [description]
@@ -129,148 +282,4 @@ class ShopOrderTotal extends Model
 
         return $order_id;
     }
-
-    /**
-     * Get sum value in order total
-     * @param  string $code      [description]
-     * @param  arra $dataTotal [description]
-     * @return int            [description]
-     */
-    public function sumValueTotal($code, $dataTotal)
-    {
-        $keys  = array_keys(array_column($dataTotal, 'code'), $code);
-        $value = 0;
-        foreach ($keys as $key => $object) {
-            $value += $dataTotal[$object]['value'];
-        }
-        return $value;
-    }
-
-    public function getShipping()
-    {
-        $subtotal = Cart::subtotal();
-        $shipping = ShopShipping::find(1);
-        if ($subtotal >= $shipping->free || $shipping->status == 0) {
-            $arrShipping = [
-                'title' => 'Shipping',
-                'code'  => 'shipping',
-                'value' => 0,
-                'text'  => 0,
-                'sort'  => 10,
-            ];
-        } else {
-            $arrShipping = [
-                'title' => 'Shipping',
-                'code'  => 'shipping',
-                'value' => $shipping->value,
-                'text'  => $shipping->value,
-                'sort'  => 10,
-            ];
-        }
-        return $arrShipping;
-    }
-
-    public function getDiscount()
-    {
-        $configs          = Config::pluck('value', 'code')->all();
-        $couponAllowGuest = empty($configs['coupon_allow_guest']) ? false : true;
-        $coupon           = session('coupon');
-        $check            = json_decode(Promocodes::check($coupon, $uID = null, $couponAllowGuest), true);
-        if (empty($coupon) || $check['error'] == 1) {
-            $arrDiscount = array(
-                'title' => 'Discount',
-                'code'  => 'discount',
-                'value' => 0,
-                'text'  => 0,
-                'sort'  => 20,
-            );
-        } else {
-            $arrType = [
-                '0' => 'Cash',
-                '1' => 'Point',
-                '2' => '%',
-            ];
-            $subtotal    = Cart::subtotal();
-            $value       = ($check['content']['type'] == '2') ? floor($subtotal * $check['content']['reward'] / 100) : $check['content']['reward'];
-            $arrDiscount = array(
-                'title' => '<b>Code:</b> ' . $coupon . '',
-                'code'  => 'discount',
-                'value' => ($value > $subtotal) ? -$subtotal : -$value,
-                'text'  => ($value > $subtotal) ? -$subtotal : -$value,
-                'sort'  => 20,
-            );
-        }
-        return $arrDiscount;
-    }
-
-    public function getReceived()
-    {
-        return array(
-            'title' => 'Received',
-            'code'  => 'received',
-            'value' => 0,
-            'text'  => 0,
-            'sort'  => 200,
-        );
-    }
-
-/**
- * Get item order total, then re-sort
- * @param  [int] $order_id [description]
- * @return [array]           [description]
- */
-    public static function getTotal($order_id)
-    {
-        $objects = self::where('order_id', $order_id)->get()->toArray();
-        usort($objects, function ($a, $b) {
-            return $a['sort'] > $b['sort'];
-        });
-        return $objects;
-    }
-
-/**
- * [updateSubTotal description]
- * @param  [type] $order_id [description]
- * @param  [type] $subtotal_value    [description]
- * @return [type]           [description]
- */
-    public static function updateSubTotal($order_id, $subtotal_value)
-    {
-
-        try {
-            $order           = ShopOrder::find($order_id);
-            $order->subtotal = $subtotal_value;
-            $total           = $subtotal_value + $order->discount + $order->shipping;
-            $balance         = $total + $order->received;
-            $payment_status  = 0;
-            if ($balance == $total) {
-                $payment_status = 0; //Chưa thanh toán
-            } elseif ($balance < 0) {
-                $payment_status = 3; //Khách hàng còn dư tiền
-            } elseif ($balance == 0) {
-                $payment_status = 2; //Đã thanh toán xong
-            } else {
-                $payment_status = 1; //Đã thanh toán 1 phần
-            }
-            $order->payment_status = $payment_status;
-            $order->total          = $total;
-            $order->balance        = $balance;
-            $order->save();
-
-            //Update total
-            $updateTotal        = self::where('order_id', $order_id)->where('code', 'total')->first();
-            $updateTotal->value = $total;
-            $updateTotal->save();
-            //Update Subtotal
-            $updateSubTotal        = self::where('order_id', $order_id)->where('code', 'subtotal')->first();
-            $updateSubTotal->value = $subtotal_value;
-            $updateSubTotal->save();
-
-            return 1;
-        } catch (\Exception $e) {
-            return $e->getMessage();
-        }
-
-    }
-
 }

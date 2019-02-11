@@ -4,7 +4,6 @@ namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Config;
-use App\Models\ShopOrderStatus;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
@@ -31,46 +30,12 @@ class ConfigInfoController extends Controller
             $content->description(' ');
             $content->body($this->grid());
             $content->row(function (Row $row) {
-                $row->column(1 / 3, new Box(trans('language.admin.config_email'), $this->viewSMTPConfig()));
-                $row->column(1 / 3, new Box(trans('language.admin.config_display'), $this->viewDisplayConfig()));
-                $row->column(1 / 3, new Box(trans('language.admin.config_paypal'), $this->viewPaypalConfig()));
+                $row->column(1 / 2, new Box(trans('language.admin.config_email'), $this->viewSMTPConfig()));
+                $row->column(1 / 2, new Box(trans('language.admin.config_display'), $this->viewDisplayConfig()));
             });
 
         });
     }
-
-    /**
-     * Edit interface.
-     *
-     * @param $id
-     * @return Content
-     */
-    // public function edit($id)
-    // {
-    //     return Admin::content(function (Content $content) use ($id) {
-
-    //         $content->header('header');
-    //         $content->description('description');
-
-    //         $content->body($this->form()->edit($id));
-    //     });
-    // }
-
-    /**
-     * Create interface.
-     *
-     * @return Content
-     */
-    // public function create()
-    // {
-    //     return Admin::content(function (Content $content) {
-
-    //         $content->header('header');
-    //         $content->description('description');
-
-    //         $content->body($this->form());
-    //     });
-    // }
 
     /**
      * Make a grid builder.
@@ -137,66 +102,14 @@ class ConfigInfoController extends Controller
 
     }
 
-    public function viewPaypalConfig()
-    {
-        $paypal = Config::where('code', 'payment_paypal')->orderBy('sort', 'desc')->get();
-        if ($paypal === null) {
-            return trans('language.no_data');
-        }
-        $fields = [];
-        foreach ($paypal as $key => $field) {
-            $data['title']    = $field->detail;
-            $data['field']    = $field->key;
-            $data['key']      = $field->key;
-            $data['value']    = $field->value;
-            $data['disabled'] = 0;
-            $data['required'] = 0;
-            if ($field->key == 'paypal_mode') {
-                $data['type']   = 'select';
-                $data['source'] = json_encode(
-                    array(
-                        ['value' => 'sandbox', 'text' => 'sandbox'],
-                        ['value' => 'live', 'text' => 'live'],
-                    )
-                );
-            } elseif ($field->key == 'paypal_status' || $field->key == 'paypal_log') {
-                $data['type']   = 'select';
-                $data['source'] = json_encode(
-                    array(
-                        ['value' => '0', 'text' => 'OFF'],
-                        ['value' => '1', 'text' => 'ON'],
-                    )
-                );
-            } elseif ($field->key == 'paypal_order_status_success') {
-                $data['type']   = 'select';
-                $data['source'] = json_encode(
-                    ShopOrderStatus::mapValue()
-                );
-            } elseif ($field->key == 'paypal_order_status_faild') {
-                $data['type']   = 'select';
-                $data['source'] = json_encode(
-                    ShopOrderStatus::mapValue()
-                );
-            } else {
-                $data['type']   = 'text';
-                $data['source'] = '';
-            }
-            $data['url'] = route('updateConfigField');
-            $fields[]    = $data;
-        }
-        return view('admin.CustomEdit')->with([
-            "datas" => $fields,
-        ])->render();
-    }
-
     public function viewSMTPConfig()
     {
-        $paypal = Config::where('code', 'smtp')->orderBy('sort', 'desc')->get();
-        if ($paypal === null) {
+        $configs = Config::where('code', 'smtp')->orderBy('sort', 'desc')->get();
+        if ($configs === null) {
             return trans('language.no_data');
         }
         $fields = [];
-        foreach ($paypal as $key => $field) {
+        foreach ($configs as $key => $field) {
             $data['title']    = $field->detail;
             $data['field']    = $field->key;
             $data['key']      = $field->key;
@@ -234,12 +147,12 @@ class ConfigInfoController extends Controller
 
     public function viewDisplayConfig()
     {
-        $paypal = Config::where('code', 'display')->orderBy('sort', 'desc')->get();
-        if ($paypal === null) {
+        $configs = Config::where('code', 'display')->orderBy('sort', 'desc')->get();
+        if ($configs === null) {
             return trans('language.no_data');
         }
         $fields = [];
-        foreach ($paypal as $key => $field) {
+        foreach ($configs as $key => $field) {
             $data['title']    = $field->detail;
             $data['field']    = $field->key;
             $data['key']      = $field->key;

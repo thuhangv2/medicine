@@ -55,7 +55,7 @@
             <table  class="table table-bordered">
                 <tr><td  class="td-title">{{ trans('language.order.order_status') }}:</td><td><a href="#" class="updateStatus" data-name="status" data-type="select" data-source ="{{ json_encode($statusOrder2) }}"  data-pk="{{ $order->id }}" data-value="{{ $order->status }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.order_status') }}">{{ $statusOrder[$order->status] }}</a></td></tr>
                 <tr><td>{{ trans('language.order.order_shipping_status') }}:</td><td><a href="#" class="updateStatus" data-name="shipping_status" data-type="select" data-source ="{{ json_encode($statusShipping2) }}"  data-pk="{{ $order->id }}" data-value="{{ $order->shipping_status }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.order_shipping_status') }}">{{ $statusShipping[$order->shipping_status] }}</a></td></tr>
-                <tr><td>{{ trans('language.order.payment_method') }}:</td><td><a href="#" class="updateStatus" data-name="payment_method" data-type="select" data-source ="{{ json_encode(['cash'=>'Cash','paypal'=>'Paypal']) }}"  data-pk="{{ $order->id }}" data-value="{{ $order->payment_method }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.payment_method') }}">{{ $order->payment_method }}</a></td></tr>
+                <tr><td>{{ trans('language.order.payment_method') }}:</td><td><a href="#" class="updateStatus" data-name="payment_method" data-type="select" data-source ="{{ json_encode($paymentMethod) }}"  data-pk="{{ $order->id }}" data-value="{{ $order->payment_method }}" data-url="{{ route("order_update") }}" data-title="{{ trans('language.order.payment_method') }}">{{ $order->payment_method }}</a></td></tr>
               </table>
              <table class="table box table-bordered">
                 <tr>
@@ -128,7 +128,7 @@
         </div>
 
     <div class="margin10" id="add-item">
-        <button  type="button" class="btn btn-sm btn-success" id="add-item-button"  title="{ trans('language.product.add_product') }}"><i class="fa fa-plus"></i> {{ trans('language.product.add_product') }}</button>
+        <button  type="button" class="btn btn-sm btn-success" id="add-item-button"  title="{{trans('language.product.add_product') }}"><i class="fa fa-plus"></i> {{ trans('language.product.add_product') }}</button>
     </div>
 
 
@@ -437,9 +437,6 @@ $('#add-item-button').click(function() {
                 success: function(result){
                     if(parseInt(result.error) ==0){
                         location.reload();
-                        // $('#addItem-form').remove();
-                        // var html = '{!! $selectProduct !!}';
-                        // $(this).before(html);
                     }else{
                         alert(result.msg);
                     }

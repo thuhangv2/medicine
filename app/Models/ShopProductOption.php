@@ -11,7 +11,7 @@ class ShopProductOption extends Model
     public $timestamps  = false;
     public function product()
     {
-        return $this->belongsTo('App\Models\ShopProduct', 'product_id', 'id');
+        return $this->belongsTo(ShopProduct::class, 'product_id', 'id');
     }
 
 }

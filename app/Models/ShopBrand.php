@@ -12,7 +12,7 @@ class ShopBrand extends Model
 
     public function products()
     {
-        return $this->hasMany('App\Models\ShopProduct', 'brand_id', 'id');
+        return $this->hasMany(ShopProduct::class, 'brand_id', 'id');
     }
     public static function getBrands()
     {
@@ -25,7 +25,7 @@ class ShopBrand extends Model
      */
     public function getUrl()
     {
-        return url('brand/' . Helper::strToUrl($this->name) . '_' . $this->id . '.html');
+        return route('brand', ['name' => Helper::strToUrl($this->name), 'id' => $this->id]);
     }
 
     /**

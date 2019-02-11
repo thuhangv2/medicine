@@ -12,7 +12,7 @@ class ShopVendor extends Model
 
     public function products()
     {
-        return $this->hasMany('App\Models\ShopProduct', 'vendor_id', 'id');
+        return $this->hasMany(ShopProduct::class, 'vendor_id', 'id');
     }
     public static function getVendor()
     {
