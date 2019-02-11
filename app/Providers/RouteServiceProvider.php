@@ -76,16 +76,21 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::middleware(['web', 'localization', 'currency'])
             ->group(function () {
-                $arrExts = Config::where('value', 1)
-                    ->whereIn('type', ['Modules', 'Extensions'])
-                    ->get()
-                    ->toArray();
-                foreach ($arrExts as $arrExt) {
-                    $filename = base_path() . '/app/' . $arrExt['type'] . '/' . $arrExt['code'] . '/Route/' . $arrExt['key'] . '.php';
-                    if (file_exists($filename)) {
-                        require_once $filename;
+                try {
+                    $arrExts = Config::where('value', 1)
+                        ->whereIn('type', ['Modules', 'Extensions'])
+                        ->get()
+                        ->toArray();
+                    foreach ($arrExts as $arrExt) {
+                        $filename = base_path() . '/app/' . $arrExt['type'] . '/' . $arrExt['code'] . '/Route/' . $arrExt['key'] . '.php';
+                        if (file_exists($filename)) {
+                            require_once $filename;
+                        }
                     }
+                } catch (\Exception $e) {
+
                 }
+
             });
     }
 
