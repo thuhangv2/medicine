@@ -70,7 +70,7 @@ class LayoutController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->row('<span style="font-size:15px;font-style: italic;">(' . trans('language.api.guide') . ')</span><br>')
+            ->row('<span style="font-size:15px;font-style: italic;">(' . trans('language.api.layout') . ')</span><br>')
             ->header(trans('language.layout.manager'))
             ->description(' ')
             ->body($this->grid());
