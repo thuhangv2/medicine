@@ -96,7 +96,8 @@ $('#submit-install').click(function(event) {
         }
         else if(error ===0)
         {
-            generateKey();
+            $('#msg').html(data.msg);
+            setTimeout('generateKey()', 2000);
         }else{
             $('#msg').html(data.msg);
         }
@@ -112,6 +113,7 @@ $('#submit-install').click(function(event) {
 });
 
 function generateKey(){
+
     $.ajax({
         url: 'install.php',
         type: 'POST',
@@ -119,13 +121,14 @@ function generateKey(){
         data: {step: 'step2'},
     })
     .done(function(data) {
-        error= parseInt(data.error);
+        error = parseInt(data.error);
         if(error != 1 && error !=0){
             $('#msg').html(data);
         }
         else if(error ===0)
         {
-            installDatabase();
+            $('#msg').html(data.msg);
+            setTimeout('installDatabase()', 2000);
         }else{
             $('#msg').html(data.msg);
         }
@@ -151,9 +154,10 @@ function installDatabase(){
         if(error != 1 && error !=0){
             $('#msg').html(data);
         }
-        else if(error ===0)
+        else if(error === 0)
         {
-            setPermission();
+            $('#msg').html(data.msg);
+            setTimeout('setPermission()', 2000);
         }else{
             $('#msg').html(data.msg);
         }
@@ -181,7 +185,7 @@ function setPermission(){
         }
         else if(error ===0)
         {
-            ('#msg').html("Done!!!!");
+            window.location.replace("/");
         }else{
             $('#msg').html(data.msg);
         }
