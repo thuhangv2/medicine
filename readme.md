@@ -72,7 +72,7 @@ Free Open source E-commerce use Laravel framework for Business
 
 ## Requirements:
 
-Version 1.6 ~ 2.1.1:
+Version 1.6 ~ 2.1.x:
 
 > Core laravel framework 5.6. Requirements::
 
@@ -86,18 +86,7 @@ Version 1.6 ~ 2.1.1:
 - Ctype PHP Extension
 - JSON PHP Extension
 ```
-Version 1.5:
 
-> Core laravel framework 5.5. Requirements:
-
-```
-- PHP >= 7.0.0
-- OpenSSL PHP Extension
-- PDO PHP Extension
-- Mbstring PHP Extension
-- Tokenizer PHP Extension
-- XML PHP Extension
-```
 
 
 ## Installation & configuration:
