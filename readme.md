@@ -102,9 +102,6 @@ Version 1.5:
 
 ## Installation & configuration:
 
-- From version 2.1.1, you can install s-cart by link: <code>your-domain.com/install.php</code>
-
-
 
 Install last version S-cart
 
@@ -120,7 +117,11 @@ composer create-project lanhktc/s-cart your-project "2.1.0"
 
 
 - Chmod -R 777 public/documents/website
+- Chmod -R 777 storage
+- Chmod -R 777 vendor
 - Folder thumbnail: public/documents/website/thumb.
+
+=> From version 2.1.1, you can install s-cart by link: <code>your-domain.com/install.php</code>
 
 ```
 - Create a new database. Then, import file sql database/s-cart.sql.
