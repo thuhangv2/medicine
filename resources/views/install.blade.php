@@ -30,7 +30,7 @@
                 <h1>{{ $title }}</h1>
             </div>
             <div class="panel-body" >
-                    <form  class="form-horizontal" id="formInstall" method="post">
+                    <form  class="form-horizontal" id="formInstall">
                         <div id="div_database_host" class="form-group required">
                             <label for="database_host"  required class="control-label col-md-4  requiredField"> {{ trans('language.install.database_host') }}<span class="asteriskField">*</span> </label>
                             <div class="controls col-md-8 ">
@@ -83,7 +83,7 @@
                         <div class="form-group">
                             <div class="controls col-md-4 "></div>
                             <div class="controls col-md-8 ">
-                                <input type="submit"  value="{{ trans('language.install.installing') }}" class="btn btn-primary btn btn-info" id="submit-install" />
+                                <input type="button"  value="{{ trans('language.install.installing') }}" class="btn btn-primary btn btn-info" id="submit-install" />
                             </div>
                         </div>
                 </form>
