@@ -13,10 +13,11 @@
             #msg{
                 text-align: center;
             }
-            #msg.error{
+            .error{
                 color: #ff0000;
+                font-weight: normal;
             }
-            #msg.success{
+            .success{
                 color: #418802;
             }
         </style>
@@ -29,7 +30,7 @@
                 <h1>{{ $title }}</h1>
             </div>
             <div class="panel-body" >
-                    <form  class="form-horizontal" id="formInstall">
+                    <form  class="form-horizontal" id="formInstall" method="post">
                         <div id="div_database_host" class="form-group required">
                             <label for="database_host"  required class="control-label col-md-4  requiredField"> {{ trans('language.install.database_host') }}<span class="asteriskField">*</span> </label>
                             <div class="controls col-md-8 ">
@@ -82,7 +83,7 @@
                         <div class="form-group">
                             <div class="controls col-md-4 "></div>
                             <div class="controls col-md-8 ">
-                                <input type="button"  value="{{ trans('language.install.installing') }}" class="btn btn-primary btn btn-info" id="submit-install" />
+                                <input type="submit"  value="{{ trans('language.install.installing') }}" class="btn btn-primary btn btn-info" id="submit-install" />
                             </div>
                         </div>
                 </form>
@@ -94,50 +95,52 @@
 
 <script type="text/javascript">
 $('#submit-install').click(function(event) {
-    $(this).button('loading');
-    $('#msg').removeClass('error');
-    $('#msg').removeClass('success');
-    $('#msg').html('{{ trans('language.install.env.process') }}');
-    $.ajax({
-        url: 'install.php',
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            database_host:$('#database_host').val(),
-            database_port:$('#database_port').val(),
-            database_name:$('#database_name').val(),
-            database_user:$('#database_user').val(),
-            admin_url:$('#admin_url').val(),
-            database_password:$('#database_password').val(),
-            step:'step1',
-        },
-    })
-    .done(function(data) {
-        setTimeout('', 4000);
-        error= parseInt(data.error);
-        if(error != 1 && error !=0){
-            $('#msg').removeClass('success');
-            $('#msg').addClass('error');
-            $('#msg').html(data);
-        }
-        else if(error ===0)
-        {
-            $('#msg').addClass('success');
-            $('#msg').html(data.msg);
-            setTimeout('generateKey()', 4000);
-        }else{
-            $('#msg').removeClass('success');
-            $('#msg').addClass('error');
-            $('#msg').html(data.msg);
-        }
-    })
-    .fail(function() {
+    validateForm();
+    if($("#formInstall").valid()){
+        $(this).button('loading');
+        $('#msg').removeClass('error');
         $('#msg').removeClass('success');
-        $('#msg').addClass('error');
-        $('#msg').html('{{ trans('language.install.env.error') }}');
-        // $(this).button('reset');
-    })
-
+            $('#msg').html('{{ trans('language.install.env.process') }}');
+            $.ajax({
+                url: 'install.php',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    database_host:$('#database_host').val(),
+                    database_port:$('#database_port').val(),
+                    database_name:$('#database_name').val(),
+                    database_user:$('#database_user').val(),
+                    admin_url:$('#admin_url').val(),
+                    database_password:$('#database_password').val(),
+                    step:'step1',
+                },
+            })
+            .done(function(data) {
+                setTimeout('', 4000);
+                error= parseInt(data.error);
+                if(error != 1 && error !=0){
+                    $('#msg').removeClass('success');
+                    $('#msg').addClass('error');
+                    $('#msg').html(data);
+                }
+                else if(error ===0)
+                {
+                    $('#msg').addClass('success');
+                    $('#msg').html(data.msg);
+                    setTimeout('generateKey()', 4000);
+                }else{
+                    $('#msg').removeClass('success');
+                    $('#msg').addClass('error');
+                    $('#msg').html(data.msg);
+                }
+            })
+            .fail(function() {
+                $('#msg').removeClass('success');
+                $('#msg').addClass('error');
+                $('#msg').html('{{ trans('language.install.env.error') }}');
+                // $(this).button('reset');
+            })
+    }
 });
 
 function generateKey(){
@@ -248,6 +251,47 @@ function setPermission(){
         $('#msg').addClass('error');
         $('#msg').html('{{ trans('language.install.permission.error') }}');
     })
+}
+
+function validateForm(){
+        $("#formInstall").validate({
+        rules: {
+            "database_host": {
+                required: true,
+            },
+            "database_port": {
+                required: true,
+                number:true,
+            },
+            "admin_url": {
+                required: true,
+            },
+            "database_name": {
+                required: true,
+            },
+            "database_user": {
+                required: true,
+            },
+        },
+        messages: {
+            "database_host": {
+                required: "{{ trans('language.install.validate.database_host_required') }}",
+            },
+            "database_port": {
+                required: "{{ trans('language.install.validate.database_port_required') }}",
+                number: "{{ trans('language.install.validate.database_port_number') }}",
+            },
+            "admin_url": {
+                required: "{{ trans('language.install.validate.admin_url_required') }}",
+            },
+            "database_name": {
+                required: "{{ trans('language.install.validate.database_name_required') }}",
+            },
+            "database_user": {
+                required: "{{ trans('language.install.validate.database_user_required') }}",
+            }
+        }
+    }).valid();
 }
 
 </script>
