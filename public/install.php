@@ -1,21 +1,27 @@
 <?php
-// if (!is_file('../.env')) {
+/**
+ * This file auto install s-cart, using for S-cart version 2.1.1
+ * @author Naruto <lanhktc@gmail.com>
+ */
+
 require __DIR__ . '/../vendor/autoload.php';
 $app      = require_once __DIR__ . '/../bootstrap/app.php';
 $kernel   = $app->make(Illuminate\Contracts\Http\Kernel::class);
 $response = $kernel->handle(
     $request = Illuminate\Http\Request::capture()
 );
-if (request()->method() === 'POST') {
+if (request()->method() == 'POST' && request()->ajax()) {
+
     $step = request('step');
     switch ($step) {
         case 'step1':
-            $domain            = request()->getHost();
+            $domain            = request()->getSchemeAndHttpHost();
             $database_host     = request('database_host') ?? '127.0.0.1';
             $database_port     = request('database_port') ?? '3306';
             $database_name     = request('database_name') ?? '';
             $database_user     = request('database_user') ?? '';
             $database_password = request('database_password') ?? '';
+            $admin_url         = request('admin_url') ?? '';
             try {
                 $getEnv = file_get_contents(base_path() . '/.env.example');
                 $getEnv = str_replace('your_domain', $domain, $getEnv);
@@ -24,10 +30,13 @@ if (request()->method() === 'POST') {
                 $getEnv = str_replace('database_name', $database_name, $getEnv);
                 $getEnv = str_replace('database_user', $database_user, $getEnv);
                 $getEnv = str_replace('database_password', $database_password, $getEnv);
-                $env    = fopen(base_path() . "/.env", "w") or die("Unable to open file!");
+                if ($admin_url) {
+                    $getEnv = str_replace('system_admin', $admin_url, $getEnv);
+                }
+                $env = fopen(base_path() . "/.env", "w") or die(json_encode(['error' => 1, 'msg' => trans('language.install.env.error_open')]));
                 fwrite($env, $getEnv);
                 fclose($env);
-                echo json_encode(['error' => 0, 'msg' => 'file Ok']);
+                echo json_encode(['error' => 0, 'msg' => trans('language.install.env.process_sucess')]);
                 exit();
             } catch (\Exception $e) {
                 echo json_encode(['error' => 1, 'msg' => $e->getMessage()]);
@@ -38,38 +47,39 @@ if (request()->method() === 'POST') {
         case 'step2':
             try {
                 shell_exec('php ' . base_path() . '/artisan key:generate');
-                echo json_encode(['error' => 0, 'msg' => 'Key ok']);
-                exit();
+                echo json_encode(['error' => 0, 'msg' => trans('language.install.key.process_sucess')]);
             } catch (\Exception $e) {
                 echo json_encode(['error' => 1, 'msg' => $e->getMessage()]);
-                exit();
             }
 
             break;
 
-        case 'tep3':
+        case 'step3':
+
             $file = base_path() . '/database/s-cart.sql';
             if (!file_exists($file)) {
-                echo json_encode(['error' => 1, 'msg' => 'File .sql not found!']);
-                exit();
+                echo json_encode(['error' => 1, 'msg' => trans('language.install.database.file_notfound')]);
             } else {
                 try {
                     DB::unprepared(file_get_contents($file));
-                    echo json_encode(['error' => 0, 'msg' => 'Database OK']);
-                    exit();
+                    echo json_encode(['error' => 0, 'msg' => trans('language.install.database.process_sucess')]);
                 } catch (\Exception $e) {
-                    echo json_encode(['error' => 1, 'msg' => $e->getMessage()]);
-                    exit();
-
+                    echo json_encode(['error' => 1, 'msg' => explode("\n", $e->getMessage())[0]]);
                 }
             }
 
             break;
 
-        case 'tep4':
+        case 'step4':
             try {
                 foldes_permissions();
-                echo json_encode(['error' => 0, 'msg' => 'Set permisson OK']);
+                try {
+                    rename(base_path() . '/public/install.php', base_path() . '/public/install_' . md5(time()) . '.php');
+                } catch (\Exception $e) {
+                    echo json_encode(['error' => 1, 'msg' => trans('language.install.rename_error')]);
+                    exit();
+                }
+                echo json_encode(['error' => 0, 'msg' => trans('language.install.permission.process_sucess')]);
                 exit();
             } catch (\Exception $e) {
                 echo json_encode(['error' => 1, 'msg' => $e->getMessage()]);
@@ -84,12 +94,10 @@ if (request()->method() === 'POST') {
     }
 } else {
     echo view('install', array(
-        'title' => trans('language.cart_title'))
+        'title' => trans('language.install.title'))
     );
     exit();
 }
-
-// }
 
 function foldes_permissions()
 {

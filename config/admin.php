@@ -48,7 +48,7 @@ return [
      */
     'route'                     => [
 
-        'prefix'     => 'system_admin',
+        'prefix'     => env('ADMIN_URL', 'system_admin'),
 
         'namespace'  => 'App\\Admin\\Controllers',
 
