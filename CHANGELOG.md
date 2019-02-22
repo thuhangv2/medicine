@@ -1,13 +1,7 @@
 # Release Notes
-## v2.1.0 (2019-02-09)
+## v2.1.1 (2019-02-22)
 ### Add
-> Support for integrated extension from 3rd party
-> Support for integrated modules from 3rd party
-### Optimize
-> Route
-> Controller
-### Fixed
-> Error prev versions
+> Auto install s-cart by link your-domain/install.php
 
 
 ## v2.0.5.2 (2019-1-9)

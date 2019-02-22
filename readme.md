@@ -72,7 +72,7 @@ Free Open source E-commerce use Laravel framework for Business
 
 ## Requirements:
 
-Version 1.6 ~ 2.1.0:
+Version 1.6 ~ 2.1.1:
 
 > Core laravel framework 5.6. Requirements::
 
@@ -101,6 +101,10 @@ Version 1.5:
 
 
 ## Installation & configuration:
+
+- From version 2.1.1, you can install s-cart by link: <code>your-domain.com/install.php</code>
+
+
 
 Install last version S-cart
 
