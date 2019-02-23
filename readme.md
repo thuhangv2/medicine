@@ -111,19 +111,26 @@ Step4:
 
 => From version 2.1.1, you can install s-cart by link: <code><b>your-domain.com/install.php</b></code>
 
+The first, rename file public/install.scart to public/install.php
+Then, access <code><b>your-domain.com/install.php</b></code> to install S-cart
+
 OR:
 ```
 - Import file sql database/s-cart.sql to database.
 - Config value of file .env:
-APP_URL=http://localhost
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=s-cart
-DB_USERNAME=root
-DB_PASSWORD=
+    APP_URL=http://localhost
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=s-cart
+    DB_USERNAME=root
+    DB_PASSWORD=
 ```
 
 Step5:
+
+Please remove or rename file public/install.php so others cannot access it.
+
+Step6:
 - Access to url admin: your-domain/system_admin.
 - User/pass <code><b>admin</b>/<b>admin</b></code>
 
