@@ -490,6 +490,7 @@ return [
             'database_user_required' => 'Database user required',
             'admin_url_required'     => 'Admin path required',
         ],
+        'installing_button' => 'Installing S-Cart',
         'database_host'     => 'Database host',
         'database_port'     => 'Database port',
         'database_name'     => 'Database name',

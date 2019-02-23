@@ -88,36 +88,54 @@ Version 1.6 ~ 2.1.x:
 ```
 
 
-
 ## Installation & configuration:
 
+<b>How to map your domain to s-cart? <a href="https://s-cart.org/installation.html">CLICK HERE</a></b>
 
-Install last version S-cart
-
+Step1: Install last version S-cart
 ```
 composer create-project lanhktc/s-cart
 ```
-
-or, install a specific version of S-cart, ex 2.1.0
-
-```
-composer create-project lanhktc/s-cart your-project "2.1.0"
-```
-
-
+Step2:
 - Chmod -R 777 public/documents/website
 - Chmod -R 777 storage
 - Chmod -R 777 vendor
-- Folder thumbnail: public/documents/website/thumb.
+- Folder thumbnail is  <b>public/documents/website/thumb</b>.
 
-=> From version 2.1.1, you can install s-cart by link: <code>your-domain.com/install.php</code>
-
+Step3:
 ```
-- Create a new database. Then, import file sql database/s-cart.sql.
-- Link admin: your-domain/system_admin. User/pass admin/admin
+- Create a new database. Example database name is s-cart
 ```
 
+Step4:
 
+=> From version 2.1.1, you can install s-cart by link: <code><b>your-domain.com/install.php</b></code>
+
+The first, rename file <b>public/install.scart</b> to <b>public/install.php</b>
+
+Then, access <code><b>your-domain.com/install.php</b></code> to install S-cart
+
+OR:
+```
+- Import file sql database/s-cart.sql to database.
+- Rename file .env.example to .env if file .env not exist.
+- Genarate API key if APP_KEY is null. Use command "php artisan key:generate"
+- Config value of file .env:
+    APP_URL=http://localhost
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=s-cart
+    DB_USERNAME=root
+    DB_PASSWORD=
+```
+
+Step5:
+
+Please remove or rename file public/install.php so others cannot access it.
+
+Step6:
+- Access to url admin: your-domain/system_admin.
+- User/pass <code><b>admin</b>/<b>admin</b></code>
 
 ## Demo:
 
