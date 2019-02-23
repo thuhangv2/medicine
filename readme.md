@@ -107,7 +107,9 @@ Step3:
 ```
 
 Step4:
-=> From version 2.1.1, you can install s-cart by link: <code>your-domain.com/install.php</code>
+
+=> From version 2.1.1, you can install s-cart by link: <code><b>your-domain.com/install.php</b></code>
+
 OR:
 ```
 - Import file sql database/s-cart.sql to database.
