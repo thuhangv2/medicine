@@ -46,7 +46,7 @@ if (request()->method() == 'POST' && request()->ajax()) {
 
         case 'step2':
             try {
-                shell_exec('php ' . base_path() . '/artisan key:generate');
+                shell_exec('php ../artisan key:generate');
                 echo json_encode(['error' => 0, 'msg' => trans('language.install.key.process_sucess')]);
             } catch (\Exception $e) {
                 echo json_encode(['error' => 1, 'msg' => $e->getMessage()]);
@@ -74,7 +74,7 @@ if (request()->method() == 'POST' && request()->ajax()) {
             try {
                 foldes_permissions();
                 try {
-                    rename(base_path() . '/public/install.php', base_path() . '/public/install_' . md5(time()) . '.php');
+                    rename(base_path() . '/public/install.php', base_path() . '/public/install.scart');
                 } catch (\Exception $e) {
                     echo json_encode(['error' => 1, 'msg' => trans('language.install.rename_error')]);
                     exit();
@@ -104,7 +104,7 @@ function foldes_permissions()
     $foldes = array(
         base_path() . '/storage/',
         base_path() . '/vendor/',
-        base_path() . '/public/documments/',
+        base_path() . '/public/documents/',
     );
     exec('chmod o+w -R ' . implode(' ', $foldes));
 }
