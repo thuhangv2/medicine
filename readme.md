@@ -88,36 +88,40 @@ Version 1.6 ~ 2.1.x:
 ```
 
 
-
 ## Installation & configuration:
 
 
-Install last version S-cart
-
+Step1: Install last version S-cart
 ```
 composer create-project lanhktc/s-cart
 ```
-
-or, install a specific version of S-cart, ex 2.1.0
-
-```
-composer create-project lanhktc/s-cart your-project "2.1.0"
-```
-
-
+Step2:
 - Chmod -R 777 public/documents/website
 - Chmod -R 777 storage
 - Chmod -R 777 vendor
 - Folder thumbnail: public/documents/website/thumb.
 
+Step3:
+```
+- Create a new database. Example database name is <code>s-cart</code>
+```
+
+Step4:
 => From version 2.1.1, you can install s-cart by link: <code>your-domain.com/install.php</code>
-
+OR:
 ```
-- Create a new database. Then, import file sql database/s-cart.sql.
-- Link admin: your-domain/system_admin. User/pass admin/admin
+- Import file sql database/s-cart.sql to database.
+- Config value of file .env:
+APP_URL=http://localhost
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=s-cart
+DB_USERNAME=root
+DB_PASSWORD=
 ```
 
-
+Step5:
+- Access to url admin: your-domain/system_admin. User/pass <code><b>admin</b>/<b>admin</b></code>
 
 ## Demo:
 
