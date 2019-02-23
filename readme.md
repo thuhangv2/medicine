@@ -104,7 +104,7 @@ Step2:
 
 Step3:
 ```
-- Create a new database. Example database name is <b>s-cart</b>
+- Create a new database. Example database name is s-cart
 ```
 
 Step4:
@@ -117,6 +117,8 @@ Then, access <code><b>your-domain.com/install.php</b></code> to install S-cart
 OR:
 ```
 - Import file sql database/s-cart.sql to database.
+- Rename file .env.example to .env if file .env not exist.
+- Genarate API key if APP_KEY is null. Use command "php artisan key:generate"
 - Config value of file .env:
     APP_URL=http://localhost
     DB_HOST=127.0.0.1
