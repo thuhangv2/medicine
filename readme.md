@@ -90,6 +90,7 @@ Version 1.6 ~ 2.1.x:
 
 ## Installation & configuration:
 
+<b>How to map your domain to s-cart? <a href="https://s-cart.org/installation.html">CLICK HERE</a></b>
 
 Step1: Install last version S-cart
 ```
@@ -99,11 +100,11 @@ Step2:
 - Chmod -R 777 public/documents/website
 - Chmod -R 777 storage
 - Chmod -R 777 vendor
-- Folder thumbnail: public/documents/website/thumb.
+- Folder thumbnail is  <b>public/documents/website/thumb</b>.
 
 Step3:
 ```
-- Create a new database. Example database name is <code>s-cart</code>
+- Create a new database. Example database name is <b>s-cart</b>
 ```
 
 Step4:
