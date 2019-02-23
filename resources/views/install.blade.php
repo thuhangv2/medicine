@@ -83,7 +83,7 @@
                         <div class="form-group">
                             <div class="controls col-md-4 "></div>
                             <div class="controls col-md-8 ">
-                                <input type="button"  value="{{ trans('language.install.installing') }}" class="btn btn-primary btn btn-info" id="submit-install" />
+                                <input type="button" data-loading-text="{{ trans('language.install.installing_button') }}"  value="{{ trans('language.install.installing') }}" class="btn btn-primary btn btn-info" id="submit-install" />
                             </div>
                         </div>
                 </form>
@@ -116,7 +116,7 @@ $('#submit-install').click(function(event) {
                 },
             })
             .done(function(data) {
-                setTimeout('', 4000);
+
                 error= parseInt(data.error);
                 if(error != 1 && error !=0){
                     $('#msg').removeClass('success');
@@ -154,7 +154,7 @@ function generateKey(){
         data: {step: 'step2'},
     })
     .done(function(data) {
-        setTimeout('', 4000);
+
         $('#msg').removeClass('success');
         $('#msg').removeClass('error');
         error = parseInt(data.error);
@@ -191,7 +191,7 @@ function installDatabase(){
         data: {step: 'step3'},
     })
     .done(function(data) {
-        setTimeout('', 4000);
+
         $('#msg').removeClass('success');
         $('#msg').removeClass('error');
          error= parseInt(data.error);
@@ -228,7 +228,7 @@ function setPermission(){
         data: {step: 'step4'},
     })
     .done(function(data) {
-        setTimeout('', 4000);
+
         $('#msg').removeClass('success');
         $('#msg').removeClass('error');
          error= parseInt(data.error);
