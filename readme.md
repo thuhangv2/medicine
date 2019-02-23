@@ -124,7 +124,8 @@ DB_PASSWORD=
 ```
 
 Step5:
-- Access to url admin: your-domain/system_admin. User/pass <code><b>admin</b>/<b>admin</b></code>
+- Access to url admin: your-domain/system_admin.
+- User/pass <code><b>admin</b>/<b>admin</b></code>
 
 ## Demo:
 
