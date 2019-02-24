@@ -18,6 +18,8 @@ Route::group([
 //Config
     $router->resource('config_info', ConfigInfoController::class);
     $router->resource('config_global', ConfigGlobalController::class);
+    $router->get('config_template', 'TemplateController@index');
+    $router->post('config_template', 'TemplateController@changeTemplate')->name('changeTemplate');
     $router->any('/config_updateConfigField', 'ConfigInfoController@updateConfigField')
         ->name('updateConfigField');
     $router->get('/ckfinder', function () {

@@ -73,14 +73,7 @@ class ConfigGlobalController extends Controller
      */
     protected function grid()
     {
-        $arrTemplates = [];
-        foreach (glob("templates/*") as $value) {
-            if (is_dir($value)) {
-                $template                = explode('templates/', $value)[1];
-                $arrTemplates[$template] = $template;
-            }
-        }
-        return Admin::grid(ConfigGlobal::class, function (Grid $grid) use ($arrTemplates) {
+        return Admin::grid(ConfigGlobal::class, function (Grid $grid) {
 
             $grid->html('&nbsp;');
 
@@ -88,7 +81,6 @@ class ConfigGlobalController extends Controller
             if (\Helper::configs()['watermark']) {
                 $grid->watermark(trans('language.config.watermark'))->image('', 50);
             }
-            $grid->template(trans('language.config.template'))->editable('select', $arrTemplates);
 
             $languages = Language::getLanguages();
             $grid->descriptions(trans('language.config.description'))->expand(function () use ($languages) {
@@ -155,20 +147,12 @@ class ConfigGlobalController extends Controller
      */
     protected function form()
     {
-        $arrTemplates = [];
-        foreach (glob("templates/*") as $value) {
-            if (is_dir($value)) {
-                $template                = explode('templates/', $value)[1];
-                $arrTemplates[$template] = $template;
-            }
-        }
         $currencies = ShopCurrency::where('status', 1)->pluck('name', 'code')->all();
         $form       = new Form(new ConfigGlobal);
         $form->image('logo', trans('language.config.logo'))->removable();
         if (\Helper::configs()['watermark']) {
             $form->image('watermark', trans('language.config.watermark'))->removable();
         }
-        $form->select('template', trans('language.config.template'))->options($arrTemplates)->rules('required', ['required' => 'Please choose template']);
 //Language
         $languages   = Language::getLanguages();
         $arrLanguage = [];

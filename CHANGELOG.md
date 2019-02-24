@@ -1,7 +1,14 @@
 # Release Notes
+## v2.1.2 ()
+### Add
+> Backup, restore database
+> Management templates
+
+
 ## v2.1.1 (2019-02-22)
 ### Add
 > Auto install s-cart by link your-domain/install.php
+> Extension, module
 
 
 ## v2.0.5.2 (2019-1-9)
