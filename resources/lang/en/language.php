@@ -501,4 +501,20 @@ return [
         'installing'        => 'Begin Install',
         'rename_error'      => 'Can not rename file install.php. Please remove or rename it!',
     ],
+    'templates'         => [
+        'manager'    => 'Template management',
+        'title'      => 'Template list',
+        'name'       => 'Template name',
+        'auth'       => 'Author',
+        'email'      => 'Email',
+        'website'    => 'Website',
+        'active'     => 'Active',
+        'inactive'   => 'Inactive',
+        'download'   => 'Download',
+        'remove'     => 'Remove',
+        'status'     => 'Status',
+        'installing' => 'Installing',
+        'guide'      => 'Read document in <a target=_new href="https://s-cart.org/guide/template.html">HERE</a>',
+    ],
+
 ];

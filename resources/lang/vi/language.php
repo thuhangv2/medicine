@@ -371,7 +371,7 @@ return [
         'ip_deny'             => 'IPs deny',
         'created_at'          => 'Ngày tạo',
         'updated_at'          => 'Ngày cập nhật',
-        'guide'               => 'Hướng dẫn sử dụng <a target=_new href="https://s-cart.org/guide/api.html">Ở ĐÂY</a>',
+        'guide'               => 'Hướng dẫn sử dụng <a target=_new href="https://s-cart.org/guide/api.html?lang=vi">Ở ĐÂY</a>',
         'no_hidden'           => 'Không có trường ẩn',
         'no_secret'           => 'Không có khóa bí mật',
     ],
@@ -414,7 +414,7 @@ return [
         'shop_profile'   => 'Trang tài khoản khách hàng',
         'shop_compare'   => 'Trang so sánh sản phẩm',
         'shop_wishlist'  => 'Trang sản phầm yêu thích',
-        'guide'          => 'Hướng dẫn sử dụng <a target=_new href="https://s-cart.org/guide/layout.html">Ở Đây</a>',
+        'guide'          => 'Hướng dẫn sử dụng <a target=_new href="https://s-cart.org/guide/layout.html?lang=vi">Ở Đây</a>',
 
     ],
     'total'             => [
@@ -507,4 +507,21 @@ return [
         'installing'        => 'Begin Install',
         'rename_error'      => 'Can not rename file install.php. Please remove or rename it!',
     ],
+
+    'templates'         => [
+        'manager'    => 'Quản lý giao diện',
+        'title'      => 'Danh sách giao diện',
+        'name'       => 'Tên giao diện',
+        'auth'       => 'Tác giả',
+        'email'      => 'Email',
+        'website'    => 'Website',
+        'active'     => 'Đang hoạt động',
+        'inactive'   => 'Đang ẩn',
+        'download'   => 'Tải về',
+        'remove'     => 'Gỡ bỏ',
+        'status'     => 'Trạng thái',
+        'installing' => 'Đang cài đặt',
+        'guide'      => 'Xem hướng dẫn <a target=_new href="https://s-cart.org/guide/template.html?lang=vi">Ở ĐÂY</a>',
+    ],
+
 ];

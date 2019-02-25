@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\ConfigGlobal;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
@@ -22,8 +23,10 @@ class TemplateController extends Controller
     }
     public function index(Content $content)
     {
+
         return $content
-            ->header(trans('language.template.manager'))
+            ->row('<span style="font-size:15px;font-style: italic;">(' . trans('language.templates.guide') . ')</span><br>')
+            ->header(trans('language.templates.manager'))
             ->description(' ')
             ->body($this->render());
     }
@@ -53,7 +56,7 @@ class TemplateController extends Controller
         }
         return view('admin.TemplatesManager')->with(
             [
-                "title"           => trans('language.template.title'),
+                "title"           => trans('language.templates.title'),
                 "templates"       => $arrTemplates,
                 "templateCurrent" => \Helper::configsGlobal()['template'],
             ])->render();
@@ -61,5 +64,13 @@ class TemplateController extends Controller
 
     public function changeTemplate()
     {
+        $key     = request('key');
+        $process = ConfigGlobal::first()->update(['template' => $key]);
+        if ($process) {
+            $return = ['error' => 0, 'msg' => 'Change template success!'];
+        } else {
+            $return = ['error' => 1, 'msg' => 'Have an error!'];
+        }
+        return json_encode($return);
     }
 }

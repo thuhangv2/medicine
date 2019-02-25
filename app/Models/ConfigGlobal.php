@@ -10,7 +10,7 @@ class ConfigGlobal extends Model
 {
     public $timestamps  = false;
     public $table       = 'config_global';
-    protected $fillable = ['locale'];
+    protected $fillable = ['locale', 'template'];
     protected $appends  = [
         'title',
         'keyword',

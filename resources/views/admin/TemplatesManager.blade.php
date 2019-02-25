@@ -24,7 +24,7 @@
                      <td>{{ $template['config']['auth']??'' }}</td>
                      <td>{{ $template['config']['email']??'' }}</td>
                      <td>{{ $template['config']['website']??'' }}</td>
-                      <td>{!! ($templateCurrent != $key)?'':'<span onClick="enableExtension($(this),\''.$key.'\');" title="'.trans('language.extensions.enable').'" type="button" class="btn btn-flat btn-primary"><i class="fa fa-paper-plane"></i>Enable</span>' !!}</td>
+                      <td>{!! ($templateCurrent == $key)?'<button title="'.trans('language.templates.active').'"  class="btn">'.trans('language.templates.active').'</button >':'<button  onClick="enableExtension($(this),\''.$key.'\');" title="'.trans('language.templates.inactive').'" data-loading-text="'.trans('language.templates.installing').'" class="btn btn-primary">'.trans('language.templates.inactive').'</button >' !!}</td>
                     </tr>
                   @endforeach
                 </tbody>
@@ -46,7 +46,7 @@
       $.ajax({
         type: 'POST',
         dataType:'json',
-        url: '{{ route('enableExtension') }}',
+        url: '{{ route('changeTemplate') }}',
         data: {
           "_token": "{{ csrf_token() }}",
           "key":key,
@@ -62,73 +62,5 @@
         }
       });
 
-  }
-  function disableExtension(obj,key) {
-      obj.button('loading');
-      $.ajax({
-        type: 'POST',
-        dataType:'json',
-        url: '{{ route('disableExtension') }}',
-        data: {
-          "_token": "{{ csrf_token() }}",
-          "key":key,
-        },
-        success: function (response) {
-          console.log(response);
-          if(parseInt(response.error) ==0){
-              location.reload();
-          }else{
-              obj.button('reset');
-              alert(response.msg);
-          }
-        }
-      });
-  }
-  function installExtension(obj,key) {
-      obj.button('loading');
-      $.ajax({
-        type: 'POST',
-        dataType:'json',
-        url: '{{ route('installExtension') }}',
-        data: {
-          "_token": "{{ csrf_token() }}",
-          "key":key,
-        },
-        success: function (response) {
-          console.log(response);
-          if(parseInt(response.error) ==0){
-              location.reload();
-          }else{
-              obj.button('reset');
-              alert(response.msg);
-          }
-        }
-      });
-  }
-  function uninstallExtension(obj,key) {
-    var checkstr =  confirm('are you sure you want to uninstall this?');
-      if(checkstr == true){
-            obj.button('loading');
-            $.ajax({
-              type: 'POST',
-              dataType:'json',
-              url: '{{ route('uninstallExtension') }}',
-              data: {
-                "_token": "{{ csrf_token() }}",
-                "key":key,
-              },
-              success: function (response) {
-                console.log(response);
-                if(parseInt(response.error) ==0){
-                    location.reload();
-                }else{
-                    obj.button('reset');
-                    alert(response.msg);
-                }
-              }
-            });
-      }else{
-      return false;
-      }
   }
 </script>
