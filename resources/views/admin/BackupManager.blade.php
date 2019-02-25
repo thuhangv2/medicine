@@ -25,7 +25,7 @@
                     <tr>
                      <td>{{ $key+1 }}</td>
                      <td>{{ $file['time']}}</td>
-                     <td>{{ $file['path']}}</td>
+                     <td>{{ $file['name']}}</td>
                      <td>{{ $file['size']}}</td>
                       <td>{!! '<a href="?download='.$file['name'].'"><button title="'.trans('language.backup.download').'" data-loading-text="'.trans('language.backup.processing').'" class="btn btn-primary"><span class="glyphicon glyphicon-save"></span> '.trans('language.backup.download').'</button ></a>' !!}</td>
                       <td>{!! '<button  onClick="processBackup($(this),\''.$file['name'].'\',\'remove\');" title="'.trans('language.backup.remove').'" data-loading-text="'.trans('language.backup.processing').'" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> '.trans('language.backup.remove').'</button >' !!}</td>

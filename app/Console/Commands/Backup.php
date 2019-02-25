@@ -22,6 +22,7 @@ class Backup extends Command
     protected $description = 'Backup database';
     protected $process;
     protected $fileBackup;
+    const LIMIT = 10;
     /**
      * Create a new command instance.
      *
@@ -47,6 +48,10 @@ class Backup extends Command
      */
     public function handle()
     {
+        if (count(glob(storage_path() . "/backups/*.sql")) >= self::LIMIT) {
+            echo json_encode(['error' => 1, 'msg' => trans('language.backup.limit_backup')]);
+            exit;
+        }
         try {
             $this->process->mustRun();
             echo json_encode(['error' => 0, 'msg' => 'Backup success!']);

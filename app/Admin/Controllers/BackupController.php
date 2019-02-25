@@ -65,6 +65,10 @@ class BackupController extends Controller
             ])->render();
     }
 
+/**
+ * [processBackupFile description]
+ * @return [type] [description]
+ */
     public function processBackupFile()
     {
         $file     = request('file');
@@ -74,26 +78,35 @@ class BackupController extends Controller
         if ($action === 'remove') {
             try {
                 unlink($pathFull);
-                $return = ['error' => 0, 'msg' => 'Remove file success!'];
+                admin_toastr(trans('language.backup.remove_success'), 'success');
+                $return = ['error' => 0, 'msg' => trans('language.backup.remove_success')];
             } catch (\Exception $e) {
+                admin_toastr($e->getMessage(), 'error');
                 $return = ['error' => 1, 'msg' => $e->getMessage()];
             }
         } else if ($action === 'restore') {
             try {
-                DB::transaction(function () use ($pathFull) {
-                    DB::unprepared(file_get_contents($pathFull));
-                    $return = ['error' => 0, 'msg' => 'Remove file success!'];
-                });
+                // DB::transaction(function () use ($pathFull) {
+                DB::unprepared(file_get_contents($pathFull));
+                admin_toastr(trans('language.backup.restore_success'), 'success');
+                $return = ['error' => 0, 'msg' => trans('language.backup.restore_success')];
+                // });
             } catch (\Exception $e) {
+                admin_toastr($e->getMessage(), 'error');
                 $return = ['error' => 1, 'msg' => $e->getMessage()];
             }
         }
 
         return json_encode($return);
     }
+    /**
+     * [generateBackup description]
+     * @return [type] [description]
+     */
     public function generateBackup()
     {
         $return = shell_exec("php " . base_path() . "/artisan BackupDatabase");
+        admin_toastr(trans('language.backup.generate_success'), 'success');
         return $return;
     }
 }
