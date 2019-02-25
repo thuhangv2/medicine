@@ -523,5 +523,17 @@ return [
         'installing' => 'Đang cài đặt',
         'guide'      => 'Xem hướng dẫn <a target=_new href="https://s-cart.org/guide/template.html?lang=vi">Ở ĐÂY</a>',
     ],
-
+    'backup'            => [
+        'generate_now' => 'Tạo một backup ngay',
+        'processing'   => 'Đang xử lý...',
+        'manager'      => 'Quản lý giao diện',
+        'title'        => 'Danh sách giao diện',
+        'name'         => 'Tên file',
+        'sort'         => 'Thứ tự',
+        'date'         => 'Thời gian',
+        'size'         => 'Kích thước',
+        'download'     => 'Tải về',
+        'remove'       => 'Gỡ bỏ',
+        'restore'      => 'Phục hồi',
+    ],
 ];

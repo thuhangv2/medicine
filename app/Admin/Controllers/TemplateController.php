@@ -33,12 +33,7 @@ class TemplateController extends Controller
 
 /**
  * [render description]
- * @param  [type] $extensionsInstalled [description]
- * @param  [type] $extensions          [description]
- * @param  [type] $namespace           [description]
- * @param  [type] $title               [description]
- * @param  [type] $group                [description]
- * @return [type]                      [description]
+ * @return [type] [description]
  */
     public function render()
     {

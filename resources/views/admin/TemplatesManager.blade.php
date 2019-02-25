@@ -7,7 +7,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-             <table id="example2" class="table table-bordered table-hover">
+             <table id="main-table" class="table table-bordered table-hover">
                 <thead>
                 <tr>
                   <th>{{ trans('language.templates.name') }}</th>
@@ -24,7 +24,7 @@
                      <td>{{ $template['config']['auth']??'' }}</td>
                      <td>{{ $template['config']['email']??'' }}</td>
                      <td>{{ $template['config']['website']??'' }}</td>
-                      <td>{!! ($templateCurrent == $key)?'<button title="'.trans('language.templates.active').'"  class="btn">'.trans('language.templates.active').'</button >':'<button  onClick="enableExtension($(this),\''.$key.'\');" title="'.trans('language.templates.inactive').'" data-loading-text="'.trans('language.templates.installing').'" class="btn btn-primary">'.trans('language.templates.inactive').'</button >' !!}</td>
+                      <td>{!! ($templateCurrent == $key)?'<button title="'.trans('language.templates.active').'"  class="btn">'.trans('language.templates.active').'</button >':'<button  onClick="enableTemplate($(this),\''.$key.'\');" title="'.trans('language.templates.inactive').'" data-loading-text="'.trans('language.templates.installing').'" class="btn btn-primary">'.trans('language.templates.inactive').'</button >' !!}</td>
                     </tr>
                   @endforeach
                 </tbody>
@@ -41,7 +41,7 @@
 </div>
 </section>
 <script type="text/javascript">
-  function enableExtension(obj,key) {
+  function enableTemplate(obj,key) {
       obj.button('loading');
       $.ajax({
         type: 'POST',

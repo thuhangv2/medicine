@@ -49,12 +49,12 @@ class Backup extends Command
     {
         try {
             $this->process->mustRun();
-            $this->info(json_encode(['error' => 0, 'msg' => 'Backup success!']));
+            echo json_encode(['error' => 0, 'msg' => 'Backup success!']);
         } catch (\Exception $exception) {
             if (file_exists($this->fileBackup)) {
                 unlink($this->fileBackup);
             }
-            $this->error(json_encode(['error' => 1, 'msg' => $exception->getMessage()]));
+            echo json_encode(['error' => 1, 'msg' => $exception->getMessage()]);
         }
     }
 }

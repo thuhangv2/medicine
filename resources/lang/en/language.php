@@ -516,5 +516,17 @@ return [
         'installing' => 'Installing',
         'guide'      => 'Read document in <a target=_new href="https://s-cart.org/guide/template.html">HERE</a>',
     ],
-
+    'backup'            => [
+        'generate_now' => 'Gererate a backup now',
+        'processing'   => 'Processing...',
+        'manager'      => 'Backup management',
+        'title'        => 'Backup file list',
+        'name'         => 'File name',
+        'sort'         => 'Sort',
+        'date'         => 'Date',
+        'size'         => 'Size',
+        'download'     => 'Download',
+        'remove'       => 'Remove',
+        'restore'      => 'Restore',
+    ],
 ];
