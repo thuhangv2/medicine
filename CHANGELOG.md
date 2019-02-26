@@ -3,7 +3,8 @@
 ### Add
 > Backup, restore database
 > Management templates
-
+### Fixed
+> Fix error create thumbnail
 
 ## v2.1.1 (2019-02-22)
 ### Add

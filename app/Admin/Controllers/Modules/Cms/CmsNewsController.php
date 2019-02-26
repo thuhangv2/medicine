@@ -156,20 +156,11 @@ class CmsNewsController extends Controller
             //end lang
 
             $file_path_admin = config('filesystems.disks.admin.root');
+            $statusWatermark = \Helper::configs()['watermark'];
+            $fileWatermark   = $file_path_admin . '/' . \Helper::configsGlobal()['watermark'];
             try {
-                if (!file_exists($file_path_admin . '/thumb/' . $form->model()->image)) {
-                    if (!empty(\Helper::configs()['watermark'])) {
-                        \Image::make($file_path_admin . '/' . $form->model()->image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $form->model()->image);
-                    }
-                    //thumbnail
-                    $image_thumb = \Image::make($file_path_admin . '/' . $form->model()->image);
-                    $image_thumb->resize(250, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    });
-                    $image_thumb->save($file_path_admin . '/thumb/' . $form->model()->image);
-                    //end thumb
-                }
-
+                //image primary
+                \Helper::processImageThumb($pathRoot = $file_path_admin, $pathFile = $form->model()->image, $widthThumb = 250, $heightThumb = null, $statusWatermark, $fileWatermark);
             } catch (\Exception $e) {
                 echo $e->getMessage();
             }

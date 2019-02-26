@@ -88,4 +88,23 @@ class Helper
         return Config::getExtensionsGroup($group, $onlyActive);
     }
     //End Extensions
+
+    public static function processImageThumb($pathRoot, $pathFile, $widthThumb = 250, $heightThumb = null, $statusWatermark = false, $fileWatermark = '')
+    {
+        if (!file_exists($pathRoot . '/thumb/' . $pathFile)) {
+            //Insert watermark
+            if ($statusWatermark) {
+                \Image::make($pathRoot . '/' . $pathFile)
+                    ->insert($fileWatermark, 'bottom-right', 10, 10)
+                    ->save($pathRoot . '/' . $pathFile);
+            }
+
+            //thumbnail
+            $image_thumb = \Image::make($pathRoot . '/' . $pathFile);
+            $image_thumb->resize($widthThumb, $heightThumb, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $image_thumb->save($pathRoot . '/thumb/' . $pathFile);
+        }
+    }
 }

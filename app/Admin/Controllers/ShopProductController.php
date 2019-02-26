@@ -289,51 +289,24 @@ SCRIPT;
                 }
                 //end lang
                 $product         = ShopProduct::find($id);
-                $file_path_admin = config('filesystems.path_file.admin.root');
+                $file_path_admin = config('filesystems.disks.admin.root');
+                $statusWatermark = \Helper::configs()['watermark'];
+                $fileWatermark   = $file_path_admin . '/' . \Helper::configsGlobal()['watermark'];
                 try {
-                    if (!file_exists($file_path_admin . '/thumb/' . $product->image)) {
-                        if (!empty(\Helper::configs()['watermark'])) {
-                            \Image::make($file_path_admin . '/' . $product->image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $product->image);
-                        }
-                        //thumbnail
-                        $image_thumb = \Image::make($file_path_admin . '/' . $product->image);
-                        $image_thumb->resize(250, null, function ($constraint) {
-                            $constraint->aspectRatio();
-                        });
-                        $image_thumb->save($file_path_admin . '/thumb/' . $product->image);
-                        //end thumb
-                    }
+                    //image primary
+                    \Helper::processImageThumb($pathRoot = $file_path_admin, $pathFile = $product->image, $widthThumb = 250, $heightThumb = null, $statusWatermark, $fileWatermark);
+
                     if (($product->images)) {
                         foreach ($product->images as $key => $image) {
-                            if (!file_exists($file_path_admin . '/thumb/' . $image->image)) {
-                                if (!empty(\Helper::configs()['watermark'])) {
-                                    \Image::make($file_path_admin . '/' . $image->image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $image->image);
-                                }
-                                //thumbnail
-                                $image_thumb = \Image::make($file_path_admin . '/' . $image->image);
-                                $image_thumb->resize(250, null, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                });
-                                $image_thumb->save($file_path_admin . '/thumb/' . $image->image);
-                                //end thumb
-                            }
+                            //images slide
+                            \Helper::processImageThumb($pathRoot = $file_path_admin, $pathFile = $image->image, $widthThumb = 250, $heightThumb = null, $statusWatermark, $fileWatermark);
                         }
                     }
 
                     if (($product->options)) {
                         foreach ($product->options as $key => $image) {
-                            if (!file_exists($file_path_admin . '/thumb/' . $image->opt_image)) {
-                                if (!empty(\Helper::configs()['watermark'])) {
-                                    \Image::make($file_path_admin . '/' . $image->opt_image)->insert(public_path('watermark.png'), 'bottom-right', 10, 10)->save($file_path_admin . '/' . $image->opt_image);
-                                }
-                                //thumbnail
-                                $image_thumb = \Image::make($file_path_admin . '/' . $image->opt_image);
-                                $image_thumb->resize(250, null, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                });
-                                $image_thumb->save($file_path_admin . '/thumb/' . $image->opt_image);
-                                //end thumb
-                            }
+                            //images options
+                            \Helper::processImageThumb($pathRoot = $file_path_admin, $pathFile = $image->opt_image, $widthThumb = 250, $heightThumb = null, $statusWatermark, $fileWatermark);
                         }
                     }
 
@@ -374,4 +347,5 @@ SCRIPT;
             }));
         });
     }
+
 }
