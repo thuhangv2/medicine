@@ -48,15 +48,7 @@ class GeneralController extends Controller
 
         //============end config====
 
-        //Auto switch link to https
-        if (!empty($configs['site_ssl'])) {
-            \URL::forceScheme('https');
-            $this->app['request']->server->set('HTTPS', true);
-        }
         //end
-
-        $host = request()->getHost();
-        config(['app.url' => 'http://' . $host]);
         $this->path_file     = config('filesystems.disks.path_file', '');
         $this->configsGlobal = $configsGlobal;
         $this->configs       = $configs;
