@@ -39,6 +39,12 @@ return [
     'default_available' => 'Mặc đính, cho phép mua từ ngày đăng bán.',
     'vendor'            => 'Nhà cung cấp',
     'view_more'         => 'Xem đầy đủ',
+    'subscribe'         => [
+        'title'             => 'Đăng ký',
+        'subscribe_des'     => 'Nhận thông tin từ chúng tôi',
+        'subscribe_email'   => 'Email của bạn',
+        'subscribe_success' => 'Đăng ký nhận tin thành công!',
+    ],
     'contact_form'      => [
         'title'   => 'Form liên hệ',
         'info'    => 'Thông tin liên hệ',

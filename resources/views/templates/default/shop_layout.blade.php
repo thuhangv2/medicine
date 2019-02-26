@@ -396,16 +396,6 @@
           </div>
           <div class="col-sm-3">
             <div class="single-widget">
-              <h2>Quick Shop</h2>
-              <ul class="nav nav-pills nav-stacked">
-                <li><a href="#">T-Shirt</a></li>
-                <li><a href="#">Mens</a></li>
-                <li><a href="#">Womens</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-sm-3">
-            <div class="single-widget">
               <h2>Policies</h2>
               <ul class="nav nav-pills nav-stacked">
                 <li><a href="#">Terms of Use</a></li>
@@ -422,6 +412,18 @@
                 <li><a href="#">Hotline: {{ $configsGlobal['long_phone'] }}</a></li>
                 <li><a href="#">Email: {{ $configsGlobal['email'] }}</a></li>
             </ul>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="single-widget">
+              <h2>{{ trans('language.subscribe.title') }}</h2>
+              <form action="{{ route('subscribe') }}" method="post" class="searchform">
+                @csrf
+
+                <input type="email" name="subscribe_email" required="required" placeholder="{{ trans('language.subscribe.subscribe_email') }}">
+                <button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
+                <p>{{ trans('language.subscribe.subscribe_des') }}</p>
+              </form>
             </div>
           </div>
 

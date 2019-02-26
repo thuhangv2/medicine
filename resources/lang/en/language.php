@@ -39,6 +39,12 @@ return [
     'default_available' => 'Allows purchase from creation date as default.',
     'vendor'            => 'Vendor',
     'view_more'         => 'View more',
+    'subscribe'         => [
+        'title'             => 'Subscribe',
+        'subscribe_des'     => 'Get the most recent updates from us',
+        'subscribe_email'   => 'Your email',
+        'subscribe_success' => 'Subscribe email successful!',
+    ],
 
     'contact_form'      => [
         'title'   => 'Get in touch',

@@ -84,18 +84,19 @@ class GeneralController extends Controller
  */
     public function emailSubscribe(Request $request)
     {
+        $data      = $request->all();
         $validator = $request->validate([
-            'email' => 'required|email',
+            'subscribe_email' => 'required|email',
         ], [
-            'email.required' => trans('validation.required'),
-            'email.email'    => trans('validation.email'),
+            'subscribe_email.required' => trans('validation.required'),
+            'subscribe_email.email'    => trans('validation.email'),
         ]);
-        $data       = $request->all();
-        $checkEmail = Subscribe::where('email', $data['email'])->first();
+
+        $checkEmail = Subscribe::where('email', $data['subscribe_email'])->first();
         if (!$checkEmail) {
-            Subscribe::insert(['email' => $data['email']]);
+            Subscribe::insert(['email' => $data['subscribe_email']]);
         }
-        return json_encode(['error' => 0]);
+        return redirect()->route('home')->with(['message' => trans('language.subscribe.subscribe_success')]);
     }
 
     public function pageNotFound()
