@@ -17,7 +17,7 @@
 <p align="center"><img src="https://s-cart.org/images/screen/v210/s-cart-4.jpg"></p>
 <p align="center"><img src="https://s-cart.org/images/screen/v210/s-cart-5.jpg"></p>
 <p align="center"><img src="https://s-cart.org/images/screen/v210/s-cart-6.jpg"></p>
-<p align="center"><img src="https://s-cart.org/images/screen/v210/s-cart-7.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v210/s-cart-8.jpg"></p>
 
 
 
