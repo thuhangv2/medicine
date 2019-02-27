@@ -96,7 +96,7 @@ class GeneralController extends Controller
         if (!$checkEmail) {
             Subscribe::insert(['email' => $data['subscribe_email']]);
         }
-        return redirect()->route('home')->with(['message' => trans('language.subscribe.subscribe_success')]);
+        return redirect()->back()->with(['message' => trans('language.subscribe.subscribe_success')]);
     }
 
     public function pageNotFound()

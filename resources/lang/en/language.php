@@ -40,6 +40,8 @@ return [
     'vendor'            => 'Vendor',
     'view_more'         => 'View more',
     'subscribe'         => [
+        'manager'           => 'Subscribe manager',
+        'email'             => 'Email',
         'title'             => 'Subscribe',
         'subscribe_des'     => 'Get the most recent updates from us',
         'subscribe_email'   => 'Your email',

@@ -15,6 +15,7 @@ Route::group([
     $router->resource('layout', LayoutController::class);
     $router->resource('language', LanguageController::class);
     $router->resource('currencies', CurrencyController::class);
+    $router->resource('subscribe', EmailSubscribeController::class);
 //Config
     $router->resource('config_info', ConfigInfoController::class);
     $router->resource('config_global', ConfigGlobalController::class);
