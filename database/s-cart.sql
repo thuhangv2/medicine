@@ -1,7 +1,7 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Server version:               10.1.28-MariaDB - mariadb.org binary distribution
--- Server OS:                    Win32
+-- Server version:               5.7.18-log - MySQL Community Server (GPL)
+-- Server OS:                    Win64
 -- HeidiSQL Version:             9.5.0.5196
 -- --------------------------------------------------------
 
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `admin_menu` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart.admin_menu: ~51 rows (approximately)
+-- Dumping data for table s-cart.admin_menu: ~52 rows (approximately)
 DELETE FROM `admin_menu`;
 /*!40000 ALTER TABLE `admin_menu` DISABLE KEYS */;
 INSERT INTO `admin_menu` (`id`, `parent_id`, `order`, `title`, `icon`, `uri`, `permission`, `created_at`, `updated_at`) VALUES
@@ -80,6 +80,7 @@ INSERT INTO `admin_menu` (`id`, `parent_id`, `order`, `title`, `icon`, `uri`, `p
 	(80, 100, 12, 'Cms contents', 'fa-copy', 'modules/cms/cms_content', NULL, NULL, '2019-02-09 17:33:31'),
 	(81, 23, 0, 'Templates manager', 'fa-columns', 'config_template', NULL, '2019-02-25 10:26:36', '2019-02-25 10:26:36'),
 	(82, 23, 0, 'Backup & Restore', 'fa-save', 'backup_database', NULL, '2019-02-25 10:32:26', '2019-02-25 10:32:26'),
+	(83, 31, 0, 'Subscribe manager', 'fa-user-md', 'subscribe', NULL, '2019-02-27 08:39:41', '2019-02-27 08:39:41'),
 	(100, 0, 9, 'CMS Manager', 'fa-coffee', NULL, NULL, '2018-02-10 09:06:05', '2019-02-08 16:21:24');
 /*!40000 ALTER TABLE `admin_menu` ENABLE KEYS */;
 
@@ -96,24 +97,21 @@ CREATE TABLE IF NOT EXISTS `admin_operation_log` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `admin_operation_log_user_id_index` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart.admin_operation_log: ~0 rows (approximately)
+-- Dumping data for table s-cart.admin_operation_log: ~9 rows (approximately)
 DELETE FROM `admin_operation_log`;
 /*!40000 ALTER TABLE `admin_operation_log` DISABLE KEYS */;
 INSERT INTO `admin_operation_log` (`id`, `user_id`, `path`, `method`, `ip`, `input`, `created_at`, `updated_at`) VALUES
-	(1, 1, 'system_admin', 'GET', '127.0.0.1', '[]', '2019-02-26 22:39:36', '2019-02-26 22:39:36'),
-	(2, 1, 'system_admin/auth/setting', 'GET', '127.0.0.1', '[]', '2019-02-26 22:52:54', '2019-02-26 22:52:54'),
-	(3, 1, 'system_admin/auth/setting', 'PUT', '127.0.0.1', '{"name":"Administrator","password":"admin","password_confirmation":"admin","_token":"On9ObiAQ0r7aJQfGkWW6Tw5qO1QepmrQW7e3sv4A","_method":"PUT","_previous_":"http:\\/\\/demoshop.local\\/system_admin"}', '2019-02-26 22:53:03', '2019-02-26 22:53:03'),
-	(4, 1, 'system_admin/auth/setting', 'GET', '127.0.0.1', '[]', '2019-02-26 22:53:03', '2019-02-26 22:53:03'),
-	(5, 1, 'system_admin/auth/logout', 'GET', '127.0.0.1', '[]', '2019-02-26 22:53:08', '2019-02-26 22:53:08'),
-	(6, 1, 'system_admin', 'GET', '127.0.0.1', '[]', '2019-02-26 22:53:15', '2019-02-26 22:53:15'),
-	(7, 1, 'system_admin/modules/cms/cms_content', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-26 23:01:28', '2019-02-26 23:01:28'),
-	(8, 1, 'system_admin/modules/cms/cms_category', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-26 23:01:30', '2019-02-26 23:01:30'),
-	(9, 1, 'system_admin/modules/cms/cms_news', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-26 23:01:31', '2019-02-26 23:01:31'),
-	(10, 1, 'system_admin/modules/cms/cms_category', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-26 23:01:34', '2019-02-26 23:01:34'),
-	(11, 1, 'system_admin/layout', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-26 23:01:48', '2019-02-26 23:01:48'),
-	(12, 1, 'system_admin/modules/Cms', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-26 23:01:51', '2019-02-26 23:01:51');
+	(1, 1, 'system_admin', 'GET', '127.0.0.1', '[]', '2019-02-27 08:45:03', '2019-02-27 08:45:03'),
+	(2, 1, 'system_admin/auth/logout', 'GET', '127.0.0.1', '[]', '2019-02-27 08:45:06', '2019-02-27 08:45:06'),
+	(3, 1, 'system_admin', 'GET', '127.0.0.1', '[]', '2019-02-27 08:45:15', '2019-02-27 08:45:15'),
+	(4, 1, 'system_admin/auth/setting', 'GET', '127.0.0.1', '[]', '2019-02-27 08:45:22', '2019-02-27 08:45:22'),
+	(5, 1, 'system_admin/auth/setting', 'PUT', '127.0.0.1', '{"name":"Administrator","password":"admin","password_confirmation":"admin","_token":"vbiW1Lr4Tbt2BuS212tiFeThwWzAsX2FSYaH94il","_method":"PUT","_previous_":"http:\\/\\/demoshop.local\\/system_admin"}', '2019-02-27 08:45:26', '2019-02-27 08:45:26'),
+	(6, 1, 'system_admin/auth/setting', 'GET', '127.0.0.1', '[]', '2019-02-27 08:45:26', '2019-02-27 08:45:26'),
+	(7, 1, 'system_admin/subscribe', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-27 08:45:38', '2019-02-27 08:45:38'),
+	(8, 1, 'system_admin/auth/logout', 'GET', '127.0.0.1', '[]', '2019-02-27 08:45:40', '2019-02-27 08:45:40'),
+	(9, 1, 'system_admin', 'GET', '127.0.0.1', '[]', '2019-02-27 08:45:45', '2019-02-27 08:45:45');
 /*!40000 ALTER TABLE `admin_operation_log` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.admin_permissions
@@ -242,7 +240,7 @@ CREATE TABLE IF NOT EXISTS `admin_users` (
 DELETE FROM `admin_users`;
 /*!40000 ALTER TABLE `admin_users` DISABLE KEYS */;
 INSERT INTO `admin_users` (`id`, `username`, `password`, `name`, `avatar`, `remember_token`, `created_at`, `updated_at`) VALUES
-	(1, 'admin', '$2y$10$OzhJNV2nhi/ve2AeYiRZSeQWjfv0wSafxLb2oZb3mBaNpXXarYHw6', 'Administrator', NULL, 'KSGSjqOqN3OSpdv9WJPuCQeNW3f31t3HCRQGYJrApHcaN7vk8ku0Z9jzYsQD', '2018-01-12 17:27:40', '2019-02-26 22:53:03'),
+	(1, 'admin', '$2y$10$aox5in99X6Jcf0T/hJRJL.49XMDlwWXHwYg4GITxNL6ABFYXLgBnm', 'Administrator', NULL, 'LkKZiPtu7GuUfO4a8cM0dnSoVtg960hfiwmUNZp1fvC87hsKMa8i4ISajLcO', '2018-01-12 17:27:40', '2019-02-27 08:45:26'),
 	(3, 'test', '$2y$10$Ao7Uey2z5jPFta/rZG51XuG1OZiWdlbdf3QSgsAjKn9Hfpcp14Ami', 'User', NULL, 'jNCohRmFqsOIHmInmGT1DB3lqImjiibXY0MzpQGAH1dvyZalzJnVioyFGlym', '2018-01-12 18:05:28', '2018-09-23 18:56:26');
 /*!40000 ALTER TABLE `admin_users` ENABLE KEYS */;
 
@@ -438,7 +436,7 @@ CREATE TABLE IF NOT EXISTS `config` (
   `detail` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `key` (`key`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Dumping data for table s-cart.config: ~25 rows (approximately)
 DELETE FROM `config`;
@@ -1842,10 +1840,10 @@ INSERT INTO `shop_product` (`id`, `sku`, `image`, `brand_id`, `vendor_id`, `cate
 	(8, 'TMC2208', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 6, 0, 11, NULL, 220000, 130000, 100, 0, 0, NULL, 1, 1, 139, '2019-02-25 15:55:36', NULL, '2018-02-02 14:53:30', '2019-02-25 15:55:36'),
 	(9, 'FILAMENT', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 15, NULL, 299000, 200000, 99, 1, 1, NULL, 1, 1, 155, '2019-02-23 23:05:57', NULL, '2018-02-02 14:53:30', '2019-02-23 23:05:57'),
 	(10, 'A4988', 'product/820283598735f98a9b23960821da438b.jpeg', 1, 0, 11, NULL, 39000, 20000, 100, 0, 0, NULL, 1, 1, 78, '2019-02-23 04:16:22', NULL, '2018-02-02 14:53:30', '2019-02-23 04:16:22'),
-	(11, 'ANYCUBIC-P', 'product/d63af407fa92299e163696a585566dc7.jpeg', 3, 0, 10, NULL, 4990000, 3500000, 100, 0, 0, NULL, 0, 1, 114, '2019-02-26 11:14:02', NULL, '2018-01-15 14:57:31', '2019-02-26 11:14:02'),
+	(11, 'ANYCUBIC-P', 'product/d63af407fa92299e163696a585566dc7.jpeg', 3, 0, 10, NULL, 4990000, 3500000, 100, 0, 0, NULL, 0, 1, 115, '2019-02-27 01:11:12', NULL, '2018-01-15 14:57:31', '2019-02-27 01:11:12'),
 	(12, '3DHLFD', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 12, NULL, 7990000, 5200000, 100, 0, 1, NULL, 0, 1, 99, '2019-02-23 15:46:36', NULL, '2018-01-15 14:57:31', '2019-02-23 15:46:36'),
 	(20, 'SS495A', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 2, 0, 14, NULL, 15000, 7000, 100, 0, 1, NULL, 0, 1, 126, '2019-02-23 20:20:55', NULL, '2018-01-15 14:57:31', '2019-02-23 20:20:55'),
-	(21, '3D-CARBON1.75', 'product/d05966a529efdd8d7b41ed9b687859b6.jpeg', 2, 0, 15, NULL, 390000, 15000, 100, 0, 1, NULL, 1, 1, 108, '2019-02-22 19:54:08', NULL, '2018-02-02 14:53:30', '2019-02-22 19:54:08'),
+	(21, '3D-CARBON1.75', 'product/d05966a529efdd8d7b41ed9b687859b6.jpeg', 2, 0, 15, NULL, 390000, 15000, 100, 0, 1, NULL, 1, 1, 109, '2019-02-27 04:37:56', NULL, '2018-02-02 14:53:30', '2019-02-27 04:37:56'),
 	(22, '3D-GOLD1.75', 'product/eedfd153bf368919a134da17f22c8de7.jpeg', 2, 0, 15, NULL, 500000, 15000, 100, 0, 1, NULL, 1, 1, 148, '2019-02-26 11:15:40', NULL, '2018-04-12 15:05:37', '2019-02-26 11:15:40'),
 	(23, 'LCD12864-3D', 'product/a7a315526ecf7594731448d792714a11.jpeg', 2, 0, 11, NULL, 220000, 15000, 100, 0, 0, NULL, 0, 1, 63, '2019-02-20 14:06:22', NULL, '2018-08-11 13:33:37', '2019-02-20 14:06:22'),
 	(24, 'LCD2004-3D', 'product/9215506044b8a350fc082f5350b3653a.jpg', 2, 0, 11, NULL, 190000, 15000, 100, 0, 0, NULL, 0, 1, 84, '2019-02-20 14:06:19', NULL, '2018-08-11 13:39:31', '2019-02-20 14:06:19'),
@@ -1873,7 +1871,7 @@ INSERT INTO `shop_product` (`id`, `sku`, `image`, `brand_id`, `vendor_id`, `cate
 	(46, 'P2.5-I', 'product/949fa36ebd56593445fb61d141fd2a81.jpeg', 2, 0, 19, NULL, 15000, 15000, 96, 4, 0, NULL, 0, 1, 153, '2019-02-21 18:45:19', NULL, '2018-08-24 09:23:07', '2019-02-21 18:45:19'),
 	(47, 'BX-5U0', 'product/cd7aa3394c35330ed7f9e4095c6adb65.jpeg', 0, 0, 19, NULL, 15000, 15000, 96, 4, 0, NULL, 0, 1, 213, '2019-02-25 04:31:20', NULL, '2018-08-24 09:48:31', '2019-02-25 04:31:20'),
 	(48, 'BX-5UT', 'product/6ddd855403d127a9fed049d0ec335481.jpeg', 0, 0, 11, NULL, 15000, 15000, 90, 10, 0, NULL, 0, 1, 419, '2019-02-26 19:41:10', NULL, '2018-08-24 09:52:15', '2019-02-26 19:41:10'),
-	(49, 'BX-5UTbnv', 'product/0950df6d59696ad39a8e5505735f578c.jpeg', 2, 0, 2, NULL, 15000, 15000, 82, 18, 1, NULL, 0, 1, 321, '2019-02-25 07:46:21', '2019-03-30 00:00:00', '2018-09-03 08:05:59', '2019-02-25 07:46:21');
+	(49, 'BX-5UTbnv', 'product/0950df6d59696ad39a8e5505735f578c.jpeg', 2, 0, 2, NULL, 15000, 15000, 82, 18, 1, NULL, 0, 1, 322, '2019-02-26 23:29:34', '2019-03-30 00:00:00', '2018-09-03 08:05:59', '2019-02-26 23:29:34');
 /*!40000 ALTER TABLE `shop_product` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_product_description
@@ -2184,11 +2182,13 @@ CREATE TABLE IF NOT EXISTS `subscribe` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Dumping data for table s-cart.subscribe: ~0 rows (approximately)
 DELETE FROM `subscribe`;
 /*!40000 ALTER TABLE `subscribe` DISABLE KEYS */;
+INSERT INTO `subscribe` (`id`, `email`) VALUES
+	(1, 'lanhktc@gmail.com');
 /*!40000 ALTER TABLE `subscribe` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
