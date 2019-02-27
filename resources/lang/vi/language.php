@@ -534,8 +534,8 @@ return [
     'backup'            => [
         'generate_now'     => 'Tạo một backup ngay',
         'processing'       => 'Đang xử lý...',
-        'manager'          => 'Quản lý giao diện',
-        'title'            => 'Danh sách giao diện',
+        'manager'          => 'Quản lý sao lưu',
+        'title'            => 'Danh sách sao lưu',
         'name'             => 'Tên file',
         'sort'             => 'Thứ tự',
         'date'             => 'Thời gian',
