@@ -24,9 +24,9 @@ CREATE TABLE IF NOT EXISTS `admin_menu` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart.admin_menu: ~47 rows (approximately)
+-- Dumping data for table s-cart.admin_menu: ~51 rows (approximately)
 DELETE FROM `admin_menu`;
 /*!40000 ALTER TABLE `admin_menu` DISABLE KEYS */;
 INSERT INTO `admin_menu` (`id`, `parent_id`, `order`, `title`, `icon`, `uri`, `permission`, `created_at`, `updated_at`) VALUES
@@ -45,6 +45,7 @@ INSERT INTO `admin_menu` (`id`, `parent_id`, `order`, `title`, `icon`, `uri`, `p
 	(14, 15, 16, 'Special price', 'fa-paw', 'shop_special_price', NULL, '2018-02-06 18:07:21', '2019-02-09 17:33:31'),
 	(15, 0, 13, 'Product Manager', 'fa-folder-open', NULL, NULL, '2018-02-09 06:04:43', '2019-02-09 17:33:31'),
 	(18, 23, 42, 'Config info', 'fa-cog', 'config_info', NULL, '2018-02-10 09:07:45', '2019-02-09 17:33:31'),
+	(21, 100, 10, 'Blog & News', 'fa-file-powerpoint-o', 'modules/cms/cms_news', NULL, '2018-02-10 09:13:01', '2019-02-08 16:21:24'),
 	(22, 0, 8, 'Pages', 'fa-clone', 'shop_page', NULL, '2018-02-10 09:19:50', '2019-02-08 16:21:24'),
 	(23, 0, 41, 'Settings', 'fa-cogs', NULL, NULL, '2018-02-11 15:01:24', '2019-02-09 17:33:31'),
 	(24, 62, 37, 'Banners', 'fa-simplybuilt', 'banner', NULL, '2018-03-13 20:10:22', '2019-02-09 17:33:31'),
@@ -65,7 +66,7 @@ INSERT INTO `admin_menu` (`id`, `parent_id`, `order`, `title`, `icon`, `uri`, `p
 	(61, 15, 19, 'Import multi product', 'fa-save', 'process/productImport', NULL, '2018-11-11 16:10:14', '2019-02-09 17:33:31'),
 	(62, 0, 36, 'Images manager', 'fa-image', NULL, NULL, '2018-11-12 19:25:16', '2019-02-09 17:33:31'),
 	(63, 62, 38, 'Images', 'fa-file-image-o', 'documents', NULL, '2018-11-12 19:26:13', '2019-02-09 17:33:31'),
-	(64, 56, 46, 'Currencies', 'fa-cc-amex', 'currencies', NULL, '2018-12-04 06:55:44', '2019-02-09 17:33:31'),
+	(64, 56, 46, 'Currencies', 'fa-dollar', 'currencies', NULL, '2018-12-04 06:55:44', '2019-02-25 10:29:53'),
 	(65, 0, 39, 'Api manager', 'fa-plug', NULL, NULL, '2018-12-16 09:51:06', '2019-02-09 17:33:31'),
 	(66, 65, 40, 'Shop Api', 'fa-usb', 'modules/api/shop_api', NULL, '2018-12-16 09:53:09', '2019-02-09 17:33:31'),
 	(70, 15, 20, 'Attributes group', 'fa-bars', 'shop_attribute_group', NULL, '2018-12-27 22:32:39', '2019-02-09 17:33:31'),
@@ -75,8 +76,11 @@ INSERT INTO `admin_menu` (`id`, `parent_id`, `order`, `title`, `icon`, `uri`, `p
 	(74, 30, 32, 'Other', 'fa-circle-thin', 'extensions/Other', NULL, '2019-02-01 15:53:09', '2019-02-09 17:33:31'),
 	(75, 0, 33, 'Modules', 'fa-codepen', NULL, NULL, '2019-02-08 12:17:59', '2019-02-09 17:33:31'),
 	(76, 75, 34, 'Cms', 'fa-modx', 'modules/Cms', NULL, '2019-02-08 12:25:13', '2019-02-09 17:33:31'),
-	(100, 0, 9, 'CMS Manager', 'fa-coffee', NULL, NULL, NULL, NULL),
-	(103, 100, 10, 'Blog & News', 'fa-file-powerpoint-o', 'modules/cms/cms_news', NULL, NULL, NULL);
+	(79, 100, 11, 'Cms categories', 'fa-folder-open-o', 'modules/cms/cms_category', NULL, NULL, '2019-02-09 17:33:31'),
+	(80, 100, 12, 'Cms contents', 'fa-copy', 'modules/cms/cms_content', NULL, NULL, '2019-02-09 17:33:31'),
+	(81, 23, 0, 'Templates manager', 'fa-columns', 'config_template', NULL, '2019-02-25 10:26:36', '2019-02-25 10:26:36'),
+	(82, 23, 0, 'Backup & Restore', 'fa-save', 'backup_database', NULL, '2019-02-25 10:32:26', '2019-02-25 10:32:26'),
+	(100, 0, 9, 'CMS Manager', 'fa-coffee', NULL, NULL, '2018-02-10 09:06:05', '2019-02-08 16:21:24');
 /*!40000 ALTER TABLE `admin_menu` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.admin_operation_log
@@ -92,113 +96,24 @@ CREATE TABLE IF NOT EXISTS `admin_operation_log` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `admin_operation_log_user_id_index` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart.admin_operation_log: ~98 rows (approximately)
+-- Dumping data for table s-cart.admin_operation_log: ~0 rows (approximately)
 DELETE FROM `admin_operation_log`;
 /*!40000 ALTER TABLE `admin_operation_log` DISABLE KEYS */;
 INSERT INTO `admin_operation_log` (`id`, `user_id`, `path`, `method`, `ip`, `input`, `created_at`, `updated_at`) VALUES
-	(1, 1, 'system_admin/extensions/Shipping', 'GET', '127.0.0.1', '[]', '2019-02-09 18:01:31', '2019-02-09 18:01:31'),
-	(2, 1, 'system_admin/modules/cms/cms_news', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:02:42', '2019-02-09 18:02:42'),
-	(3, 1, 'system_admin/modules/cms/cms_news/7', 'DELETE', '127.0.0.1', '{"_method":"delete","_token":"4OTMA81x877shYm8yR27NqopOLnizf7sING8dh0i"}', '2019-02-09 18:02:45', '2019-02-09 18:02:45'),
-	(4, 1, 'system_admin/modules/cms/cms_news', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:02:46', '2019-02-09 18:02:46'),
-	(5, 1, 'system_admin/modules/cms/cms_news/6', 'DELETE', '127.0.0.1', '{"_method":"delete","_token":"4OTMA81x877shYm8yR27NqopOLnizf7sING8dh0i"}', '2019-02-09 18:02:49', '2019-02-09 18:02:49'),
-	(6, 1, 'system_admin/modules/cms/cms_news', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:02:49', '2019-02-09 18:02:49'),
-	(7, 1, 'system_admin/modules/cms/cms_news/5', 'DELETE', '127.0.0.1', '{"_method":"delete","_token":"4OTMA81x877shYm8yR27NqopOLnizf7sING8dh0i"}', '2019-02-09 18:02:52', '2019-02-09 18:02:52'),
-	(8, 1, 'system_admin/modules/cms/cms_news', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:02:52', '2019-02-09 18:02:52'),
-	(9, 1, 'system_admin/modules/cms/cms_news/4', 'DELETE', '127.0.0.1', '{"_method":"delete","_token":"4OTMA81x877shYm8yR27NqopOLnizf7sING8dh0i"}', '2019-02-09 18:02:55', '2019-02-09 18:02:55'),
-	(10, 1, 'system_admin/modules/cms/cms_news', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:02:55', '2019-02-09 18:02:55'),
-	(11, 1, 'system_admin/modules/cms/cms_news/3', 'DELETE', '127.0.0.1', '{"_method":"delete","_token":"4OTMA81x877shYm8yR27NqopOLnizf7sING8dh0i"}', '2019-02-09 18:02:58', '2019-02-09 18:02:58'),
-	(12, 1, 'system_admin/modules/cms/cms_news', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:02:58', '2019-02-09 18:02:58'),
-	(13, 1, 'system_admin/modules/cms/cms_news/2', 'DELETE', '127.0.0.1', '{"_method":"delete","_token":"4OTMA81x877shYm8yR27NqopOLnizf7sING8dh0i"}', '2019-02-09 18:03:01', '2019-02-09 18:03:01'),
-	(14, 1, 'system_admin/modules/cms/cms_news', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:03:01', '2019-02-09 18:03:01'),
-	(15, 1, 'system_admin/modules/cms/cms_news/1', 'DELETE', '127.0.0.1', '{"_method":"delete","_token":"4OTMA81x877shYm8yR27NqopOLnizf7sING8dh0i"}', '2019-02-09 18:03:04', '2019-02-09 18:03:04'),
-	(16, 1, 'system_admin/modules/cms/cms_news', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:03:04', '2019-02-09 18:03:04'),
-	(17, 1, 'system_admin/modules/cms/cms_news', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:03:07', '2019-02-09 18:03:07'),
-	(18, 1, 'system_admin/modules/cms/cms_category', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:03:08', '2019-02-09 18:03:08'),
-	(19, 1, 'system_admin/modules/cms/cms_content', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:03:10', '2019-02-09 18:03:10'),
-	(20, 1, 'system_admin/extensions/Payment', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:03:15', '2019-02-09 18:03:15'),
-	(21, 1, 'system_admin/modules/Cms', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:03:20', '2019-02-09 18:03:20'),
-	(22, 1, 'system_admin/modules/uninstallModule', 'POST', '127.0.0.1', '{"_token":"4OTMA81x877shYm8yR27NqopOLnizf7sING8dh0i","key":"Content","group":"Cms"}', '2019-02-09 18:03:23', '2019-02-09 18:03:23'),
-	(23, 1, 'system_admin/modules/Cms', 'GET', '127.0.0.1', '[]', '2019-02-09 18:03:23', '2019-02-09 18:03:23'),
-	(24, 1, 'system_admin/modules/uninstallModule', 'POST', '127.0.0.1', '{"_token":"4OTMA81x877shYm8yR27NqopOLnizf7sING8dh0i","key":"News","group":"Cms"}', '2019-02-09 18:03:26', '2019-02-09 18:03:26'),
-	(25, 1, 'system_admin/modules/Cms', 'GET', '127.0.0.1', '[]', '2019-02-09 18:03:26', '2019-02-09 18:03:26'),
-	(26, 1, 'system_admin/modules/Cms', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:03:33', '2019-02-09 18:03:33'),
-	(27, 1, 'system_admin/extensions/Payment', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:03:35', '2019-02-09 18:03:35'),
-	(28, 1, 'system_admin/extensions/Payment', 'GET', '127.0.0.1', '{"action":"config","extensionKey":"Paypal"}', '2019-02-09 18:03:39', '2019-02-09 18:03:39'),
-	(29, 1, 'system_admin/extensions/Payment', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:03:47', '2019-02-09 18:03:47'),
-	(30, 1, 'system_admin/extensions/uninstallExtension', 'POST', '127.0.0.1', '{"_token":"4OTMA81x877shYm8yR27NqopOLnizf7sING8dh0i","key":"Paypal","group":"Payment"}', '2019-02-09 18:03:55', '2019-02-09 18:03:55'),
-	(31, 1, 'system_admin/extensions/Payment', 'GET', '127.0.0.1', '[]', '2019-02-09 18:03:55', '2019-02-09 18:03:55'),
-	(32, 1, 'system_admin/extensions/uninstallExtension', 'POST', '127.0.0.1', '{"_token":"4OTMA81x877shYm8yR27NqopOLnizf7sING8dh0i","key":"Cash","group":"Payment"}', '2019-02-09 18:03:58', '2019-02-09 18:03:58'),
-	(33, 1, 'system_admin/extensions/Payment', 'GET', '127.0.0.1', '[]', '2019-02-09 18:03:58', '2019-02-09 18:03:58'),
-	(34, 1, 'system_admin/extensions/Shipping', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:04:05', '2019-02-09 18:04:05'),
-	(35, 1, 'system_admin/extensions/uninstallExtension', 'POST', '127.0.0.1', '{"_token":"4OTMA81x877shYm8yR27NqopOLnizf7sING8dh0i","key":"ShippingStandard","group":"Shipping"}', '2019-02-09 18:04:07', '2019-02-09 18:04:07'),
-	(36, 1, 'system_admin/extensions/Shipping', 'GET', '127.0.0.1', '[]', '2019-02-09 18:04:07', '2019-02-09 18:04:07'),
-	(37, 1, 'system_admin/extensions/uninstallExtension', 'POST', '127.0.0.1', '{"_token":"4OTMA81x877shYm8yR27NqopOLnizf7sING8dh0i","key":"ShippingBasic","group":"Shipping"}', '2019-02-09 18:04:12', '2019-02-09 18:04:12'),
-	(38, 1, 'system_admin/extensions/Shipping', 'GET', '127.0.0.1', '[]', '2019-02-09 18:04:12', '2019-02-09 18:04:12'),
-	(39, 1, 'system_admin/extensions/installExtension', 'POST', '127.0.0.1', '{"_token":"4OTMA81x877shYm8yR27NqopOLnizf7sING8dh0i","key":"ShippingStandard","group":"Shipping"}', '2019-02-09 18:04:13', '2019-02-09 18:04:13'),
-	(40, 1, 'system_admin/extensions/Shipping', 'GET', '127.0.0.1', '[]', '2019-02-09 18:04:14', '2019-02-09 18:04:14'),
-	(41, 1, 'system_admin/extensions/Payment', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:04:21', '2019-02-09 18:04:21'),
-	(42, 1, 'system_admin/extensions/installExtension', 'POST', '127.0.0.1', '{"_token":"4OTMA81x877shYm8yR27NqopOLnizf7sING8dh0i","key":"Cash","group":"Payment"}', '2019-02-09 18:04:22', '2019-02-09 18:04:22'),
-	(43, 1, 'system_admin/extensions/Payment', 'GET', '127.0.0.1', '[]', '2019-02-09 18:04:23', '2019-02-09 18:04:23'),
-	(44, 1, 'system_admin/extensions/Total', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:04:35', '2019-02-09 18:04:35'),
-	(45, 1, 'system_admin/extensions/Total', 'GET', '127.0.0.1', '{"action":"config","extensionKey":"Discount"}', '2019-02-09 18:04:37', '2019-02-09 18:04:37'),
-	(46, 1, 'system_admin/shop_discount', 'GET', '127.0.0.1', '[]', '2019-02-09 18:04:38', '2019-02-09 18:04:38'),
-	(47, 1, 'system_admin/layout', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:04:47', '2019-02-09 18:04:47'),
-	(48, 1, 'system_admin/modules/Cms', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:04:50', '2019-02-09 18:04:50'),
-	(49, 1, 'system_admin/extensions/Other', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:04:54', '2019-02-09 18:04:54'),
-	(50, 1, 'system_admin/modules/api/shop_api', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:05:01', '2019-02-09 18:05:01'),
-	(51, 1, 'system_admin/modules/api/shop_api/1/edit', 'GET', '127.0.0.1', '[]', '2019-02-09 18:05:14', '2019-02-09 18:05:14'),
-	(52, 1, 'system_admin/modules/api/shop_api', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:05:32', '2019-02-09 18:05:32'),
-	(53, 1, 'system_admin/modules/Cms', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:08:06', '2019-02-09 18:08:06'),
-	(54, 1, 'system_admin/layout', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:08:08', '2019-02-09 18:08:08'),
-	(55, 1, 'system_admin/modules/Cms', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:15:42', '2019-02-09 18:15:42'),
-	(56, 1, 'system_admin/extensions/Payment', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:15:43', '2019-02-09 18:15:43'),
-	(57, 1, 'system_admin/banner', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 18:16:16', '2019-02-09 18:16:16'),
-	(58, 1, 'system_admin/banner/17/edit', 'GET', '127.0.0.1', '[]', '2019-02-09 18:16:18', '2019-02-09 18:16:18'),
-	(59, 1, 'system_admin', 'GET', '127.0.0.1', '[]', '2019-02-09 18:16:33', '2019-02-09 18:16:33'),
-	(60, 1, 'system_admin/modules/Cms', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 20:43:45', '2019-02-09 20:43:45'),
-	(61, 1, 'system_admin/modules/installModule', 'POST', '127.0.0.1', '{"_token":"4OTMA81x877shYm8yR27NqopOLnizf7sING8dh0i","key":"News","group":"Cms"}', '2019-02-09 20:43:49', '2019-02-09 20:43:49'),
-	(62, 1, 'system_admin/modules/Cms', 'GET', '127.0.0.1', '[]', '2019-02-09 20:43:50', '2019-02-09 20:43:50'),
-	(63, 1, 'system_admin/modules/Cms', 'GET', '127.0.0.1', '[]', '2019-02-09 20:46:13', '2019-02-09 20:46:13'),
-	(64, 1, 'system_admin/modules/uninstallModule', 'POST', '127.0.0.1', '{"_token":"4OTMA81x877shYm8yR27NqopOLnizf7sING8dh0i","key":"News","group":"Cms"}', '2019-02-09 20:46:20', '2019-02-09 20:46:20'),
-	(65, 1, 'system_admin/modules/Cms', 'GET', '127.0.0.1', '[]', '2019-02-09 20:46:21', '2019-02-09 20:46:21'),
-	(66, 1, 'system_admin/modules/installModule', 'POST', '127.0.0.1', '{"_token":"4OTMA81x877shYm8yR27NqopOLnizf7sING8dh0i","key":"News","group":"Cms"}', '2019-02-09 20:51:27', '2019-02-09 20:51:27'),
-	(67, 1, 'system_admin/modules/Cms', 'GET', '127.0.0.1', '[]', '2019-02-09 20:51:28', '2019-02-09 20:51:28'),
-	(68, 1, 'system_admin/modules/uninstallModule', 'POST', '127.0.0.1', '{"_token":"4OTMA81x877shYm8yR27NqopOLnizf7sING8dh0i","key":"News","group":"Cms"}', '2019-02-09 21:40:01', '2019-02-09 21:40:01'),
-	(69, 1, 'system_admin/modules/Cms', 'GET', '127.0.0.1', '[]', '2019-02-09 21:40:02', '2019-02-09 21:40:02'),
-	(70, 1, 'system_admin/modules/installModule', 'POST', '127.0.0.1', '{"_token":"4OTMA81x877shYm8yR27NqopOLnizf7sING8dh0i","key":"News","group":"Cms"}', '2019-02-09 21:40:09', '2019-02-09 21:40:09'),
-	(71, 1, 'system_admin/modules/Cms', 'GET', '127.0.0.1', '[]', '2019-02-09 21:40:09', '2019-02-09 21:40:09'),
-	(72, 1, 'system_admin/extensions/Payment', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 21:40:21', '2019-02-09 21:40:21'),
-	(73, 1, 'system_admin/extensions/uninstallExtension', 'POST', '127.0.0.1', '{"_token":"4OTMA81x877shYm8yR27NqopOLnizf7sING8dh0i","key":"Cash","group":"Payment"}', '2019-02-09 21:40:24', '2019-02-09 21:40:24'),
-	(74, 1, 'system_admin/extensions/Payment', 'GET', '127.0.0.1', '[]', '2019-02-09 21:40:24', '2019-02-09 21:40:24'),
-	(75, 1, 'system_admin/extensions/installExtension', 'POST', '127.0.0.1', '{"_token":"4OTMA81x877shYm8yR27NqopOLnizf7sING8dh0i","key":"Cash","group":"Payment"}', '2019-02-09 21:40:26', '2019-02-09 21:40:26'),
-	(76, 1, 'system_admin/extensions/Payment', 'GET', '127.0.0.1', '[]', '2019-02-09 21:40:26', '2019-02-09 21:40:26'),
-	(77, 1, 'system_admin/extensions/installExtension', 'POST', '127.0.0.1', '{"_token":"4OTMA81x877shYm8yR27NqopOLnizf7sING8dh0i","key":"Paypal","group":"Payment"}', '2019-02-09 21:40:27', '2019-02-09 21:40:27'),
-	(78, 1, 'system_admin/extensions/Payment', 'GET', '127.0.0.1', '[]', '2019-02-09 21:40:28', '2019-02-09 21:40:28'),
-	(79, 1, 'system_admin/modules/Cms', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 21:52:07', '2019-02-09 21:52:07'),
-	(80, 1, 'system_admin/layout', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 21:52:10', '2019-02-09 21:52:10'),
-	(81, 1, 'system_admin/config_global', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 21:55:13', '2019-02-09 21:55:13'),
-	(82, 1, 'system_admin/shop_page', 'GET', '127.0.0.1', '[]', '2019-02-09 21:55:14', '2019-02-09 21:55:14'),
-	(83, 1, 'system_admin/auth/users', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 21:55:18', '2019-02-09 21:55:18'),
-	(84, 1, 'system_admin/auth/roles', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 21:55:19', '2019-02-09 21:55:19'),
-	(85, 1, 'system_admin/auth/permissions', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 21:55:19', '2019-02-09 21:55:19'),
-	(86, 1, 'system_admin/auth/menu', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 21:55:20', '2019-02-09 21:55:20'),
-	(87, 1, 'system_admin/auth/logs', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 21:55:21', '2019-02-09 21:55:21'),
-	(88, 1, 'system_admin/shop_page', 'GET', '127.0.0.1', '[]', '2019-02-09 21:55:29', '2019-02-09 21:55:29'),
-	(89, 1, 'system_admin/extensions/Payment', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 21:55:32', '2019-02-09 21:55:32'),
-	(90, 1, 'system_admin/extensions/uninstallExtension', 'POST', '127.0.0.1', '{"_token":"4OTMA81x877shYm8yR27NqopOLnizf7sING8dh0i","key":"Paypal","group":"Payment"}', '2019-02-09 21:55:40', '2019-02-09 21:55:40'),
-	(91, 1, 'system_admin/extensions/Payment', 'GET', '127.0.0.1', '[]', '2019-02-09 21:55:40', '2019-02-09 21:55:40'),
-	(92, 1, 'system_admin/shop_order', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 21:55:43', '2019-02-09 21:55:43'),
-	(93, 1, 'system_admin/shop_order_status', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 21:55:45', '2019-02-09 21:55:45'),
-	(94, 1, 'system_admin/extensions/Other', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 21:55:51', '2019-02-09 21:55:51'),
-	(95, 1, 'system_admin/extensions/Total', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 21:55:53', '2019-02-09 21:55:53'),
-	(96, 1, 'system_admin/extensions/Shipping', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 21:55:59', '2019-02-09 21:55:59'),
-	(97, 1, 'system_admin/extensions/Payment', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 21:56:04', '2019-02-09 21:56:04'),
-	(98, 1, 'system_admin/modules/Cms', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-09 21:56:09', '2019-02-09 21:56:09'),
-	(99, 1, 'system_admin/auth/setting', 'GET', '127.0.0.1', '[]', '2019-02-09 21:58:15', '2019-02-09 21:58:15'),
-	(100, 1, 'system_admin/auth/setting', 'PUT', '127.0.0.1', '{"name":"Administrator","password":"admin","password_confirmation":"admin","_token":"4OTMA81x877shYm8yR27NqopOLnizf7sING8dh0i","_method":"PUT","_previous_":"http:\\/\\/demoshop.local\\/system_admin\\/modules\\/Cms"}', '2019-02-09 21:58:23', '2019-02-09 21:58:23'),
-	(101, 1, 'system_admin/auth/setting', 'GET', '127.0.0.1', '[]', '2019-02-09 21:58:23', '2019-02-09 21:58:23');
+	(1, 1, 'system_admin', 'GET', '127.0.0.1', '[]', '2019-02-26 22:39:36', '2019-02-26 22:39:36'),
+	(2, 1, 'system_admin/auth/setting', 'GET', '127.0.0.1', '[]', '2019-02-26 22:52:54', '2019-02-26 22:52:54'),
+	(3, 1, 'system_admin/auth/setting', 'PUT', '127.0.0.1', '{"name":"Administrator","password":"admin","password_confirmation":"admin","_token":"On9ObiAQ0r7aJQfGkWW6Tw5qO1QepmrQW7e3sv4A","_method":"PUT","_previous_":"http:\\/\\/demoshop.local\\/system_admin"}', '2019-02-26 22:53:03', '2019-02-26 22:53:03'),
+	(4, 1, 'system_admin/auth/setting', 'GET', '127.0.0.1', '[]', '2019-02-26 22:53:03', '2019-02-26 22:53:03'),
+	(5, 1, 'system_admin/auth/logout', 'GET', '127.0.0.1', '[]', '2019-02-26 22:53:08', '2019-02-26 22:53:08'),
+	(6, 1, 'system_admin', 'GET', '127.0.0.1', '[]', '2019-02-26 22:53:15', '2019-02-26 22:53:15'),
+	(7, 1, 'system_admin/modules/cms/cms_content', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-26 23:01:28', '2019-02-26 23:01:28'),
+	(8, 1, 'system_admin/modules/cms/cms_category', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-26 23:01:30', '2019-02-26 23:01:30'),
+	(9, 1, 'system_admin/modules/cms/cms_news', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-26 23:01:31', '2019-02-26 23:01:31'),
+	(10, 1, 'system_admin/modules/cms/cms_category', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-26 23:01:34', '2019-02-26 23:01:34'),
+	(11, 1, 'system_admin/layout', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-26 23:01:48', '2019-02-26 23:01:48'),
+	(12, 1, 'system_admin/modules/Cms', 'GET', '127.0.0.1', '{"_pjax":"#pjax-container"}', '2019-02-26 23:01:51', '2019-02-26 23:01:51');
 /*!40000 ALTER TABLE `admin_operation_log` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.admin_permissions
@@ -259,7 +174,7 @@ CREATE TABLE IF NOT EXISTS `admin_role_menu` (
   KEY `admin_role_menu_role_id_menu_id_index` (`role_id`,`menu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart.admin_role_menu: ~1 rows (approximately)
+-- Dumping data for table s-cart.admin_role_menu: ~0 rows (approximately)
 DELETE FROM `admin_role_menu`;
 /*!40000 ALTER TABLE `admin_role_menu` DISABLE KEYS */;
 INSERT INTO `admin_role_menu` (`role_id`, `menu_id`, `created_at`, `updated_at`) VALUES
@@ -327,8 +242,8 @@ CREATE TABLE IF NOT EXISTS `admin_users` (
 DELETE FROM `admin_users`;
 /*!40000 ALTER TABLE `admin_users` DISABLE KEYS */;
 INSERT INTO `admin_users` (`id`, `username`, `password`, `name`, `avatar`, `remember_token`, `created_at`, `updated_at`) VALUES
-	(1, 'admin', '$2y$10$dWIHgYK9JpvfyzZo0eA0MerBPBH8SF1VfGZlq2s/ytL9BZ2ZZqme6', 'Administrator', NULL, 'g7y4D1ISmSdaixFiFVb16wRwMCDVXZj3cQTrVKJ7t2j0qbSJEExAwPS00OcW', '2018-01-12 17:27:40', '2019-02-09 21:58:23'),
-	(3, 'test', '$2y$10$Ao7Uey2z5jPFta/rZG51XuG1OZiWdlbdf3QSgsAjKn9Hfpcp14Ami', 'User', NULL, 'qYbvGFqv6sRSa77uTUuNZlg5MfU5KocyQMaYSlSy9JtxUMpiNT12FzV9XQnU', '2018-01-12 18:05:28', '2018-09-23 18:56:26');
+	(1, 'admin', '$2y$10$OzhJNV2nhi/ve2AeYiRZSeQWjfv0wSafxLb2oZb3mBaNpXXarYHw6', 'Administrator', NULL, 'KSGSjqOqN3OSpdv9WJPuCQeNW3f31t3HCRQGYJrApHcaN7vk8ku0Z9jzYsQD', '2018-01-12 17:27:40', '2019-02-26 22:53:03'),
+	(3, 'test', '$2y$10$Ao7Uey2z5jPFta/rZG51XuG1OZiWdlbdf3QSgsAjKn9Hfpcp14Ami', 'User', NULL, 'jNCohRmFqsOIHmInmGT1DB3lqImjiibXY0MzpQGAH1dvyZalzJnVioyFGlym', '2018-01-12 18:05:28', '2018-09-23 18:56:26');
 /*!40000 ALTER TABLE `admin_users` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.admin_user_permissions
@@ -371,11 +286,44 @@ INSERT INTO `banner` (`id`, `image`, `url`, `html`, `status`, `sort`, `click`, `
 	(17, 'banner/36e662803f744d4f9df2cecc2e17b87b.jpg', NULL, '<h1>S-CART</h1>\r\n                  <h2>Free E-Commerce Template</h2>\r\n                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>\r\n                  <button type="button" class="btn btn-default get">Get it now</button>', 1, 0, 0, 0, '2018-09-03 16:51:56', '2018-09-20 22:24:23');
 /*!40000 ALTER TABLE `banner` ENABLE KEYS */;
 
--- Dumping structure for table s-cart.cms_news
-DROP TABLE IF EXISTS `cms_news`;
-CREATE TABLE IF NOT EXISTS `cms_news` (
+-- Dumping structure for table s-cart.cms_category
+DROP TABLE IF EXISTS `cms_category`;
+CREATE TABLE IF NOT EXISTS `cms_category` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `image` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `parent` tinyint(4) NOT NULL DEFAULT '0',
+  `sort` tinyint(4) NOT NULL DEFAULT '0',
+  `status` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table s-cart.cms_category: ~0 rows (approximately)
+DELETE FROM `cms_category`;
+/*!40000 ALTER TABLE `cms_category` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cms_category` ENABLE KEYS */;
+
+-- Dumping structure for table s-cart.cms_category_description
+DROP TABLE IF EXISTS `cms_category_description`;
+CREATE TABLE IF NOT EXISTS `cms_category_description` (
+  `cms_category_id` int(11) NOT NULL,
+  `lang_id` int(11) NOT NULL,
+  `title` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `keyword` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  UNIQUE KEY `cms_category_description_cms_category_id_lang_id_unique` (`cms_category_id`,`lang_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table s-cart.cms_category_description: ~0 rows (approximately)
+DELETE FROM `cms_category_description`;
+/*!40000 ALTER TABLE `cms_category_description` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cms_category_description` ENABLE KEYS */;
+
+-- Dumping structure for table s-cart.cms_conten
+DROP TABLE IF EXISTS `cms_conten`;
+CREATE TABLE IF NOT EXISTS `cms_conten` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `category_id` int(11) NOT NULL DEFAULT '0',
+  `image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sort` tinyint(4) NOT NULL DEFAULT '0',
   `status` tinyint(4) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
@@ -383,9 +331,67 @@ CREATE TABLE IF NOT EXISTS `cms_news` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart.cms_news: ~0 rows (approximately)
+-- Dumping data for table s-cart.cms_conten: ~0 rows (approximately)
+DELETE FROM `cms_conten`;
+/*!40000 ALTER TABLE `cms_conten` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cms_conten` ENABLE KEYS */;
+
+-- Dumping structure for table s-cart.cms_content_description
+DROP TABLE IF EXISTS `cms_content_description`;
+CREATE TABLE IF NOT EXISTS `cms_content_description` (
+  `cms_content_id` int(11) NOT NULL,
+  `lang_id` int(11) NOT NULL,
+  `title` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `keyword` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `content` text COLLATE utf8mb4_unicode_ci,
+  UNIQUE KEY `cms_content_description_cms_content_id_lang_id_unique` (`cms_content_id`,`lang_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table s-cart.cms_content_description: ~0 rows (approximately)
+DELETE FROM `cms_content_description`;
+/*!40000 ALTER TABLE `cms_content_description` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cms_content_description` ENABLE KEYS */;
+
+-- Dumping structure for table s-cart.cms_image
+DROP TABLE IF EXISTS `cms_image`;
+CREATE TABLE IF NOT EXISTS `cms_image` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `content_id` int(11) NOT NULL DEFAULT '0',
+  `image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sort` tinyint(4) NOT NULL DEFAULT '0',
+  `status` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table s-cart.cms_image: ~0 rows (approximately)
+DELETE FROM `cms_image`;
+/*!40000 ALTER TABLE `cms_image` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cms_image` ENABLE KEYS */;
+
+-- Dumping structure for table s-cart.cms_news
+DROP TABLE IF EXISTS `cms_news`;
+CREATE TABLE IF NOT EXISTS `cms_news` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `image` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `sort` tinyint(4) unsigned NOT NULL DEFAULT '0',
+  `status` tinyint(4) unsigned NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- Dumping data for table s-cart.cms_news: ~7 rows (approximately)
 DELETE FROM `cms_news`;
 /*!40000 ALTER TABLE `cms_news` DISABLE KEYS */;
+INSERT INTO `cms_news` (`id`, `image`, `sort`, `status`, `created_at`, `updated_at`) VALUES
+	(1, 'cms_content/bdbd7a28e7be30d83ba2842cdc580a02.png', 0, 1, '2018-02-10 03:35:13', '2018-09-06 06:25:35'),
+	(2, 'cms_content/8ce2fd76cf30bcd9e099345a68ca17b6.png', 0, 1, '2018-08-02 17:10:19', '2018-09-06 06:25:26'),
+	(3, 'cms_content/bdbd7a28e7be30d83ba2842cdc580a02.png', 0, 1, '2018-08-02 17:16:49', '2018-09-06 06:25:17'),
+	(4, 'cms_content/8ce2fd76cf30bcd9e099345a68ca17b6.png', 0, 1, '2018-08-02 17:59:52', '2018-09-06 06:25:06'),
+	(5, 'cms_content/16889dd0f3e75856c9b387420d641ce4.png', 0, 1, '2018-08-09 13:44:08', '2018-09-23 09:27:12'),
+	(6, 'cms_content/8ce2fd76cf30bcd9e099345a68ca17b6.png', 0, 1, '2018-08-09 13:50:36', '2018-09-23 09:26:59'),
+	(7, 'cms_content/bdbd7a28e7be30d83ba2842cdc580a02.png', 0, 1, '2018-08-09 15:59:29', '2018-09-23 09:26:41');
 /*!40000 ALTER TABLE `cms_news` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.cms_news_description
@@ -393,16 +399,31 @@ DROP TABLE IF EXISTS `cms_news_description`;
 CREATE TABLE IF NOT EXISTS `cms_news_description` (
   `cms_news_id` int(11) NOT NULL,
   `lang_id` int(11) NOT NULL,
-  `title` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `keyword` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `content` text COLLATE utf8mb4_unicode_ci,
-  UNIQUE KEY `cms_news_description_cms_news_id_lang_id_unique` (`cms_news_id`,`lang_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `title` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `keyword` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `content` text COLLATE utf8_unicode_ci,
+  UNIQUE KEY `cms_news_id_lang_id` (`cms_news_id`,`lang_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.cms_news_description: ~0 rows (approximately)
+-- Dumping data for table s-cart.cms_news_description: ~14 rows (approximately)
 DELETE FROM `cms_news_description`;
 /*!40000 ALTER TABLE `cms_news_description` DISABLE KEYS */;
+INSERT INTO `cms_news_description` (`cms_news_id`, `lang_id`, `title`, `keyword`, `description`, `content`) VALUES
+	(1, 1, 'Easy Polo Black Edition', NULL, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\r\n\r\n', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt="" src="/documents/photos/blogs/16d9_star_trek_tng_uniform_tee.jpeg" style="width: 262px; height: 262px; float: right; margin: 10px;" /></p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>'),
+	(1, 2, 'Easy Polo Black Edition', NULL, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\r\n\r\n', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt="" src="/documents/photos/blogs/16d9_star_trek_tng_uniform_tee.jpeg" style="width: 262px; height: 262px; float: right; margin: 10px;" /></p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>'),
+	(2, 1, 'Easy Polo Black Edition', NULL, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\r\n\r\n', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt="" src="/documents/photos/blogs/16d9_star_trek_tng_uniform_tee.jpeg" style="width: 262px; height: 262px; float: right; margin: 10px;" /></p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>'),
+	(2, 2, 'Easy Polo Black Edition', NULL, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\r\n\r\n', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt="" src="/documents/photos/blogs/16d9_star_trek_tng_uniform_tee.jpeg" style="width: 262px; height: 262px; float: right; margin: 10px;" /></p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>'),
+	(3, 1, 'Easy Polo Black Edition', NULL, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\r\n\r\n', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt="" src="/documents/photos/blogs/16d9_star_trek_tng_uniform_tee.jpeg" style="width: 262px; height: 262px; float: right; margin: 10px;" /></p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>'),
+	(3, 2, 'Easy Polo Black Edition', NULL, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\r\n\r\n', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt="" src="/documents/photos/blogs/16d9_star_trek_tng_uniform_tee.jpeg" style="width: 262px; height: 262px; float: right; margin: 10px;" /></p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>'),
+	(4, 1, 'Easy Polo Black Edition', NULL, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\r\n\r\n', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt="" src="/documents/photos/blogs/16d9_star_trek_tng_uniform_tee.jpeg" style="width: 262px; height: 262px; float: right; margin: 10px;" /></p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>'),
+	(4, 2, 'Easy Polo Black Edition', NULL, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\r\n\r\n', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt="" src="/documents/photos/blogs/16d9_star_trek_tng_uniform_tee.jpeg" style="width: 262px; height: 262px; float: right; margin: 10px;" /></p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>'),
+	(5, 1, 'Easy Polo Black Edition', NULL, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\r\n\r\n', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt="" src="/documents/photos/blogs/16d9_star_trek_tng_uniform_tee.jpeg" style="width: 262px; height: 262px; float: right; margin: 10px;" /></p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>'),
+	(5, 2, 'Easy Polo Black Edition', NULL, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\r\n\r\n', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt="" src="/documents/photos/blogs/16d9_star_trek_tng_uniform_tee.jpeg" style="width: 262px; height: 262px; float: right; margin: 10px;" /></p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>'),
+	(6, 1, 'Easy Polo Black Edition', NULL, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\r\n\r\n', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt="" src="/documents/photos/blogs/16d9_star_trek_tng_uniform_tee.jpeg" style="width: 262px; height: 262px; float: right; margin: 10px;" /></p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>'),
+	(6, 2, 'Easy Polo Black Edition', NULL, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\r\n\r\n', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt="" src="/documents/photos/blogs/16d9_star_trek_tng_uniform_tee.jpeg" style="width: 262px; height: 262px; float: right; margin: 10px;" /></p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>'),
+	(7, 1, 'Easy Polo Black Edition', NULL, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt="" src="/documents/photos/blogs/16d9_star_trek_tng_uniform_tee.jpeg" style="width: 262px; height: 262px; float: right; margin: 10px;" /></p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>'),
+	(7, 2, 'Easy Polo Black Edition', '', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt="" src="/documents/photos/blogs/16d9_star_trek_tng_uniform_tee.jpeg" style="width: 262px; height: 262px; float: right; margin: 10px;" /></p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>&nbsp;</p>');
 /*!40000 ALTER TABLE `cms_news_description` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.config
@@ -417,9 +438,9 @@ CREATE TABLE IF NOT EXISTS `config` (
   `detail` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `key` (`key`)
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.config: ~23 rows (approximately)
+-- Dumping data for table s-cart.config: ~25 rows (approximately)
 DELETE FROM `config`;
 /*!40000 ALTER TABLE `config` DISABLE KEYS */;
 INSERT INTO `config` (`id`, `type`, `code`, `key`, `value`, `sort`, `detail`) VALUES
@@ -442,10 +463,12 @@ INSERT INTO `config` (`id`, `type`, `code`, `key`, `value`, `sort`, `detail`) VA
 	(32, NULL, 'config', 'watermark', '1', 0, 'language.admin.enable_watermark'),
 	(44, NULL, 'config', 'site_status', '1', 100, 'language.admin.site_status'),
 	(45, NULL, 'display', 'product_viewed', '4', 0, 'language.admin.viewed_product'),
+	(47, 'Extensions', 'Payment', 'Cash', '1', 0, 'Extensions/Payment/Cash.title'),
+	(48, 'Extensions', 'Shipping', 'ShippingStandard', '1', 0, 'Shipping Standard'),
+	(53, 'Modules', 'Cms', 'News', '1', 0, 'Modules/Cms/News.title'),
 	(55, 'Extensions', 'Total', 'Discount', '1', 0, 'Extensions/Total/Discount.title'),
-	(60, 'Extensions', 'Shipping', 'ShippingStandard', '1', 0, 'Extensions/Shipping/ShippingStandard.title'),
-	(64, 'Modules', 'Cms', 'News', '1', 0, 'Modules/Cms/News.title'),
-	(65, 'Extensions', 'Payment', 'Cash', '1', 0, 'Extensions/Payment/Cash.title');
+	(57, 'Modules', 'Cms', 'Content', '0', 0, 'Modules/Cms/Content.title'),
+	(58, 'Extensions', 'Payment', 'Paypal', '1', 0, 'Extensions/Payment/Paypal.title');
 /*!40000 ALTER TABLE `config` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.config_global
@@ -465,7 +488,7 @@ CREATE TABLE IF NOT EXISTS `config_global` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.config_global: ~1 rows (approximately)
+-- Dumping data for table s-cart.config_global: ~0 rows (approximately)
 DELETE FROM `config_global`;
 /*!40000 ALTER TABLE `config_global` DISABLE KEYS */;
 INSERT INTO `config_global` (`id`, `logo`, `watermark`, `template`, `phone`, `long_phone`, `email`, `time_active`, `address`, `locale`, `currency`) VALUES
@@ -561,6 +584,29 @@ DELETE FROM `password_resets`;
 /*!40000 ALTER TABLE `password_resets` DISABLE KEYS */;
 /*!40000 ALTER TABLE `password_resets` ENABLE KEYS */;
 
+-- Dumping structure for table s-cart.paypal
+DROP TABLE IF EXISTS `paypal`;
+CREATE TABLE IF NOT EXISTS `paypal` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `paypal_client_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `paypal_secrect` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `paypal_log` int(11) NOT NULL,
+  `paypal_path_log` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `paypal_mode` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `paypal_logLevel` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `paypal_currency` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `paypal_order_status_success` int(11) NOT NULL,
+  `paypal_order_status_faild` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table s-cart.paypal: ~0 rows (approximately)
+DELETE FROM `paypal`;
+/*!40000 ALTER TABLE `paypal` DISABLE KEYS */;
+INSERT INTO `paypal` (`id`, `paypal_client_id`, `paypal_secrect`, `paypal_log`, `paypal_path_log`, `paypal_mode`, `paypal_logLevel`, `paypal_currency`, `paypal_order_status_success`, `paypal_order_status_faild`) VALUES
+	(1, '', '', 0, 'logs/paypal.log', 'sandbox', 'DEBUG', 'USD', 1, 5);
+/*!40000 ALTER TABLE `paypal` ENABLE KEYS */;
+
 -- Dumping structure for table s-cart.shipping_standard
 DROP TABLE IF EXISTS `shipping_standard`;
 CREATE TABLE IF NOT EXISTS `shipping_standard` (
@@ -570,7 +616,7 @@ CREATE TABLE IF NOT EXISTS `shipping_standard` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart.shipping_standard: ~1 rows (approximately)
+-- Dumping data for table s-cart.shipping_standard: ~0 rows (approximately)
 DELETE FROM `shipping_standard`;
 /*!40000 ALTER TABLE `shipping_standard` DISABLE KEYS */;
 INSERT INTO `shipping_standard` (`id`, `fee`, `shipping_free`) VALUES
@@ -821,7 +867,7 @@ CREATE TABLE IF NOT EXISTS `shop_discount` (
   UNIQUE KEY `shop_discount_code_unique` (`code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart.shop_discount: ~1 rows (approximately)
+-- Dumping data for table s-cart.shop_discount: ~0 rows (approximately)
 DELETE FROM `shop_discount`;
 /*!40000 ALTER TABLE `shop_discount` DISABLE KEYS */;
 INSERT INTO `shop_discount` (`id`, `code`, `reward`, `type`, `data`, `number_uses`, `used`, `status`, `login`, `expires_at`) VALUES
@@ -983,7 +1029,7 @@ INSERT INTO `shop_order` (`id`, `user_id`, `subtotal`, `shipping`, `discount`, `
 	(157, 0, 15000, 200, 0, 0, 0, 0, 0, 15200, 'USD', 1, 0, 15200, 'The Han', 'Abc', 'xyz', NULL, '09012345678', 'johan.lv@gmail.com', 'tesst', 'Cash', NULL, '2019-02-01 16:15:12', NULL),
 	(158, 3, 45000, 20000, -10, 0, 0, 1, 0, 64990, 'USD', 1, 0, 64990, 'Naruto VN', 'HCM', 'Ho chi minh', NULL, '0667151172', 'lanhktc@gmail.com', NULL, 'Paypal', 'PAYID-LRKBPXY6P542036HU424794X', '2019-02-01 16:56:44', '2019-02-01 16:57:16'),
 	(159, 0, 30000, 20000, 0, 0, 0, 0, 0, 50000, 'USD', 1, 0, 50000, 'chinonso', '18,abata close orile iganmu lagos', '12.dfkvjjfovmkl', NULL, '08142381323', 'chinonso1amaechi@gmail.com', NULL, 'Cash', NULL, '2019-02-05 07:10:58', NULL),
-	(160, 0, 15000, 20000, 0, 0, 0, 0, 0, 35000, 'USD', 1, 0, 35000, 'Hung', '南陽市長岡', 'jhgj', NULL, '09012345678', 'lalanh112@fgfd.com', 'ghjghj', 'Cash', NULL, '2019-02-09 21:28:57', NULL);
+	(160, 14, 10000, 20000, 0, 0, 0, 0, 0, 30000, 'USD', 1, 0, 30000, 'usertest', 'jl dr ismangil', 'semarang barat', NULL, '082227212727', 'nanangkurnia64@gmail.com', 'wfwfwfw', 'Cash', NULL, '2019-02-11 13:34:02', NULL);
 /*!40000 ALTER TABLE `shop_order` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_order_detail
@@ -1106,7 +1152,7 @@ INSERT INTO `shop_order_detail` (`id`, `order_id`, `product_id`, `name`, `price`
 	(245, 158, 48, 'Easy Polo Black Edition', 15000, 2, 30000, 'BX-5UT', NULL, NULL, NULL, NULL, '2019-02-01 16:56:44', NULL),
 	(246, 159, 46, 'Easy Polo Black Edition', 15000, 1, 15000, 'P2.5-I', NULL, NULL, NULL, NULL, '2019-02-05 07:10:58', NULL),
 	(247, 159, 45, 'Easy Polo Black Edition', 15000, 1, 15000, 'LFF', NULL, NULL, NULL, NULL, '2019-02-05 07:10:58', NULL),
-	(248, 160, 48, 'Easy Polo Black Edition', 15000, 1, 15000, 'BX-5UT', NULL, NULL, NULL, NULL, '2019-02-09 21:28:57', NULL);
+	(248, 160, 49, 'Easy Polo Black Edition', 10000, 1, 10000, 'BX-5UTbnv', NULL, NULL, NULL, NULL, '2019-02-11 13:34:02', NULL);
 /*!40000 ALTER TABLE `shop_order_detail` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_order_history
@@ -1229,7 +1275,7 @@ INSERT INTO `shop_order_history` (`id`, `order_id`, `content`, `admin_id`, `user
 	(167, 158, 'New order', 0, 3, '2019-02-01 16:56:44'),
 	(168, 158, 'Transaction PAYID-LRKBPXY6P542036HU424794X', 0, 3, '2019-02-01 16:57:16'),
 	(169, 159, 'New order', 0, 0, '2019-02-05 07:10:58'),
-	(170, 160, 'New order', 0, 0, '2019-02-09 21:28:57');
+	(170, 160, 'New order', 0, 14, '2019-02-11 13:34:02');
 /*!40000 ALTER TABLE `shop_order_history` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_order_status
@@ -1691,11 +1737,11 @@ INSERT INTO `shop_order_total` (`id`, `order_id`, `title`, `code`, `value`, `tex
 	(641, 159, 'Discount', 'discount', 0, '$0', 20, '2019-02-05 07:10:58', NULL),
 	(642, 159, 'Total', 'total', 50000, '$50,000', 100, '2019-02-05 07:10:58', NULL),
 	(643, 159, 'Received', 'received', 0, '$0', 200, '2019-02-05 07:10:58', NULL),
-	(644, 160, 'Sub Total', 'subtotal', 15000, '$15,000', 1, '2019-02-09 21:28:57', NULL),
-	(645, 160, 'Shipping Standard', 'shipping', 20000, '$20,000', 10, '2019-02-09 21:28:57', NULL),
-	(646, 160, 'Discount', 'discount', 0, '$0', 20, '2019-02-09 21:28:57', NULL),
-	(647, 160, 'Total', 'total', 35000, '$35,000', 100, '2019-02-09 21:28:57', NULL),
-	(648, 160, 'Received', 'received', 0, '$0', 200, '2019-02-09 21:28:57', NULL);
+	(644, 160, 'Sub Total', 'subtotal', 10000, '$10,000', 1, '2019-02-11 13:34:02', NULL),
+	(645, 160, 'Shipping Standard', 'shipping', 20000, '$20,000', 10, '2019-02-11 13:34:02', NULL),
+	(646, 160, 'Discount', 'discount', 0, '$0', 20, '2019-02-11 13:34:02', NULL),
+	(647, 160, 'Total', 'total', 30000, '$30,000', 100, '2019-02-11 13:34:02', NULL),
+	(648, 160, 'Received', 'received', 0, '$0', 200, '2019-02-11 13:34:02', NULL);
 /*!40000 ALTER TABLE `shop_order_total` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_page
@@ -1788,46 +1834,46 @@ CREATE TABLE IF NOT EXISTS `shop_product` (
 DELETE FROM `shop_product`;
 /*!40000 ALTER TABLE `shop_product` DISABLE KEYS */;
 INSERT INTO `shop_product` (`id`, `sku`, `image`, `brand_id`, `vendor_id`, `category_id`, `category_other`, `price`, `cost`, `stock`, `sold`, `type`, `option`, `sort`, `status`, `view`, `date_lastview`, `date_available`, `created_at`, `updated_at`) VALUES
-	(3, 'MEGA2560', 'product/f2d9505d28f1b10f949cec466cada01e.jpeg', 1, 0, 7, NULL, 220000, 150000, 100, 0, 0, NULL, 0, 1, 93, '2019-02-05 12:26:24', NULL, '2018-01-15 14:57:31', '2019-02-05 12:26:24'),
-	(4, 'LEDFAN1', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 6, NULL, 190000, 100000, 99, 1, 1, NULL, 0, 1, 69, '2019-02-05 14:44:56', NULL, '2018-01-16 13:03:54', '2019-02-05 14:44:56'),
-	(5, 'CLOCKFAN1', 'product/15aa6b1f31b53a0177d7653761a45274.jpeg', 2, 0, 13, NULL, 420000, 320000, 100, 0, 1, NULL, 0, 1, 89, '2019-02-09 21:43:13', NULL, '2018-01-16 13:04:41', '2019-02-09 21:43:13'),
-	(6, 'CLOCKFAN2', 'product/0e1416d509af3712bd801404ca928702.jpeg', 1, 0, 13, NULL, 380000, 250000, 97, 3, 1, NULL, 0, 1, 118, '2019-02-08 09:12:17', NULL, '2018-02-02 14:52:50', '2019-02-08 09:12:17'),
-	(7, 'CLOCKFAN3', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 13, NULL, 320000, 250000, 99, 1, 1, NULL, 1, 1, 98, '2019-02-02 21:05:57', NULL, '2018-02-02 14:53:30', '2019-02-02 21:05:57'),
-	(8, 'TMC2208', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 6, 0, 11, NULL, 220000, 130000, 100, 0, 0, NULL, 1, 1, 122, '2019-02-09 07:01:25', NULL, '2018-02-02 14:53:30', '2019-02-09 07:01:25'),
-	(9, 'FILAMENT', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 15, NULL, 299000, 200000, 99, 1, 1, NULL, 1, 1, 139, '2019-02-09 15:45:58', NULL, '2018-02-02 14:53:30', '2019-02-09 15:45:58'),
-	(10, 'A4988', 'product/820283598735f98a9b23960821da438b.jpeg', 1, 0, 11, NULL, 39000, 20000, 100, 0, 0, NULL, 1, 1, 70, '2019-01-30 16:00:58', NULL, '2018-02-02 14:53:30', '2019-01-30 16:00:58'),
-	(11, 'ANYCUBIC-P', 'product/d63af407fa92299e163696a585566dc7.jpeg', 3, 0, 10, NULL, 4990000, 3500000, 100, 0, 0, NULL, 0, 1, 102, '2019-02-08 05:20:27', NULL, '2018-01-15 14:57:31', '2019-02-08 05:20:27'),
-	(12, '3DHLFD', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 12, NULL, 7990000, 5200000, 100, 0, 1, NULL, 0, 1, 90, '2019-02-08 03:49:14', NULL, '2018-01-15 14:57:31', '2019-02-08 03:49:14'),
-	(20, 'SS495A', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 2, 0, 14, NULL, 15000, 7000, 100, 0, 1, NULL, 0, 1, 112, '2019-02-09 17:13:01', NULL, '2018-01-15 14:57:31', '2019-02-09 17:13:01'),
-	(21, '3D-CARBON1.75', 'product/d05966a529efdd8d7b41ed9b687859b6.jpeg', 2, 0, 15, NULL, 390000, 15000, 100, 0, 1, NULL, 1, 1, 97, '2019-02-05 11:31:13', NULL, '2018-02-02 14:53:30', '2019-02-05 11:31:14'),
-	(22, '3D-GOLD1.75', 'product/eedfd153bf368919a134da17f22c8de7.jpeg', 2, 0, 15, NULL, 500000, 15000, 100, 0, 1, NULL, 1, 1, 131, '2019-02-06 20:06:12', NULL, '2018-04-12 15:05:37', '2019-02-06 20:06:12'),
-	(23, 'LCD12864-3D', 'product/a7a315526ecf7594731448d792714a11.jpeg', 2, 0, 11, NULL, 220000, 15000, 100, 0, 0, NULL, 0, 1, 57, '2019-02-08 13:27:37', NULL, '2018-08-11 13:33:37', '2019-02-08 13:27:37'),
-	(24, 'LCD2004-3D', 'product/9215506044b8a350fc082f5350b3653a.jpg', 2, 0, 11, NULL, 190000, 15000, 100, 0, 0, NULL, 0, 1, 80, '2019-01-30 16:00:59', NULL, '2018-08-11 13:39:31', '2019-01-30 16:00:59'),
-	(25, 'RAMPS1.5-3D', 'product/1d6cdd4473603c7a4d162067713b8da8.jpg', 2, 0, 11, NULL, 120000, 15000, 100, 0, 0, NULL, 0, 1, 82, '2019-01-30 16:00:59', NULL, '2018-08-11 13:41:25', '2019-01-30 16:00:59'),
-	(26, 'EFULL-3D', 'product/07e79f6546499878cba383dd5bfe977e.jpeg', 1, 0, 11, NULL, 890000, 15000, 100, 0, 0, NULL, 0, 1, 54, '2019-01-30 16:01:00', NULL, '2018-08-11 13:50:25', '2019-01-30 16:01:00'),
-	(27, 'ANYCUBIC-I3M', 'product/ea88b7078652909f3d6c5d445aa05f59.jpeg', 1, 0, 10, NULL, 7990000, 15000, 100, 0, 0, NULL, 0, 1, 115, '2019-02-05 13:28:43', NULL, '2018-08-22 16:26:00', '2019-02-05 13:28:43'),
-	(28, '3DNOZZLE', 'product/c25c81c852823f5ea8ba4250978217a5.jpeg', 1, 0, 11, NULL, 10000, 15000, 100, 0, 0, NULL, 0, 1, 61, '2019-02-06 12:47:02', NULL, '2018-08-24 04:21:48', '2019-02-06 12:47:02'),
-	(29, '3D-TEFLONLOCK', 'product/8e28f51184f0a96970c05185b1412fa1.jpeg', 1, 0, 12, NULL, 10000, 15000, 99, 1, 0, NULL, 0, 1, 96, '2019-01-30 16:01:01', NULL, '2018-08-24 04:32:48', '2019-01-30 16:01:01'),
-	(30, '3D-BELT-GT2', 'product/8f795b2335d42cdb7c7eafcfaf714cb2.jpeg', 1, 0, 11, NULL, 20000, 15000, 100, 0, 1, NULL, 0, 1, 109, '2019-01-30 16:00:40', NULL, '2018-08-24 04:35:39', '2019-01-30 16:00:40'),
-	(31, '3D-TEFLONLOCK-M10', 'product/0e1416d509af3712bd801404ca928702.jpeg', 2, 0, 11, NULL, 10000, 15000, 100, 0, 0, NULL, 0, 1, 70, '2019-02-09 12:32:57', NULL, '2018-08-24 04:39:03', '2019-02-09 12:32:57'),
-	(32, '3D-HOTWIRE1240', 'product/efd9fb910ba539c125b7c431a1ccc563.jpg', 0, 0, 11, NULL, 20000, 15000, 100, 0, 1, NULL, 0, 1, 115, '2019-02-08 10:11:25', NULL, '2018-08-24 04:40:54', '2019-02-08 10:11:25'),
-	(33, '3D-TEFTLON-24', 'product/a635cc2bdf5485ccb2c0cc9d186968b2.jpeg', 2, 0, 16, NULL, 15000, 15000, 100, 0, 0, NULL, 1, 1, 98, '2019-01-30 16:01:02', NULL, '2018-08-24 04:44:04', '2019-01-30 16:01:02'),
-	(34, '3D-TEFTLON-W24', 'product/a32f12e009ebf0d24ab264706ecbc15e.jpeg', 5, 0, 11, NULL, 20000, 15000, 100, 0, 1, NULL, 0, 1, 117, '2019-02-08 05:09:44', NULL, '2018-08-24 05:09:34', '2019-02-08 05:09:44'),
-	(35, '3D-SENSOR-NTC 100K', 'product/41c8f0d0111cd5a3f0538604233cbed8.jpeg', 4, 0, 10, NULL, 15000, 15000, 100, 0, 1, NULL, 0, 1, 152, '2019-02-08 04:59:52', NULL, '2018-08-24 05:13:58', '2019-02-08 04:59:52'),
-	(36, 'nRLF24L01+2.4HZ', 'product/820283598735f98a9b23960821da438b.jpeg', 3, 0, 11, NULL, 25000, 15000, 100, 0, 0, NULL, 0, 1, 101, '2019-01-30 16:00:42', NULL, '2018-08-24 06:07:15', '2019-01-30 16:00:42'),
-	(37, 'ARDUINO-NANO', 'product/da687e60e54bd7fc7eab5c76e7ec3754.jpeg', 1, 0, 17, NULL, 100000, 15000, 99, 1, 0, NULL, 0, 1, 118, '2019-02-08 11:21:49', NULL, '2018-08-24 06:25:48', '2019-02-08 11:21:49'),
-	(38, 'LEDSTRIP-5050RGB', 'product/61559578baf403e03565e73a14f845ce.jpeg', 1, 0, 9, NULL, 15000, 15000, 99, 1, 1, NULL, 0, 1, 136, '2019-02-09 14:28:55', NULL, '2018-08-24 06:33:31', '2019-02-09 14:28:55'),
-	(39, 'LEDSTRIP-S', 'product/c400aecd5c6d87782ac9af33dd7a5980.jpg', 4, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 65, '2019-02-01 06:24:30', NULL, '2018-08-24 08:46:21', '2019-02-01 06:24:30'),
-	(40, 'P10-IR', 'product/830d640cd17eba0bf186dc649d5c3053.jpeg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 63, '2019-01-30 16:01:04', NULL, '2018-08-24 08:49:49', '2019-01-30 16:01:04'),
-	(41, 'P10-IG', 'product/9d9aab8be8634708c9cf5b690fee74a4.jpeg', 0, 0, 19, NULL, 15000, 15000, 99, 1, 1, NULL, 0, 1, 83, '2019-02-09 11:27:11', NULL, '2018-08-24 08:51:11', '2019-02-09 11:27:11'),
-	(42, 'P10-IB', 'product/98fafb9da683cd9ee854598f3f3a3bd5.jpeg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 66, '2019-01-31 23:42:24', NULL, '2018-08-24 08:52:58', '2019-01-31 23:42:24'),
-	(43, 'P10-IRGB', 'product/a111c060ebb6ffbbd2d34ae278501789.jpg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 84, '2019-02-09 17:37:00', NULL, '2018-08-24 08:54:45', '2019-02-09 17:37:00'),
-	(44, 'P10-IRG', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 1, NULL, 0, 1, 108, '2019-01-30 16:00:43', NULL, '2018-08-24 08:56:02', '2019-01-30 16:00:43'),
-	(45, 'LFF', 'product/3c8f613d30b4e487ef95a5e4cdea634c.jpeg', 0, 0, 6, NULL, 15000, 15000, 95, 5, 0, NULL, 0, 1, 165, '2019-02-08 16:49:15', NULL, '2018-08-24 08:58:42', '2019-02-08 16:49:15'),
-	(46, 'P2.5-I', 'product/949fa36ebd56593445fb61d141fd2a81.jpeg', 2, 0, 19, NULL, 15000, 15000, 96, 4, 0, NULL, 0, 1, 142, '2019-02-08 16:48:17', NULL, '2018-08-24 09:23:07', '2019-02-08 16:48:17'),
-	(47, 'BX-5U0', 'product/cd7aa3394c35330ed7f9e4095c6adb65.jpeg', 0, 0, 19, NULL, 15000, 15000, 96, 4, 0, NULL, 0, 1, 202, '2019-02-07 22:22:02', NULL, '2018-08-24 09:48:31', '2019-02-07 22:22:02'),
-	(48, 'BX-5UT', 'product/6ddd855403d127a9fed049d0ec335481.jpeg', 0, 0, 11, NULL, 15000, 15000, 89, 11, 0, NULL, 0, 1, 400, '2019-02-08 15:36:04', NULL, '2018-08-24 09:52:15', '2019-02-09 21:28:57'),
-	(49, 'BX-5UTbnv', 'product/0950df6d59696ad39a8e5505735f578c.jpeg', 2, 0, 2, NULL, 15000, 15000, 83, 17, 1, NULL, 0, 1, 300, '2019-02-09 07:49:00', '2019-03-30 00:00:00', '2018-09-03 08:05:59', '2019-02-09 07:49:00');
+	(3, 'MEGA2560', 'product/f2d9505d28f1b10f949cec466cada01e.jpeg', 1, 0, 7, NULL, 220000, 150000, 100, 0, 0, NULL, 0, 1, 107, '2019-02-24 03:37:20', NULL, '2018-01-15 14:57:31', '2019-02-24 03:37:20'),
+	(4, 'LEDFAN1', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 6, NULL, 190000, 100000, 99, 1, 1, NULL, 0, 1, 77, '2019-02-25 05:00:39', NULL, '2018-01-16 13:03:54', '2019-02-25 05:00:39'),
+	(5, 'CLOCKFAN1', 'product/15aa6b1f31b53a0177d7653761a45274.jpeg', 2, 0, 13, NULL, 420000, 320000, 100, 0, 1, NULL, 0, 1, 105, '2019-02-22 02:37:46', NULL, '2018-01-16 13:04:41', '2019-02-22 02:37:46'),
+	(6, 'CLOCKFAN2', 'product/0e1416d509af3712bd801404ca928702.jpeg', 1, 0, 13, NULL, 380000, 250000, 97, 3, 1, NULL, 0, 1, 136, '2019-02-24 12:12:49', NULL, '2018-02-02 14:52:50', '2019-02-24 12:12:49'),
+	(7, 'CLOCKFAN3', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 13, NULL, 320000, 250000, 99, 1, 1, NULL, 1, 1, 107, '2019-02-20 14:06:17', NULL, '2018-02-02 14:53:30', '2019-02-20 14:06:17'),
+	(8, 'TMC2208', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 6, 0, 11, NULL, 220000, 130000, 100, 0, 0, NULL, 1, 1, 139, '2019-02-25 15:55:36', NULL, '2018-02-02 14:53:30', '2019-02-25 15:55:36'),
+	(9, 'FILAMENT', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 15, NULL, 299000, 200000, 99, 1, 1, NULL, 1, 1, 155, '2019-02-23 23:05:57', NULL, '2018-02-02 14:53:30', '2019-02-23 23:05:57'),
+	(10, 'A4988', 'product/820283598735f98a9b23960821da438b.jpeg', 1, 0, 11, NULL, 39000, 20000, 100, 0, 0, NULL, 1, 1, 78, '2019-02-23 04:16:22', NULL, '2018-02-02 14:53:30', '2019-02-23 04:16:22'),
+	(11, 'ANYCUBIC-P', 'product/d63af407fa92299e163696a585566dc7.jpeg', 3, 0, 10, NULL, 4990000, 3500000, 100, 0, 0, NULL, 0, 1, 114, '2019-02-26 11:14:02', NULL, '2018-01-15 14:57:31', '2019-02-26 11:14:02'),
+	(12, '3DHLFD', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 1, 0, 12, NULL, 7990000, 5200000, 100, 0, 1, NULL, 0, 1, 99, '2019-02-23 15:46:36', NULL, '2018-01-15 14:57:31', '2019-02-23 15:46:36'),
+	(20, 'SS495A', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 2, 0, 14, NULL, 15000, 7000, 100, 0, 1, NULL, 0, 1, 126, '2019-02-23 20:20:55', NULL, '2018-01-15 14:57:31', '2019-02-23 20:20:55'),
+	(21, '3D-CARBON1.75', 'product/d05966a529efdd8d7b41ed9b687859b6.jpeg', 2, 0, 15, NULL, 390000, 15000, 100, 0, 1, NULL, 1, 1, 108, '2019-02-22 19:54:08', NULL, '2018-02-02 14:53:30', '2019-02-22 19:54:08'),
+	(22, '3D-GOLD1.75', 'product/eedfd153bf368919a134da17f22c8de7.jpeg', 2, 0, 15, NULL, 500000, 15000, 100, 0, 1, NULL, 1, 1, 148, '2019-02-26 11:15:40', NULL, '2018-04-12 15:05:37', '2019-02-26 11:15:40'),
+	(23, 'LCD12864-3D', 'product/a7a315526ecf7594731448d792714a11.jpeg', 2, 0, 11, NULL, 220000, 15000, 100, 0, 0, NULL, 0, 1, 63, '2019-02-20 14:06:22', NULL, '2018-08-11 13:33:37', '2019-02-20 14:06:22'),
+	(24, 'LCD2004-3D', 'product/9215506044b8a350fc082f5350b3653a.jpg', 2, 0, 11, NULL, 190000, 15000, 100, 0, 0, NULL, 0, 1, 84, '2019-02-20 14:06:19', NULL, '2018-08-11 13:39:31', '2019-02-20 14:06:19'),
+	(25, 'RAMPS1.5-3D', 'product/1d6cdd4473603c7a4d162067713b8da8.jpg', 2, 0, 11, NULL, 120000, 15000, 100, 0, 0, NULL, 0, 1, 87, '2019-02-20 14:06:23', NULL, '2018-08-11 13:41:25', '2019-02-20 14:06:23'),
+	(26, 'EFULL-3D', 'product/07e79f6546499878cba383dd5bfe977e.jpeg', 1, 0, 11, NULL, 890000, 15000, 100, 0, 0, NULL, 0, 1, 57, '2019-02-20 14:06:17', NULL, '2018-08-11 13:50:25', '2019-02-20 14:06:17'),
+	(27, 'ANYCUBIC-I3M', 'product/ea88b7078652909f3d6c5d445aa05f59.jpeg', 1, 0, 10, NULL, 7990000, 15000, 100, 0, 0, NULL, 0, 1, 131, '2019-02-24 22:22:21', NULL, '2018-08-22 16:26:00', '2019-02-24 22:22:21'),
+	(28, '3DNOZZLE', 'product/c25c81c852823f5ea8ba4250978217a5.jpeg', 1, 0, 11, NULL, 10000, 15000, 100, 0, 0, NULL, 0, 1, 65, '2019-02-22 22:16:11', NULL, '2018-08-24 04:21:48', '2019-02-22 22:16:11'),
+	(29, '3D-TEFLONLOCK', 'product/8e28f51184f0a96970c05185b1412fa1.jpeg', 1, 0, 12, NULL, 10000, 15000, 99, 1, 0, NULL, 0, 1, 98, '2019-02-20 14:06:24', NULL, '2018-08-24 04:32:48', '2019-02-20 14:06:24'),
+	(30, '3D-BELT-GT2', 'product/8f795b2335d42cdb7c7eafcfaf714cb2.jpeg', 1, 0, 11, NULL, 20000, 15000, 100, 0, 1, NULL, 0, 1, 115, '2019-02-24 09:23:31', NULL, '2018-08-24 04:35:39', '2019-02-24 09:23:31'),
+	(31, '3D-TEFLONLOCK-M10', 'product/0e1416d509af3712bd801404ca928702.jpeg', 2, 0, 11, NULL, 10000, 15000, 100, 0, 0, NULL, 0, 1, 73, '2019-02-24 07:21:19', NULL, '2018-08-24 04:39:03', '2019-02-24 07:21:19'),
+	(32, '3D-HOTWIRE1240', 'product/efd9fb910ba539c125b7c431a1ccc563.jpg', 0, 0, 11, NULL, 20000, 15000, 100, 0, 1, NULL, 0, 1, 129, '2019-02-26 08:43:00', NULL, '2018-08-24 04:40:54', '2019-02-26 08:43:00'),
+	(33, '3D-TEFTLON-24', 'product/a635cc2bdf5485ccb2c0cc9d186968b2.jpeg', 2, 0, 16, NULL, 15000, 15000, 100, 0, 0, NULL, 1, 1, 103, '2019-02-20 14:06:24', NULL, '2018-08-24 04:44:04', '2019-02-20 14:06:24'),
+	(34, '3D-TEFTLON-W24', 'product/a32f12e009ebf0d24ab264706ecbc15e.jpeg', 5, 0, 11, NULL, 20000, 15000, 100, 0, 1, NULL, 0, 1, 124, '2019-02-22 22:21:14', NULL, '2018-08-24 05:09:34', '2019-02-22 22:21:14'),
+	(35, '3D-SENSOR-NTC 100K', 'product/41c8f0d0111cd5a3f0538604233cbed8.jpeg', 4, 0, 10, NULL, 15000, 15000, 100, 0, 1, NULL, 0, 1, 169, '2019-02-24 11:46:59', NULL, '2018-08-24 05:13:58', '2019-02-24 11:46:59'),
+	(36, 'nRLF24L01+2.4HZ', 'product/820283598735f98a9b23960821da438b.jpeg', 3, 0, 11, NULL, 25000, 15000, 100, 0, 0, NULL, 0, 1, 110, '2019-02-20 14:05:57', NULL, '2018-08-24 06:07:15', '2019-02-20 14:05:57'),
+	(37, 'ARDUINO-NANO', 'product/da687e60e54bd7fc7eab5c76e7ec3754.jpeg', 1, 0, 17, NULL, 100000, 15000, 99, 1, 0, NULL, 0, 1, 142, '2019-02-26 21:40:35', NULL, '2018-08-24 06:25:48', '2019-02-26 21:40:35'),
+	(38, 'LEDSTRIP-5050RGB', 'product/61559578baf403e03565e73a14f845ce.jpeg', 1, 0, 9, NULL, 15000, 15000, 99, 1, 1, NULL, 0, 1, 155, '2019-02-26 11:25:29', NULL, '2018-08-24 06:33:31', '2019-02-26 11:25:29'),
+	(39, 'LEDSTRIP-S', 'product/c400aecd5c6d87782ac9af33dd7a5980.jpg', 4, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 71, '2019-02-20 14:06:18', NULL, '2018-08-24 08:46:21', '2019-02-20 14:06:18'),
+	(40, 'P10-IR', 'product/830d640cd17eba0bf186dc649d5c3053.jpeg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 65, '2019-02-20 14:06:25', NULL, '2018-08-24 08:49:49', '2019-02-20 14:06:25'),
+	(41, 'P10-IG', 'product/9d9aab8be8634708c9cf5b690fee74a4.jpeg', 0, 0, 19, NULL, 15000, 15000, 99, 1, 1, NULL, 0, 1, 89, '2019-02-20 14:06:27', NULL, '2018-08-24 08:51:11', '2019-02-20 14:06:27'),
+	(42, 'P10-IB', 'product/98fafb9da683cd9ee854598f3f3a3bd5.jpeg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 71, '2019-02-20 14:06:28', NULL, '2018-08-24 08:52:58', '2019-02-20 14:06:28'),
+	(43, 'P10-IRGB', 'product/a111c060ebb6ffbbd2d34ae278501789.jpg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 0, NULL, 0, 1, 89, '2019-02-21 13:27:25', NULL, '2018-08-24 08:54:45', '2019-02-21 13:27:25'),
+	(44, 'P10-IRG', 'product/95349d3747fdaf79d391fdc98e083701.jpg', 0, 0, 19, NULL, 15000, 15000, 100, 0, 1, NULL, 0, 1, 117, '2019-02-24 23:35:40', NULL, '2018-08-24 08:56:02', '2019-02-24 23:35:40'),
+	(45, 'LFF', 'product/3c8f613d30b4e487ef95a5e4cdea634c.jpeg', 0, 0, 6, NULL, 15000, 15000, 95, 5, 0, NULL, 0, 1, 179, '2019-02-23 22:23:25', NULL, '2018-08-24 08:58:42', '2019-02-23 22:23:25'),
+	(46, 'P2.5-I', 'product/949fa36ebd56593445fb61d141fd2a81.jpeg', 2, 0, 19, NULL, 15000, 15000, 96, 4, 0, NULL, 0, 1, 153, '2019-02-21 18:45:19', NULL, '2018-08-24 09:23:07', '2019-02-21 18:45:19'),
+	(47, 'BX-5U0', 'product/cd7aa3394c35330ed7f9e4095c6adb65.jpeg', 0, 0, 19, NULL, 15000, 15000, 96, 4, 0, NULL, 0, 1, 213, '2019-02-25 04:31:20', NULL, '2018-08-24 09:48:31', '2019-02-25 04:31:20'),
+	(48, 'BX-5UT', 'product/6ddd855403d127a9fed049d0ec335481.jpeg', 0, 0, 11, NULL, 15000, 15000, 90, 10, 0, NULL, 0, 1, 419, '2019-02-26 19:41:10', NULL, '2018-08-24 09:52:15', '2019-02-26 19:41:10'),
+	(49, 'BX-5UTbnv', 'product/0950df6d59696ad39a8e5505735f578c.jpeg', 2, 0, 2, NULL, 15000, 15000, 82, 18, 1, NULL, 0, 1, 321, '2019-02-25 07:46:21', '2019-03-30 00:00:00', '2018-09-03 08:05:59', '2019-02-25 07:46:21');
 /*!40000 ALTER TABLE `shop_product` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_product_description
@@ -2002,7 +2048,7 @@ CREATE TABLE IF NOT EXISTS `shop_shipping` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.shop_shipping: ~1 rows (approximately)
+-- Dumping data for table s-cart.shop_shipping: ~0 rows (approximately)
 DELETE FROM `shop_shipping`;
 /*!40000 ALTER TABLE `shop_shipping` DISABLE KEYS */;
 INSERT INTO `shop_shipping` (`id`, `type`, `value`, `free`, `status`) VALUES
@@ -2089,9 +2135,9 @@ CREATE TABLE IF NOT EXISTS `shop_users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table s-cart.shop_users: ~13 rows (approximately)
+-- Dumping data for table s-cart.shop_users: ~14 rows (approximately)
 DELETE FROM `shop_users`;
 /*!40000 ALTER TABLE `shop_users` DISABLE KEYS */;
 INSERT INTO `shop_users` (`id`, `name`, `email`, `password`, `address1`, `address2`, `phone`, `remember_token`, `created_at`, `updated_at`) VALUES
@@ -2107,7 +2153,8 @@ INSERT INTO `shop_users` (`id`, `name`, `email`, `password`, `address1`, `addres
 	(10, 'Hoang', 'tuannguyen@gmail.com2', '$2y$10$DdSoAxE33P.s5zJdsbLM7u0z1ICrF/3w8rn0ck2DlRyqADBVmXQHi', 'Van', 'Trnag', '099845345', 'KKPkyip3UYcdwbaCRZX5d9s4y1lljY9FKGKO4kkIg2hnoELdEvTPcAD3kxds', '2018-10-23 11:34:43', '2018-10-23 11:34:43'),
 	(11, 'levantu', 'levantu.nd1997@gmail.com', '$2y$10$dLW04M0TIbGGEo0vHsE0XO0M2ZGEmwa0hD1h2ZZi4MA0jZPMtENDK', 'hn', 'hn', '0914731527', NULL, '2018-10-23 13:20:42', '2018-10-23 13:20:42'),
 	(12, 'test', 'ahsanislam04@gmail.com', '$2y$10$cBWPb0Z69/Ps/4mPaIORSOAQlrIlS68b483S2RuP/XwUuHHGGKb5u', 'papi chulo', 'papi chulo', '090078601', NULL, '2018-11-27 19:32:30', '2018-11-27 19:32:30'),
-	(13, 'mail', 'mail@gmail.com', '$2y$10$GkIRhidmHNAih4vid6wo3ucbTJVNk.I/Hp.yO3P2E1lbGB6AR3KpO', 'jampang', 'bandung', '089324234213213', NULL, '2019-01-02 21:57:11', '2019-01-02 21:57:11');
+	(13, 'mail', 'mail@gmail.com', '$2y$10$GkIRhidmHNAih4vid6wo3ucbTJVNk.I/Hp.yO3P2E1lbGB6AR3KpO', 'jampang', 'bandung', '089324234213213', NULL, '2019-01-02 21:57:11', '2019-01-02 21:57:11'),
+	(14, 'usertest', 'nanangkurnia64@gmail.com', '$2y$10$R9TSffgyx/K/Cm9eIO7VROZsmDoUUZ4V9x2aR08x1cJS1NCkYjAy2', 'jl dr ismangil', 'semarang barat', '082227212727', NULL, '2019-02-11 13:32:45', '2019-02-11 13:32:45');
 /*!40000 ALTER TABLE `shop_users` ENABLE KEYS */;
 
 -- Dumping structure for table s-cart.shop_vendor
@@ -2124,7 +2171,7 @@ CREATE TABLE IF NOT EXISTS `shop_vendor` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table s-cart.shop_vendor: ~1 rows (approximately)
+-- Dumping data for table s-cart.shop_vendor: ~0 rows (approximately)
 DELETE FROM `shop_vendor`;
 /*!40000 ALTER TABLE `shop_vendor` DISABLE KEYS */;
 INSERT INTO `shop_vendor` (`id`, `name`, `email`, `phone`, `image`, `address`, `url`, `sort`) VALUES
