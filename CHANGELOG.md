@@ -1,8 +1,9 @@
 # Release Notes
-## v2.1.2 ()
+## v2.1.2 (2019-02-23)
 ### Add
 > Backup, restore database
 > Management templates
+> Subscribe manager
 ### Fixed
 > Fix error create thumbnail
 
