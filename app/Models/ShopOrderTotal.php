@@ -188,13 +188,13 @@ class ShopOrderTotal extends Model
             $balance         = $total + $order->received;
             $payment_status  = 0;
             if ($balance == $total) {
-                $payment_status = NOT_YET_PAY; //Not pay
+                $payment_status = self::NOT_YET_PAY; //Not pay
             } elseif ($balance < 0) {
-                $payment_status = NEED_REFUND; //Need refund
+                $payment_status = self::NEED_REFUND; //Need refund
             } elseif ($balance == 0) {
-                $payment_status = PAID; //Paid
+                $payment_status = self::PAID; //Paid
             } else {
-                $payment_status = PART_PAY; //Part pay
+                $payment_status = self::PART_PAY; //Part pay
             }
             $order->payment_status = $payment_status;
             $order->total          = $total;
