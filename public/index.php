@@ -55,7 +55,7 @@ $response = $kernel->handle(
     $request = Illuminate\Http\Request::capture()
 );
 // Configuration
-if (!is_file('../.env')) {
+if (!is_file('install.php')) {
     header('Location: /install.php');
     exit;
 }

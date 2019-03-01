@@ -112,8 +112,8 @@ Step4:
 => From version 2.1.1, you can install s-cart by link: <code><b>your-domain.com/install.php</b></code>
 
 ```
-The first, rename file public/install.scart to public/install.php
-Then, access your-domain.com/install.php to install S-cart
+Then, access your-domain.com/install.php to install S-cart.
+If installing with link "install.php" unsuccessful, you can install it manually below.
 ```
 OR manual installation:
 ```
@@ -131,7 +131,7 @@ OR manual installation:
 
 Step5:
 
-Please remove or rename file public/install.php so others cannot access it.
+NOTE: Please <b>remove</b> or <b>rename</b> file public/install.php so others cannot access it.
 
 Step6:
 - Access to url admin: your-domain/system_admin.
