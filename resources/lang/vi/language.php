@@ -123,7 +123,7 @@ return [
         'config_display'               => 'Cấu hình số item hiển thị trên trang',
         'info_global'                  => 'Thông tin chung website',
         'cms_news'                     => 'Quản lý tin tức',
-        'cms_page'                     => 'Quản lý các trang',
+        'shop_page'                    => 'Quản lý các trang',
         'cms_name'                     => 'Tên bài viết',
         'cms_content'                  => 'Bài viết',
         'cms_category'                 => 'Danh mục CMS',

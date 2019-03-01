@@ -119,7 +119,7 @@ return [
         'config_display'               => 'Config Items/pages display',
         'info_global'                  => 'Info global',
         'cms_news'                     => 'News manager',
-        'cms_page'                     => 'Page manager',
+        'shop_page'                    => 'Page manager',
         'cms_name'                     => 'Entry name',
         'cms_content'                  => 'Entry',
         'cms_category'                 => 'Cms category',
