@@ -83,7 +83,7 @@ return [
         'search_order'                 => 'Search order id, email, phone or name',
         'only_numeric'                 => 'Please input numeric!',
         'order_year'                   => 'In 12 months',
-        'order_month'                  => 'In this month',
+        'order_month'                  => 'In 30 days',
         'dashboard'                    => 'Dashboard',
         'total_product'                => 'Product total',
         'total_order'                  => 'Order total',

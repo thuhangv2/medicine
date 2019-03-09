@@ -29,21 +29,28 @@ class HomeController extends Controller
                 $row->column(4, new InfoBox(trans('language.admin.total_customer'), 'user', 'yellow', '/' . config('admin.route.prefix') . '/shop_customer', User::all()->count()));
             });
 
+// in 30 days
             $content->row(function (Row $row) {
                 $totals = ShopOrder::select(DB::raw('DATE(created_at) as date, sum(total) as total_amount, count(id) as total_order'))
                     ->groupBy('date')
-                    ->having('date', '>=', date('Y-m') . '-01')
                     ->having('date', '<=', date('Y-m-d'))
+                    ->whereRaw('DATE(created_at) >=  DATE_SUB(DATE(NOW()), INTERVAL 1 MONTH)')
                     ->get();
-                $day             = (int) date('d');
+
                 $arrDays         = [];
                 $arrTotalsOrder  = [];
                 $arrTotalsAmount = [];
-                for ($i = 1; $i <= $day; $i++) {
-                    $arrDays[$i]         = $i . '/' . date('m');
+                $rangDays        = new \DatePeriod(
+                    new \DateTime('-1 MONTH'),
+                    new \DateInterval('P1D'),
+                    new \DateTime('+1 day')
+                );
+                foreach ($rangDays as $i => $day) {
+                    $arrDays[$i]         = $day->format('m/d');
                     $arrTotalsAmount[$i] = 0;
                     $arrTotalsOrder[$i]  = 0;
                 }
+
                 foreach ($totals as $key => $value) {
                     $day                   = (int) date('d', strtotime($value->date));
                     $arrTotalsAmount[$day] = $value->total_amount;
@@ -51,7 +58,7 @@ class HomeController extends Controller
                 }
                 $max_order = max($arrTotalsOrder);
                 foreach ($arrTotalsAmount as $key => $value) {
-                    if ($key != 1) {
+                    if ($key != 0) {
                         $key_first = $key - 1;
                         $arrTotalsAmount[$key] += $arrTotalsAmount[$key_first];
                     }
@@ -60,8 +67,8 @@ class HomeController extends Controller
                 $arrTotalsAmount = '[' . implode(',', $arrTotalsAmount) . ']';
                 $arrTotalsOrder  = '[' . implode(',', $arrTotalsOrder) . ']';
 
-                $chart1 = view('admin.chart.chart1', compact(['arrDays', 'arrTotalsAmount', 'arrTotalsOrder', 'max_order']));
-                $row->column(12, new Box(trans('language.admin.order_month'), $chart1));
+                $chartMonth = view('admin.chart.chartMonth', compact(['arrDays', 'arrTotalsAmount', 'arrTotalsOrder', 'max_order']));
+                $row->column(12, new Box(trans('language.admin.order_month'), $chartMonth));
             });
 
 //===================12 months  ==============================
@@ -84,10 +91,11 @@ class HomeController extends Controller
                 $months1              = '["' . implode('","', $months1) . '"]';
                 $arrTotalsAmount_year = '[' . implode(',', $arrTotalsAmount_year) . ']';
 
-                $chart2 = view('admin.chart.chart2', compact(['arrTotalsAmount_year', 'totals_month', 'months1', 'max_order']));
-                $row->column(12, new Box(trans('language.admin.order_year'), $chart2));
+                $chartYear = view('admin.chart.chartYear', compact(['arrTotalsAmount_year', 'totals_month', 'months1', 'max_order']));
+                $row->column(12, new Box(trans('language.admin.order_year'), $chartYear));
             });
 
+//===================new customers  ==============================
             $users = User::select('id', 'email', 'name', 'phone', 'created_at')->orderBy('id', 'desc')
                 ->limit(10)->get()
                 ->each(function ($item) {

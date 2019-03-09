@@ -1,14 +1,13 @@
-
-        <!-- /.box-header -->
-        <div class="box-body">
-          <div class="row">
-            <!-- /.col -->
-            <canvas id="chartjs-1" width="600" height="150"></canvas>
-            <!-- /.col -->
-          </div>
-          <!-- /.row -->
-        </div>
-  <script src="/vendor/chartjs/dist/Chart.bundle.min.js"></script>
+<!-- /.box-header -->
+<div class="box-body">
+  <div class="row">
+    <!-- /.col -->
+    <canvas id="chartjs-1" width="600" height="150"></canvas>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+</div>
+  <script src="{{ asset('vendor/chartjs/dist/Chart.bundle.min.js') }}"></script>
 <script>
 function format_number(n) {
     return n.toFixed(0).replace(/./g, function(c, i, a) {
@@ -120,8 +119,6 @@ var chart = new Chart(ctx, {
             ]
         },
     },
-
-
 
 });
 });

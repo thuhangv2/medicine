@@ -6,7 +6,7 @@
 </div>
 <!-- /.row -->
 </div>
-<script src="/vendor/chartjs/dist/Chart.bundle.min.js"></script>
+<script src="{{ asset('vendor/chartjs/dist/Chart.bundle.min.js') }}"></script>
 <script>
 function format_number(n) {
     return n.toFixed(0).replace(/./g, function(c, i, a) {
@@ -32,9 +32,9 @@ var chart = new Chart(ctx, {
             backgroundColor: 'rgba(225,0,0,0.4)',
             borderColor: "rgb(231, 53, 253)",
             borderCapStyle: 'square',
-          pointHoverRadius: 8,
-          pointHoverBackgroundColor: "yellow",
-          pointHoverBorderColor: "brown",
+            pointHoverRadius: 8,
+            pointHoverBackgroundColor: "yellow",
+            pointHoverBorderColor: "brown",
             data: {!! $arrTotalsAmount !!},
             showLine: true, // disable for a single dataset,
             yAxisID: "y-axis-gravity",
@@ -46,9 +46,9 @@ var chart = new Chart(ctx, {
             label: "Total order",
             backgroundColor: 'rgb(138, 199, 214)',
             borderColor: 'rgb(138, 199, 214)',
-      pointHoverRadius: 8,
-      pointHoverBackgroundColor: "brown",
-      pointHoverBorderColor: "yellow",
+            pointHoverRadius: 8,
+            pointHoverBackgroundColor: "brown",
+            pointHoverBorderColor: "yellow",
             data: {!! $arrTotalsOrder !!},
             showLine: true, // disable for a single dataset,
             yAxisID: "y-axis-density",
