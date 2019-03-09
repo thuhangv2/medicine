@@ -1,5 +1,11 @@
 # Release Notes
-## v2.1.2 (2019-02-23)
+## v2.1.4 (2019-03-10)
+### Fixed
+> Modify route admin
+> Fix duplicate search front
+> Fix chart
+
+## v2.1.2,3 (2019-02-23)
 ### Add
 > Backup, restore database
 > Management templates

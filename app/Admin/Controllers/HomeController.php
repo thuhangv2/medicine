@@ -24,9 +24,9 @@ class HomeController extends Controller
             $content->description(' ');
 
             $content->row(function ($row) {
-                $row->column(4, new InfoBox(trans('language.admin.total_product'), 'tags', 'aqua', '/' . config('admin.route.prefix') . '/shop_product', ShopProduct::all()->count()));
-                $row->column(4, new InfoBox(trans('language.admin.total_order'), 'shopping-cart', 'green', '/' . config('admin.route.prefix') . '/shop_order', ShopOrder::all()->count()));
-                $row->column(4, new InfoBox(trans('language.admin.total_customer'), 'user', 'yellow', '/' . config('admin.route.prefix') . '/shop_customer', User::all()->count()));
+                $row->column(4, new InfoBox(trans('language.admin.total_product'), 'tags', 'aqua', route('productControl.index'), ShopProduct::all()->count()));
+                $row->column(4, new InfoBox(trans('language.admin.total_order'), 'shopping-cart', 'green', route('orderControl.index'), ShopOrder::all()->count()));
+                $row->column(4, new InfoBox(trans('language.admin.total_customer'), 'user', 'yellow', route('customerControl.index'), User::all()->count()));
             });
 
 // in 30 days
