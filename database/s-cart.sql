@@ -64,7 +64,7 @@ CREATE TABLE `admin_operation_log` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `admin_operation_log_user_id_index` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +73,7 @@ CREATE TABLE `admin_operation_log` (
 
 LOCK TABLES `admin_operation_log` WRITE;
 /*!40000 ALTER TABLE `admin_operation_log` DISABLE KEYS */;
-INSERT INTO `admin_operation_log` VALUES (1,1,'system_admin/backup_database','GET','127.0.0.1','{\"_pjax\":\"#pjax-container\"}','2019-03-02 00:09:45','2019-03-02 00:09:45'),(2,1,'system_admin/backup','POST','127.0.0.1','{\"_token\":\"yJEtrTLlSLaDLwOKWTqXvZOJDQcTxxS3uIrlHTfg\"}','2019-03-02 00:09:53','2019-03-02 00:09:53'),(3,1,'system_admin/backup_database','GET','127.0.0.1','[]','2019-03-02 00:10:54','2019-03-02 00:10:54'),(4,1,'system_admin/backup','POST','127.0.0.1','{\"_token\":\"yJEtrTLlSLaDLwOKWTqXvZOJDQcTxxS3uIrlHTfg\"}','2019-03-02 00:10:58','2019-03-02 00:10:58'),(5,1,'system_admin','GET','127.0.0.1','[]','2019-03-02 00:11:35','2019-03-02 00:11:35'),(6,1,'system_admin/backup_database','GET','127.0.0.1','{\"_pjax\":\"#pjax-container\"}','2019-03-02 00:11:49','2019-03-02 00:11:49'),(7,1,'system_admin/backup_database','GET','127.0.0.1','{\"_pjax\":\"#pjax-container\"}','2019-03-02 00:11:49','2019-03-02 00:11:49'),(8,1,'system_admin/backup','POST','127.0.0.1','{\"_token\":\"E9eVBN3OvV9cykLghUoDGuKKco77lMVjj16pmgJD\"}','2019-03-02 00:11:53','2019-03-02 00:11:53');
+INSERT INTO `admin_operation_log` VALUES (1,1,'system_admin/backup_database','GET','127.0.0.1','{\"_pjax\":\"#pjax-container\"}','2019-03-02 00:09:45','2019-03-02 00:09:45'),(2,1,'system_admin/backup','POST','127.0.0.1','{\"_token\":\"yJEtrTLlSLaDLwOKWTqXvZOJDQcTxxS3uIrlHTfg\"}','2019-03-02 00:09:53','2019-03-02 00:09:53'),(3,1,'system_admin/backup_database','GET','127.0.0.1','[]','2019-03-02 00:10:54','2019-03-02 00:10:54'),(4,1,'system_admin/backup','POST','127.0.0.1','{\"_token\":\"yJEtrTLlSLaDLwOKWTqXvZOJDQcTxxS3uIrlHTfg\"}','2019-03-02 00:10:58','2019-03-02 00:10:58'),(5,1,'system_admin','GET','127.0.0.1','[]','2019-03-02 00:11:35','2019-03-02 00:11:35'),(6,1,'system_admin/backup_database','GET','127.0.0.1','{\"_pjax\":\"#pjax-container\"}','2019-03-02 00:11:49','2019-03-02 00:11:49'),(7,1,'system_admin/backup_database','GET','127.0.0.1','{\"_pjax\":\"#pjax-container\"}','2019-03-02 00:11:49','2019-03-02 00:11:49'),(8,1,'system_admin/backup','POST','127.0.0.1','{\"_token\":\"E9eVBN3OvV9cykLghUoDGuKKco77lMVjj16pmgJD\"}','2019-03-02 00:11:53','2019-03-02 00:11:53'),(9,1,'system_admin/backup_database','GET','127.0.0.1','[]','2019-03-09 09:03:44','2019-03-09 09:03:44'),(10,1,'system_admin/backup_database','GET','127.0.0.1','[]','2019-03-09 09:04:10','2019-03-09 09:04:10'),(11,1,'system_admin/backup_database','POST','127.0.0.1','{\"_token\":\"QubkZH6pHxQqVjUdiLvRz2qU2sLXb6A5SPzudg6U\",\"file\":\"backup-2019-03-02-07-11-55.sql\",\"action\":\"remove\"}','2019-03-09 09:04:17','2019-03-09 09:04:17'),(12,1,'system_admin/backup_database','GET','127.0.0.1','[]','2019-03-09 09:04:18','2019-03-09 09:04:18'),(13,1,'system_admin/backup','POST','127.0.0.1','{\"_token\":\"QubkZH6pHxQqVjUdiLvRz2qU2sLXb6A5SPzudg6U\"}','2019-03-09 09:04:21','2019-03-09 09:04:21');
 /*!40000 ALTER TABLE `admin_operation_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -354,13 +354,13 @@ LOCK TABLES `cms_category_description` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `cms_conten`
+-- Table structure for table `cms_content`
 --
 
-DROP TABLE IF EXISTS `cms_conten`;
+DROP TABLE IF EXISTS `cms_content`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `cms_conten` (
+CREATE TABLE `cms_content` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `category_id` int(11) NOT NULL DEFAULT '0',
   `image` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -373,12 +373,12 @@ CREATE TABLE `cms_conten` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cms_conten`
+-- Dumping data for table `cms_content`
 --
 
-LOCK TABLES `cms_conten` WRITE;
-/*!40000 ALTER TABLE `cms_conten` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cms_conten` ENABLE KEYS */;
+LOCK TABLES `cms_content` WRITE;
+/*!40000 ALTER TABLE `cms_content` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cms_content` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1619,4 +1619,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-02  7:11:57
+-- Dump completed on 2019-03-09 16:04:25

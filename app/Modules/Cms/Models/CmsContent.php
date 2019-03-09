@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CmsContent extends Model
 {
-    public $table      = 'cms_conten';
+    public $table      = 'cms_content';
     protected $appends = [
         'title',
         'keyword',
