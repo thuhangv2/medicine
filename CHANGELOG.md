@@ -1,5 +1,6 @@
 # Release Notes
 ## v2.2.0-beta ()
+### Upgrade laravel 5.7
 ### Fixed
 > Fix error route admin
 
