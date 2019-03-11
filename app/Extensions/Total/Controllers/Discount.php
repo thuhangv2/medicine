@@ -126,7 +126,7 @@ class Discount extends \App\Http\Controllers\Controller
     }
     public function config()
     {
-        return redirect()->route('configDiscount.index');
+        return redirect()->route('discountControl.index');
     }
     public function processConfig($data)
     {

@@ -71,7 +71,7 @@ Route::group([
     $router->group(['prefix' => 'modules', 'namespace' => 'Modules'], function ($router) {
         $router->resource('cms/cms_category', Cms\CmsCategoryController::class)->names('cmsCategoryControl');
         $router->resource('cms/cms_content', Cms\CmsContentController::class)->names('cmsContentControl');
-        $router->resource('cms/cms_news', Cms\CmsNewsController::class)->names('news')->names('cmsNewsControl');
+        $router->resource('cms/cms_news', Cms\CmsNewsController::class)->names('cmsNewsControl');
         $router->resource('api/shop_api', Api\ShopApiController::class)->names('apiControl');
     });
 //End module
@@ -85,7 +85,7 @@ Route::group([
         $router->post('/disableExtension', 'ExtensionsController@disableExtension')->name('disableExtension');
         $router->match(['put', 'post'], '/processExtension/{extensionGroup}/{extension}', 'ExtensionsController@processExtension')->name('processExtension');
     });
-    $router->resource('shop_discount', Extensions\Total\DiscountController::class)->names('configDiscount')->names('discountControl');
+    $router->resource('shop_discount', Extensions\Total\DiscountController::class)->names('discountControl');
 //end extensions
 
 //Language
