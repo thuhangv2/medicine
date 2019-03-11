@@ -74,9 +74,12 @@ Route::post('/storeOrder', 'ShopCart@storeOrder')->name('storeOrder');
 //Front
 Route::get('/', 'ShopFront@index')->name('home');
 Route::get('index.html', 'ShopFront@index');
-Route::get('/shop/{name}_{id}.html', 'ShopFront@productToCategory')->name('category');
-Route::get('/product/{name}_{id}.html', 'ShopFront@productDetail')->name('product');
-Route::get('/brand/{name}_{id}/{category?}', 'ShopFront@productBrand')->name('brand');
+Route::get('/shop/{name}_{id}.html', 'ShopFront@productToCategory')
+    ->where(['id' => '[0-9]+'])->name('category');
+Route::get('/product/{name}_{id}.html', 'ShopFront@productDetail')
+    ->where(['id' => '[0-9]+'])->name('product');
+Route::get('/brand/{name}_{id}/{category?}', 'ShopFront@productBrand')
+    ->where(['id' => '[0-9]+'])->name('brand');
 Route::get('/products.html', 'ShopFront@allProducts')->name('products');
 Route::get('/search.html', 'ShopFront@search')->name('search');
 Route::get('/contact.html', 'ShopFront@getContact')->name('contact');

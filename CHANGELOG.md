@@ -1,4 +1,9 @@
 # Release Notes
+## v2.2.0-beta ()
+### Fixed
+> Fix error route admin
+
+
 ## v2.1.4 (2019-03-10)
 ### Fixed
 > Modify route admin
