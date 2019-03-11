@@ -24,7 +24,7 @@ class ShopPageController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->header(trans('language.admin.cms_page'))
+            ->header(trans('language.admin.shop_page'))
             ->description(' ')
             ->body($this->grid());
     }
@@ -39,7 +39,7 @@ class ShopPageController extends Controller
     public function edit($id, Content $content)
     {
         return $content
-            ->header(trans('language.admin.cms_page'))
+            ->header(trans('language.admin.shop_page'))
             ->description(' ')
             ->body($this->form()->edit($id));
     }
@@ -52,7 +52,7 @@ class ShopPageController extends Controller
     public function create(Content $content)
     {
         return $content
-            ->header(trans('language.admin.cms_page'))
+            ->header(trans('language.admin.shop_page'))
             ->description(' ')
             ->body($this->form());
     }
@@ -122,7 +122,7 @@ class ShopPageController extends Controller
             $form->display('uniquekey', 'Unique Key');
         } else {
             $form->text('uniquekey', 'Unique Key')->rules(function ($form) {
-                return 'required|unique:cms_page,uniquekey,' . $form->model()->id . ',id';
+                return 'required|unique:shop_page,uniquekey,' . $form->model()->id . ',id';
             }, ['required' => trans('validation.required'), 'unique' => trans('validation.unique')])->placeholder('Ví dụ: thong-tin-khuyen-mai, tin-tuc,...')->help(trans('validation.validate_nickname'));
         }
         $form->switch('status', trans('language.admin.status'));

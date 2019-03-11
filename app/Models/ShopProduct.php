@@ -163,8 +163,12 @@ class ShopProduct extends Model
 
     public static function getSearch($keyword, $limit = 12)
     {
+        $langs         = Language::pluck('id', 'code')->all();
+        $currentlyLang = app()->getLocale();
+        $idLang        = $langs[$currentlyLang] ?? 1;
         return self::where('status', 1)
             ->leftJoin('shop_product_description', 'shop_product_description.product_id', 'shop_product.id')
+            ->where('shop_product_description.lang_id', $idLang)
             ->where(function ($sql) use ($keyword) {
                 $sql->where('shop_product_description.name', 'like', '%' . $keyword . '%')
                     ->orWhere('shop_product.sku', 'like', '%' . $keyword . '%');

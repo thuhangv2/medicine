@@ -3,7 +3,7 @@
 </p>
 <p align="center">Open source e-commerce for business use laravel framework</p>
 <p align="center">
-<a href="https://demo.s-cart.org">Demo</a> | <a href="https://demo.s-cart.org/system_admin">Demo admin</a> | <a href="https://s-cart.org">Home page</a> | <a href="https://s-cart.org/installation.html">Installation</a>
+<a href="https://demo.s-cart.org">Demo</a> | <a href="https://demo.s-cart.org/system_admin">Demo admin</a> | <a href="https://s-cart.org">Home page</a> | <a href="https://s-cart.org/installation.html">Installation</a> | <a href="https://s-cart.org/video-guide.html">Video Guide</a>
 </p>
 <p align="center">
 <a href="https://packagist.org/packages/lanhktc/s-cart"><img src="https://poser.pugx.org/lanhktc/s-cart/d/total.svg" alt="Total Downloads"></a>
@@ -112,8 +112,8 @@ Step4:
 => From version 2.1.1, you can install s-cart by link: <code><b>your-domain.com/install.php</b></code>
 
 ```
-The first, rename file public/install.scart to public/install.php
-Then, access your-domain.com/install.php to install S-cart
+Then, access your-domain.com/install.php to install S-cart.
+If installing with link "install.php" unsuccessful, you can install it manually below.
 ```
 OR manual installation:
 ```
@@ -131,7 +131,7 @@ OR manual installation:
 
 Step5:
 
-Please remove or rename file public/install.php so others cannot access it.
+NOTE: Please <b>remove</b> or <b>rename</b> file public/install.php so others cannot access it.
 
 Step6:
 - Access to url admin: your-domain/system_admin.

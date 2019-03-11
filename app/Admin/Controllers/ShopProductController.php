@@ -84,6 +84,7 @@ class ShopProductController extends Controller
 
             $grid->id('ID')->sortable();
             $grid->image(trans('language.admin.image'))->image('', 50);
+            $grid->sku(trans('language.product.sku'))->sortable();
             $grid->name(trans('language.product.product_name'))->sortable();
             $grid->category()->name(trans('language.category'));
             $grid->cost(trans('language.product.price_cost'))->display(function ($price) {
@@ -121,6 +122,7 @@ class ShopProductController extends Controller
             $grid->filter(function ($filter) {
                 $filter->disableIdFilter();
                 $filter->like('name', trans('language.product.name'));
+                $filter->like('sku', trans('language.product.sku'));
 
             });
         });

@@ -1,6 +1,6 @@
 <?php
 /**
- * This file auto install s-cart, using for S-cart version 2.1.1
+ * This file auto install s-cart, using for S-cart from version 2.1.1
  * @author Naruto <lanhktc@gmail.com>
  */
 

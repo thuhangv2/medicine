@@ -10,15 +10,15 @@ Route::group([
     'middleware' => config('admin.route.middleware'),
 ], function (Router $router) {
 
-    $router->get('/', 'HomeController@index');
-    $router->resource('banner', BannerController::class);
-    $router->resource('layout', LayoutController::class);
-    $router->resource('language', LanguageController::class);
-    $router->resource('currencies', CurrencyController::class);
-    $router->resource('subscribe', EmailSubscribeController::class);
+    $router->get('/', 'HomeController@index')->name('homeAdmin');
+    $router->resource('banner', BannerController::class)->names('bannerControl');
+    $router->resource('layout', LayoutController::class)->names('layoutControl');
+    $router->resource('language', LanguageController::class)->names('languageControl');
+    $router->resource('currencies', CurrencyController::class)->names('currencyControl');
+    $router->resource('subscribe', EmailSubscribeController::class)->names('subscribeControl');
 //Config
-    $router->resource('config_info', ConfigInfoController::class);
-    $router->resource('config_global', ConfigGlobalController::class);
+    $router->resource('config_info', ConfigInfoController::class)->names('configInfoControl');
+    $router->resource('config_global', ConfigGlobalController::class)->names('configGlobalControl');
     $router->get('config_template', 'TemplateController@index');
     $router->post('config_template', 'TemplateController@changeTemplate')->name('changeTemplate');
     $router->get('backup_database', 'BackupController@index');
@@ -31,18 +31,18 @@ Route::group([
     });
 
 //Shop
-    $router->resource('shop_customer', ShopCustomerController::class);
-    $router->resource('shop_order', ShopOrderController::class);
-    $router->resource('shop_product', ShopProductController::class);
-    $router->resource('shop_category', ShopCategoryController::class);
-    $router->resource('shop_brand', ShopBrandController::class);
-    $router->resource('shop_vendor', ShopVendorController::class);
-    $router->resource('shop_order_status', ShopOrderStatusController::class);
-    $router->resource('shop_payment_status', ShopPaymentStatusController::class);
-    $router->resource('shop_shipping_status', ShopShipingStatusController::class);
-    $router->resource('shop_special_price', ShopSpecialPriceController::class);
-    $router->resource('shop_attribute_group', ShopAttributeGroupController::class);
-    $router->resource('shop_page', ShopPageController::class);
+    $router->resource('shop_customer', ShopCustomerController::class)->names('customerControl');
+    $router->resource('shop_order', ShopOrderController::class)->names('orderControl');
+    $router->resource('shop_product', ShopProductController::class)->names('productControl');
+    $router->resource('shop_category', ShopCategoryController::class)->names('categoryControl');
+    $router->resource('shop_brand', ShopBrandController::class)->names('brandControl');
+    $router->resource('shop_vendor', ShopVendorController::class)->names('vendorControl');
+    $router->resource('shop_order_status', ShopOrderStatusController::class)->names('orderStatusControl');
+    $router->resource('shop_payment_status', ShopPaymentStatusController::class)->names('paymentStatusControl');
+    $router->resource('shop_shipping_status', ShopShipingStatusController::class)->names('shippingStatusControl');
+    $router->resource('shop_special_price', ShopSpecialPriceController::class)->names('specialPriceControl');
+    $router->resource('shop_attribute_group', ShopAttributeGroupController::class)->names('attributeControl');
+    $router->resource('shop_page', ShopPageController::class)->names('pageControl');
 
 //Get info
     $router->group(['prefix' => 'get_info'], function ($router) {
@@ -69,10 +69,10 @@ Route::group([
         $router->match(['put', 'post'], '/processModule/{moduleGroup}/{module}', 'ModulesController@processModule')->name('processModule');
     });
     $router->group(['prefix' => 'modules', 'namespace' => 'Modules'], function ($router) {
-        $router->resource('cms/cms_category', Cms\CmsCategoryController::class);
-        $router->resource('cms/cms_content', Cms\CmsContentController::class);
-        $router->resource('cms/cms_news', Cms\CmsNewsController::class)->names('news');
-        $router->resource('api/shop_api', Api\ShopApiController::class);
+        $router->resource('cms/cms_category', Cms\CmsCategoryController::class)->names('cmsCategoryControl');
+        $router->resource('cms/cms_content', Cms\CmsContentController::class)->names('cmsContentControl');
+        $router->resource('cms/cms_news', Cms\CmsNewsController::class)->names('news')->names('cmsNewsControl');
+        $router->resource('api/shop_api', Api\ShopApiController::class)->names('apiControl');
     });
 //End module
 
@@ -85,7 +85,7 @@ Route::group([
         $router->post('/disableExtension', 'ExtensionsController@disableExtension')->name('disableExtension');
         $router->match(['put', 'post'], '/processExtension/{extensionGroup}/{extension}', 'ExtensionsController@processExtension')->name('processExtension');
     });
-    $router->resource('shop_discount', Extensions\Total\DiscountController::class)->names('configDiscount');
+    $router->resource('shop_discount', Extensions\Total\DiscountController::class)->names('configDiscount')->names('discountControl');
 //end extensions
 
 //Language
@@ -99,5 +99,5 @@ Route::group([
     $router->prefix('process')->group(function ($router) {
         $router->any('/productImport', 'ProcessController@importProduct')->name('productImport');
     });
-    $router->get('/report/{key}', 'ReportController@index');
+    $router->get('/report/{key}', 'ReportController@index')->name('report');
 });
