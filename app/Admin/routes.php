@@ -88,16 +88,14 @@ Route::group([
     $router->resource('shop_discount', Extensions\Total\DiscountController::class)->names('discountControl');
 //end extensions
 
-//Language
-    $router->post('locale/{code}', function ($code) {
-        \App\Models\ConfigGlobal::first()->update(['locale' => $code]);
-        return back();
-    });
-//
-
 //Process Simpe
     $router->prefix('process')->group(function ($router) {
         $router->any('/productImport', 'ProcessController@importProduct')->name('productImport');
     });
     $router->get('/report/{key}', 'ReportController@index')->name('report');
+    //Language
+    $router->get('locale/{code}', function ($code) {
+        session(['locale' => $code]);
+        return back();
+    })->name('admin.locale');
 });
