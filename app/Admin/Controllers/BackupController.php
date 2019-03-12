@@ -34,6 +34,7 @@ class BackupController extends Controller
             }
         }
         return $content
+            ->row('<span style="font-size:15px;font-style: italic;">(' . trans('language.backup.guide') . ')</span><br>')
             ->header(trans('language.backup.manager'))
             ->description(' ')
             ->body($this->render());
