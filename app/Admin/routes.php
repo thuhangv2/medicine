@@ -89,10 +89,10 @@ Route::group([
 //end extensions
 
 //Language
-    $router->post('locale/{code}', function ($code) {
-        \App\Models\ConfigGlobal::first()->update(['locale' => $code]);
+    $router->get('locale/{code}', function ($code) {
+        session(['locale' => $code]);
         return back();
-    });
+    })->name('admin.locale');
 //
 
 //Process Simpe

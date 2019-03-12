@@ -34,20 +34,9 @@ Route::get('/member/profile.html', [
 
 //Language
 Route::get('locale/{code}', function ($code) {
-    $strQuery  = explode('?', url()->previous());
-    $arrParams = [];
-    if (!empty($strQuery[1])) {
-        parse_str($strQuery[1], $arrParams);
-        unset($arrParams['lang']);
-    }
-    if ($arrParams) {
-        $url = $strQuery[0] . '?' . http_build_query($arrParams);
-    } else {
-        $url = $strQuery[0];
-    }
     session(['locale' => $code]);
-    return redirect($url);
-});
+    return back();
+})->name('locale');
 
 //Currency
 Route::get('currency/{code}', function ($code) {
