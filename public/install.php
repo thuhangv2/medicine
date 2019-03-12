@@ -55,7 +55,8 @@ if (request()->method() == 'POST' && request()->ajax()) {
             break;
 
         case 'step3':
-
+            shell_exec('php ../artisan config:clear');
+            shell_exec('php ../artisan cache:clear');
             $file = base_path() . '/database/s-cart.sql';
             if (!file_exists($file)) {
                 echo json_encode(['error' => 1, 'msg' => trans('language.install.database.file_notfound')]);
