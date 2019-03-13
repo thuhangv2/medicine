@@ -79,19 +79,19 @@ class HomeController extends Controller
                     $arrTotalsAmount_year[$i] = 0;
                 }
 
-                $totals_month = ShopOrder::select(DB::raw('DATE_FORMAT(created_at, "%Y-%m") as ym, sum(total) as total_amount, count(id) as total_order'))
+                $totalsMonth = ShopOrder::select(DB::raw('DATE_FORMAT(created_at, "%Y-%m") as ym, sum(total) as total_amount, count(id) as total_order'))
                     ->groupBy('ym')
                     ->having('ym', '>=', $months2[12])
                     ->having('ym', '<=', $months2[0])
                     ->get();
-                foreach ($totals_month as $key => $value) {
+                foreach ($totalsMonth as $key => $value) {
                     $key_month                        = array_search($value->ym, $months2);
                     $arrTotalsAmount_year[$key_month] = $value->total_amount;
                 }
                 $months1              = '["' . implode('","', $months1) . '"]';
                 $arrTotalsAmount_year = '[' . implode(',', $arrTotalsAmount_year) . ']';
 
-                $chartYear = view('admin.chart.chartYear', compact(['arrTotalsAmount_year', 'totals_month', 'months1', 'max_order']));
+                $chartYear = view('admin.chart.chartYear', compact(['arrTotalsAmount_year', 'months1']));
                 $row->column(12, new Box(trans('language.admin.order_year'), $chartYear));
             });
 
