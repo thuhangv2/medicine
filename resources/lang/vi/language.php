@@ -529,7 +529,7 @@ return [
         'remove'     => 'Gỡ bỏ',
         'status'     => 'Trạng thái',
         'installing' => 'Đang cài đặt',
-        'guide'      => 'Xem hướng dẫn <a target=_new href="https://s-cart.org/guide/template.html?lang=vi">Ở ĐÂY</a>',
+        'guide'      => 'Xem hướng dẫn <a target=_new href="https://s-cart.org/download/template.html?lang=vi">Ở ĐÂY</a>',
     ],
     'backup'            => [
         'guide'            => '<span class="text-danger">Chú ý: Bạn cần phải cài đặt đường dẫn hệ thống chính xác. Xem hướng dẫn <a target=_new href="https://s-cart.org/guide/backup.html?lang=vi">TẠI ĐÂY</a></span>',
