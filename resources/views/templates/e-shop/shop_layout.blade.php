@@ -61,68 +61,91 @@
       {!! $element->html !!}
     @endforeach
   @endisset
-  <header id="header"><!--header-->
-    <div class="header_top"><!--header_top-->
+  <header><!--header-->
+        <!-- top Header -->
+    <div id="top-header">
       <div class="container">
-        <div class="row">
-          <div class="col-sm-6">
+        <div class="pull-left">
             <div class="contactinfo">
               <ul class="nav nav-pills">
                 <li><a href="#"><i class="fa fa-phone"></i> {{ $configsGlobal['phone'] }}</a></li>
                 <li><a href="#"><i class="fa fa-envelope"></i> {{ $configsGlobal['email'] }}</a></li>
               </ul>
             </div>
-          </div>
-          <div class="col-sm-6">
-            <div class="btn-group pull-right">
-              <div class="btn-group locale">
-                @if (count($languages)>1)
-                <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown"><img src="{{ asset($path_file.'/'.$languages[app()->getLocale()]['icon']) }}" style="height: 25px;">
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
+        </div>
+        <div class="pull-right">
+          <ul class="header-top-links">
+            <li><a href="#">Store</a></li>
+            <li><a href="#">Newsletter</a></li>
+            <li><a href="#">FAQ</a></li>
+            @if (count($languages)>1)
+            <li class="dropdown default-dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">{{ $languages[app()->getLocale()]['name'] }}<i class="fa fa-caret-down"></i></a>
+              <ul class="custom-menu">
                   @foreach ($languages as $key => $language)
-                    <li><a href="{{ url('locale/'.$key) }}"><img src="{{ asset($path_file.'/'.$language['icon']) }}" style="height: 25px;"></a></li>
+                    <li><a href="{{ url('locale/'.$key) }}">{{ $language['name'] }}</a></li>
                   @endforeach
-                </ul>
-                @endif
-              </div>
-              @if (count($currencies)>1)
-               <div class="btn-group locale">
-                <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                  {{ \Helper::getCurrency()['name'] }}
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
+              </ul>
+            </li>
+            @endif
+            @if (count($currencies)>1)
+            <li class="dropdown default-dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">{{ \Helper::getCurrency()['name'] }} <i class="fa fa-caret-down"></i></a>
+              <ul class="custom-menu">
                   @foreach ($currencies as $key => $currency)
                     <li><a href="{{ url('currency/'.$currency->code) }}">{{ $currency->name }}</a></li>
                   @endforeach
-                </ul>
-              </div>
-              @endif
-            </div>
-          </div>
+              </ul>
+            </li>
+            @endif
+          </ul>
         </div>
       </div>
-    </div><!--/header_top-->
+    </div>
+    <!-- /top Header -->
 
-    <div class="header-middle"><!--header-middle-->
+
+    <!-- header -->
+    <div id="header">
       <div class="container">
-        <div class="row">
-          <div class="col-sm-4">
-            <div class="logo pull-left">
+        <div class="pull-left">
+          <!-- Logo -->
+          <div class="header-logo">
               <a href="{{ route('home') }}"><img style="width: 150px;" src="{{ asset($logo) }}" alt="" /></a>
-            </div>
           </div>
-          <div class="col-sm-8">
-            <div class="shop-menu pull-right">
-              <ul class="nav navbar-nav">
-                <li><a href="{{ route('profile') }}"><i class="fa fa-user"></i> {{ trans('language.account') }}</a></li>
-                <li><a href="{{ route('wishlist') }}"><span style="border-radius: 3px;padding: 5px;" class="label_top label-warning shopping-wishlist" id="count_wishlist">{{ Cart::instance('wishlist')->count() }}</span><i class="fa fa-star"></i> {{ trans('language.wishlist') }}</a></li>
-                <li><a href="{{ route('compare') }}"><span style="border-radius: 3px;padding: 5px;" class="label_top label-warning shopping-compare" id="count_compare">{{ Cart::instance('compare')->count() }}</span><i class="fa fa-crosshairs"></i> {{ trans('language.compare') }}</a></li>
-                <li><a href="{{ route('cart') }}"><span style="border-radius: 3px;padding: 5px;" class="label_top label-warning shopping-cart" id="count_cart">{{ Cart::instance('default')->count() }}</span><i class="fa fa-shopping-cart"></i> {{ trans('language.cart_title') }}</a></li>
+          <!-- /Logo -->
+
+          <!-- Search -->
+          <div class="header-search">
+            <form>
+              <input class="input search-input" type="text" placeholder="Enter your keyword">
+              <select class="input search-categories">
+                <option value="0">All Categories</option>
+                <option value="1">Category 01</option>
+                <option value="1">Category 02</option>
+              </select>
+              <button class="search-btn"><i class="fa fa-search"></i></button>
+            </form>
+          </div>
+          <!-- /Search -->
+        </div>
+        <div class="pull-right">
+          <ul class="header-btns">
+            <!-- Account -->
+            <li class="header-account dropdown default-dropdown">
+              <div class="dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="true">
+                <div class="header-btns-icon">
+                  <i class="fa fa-user-o"></i>
+                </div>
+                <strong class="text-uppercase">My Account <i class="fa fa-caret-down"></i></strong>
+              </div>
+              <a href="#" class="text-uppercase">Login</a> / <a href="#" class="text-uppercase">Join</a>
+              <ul class="custom-menu">
+                <li><a href="{{ route('profile') }}"><i class="fa fa-user-o"></i> {{ trans('language.account') }}</a></li>
+                <li><a href="{{ route('wishlist') }}" ><span style="border-radius: 3px;padding: 5px;" class="label_top label-warning shopping-wishlist" id="count_wishlist">{{ Cart::instance('wishlist')->count() }}</span><i class="fa fa-heart-o"></i> {{ trans('language.wishlist') }}</a></li>
+                <li><a href="{{ route('compare') }}"><span style="border-radius: 3px;padding: 5px;" class="label_top label-warning shopping-compare" id="count_compare">{{ Cart::instance('compare')->count() }}</span><i class="fa fa-exchange"></i> {{ trans('language.compare') }}</a></li>
                 @guest
-                <li><a href="{{ route('login') }}"><i class="fa fa-lock"></i> {{ trans('language.login') }}</a></li>
+                <li><a href="{{ route('login') }}"><i class="fa fa-unlock-alt"></i> {{ trans('language.login') }}</a></li>
                 @else
                 <li><a href="{{ route('logout') }}" rel="nofollow" onclick="event.preventDefault();
                    document.getElementById('logout-form').submit();"><i class="fa fa-power-off"></i> {{ trans('language.logout') }}</a></li>
@@ -131,12 +154,77 @@
                 </form>
                 @endguest
 
+                <li><a href="#"><i class="fa fa-check"></i> Checkout</a></li>
+                <li><a href="#"><i class="fa fa-unlock-alt"></i> Login</a></li>
+                <li><a href="#"><i class="fa fa-user-plus"></i> Create An Account</a></li>
               </ul>
-            </div>
-          </div>
+            </li>
+            <!-- /Account -->
+
+
+            <!-- Cart -->
+            <li class="header-cart dropdown default-dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                <div class="header-btns-icon">
+                  <i class="fa fa-shopping-cart"></i>
+                  <span class="qty shopping-cart" id="count_cart">{{ Cart::instance('default')->count() }}</span>
+                </div>
+                <strong class="text-uppercase">{{ trans('language.cart_title') }}:</strong>
+                <br>
+                  @php
+                    $cart      = Cart::instance('default')->content();
+                  @endphp
+                <span>{{\Helper::currencyRender(Cart::subtotal())}}</span>
+              </a>
+              <div class="custom-menu">
+                <div id="shopping-cart">
+                    @if (count($cart) ==0)
+                    <!-- layout emty cart -->
+                    <a href="#" class="tt-cart-empty">
+                      <i class="icon-f-39"></i>
+                      <p>{{ trans('language.empty_product') }}</p>
+                    </a>
+                    @else
+                  <div class="shopping-cart-list">
+                    @foreach($cart as $item)
+                      @php
+                        $product = App\Models\ShopProduct::find($item->id);
+                      @endphp
+                    @endforeach
+                    <div class="product product-widget">
+                      <div class="product-thumb">
+                        <img src="{{ asset($product->getImage()) }}" alt="">
+                      </div>
+                      <div class="product-body">
+                        <h3 class="product-price">{{ $item->getPrice() }} <span class="qty">x{{ $item->qty }}</span></h3>
+                        <h2 class="product-name"><a href="{{ $product->getUrl() }}">{{ $item->name }}</a></h2>
+                      </div>
+                      <a href="{{route("removeItem",['id'=>$item->rowId])}}"><button class="cancel-btn"><i class="fa fa-trash"></i></button></a>
+                    </div>
+                  </div>
+                  <div class="shopping-cart-btns">
+                    <a href="{{ route('cart') }}"><button class="main-btn">{{ trans('language.cart_title') }}</button></a>
+                    <a href="{{ route('checkout') }}"><button class="primary-btn">{{ trans('language.checkout_title') }} <i class="fa fa-arrow-circle-right"></i></button></a>
+                  </div>
+                  @endif
+                </div>
+              </div>
+            </li>
+            <!-- /Cart -->
+
+            <!-- Mobile nav toggle-->
+            <li class="nav-toggle">
+              <button class="nav-toggle-btn main-btn icon-btn"><i class="fa fa-bars"></i></button>
+            </li>
+            <!-- / Mobile nav toggle -->
+          </ul>
         </div>
       </div>
-    </div><!--/header-middle-->
+      <!-- header -->
+    </div>
+    <!-- container -->
+
+
 
     <div class="header-bottom"><!--header-bottom-->
       <div class="container">
