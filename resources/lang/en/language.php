@@ -5,14 +5,15 @@ return [
     'all_product'       => 'All products',
 
     'my_profile'        => 'My profile',
+    'my_account'        => 'My account',
     'notfound'          => 'Not found',
     'empty_product'     => 'No product!',
     'no_data'           => 'No data!',
     'empty_entry'       => 'No entry!',
     'page_not_found'    => 'Sorry! We can\'t find this page!',
     'item_not_found'    => 'Sorry! Data you request cannot be found!',
-    'cart_title'        => 'Shopping cart',
-    'checkout_title'    => 'Checkout order',
+    'cart_title'        => 'View cart',
+    'checkout_title'    => 'Checkout',
     'wishlist'          => 'Wishlist',
     'add_to_wishlist'   => 'Add to wishlist',
     'compare'           => 'Compare',
@@ -39,6 +40,8 @@ return [
     'default_available' => 'Allows purchase from creation date as default.',
     'vendor'            => 'Vendor',
     'view_more'         => 'View more',
+    'view_product'      => 'View product',
+    'join_new_letter'   => 'Join Newsletter',
     'subscribe'         => [
         'manager'           => 'Subscribe manager',
         'email'             => 'Email',
@@ -221,7 +224,8 @@ return [
         'view'         => 'View',
         'sold'         => 'Sold',
         'import_multi' => 'Import multiple',
-
+        'new'          => 'New',
+        'sale'         => 'Sale',
     ],
     'promotion'         => [
         'code'        => 'Coupon code',
@@ -279,6 +283,8 @@ return [
     'cart'              => [
         'over'             => 'Product :item has exceeded the maximum number of allowed quantity.',
         'exist'            => 'This product exist in :instance',
+        'success'          => 'Add product to :instance successfully!',
+        'dont_allow_sale'  => 'This product dont allow for sale!',
         'apply'            => 'Apply',
         'coupon'           => 'Coupon',
         'remove_coupon'    => 'Remove coupon',
@@ -541,5 +547,10 @@ return [
         'restore_success'  => 'Restore successful!',
         'generate_success' => 'Create successful backup file!',
         'limit_backup'     => 'You cannot create more than 10 copies',
+    ],
+    'shop_info'         => [
+        'email'   => 'Email',
+        'hotline' => 'Hot line',
+        'address' => 'Address',
     ],
 ];

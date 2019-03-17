@@ -1728,3 +1728,27 @@ textarea.input {
     width: 100%;
   }
 }
+
+.product-price{
+    color: #30323A;
+    margin: 0 0 10px;
+    font-weight: 700;
+    font-size: 24px;
+}
+.product-price .product-old-price{
+  text-decoration: line-through !important;
+  color: #F8694A;
+  font-size: 70%;
+}
+.qty-cart{
+  position: absolute;
+  margin-left: 5px;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+    font-size: 10px;
+    background: #F8694A;
+    color: #FFF;
+    border-radius: 50%;
+}

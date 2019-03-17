@@ -5,6 +5,7 @@ return [
     'all_product'       => 'Tất cả sản phẩm',
 
     'my_profile'        => 'Trang quản lý cá nhân',
+    'my_account'        => 'Tài khoản',
     'notfound'          => 'Không tìm thấy dữ liệu',
     'empty_product'     => 'Không có sản phẩm nào!',
     'empty_entry'       => 'Không có bài viết nào!',
@@ -12,7 +13,7 @@ return [
     'item_not_found'    => 'Dữ liệu không tồn tại!',
     'no_data'           => 'Không có dữ liệu!',
     'cart_title'        => 'Giỏ hàng',
-    'checkout_title'    => 'Xác nhận đơn hàng',
+    'checkout_title'    => 'Xác nhận',
     'wishlist'          => 'Sản phẩm yêu thích',
     'add_to_wishlist'   => 'Yêu thích',
     'add_to_cart'       => 'Thêm vào giỏ hàng',
@@ -39,6 +40,8 @@ return [
     'default_available' => 'Mặc đính, cho phép mua từ ngày đăng bán.',
     'vendor'            => 'Nhà cung cấp',
     'view_more'         => 'Xem đầy đủ',
+    'view_product'      => 'Xem sản phẩm',
+    'join_new_letter'   => 'Đăng ký',
     'subscribe'         => [
         'manager'           => 'Quản lý người đăng ký',
         'email'             => 'Email',
@@ -225,6 +228,8 @@ return [
         'view'         => 'Lượt xem',
         'sold'         => 'Đã bán',
         'import_multi' => 'Import nhiều sản phẩm',
+        'new'          => 'Mới',
+        'sale'         => 'Sale',
     ],
     'promotion'         => [
         'code'        => 'Mã coupon',
@@ -281,6 +286,8 @@ return [
     'cart'              => [
         'over'             => 'Sản phẩm :item vượt quá số lượng cho phép.',
         'exist'            => 'Sản phẩm đã tồn tại trong :instance',
+        'success'          => 'Thêm sản phẩm vào :instance thành công!',
+        'dont_allow_sale'  => 'Sản phẩm này không thể thêm vào giỏ hàng!',
         'apply'            => 'Sử dụng',
         'coupon'           => 'Mã giảm giá',
         'remove_coupon'    => 'Xóa mã giảm giá',
@@ -548,5 +555,10 @@ return [
         'restore_success'  => 'Phục hồi dữ liệu thành công!',
         'generate_success' => 'Tạo file backup thành công!',
         'limit_backup'     => 'Bạn chỉ được tạo tối đa 10 bản sao lưu!',
+    ],
+    'shop_info'         => [
+        'email'   => 'Email',
+        'hotline' => 'SĐT',
+        'address' => 'Địa chỉ',
     ],
 ];

@@ -1,3 +1,6 @@
+@php
+  $carts = \Helper::getListCart();
+@endphp
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
@@ -32,26 +35,6 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset($theme_asset.'/images/ico/apple-touch-icon-114-precomposed.png')}}">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset($theme_asset.'/images/ico/apple-touch-icon-72-precomposed.png')}}">
     <link rel="apple-touch-icon-precomposed" href="{{ asset($theme_asset.'/images/ico/apple-touch-icon-57-precomposed.png')}}">
-    <style type="text/css">
-      .new-price{
-        color:#FE980F;
-        font-size: 20px;
-        padding: 10px;
-        font-weight:bold;
-      }
-      .old-price {
-        text-decoration: line-through;
-        color: #a95d5d;
-        font-size: 17px;
-        padding: 10px;
-      }
-      .locale .dropdown-menu{
-          min-width: auto !important;
-      }
-      .locale button{
-          min-height: 30px !important;
-      }
-    </style>
   @isset ($layouts['header'])
     @foreach ( $layouts['header']  as $element)
       {!! $element->html !!}
@@ -108,7 +91,6 @@
         </div>
       </div>
     </div><!--/header_top-->
-
     <div class="header-middle"><!--header-middle-->
       <div class="container">
         <div class="row">
@@ -121,9 +103,10 @@
             <div class="shop-menu pull-right">
               <ul class="nav navbar-nav">
                 <li><a href="{{ route('profile') }}"><i class="fa fa-user"></i> {{ trans('language.account') }}</a></li>
-                <li><a href="{{ route('wishlist') }}"><span style="border-radius: 3px;padding: 5px;" class="label_top label-warning shopping-wishlist" id="count_wishlist">{{ Cart::instance('wishlist')->count() }}</span><i class="fa fa-star"></i> {{ trans('language.wishlist') }}</a></li>
-                <li><a href="{{ route('compare') }}"><span style="border-radius: 3px;padding: 5px;" class="label_top label-warning shopping-compare" id="count_compare">{{ Cart::instance('compare')->count() }}</span><i class="fa fa-crosshairs"></i> {{ trans('language.compare') }}</a></li>
-                <li><a href="{{ route('cart') }}"><span style="border-radius: 3px;padding: 5px;" class="label_top label-warning shopping-cart" id="count_cart">{{ Cart::instance('default')->count() }}</span><i class="fa fa-shopping-cart"></i> {{ trans('language.cart_title') }}</a></li>
+                <li><a href="{{ route('wishlist') }}"><span  class="cart-qty  shopping-wishlist" id="shopping-wishlist">{{ Cart::instance('wishlist')->count() }}</span><i class="fa fa-star"></i> {{ trans('language.wishlist') }}</a></li>
+                <li><a href="{{ route('compare') }}"><span  class="cart-qty shopping-compare" id="shopping-compare">{{ Cart::instance('compare')->count() }}</span><i class="fa fa-crosshairs"></i> {{ trans('language.compare') }}</a></li>
+                <li><a href="{{ route('cart') }}"><span class="cart-qty shopping-cart" id="shopping-cart">{{ $carts['count'] }}</span><i class="fa fa-shopping-cart"></i> {{ trans('language.cart_title') }}</a>
+                </li>
                 @guest
                 <li><a href="{{ route('login') }}"><i class="fa fa-lock"></i> {{ trans('language.login') }}</a></li>
                 @else
@@ -201,13 +184,16 @@
   </header><!--/header-->
 
   @yield('banner')
-
-
+<div class="cart-alert" style="display: none;"></div>
 @if(Session::has('message'))
-    <div class="alert alert-success">{!! Session::get('message') !!}</div>
+    <div class="alert alert-success cart-alert">{!! Session::get('message') !!}
+    <button type="button" class="close" data-dismiss="alert">x</button>
+    </div>
 @endif
 @if(Session::has('error'))
-    <div class="alert alert-danger">{!! Session::get('error') !!}</div>
+    <div class="alert alert-danger cart-alert">{!! Session::get('error') !!}
+    <button type="button" class="close" data-dismiss="alert">x</button>
+    </div>
 @endif
 
 @if ($configs['site_status'])
@@ -408,9 +394,9 @@
             <div class="single-widget">
               <h2>{{ trans('language.about') }}</h2>
               <ul class="nav nav-pills nav-stacked">
-                <li><a href="#">Address: {{ $configsGlobal['address'] }}</a></li>
-                <li><a href="#">Hotline: {{ $configsGlobal['long_phone'] }}</a></li>
-                <li><a href="#">Email: {{ $configsGlobal['email'] }}</a></li>
+                <li><a href="#">{{ trans('language.shop_info.address') }}: {{ $configsGlobal['address'] }}</a></li>
+                <li><a href="#">{{ trans('language.shop_info.hotline') }}: {{ $configsGlobal['long_phone'] }}</a></li>
+                <li><a href="#">{{ trans('language.shop_info.email') }}: {{ $configsGlobal['email'] }}</a></li>
             </ul>
             </div>
           </div>
@@ -435,7 +421,11 @@
       <div class="container">
         <div class="row">
           <p class="pull-left">Copyright © 2018 <a href="{{ config('scart.homepage') }}">{{ config('scart.name') }} {{ config('scart.version') }}</a> Inc. All rights reserved.</p>
-          <p class="pull-right">Hosted by  <span><a target="_blank" href="http://giaiphap247.com">GiaiPhap247</a></span></p>
+          <p class="pull-right">Hosted by  <span><a target="_blank" href="https://giaiphap247.com">GiaiPhap247</a></span></p>
+            <!--
+            S-Cart is free open source and you are free to remove the powered by S-cart if you want, but its generally accepted practise to make a small donation.
+            Please donate via PayPal to https://www.paypal.me/LeLanh
+            //-->
         </div>
       </div>
     </div>
@@ -462,13 +452,25 @@
     </script>
 
     <script type="text/javascript">
-        function addToCart(id,instance = null){
-            if(instance == null || instance ==''){
-              var cart = $('.shopping-cart');
-            }else{
-              var cart = $('.shopping-'+instance);
-            }
-                var imgtodrag = $('.product-box-'+id).find("img").eq(0);
+        function addToCart(id,instance = null,element = null){
+        $.ajax({
+            url: '{{ route('addToCart') }}',
+            type: 'POST',
+            dataType: 'json',
+            data: {id: id,instance:instance, _token:'{{ csrf_token() }}'},
+            async: false,
+            success: function(data){
+              // console.log(data);
+                error= parseInt(data.error);
+                if(error ===0)
+                {
+                //animate
+                if(instance == null || instance =='' || instance =='default'){
+                  var cart = $('#shopping-cart');
+                }else{
+                  var cart = $('#shopping-'+instance);
+                }
+                var imgtodrag = element.closest('.product-single').find("img").eq(0);
                 if (imgtodrag) {
                     var imgclone = imgtodrag.clone()
                         .offset({
@@ -487,11 +489,7 @@
                             'left': cart.offset().left,
                             'width': 75,
                             'height': 75
-                    }, 1000, 'easeInOutExpo');
-                    // setTimeout(function () {
-                    //     cart.effect("shake", {times: 2}, 200);
-                    // }, 1500);
-
+                    });
                     imgclone.animate({
                         'width': 0,
                             'height': 0
@@ -499,28 +497,24 @@
                         $(this).detach()
                     });
                 }
+                //End animate
 
-        $.ajax({
-            url: '{{ route('addToCart') }}',
-            type: 'POST',
-            dataType: 'json',
-            data: {id: id,instance:instance, _token:'{{ csrf_token() }}'},
-            success: function(data){
-              console.log(data);
-                error= parseInt(data.error);
-                if(error ===0)
-                {
+
                   setTimeout(function () {
                     if(data.instance =='default'){
-                      $('#count_cart').html(data.count_cart);
-                      $('.actions').show();
+                      $('.shopping-cart').html(data.count_cart);
+                      $('.shopping-cart-subtotal').html(data.subtotal);
+                      $('#shopping-cart-show').html(data.html);
                     }else{
-                      $('#count_'+data.instance).html(data.count_cart);
+                      $('.shopping-'+data.instance).html(data.count_cart);
                     }
-
                   }, 1000);
+
+                $('.cart-alert').show().html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">x</button>'+data.msg+'</div>');
+                alertCart();
                 }else{
-                  // alert(data.error);
+                  $('.cart-alert').show().html('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">x</button>'+data.msg+'</div>');
+                    alertCart();
                 }
 
                 }
@@ -528,6 +522,11 @@
 
     }
 
+    function alertCart(){
+        $(".cart-alert").fadeTo(2000, 500).slideUp(500, function(){
+        $(".cart-alert").slideUp(500);
+      });
+    }
 </script>
   @isset ($layouts['bottom'])
     @foreach ( $layouts['bottom']  as $element)

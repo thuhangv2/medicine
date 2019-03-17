@@ -214,17 +214,9 @@ class ShopCart extends GeneralController
         $attribute  = $data['attribute'] ?? null;
         $qty        = $data['qty'];
         $product    = ShopProduct::find($product_id);
-        //Condition:
-        //Active
-        //In of stock or allow order out of stock
-        //Date availabe
-        if ($product->status != 0 &&
-            ($this->configs['product_preorder'] == 1 || $product->date_available == null || date('Y-m-d H:i:s') >= $product->date_available) &&
-            ($this->configs['product_display_out_of_stock'] || $product->stock > 0)) {
-            $options = array();
-            if ($opt_sku != $product->sku && $opt_sku) {
-                $options['opt'] = $opt_sku;
-            }
+        if ($product->allowSale()) {
+            $options        = array();
+            $options['opt'] = $opt_sku;
             $options['att'] = $attribute;
             Cart::add(
                 array(
@@ -235,8 +227,17 @@ class ShopCart extends GeneralController
                     'options' => $options,
                 )
             );
+            return redirect()->route('cart')
+                ->with(
+                    ['message' => trans('language.cart.success', ['instance' => 'cart'])]
+                );
+        } else {
+            return redirect()->route('cart')
+                ->with(
+                    ['error' => trans('language.cart.dont_allow_sale')]
+                );
         }
-        return redirect()->route('cart');
+
     }
 
 /**
@@ -419,62 +420,102 @@ class ShopCart extends GeneralController
  */
     public function addToCart(Request $request)
     {
+        $instance = request('instance') ?? 'default';
+        $cart     = \Cart::instance($instance);
         if (!$request->ajax()) {
             return redirect()->route('cart');
         }
-        $instance   = $request->get('instance') ?? 'default';
-        $id         = $request->get('id');
-        $product    = ShopProduct::find($id);
-        $attributes = $request->get('attributes') ?? '';
-        if ($instance == 'default') {
-            //Cart
-            //Condition:
-            //1. Active
-            //2. Instock or allow order out of stock
-            //3. Date availabe
-            if ($product->status != 0
-                && ($this->configs['product_preorder'] == 1 ||
-                    $product->date_available == null ||
-                    date('Y-m-d H:i:s') >= $product->date_available)
-                && ($this->configs['product_buy_out_of_stock'] || $product->stock)) {
-                Cart::add(
-                    array(
-                        'id'        => $id,
-                        'name'      => $product->name,
-                        'qty'       => 1,
-                        'price'     => $product->getPrice($id),
-                        'attribute' => $attributes,
-                    )
-                );
-            }
+        $id             = request('id');
+        $attribute      = request('attribute') ?? null;
+        $opt_sku        = request('opt_sku') ?? null;
+        $options        = [];
+        $options['att'] = $attribute;
+        $options['opt'] = $opt_sku;
+        $product        = ShopProduct::find($id);
+        $html           = '';
+        switch ($instance) {
+            case 'default':
+                if ($product->allowSale()) {
+                    $cart->add(
+                        array(
+                            'id'      => $id,
+                            'name'    => $product->name,
+                            'qty'     => 1,
+                            'price'   => $product->getPrice($id),
+                            'options' => $options,
+                        )
+                    );
+                } else {
+                    return response()->json(
+                        [
+                            'error' => 1,
+                            'msg'   => trans('language.cart.dont_allow_sale'),
+                        ]
+                    );
+                }
+                break;
 
-        } else {
-            //Wishlist or Compare...
-            ${'arrID' . $instance} = array_keys(Cart::instance($instance)->content()->groupBy('id')->toArray());
-            if (!in_array($id, ${'arrID' . $instance})) {
-                Cart::instance($instance)->add(
-                    array(
-                        'id'    => $id,
-                        'name'  => $product->name,
-                        'qty'   => 1,
-                        'price' => $product->getPrice($id),
-                    )
-                );
-            } else {
-                return response()->json(
-                    [
-                        'error' => 1,
-                        'msg'   => trans('language.cart.exist', ['instance' => $instance]),
-                    ]
-                );
-            }
+            default:
+                //Wishlist or Compare...
+                ${'arrID' . $instance} = array_keys($cart->content()->groupBy('id')->toArray());
+                if (!in_array($id, ${'arrID' . $instance})) {
+                    try {
+                        $cart->add(
+                            array(
+                                'id'    => $id,
+                                'name'  => $product->name,
+                                'qty'   => 1,
+                                'price' => $product->getPrice($id),
+                            )
+                        );
+                    } catch (\Exception $e) {
+                        return response()->json(
+                            [
+                                'error' => 1,
+                                'msg'   => $e->getMessage(),
+                            ]
+                        );
+                    }
+
+                } else {
+                    return response()->json(
+                        [
+                            'error' => 1,
+                            'msg'   => trans('language.cart.exist', ['instance' => $instance]),
+                        ]
+                    );
+                }
+                break;
         }
 
+        $carts = \Helper::getListCart($instance);
+        if ($instance == 'default' && $carts['count']) {
+            $html .= '<div><div class="shopping-cart-list">';
+            foreach ($carts['items'] as $item) {
+                $html .= '<div class="product product-widget"><div class="product-thumb">';
+                $html .= '<img src="' . $item['image'] . '" alt="">';
+                $html .= '</div>';
+                $html .= '<div class="product-body">';
+                $html .= '<h3 class="product-price">' . $item['price'] . ' <span class="qty">x' . $item['qty'] . '</span></h3>';
+                $html .= '<h2 class="product-name"><a href="' . $item['url'] . '">' . $item['name'] . '</a></h2>';
+                $html .= '</div>';
+                $html .= '<a href="' . route("removeItem", ['id' => $item['rowId']]) . '"><button class="cancel-btn"><i class="fa fa-trash"></i></button></a>';
+                $html .= '</div>';
+            }
+            $html .= '</div></div>';
+            $html .= '<div class="shopping-cart-btns">
+                    <a href="' . route('cart') . '"><button class="main-btn">' . trans('language.cart_title') . '</button></a>
+                    <a href="' . route('checkout') . '"><button class="primary-btn">' . trans('language.checkout_title') . ' <i class="fa fa-arrow-circle-right"></i></button></a>
+                  </div>';
+        }
         return response()->json(
             [
                 'error'      => 0,
-                'count_cart' => Cart::instance($instance)->count(),
+                'count_cart' => $carts['count'],
                 'instance'   => $instance,
+                'subtotal'   => $carts['subtotal'],
+                'html'       => $html,
+                'msg'        => trans('language.cart.success', ['instance' => ($instance == 'default') ? 'cart' : $instance]),
             ]
         );
 
@@ -624,5 +665,4 @@ class ShopCart extends GeneralController
         } //
         return redirect()->route('cart')->with('message', trans('language.order.success'));
     }
-
 }

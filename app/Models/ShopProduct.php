@@ -401,4 +401,20 @@ class ShopProduct extends Model
         $column = $column ?? 'sort';
         return $query->orderBy($column, 'asc')->orderBy('id', 'desc');
     }
+
+    //Condition:
+    //Active
+    //In of stock or allow order out of stock
+    //Date availabe
+    public function allowSale()
+    {
+        if ($this->status &&
+            (\Helper::configs()['product_preorder'] == 1 || $this->date_available == null || date('Y-m-d H:i:s') >= $this->date_available) &&
+            (\Helper::configs()['product_buy_out_of_stock'] || $this->stock)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

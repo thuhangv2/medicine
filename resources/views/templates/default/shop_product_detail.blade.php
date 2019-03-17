@@ -132,7 +132,7 @@
                   <div class="item {{  ($key ==0)?'active':'' }}">
                 @endif
                   <div class="col-sm-3">
-                    <div class="product-image-wrapper">
+                    <div class="product-image-wrapper product-single">
                       <div class="single-products   product-box-{{ $product_real->id }}">
                           <div class="productinfo text-center">
                             <a href="{{ $product_real->getUrl() }}"><img src="{{ asset($product_real->getThumb()) }}" alt="{{ $product_real->name }}" /></a>
