@@ -184,7 +184,7 @@
   </header><!--/header-->
 
   @yield('banner')
-<div class="cart-alert" style="display: none;"></div>
+<div id="cart-alert">
 @if(Session::has('message'))
     <div class="alert alert-success cart-alert">{!! Session::get('message') !!}
     <button type="button" class="close" data-dismiss="alert">x</button>
@@ -195,7 +195,7 @@
     <button type="button" class="close" data-dismiss="alert">x</button>
     </div>
 @endif
-
+</div>
 @if ($configs['site_status'])
   @yield('notice')
   <section>
@@ -498,34 +498,23 @@
                     });
                 }
                 //End animate
-
-
                   setTimeout(function () {
                     if(data.instance =='default'){
                       $('.shopping-cart').html(data.count_cart);
-                      $('.shopping-cart-subtotal').html(data.subtotal);
-                      $('#shopping-cart-show').html(data.html);
+                      // $('.shopping-cart-subtotal').html(data.subtotal);
+                      // $('#shopping-cart-show').html(data.html);
                     }else{
                       $('.shopping-'+data.instance).html(data.count_cart);
                     }
                   }, 1000);
 
-                $('.cart-alert').show().html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">x</button>'+data.msg+'</div>');
-                alertCart();
+                $('#cart-alert').html('<div class="cart-alert alert alert-success">'+data.msg+'</div>').fadeIn(100).delay(2000).fadeOut('slow');
                 }else{
-                  $('.cart-alert').show().html('<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">x</button>'+data.msg+'</div>');
-                    alertCart();
+                  $('#cart-alert').html('<div class="cart-alert alert alert-danger">'+data.msg+'</div>').fadeIn(100).delay(2000).fadeOut('slow');
                 }
 
                 }
         });
-
-    }
-
-    function alertCart(){
-        $(".cart-alert").fadeTo(2000, 500).slideUp(500, function(){
-        $(".cart-alert").slideUp(500);
-      });
     }
 </script>
   @isset ($layouts['bottom'])
