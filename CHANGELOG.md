@@ -3,6 +3,8 @@
 ### Upgrade laravel 5.7
 ### Fixed
 > Fix error route admin
+> Fix error process cart
+
 
 
 ## v2.1.4 (2019-03-10)
