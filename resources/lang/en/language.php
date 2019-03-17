@@ -14,8 +14,10 @@ return [
     'item_not_found'    => 'Sorry! Data you request cannot be found!',
     'cart_title'        => 'View cart',
     'checkout_title'    => 'Checkout',
+    'wishlist_page'     => 'Wishlist page',
     'wishlist'          => 'Wishlist',
     'add_to_wishlist'   => 'Add to wishlist',
+    'compare_page'      => 'Compare page',
     'compare'           => 'Compare',
     'add_to_compare'    => 'Add to compare',
     'add_to_cart'       => 'Add to cart',
@@ -42,6 +44,7 @@ return [
     'view_more'         => 'View more',
     'view_product'      => 'View product',
     'join_new_letter'   => 'Join Newsletter',
+    'products_hot'      => 'Hot products',
     'subscribe'         => [
         'manager'           => 'Subscribe manager',
         'email'             => 'Email',

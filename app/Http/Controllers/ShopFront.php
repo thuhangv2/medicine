@@ -28,14 +28,13 @@ class ShopFront extends GeneralController
     {
         return view($this->theme . '.shop_home',
             array(
-                'title'           => $this->configsGlobal['title'],
-                'description'     => $this->configsGlobal['description'],
-                'keyword'         => $this->configsGlobal['keyword'],
-                'banners'         => $this->banners,
-                'products_new'    => (new ShopProduct)->getProducts($type = null, $limit = $this->configs['product_new'], $opt = null),
-                'products_hot'    => (new ShopProduct)->getProducts($type = 1, $limit = $this->configs['product_hot'], $opt = 'random'),
-                'product_special' => (new ShopProduct)->getProducts($type = 1, 1, $opt = 'random')->first(),
-                'page_id'         => 'home',
+                'title'        => $this->configsGlobal['title'],
+                'description'  => $this->configsGlobal['description'],
+                'keyword'      => $this->configsGlobal['keyword'],
+                'banners'      => $this->banners,
+                'products_new' => (new ShopProduct)->getProducts($type = null, $limit = $this->configs['product_new'], $opt = null),
+                'products_hot' => (new ShopProduct)->getProducts($type = 1, $limit = $this->configs['product_hot'], $opt = 'random'),
+                'page_id'      => 'home',
             )
         );
     }

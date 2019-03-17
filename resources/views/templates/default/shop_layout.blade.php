@@ -197,11 +197,15 @@
 @endif
 </div>
 @if ($configs['site_status'])
-  @yield('notice')
+
   <section>
     <div class="container">
       <div class="row">
+        <!--breadcrumb-->
         @yield('breadcrumb')
+        <!--//breadcrumb-->
+
+        <!--main-->
         @section('main')
         <div class="col-sm-3">
           <div class="left-sidebar">
@@ -252,17 +256,46 @@
               </div>
             </div><!--/brands_products-->
 
-            <div class="shipping text-center"><!--shipping-->
-              <img src="{{ asset($theme_asset.'/images/home/shipping.jpg') }}" alt="" />
-            </div><!--/shipping-->
-
+@if (!empty($products_hot))
+            <div class="brands_products"><!--brands_products-->
+              <h2>{{ trans('language.products_hot') }}</h2>
+              <div class="products-name">
+                <ul class="nav nav-pills nav-stacked">
+                  @foreach ($products_hot as $product_hot)
+                    <li>
+                      <div class="product-image-wrapper product-single">
+                        <div class="single-products product-box-{{ $product_hot->id }}">
+                            <div class="productinfo text-center">
+                              <a href="{{ $product_hot->getUrl() }}"><img src="{{ asset($product_hot->getThumb()) }}" alt="{{ $product_hot->name }}" /></a>
+                              {!! $product_hot->showPrice() !!}
+                              <a href="{{ $product_hot->getUrl() }}"><p>{{ $product_hot->name }}</p></a>
+                            </div>
+                        @if ($product_hot->price != $product_hot->getPrice())
+                        <img src="{{ asset($theme_asset.'/images/home/sale.png') }}" class="new" alt="" />
+                        @elseif($product_hot->type == 1)
+                        <img src="{{ asset($theme_asset.'/images/home/new.png') }}" class="new" alt="" />
+                        @endif
+                        </div>
+                      </div>
+                    </li>
+                  @endforeach
+                </ul>
+              </div>
+            </div><!--/brands_products-->
+@endif
           </div>
+
+
         </div>
         @show
+        <!--//main-->
 
+        <!--content right-->
         <div class="col-sm-9 padding-right">
            @yield('content')
         </div>
+        <!--//content right-->
+
       </div>
     </div>
   </section>
@@ -287,106 +320,24 @@
     @endforeach
   @endisset
   <footer id="footer"><!--Footer-->
-    <div class="footer-top">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-2">
-            <div class="companyinfo">
-              <h2>S-CART</h2>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor</p>
-            </div>
-          </div>
-          <div class="col-sm-7">
-            <div class="col-sm-3">
-              <div class="video-gallery text-center">
-                <a href="#">
-                  <div class="iframe-img">
-                    <img src="{{ asset($theme_asset.'/images/home/iframe1.png') }}" alt="" />
-                  </div>
-                  <div class="overlay-icon">
-                    <i class="fa fa-play-circle-o"></i>
-                  </div>
-                </a>
-                <p>Circle of Hands</p>
-                <h2>24 DEC 2014</h2>
-              </div>
-            </div>
-
-            <div class="col-sm-3">
-              <div class="video-gallery text-center">
-                <a href="#">
-                  <div class="iframe-img">
-                    <img src="{{ asset($theme_asset.'/images/home/iframe2.png') }}" alt="" />
-                  </div>
-                  <div class="overlay-icon">
-                    <i class="fa fa-play-circle-o"></i>
-                  </div>
-                </a>
-                <p>Circle of Hands</p>
-                <h2>24 DEC 2014</h2>
-              </div>
-            </div>
-
-            <div class="col-sm-3">
-              <div class="video-gallery text-center">
-                <a href="#">
-                  <div class="iframe-img">
-                   <img src="{{ asset($theme_asset.'/images/home/iframe3.png') }}" alt="" />
-                  </div>
-                  <div class="overlay-icon">
-                    <i class="fa fa-play-circle-o"></i>
-                  </div>
-                </a>
-                <p>Circle of Hands</p>
-                <h2>24 DEC 2014</h2>
-              </div>
-            </div>
-
-            <div class="col-sm-3">
-              <div class="video-gallery text-center">
-                <a href="#">
-                  <div class="iframe-img">
-                    <img src="{{ asset($theme_asset.'/images/home/iframe4.png') }}" alt="" />
-                  </div>
-                  <div class="overlay-icon">
-                    <i class="fa fa-play-circle-o"></i>
-                  </div>
-                </a>
-                <p>Circle of Hands</p>
-                <h2>24 DEC 2014</h2>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-3">
-            <div class="address">
-              <img src="{{ asset($theme_asset.'/images/home/map.png') }}" alt="" />
-              <p>{{ $configsGlobal['address'] }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <div class="footer-widget">
       <div class="container">
         <div class="row">
           <div class="col-sm-3">
             <div class="single-widget">
-              <h2>Service</h2>
-              <ul class="nav nav-pills nav-stacked">
-                <li><a href="#">Online Help</a></li>
-                <li><a href="#">Contact Us</a></li>
-                <li><a href="#">Order Status</a></li>
-              </ul>
+              <h2><a href="{{ route('home') }}"><img style="max-width: 150px;" src="{{  asset($logo) }}"></a></h2>
+             <ul class="nav nav-pills nav-stacked">
+               <li>{{ $configsGlobal['title'] }}</li>
+             </ul>
             </div>
           </div>
           <div class="col-sm-3">
             <div class="single-widget">
-              <h2>Policies</h2>
+              <h2>{{ trans('language.my_account') }}</h2>
               <ul class="nav nav-pills nav-stacked">
-                <li><a href="#">Terms of Use</a></li>
-                <li><a href="#">Privecy Policy</a></li>
-                <li><a href="#">Refund Policy</a></li>
+                <li><a href="{{ route('profile') }}">{{ trans('language.my_profile') }}</a></li>
+                <li><a href="{{ route('compare') }}">{{ trans('language.compare_page') }}</a></li>
+                <li><a href="{{ route('wishlist') }}">{{ trans('language.wishlist_page') }}</a></li>
               </ul>
             </div>
           </div>
