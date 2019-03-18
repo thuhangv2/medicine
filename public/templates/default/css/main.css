@@ -2496,6 +2496,7 @@ h2.title {
     background: #FE980F;
     color: #FFF;
     border-radius: 50%;
+    z-index: 99;
 }
 #cart-alert{
   position: fixed;
