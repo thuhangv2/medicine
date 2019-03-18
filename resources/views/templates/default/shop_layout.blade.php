@@ -257,23 +257,23 @@
               </div>
             </div><!--/brands_products-->
 
-@if (!empty($products_hot))
+@if (!empty($products_special))
             <div class="brands_products"><!--brands_products-->
-              <h2>{{ trans('language.products_hot') }}</h2>
+              <h2>{{ trans('language.products_special') }}</h2>
               <div class="products-name">
                 <ul class="nav nav-pills nav-stacked">
-                  @foreach ($products_hot as $product_hot)
+                  @foreach ($products_special as $product_special)
                     <li>
                       <div class="product-image-wrapper product-single">
-                        <div class="single-products product-box-{{ $product_hot->id }}">
+                        <div class="single-products product-box-{{ $product_special->id }}">
                             <div class="productinfo text-center">
-                              <a href="{{ $product_hot->getUrl() }}"><img src="{{ asset($product_hot->getThumb()) }}" alt="{{ $product_hot->name }}" /></a>
-                              {!! $product_hot->showPrice() !!}
-                              <a href="{{ $product_hot->getUrl() }}"><p>{{ $product_hot->name }}</p></a>
+                              <a href="{{ $product_special->product->getUrl() }}"><img src="{{ asset($product_special->product->getThumb()) }}" alt="{{ $product_special->product->name }}" /></a>
+                              {!! $product_special->product->showPrice() !!}
+                              <a href="{{ $product_special->product->getUrl() }}"><p>{{ $product_special->product->name }}</p></a>
                             </div>
-                        @if ($product_hot->price != $product_hot->getPrice())
+                        @if ($product_special->product->price != $product_special->product->getPrice())
                         <img src="{{ asset($theme_asset.'/images/home/sale.png') }}" class="new" alt="" />
-                        @elseif($product_hot->type == 1)
+                        @elseif($product_special->product->type == 1)
                         <img src="{{ asset($theme_asset.'/images/home/new.png') }}" class="new" alt="" />
                         @endif
                         </div>

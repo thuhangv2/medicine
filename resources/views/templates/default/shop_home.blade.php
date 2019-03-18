@@ -30,46 +30,8 @@
                @endforeach
           </div><!--features_items-->
 
-
-
-          <div class="category-tab"><!--category-tab-->
-            <div class="col-sm-12">
-              <ul class="nav nav-tabs">
-                @foreach ($categories as $key => $category)
-                  <li {{ ($key ==0)?'class="active"':'' }}><a href="#cate{{ $key }}" data-toggle="tab">{{ $category->name }}</a></li>
-                @endforeach
-              </ul>
-            </div>
-            <div class="tab-content">
-              @foreach ($categories as $key => $category)
-                <div class="tab-pane fade {{ ($key ==0)?'active in':'' }}" id="cate{{ $key }}" >
-                  @foreach ($category->getProductsToCategory($category->id,4) as $product)
-                    <div class="col-sm-3">
-                      <div class="product-image-wrapper product-single">
-                        <div class="single-products  product-box-{{ $product->id }}">
-                          <div class="productinfo text-center">
-                            <a href="{{ $product->getUrl() }}"><img src="{{ asset($product->getThumb()) }}" alt="{{ $product->name }}" /></a>
-                            {!! $product->showPrice() !!}
-                            <a href="{{ $product->getUrl() }}"><p>{{ $product->name }}</p></a>
-                            <a class="btn btn-default add-to-cart" onClick="addToCart('{{ $product->id }}','default',$(this))"><i class="fa fa-shopping-cart"></i>{{trans('language.add_to_cart')}}</a>
-                          </div>
-                          @if ($product->price != $product->getPrice())
-                          <img src="{{ asset($theme_asset.'/images/home/sale.png') }}" class="new" alt="" />
-                          @elseif($product->type == 1)
-                          <img src="{{ asset($theme_asset.'/images/home/new.png') }}" class="new" alt="" />
-                          @endif
-
-                        </div>
-                      </div>
-                    </div>
-                  @endforeach
-                </div>
-              @endforeach
-            </div>
-          </div><!--/category-tab-->
-
           <div class="recommended_items"><!--recommended_items-->
-            <h2 class="title text-center">{{ trans('language.recommended_items') }}</h2>
+            <h2 class="title text-center">{{ trans('language.products_hot') }}</h2>
 
             <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
               <div class="carousel-inner">
@@ -114,6 +76,44 @@
                 </a>
             </div>
           </div><!--/recommended_items-->
+
+          <div class="category-tab"><!--category-tab-->
+            <div class="col-sm-12">
+              <ul class="nav nav-tabs">
+                @foreach ($categories as $key => $category)
+                  <li {{ ($key ==0)?'class="active"':'' }}><a href="#cate{{ $key }}" data-toggle="tab">{{ $category->name }}</a></li>
+                @endforeach
+              </ul>
+            </div>
+            <div class="tab-content">
+              @foreach ($categories as $key => $category)
+                <div class="tab-pane fade {{ ($key ==0)?'active in':'' }}" id="cate{{ $key }}" >
+                  @foreach ($category->getProductsToCategory($category->id,4) as $product)
+                    <div class="col-sm-3">
+                      <div class="product-image-wrapper product-single">
+                        <div class="single-products  product-box-{{ $product->id }}">
+                          <div class="productinfo text-center">
+                            <a href="{{ $product->getUrl() }}"><img src="{{ asset($product->getThumb()) }}" alt="{{ $product->name }}" /></a>
+                            {!! $product->showPrice() !!}
+                            <a href="{{ $product->getUrl() }}"><p>{{ $product->name }}</p></a>
+                            <a class="btn btn-default add-to-cart" onClick="addToCart('{{ $product->id }}','default',$(this))"><i class="fa fa-shopping-cart"></i>{{trans('language.add_to_cart')}}</a>
+                          </div>
+                          @if ($product->price != $product->getPrice())
+                          <img src="{{ asset($theme_asset.'/images/home/sale.png') }}" class="new" alt="" />
+                          @elseif($product->type == 1)
+                          <img src="{{ asset($theme_asset.'/images/home/new.png') }}" class="new" alt="" />
+                          @endif
+
+                        </div>
+                      </div>
+                    </div>
+                  @endforeach
+                </div>
+              @endforeach
+            </div>
+          </div><!--/category-tab-->
+
+
 @endsection
 
 @section('banner')

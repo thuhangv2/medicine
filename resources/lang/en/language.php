@@ -45,6 +45,7 @@ return [
     'view_product'      => 'View product',
     'join_new_letter'   => 'Join Newsletter',
     'products_hot'      => 'Hot products',
+    'products_special'  => 'Special products',
     'subscribe'         => [
         'manager'           => 'Subscribe manager',
         'email'             => 'Email',

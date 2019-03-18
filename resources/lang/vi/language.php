@@ -45,6 +45,7 @@ return [
     'view_product'      => 'Xem sản phẩm',
     'join_new_letter'   => 'Đăng ký',
     'products_hot'      => 'Sản phẩm HOT',
+    'products_special'  => 'Sản phẩm giảm giá',
     'subscribe'         => [
         'manager'           => 'Quản lý người đăng ký',
         'email'             => 'Email',
