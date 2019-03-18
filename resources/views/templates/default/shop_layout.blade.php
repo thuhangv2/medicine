@@ -20,7 +20,7 @@
       {!! $element->html !!}
     @endforeach
   @endisset
-    <link href="{{ asset($theme_asset.'/css/bootstrap.min.css')}}"" rel="stylesheet">
+    <link href="{{ asset($theme_asset.'/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{ asset($theme_asset.'/css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{ asset($theme_asset.'/css/prettyPhoto.css')}}" rel="stylesheet">
     <link href="{{ asset($theme_asset.'/css/animate.css')}}" rel="stylesheet">
@@ -102,7 +102,7 @@
           <div class="col-sm-8">
             <div class="shop-menu pull-right">
               <ul class="nav navbar-nav">
-                <li><a href="{{ route('profile') }}"><i class="fa fa-user"></i> {{ trans('language.account') }}</a></li>
+
                 <li><a href="{{ route('wishlist') }}"><span  class="cart-qty  shopping-wishlist" id="shopping-wishlist">{{ Cart::instance('wishlist')->count() }}</span><i class="fa fa-star"></i> {{ trans('language.wishlist') }}</a></li>
                 <li><a href="{{ route('compare') }}"><span  class="cart-qty shopping-compare" id="shopping-compare">{{ Cart::instance('compare')->count() }}</span><i class="fa fa-crosshairs"></i> {{ trans('language.compare') }}</a></li>
                 <li><a href="{{ route('cart') }}"><span class="cart-qty shopping-cart" id="shopping-cart">{{ $carts['count'] }}</span><i class="fa fa-shopping-cart"></i> {{ trans('language.cart_title') }}</a>
@@ -110,6 +110,7 @@
                 @guest
                 <li><a href="{{ route('login') }}"><i class="fa fa-lock"></i> {{ trans('language.login') }}</a></li>
                 @else
+                <li><a href="{{ route('profile') }}"><i class="fa fa-user"></i> {{ trans('language.account') }}</a></li>
                 <li><a href="{{ route('logout') }}" rel="nofollow" onclick="event.preventDefault();
                    document.getElementById('logout-form').submit();"><i class="fa fa-power-off"></i> {{ trans('language.logout') }}</a></li>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
