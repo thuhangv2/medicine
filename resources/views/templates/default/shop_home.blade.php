@@ -62,7 +62,7 @@
                       </div>
                     </div>
                   </div>
-                @if ($key % 3 == 2)
+                @if ($key % 3 == 2 || $key+1 == $products_hot->count())
                   </div>
                 @endif
                @endforeach

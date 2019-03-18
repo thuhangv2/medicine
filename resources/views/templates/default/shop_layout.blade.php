@@ -262,10 +262,10 @@
               <h2>{{ trans('language.products_special') }}</h2>
               <div class="products-name">
                 <ul class="nav nav-pills nav-stacked">
-                  @foreach ($products_special as $product_special)
+                  @foreach ($products_special as $key => $product_special)
                     <li>
                       <div class="product-image-wrapper product-single">
-                        <div class="single-products product-box-{{ $product_special->id }}">
+                        <div class="single-products product-box-{{ $key }}">
                             <div class="productinfo text-center">
                               <a href="{{ $product_special->product->getUrl() }}"><img src="{{ asset($product_special->product->getThumb()) }}" alt="{{ $product_special->product->name }}" /></a>
                               {!! $product_special->product->showPrice() !!}
@@ -284,6 +284,16 @@
               </div>
             </div><!--/brands_products-->
 @endif
+
+@php
+  // dd($productLastView)
+@endphp
+
+@if (!empty($productLastView))
+  @include($theme.'.Modules.LastView', array('productLastView' => $productLastView))
+@endif
+
+
           </div>
 
 

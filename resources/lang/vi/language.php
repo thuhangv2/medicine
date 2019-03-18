@@ -2,51 +2,52 @@
 // resources/lang/vi/shop.php
 
 return [
-    'all_product'       => 'Tất cả sản phẩm',
+    'all_product'        => 'Tất cả sản phẩm',
 
-    'my_profile'        => 'Trang quản lý cá nhân',
-    'my_account'        => 'Tài khoản',
-    'notfound'          => 'Không tìm thấy dữ liệu',
-    'empty_product'     => 'Không có sản phẩm nào!',
-    'empty_entry'       => 'Không có bài viết nào!',
-    'page_not_found'    => 'Xin lỗi. Chúng tôi không tìm thấy trang này!',
-    'item_not_found'    => 'Dữ liệu không tồn tại!',
-    'no_data'           => 'Không có dữ liệu!',
-    'cart_title'        => 'Giỏ hàng',
-    'checkout_title'    => 'Xác nhận',
-    'wishlist_page'     => 'Sản phẩm yêu thích',
-    'wishlist'          => 'Sản phẩm yêu thích',
-    'add_to_wishlist'   => 'Yêu thích',
-    'add_to_cart'       => 'Thêm vào giỏ hàng',
-    'compare_page'      => 'So sánh sản phẩm',
-    'compare'           => 'So sánh sản phẩm',
-    'add_to_compare'    => 'So sánh',
-    'for_got_password'  => 'Quên mật khẩu',
-    'login'             => 'Đăng nhập',
-    'search'            => 'Tìm kiếm',
-    'account'           => 'Tài khoản',
-    'logout'            => 'Đăng xuất',
-    'home'              => 'Trang chủ',
-    'blog'              => 'Blog',
-    'contact'           => 'Liên hệ',
-    'about'             => 'Giới thiệu',
-    'shop'              => 'Cửa hàng',
-    'cms_category'      => 'Danh mục CMS',
-    'category'          => 'Danh mục',
-    'brands'            => 'Nhãn hiệu',
-    'maintenance'       => 'Xin lỗi, website đang bảo trì',
-    'features_items'    => 'Sản phẩm nổi bật',
-    'recommended_items' => 'Sản phẩm đề xuất',
-    'thank_contact'     => 'Cảm ơn bạn. Chúng tôi sẽ liên hệ sớm nhất có thể!',
-    'date_available'    => 'Ngày bán',
-    'default_available' => 'Mặc đính, cho phép mua từ ngày đăng bán.',
-    'vendor'            => 'Nhà cung cấp',
-    'view_more'         => 'Xem đầy đủ',
-    'view_product'      => 'Xem sản phẩm',
-    'join_new_letter'   => 'Đăng ký',
-    'products_hot'      => 'Sản phẩm HOT',
-    'products_special'  => 'Sản phẩm giảm giá',
-    'subscribe'         => [
+    'my_profile'         => 'Trang quản lý cá nhân',
+    'my_account'         => 'Tài khoản',
+    'notfound'           => 'Không tìm thấy dữ liệu',
+    'empty_product'      => 'Không có sản phẩm nào!',
+    'empty_entry'        => 'Không có bài viết nào!',
+    'page_not_found'     => 'Xin lỗi. Chúng tôi không tìm thấy trang này!',
+    'item_not_found'     => 'Dữ liệu không tồn tại!',
+    'no_data'            => 'Không có dữ liệu!',
+    'cart_title'         => 'Giỏ hàng',
+    'checkout_title'     => 'Xác nhận',
+    'wishlist_page'      => 'Sản phẩm yêu thích',
+    'wishlist'           => 'Sản phẩm yêu thích',
+    'add_to_wishlist'    => 'Yêu thích',
+    'add_to_cart'        => 'Thêm vào giỏ hàng',
+    'compare_page'       => 'So sánh sản phẩm',
+    'compare'            => 'So sánh sản phẩm',
+    'add_to_compare'     => 'So sánh',
+    'for_got_password'   => 'Quên mật khẩu',
+    'login'              => 'Đăng nhập',
+    'search'             => 'Tìm kiếm',
+    'account'            => 'Tài khoản',
+    'logout'             => 'Đăng xuất',
+    'home'               => 'Trang chủ',
+    'blog'               => 'Blog',
+    'contact'            => 'Liên hệ',
+    'about'              => 'Giới thiệu',
+    'shop'               => 'Cửa hàng',
+    'cms_category'       => 'Danh mục CMS',
+    'category'           => 'Danh mục',
+    'brands'             => 'Nhãn hiệu',
+    'maintenance'        => 'Xin lỗi, website đang bảo trì',
+    'features_items'     => 'Sản phẩm nổi bật',
+    'recommended_items'  => 'Sản phẩm đề xuất',
+    'thank_contact'      => 'Cảm ơn bạn. Chúng tôi sẽ liên hệ sớm nhất có thể!',
+    'date_available'     => 'Ngày bán',
+    'default_available'  => 'Mặc đính, cho phép mua từ ngày đăng bán.',
+    'vendor'             => 'Nhà cung cấp',
+    'view_more'          => 'Xem đầy đủ',
+    'view_product'       => 'Xem sản phẩm',
+    'join_new_letter'    => 'Đăng ký',
+    'products_hot'       => 'Sản phẩm HOT',
+    'products_special'   => 'Sản phẩm giảm giá',
+    'products_last_view' => 'Xem gần đây',
+    'subscribe'          => [
         'manager'           => 'Quản lý người đăng ký',
         'email'             => 'Email',
         'title'             => 'Đăng ký',
@@ -54,7 +55,7 @@ return [
         'subscribe_email'   => 'Email của bạn',
         'subscribe_success' => 'Đăng ký nhận tin thành công!',
     ],
-    'contact_form'      => [
+    'contact_form'       => [
         'title'   => 'Form liên hệ',
         'info'    => 'Thông tin liên hệ',
         'name'    => 'Tên của bạn',
@@ -65,11 +66,11 @@ return [
         'message' => 'Tin nhắn của bạn',
         'submit'  => 'Gửi đi',
     ],
-    'search_form'       => [
+    'search_form'        => [
         'keyword' => 'Từ khóa tìm kiếm',
     ],
 
-    'admin'             => [
+    'admin'              => [
         'home_blogs'                   => 'Số blog/Trang chủ',
         'home_contents'                => 'Số dịch vụ/Trang chủ',
         'item_list'                    => 'Số item/Trang',
@@ -171,7 +172,7 @@ return [
         'access_denied'                => 'Hành động từ chối!',
         'access_denied_msg'            => 'Bạn không thể khóa ngôn ngữ này vì nó đang là mặc định. Phải thay đổi ngôn ngữ mặc định trước.',
     ],
-    'order'             => [
+    'order'              => [
         'title'                 => 'Đơn hàng',
         'customer_name'         => 'Tên khách hàng',
         'customer'              => 'Khách hàng',
@@ -213,7 +214,7 @@ return [
         ],
     ],
 
-    'product'           => [
+    'product'            => [
         'sku'          => 'Mã hàng',
         'sku_validate' => 'SKU chỉ được dùng các chữ số, chữ cái không dấu và dấu -',
         'name'         => 'Tên sản phẩm',
@@ -235,7 +236,7 @@ return [
         'new'          => 'Mới',
         'sale'         => 'Sale',
     ],
-    'promotion'         => [
+    'promotion'          => [
         'code'        => 'Mã coupon',
         'value'       => 'Giá trị',
         'type'        => 'Loại',
@@ -270,7 +271,7 @@ return [
         ],
     ],
 
-    'customer'          => [
+    'customer'           => [
         'name'         => 'Tên',
         'phone'        => 'Số điện thoại',
         'email'        => 'Email',
@@ -282,12 +283,12 @@ return [
         'created_at'   => 'Thời gian tạo',
     ],
 
-    'process'           => [
+    'process'            => [
         'productImport'      => 'Thêm nhiều sản phẩm',
         'productImport_text' => 'Tải file mẫu ở đây',
     ],
 
-    'cart'              => [
+    'cart'               => [
         'over'             => 'Sản phẩm :item vượt quá số lượng cho phép.',
         'exist'            => 'Sản phẩm đã tồn tại trong :instance',
         'success'          => 'Thêm sản phẩm vào :instance thành công!',
@@ -314,14 +315,14 @@ return [
         'note'             => 'Ghi chú đơn hàng',
     ],
 
-    'profile'           => [
+    'profile'            => [
         'empty_order'  => 'Bạn chưa có đơn hàng nào!',
         'total'        => 'Tổng giá',
         'status'       => 'Trạng thái đơn hàng',
         'date_add'     => 'Ngày mua',
         'detail_order' => 'Chi tiết đơn hàng',
     ],
-    'config'            => [
+    'config'             => [
         'logo'        => 'Logo',
         'title'       => 'Tên website',
         'description' => 'Mô tả',
@@ -337,7 +338,7 @@ return [
         'template'    => 'Giao diện',
     ],
 
-    'currency'          => [
+    'currency'           => [
         'manager'      => 'Quản lý tiền tệ',
         'code'         => 'Mã',
         'name'         => 'Tên',
@@ -350,7 +351,7 @@ return [
         'symbol_first' => 'Ký hiệu hiện đầu tiên',
     ],
 
-    'email'             => [
+    'email'              => [
         'order' => [
             'title_1'      => 'Xin chào! :website trang web có đơn hàng mới!',
             'order_id'     => 'Mã đơn hàng',
@@ -372,7 +373,7 @@ return [
         ],
     ],
 
-    'api'               => [
+    'api'                => [
         'manager'             => 'Quản lý API',
         'name'                => 'Tên',
         'name_help'           => 'Là tên trong router của API: route/api.php',
@@ -394,7 +395,7 @@ return [
         'no_hidden'           => 'Không có trường ẩn',
         'no_secret'           => 'Không có khóa bí mật',
     ],
-    'attribute'         => [
+    'attribute'          => [
         'manager'     => 'Quản lý thuộc tính',
         'group'       => 'Nhóm thuộc tính',
         'group_name'  => 'Tên nhóm',
@@ -407,7 +408,7 @@ return [
         'add_more'    => 'Thêm thuộc tính',
     ],
 
-    'layout'            => [
+    'layout'             => [
         'all_page'       => 'Tất cả các trang',
         'manager'        => 'Quản lý layout',
         'name'           => 'Tên layout',
@@ -436,7 +437,7 @@ return [
         'guide'          => 'Hướng dẫn sử dụng <a target=_new href="https://s-cart.org/guide/layout.html?lang=vi">Ở Đây</a>',
 
     ],
-    'total'             => [
+    'total'              => [
         'sub_total' => 'Tiền hàng',
         'total'     => 'Tổng tiền',
         'shipping'  => 'Phí vẫn chuyển',
@@ -444,7 +445,7 @@ return [
         'received'  => 'Đã nhận',
         'balance'   => 'Còn lại',
     ],
-    'extensions'        => [
+    'extensions'         => [
         'manager'     => 'Quản lý phần mở rộng',
         'shipping'    => 'Chức năng vận chuyển',
         'payment'     => 'Chức năng thanh toán',
@@ -465,7 +466,7 @@ return [
         'not_install' => 'Chưa cài đặt',
     ],
 
-    'modules'           => [
+    'modules'            => [
         'manager'     => 'Quản lý module',
         'Cms'         => 'Các module CMS',
         'Api'         => 'Các module Api',
@@ -484,7 +485,7 @@ return [
         'disabled'    => 'Bị tắt',
         'not_install' => 'Chưa cài đặt',
     ],
-    'install'           => [
+    'install'            => [
         'env'               => [
             'process'        => 'Generating file .env',
             'error_open'     => 'Cant not open file .env.example',
@@ -527,7 +528,7 @@ return [
         'rename_error'      => 'Can not rename file install.php. Please remove or rename it!',
     ],
 
-    'templates'         => [
+    'templates'          => [
         'manager'    => 'Quản lý giao diện',
         'title'      => 'Danh sách giao diện',
         'name'       => 'Tên giao diện',
@@ -542,7 +543,7 @@ return [
         'installing' => 'Đang cài đặt',
         'guide'      => 'Xem hướng dẫn <a target=_new href="https://s-cart.org/download/template.html?lang=vi">Ở ĐÂY</a>',
     ],
-    'backup'            => [
+    'backup'             => [
         'guide'            => '<span class="text-danger">Chú ý: Bạn cần phải cài đặt đường dẫn hệ thống chính xác. Xem hướng dẫn <a target=_new href="https://s-cart.org/guide/backup.html?lang=vi">TẠI ĐÂY</a></span>',
         'generate_now'     => 'Tạo một backup ngay',
         'processing'       => 'Đang xử lý...',
@@ -560,7 +561,7 @@ return [
         'generate_success' => 'Tạo file backup thành công!',
         'limit_backup'     => 'Bạn chỉ được tạo tối đa 10 bản sao lưu!',
     ],
-    'shop_info'         => [
+    'shop_info'          => [
         'email'   => 'Email',
         'hotline' => 'SĐT',
         'address' => 'Địa chỉ',

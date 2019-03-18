@@ -2518,3 +2518,12 @@ h2.title {
 li > a{
   cursor: pointer;
 }
+.products-lasView img{
+  width: 100%;
+}
+.products-lasView .last-view{
+    font-style: italic;
+    color: #bf521b;
+    font-size: 12px;
+    display: block;
+}

@@ -74,6 +74,7 @@ class GeneralController extends Controller
         View::share('brands', $this->brands);
         View::share('languages', $this->languages);
         View::share('currencies', $this->currencies);
+
     }
 
 /**
@@ -122,4 +123,5 @@ class GeneralController extends Controller
             )
         );
     }
+
 }

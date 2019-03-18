@@ -35,7 +35,9 @@ class ShopFront extends GeneralController
                 'products_new'     => (new ShopProduct)->getProducts($type = null, $limit = $this->configs['product_new'], $opt = null),
                 'products_hot'     => (new ShopProduct)->getProducts($type = 1, $limit = $this->configs['product_hot'], $opt = 'random'),
                 'products_special' => (new ShopProduct)->getProductsSpecial($limit = 1, $random = true),
+                'productLastView'  => $this->productLastView(),
                 'page_id'          => 'home',
+
             )
         );
     }
@@ -99,11 +101,16 @@ class ShopFront extends GeneralController
             $product->view += 1;
             $product->date_lastview = date('Y-m-d H:i:s');
             $product->save();
-            $arrlastView      = empty(\Cookie::get('productsLastView')) ? array() : json_decode(\Cookie::get('productsLastView'), true);
-            $arrlastView[$id] = date('Y-m-d H:i:s');
-            arsort($arrlastView);
-            \Cookie::queue('productsLastView', json_encode($arrlastView), (86400 * 30));
             //End last viewed
+
+            //Product last view
+            if (!empty($this->configs['product_last_view'])) {
+                $arrlastView      = empty(\Cookie::get('productsLastView')) ? array() : json_decode(\Cookie::get('productsLastView'), true);
+                $arrlastView[$id] = date('Y-m-d H:i:s');
+                arsort($arrlastView);
+                \Cookie::queue('productsLastView', json_encode($arrlastView), (86400 * 30));
+            }
+            //End product last view
 
             //Check product available
             return view($this->theme . '.shop_product_detail',
@@ -263,4 +270,32 @@ class ShopFront extends GeneralController
         return ShopPage::where('uniquekey', $key)->where('status', 1)->first();
     }
 
+/**
+ * [productLastView description]
+ * @return [type] [description]
+ */
+    public function productLastView()
+    {
+        $arrProductsLastView = array();
+        if (!empty($this->configs['product_last_view'])) {
+            $lastView = empty(\Cookie::get('productsLastView')) ? [] : json_decode(\Cookie::get('productsLastView'), true);
+            if ($lastView) {
+                arsort($lastView);
+            }
+
+            if (count($lastView)) {
+                $lastView         = array_slice($lastView, 0, 5, true);
+                $productsLastview = ShopProduct::whereIn('id', array_keys($lastView))->get();
+                foreach ($lastView as $pId => $time) {
+                    foreach ($productsLastview as $key => $product) {
+                        if ($product['id'] == $pId) {
+                            $product['timelastview'] = $time;
+                            $arrProductsLastView[]   = $product;
+                        }
+                    }
+                }
+            }
+        }
+        return $arrProductsLastView;
+    }
 }
