@@ -5,28 +5,28 @@
 @section('content')
           <div class="product-details"><!--product-details-->
             <div class="col-sm-5">
-              <div class="view-product">
-                <img src="{{ asset($product->getImage()) }}" alt="" />
-              </div>
-          @if ($product->images->count())
+
+
               <div id="similar-product" class="carousel slide" data-ride="carousel">
                   <!-- Wrapper for slides -->
                   <div class="carousel-inner">
-                    <div class="item active">
-                        <a href="#" class="col-sm-4">
-                          <img src="{{ asset($product->getThumb()) }}" alt="">
-                        </a>
+
+                  <div id="similar-product" class="carousel slide" data-ride="carousel">
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                      <div class="view-product item active"  data-slide-number="0">
+                        <img src="{{ asset($product->getImage()) }}" alt="">
+                      </div>
+                    @if ($product->images->count())
                        @foreach ($product->images as $key=>$image)
-                        <a href="#" class="col-sm-4">
-                          <img src="{{ asset($image->getThumb()) }}" alt="">
-                        </a>
-                          @if ($key % 3 == 1 && $key + 1 != count($product->images))
-                            </div>
-                            <div class="item">
-                          @endif
+                        <div class="view-product item"  data-slide-number="{{ $key + 1 }}">
+                          <img src="{{ asset($image->getImage()) }}" alt="">
+                        </div>
                         @endforeach
+                    @endif
                     </div>
                   </div>
+            @if ($product->images->count())
                   <!-- Controls -->
                   <a class="left item-control" href="#similar-product" data-slide="prev">
                   <i class="fa fa-angle-left"></i>
@@ -34,8 +34,10 @@
                   <a class="right item-control" href="#similar-product" data-slide="next">
                   <i class="fa fa-angle-right"></i>
                   </a>
+              @endif
+                  </div>
               </div>
-          @endif
+
             </div>
 
         <form id="buy_block" action="{{ route('postCart') }}" method="post">
