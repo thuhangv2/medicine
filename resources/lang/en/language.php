@@ -110,6 +110,7 @@ return [
         'show_date_available'          => 'Show date available',
         'product_buy_out_of_stock'     => 'Allow buy product out of stock',
         'product_display_out_of_stock' => 'Show product out of stock',
+        'product_last_view'            => 'Products recently viewed',
         'product_preorder'             => 'Allow pre-order',
         'smtp_mode'                    => 'Use SMTP',
         'smtp_port'                    => 'Port SMTP',

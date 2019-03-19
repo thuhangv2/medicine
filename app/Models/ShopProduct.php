@@ -233,6 +233,8 @@ class ShopProduct extends Model
             $product->likes()->delete();
             $product->images()->delete();
             $product->descriptions()->delete();
+            $product->specialPrice()->delete();
+            $product->options()->delete();
             $product->attDetails()->delete();
         });
     }

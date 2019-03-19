@@ -114,6 +114,7 @@ return [
         'show_date_available'          => 'Hiển thị ngày cho phép mua',
         'product_buy_out_of_stock'     => 'Cho phép mua vượt stock, kể cả đã hết hàng',
         'product_display_out_of_stock' => 'Hiển thị sản phẩm đã hết hàng',
+        'product_last_view'            => 'Sản phẩm đã xem',
         'product_preorder'             => 'Cho phép đặt hàng trước',
         'smtp_mode'                    => 'Sử dụng SMTP',
         'smtp_port'                    => 'Cổng SMTP',
