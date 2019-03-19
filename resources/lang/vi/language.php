@@ -235,6 +235,12 @@ return [
         'import_multi' => 'Import nhiều sản phẩm',
         'new'          => 'Mới',
         'sale'         => 'Sale',
+        'type'         => 'Loại sản phẩm',
+        'brand'        => 'Nhãn hiệu',
+        'availability' => 'Tình trạng',
+        'in_stock'     => 'Còn hàng',
+        'overview'     => 'Mô tả',
+        'comment'      => 'Đánh giá',
     ],
     'promotion'          => [
         'code'        => 'Mã coupon',

@@ -1,13 +1,13 @@
 <?php
-
+#app/Models/ShopProductImage.php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ShopImage extends Model
+class ShopProductImage extends Model
 {
     public $timestamps  = false;
-    public $table       = 'shop_image';
+    public $table       = 'shop_product_image';
     protected $fillable = ['id', 'image', 'product_id', 'status'];
     public function product()
     {

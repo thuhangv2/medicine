@@ -43,7 +43,7 @@ class ShopProduct extends Model
 
     public function images()
     {
-        return $this->hasMany(ShopImage::class, 'product_id', 'id');
+        return $this->hasMany(ShopProductImage::class, 'product_id', 'id');
     }
     public function likes()
     {
