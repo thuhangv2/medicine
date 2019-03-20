@@ -34,6 +34,7 @@ return [
     'cms_category'       => 'CMS categories',
     'category'           => 'Category',
     'brands'             => 'Brands',
+    'vendors'            => 'Vendors',
     'maintenance'        => 'Sorry! We are currently doing site maintenance!',
     'features_items'     => 'Features Items',
     'recommended_items'  => 'Recommended items',

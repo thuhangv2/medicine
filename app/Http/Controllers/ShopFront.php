@@ -36,7 +36,7 @@ class ShopFront extends GeneralController
                 'products_hot'     => (new ShopProduct)->getProducts($type = 1, $limit = $this->configs['product_hot'], $opt = 'random'),
                 'products_special' => (new ShopProduct)->getProductsSpecial($limit = 1, $random = true),
                 'productLastView'  => $this->productLastView(),
-                'page_id'          => 'home',
+                'layout_page'      => 'home',
 
             )
         );
@@ -59,6 +59,7 @@ class ShopFront extends GeneralController
                     'keyword'      => $this->configsGlobal['keyword'],
                     'categorySelf' => $category,
                     'products'     => $products,
+                    'layout_page'  => 'product_list',
                     'og_image'     => url($category->getImage()),
                 )
             );
@@ -83,6 +84,7 @@ class ShopFront extends GeneralController
                 'description' => $this->configsGlobal['description'],
                 'keyword'     => $this->configsGlobal['keyword'],
                 'products'    => $products,
+                'layout_page' => 'product_list',
             )
         );
     }
@@ -122,6 +124,7 @@ class ShopFront extends GeneralController
                     'attributesGroup'    => ShopAttributeGroup::all()->keyBy('id'),
                     'productsToCategory' => (new ShopCategory)->getProductsToCategory($id = $product->category_id, $limit = $this->configs['product_relation'], $opt = 'random'),
                     'og_image'           => url($product->getImage()),
+                    'layout_page'        => 'product_detail',
                 )
             );
         } else {
@@ -144,6 +147,7 @@ class ShopFront extends GeneralController
                 'title'       => $brand->name,
                 'description' => '',
                 'keyword'     => '',
+                'layout_page' => 'product_list',
                 'products'    => $brand->products()->paginate(9),
             )
         );
@@ -164,6 +168,7 @@ class ShopFront extends GeneralController
             'user'        => $user,
             'orders'      => $orders,
             'statusOrder' => $statusOrder,
+            'layout_page' => 'shop_profile',
         ));
     }
 
@@ -177,8 +182,9 @@ class ShopFront extends GeneralController
         $keyword = $request->get('keyword');
         return view($this->theme . '.shop_products_list',
             array(
-                'title'    => trans('language.search') . ': ' . $keyword,
-                'products' => ShopProduct::getSearch($keyword),
+                'title'       => trans('language.search') . ': ' . $keyword,
+                'products'    => ShopProduct::getSearch($keyword),
+                'layout_page' => 'product_list',
             ));
     }
 
@@ -298,4 +304,41 @@ class ShopFront extends GeneralController
         }
         return $arrProductsLastView;
     }
+
+/**
+ * [brands description]
+ * @param  Request $request [description]
+ * @return [type]           [description]
+ */
+    public function brands(Request $request)
+    {
+        $keyword = $request->get('keyword');
+        return view($this->theme . '.shop_item_list',
+            array(
+                'title'       => trans('language.brands'),
+                'itemsList'   => $this->banners,
+                'keyword'     => '',
+                'description' => '',
+                'layout_page' => 'product_brand',
+            ));
+    }
+
+/**
+ * [vendors description]
+ * @param  Request $request [description]
+ * @return [type]           [description]
+ */
+    public function vendors(Request $request)
+    {
+        $keyword = $request->get('keyword');
+        return view($this->theme . '.shop_item_list',
+            array(
+                'title'       => trans('language.vendors'),
+                'itemsList'   => $this->banners,
+                'keyword'     => '',
+                'description' => '',
+                'layout_page' => 'product_vendor',
+            ));
+    }
+
 }

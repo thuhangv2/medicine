@@ -34,6 +34,7 @@ return [
     'cms_category'       => 'Danh mục CMS',
     'category'           => 'Danh mục',
     'brands'             => 'Nhãn hiệu',
+    'vendors'            => 'Nhà cung cấp',
     'maintenance'        => 'Xin lỗi, website đang bảo trì',
     'features_items'     => 'Sản phẩm nổi bật',
     'recommended_items'  => 'Sản phẩm đề xuất',

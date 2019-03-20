@@ -69,6 +69,8 @@ Route::get('/product/{name}_{id}.html', 'ShopFront@productDetail')
     ->where(['id' => '[0-9]+'])->name('product');
 Route::get('/brand/{name}_{id}/{category?}', 'ShopFront@productBrand')
     ->where(['id' => '[0-9]+'])->name('brand');
+Route::get('/brands', 'ShopFront@brands')->name('brands');
+Route::get('/vendors', 'ShopFront@vendors')->name('vendors');
 Route::get('/products.html', 'ShopFront@allProducts')->name('products');
 Route::get('/search.html', 'ShopFront@search')->name('search');
 Route::get('/contact.html', 'ShopFront@getContact')->name('contact');

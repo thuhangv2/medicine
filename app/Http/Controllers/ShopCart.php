@@ -110,6 +110,7 @@ class ShopCart extends GeneralController
                 'extensionDiscount' => $extensionDiscount,
                 'shippingAddress'   => $shippingAddress,
                 'uID'               => $user->id ?? 0,
+                'layout_page'       => 'shop_cart',
             )
         );
     }
@@ -564,6 +565,7 @@ class ShopCart extends GeneralController
                 'description' => '',
                 'keyword'     => '',
                 'wishlist'    => $wishlist,
+                'layout_page' => 'shop_wishlist',
             )
         );
     }
@@ -581,6 +583,7 @@ class ShopCart extends GeneralController
                 'description' => '',
                 'keyword'     => '',
                 'compare'     => $compare,
+                'layout_page' => 'product_compare',
             )
         );
     }
