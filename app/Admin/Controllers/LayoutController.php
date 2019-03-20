@@ -13,11 +13,14 @@ use Encore\Admin\Show;
 class LayoutController extends Controller
 {
     use HasResourceActions;
-    const META   = 'meta';
-    const TOP    = 'top';
-    const HEADER = 'header';
-    const BOTTOM = 'bottom';
-    const FOOTER = 'footer';
+    const COLUMN_LEFT  = 'column_left';
+    const COLUMN_RIGHT = 'column_right';
+    const MAIN         = 'main';
+    const META         = 'meta';
+    const TOP          = 'top';
+    const HEADER       = 'header';
+    const BOTTOM       = 'bottom';
+    const FOOTER       = 'footer';
     //
     const HOME           = 'home';
     const CMS_LIST       = 'cms_list';
