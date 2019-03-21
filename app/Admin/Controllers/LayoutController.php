@@ -4,6 +4,9 @@ namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Layout;
+use App\Models\LayoutPage;
+use App\Models\LayoutPosition;
+use App\Models\LayoutType;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -13,55 +16,15 @@ use Encore\Admin\Show;
 class LayoutController extends Controller
 {
     use HasResourceActions;
-    const COLUMN_LEFT  = 'column_left';
-    const COLUMN_RIGHT = 'column_right';
-    const MAIN         = 'main';
-    const META         = 'meta';
-    const TOP          = 'top';
-    const HEADER       = 'header';
-    const BOTTOM       = 'bottom';
-    const FOOTER       = 'footer';
-    //
-    const HOME           = 'home';
-    const CMS_LIST       = 'cms_list';
-    const CMS_DETAIL     = 'cms_detail';
-    const CMS_PAGE       = 'cms_page';
-    const ABOUT          = 'about';
-    const CONTACT        = 'contact';
-    const PRODUCT_LIST   = 'product_list';
-    const PRODUCT_DETAIL = 'product_detail';
-    const SHOP_CART      = 'shop_cart';
-    const SHOP_ACCOUNT   = 'shop_account';
-    const SHOP_PROFILE   = 'shop_profile';
-    const SHOP_COMPARE   = 'shop_compare';
-    const SHOP_WISHLIST  = 'shop_wishlist';
-    protected $arrDisplay;
+    protected $arrPage;
     protected $arrPosition;
+    protected $arrTypes;
 
     public function __construct()
     {
-        $this->arrDisplay = [
-            self::HOME           => trans('language.layout.home'),
-            self::CMS_LIST       => trans('language.layout.cms_list'),
-            self::CMS_DETAIL     => trans('language.layout.cms_detail'),
-            self::CMS_PAGE       => trans('language.layout.cms_page'),
-            self::ABOUT          => trans('language.layout.about'),
-            self::CONTACT        => trans('language.layout.contact'),
-            self::PRODUCT_LIST   => trans('language.layout.product_list'),
-            self::PRODUCT_DETAIL => trans('language.layout.product_detail'),
-            self::SHOP_CART      => trans('language.layout.shop_cart'),
-            self::SHOP_ACCOUNT   => trans('language.layout.shop_account'),
-            self::SHOP_PROFILE   => trans('language.layout.shop_profile'),
-            self::SHOP_COMPARE   => trans('language.layout.shop_compare'),
-            self::SHOP_WISHLIST  => trans('language.layout.shop_wishlist'),
-        ];
-        $this->arrPosition = [
-            self::META   => trans('language.layout.meta'),
-            self::HEADER => trans('language.layout.header'),
-            self::TOP    => trans('language.layout.top'),
-            self::FOOTER => trans('language.layout.footer'),
-            self::BOTTOM => trans('language.layout.bottom'),
-        ];
+        $this->arrPage     = LayoutPage::getPages();
+        $this->arrPosition = LayoutPosition::getPositions();
+        $this->arrTypes    = LayoutType::getTypes();
     }
 
     /**
@@ -130,7 +93,7 @@ class LayoutController extends Controller
      */
     protected function grid()
     {
-        $arrDisplay  = $this->arrDisplay;
+        $arrPage     = $this->arrPage;
         $arrPosition = $this->arrPosition;
         $grid        = new Grid(new Layout);
 
@@ -139,21 +102,21 @@ class LayoutController extends Controller
         $grid->position(trans('language.layout.position'))->display(function ($value) use ($arrPosition) {
             return htmlentities($arrPosition[$value]);
         });
-        $grid->page_display(trans('language.layout.page_display'))->display(function ($value) use ($arrDisplay) {
+        $grid->page(trans('language.layout.page_display'))->display(function ($value) use ($arrPage) {
             if (!$value) {
                 return trans('language.layout.all_page');
             } else {
                 $html = '';
                 if (is_array($value)) {
                     foreach ($value as $key => $v) {
-                        $html .= '+' . $arrDisplay[$v] . '<br>';
+                        $html .= '+' . $arrPage[$v] . '<br>';
                     }
                 }
                 return $html;
             }
 
         })->style('max-width:200px;word-break:break-all;');
-        $grid->html('Html')->display(function ($value) {
+        $grid->content('Html')->display(function ($value) {
             return htmlentities($value);
         })->style('max-width:200px;word-break:break-all;');
         $grid->status(trans('language.layout.status'))->switch();
@@ -201,8 +164,9 @@ class LayoutController extends Controller
         $form = new Form(new Layout);
         $form->text('name', trans('language.layout.name'))->rules('required');
         $form->select('position', trans('language.layout.position'))->options($this->arrPosition)->rules('required');
-        $form->listbox('page_display', trans('language.layout.page_display'))->options($this->arrDisplay);
-        $form->textarea('html', 'Html');
+        $form->listbox('page', trans('language.layout.page_display'))->options($this->arrPage);
+        $form->radio('type', trans('language.layout.page_display'))->options($this->arrTypes);
+        $form->textarea('content', 'Content');
         $form->switch('status', trans('language.layout.status'));
         $form->number('sort', trans('language.layout.sort'));
         $form->disableViewCheck();

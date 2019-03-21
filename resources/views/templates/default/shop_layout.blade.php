@@ -17,7 +17,7 @@
     <meta property="og:description" content="{{ $description??'' }}" />
   @isset ($layouts['meta'])
     @foreach ( $layouts['meta']  as $element)
-      {!! $element->html !!}
+      {!! $element->content !!}
     @endforeach
   @endisset
     <link href="{{ asset($theme_asset.'/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -37,14 +37,14 @@
     <link rel="apple-touch-icon-precomposed" href="{{ asset($theme_asset.'/images/ico/apple-touch-icon-57-precomposed.png')}}">
   @isset ($layouts['header'])
     @foreach ( $layouts['header']  as $element)
-      {!! $element->html !!}
+      {!! $element->content !!}
     @endforeach
   @endisset
 </head><!--/head-->
 <body>
   @isset ($layouts['top'])
     @foreach ( $layouts['top']  as $element)
-      {!! $element->html !!}
+      {!! $element->content !!}
     @endforeach
   @endisset
   <header id="header"><!--header-->
@@ -327,7 +327,7 @@
 
   @isset ($layouts['footer'])
     @foreach ( $layouts['footer']  as $element)
-      {!! $element->html !!}
+      {!! $element->content !!}
     @endforeach
   @endisset
   <footer id="footer"><!--Footer-->
@@ -481,7 +481,7 @@
 </script>
   @isset ($layouts['bottom'])
     @foreach ( $layouts['bottom']  as $element)
-      {!! $element->html !!}
+      {!! $element->content !!}
     @endforeach
   @endisset
 </body>
