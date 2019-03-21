@@ -25,6 +25,7 @@ class LayoutController extends Controller
         $this->arrPage     = LayoutPage::getPages();
         $this->arrPosition = LayoutPosition::getPositions();
         $this->arrTypes    = LayoutType::getTypes();
+        $this->arrTypes    = LayoutType::getTypes();
     }
 
     /**

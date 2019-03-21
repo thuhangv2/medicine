@@ -15,11 +15,15 @@
     <meta property="og:type" content="Website" />
     <meta property="og:title" content="{{ $title??'' }}" />
     <meta property="og:description" content="{{ $description??'' }}" />
-  @isset ($layouts['meta'])
-    @foreach ( $layouts['meta']  as $element)
-      {!! $element->content !!}
-    @endforeach
-  @endisset
+    @isset ($layouts['meta'])
+      @foreach ( $layouts['meta']  as $element)
+        @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
+          @if ($element->page =='html')
+            {!! $element->content !!}
+          @endif
+        @endif
+      @endforeach
+    @endisset
     <link href="{{ asset($theme_asset.'/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{ asset($theme_asset.'/css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{ asset($theme_asset.'/css/prettyPhoto.css')}}" rel="stylesheet">
@@ -36,16 +40,24 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset($theme_asset.'/images/ico/apple-touch-icon-72-precomposed.png')}}">
     <link rel="apple-touch-icon-precomposed" href="{{ asset($theme_asset.'/images/ico/apple-touch-icon-57-precomposed.png')}}">
   @isset ($layouts['header'])
-    @foreach ( $layouts['header']  as $element)
-      {!! $element->content !!}
-    @endforeach
+      @foreach ( $layouts['header']  as $element)
+        @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
+          @if ($element->page =='html')
+            {!! $element->content !!}
+          @endif
+        @endif
+      @endforeach
   @endisset
 </head><!--/head-->
 <body>
   @isset ($layouts['top'])
-    @foreach ( $layouts['top']  as $element)
-      {!! $element->content !!}
-    @endforeach
+      @foreach ( $layouts['top']  as $element)
+        @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
+          @if ($element->page =='html')
+            {!! $element->content !!}
+          @endif
+        @endif
+      @endforeach
   @endisset
   <header id="header"><!--header-->
     <div class="header_top"><!--header_top-->
@@ -327,7 +339,9 @@
 
   @isset ($layouts['footer'])
     @foreach ( $layouts['footer']  as $element)
-      {!! $element->content !!}
+        @if ($element->page =='html')
+          {!! $element->content !!}
+        @endif
     @endforeach
   @endisset
   <footer id="footer"><!--Footer-->
@@ -424,7 +438,7 @@
             success: function(data){
               // console.log(data);
                 error= parseInt(data.error);
-                if(error ===0)
+                if(error ==0)
                 {
                 //animate
                 if(instance == null || instance =='' || instance =='default'){
@@ -481,7 +495,11 @@
 </script>
   @isset ($layouts['bottom'])
     @foreach ( $layouts['bottom']  as $element)
-      {!! $element->content !!}
+      @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
+        @if ($element->page =='html')
+          {!! $element->content !!}
+        @endif
+      @endif
     @endforeach
   @endisset
 </body>
