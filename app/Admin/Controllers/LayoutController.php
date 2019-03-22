@@ -24,8 +24,7 @@ class LayoutController extends Controller
     {
         $this->arrPage     = LayoutPage::getPages();
         $this->arrPosition = LayoutPosition::getPositions();
-        $this->arrTypes    = LayoutType::getTypes();
-        $this->arrTypes    = LayoutType::getTypes();
+        $this->arrType     = LayoutType::getTypes();
     }
 
     /**
@@ -96,6 +95,7 @@ class LayoutController extends Controller
     {
         $arrPage     = $this->arrPage;
         $arrPosition = $this->arrPosition;
+        $arrType     = $this->arrType;
         $grid        = new Grid(new Layout);
 
         $grid->id('Id');
@@ -103,7 +103,10 @@ class LayoutController extends Controller
         $grid->position(trans('language.layout.position'))->display(function ($value) use ($arrPosition) {
             return htmlentities($arrPosition[$value]);
         });
-        $grid->page(trans('language.layout.page_display'))->display(function ($value) use ($arrPage) {
+        $grid->type(trans('language.layout.type'))->display(function ($value) use ($arrType) {
+            return htmlentities($arrType[$value]);
+        });
+        $grid->page(trans('language.layout.page'))->display(function ($value) use ($arrPage) {
             if (!$value) {
                 return trans('language.layout.all_page');
             } else {
@@ -117,7 +120,7 @@ class LayoutController extends Controller
             }
 
         })->style('max-width:200px;word-break:break-all;');
-        $grid->content('Html')->display(function ($value) {
+        $grid->content(trans('language.layout.page'))->display(function ($value) {
             return htmlentities($value);
         })->style('max-width:200px;word-break:break-all;');
         $grid->status(trans('language.layout.status'))->switch();
@@ -147,8 +150,8 @@ class LayoutController extends Controller
         $show->id('Id');
         $show->name(trans('language.layout.name'));
         $show->position(trans('language.layout.position'));
-        $show->page_display(trans('language.layout.page_display'));
-        $show->html('Html');
+        $show->page(trans('language.layout.page'));
+        $show->content(trans('language.layout.page'));
         $show->status(trans('language.layout.status'));
         $show->sort(trans('language.layout.sort'));
 
@@ -165,9 +168,9 @@ class LayoutController extends Controller
         $form = new Form(new Layout);
         $form->text('name', trans('language.layout.name'))->rules('required');
         $form->select('position', trans('language.layout.position'))->options($this->arrPosition)->rules('required');
-        $form->listbox('page', trans('language.layout.page_display'))->options($this->arrPage);
-        $form->radio('type', trans('language.layout.page_display'))->options($this->arrTypes);
-        $form->textarea('content', 'Content');
+        $form->listbox('page', trans('language.layout.page'))->options($this->arrPage);
+        $form->radio('type', trans('language.layout.type'))->options($this->arrType)->default('html');
+        $form->textarea('content', trans('language.layout.content'));
         $form->switch('status', trans('language.layout.status'));
         $form->number('sort', trans('language.layout.sort'));
         $form->disableViewCheck();
