@@ -1,5 +1,5 @@
 <?php
-#app/Modules/Other/Controllers/LastView.php
+#app/Modules/Other/Controllers/LastViewProduct.php
 namespace App\Modules\Other\Controllers;
 
 use App\Models\Config;
@@ -11,11 +11,11 @@ use App\Modules\Cms\Models\CmsContentDescription;
 use App\Modules\Cms\Models\CmsImage;
 use Encore\Admin\Auth\Database\Menu;
 
-class LastView extends \App\Http\Controllers\GeneralController
+class LastViewProduct extends \App\Http\Controllers\GeneralController
 {
     protected $configType = 'Modules';
     protected $configCode = 'Other';
-    protected $configKey  = 'LastView';
+    protected $configKey  = 'LastViewProduct';
 
     public $title;
     const ON  = 1;
@@ -214,7 +214,7 @@ class LastView extends \App\Http\Controllers\GeneralController
                 }
             }
         }
-        app('view')->prependNamespace('Other', base_path('app/Modules/Other/resources/views'));
-        return view('Other::LastView', ['arrProductsLastView' => $arrProductsLastView]);
+        app('view')->prependNamespace('Other', base_path('app/' . $this->configType . '/' . $this->configCode . '/resources/views'));
+        return view('Other::' . $this->configKey, ['arrProductsLastView' => $arrProductsLastView]);
     }
 }
