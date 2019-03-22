@@ -18,8 +18,10 @@
     @isset ($layouts['meta'])
       @foreach ( $layouts['meta']  as $element)
         @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
-          @if ($element->page =='html')
+          @if ($element->page =='html' || $element->page =='block')
             {!! $element->content !!}
+          @elseif($element->page =='view')
+            @include($theme.'.'.$element->content)
           @endif
         @endif
       @endforeach
@@ -53,8 +55,10 @@
   @isset ($layouts['top'])
       @foreach ( $layouts['top']  as $element)
         @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
-          @if ($element->page =='html')
+          @if ($element->page =='html' || $element->page =='block')
             {!! $element->content !!}
+          @elseif($element->page =='view')
+            @include($theme.'.'.$element->content)
           @endif
         @endif
       @endforeach
@@ -339,8 +343,10 @@
 
   @isset ($layouts['footer'])
     @foreach ( $layouts['footer']  as $element)
-        @if ($element->page =='html')
+        @if ($element->page =='html' || $element->page =='block')
           {!! $element->content !!}
+        @elseif($element->page =='view')
+          @include($theme.'.'.$element->content)
         @endif
     @endforeach
   @endisset
@@ -496,8 +502,10 @@
   @isset ($layouts['bottom'])
     @foreach ( $layouts['bottom']  as $element)
       @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
-        @if ($element->page =='html')
+        @if ($element->page =='html' || $element->page =='block')
           {!! $element->content !!}
+        @elseif($element->page =='view')
+          @include($theme.'.'.$element->content)
         @endif
       @endif
     @endforeach
