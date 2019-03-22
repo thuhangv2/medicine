@@ -301,14 +301,7 @@
             </div><!--/brands_products-->
 @endif
 
-@php
-  // dd($productLastView)
-@endphp
-
-@if (!empty($productLastView))
-  @include($theme.'.Modules.LastView', array('productLastView' => $productLastView))
-@endif
-
+{!! (new \App\Modules\Other\Controllers\LastView)->render() !!}
 
           </div>
 

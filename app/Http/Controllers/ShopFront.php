@@ -35,7 +35,6 @@ class ShopFront extends GeneralController
                 'products_new'     => (new ShopProduct)->getProducts($type = null, $limit = $this->configs['product_new'], $opt = null),
                 'products_hot'     => (new ShopProduct)->getProducts($type = 1, $limit = $this->configs['product_hot'], $opt = 'random'),
                 'products_special' => (new ShopProduct)->getProductsSpecial($limit = 1, $random = true),
-                'productLastView'  => $this->productLastView(),
                 'layout_page'      => 'home',
 
             )
@@ -274,35 +273,6 @@ class ShopFront extends GeneralController
     public function getPage($key = null)
     {
         return ShopPage::where('uniquekey', $key)->where('status', 1)->first();
-    }
-
-/**
- * [productLastView description]
- * @return [type] [description]
- */
-    public function productLastView()
-    {
-        $arrProductsLastView = array();
-        if (!empty($this->configs['product_last_view'])) {
-            $lastView = empty(\Cookie::get('productsLastView')) ? [] : json_decode(\Cookie::get('productsLastView'), true);
-            if ($lastView) {
-                arsort($lastView);
-            }
-
-            if (count($lastView)) {
-                $lastView         = array_slice($lastView, 0, 5, true);
-                $productsLastview = ShopProduct::whereIn('id', array_keys($lastView))->get();
-                foreach ($lastView as $pId => $time) {
-                    foreach ($productsLastview as $key => $product) {
-                        if ($product['id'] == $pId) {
-                            $product['timelastview'] = $time;
-                            $arrProductsLastView[]   = $product;
-                        }
-                    }
-                }
-            }
-        }
-        return $arrProductsLastView;
     }
 
 /**
