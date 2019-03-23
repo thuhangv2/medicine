@@ -15,6 +15,7 @@
     <meta property="og:type" content="Website" />
     <meta property="og:title" content="{{ $title??'' }}" />
     <meta property="og:description" content="{{ $description??'' }}" />
+<!--Module meta -->
     @isset ($layouts['meta'])
       @foreach ( $layouts['meta']  as $element)
         @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
@@ -26,6 +27,7 @@
         @endif
       @endforeach
     @endisset
+<!--Module meta -->
     <link href="{{ asset($theme_asset.'/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{ asset($theme_asset.'/css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{ asset($theme_asset.'/css/prettyPhoto.css')}}" rel="stylesheet">
@@ -41,6 +43,7 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset($theme_asset.'/images/ico/apple-touch-icon-114-precomposed.png')}}">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset($theme_asset.'/images/ico/apple-touch-icon-72-precomposed.png')}}">
     <link rel="apple-touch-icon-precomposed" href="{{ asset($theme_asset.'/images/ico/apple-touch-icon-57-precomposed.png')}}">
+<!--Module header -->
   @isset ($layouts['header'])
       @foreach ( $layouts['header']  as $element)
         @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
@@ -50,8 +53,12 @@
         @endif
       @endforeach
   @endisset
+<!--Module header -->
+
 </head><!--/head-->
 <body>
+
+<!--Module top -->
   @isset ($layouts['top'])
       @foreach ( $layouts['top']  as $element)
         @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
@@ -63,6 +70,8 @@
         @endif
       @endforeach
   @endisset
+<!--Module top -->
+
   <header id="header"><!--header-->
     <div class="header_top"><!--header_top-->
       <div class="container">
@@ -201,18 +210,19 @@
   </header><!--/header-->
 
   @yield('banner')
-<div id="cart-alert">
-@if(Session::has('message'))
-    <div class="alert alert-success cart-alert">{!! Session::get('message') !!}
-    <button type="button" class="close" data-dismiss="alert">x</button>
-    </div>
-@endif
-@if(Session::has('error'))
-    <div class="alert alert-danger cart-alert">{!! Session::get('error') !!}
-    <button type="button" class="close" data-dismiss="alert">x</button>
-    </div>
-@endif
-</div>
+  <div id="cart-alert">
+  @if(Session::has('message'))
+      <div class="alert alert-success cart-alert">{!! Session::get('message') !!}
+      <button type="button" class="close" data-dismiss="alert">x</button>
+      </div>
+  @endif
+  @if(Session::has('error'))
+      <div class="alert alert-danger cart-alert">{!! Session::get('error') !!}
+      <button type="button" class="close" data-dismiss="alert">x</button>
+      </div>
+  @endif
+  </div>
+
 @if ($configs['site_status'])
 
   <section>
@@ -222,99 +232,13 @@
         @yield('breadcrumb')
         <!--//breadcrumb-->
 
-        <!--main-->
+        <!--body-->
         @section('main')
-        <div class="col-sm-3">
-          <div class="left-sidebar">
-            <h2>{{ trans('language.category') }}</h2>
-            <div class="panel-group category-products" id="accordian">
-              <!--category-productsr-->
-            @foreach ($categories as $key =>  $category)
-              @if (count($category->getChildrens($category->id))>0)
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordian" href="#{{ $key }}">
-                      <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                      {{ $category->name }}
-                    </a>
-                  </h4>
-                </div>
-                <div id="{{ $key }}" class="panel-collapse collapse">
-                  <div class="panel-body">
-                    <ul>
-                      @foreach ($category->getChildrens($category->id) as $cateChild)
-                          <li>
-                              <a href="{{ $cateChild->getUrl() }}">{{ $cateChild->name }}</a>
-                          </li>
-                      @endforeach
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              @else
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <h4 class="panel-title"><a href="{{ $category->getUrl() }}">{{ $category->name }}</a></h4>
-                  </div>
-                </div>
-             @endif
-          @endforeach
-            </div><!--/category-products-->
-
-            <div class="brands_products"><!--brands_products-->
-              <h2>{{ trans('language.brands') }}</h2>
-              <div class="brands-name">
-                <ul class="nav nav-pills nav-stacked">
-                  @foreach ($brands as $brand)
-                    <li><a href="{{ $brand->getUrl() }}"> <span class="pull-right">({{ $brand->products()->count() }})</span>{{ $brand->name }}</a></li>
-                  @endforeach
-                </ul>
-              </div>
-            </div><!--/brands_products-->
-
-@if (!empty($products_special))
-            <div class="brands_products"><!--brands_products-->
-              <h2>{{ trans('language.products_special') }}</h2>
-              <div class="products-name">
-                <ul class="nav nav-pills nav-stacked">
-                  @foreach ($products_special as $key => $product_special)
-                    <li>
-                      <div class="product-image-wrapper product-single">
-                        <div class="single-products product-box-{{ $key }}">
-                            <div class="productinfo text-center">
-                              <a href="{{ $product_special->product->getUrl() }}"><img src="{{ asset($product_special->product->getThumb()) }}" alt="{{ $product_special->product->name }}" /></a>
-                              {!! $product_special->product->showPrice() !!}
-                              <a href="{{ $product_special->product->getUrl() }}"><p>{{ $product_special->product->name }}</p></a>
-                            </div>
-                        @if ($product_special->product->price != $product_special->product->getPrice())
-                        <img src="{{ asset($theme_asset.'/images/home/sale.png') }}" class="new" alt="" />
-                        @elseif($product_special->product->type == 1)
-                        <img src="{{ asset($theme_asset.'/images/home/new.png') }}" class="new" alt="" />
-                        @endif
-                        </div>
-                      </div>
-                    </li>
-                  @endforeach
-                </ul>
-              </div>
-            </div><!--/brands_products-->
-@endif
-
-{!! (new \App\Modules\Other\Controllers\LastView)->render() !!}
-
-          </div>
-
-
-        </div>
+          @include($theme.'.left')
+          @include($theme.'.center')
+          @include($theme.'.right')
         @show
-        <!--//main-->
-
-        <!--content right-->
-        <div class="col-sm-9 padding-right">
-           @yield('content')
-        </div>
-        <!--//content right-->
+        <!--//body-->
 
       </div>
     </div>
@@ -334,85 +258,26 @@
   </section>
 @endif
 
-  @isset ($layouts['footer'])
-    @foreach ( $layouts['footer']  as $element)
-        @if ($element->page =='html' || $element->page =='block')
-          {!! $element->content !!}
-        @elseif($element->page =='view')
-          @include($theme.'.'.$element->content)
-        @endif
-    @endforeach
-  @endisset
-  <footer id="footer"><!--Footer-->
-    <div class="footer-widget">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-3">
-            <div class="single-widget">
-              <h2><a href="{{ route('home') }}"><img style="max-width: 150px;" src="{{  asset($logo) }}"></a></h2>
-             <ul class="nav nav-pills nav-stacked">
-               <li>{{ $configsGlobal['title'] }}</li>
-             </ul>
-            </div>
-          </div>
-          <div class="col-sm-3">
-            <div class="single-widget">
-              <h2>{{ trans('language.my_account') }}</h2>
-              <ul class="nav nav-pills nav-stacked">
-                <li><a href="{{ route('profile') }}">{{ trans('language.my_profile') }}</a></li>
-                <li><a href="{{ route('compare') }}">{{ trans('language.compare_page') }}</a></li>
-                <li><a href="{{ route('wishlist') }}">{{ trans('language.wishlist_page') }}</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-sm-3">
-            <div class="single-widget">
-              <h2>{{ trans('language.about') }}</h2>
-              <ul class="nav nav-pills nav-stacked">
-                <li><a href="#">{{ trans('language.shop_info.address') }}: {{ $configsGlobal['address'] }}</a></li>
-                <li><a href="#">{{ trans('language.shop_info.hotline') }}: {{ $configsGlobal['long_phone'] }}</a></li>
-                <li><a href="#">{{ trans('language.shop_info.email') }}: {{ $configsGlobal['email'] }}</a></li>
-            </ul>
-            </div>
-          </div>
-          <div class="col-sm-3">
-            <div class="single-widget">
-              <h2>{{ trans('language.subscribe.title') }}</h2>
-              <form action="{{ route('subscribe') }}" method="post" class="searchform">
-                @csrf
+<!--Module top footer -->
+@isset ($layouts['footer'])
+  @foreach ( $layouts['footer']  as $element)
+      @if ($element->page =='html' || $element->page =='block')
+        {!! $element->content !!}
+      @elseif($element->page =='view')
+        @include($theme.'.'.$element->content)
+      @endif
+  @endforeach
+@endisset
+<!--//Module top footer -->
 
-                <input type="email" name="subscribe_email" required="required" placeholder="{{ trans('language.subscribe.subscribe_email') }}">
-                <button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
-                <p>{{ trans('language.subscribe.subscribe_des') }}</p>
-              </form>
-            </div>
-          </div>
+@include($theme.'.footer')
 
-        </div>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <div class="container">
-        <div class="row">
-          <p class="pull-left">Copyright © 2018 <a href="{{ config('scart.homepage') }}">{{ config('scart.name') }} {{ config('scart.version') }}</a> Inc. All rights reserved.</p>
-          <p class="pull-right">Hosted by  <span><a target="_blank" href="https://giaiphap247.com">GiaiPhap247</a></span></p>
-            <!--
-            S-Cart is free open source and you are free to remove the powered by S-cart if you want, but its generally accepted practise to make a small donation.
-            Please donate via PayPal to https://www.paypal.me/LeLanh
-            //-->
-        </div>
-      </div>
-    </div>
-  </footer><!--/Footer-->
-
-
-  <script src="{{ asset($theme_asset.'/js/jquery.js')}}"></script>
-  <script src="{{ asset($theme_asset.'/js/jquery-ui.min.js')}}"></script>
-  <script src="{{ asset($theme_asset.'/js/bootstrap.min.js')}}"></script>
-  <script src="{{ asset($theme_asset.'/js/jquery.scrollUp.min.js')}}"></script>
-  <script src="{{ asset($theme_asset.'/js/jquery.prettyPhoto.js')}}"></script>
-  <script src="{{ asset($theme_asset.'/js/main.js')}}"></script>
+<script src="{{ asset($theme_asset.'/js/jquery.js')}}"></script>
+<script src="{{ asset($theme_asset.'/js/jquery-ui.min.js')}}"></script>
+<script src="{{ asset($theme_asset.'/js/bootstrap.min.js')}}"></script>
+<script src="{{ asset($theme_asset.'/js/jquery.scrollUp.min.js')}}"></script>
+<script src="{{ asset($theme_asset.'/js/jquery.prettyPhoto.js')}}"></script>
+<script src="{{ asset($theme_asset.'/js/main.js')}}"></script>
 
 
 @stack('scripts')
@@ -492,6 +357,8 @@
         });
     }
 </script>
+
+<!--Module bottom -->
   @isset ($layouts['bottom'])
     @foreach ( $layouts['bottom']  as $element)
       @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
@@ -503,5 +370,7 @@
       @endif
     @endforeach
   @endisset
+<!--//Module bottom -->
+
 </body>
 </html>

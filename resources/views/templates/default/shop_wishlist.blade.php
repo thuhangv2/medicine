@@ -2,7 +2,7 @@
 @section('banner')
 @endsection
 
-@section('content')
+@section('center')
 
 <div class="features_items">
 <h2 class="title text-center">{{ $title }}</h2>

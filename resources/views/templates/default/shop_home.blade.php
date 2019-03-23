@@ -1,6 +1,6 @@
 @extends($theme.'.shop_layout')
 
-@section('content')
+@section('center')
           <div class="features_items"><!--features_items-->
             <h2 class="title text-center">{{ trans('language.features_items') }}</h2>
                 @foreach ($products_new as  $key => $product_new)

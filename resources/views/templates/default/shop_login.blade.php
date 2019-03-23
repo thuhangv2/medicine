@@ -1,6 +1,4 @@
 @extends($theme.'.shop_layout')
-@section('slide')
-@endsection
 
 @section('main')
 
@@ -15,7 +13,7 @@
                             {!! csrf_field() !!}
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <label for="email" class="control-label">Your email</label>
-                                    <input class="is_required validate account_input form-control {{ ($errors->has('email'))?"input-error":"" }}"   type="text" " name="email" value="{{ old('email') }}" >
+                                    <input class="is_required validate account_input form-control {{ ($errors->has('email'))?"input-error":"" }}"   type="text" name="email" value="{{ old('email') }}" >
                                         @if ($errors->has('email'))
                                             <span class="help-block">
                                                 {{ $errors->first('email') }}

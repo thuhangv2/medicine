@@ -1,6 +1,4 @@
 @extends($theme.'.shop_layout')
-@section('slide')
-@endsection
 
 @section('main')
 

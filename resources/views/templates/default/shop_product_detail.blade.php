@@ -2,7 +2,7 @@
 @section('banner')
 @endsection
 
-@section('content')
+@section('center')
           <div class="product-details"><!--product-details-->
             <div class="col-sm-5">
 
