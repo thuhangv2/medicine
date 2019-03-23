@@ -16,17 +16,15 @@
     <meta property="og:title" content="{{ $title??'' }}" />
     <meta property="og:description" content="{{ $description??'' }}" />
 <!--Module meta -->
-    @isset ($layouts['meta'])
+  @isset ($layouts['meta'])
       @foreach ( $layouts['meta']  as $element)
         @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
-          @if ($element->page =='html' || $element->page =='block')
-            {!! $element->content !!}
-          @elseif($element->page =='view')
-            @include($theme.'.'.$element->content)
+          @if ($element->page =='html')
+            {{$element->content }}
           @endif
         @endif
       @endforeach
-    @endisset
+  @endisset
 <!--Module meta -->
     <link href="{{ asset($theme_asset.'/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{ asset($theme_asset.'/css/font-awesome.min.css')}}" rel="stylesheet">
@@ -48,7 +46,7 @@
       @foreach ( $layouts['header']  as $element)
         @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
           @if ($element->page =='html')
-            {!! $element->content !!}
+            {{$element->content }}
           @endif
         @endif
       @endforeach
@@ -215,10 +213,12 @@
   @isset ($layouts['top'])
       @foreach ( $layouts['top']  as $element)
         @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
-          @if ($element->page =='html' || $element->page =='block')
+          @if ($element->type =='html' || $element->type =='block')
             {!! $element->content !!}
-          @elseif($element->page =='view')
+          @elseif($element->type =='view')
             @include($theme.'.'.$element->content)
+          @elseif($element->type =='module')
+            {!! (new $element->content)->render() !!}
           @endif
         @endif
       @endforeach
@@ -260,15 +260,19 @@
 @endif
 
 <!--Module top footer -->
-@isset ($layouts['footer'])
-  @foreach ( $layouts['footer']  as $element)
-      @if ($element->page =='html' || $element->page =='block')
-        {!! $element->content !!}
-      @elseif($element->page =='view')
-        @include($theme.'.'.$element->content)
-      @endif
-  @endforeach
-@endisset
+  @isset ($layouts['footer'])
+      @foreach ( $layouts['footer']  as $element)
+        @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
+          @if ($element->type =='html' || $element->type =='block')
+            {!! $element->content !!}
+          @elseif($element->type =='view')
+            @include($theme.'.'.$element->content)
+          @elseif($element->type =='module')
+            {!! (new $element->content)->render() !!}
+          @endif
+        @endif
+      @endforeach
+  @endisset
 <!--//Module top footer -->
 
 @include($theme.'.footer')
@@ -361,15 +365,17 @@
 
 <!--Module bottom -->
   @isset ($layouts['bottom'])
-    @foreach ( $layouts['bottom']  as $element)
-      @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
-        @if ($element->page =='html' || $element->page =='block')
-          {!! $element->content !!}
-        @elseif($element->page =='view')
-          @include($theme.'.'.$element->content)
+      @foreach ( $layouts['bottom']  as $element)
+        @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
+          @if ($element->type =='html' || $element->type =='block')
+            {!! $element->content !!}
+          @elseif($element->type =='view')
+            @include($theme.'.'.$element->content)
+          @elseif($element->type =='module')
+            {!! (new $element->content)->render() !!}
+          @endif
         @endif
-      @endif
-    @endforeach
+      @endforeach
   @endisset
 <!--//Module bottom -->
 

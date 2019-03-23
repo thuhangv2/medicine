@@ -20,7 +20,6 @@ class News extends \App\Http\Controllers\GeneralController
     {
         parent::__construct();
         $this->title = trans($this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title');
-        $this->title = trans($this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title');
         app('view')->prependNamespace($this->configType,
             base_path('app/' . $this->configType . '/' . $this->configCode . '/Views'));
     }

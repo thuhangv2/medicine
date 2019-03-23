@@ -197,21 +197,19 @@ class LastViewProduct extends \App\Http\Controllers\GeneralController
     public function render()
     {
         $arrProductsLastView = array();
-        if (!empty($this->configs['product_last_view'])) {
-            $lastView = empty(\Cookie::get('productsLastView')) ? [] : json_decode(\Cookie::get('productsLastView'), true);
-            if ($lastView) {
-                arsort($lastView);
-            }
+        $lastView            = empty(\Cookie::get('productsLastView')) ? [] : json_decode(\Cookie::get('productsLastView'), true);
+        if ($lastView) {
+            arsort($lastView);
+        }
 
-            if (count($lastView)) {
-                $lastView         = array_slice($lastView, 0, 5, true);
-                $productsLastView = ShopProduct::whereIn('id', array_keys($lastView))->get();
-                foreach ($lastView as $pId => $time) {
-                    foreach ($productsLastView as $key => $product) {
-                        if ($product['id'] == $pId) {
-                            $product['timelastview'] = $time;
-                            $arrProductsLastView[]   = $product;
-                        }
+        if (count($lastView)) {
+            $lastView         = array_slice($lastView, 0, 5, true);
+            $productsLastView = ShopProduct::whereIn('id', array_keys($lastView))->get();
+            foreach ($lastView as $pId => $time) {
+                foreach ($productsLastView as $key => $product) {
+                    if ($product['id'] == $pId) {
+                        $product['timelastview'] = $time;
+                        $arrProductsLastView[]   = $product;
                     }
                 }
             }

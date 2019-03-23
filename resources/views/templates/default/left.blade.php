@@ -77,7 +77,23 @@
               </div><!--/brands_products-->
   @endif
 
-  {!! (new \App\Modules\Other\Controllers\LastViewProduct)->render() !!}
+
+
+<!--Module left -->
+  @isset ($layouts['left'])
+      @foreach ( $layouts['left']  as $element)
+        @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
+          @if ($element->type =='html' || $element->type =='block')
+            {!! $element->content !!}
+          @elseif($element->type =='view')
+            @include($theme.'.'.$element->content)
+          @elseif($element->type =='module')
+            {!! (new $element->content)->render() !!}
+          @endif
+        @endif
+      @endforeach
+  @endisset
+<!--Module left -->
 
             </div>
     @show
