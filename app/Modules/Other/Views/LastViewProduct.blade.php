@@ -1,5 +1,5 @@
 @if (!empty($arrProductsLastView))
-            <div class="brands_products"><!--brands_products-->
+            <div class="last_view_product"><!--last_view_product-->
               <h2>{{ trans('language.products_last_view') }}</h2>
               <div class="products-lasView">
                 <ul class="nav nav-pills nav-stacked">
@@ -13,5 +13,5 @@
                   @endforeach
                 </ul>
               </div>
-            </div><!--/brands_products-->
+            </div><!--/last_view_product-->
 @endif

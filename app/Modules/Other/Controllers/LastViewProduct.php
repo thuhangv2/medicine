@@ -3,13 +3,8 @@
 namespace App\Modules\Other\Controllers;
 
 use App\Models\Config;
+use App\Models\Layout;
 use App\Models\ShopProduct;
-use App\Modules\Cms\Models\CmsCategory;
-use App\Modules\Cms\Models\CmsCategoryDescription;
-use App\Modules\Cms\Models\CmsContent;
-use App\Modules\Cms\Models\CmsContentDescription;
-use App\Modules\Cms\Models\CmsImage;
-use Encore\Admin\Auth\Database\Menu;
 
 class LastViewProduct extends \App\Http\Controllers\GeneralController
 {
@@ -60,39 +55,6 @@ class LastViewProduct extends \App\Http\Controllers\GeneralController
             );
             if (!$process) {
                 $return = ['error' => 1, 'msg' => 'Error when install'];
-            } else {
-                $checkMenu = Menu::find('100');
-                if (!$checkMenu) {
-                    Menu::insert([
-                        'id'        => 100,
-                        'order'     => 9,
-                        'parent_id' => 0,
-                        'title'     => 'CMS Manager',
-                        'icon'      => 'fa-coffee',
-                    ]);
-                }
-                (new CmsCategory)->installExtension();
-                (new CmsCategoryDescription)->installExtension();
-                (new CmsContent)->installExtension();
-                (new CmsContentDescription)->installExtension();
-                (new CmsImage)->installExtension();
-                Menu::insert(
-                    [
-                        'order'     => 10,
-                        'parent_id' => 100,
-                        'title'     => 'Cms categories',
-                        'icon'      => 'fa-folder-open-o',
-                        'uri'       => 'modules/cms/cms_category',
-                    ]);
-                Menu::insert(
-                    [
-                        'order'     => 10,
-                        'parent_id' => 100,
-                        'title'     => 'Cms contents',
-                        'icon'      => 'fa-copy',
-                        'uri'       => 'modules/cms/cms_content',
-                    ]
-                );
             }
         }
         return $return;
@@ -105,18 +67,7 @@ class LastViewProduct extends \App\Http\Controllers\GeneralController
         if (!$process) {
             $return = ['error' => 1, 'msg' => 'Error when uninstall'];
         }
-        (new CmsCategory)->uninstallExtension();
-        (new CmsCategoryDescription)->uninstallExtension();
-        (new CmsContent)->uninstallExtension();
-        (new CmsContentDescription)->uninstallExtension();
-        (new CmsImage)->uninstallExtension();
-        //Remove menu
-        (new Menu)->where('uri', 'modules/cms/cms_category')->delete();
-        (new Menu)->where('uri', 'modules/cms/cms_content')->delete();
-        if (!(new Menu)->where('parent_id', 100)->count()) {
-            (new Menu)->find(100)->delete();
-        }
-
+        (new Layout)->where('content', '\App\\' . $this->configType . '\\' . $this->configCode . '\\Controllers\\' . $this->configKey)->delete();
         return $return;
     }
     public function enable()
@@ -149,71 +100,29 @@ class LastViewProduct extends \App\Http\Controllers\GeneralController
 
 //=======================
 
-/**
- * [news description]
- * @return [type] [description]
- */
-    public function category($name, $id)
-    {
-        $category_currently = CmsCategory::find($id);
-        $entries            = (new CmsCategory)->getContentsToCategory($id, $limit = $this->configs['product_new'], $opt = 'paginate');
-        return view($this->theme . '.cms_category',
-            array(
-                'title'       => $category_currently->title,
-                'description' => $category_currently['description'],
-                'keyword'     => $category_currently['keyword'],
-                'entries'     => $entries,
-                'og_image'    => $this->logo,
-            )
-        );
-    }
-
-    public function content($name, $id)
-    {
-        $entry_currently = CmsContent::find($id);
-        if ($entry_currently) {
-            $title = ($entry_currently) ? $entry_currently->title : trans('language.not_found');
-            return view($this->theme . '.cms_entry_detail',
-                array(
-                    'title'           => $title,
-                    'entry_currently' => $entry_currently,
-                    'description'     => $entry_currently['description'],
-                    'keyword'         => $entry_currently['keyword'],
-                    'og_image'        => url($this->path_file . '/' . $entry_currently->image),
-                )
-            );
-        } else {
-            return view($this->theme . '.notfound',
-                array(
-                    'title'       => trans('language.not_found'),
-                    'description' => '',
-                    'keyword'     => $this->configsGlobal['keyword'],
-                )
-            );
-        }
-
-    }
-
     public function render()
     {
-        $arrProductsLastView = array();
-        $lastView            = empty(\Cookie::get('productsLastView')) ? [] : json_decode(\Cookie::get('productsLastView'), true);
-        if ($lastView) {
-            arsort($lastView);
-        }
+        if (!empty($this->configs['brands_products'])) {
+            $arrProductsLastView = array();
+            $lastView            = empty(\Cookie::get('productsLastView')) ? [] : json_decode(\Cookie::get('productsLastView'), true);
+            if ($lastView) {
+                arsort($lastView);
+            }
 
-        if (count($lastView)) {
-            $lastView         = array_slice($lastView, 0, 5, true);
-            $productsLastView = ShopProduct::whereIn('id', array_keys($lastView))->get();
-            foreach ($lastView as $pId => $time) {
-                foreach ($productsLastView as $key => $product) {
-                    if ($product['id'] == $pId) {
-                        $product['timelastview'] = $time;
-                        $arrProductsLastView[]   = $product;
+            if (count($lastView)) {
+                $lastView         = array_slice($lastView, 0, 5, true);
+                $productsLastView = ShopProduct::whereIn('id', array_keys($lastView))->get();
+                foreach ($lastView as $pId => $time) {
+                    foreach ($productsLastView as $key => $product) {
+                        if ($product['id'] == $pId) {
+                            $product['timelastview'] = $time;
+                            $arrProductsLastView[]   = $product;
+                        }
                     }
                 }
             }
+            return view($this->configType . '::' . $this->configKey, ['arrProductsLastView' => $arrProductsLastView]);
         }
-        return view($this->configType . '::' . $this->configKey, ['arrProductsLastView' => $arrProductsLastView]);
+
     }
 }
