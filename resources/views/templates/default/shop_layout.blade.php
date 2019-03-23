@@ -58,20 +58,6 @@
 </head><!--/head-->
 <body>
 
-<!--Module top -->
-  @isset ($layouts['top'])
-      @foreach ( $layouts['top']  as $element)
-        @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
-          @if ($element->page =='html' || $element->page =='block')
-            {!! $element->content !!}
-          @elseif($element->page =='view')
-            @include($theme.'.'.$element->content)
-          @endif
-        @endif
-      @endforeach
-  @endisset
-<!--Module top -->
-
   <header id="header"><!--header-->
     <div class="header_top"><!--header_top-->
       <div class="container">
@@ -224,6 +210,21 @@
   </div>
 
 @if ($configs['site_status'])
+
+<!--Module top -->
+  @isset ($layouts['top'])
+      @foreach ( $layouts['top']  as $element)
+        @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
+          @if ($element->page =='html' || $element->page =='block')
+            {!! $element->content !!}
+          @elseif($element->page =='view')
+            @include($theme.'.'.$element->content)
+          @endif
+        @endif
+      @endforeach
+  @endisset
+<!--Module top -->
+
 
   <section>
     <div class="container">
