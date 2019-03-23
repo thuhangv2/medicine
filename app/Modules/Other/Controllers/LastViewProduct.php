@@ -102,7 +102,7 @@ class LastViewProduct extends \App\Http\Controllers\GeneralController
 
     public function render()
     {
-        if (!empty($this->configs['brands_products'])) {
+        if (!empty($this->configs['LastViewProduct'])) {
             $arrProductsLastView = array();
             $lastView            = empty(\Cookie::get('productsLastView')) ? [] : json_decode(\Cookie::get('productsLastView'), true);
             if ($lastView) {
