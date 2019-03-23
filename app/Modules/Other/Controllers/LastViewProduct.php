@@ -24,6 +24,8 @@ class LastViewProduct extends \App\Http\Controllers\GeneralController
     {
         parent::__construct();
         $this->title = trans($this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title');
+        app('view')->prependNamespace($this->configType,
+            base_path('app/' . $this->configType . '/' . $this->configCode . '/resources/views'));
 
     }
     public function getData()
@@ -214,7 +216,6 @@ class LastViewProduct extends \App\Http\Controllers\GeneralController
                 }
             }
         }
-        app('view')->prependNamespace('Other', base_path('app/' . $this->configType . '/' . $this->configCode . '/resources/views'));
-        return view('Other::' . $this->configKey, ['arrProductsLastView' => $arrProductsLastView]);
+        return view($this->configType . '::' . $this->configKey, ['arrProductsLastView' => $arrProductsLastView]);
     }
 }
