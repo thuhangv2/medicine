@@ -105,7 +105,7 @@ class ShopFront extends GeneralController
             //End last viewed
 
             //Product last view
-            if (!empty($this->configs['product_last_view'])) {
+            if (!empty($this->configs['LastViewProduct'])) {
                 $arrlastView      = empty(\Cookie::get('productsLastView')) ? array() : json_decode(\Cookie::get('productsLastView'), true);
                 $arrlastView[$id] = date('Y-m-d H:i:s');
                 arsort($arrlastView);
