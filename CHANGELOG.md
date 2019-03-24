@@ -1,9 +1,10 @@
 # Release Notes
-## v2.2.0-beta ()
+## v2.2.0 (2019-03-24)
 ### Upgrade laravel 5.7
 ### Fixed
 > Fix error route admin
 > Fix error process cart
+> Support design layout: HTML, View, Module
 
 
 
