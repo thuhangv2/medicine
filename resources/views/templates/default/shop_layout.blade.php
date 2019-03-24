@@ -213,7 +213,7 @@
   @isset ($layouts['top'])
       @foreach ( $layouts['top']  as $element)
         @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
-          @if ($element->type =='html' || $element->type =='block')
+          @if ($element->type =='html')
             {!! $element->content !!}
           @elseif($element->type =='view')
             @include($theme.'.'.$element->content)
@@ -263,7 +263,7 @@
   @isset ($layouts['footer'])
       @foreach ( $layouts['footer']  as $element)
         @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
-          @if ($element->type =='html' || $element->type =='block')
+          @if ($element->type =='html')
             {!! $element->content !!}
           @elseif($element->type =='view')
             @include($theme.'.'.$element->content)
@@ -367,7 +367,7 @@
   @isset ($layouts['bottom'])
       @foreach ( $layouts['bottom']  as $element)
         @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
-          @if ($element->type =='html' || $element->type =='block')
+          @if ($element->type =='html')
             {!! $element->content !!}
           @elseif($element->type =='view')
             @include($theme.'.'.$element->content)

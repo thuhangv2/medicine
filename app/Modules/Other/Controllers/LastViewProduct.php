@@ -11,6 +11,7 @@ class LastViewProduct extends \App\Http\Controllers\GeneralController
     protected $configType = 'Modules';
     protected $configCode = 'Other';
     protected $configKey  = 'LastViewProduct';
+    protected $namespace  = '';
 
     public $title;
     const ON  = 1;
@@ -18,7 +19,8 @@ class LastViewProduct extends \App\Http\Controllers\GeneralController
     public function __construct()
     {
         parent::__construct();
-        $this->title = trans($this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title');
+        $this->namespace = '\App\\' . $this->configType . '\\' . $this->configCode . '\\Controllers\\' . $this->configKey;
+        $this->title     = trans($this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title');
         app('view')->prependNamespace($this->configType,
             base_path('app/' . $this->configType . '/' . $this->configCode . '/Views'));
 
@@ -53,6 +55,7 @@ class LastViewProduct extends \App\Http\Controllers\GeneralController
                     'detail' => $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title',
                 ]
             );
+            $this->processDefault();
             if (!$process) {
                 $return = ['error' => 1, 'msg' => 'Error when install'];
             }
@@ -67,7 +70,7 @@ class LastViewProduct extends \App\Http\Controllers\GeneralController
         if (!$process) {
             $return = ['error' => 1, 'msg' => 'Error when uninstall'];
         }
-        (new Layout)->where('content', '\App\\' . $this->configType . '\\' . $this->configCode . '\\Controllers\\' . $this->configKey)->delete();
+        (new Layout)->where('content', $this->namespace)->delete();
         return $return;
     }
     public function enable()
@@ -102,7 +105,7 @@ class LastViewProduct extends \App\Http\Controllers\GeneralController
 
     public function render()
     {
-        if (!empty($this->configs['LastViewProduct'])) {
+        if (!empty($this->configs[$this->configKey])) {
             $arrProductsLastView = array();
             $lastView            = empty(\Cookie::get('productsLastView')) ? [] : json_decode(\Cookie::get('productsLastView'), true);
             if ($lastView) {
@@ -123,6 +126,22 @@ class LastViewProduct extends \App\Http\Controllers\GeneralController
             }
             return view($this->configType . '::' . $this->configKey, ['arrProductsLastView' => $arrProductsLastView]);
         }
+    }
+
+    public function processDefault()
+    {
+        return $process = Layout::insert(
+            [
+                'name'     => $this->title,
+                'position' => 'left',
+                'page'     => '',
+                'type'     => 'module',
+                'content'  => $this->namespace,
+                'status'   => self::ON, //1- Enable extension; 0 - Disable
+                'sort'     => 0,
+            ]
+        );
 
     }
+
 }

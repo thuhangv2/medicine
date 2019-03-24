@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Layout extends Model
 {
-    public $timestamps = false;
-    public $table      = 'layout';
+    public $timestamps  = false;
+    public $table       = 'layout';
+    protected $fillable = ['status', 'content', 'sort', 'type', 'page', 'position', 'name'];
     /**
      * Get value field page same array
      * @param  [type] $page [description]
