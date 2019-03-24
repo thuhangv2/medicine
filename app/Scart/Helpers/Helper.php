@@ -107,4 +107,30 @@ class Helper
             $image_thumb->save($pathRoot . '/thumb/' . $pathFile);
         }
     }
+
+    public static function getListCart($instance = 'default')
+    {
+        $cart                = \Cart::instance($instance);
+        $arrCart['count']    = $cart->count();
+        $arrCart['subtotal'] = \Helper::currencyRender($cart->subtotal());
+        $arrCart['items']    = [];
+        if ($cart->count()) {
+            foreach ($cart->content() as $key => $item) {
+                $product            = \App\Models\ShopProduct::find($item->id);
+                $arrCart['items'][] = [
+                    'id'        => $item->id,
+                    'qty'       => $item->qty,
+                    'image'     => asset($product->getThumb()),
+                    'price'     => $product->getPrice(),
+                    'showPrice' => $product->showPrice(),
+                    'url'       => $product->getUrl(),
+                    'rowId'     => $item->rowId,
+                    'name'      => $product->getName(),
+                ];
+            }
+        }
+
+        return $arrCart;
+    }
+
 }

@@ -2,7 +2,7 @@
 @section('banner')
 @endsection
 
-@section('content')
+@section('center')
   <div class="features_items">
     <h2 class="title text-center">{{ $title }}</h2>
       @if (count($products) ==0)
@@ -10,7 +10,7 @@
       @else
           @foreach ($products as  $key => $product)
           <div class="col-sm-4 col-xs-6">
-              <div class="product-image-wrapper">
+              <div class="product-image-wrapper product-single">
                 <div class="single-products">
                   <div class="productinfo text-center product-box-{{ $product->id }}">
                     <a href="{{ $product->getUrl() }}"><img src="{{ asset($product->getThumb()) }}" alt="{{ $product->name }}" /></a>
@@ -18,7 +18,7 @@
                     {!! $product->showPrice() !!}
 
                     <a href="{{ $product->getUrl() }}"><p>{{ $product->name }}</p></a>
-                    <a href="#" class="btn btn-default add-to-cart" onClick="addToCart({{ $product->id }})"><i class="fa fa-shopping-cart"></i>{{trans('language.add_to_cart')}}</a>
+                    <a  class="btn btn-default add-to-cart" onClick="addToCart({{ $product->id }},'default',$(this))"><i class="fa fa-shopping-cart"></i>{{trans('language.add_to_cart')}}</a>
                   </div>
                   @if ($product->price != $product->getPrice())
                   <img src="{{ asset($theme_asset.'/images/home/sale.png') }}" class="new" alt="" />
@@ -28,8 +28,8 @@
                 </div>
                 <div class="choose">
                   <ul class="nav nav-pills nav-justified">
-                    <li><a href="#" onClick="addToCart({{ $product->id }},'wishlist')"><i class="fa fa-plus-square"></i>{{trans('language.add_to_wishlist')}}</a></li>
-                    <li><a href="#" onClick="addToCart({{ $product->id }},'compare')"><i class="fa fa-plus-square"></i>{{trans('language.add_to_compare')}}</a></li>
+                    <li><a  onClick="addToCart({{ $product->id }},'wishlist',$(this))"><i class="fa fa-plus-square"></i>{{trans('language.add_to_wishlist')}}</a></li>
+                    <li><a  onClick="addToCart({{ $product->id }},'compare',$(this))"><i class="fa fa-plus-square"></i>{{trans('language.add_to_compare')}}</a></li>
                   </ul>
                 </div>
               </div>

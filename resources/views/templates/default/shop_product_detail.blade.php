@@ -2,31 +2,31 @@
 @section('banner')
 @endsection
 
-@section('content')
+@section('center')
           <div class="product-details"><!--product-details-->
             <div class="col-sm-5">
-              <div class="view-product">
-                <img src="{{ asset($product->getImage()) }}" alt="" />
-              </div>
-          @if ($product->images->count())
+
+
               <div id="similar-product" class="carousel slide" data-ride="carousel">
                   <!-- Wrapper for slides -->
                   <div class="carousel-inner">
-                    <div class="item active">
-                        <a href="#" class="col-sm-4">
-                          <img src="{{ asset($product->getThumb()) }}" alt="">
-                        </a>
+
+                  <div id="similar-product" class="carousel slide" data-ride="carousel">
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                      <div class="view-product item active"  data-slide-number="0">
+                        <img src="{{ asset($product->getImage()) }}" alt="">
+                      </div>
+                    @if ($product->images->count())
                        @foreach ($product->images as $key=>$image)
-                        <a href="#" class="col-sm-4">
-                          <img src="{{ asset($image->getThumb()) }}" alt="">
-                        </a>
-                          @if ($key % 3 == 1)
-                            </div>
-                            <div class="item">
-                          @endif
+                        <div class="view-product item"  data-slide-number="{{ $key + 1 }}">
+                          <img src="{{ asset($image->getImage()) }}" alt="">
+                        </div>
                         @endforeach
+                    @endif
                     </div>
                   </div>
+            @if ($product->images->count())
                   <!-- Controls -->
                   <a class="left item-control" href="#similar-product" data-slide="prev">
                   <i class="fa fa-angle-left"></i>
@@ -34,8 +34,10 @@
                   <a class="right item-control" href="#similar-product" data-slide="next">
                   <i class="fa fa-angle-right"></i>
                   </a>
+              @endif
+                  </div>
               </div>
-          @endif
+
             </div>
 
         <form id="buy_block" action="{{ route('postCart') }}" method="post">
@@ -52,7 +54,7 @@
                 <p>SKU: {{ $product->sku }}</p>
                   {!! $product->showPrice() !!}
                 <span>
-                  <label>Quantity:</label>
+                  <label>{{ trans('language.product.quantity') }}:</label>
                   <input type="number" name="qty" value="1" />
                   <button type="submit" class="btn btn-fefault cart">
                     <i class="fa fa-shopping-cart"></i>
@@ -82,17 +84,17 @@
                   @endforeach
                 </div>
                 @endif
-                <p><b>Availability:</b>
+                <p><b>{{ trans('language.product.availability') }}:</b>
                 @if ($configs['show_date_available'] && $product->date_available >= date('Y-m-d H:i:s'))
                 {{ $product->date_available }}
                 @else
-                In Stock
+                {{ trans('language.product.in_stock') }}
                 @endif
               </p>
-                <p><b>Condition:</b> New</p>
-                <p><b>Brand:</b> {{ empty($product->brand->name)?'None':$product->brand->name }}</p>
+                <p><b>{{ trans('language.product.type') }}:</b> New</p>
+                <p><b>{{ trans('language.product.brand') }}:</b> {{ empty($product->brand->name)?'None':$product->brand->name }}</p>
                 <div class="short-description">
-                  <b>Quick Overview:</b>
+                  <b>{{ trans('language.product.overview') }}:</b>
                   <p>{{ $product->description }}</p>
                 </div>
               <div class="addthis_inline_share_toolbox_yprn"></div>
@@ -104,8 +106,8 @@
           <div class="category-tab shop-details-tab"><!--category-tab-->
             <div class="col-sm-12">
               <ul class="nav nav-tabs">
-                <li class="active"><a href="#details" data-toggle="tab">Details</a></li>
-                <li><a href="#reviews" data-toggle="tab">Comment</a></li>
+                <li class="active"><a href="#details" data-toggle="tab">{{ trans('language.product.description') }}</a></li>
+                <li><a href="#reviews" data-toggle="tab">{{ trans('language.product.comment') }}</a></li>
               </ul>
             </div>
             <div class="tab-content">
@@ -127,21 +129,21 @@
 
             <div id="recommended-item-carousel" class="carousel slide">
               <div class="carousel-inner">
-               @foreach ($productsToCategory as  $key => $product_real)
+               @foreach ($productsToCategory as  $key => $product_rel)
                 @if ($key % 4 == 0)
                   <div class="item {{  ($key ==0)?'active':'' }}">
                 @endif
                   <div class="col-sm-3">
-                    <div class="product-image-wrapper">
-                      <div class="single-products   product-box-{{ $product_real->id }}">
+                    <div class="product-image-wrapper product-single">
+                      <div class="single-products   product-box-{{ $product_rel->id }}">
                           <div class="productinfo text-center">
-                            <a href="{{ $product_real->getUrl() }}"><img src="{{ asset($product_real->getThumb()) }}" alt="{{ $product_real->name }}" /></a>
-                        {!! $product_real->showPrice() !!}
-                            <a href="{{ $product_real->getUrl() }}"><p>{{ $product_real->name }}</p></a>
+                            <a href="{{ $product_rel->getUrl() }}"><img src="{{ asset($product_rel->getThumb()) }}" alt="{{ $product_rel->name }}" /></a>
+                        {!! $product_rel->showPrice() !!}
+                            <a href="{{ $product_rel->getUrl() }}"><p>{{ $product_rel->name }}</p></a>
                           </div>
-                          @if ($product_real->price != $product_real->getPrice())
+                          @if ($product_rel->price != $product_rel->getPrice())
                           <img src="{{ asset($theme_asset.'/images/home/sale.png') }}" class="new" alt="" />
-                          @elseif($product_real->type == 1)
+                          @elseif($product_rel->type == 1)
                           <img src="{{ asset($theme_asset.'/images/home/new.png') }}" class="new" alt="" />
                           @endif
                       </div>

@@ -1,4 +1,5 @@
 @extends($theme.'.shop_layout')
+
 @section('banner')
 @endsection
 

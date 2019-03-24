@@ -20,7 +20,8 @@ class News extends \App\Http\Controllers\GeneralController
     {
         parent::__construct();
         $this->title = trans($this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title');
-
+        app('view')->prependNamespace($this->configType,
+            base_path('app/' . $this->configType . '/' . $this->configCode . '/Views'));
     }
     public function getData()
     {
@@ -136,7 +137,7 @@ class News extends \App\Http\Controllers\GeneralController
     public function news()
     {
         $news = (new CmsNews)->getItemsNews($limit = $this->configs['product_new'], $opt = 'paginate');
-        return view($this->theme . '.cms_news',
+        return view($this->configType . '::' . 'cms_news',
             array(
                 'title'       => trans('language.blog'),
                 'description' => $this->configsGlobal['description'],
@@ -152,7 +153,7 @@ class News extends \App\Http\Controllers\GeneralController
         $news_currently = CmsNews::find($id);
         if ($news_currently) {
             $title = ($news_currently) ? $news_currently->title : trans('language.not_found');
-            return view($this->theme . '.cms_news_detail',
+            return view($this->configType . '::' . 'cms_news_detail',
                 array(
                     'title'          => $title,
                     'news_currently' => $news_currently,

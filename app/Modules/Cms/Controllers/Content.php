@@ -23,6 +23,8 @@ class Content extends \App\Http\Controllers\GeneralController
     {
         parent::__construct();
         $this->title = trans($this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title');
+        app('view')->prependNamespace($this->configType,
+            base_path('app/' . $this->configType . '/' . $this->configCode . '/Views'));
 
     }
     public function getData()
@@ -154,7 +156,7 @@ class Content extends \App\Http\Controllers\GeneralController
     {
         $category_currently = CmsCategory::find($id);
         $entries            = (new CmsCategory)->getContentsToCategory($id, $limit = $this->configs['product_new'], $opt = 'paginate');
-        return view($this->theme . '.cms_category',
+        return view($this->configType . '::' . 'cms_category',
             array(
                 'title'       => $category_currently->title,
                 'description' => $category_currently['description'],
@@ -170,7 +172,7 @@ class Content extends \App\Http\Controllers\GeneralController
         $entry_currently = CmsContent::find($id);
         if ($entry_currently) {
             $title = ($entry_currently) ? $entry_currently->title : trans('language.not_found');
-            return view($this->theme . '.cms_entry_detail',
+            return view($this->configType . '::' . 'cms_entry_detail',
                 array(
                     'title'           => $title,
                     'entry_currently' => $entry_currently,

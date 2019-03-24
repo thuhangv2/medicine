@@ -2,44 +2,53 @@
 // resources/lang/en/lang.php
 
 return [
-    'all_product'       => 'All products',
+    'all_product'        => 'All products',
 
-    'my_profile'        => 'My profile',
-    'notfound'          => 'Not found',
-    'empty_product'     => 'No product!',
-    'no_data'           => 'No data!',
-    'empty_entry'       => 'No entry!',
-    'page_not_found'    => 'Sorry! We can\'t find this page!',
-    'item_not_found'    => 'Sorry! Data you request cannot be found!',
-    'cart_title'        => 'Shopping cart',
-    'checkout_title'    => 'Checkout order',
-    'wishlist'          => 'Wishlist',
-    'add_to_wishlist'   => 'Add to wishlist',
-    'compare'           => 'Compare',
-    'add_to_compare'    => 'Add to compare',
-    'add_to_cart'       => 'Add to cart',
-    'for_got_password'  => 'Forgot password',
-    'login'             => 'Login',
-    'search'            => 'Search',
-    'account'           => 'Account',
-    'logout'            => 'Logout',
-    'home'              => 'Home',
-    'blog'              => 'Blog',
-    'contact'           => 'Contact us',
-    'about'             => 'About us',
-    'shop'              => 'Shop',
-    'cms_category'      => 'CMS categories',
-    'category'          => 'Category',
-    'brands'            => 'Brands',
-    'maintenance'       => 'Sorry! We are currently doing site maintenance!',
-    'features_items'    => 'Features Items',
-    'recommended_items' => 'Recommended items',
-    'thank_contact'     => 'Thanks!. We will contact as soon as possible!',
-    'date_available'    => 'Date available',
-    'default_available' => 'Allows purchase from creation date as default.',
-    'vendor'            => 'Vendor',
-    'view_more'         => 'View more',
-    'subscribe'         => [
+    'my_profile'         => 'My profile',
+    'my_account'         => 'My account',
+    'notfound'           => 'Not found',
+    'empty_product'      => 'No product!',
+    'no_data'            => 'No data!',
+    'empty_entry'        => 'No entry!',
+    'page_not_found'     => 'Sorry! We can\'t find this page!',
+    'item_not_found'     => 'Sorry! Data you request cannot be found!',
+    'cart_title'         => 'View cart',
+    'checkout_title'     => 'Checkout',
+    'wishlist_page'      => 'Wishlist page',
+    'wishlist'           => 'Wishlist',
+    'add_to_wishlist'    => 'Add to wishlist',
+    'compare_page'       => 'Compare page',
+    'compare'            => 'Compare',
+    'add_to_compare'     => 'Add to compare',
+    'add_to_cart'        => 'Add to cart',
+    'for_got_password'   => 'Forgot password',
+    'login'              => 'Login',
+    'search'             => 'Search',
+    'account'            => 'Account',
+    'logout'             => 'Logout',
+    'home'               => 'Home',
+    'blog'               => 'Blog',
+    'contact'            => 'Contact us',
+    'about'              => 'About us',
+    'shop'               => 'Shop',
+    'cms_category'       => 'CMS categories',
+    'category'           => 'Category',
+    'brands'             => 'Brands',
+    'vendors'            => 'Vendors',
+    'maintenance'        => 'Sorry! We are currently doing site maintenance!',
+    'features_items'     => 'Features Items',
+    'recommended_items'  => 'Recommended items',
+    'thank_contact'      => 'Thanks!. We will contact as soon as possible!',
+    'date_available'     => 'Date available',
+    'default_available'  => 'Allows purchase from creation date as default.',
+    'vendor'             => 'Vendor',
+    'view_more'          => 'View more',
+    'view_product'       => 'View product',
+    'join_new_letter'    => 'Join Newsletter',
+    'products_hot'       => 'Hot products',
+    'products_special'   => 'Special products',
+    'products_last_view' => 'Products recently viewed',
+    'subscribe'          => [
         'manager'           => 'Subscribe manager',
         'email'             => 'Email',
         'title'             => 'Subscribe',
@@ -48,7 +57,7 @@ return [
         'subscribe_success' => 'Subscribe email successful!',
     ],
 
-    'contact_form'      => [
+    'contact_form'       => [
         'title'   => 'Get in touch',
         'info'    => 'Contact infomation',
         'name'    => 'Name',
@@ -59,11 +68,11 @@ return [
         'message' => 'Your message...',
         'submit'  => 'Submit',
     ],
-    'search_form'       => [
+    'search_form'        => [
         'keyword' => 'Your keyword',
     ],
 
-    'admin'             => [
+    'admin'              => [
         'note_test'                    => '<span style="font-size: 30px;
         color: #f3d80e;
         padding-left: 10%;
@@ -102,6 +111,7 @@ return [
         'show_date_available'          => 'Show date available',
         'product_buy_out_of_stock'     => 'Allow buy product out of stock',
         'product_display_out_of_stock' => 'Show product out of stock',
+        'product_last_view'            => 'Products recently viewed',
         'product_preorder'             => 'Allow pre-order',
         'smtp_mode'                    => 'Use SMTP',
         'smtp_port'                    => 'Port SMTP',
@@ -160,7 +170,7 @@ return [
         'access_denied'                => 'Access denied!',
         'access_denied_msg'            => 'Can\'t disable this language. Please change default language before do that.',
     ],
-    'order'             => [
+    'order'              => [
         'title'                 => 'Order',
         'customer_name'         => 'Customer name',
         'customer'              => 'Customer',
@@ -202,10 +212,11 @@ return [
         ],
     ],
 
-    'product'           => [
+    'product'            => [
         'sku'          => 'SKU',
         'sku_validate' => 'SKU may only contain letters, numbers, and dashes.',
         'name'         => 'Product name',
+        'description'  => 'Product description',
         'price'        => 'Price',
         'quantity'     => 'Quantity',
         'total_price'  => 'Total',
@@ -221,9 +232,16 @@ return [
         'view'         => 'View',
         'sold'         => 'Sold',
         'import_multi' => 'Import multiple',
-
+        'new'          => 'New',
+        'sale'         => 'Sale',
+        'type'         => 'Product type',
+        'brand'        => 'Brand',
+        'availability' => 'Availability',
+        'in_stock'     => 'In stock',
+        'overview'     => 'Quick Overview',
+        'comment'      => 'Comment',
     ],
-    'promotion'         => [
+    'promotion'          => [
         'code'        => 'Coupon code',
         'value'       => 'Value',
         'type'        => 'Type',
@@ -259,7 +277,7 @@ return [
         ],
     ],
 
-    'customer'          => [
+    'customer'           => [
         'name'         => 'Name',
         'phone'        => 'Phone',
         'email'        => 'Email',
@@ -271,14 +289,16 @@ return [
         'created_at'   => 'Time added',
     ],
 
-    'process'           => [
+    'process'            => [
         'productImport'      => 'Import multiple product',
         'productImport_text' => 'Download file format',
     ],
 
-    'cart'              => [
+    'cart'               => [
         'over'             => 'Product :item has exceeded the maximum number of allowed quantity.',
         'exist'            => 'This product exist in :instance',
+        'success'          => 'Add product to :instance successfully!',
+        'dont_allow_sale'  => 'This product dont allow for sale!',
         'apply'            => 'Apply',
         'coupon'           => 'Coupon',
         'remove_coupon'    => 'Remove coupon',
@@ -300,7 +320,7 @@ return [
         'address2'         => 'Address 2',
         'note'             => 'Note',
     ],
-    'profile'           => [
+    'profile'            => [
         'empty_order'  => 'You have no orders!',
         'total'        => 'Total',
         'status'       => 'Status',
@@ -308,7 +328,7 @@ return [
         'detail_order' => 'Order detail',
     ],
 
-    'config'            => [
+    'config'             => [
         'logo'        => 'Logo',
         'title'       => 'Title',
         'description' => 'Description',
@@ -324,7 +344,7 @@ return [
         'template'    => 'Template',
     ],
 
-    'currency'          => [
+    'currency'           => [
         'manager'      => 'Currency manager',
         'code'         => 'Code',
         'name'         => 'Name',
@@ -336,7 +356,7 @@ return [
         'sort'         => 'Sort',
         'symbol_first' => 'Symbol first',
     ],
-    'email'             => [
+    'email'              => [
         'order' => [
             'title_1'      => 'Hi! Website :website has new order!',
             'order_id'     => 'Order ID',
@@ -357,7 +377,7 @@ return [
         ],
     ],
 
-    'api'               => [
+    'api'                => [
         'manager'             => 'Api manager',
         'name'                => 'Api name',
         'name_help'           => 'Name of api in route/api.php',
@@ -379,7 +399,7 @@ return [
         'no_hidden'           => 'No hidden',
         'no_secret'           => 'No secret',
     ],
-    'attribute'         => [
+    'attribute'          => [
         'manager'     => 'Attribute manager',
         'group'       => 'Attribute group',
         'group_name'  => 'Group name',
@@ -391,12 +411,14 @@ return [
         'no_item'     => 'No attribute',
         'add_more'    => 'Add more',
     ],
-    'layout'            => [
+    'layout'             => [
         'all_page'       => 'All page',
         'manager'        => 'Layout manager',
         'name'           => 'Layout name',
         'position'       => 'Layout position',
-        'page_display'   => 'Page display',
+        'page'           => 'Page display',
+        'type'           => 'Layout type',
+        'content'        => 'Layout content',
         'status'         => 'Status',
         'sort'           => 'Sort',
         'meta'           => 'Meta -  tag <meta> between <head></head>',
@@ -420,7 +442,7 @@ return [
         'guide'          => 'Read document in <a target=_new href="https://s-cart.org/guide/layout.html">HERE</a>',
 
     ],
-    'total'             => [
+    'total'              => [
         'sub_total' => 'Sub Total',
         'total'     => 'Total',
         'shipping'  => 'Shipping Fee',
@@ -428,7 +450,7 @@ return [
         'received'  => 'Received',
         'balance'   => 'Balance',
     ],
-    'extensions'        => [
+    'extensions'         => [
         'manager'     => 'Extensions manager',
         'Shipping'    => 'Shipping extensions',
         'Payment'     => 'Payment extensions',
@@ -448,7 +470,7 @@ return [
         'disabled'    => 'Disabled',
         'not_install' => 'Not install',
     ],
-    'modules'           => [
+    'modules'            => [
         'manager'     => 'Modules manager',
         'Cms'         => 'Cms modules',
         'Api'         => 'Api modules',
@@ -467,7 +489,7 @@ return [
         'disabled'    => 'Disabled',
         'not_install' => 'Not install',
     ],
-    'install'           => [
+    'install'            => [
         'env'               => [
             'process'        => 'Generating file .env',
             'error_open'     => 'Cant not open file .env.example',
@@ -509,7 +531,7 @@ return [
         'installing'        => 'Begin Install',
         'rename_error'      => 'Can not rename file install.php. Please remove or rename it!',
     ],
-    'templates'         => [
+    'templates'          => [
         'manager'    => 'Template management',
         'title'      => 'Template list',
         'name'       => 'Template name',
@@ -522,9 +544,9 @@ return [
         'remove'     => 'Remove',
         'status'     => 'Status',
         'installing' => 'Installing',
-        'guide'      => 'Read document in <a target=_new href="https://s-cart.org/guide/template.html">HERE</a>',
+        'guide'      => 'Read document in <a target=_new href="https://s-cart.org/download/template.html">HERE</a>',
     ],
-    'backup'            => [
+    'backup'             => [
         'guide'            => '<span class="text-danger">NOTE: To use MySQL server on the command line, you must have the correct system path. This is usually done automatically. Read document in <a target=_new href="https://s-cart.org/guide/backup.html">HERE</a></span>',
         'generate_now'     => 'Gererate a backup now',
         'processing'       => 'Processing...',
@@ -541,5 +563,10 @@ return [
         'restore_success'  => 'Restore successful!',
         'generate_success' => 'Create successful backup file!',
         'limit_backup'     => 'You cannot create more than 10 copies',
+    ],
+    'shop_info'          => [
+        'email'   => 'Email',
+        'hotline' => 'Hot line',
+        'address' => 'Address',
     ],
 ];

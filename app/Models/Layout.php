@@ -6,32 +6,33 @@ use Illuminate\Database\Eloquent\Model;
 
 class Layout extends Model
 {
-    public $timestamps = false;
-    public $table      = 'layout';
+    public $timestamps  = false;
+    public $table       = 'layout';
+    protected $fillable = ['status', 'content', 'sort', 'type', 'page', 'position', 'name'];
     /**
-     * Get value field page_display same array
-     * @param  [type] $page_display [description]
+     * Get value field page same array
+     * @param  [type] $page [description]
      * @return [type]                 [description]
      */
-    public function getPageDisplayAttribute($page_display)
+    public function getPageAttribute($page)
     {
-        if (is_string($page_display) && $page_display) {
-            return explode(',', $page_display);
+        if (is_string($page) && $page) {
+            return explode(',', $page);
         } else {
-            return $page_display;
+            return $page;
         }
     }
 
 /**
- * Set value for field page_display
- * @param [type] $page_display [description]
+ * Set value for field page
+ * @param [type] $page [description]
  */
-    public function setPageDisplayAttribute($page_display)
+    public function setPageAttribute($page)
     {
-        if (is_array($page_display)) {
-            $this->attributes['page_display'] = implode(',', $page_display);
+        if (is_array($page)) {
+            $this->attributes['page'] = implode(',', $page);
         } else {
-            $this->attributes['page_display'] = $page_display;
+            $this->attributes['page'] = $page;
         }
 
     }

@@ -57,7 +57,7 @@ class GeneralController extends Controller
         $this->banners       = Banner::where('status', 1)->sort()->get();
         $this->logo          = $this->path_file . '/' . $this->configsGlobal['logo'];
         $this->brands        = ShopBrand::getBrands();
-        $this->categories    = ShopCategory::getCategories(0);
+        $this->categories    = ShopCategory::getCategories($categoryParent = 0);
         $this->languages     = Language::where('status', 1)->get()->keyBy('code');
         $this->currencies    = ShopCurrency::getAll();
 //Share variable
@@ -123,4 +123,5 @@ class GeneralController extends Controller
             )
         );
     }
+
 }

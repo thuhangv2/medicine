@@ -24,12 +24,11 @@ toastr.options = {
 
 $.pjax.defaults.timeout = 5000;
 $.pjax.defaults.maxCacheLength = 0;
-// $('.treeview-menu .menu-open').pjax('a:not(a[target="_blank"])', {
 $('.treeview-menu').pjax('a:not(a[target="_blank"])', {
     container: '#pjax-container'
 });
 
-NProgress.configure({parent: '#pjax-container'});
+NProgress.configure({parent: '#app'});
 
 $(document).on('pjax:timeout', function (event) {
     event.preventDefault();
@@ -68,13 +67,15 @@ $(document).on('pjax:complete', function (xhr) {
     NProgress.done();
 });
 
-
 $(function () {
     $('.sidebar-menu li:not(.treeview) > a').on('click', function () {
         var $parent = $(this).parent().addClass('active');
         $parent.siblings('.treeview.active').find('> a').trigger('click');
         $parent.siblings().removeClass('active').find('li').removeClass('active');
     });
+    var menu = $('.sidebar-menu li > a[href="' + (location.pathname + location.search + location.hash) + '"]').parent().addClass('active');
+    menu.parents('ul.treeview-menu').addClass('menu-open');
+    menu.parents('li.treeview').addClass('active');
 
     $('[data-toggle="popover"]').popover();
 });

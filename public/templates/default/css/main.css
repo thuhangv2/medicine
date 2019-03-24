@@ -2465,4 +2465,65 @@ h2.title {
   color: #FE980F;
 }
 
+.new-price{
+  color:#FE980F;
+  font-size: 20px;
+  padding: 10px;
+  font-weight:bold;
+}
+.old-price {
+  text-decoration: line-through;
+  color: #a95d5d;
+  font-size: 17px;
+  padding: 10px;
+}
+.locale .dropdown-menu{
+    min-width: auto !important;
+}
+.locale button{
+    min-height: 30px !important;
+}
 
+.cart-qty{
+  position: absolute;
+    right: -20px;
+    top: -9px;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+    font-size: 10px;
+    background: #FE980F;
+    color: #FFF;
+    border-radius: 50%;
+    z-index: 99;
+}
+#cart-alert{
+  position: fixed;
+  top: 5px;
+  right: 0px;
+  text-align: center;
+  z-index: 999999 !important;
+}
+.cart-alert{
+  text-align: center;
+  padding: 10px;
+  -webkit-transition: width 2s;
+  transition: width 2s;
+  z-index: 999999 !important;
+  border-radius: 0px 0px 0px 2px;
+  line-height: 30px;
+  padding: 0 5px;
+}
+li > a{
+  cursor: pointer;
+}
+.products-lasView img{
+  width: 100%;
+}
+.products-lasView .last-view{
+    font-style: italic;
+    color: #bf521b;
+    font-size: 12px;
+    display: block;
+}

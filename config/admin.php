@@ -48,7 +48,7 @@ return [
      */
     'route'                     => [
 
-        'prefix'     => env('ADMIN_URL', 'system_admin'),
+        'prefix'     => env('ADMIN_ROUTE_PREFIX', 'system_admin'),
 
         'namespace'  => 'App\\Admin\\Controllers',
 
@@ -115,6 +115,7 @@ return [
                 'model'  => Encore\Admin\Auth\Database\Administrator::class,
             ],
         ],
+        'remember'   => true,
     ],
 
     /*
