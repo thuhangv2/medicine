@@ -129,7 +129,7 @@ class CmsContentController extends Controller
             $form->select('category_id', trans('language.category'))->options($arrCate)->rules('required');
             $form->image('image', trans('language.admin.image'))->uniqueName()->move('cms_content')->removable();
             $form->switch('status', trans('language.admin.status'));
-            $form->number('sort', trans('language.admin.sort'));
+            $form->number('sort', trans('language.admin.sort'))->rules('numeric|min:0')->default(0);
         })->tab(trans('language.admin.sub_image'), function ($form) {
             $form->hasMany('images', ' ', function (Form\NestedForm $form) {
                 $form->image('image', trans('language.admin.sub_image'))->uniqueName()->move('product_slide');

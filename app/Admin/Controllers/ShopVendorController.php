@@ -106,7 +106,7 @@ class ShopVendorController extends Controller
             $form->text('phone', trans('language.admin.phone'));
             $form->textarea('address', trans('language.admin.address'));
             $form->image('image', trans('language.admin.image'))->uniqueName()->move('vendor')->removable();
-            $form->number('sort', trans('language.admin.sort'));
+            $form->number('sort', trans('language.admin.sort'))->rules('numeric|min:0')->default(0);
             $form->disableViewCheck();
             $form->disableEditingCheck();
             $form->tools(function (Form\Tools $tools) {

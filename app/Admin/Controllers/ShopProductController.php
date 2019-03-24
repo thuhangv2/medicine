@@ -187,7 +187,7 @@ class ShopProductController extends Controller
                 $form->select('vendor_id', trans('language.vendor'))->options($arrVendor)->default('0')
                     ->rules('required');
                 $form->switch('status', trans('language.admin.status'));
-                $form->number('sort', trans('language.admin.sort'));
+                $form->number('sort', trans('language.admin.sort'))->rules('numeric|min:0')->default(0);
                 $form->divide();
                 $form->radio('type', trans('language.product.product_type'))->options($this->arrType)->default('0');
                 $form->datetime('date_available', trans('language.date_available'))->help(trans('language.default_available'));

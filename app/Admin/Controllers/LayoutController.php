@@ -180,7 +180,7 @@ class LayoutController extends Controller
         $form->radio('type', trans('language.layout.type'))->options($this->arrType)->default('html');
         $form->textarea('content', trans('language.layout.content'));
         $form->switch('status', trans('language.layout.status'));
-        $form->number('sort', trans('language.layout.sort'));
+        $form->number('sort', trans('language.layout.sort'))->rules('numeric|min:0')->default(0);
         $form->disableViewCheck();
         $form->disableEditingCheck();
         $form->tools(function (Form\Tools $tools) {

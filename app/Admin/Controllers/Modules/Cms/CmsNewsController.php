@@ -123,7 +123,7 @@ class CmsNewsController extends Controller
 
         $form->image('image', trans('language.admin.image'))->uniqueName()->move('cms_content')->removable();
         $form->switch('status', trans('language.admin.status'));
-        $form->number('sort', trans('language.admin.sort'));
+        $form->number('sort', trans('language.admin.sort'))->rules('numeric|min:0')->default(0);
 
         $arrData = array();
         $form->saving(function (Form $form) use ($languages, &$arrData) {

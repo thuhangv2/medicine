@@ -133,7 +133,7 @@ class ShopCategoryController extends Controller
             $arrCate = ['0' => '== ROOT =='] + $arrCate;
             $form->select('parent', trans('language.admin.parent_category'))->options($arrCate);
             $form->image('image', trans('language.admin.image'))->uniqueName()->move('category')->removable();
-            $form->number('sort', trans('language.admin.sort'));
+            $form->number('sort', trans('language.admin.sort'))->rules('numeric|min:0')->default(0);
             $form->switch('status', trans('language.admin.status'));
             $arrData = array();
 

@@ -102,7 +102,7 @@ class ShopBrandController extends Controller
             $form->text('name', trans('language.admin.name'))->rules('required');
             $form->image('image', trans('language.admin.image'))->uniqueName()->move('brand')->removable();
             $form->switch('status', trans('language.admin.status'));
-            $form->number('sort', trans('language.admin.sort'));
+            $form->number('sort', trans('language.admin.sort'))->rules('numeric|min:0')->default(0);
             $form->disableViewCheck();
             $form->disableEditingCheck();
             $form->tools(function (Form\Tools $tools) {
