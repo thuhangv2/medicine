@@ -104,7 +104,15 @@ class LayoutController extends Controller
             return htmlentities($arrPosition[$value]);
         });
         $grid->type(trans('language.layout.type'))->display(function ($value) use ($arrType) {
-            return htmlentities($arrType[$value]);
+            $style = "";
+            if ($value == 'html') {
+                $style = 'class="label label-primary"';
+            } elseif ($value == 'view') {
+                $style = 'class="label label-warning"';
+            } elseif ($value == 'module') {
+                $style = 'class="label label-danger"';
+            }
+            return "<span $style>" . $arrType[$value] . "</span>";
         });
         $grid->page(trans('language.layout.page'))->display(function ($value) use ($arrPage) {
             if (!$value) {

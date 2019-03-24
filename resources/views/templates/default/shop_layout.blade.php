@@ -17,10 +17,10 @@
     <meta property="og:description" content="{{ $description??'' }}" />
 <!--Module meta -->
   @isset ($layouts['meta'])
-      @foreach ( $layouts['meta']  as $element)
-        @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
-          @if ($element->page =='html')
-            {{$element->content }}
+      @foreach ( $layouts['meta']  as $layout)
+        @if ($layout->page == null ||  $layout->page =='*' || $layout->page =='' || (isset($layout_page) && in_array($layout_page, $layout->page) ) )
+          @if ($layout->page =='html')
+            {{$layout->content }}
           @endif
         @endif
       @endforeach
@@ -43,10 +43,10 @@
     <link rel="apple-touch-icon-precomposed" href="{{ asset($theme_asset.'/images/ico/apple-touch-icon-57-precomposed.png')}}">
 <!--Module header -->
   @isset ($layouts['header'])
-      @foreach ( $layouts['header']  as $element)
-        @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
-          @if ($element->page =='html')
-            {{$element->content }}
+      @foreach ( $layouts['header']  as $layout)
+        @if ($layout->page == null ||  $layout->page =='*' || $layout->page =='' || (isset($layout_page) && in_array($layout_page, $layout->page) ) )
+          @if ($layout->page =='html')
+            {{$layout->content }}
           @endif
         @endif
       @endforeach
@@ -211,14 +211,14 @@
 
 <!--Module top -->
   @isset ($layouts['top'])
-      @foreach ( $layouts['top']  as $element)
-        @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
-          @if ($element->type =='html')
-            {!! $element->content !!}
-          @elseif($element->type =='view')
-            @include($theme.'.'.$element->content)
-          @elseif($element->type =='module')
-            {!! (new $element->content)->render() !!}
+      @foreach ( $layouts['top']  as $layout)
+        @if ($layout->page == null ||  $layout->page =='*' || $layout->page =='' || (isset($layout_page) && in_array($layout_page, $layout->page) ) )
+          @if ($layout->type =='html')
+            {!! $layout->content !!}
+          @elseif($layout->type =='view')
+            @include($theme.'.'.$layout->content)
+          @elseif($layout->type =='module')
+            {!! (new $layout->content)->render() !!}
           @endif
         @endif
       @endforeach
@@ -261,14 +261,14 @@
 
 <!--Module top footer -->
   @isset ($layouts['footer'])
-      @foreach ( $layouts['footer']  as $element)
-        @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
-          @if ($element->type =='html')
-            {!! $element->content !!}
-          @elseif($element->type =='view')
-            @include($theme.'.'.$element->content)
-          @elseif($element->type =='module')
-            {!! (new $element->content)->render() !!}
+      @foreach ( $layouts['footer']  as $layout)
+        @if ($layout->page == null ||  $layout->page =='*' || $layout->page =='' || (isset($layout_page) && in_array($layout_page, $layout->page) ) )
+          @if ($layout->type =='html')
+            {!! $layout->content !!}
+          @elseif($layout->type =='view')
+            @include($theme.'.'.$layout->content)
+          @elseif($layout->type =='module')
+            {!! (new $layout->content)->render() !!}
           @endif
         @endif
       @endforeach
@@ -365,14 +365,14 @@
 
 <!--Module bottom -->
   @isset ($layouts['bottom'])
-      @foreach ( $layouts['bottom']  as $element)
-        @if ($element->page == null ||  $element->page =='*' || (isset($layout_page) && $element->page == $layout_page) )
-          @if ($element->type =='html')
-            {!! $element->content !!}
-          @elseif($element->type =='view')
-            @include($theme.'.'.$element->content)
-          @elseif($element->type =='module')
-            {!! (new $element->content)->render() !!}
+      @foreach ( $layouts['bottom']  as $layout)
+        @if ($layout->page == null ||  $layout->page =='*' || $layout->page =='' || (isset($layout_page) && in_array($layout_page, $layout->page) ) )
+          @if ($layout->type =='html')
+            {!! $layout->content !!}
+          @elseif($layout->type =='view')
+            @include($theme.'.blockView.'.$layout->content)
+          @elseif($layout->type =='module')
+            {!! (new $layout->content)->render() !!}
           @endif
         @endif
       @endforeach
