@@ -132,7 +132,7 @@ class LayoutController extends Controller
             return htmlentities($value);
         })->style('max-width:200px;word-break:break-all;');
         $grid->status(trans('language.layout.status'))->switch();
-        $grid->sort(trans('language.layout.sort'));
+        $grid->sort(trans('language.layout.sort'))->editable();
         $grid->disableRowSelector();
         $grid->disableFilter();
         $grid->tools(function ($tools) {
