@@ -115,7 +115,7 @@ return [
                 'model'  => Encore\Admin\Auth\Database\Administrator::class,
             ],
         ],
-        'remember'   => true,
+        'remember'   => false,
     ],
 
     /*
