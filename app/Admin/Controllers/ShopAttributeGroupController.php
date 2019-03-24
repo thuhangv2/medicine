@@ -120,7 +120,7 @@ class ShopAttributeGroupController extends Controller
 
         $form->text('name', trans('language.attribute.group_name'))->rules('required');
         $form->switch('status', trans('language.attribute.status'));
-        $form->number('sort', trans('language.attribute.sort'));
+        $form->number('sort', trans('language.attribute.sort'))->rules('numeric|min:0')->default(0);
         $form->select('type', trans('language.attribute.type'))->options(['radio' => 'Radio', 'select' => 'Select'])->rules('required');
 
         return $form;

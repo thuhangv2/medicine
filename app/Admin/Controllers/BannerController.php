@@ -95,7 +95,7 @@ class BannerController extends Controller
         $form->textarea('html', 'html');
         $form->text('url', 'Url');
         $form->switch('status', trans('language.admin.status'));
-        $form->number('sort', trans('language.admin.sort'));
+        $form->number('sort', trans('language.admin.sort'))->rules('numeric|min:0')->default(0);
         $form->display('created_at', trans('language.admin.created_at'));
         $form->display('updated_at', trans('language.admin.last_modify'));
         $form->disableViewCheck();

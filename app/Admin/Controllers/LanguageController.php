@@ -147,7 +147,7 @@ class LanguageController extends Controller
         }
         $form->image('icon', 'Icon')->move('language');
         $form->switch('status', 'Status')->default(1);
-        $form->number('sort', 'Sort');
+        $form->number('sort', 'Sort')->rules('numeric|min:0')->default(0);
         $form->disableViewCheck();
         $form->disableEditingCheck();
         $form->tools(function (Form\Tools $tools) use ($idCheck) {

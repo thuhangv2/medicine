@@ -153,7 +153,7 @@ class CurrencyController extends Controller
         $form->text('thousands', trans('language.currency.thousands'));
         $form->switch('symbol_first', trans('language.currency.symbol_first'));
         $form->switch('status', trans('language.currency.status'))->default(1);
-        $form->number('sort', trans('language.currency.sort'));
+        $form->number('sort', trans('language.currency.sort'))->rules('numeric|min:0')->default(0);
         $form->disableViewCheck();
         $form->disableEditingCheck();
         $form->tools(function (Form\Tools $tools) use ($idCheck) {

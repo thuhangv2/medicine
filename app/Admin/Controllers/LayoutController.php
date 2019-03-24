@@ -132,7 +132,7 @@ class LayoutController extends Controller
             return htmlentities($value);
         })->style('max-width:200px;word-break:break-all;');
         $grid->status(trans('language.layout.status'))->switch();
-        $grid->sort(trans('language.layout.sort'));
+        $grid->sort(trans('language.layout.sort'))->editable();
         $grid->disableRowSelector();
         $grid->disableFilter();
         $grid->tools(function ($tools) {
@@ -180,7 +180,7 @@ class LayoutController extends Controller
         $form->radio('type', trans('language.layout.type'))->options($this->arrType)->default('html');
         $form->textarea('content', trans('language.layout.content'));
         $form->switch('status', trans('language.layout.status'));
-        $form->number('sort', trans('language.layout.sort'));
+        $form->number('sort', trans('language.layout.sort'))->rules('numeric|min:0')->default(0);
         $form->disableViewCheck();
         $form->disableEditingCheck();
         $form->tools(function (Form\Tools $tools) {

@@ -127,7 +127,7 @@ class CmsCategoryController extends Controller
 //end language
 
             $form->image('image', trans('language.admin.image'))->uniqueName()->move('cms_category')->removable();
-            $form->number('sort', trans('language.admin.sort'));
+            $form->number('sort', trans('language.admin.sort'))->rules('numeric|min:0')->default(0);
             $form->switch('status', trans('language.admin.status'));
             $arrData = array();
 
