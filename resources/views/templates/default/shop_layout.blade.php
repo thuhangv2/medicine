@@ -25,7 +25,7 @@
         @endif
       @endforeach
   @endisset
-<!--Module meta -->
+<!--//Module meta -->
     <link href="{{ asset($theme_asset.'/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{ asset($theme_asset.'/css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{ asset($theme_asset.'/css/prettyPhoto.css')}}" rel="stylesheet">
@@ -51,7 +51,7 @@
         @endif
       @endforeach
   @endisset
-<!--Module header -->
+<!--//Module header -->
 
 </head><!--/head-->
 <body>
@@ -223,7 +223,7 @@
         @endif
       @endforeach
   @endisset
-<!--Module top -->
+<!--//Module top -->
 
 
   <section>
