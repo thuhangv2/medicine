@@ -220,6 +220,7 @@ class LayoutController extends Controller
 $('[name="type"]').change(function(){
 var type = $(this).val();
 var obj = $('[name="text"]');
+obj.next('.help-block').remove();
 if(type =='html'){
    obj.before('<textarea name="text" class="form-control text" rows="5" placeholder="$lang"></textarea><span class="help-block"><i class="fa fa-info-circle"></i>$textHtml</span>');
    obj.remove();
