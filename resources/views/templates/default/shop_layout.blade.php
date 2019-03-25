@@ -20,7 +20,7 @@
       @foreach ( $layouts['meta']  as $layout)
         @if ($layout->page == null ||  $layout->page =='*' || $layout->page =='' || (isset($layout_page) && in_array($layout_page, $layout->page) ) )
           @if ($layout->page =='html')
-            {{$layout->content }}
+            {{$layout->text }}
           @endif
         @endif
       @endforeach
@@ -46,7 +46,7 @@
       @foreach ( $layouts['header']  as $layout)
         @if ($layout->page == null ||  $layout->page =='*' || $layout->page =='' || (isset($layout_page) && in_array($layout_page, $layout->page) ) )
           @if ($layout->page =='html')
-            {{$layout->content }}
+            {{$layout->text }}
           @endif
         @endif
       @endforeach
@@ -214,11 +214,11 @@
       @foreach ( $layouts['top']  as $layout)
         @if ($layout->page == null ||  $layout->page =='*' || $layout->page =='' || (isset($layout_page) && in_array($layout_page, $layout->page) ) )
           @if ($layout->type =='html')
-            {!! $layout->content !!}
+            {!! $layout->text !!}
           @elseif($layout->type =='view')
-            @include($theme.'.'.$layout->content)
+            @include('blockView.'.$layout->text)
           @elseif($layout->type =='module')
-            {!! (new $layout->content)->render() !!}
+            {!! (new $layout->text)->render() !!}
           @endif
         @endif
       @endforeach
@@ -264,11 +264,11 @@
       @foreach ( $layouts['footer']  as $layout)
         @if ($layout->page == null ||  $layout->page =='*' || $layout->page =='' || (isset($layout_page) && in_array($layout_page, $layout->page) ) )
           @if ($layout->type =='html')
-            {!! $layout->content !!}
+            {!! $layout->text !!}
           @elseif($layout->type =='view')
-            @include($theme.'.'.$layout->content)
+            @include('blockView.'.$layout->text)
           @elseif($layout->type =='module')
-            {!! (new $layout->content)->render() !!}
+            {!! (new $layout->text)->render() !!}
           @endif
         @endif
       @endforeach
@@ -368,11 +368,11 @@
       @foreach ( $layouts['bottom']  as $layout)
         @if ($layout->page == null ||  $layout->page =='*' || $layout->page =='' || (isset($layout_page) && in_array($layout_page, $layout->page) ) )
           @if ($layout->type =='html')
-            {!! $layout->content !!}
+            {!! $layout->text !!}
           @elseif($layout->type =='view')
-            @include($theme.'.blockView.'.$layout->content)
+            @include($theme.'.blockView.'.$layout->text)
           @elseif($layout->type =='module')
-            {!! (new $layout->content)->render() !!}
+            {!! (new $layout->text)->render() !!}
           @endif
         @endif
       @endforeach

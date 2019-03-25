@@ -419,6 +419,7 @@ return [
         'page'           => 'Page display',
         'type'           => 'Layout type',
         'content'        => 'Layout content',
+        'text'           => 'Layout text',
         'status'         => 'Status',
         'sort'           => 'Sort',
         'meta'           => 'Meta -  tag <meta> between <head></head>',
@@ -440,7 +441,9 @@ return [
         'shop_compare'   => 'Compare page',
         'shop_wishlist'  => 'Wishlist page',
         'guide'          => 'Read document in <a target=_new href="https://s-cart.org/guide/layout.html">HERE</a>',
-
+        'textModule'     => 'Module must have render() method available to display content.',
+        'textView'       => 'View files are in "resources/views/blockView" directory.',
+        'textHtml'       => 'Basic HTML content.',
     ],
     'total'              => [
         'sub_total' => 'Sub Total',
