@@ -228,7 +228,7 @@ if(type =='html'){
    obj.before('<select name="text" class="form-control text">$selectView</select><span class="help-block"><i class="fa fa-info-circle"></i>$textView</span>');
    obj.remove();
 }else if(type =='module'){
-   obj.before('<div class="input-group"><input type="text" name="text" value="" class="form-control name" placeholder="$lang"><span class="help-block"><i class="fa fa-info-circle"></i>$textModule</span></div>');
+   obj.before('<input type="text" name="text" value="" class="form-control name" placeholder="$lang"><span class="help-block"><i class="fa fa-info-circle"></i>$textModule</span>');
    obj.remove();
 }
 });
