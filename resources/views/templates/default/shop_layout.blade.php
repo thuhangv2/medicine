@@ -216,7 +216,9 @@
           @if ($layout->type =='html')
             {!! $layout->text !!}
           @elseif($layout->type =='view')
-            @include('blockView.'.$layout->text)
+            @if (view()->exists('blockView.'.$layout->text))
+             @include('blockView.'.$layout->text)
+            @endif
           @elseif($layout->type =='module')
             {!! (new $layout->text)->render() !!}
           @endif
@@ -258,22 +260,6 @@
     </div>
   </section>
 @endif
-
-<!--Module top footer -->
-  @isset ($layouts['footer'])
-      @foreach ( $layouts['footer']  as $layout)
-        @if ($layout->page == null ||  $layout->page =='*' || $layout->page =='' || (isset($layout_page) && in_array($layout_page, $layout->page) ) )
-          @if ($layout->type =='html')
-            {!! $layout->text !!}
-          @elseif($layout->type =='view')
-            @include('blockView.'.$layout->text)
-          @elseif($layout->type =='module')
-            {!! (new $layout->text)->render() !!}
-          @endif
-        @endif
-      @endforeach
-  @endisset
-<!--//Module top footer -->
 
 @include($theme.'.footer')
 
@@ -370,7 +356,9 @@
           @if ($layout->type =='html')
             {!! $layout->text !!}
           @elseif($layout->type =='view')
-            @include($theme.'.blockView.'.$layout->text)
+            @if (view()->exists('blockView.'.$layout->text))
+             @include('blockView.'.$layout->text)
+            @endif
           @elseif($layout->type =='module')
             {!! (new $layout->text)->render() !!}
           @endif

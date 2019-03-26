@@ -5,7 +5,9 @@
           @if ($layout->type =='html')
             {!! $layout->text !!}
           @elseif($layout->type =='view')
-            @include('blockView.'.$layout->text)
+            @if (view()->exists('blockView.'.$layout->text))
+             @include('blockView.'.$layout->text)
+            @endif
           @elseif($layout->type =='module')
             {!! (new $layout->text)->render() !!}
           @endif

@@ -1,5 +1,5 @@
 # Release Notes
-## v2.2.0 (2019-03-24)
+## v2.2.x (2019-03)
 ### Upgrade laravel 5.7
 ### Fixed
 > Fix error route admin
