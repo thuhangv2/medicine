@@ -20,12 +20,12 @@
       @foreach ( $layouts['meta']  as $layout)
         @if ($layout->page == null ||  $layout->page =='*' || $layout->page =='' || (isset($layout_page) && in_array($layout_page, $layout->page) ) )
           @if ($layout->page =='html')
-            {{$layout->content }}
+            {{$layout->text }}
           @endif
         @endif
       @endforeach
   @endisset
-<!--Module meta -->
+<!--//Module meta -->
     <link href="{{ asset($theme_asset.'/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{ asset($theme_asset.'/css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{ asset($theme_asset.'/css/prettyPhoto.css')}}" rel="stylesheet">
@@ -46,12 +46,12 @@
       @foreach ( $layouts['header']  as $layout)
         @if ($layout->page == null ||  $layout->page =='*' || $layout->page =='' || (isset($layout_page) && in_array($layout_page, $layout->page) ) )
           @if ($layout->page =='html')
-            {{$layout->content }}
+            {{$layout->text }}
           @endif
         @endif
       @endforeach
   @endisset
-<!--Module header -->
+<!--//Module header -->
 
 </head><!--/head-->
 <body>
@@ -214,16 +214,18 @@
       @foreach ( $layouts['top']  as $layout)
         @if ($layout->page == null ||  $layout->page =='*' || $layout->page =='' || (isset($layout_page) && in_array($layout_page, $layout->page) ) )
           @if ($layout->type =='html')
-            {!! $layout->content !!}
+            {!! $layout->text !!}
           @elseif($layout->type =='view')
-            @include($theme.'.'.$layout->content)
+            @if (view()->exists('blockView.'.$layout->text))
+             @include('blockView.'.$layout->text)
+            @endif
           @elseif($layout->type =='module')
-            {!! (new $layout->content)->render() !!}
+            {!! (new $layout->text)->render() !!}
           @endif
         @endif
       @endforeach
   @endisset
-<!--Module top -->
+<!--//Module top -->
 
 
   <section>
@@ -258,22 +260,6 @@
     </div>
   </section>
 @endif
-
-<!--Module top footer -->
-  @isset ($layouts['footer'])
-      @foreach ( $layouts['footer']  as $layout)
-        @if ($layout->page == null ||  $layout->page =='*' || $layout->page =='' || (isset($layout_page) && in_array($layout_page, $layout->page) ) )
-          @if ($layout->type =='html')
-            {!! $layout->content !!}
-          @elseif($layout->type =='view')
-            @include($theme.'.'.$layout->content)
-          @elseif($layout->type =='module')
-            {!! (new $layout->content)->render() !!}
-          @endif
-        @endif
-      @endforeach
-  @endisset
-<!--//Module top footer -->
 
 @include($theme.'.footer')
 
@@ -368,11 +354,13 @@
       @foreach ( $layouts['bottom']  as $layout)
         @if ($layout->page == null ||  $layout->page =='*' || $layout->page =='' || (isset($layout_page) && in_array($layout_page, $layout->page) ) )
           @if ($layout->type =='html')
-            {!! $layout->content !!}
+            {!! $layout->text !!}
           @elseif($layout->type =='view')
-            @include($theme.'.blockView.'.$layout->content)
+            @if (view()->exists('blockView.'.$layout->text))
+             @include('blockView.'.$layout->text)
+            @endif
           @elseif($layout->type =='module')
-            {!! (new $layout->content)->render() !!}
+            {!! (new $layout->text)->render() !!}
           @endif
         @endif
       @endforeach

@@ -424,6 +424,7 @@ return [
         'page'           => 'Trang hiển thị',
         'type'           => 'Loại layout',
         'content'        => 'Nội dung layout',
+        'text'           => 'Nội dung layout',
         'status'         => 'Trạng thái',
         'sort'           => 'Sắp xếp',
         'meta'           => 'Meta -  thẻ <meta> giữa <head></head>',
@@ -445,6 +446,9 @@ return [
         'shop_compare'   => 'Trang so sánh sản phẩm',
         'shop_wishlist'  => 'Trang sản phầm yêu thích',
         'guide'          => 'Hướng dẫn sử dụng <a target=_new href="https://s-cart.org/guide/layout.html?lang=vi">Ở Đây</a>',
+        'textModule'     => 'Module phải có sẵn phương thức render() để hiển thị nội dung.',
+        'textView'       => 'Các file view nằm trong thư mục resources/views/blockView.',
+        'textHtml'       => 'Nội dung HTML cơ bản.',
 
     ],
     'total'              => [

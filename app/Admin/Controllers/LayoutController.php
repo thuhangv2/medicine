@@ -8,6 +8,7 @@ use App\Models\LayoutPage;
 use App\Models\LayoutPosition;
 use App\Models\LayoutType;
 use Encore\Admin\Controllers\HasResourceActions;
+use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
@@ -69,7 +70,7 @@ class LayoutController extends Controller
         return $content
             ->header(trans('language.layout.manager'))
             ->description(' ')
-            ->body($this->form()->edit($id));
+            ->body($this->form($id)->edit($id));
     }
 
     /**
@@ -128,7 +129,7 @@ class LayoutController extends Controller
             }
 
         })->style('max-width:200px;word-break:break-all;');
-        $grid->content(trans('language.layout.page'))->display(function ($value) {
+        $grid->text(trans('language.layout.page'))->display(function ($value) {
             return htmlentities($value);
         })->style('max-width:200px;word-break:break-all;');
         $grid->status(trans('language.layout.status'))->switch();
@@ -159,7 +160,7 @@ class LayoutController extends Controller
         $show->name(trans('language.layout.name'));
         $show->position(trans('language.layout.position'));
         $show->page(trans('language.layout.page'));
-        $show->content(trans('language.layout.page'));
+        $show->text(trans('language.layout.page'));
         $show->status(trans('language.layout.status'));
         $show->sort(trans('language.layout.sort'));
 
@@ -171,14 +172,31 @@ class LayoutController extends Controller
      *
      * @return Form
      */
-    protected function form()
+    protected function form($id = null)
     {
+        $layout = null;
+        if ($id) {
+            $layout = Layout::find($id);
+        }
+        Admin::script($this->jsProcess());
         $form = new Form(new Layout);
         $form->text('name', trans('language.layout.name'))->rules('required');
         $form->select('position', trans('language.layout.position'))->options($this->arrPosition)->rules('required');
         $form->listbox('page', trans('language.layout.page'))->options($this->arrPage);
-        $form->radio('type', trans('language.layout.type'))->options($this->arrType)->default('html');
-        $form->textarea('content', trans('language.layout.content'));
+        if ($layout) {
+            $form->radio('type', trans('language.layout.type'))->options([$layout->type => $this->arrType[$layout->type]])->value($layout->type);
+            if ($layout->type == 'html') {
+                $form->textarea('text', trans('language.layout.text'))->value($layout->text)->help(trans('language.layout.textHtml'));
+            } elseif ($layout->type == 'module') {
+                $form->text('text', trans('language.layout.text'))->rules('required')->value($layout->text)->help(trans('language.layout.textModule'));
+            } elseif ($layout->type == 'view') {
+                $form->select('text', trans('language.layout.text'))->options($this->getListViewBlock())->value($layout->text)->help(trans('language.layout.textView'));
+            }
+        } else {
+            $form->select('type', trans('language.layout.type'))->options($this->arrType)->default('html');
+            $form->textarea('text', trans('language.layout.text'))->help(trans('language.layout.textHtml'));
+        }
+
         $form->switch('status', trans('language.layout.status'));
         $form->number('sort', trans('language.layout.sort'))->rules('numeric|min:0')->default(0);
         $form->disableViewCheck();
@@ -188,4 +206,45 @@ class LayoutController extends Controller
         });
         return $form;
     }
+    public function jsProcess()
+    {
+        $selectView = '';
+        $lang       = trans('language.layout.text');
+        $textModule = trans('language.layout.textModule');
+        $textHtml   = trans('language.layout.textHtml');
+        $textView   = trans('language.layout.textView');
+        foreach ($this->getListViewBlock() as $key => $value) {
+            $selectView .= '<option value="' . $key . '">' . $value . '</option>';
+        }
+        return <<<JS
+$('[name="type"]').change(function(){
+var type = $(this).val();
+var obj = $('[name="text"]');
+obj.next('.help-block').remove();
+if(type =='html'){
+   obj.before('<textarea name="text" class="form-control text" rows="5" placeholder="$lang"></textarea><span class="help-block"><i class="fa fa-info-circle"></i>$textHtml</span>');
+   obj.remove();
+}else if(type =='view'){
+   obj.before('<select name="text" class="form-control text">$selectView</select><span class="help-block"><i class="fa fa-info-circle"></i>$textView</span>');
+   obj.remove();
+}else if(type =='module'){
+   obj.before('<input type="text" name="text" value="" class="form-control name" placeholder="$lang"><span class="help-block"><i class="fa fa-info-circle"></i>$textModule</span>');
+   obj.remove();
+}
+});
+JS;
+    }
+
+    public function getListViewBlock()
+    {
+        $arrView = [];
+        foreach (glob(base_path() . "/resources/views/blockView/*.blade.php") as $file) {
+            if (file_exists($file)) {
+                $arr                                = explode('/', $file);
+                $arrView[substr(end($arr), 0, -10)] = substr(end($arr), 0, -10);
+            }
+        }
+        return $arrView;
+    }
+
 }
