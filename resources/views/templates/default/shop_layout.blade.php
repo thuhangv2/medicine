@@ -56,21 +56,10 @@
 </head><!--/head-->
 <body>
 
-  @include($theme.'.header')
+@include($theme.'.header')
 
-  @yield('banner')
-  <div id="cart-alert">
-    @if(Session::has('message'))
-        <div class="alert alert-success cart-alert">{!! Session::get('message') !!}
-        <button type="button" class="close" data-dismiss="alert">x</button>
-        </div>
-    @endif
-    @if(Session::has('error'))
-        <div class="alert alert-danger cart-alert">{!! Session::get('error') !!}
-        <button type="button" class="close" data-dismiss="alert">x</button>
-        </div>
-    @endif
-  </div>
+@yield('banner')
+
 
 @if ($configs['site_status'])
 
@@ -140,7 +129,7 @@
 <script src="{{ asset($theme_asset.'/js/jquery.scrollUp.min.js')}}"></script>
 <script src="{{ asset($theme_asset.'/js/jquery.prettyPhoto.js')}}"></script>
 <script src="{{ asset($theme_asset.'/js/main.js')}}"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/mouse0270-bootstrap-notify/3.1.7/bootstrap-notify.min.js"></script>
 
 
 @stack('scripts')
@@ -211,23 +200,19 @@
                     }
                   }, 1000);
 
-                $.notify({
-                    icon: 'glyphicon glyphicon-warning-sign',
-                    message: data.msg,
-                },{
-                    type: 'success'
-                });
-
+                    $.notify({
+                      message: data.msg
+                    },{
+                      type: 'success'
+                    });
                 // $('#cart-alert').html('<div class="cart-alert alert alert-success">'+data.msg+'</div>').fadeIn(100).delay(2000).fadeOut('slow');
                 }else{
-                $.notify({
-                    icon: 'glyphicon glyphicon-warning-sign',
-                    message: data.msg,
-                },{
+                  $.notify({
+                  icon: 'glyphicon glyphicon-warning-sign',
+                    message: data.msg
+                  },{
                     type: 'danger'
-                });
-
-
+                  });
                   // $('#cart-alert').html('<div class="cart-alert alert alert-danger">'+data.msg+'</div>').fadeIn(100).delay(2000).fadeOut('slow');
                 }
 
@@ -235,6 +220,39 @@
         });
     }
 </script>
+
+<!--message-->
+    @if(Session::has('message'))
+    <script type="text/javascript">
+        $.notify({
+          message: "{!! Session::get('message') !!}"
+        },{
+          type: 'success'
+        });
+    </script>
+    @endif
+    @if(Session::has('error'))
+    <script type="text/javascript">
+        $.notify({
+        icon: 'glyphicon glyphicon-warning-sign',
+          message: "{!! Session::get('error') !!}"
+        },{
+          type: 'danger'
+        });
+    </script>
+    @endif
+    @if(Session::has('warning'))
+    <script type="text/javascript">
+        $.notify({
+        icon: 'glyphicon glyphicon-warning-sign',
+          message: "{!! Session::get('warning') !!}"
+        },{
+          type: 'warning'
+        });
+    </script>
+    @endif
+<!--//message-->
+
 
 <!--Module bottom -->
   @isset ($layouts['bottom'])
