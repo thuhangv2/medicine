@@ -1,6 +1,5 @@
 @extends($theme.'.shop_layout')
-@section('banner')
-@endsection
+
 @section('main')
 <section>
     <div class="container">

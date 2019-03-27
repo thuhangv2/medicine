@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Banner;
 use App\Models\Config;
 use App\Models\Language;
 use App\Models\Layout;
@@ -52,14 +51,12 @@ class GeneralController extends Controller
         $this->configs       = $configs;
         $this->theme_asset   = 'templates/' . $this->configsGlobal['template'];
         $this->theme         = 'templates.' . $this->configsGlobal['template'];
-        $this->banners       = Banner::where('status', 1)->sort()->get();
         $this->logo          = $this->path_file . '/' . $this->configsGlobal['logo'];
         $this->categories    = ShopCategory::getCategories($categoryParent = 0);
         $this->languages     = Language::where('status', 1)->get()->keyBy('code');
         $this->currencies    = ShopCurrency::getAll();
 //Share variable
         View::share('path_file', $this->path_file);
-        View::share('banners', $this->banners);
         View::share('layouts', Layout::getLayout());
         View::share('configs', $this->configs);
         View::share('configsGlobal', $this->configsGlobal);

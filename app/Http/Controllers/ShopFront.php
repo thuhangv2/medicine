@@ -31,7 +31,6 @@ class ShopFront extends GeneralController
                 'title'        => $this->configsGlobal['title'],
                 'description'  => $this->configsGlobal['description'],
                 'keyword'      => $this->configsGlobal['keyword'],
-                'banners'      => $this->banners,
                 'products_new' => (new ShopProduct)->getProducts($type = null, $limit = $this->configs['product_new'], $opt = null),
                 'products_hot' => (new ShopProduct)->getProducts($type = 1, $limit = $this->configs['product_hot'], $opt = 'random'),
                 'layout_page'  => 'home',
