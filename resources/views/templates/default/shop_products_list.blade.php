@@ -47,7 +47,7 @@
 
 
 @section('breadcrumb')
-    <div class="breadcrumbs">
+    <div class="breadcrumbs pull-left">
         <ol class="breadcrumb">
           <li><a href="{{ route('home') }}">Home</a></li>
           <li class="active">{{ $title }}</li>
@@ -56,7 +56,33 @@
 @endsection
 
 
+@section('filter')
+  <form action="" method="GET" id="filter_sort">
+        <div class="pull-right">
+        <div>
+          <select class="custom-select" name="filter_sort">
+            <option selected>{{ trans('language.filters.sort') }}</option>
+            <option value="price_asc">{{ trans('language.filters.price_asc') }}</option>
+            <option value="price_desc">{{ trans('language.filters.price_desc') }}</option>
+            <option value="name_asc">{{ trans('language.filters.name_asc') }}</option>
+            <option value="name_desc">{{ trans('language.filters.name_desc') }}</option>
+            <option value="sort_asc">{{ trans('language.filters.sort_asc') }}</option>
+            <option value="sort_desc">{{ trans('language.filters.sort_desc') }}</option>
+            <option value="id_asc">{{ trans('language.filters.id_asc') }}</option>
+            <option value="id_desc">{{ trans('language.filters.id_desc') }}</option>
+          </select>
+        </div>
+      </div>
+  </form>
+
+@endsection
+
 @push('styles')
 @endpush
 @push('scripts')
+  <script type="text/javascript">
+    $('[name="filter_sort"]').change(function(event) {
+      $('#filter_sort').submit();
+    });
+  </script>
 @endpush

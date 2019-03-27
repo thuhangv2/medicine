@@ -76,8 +76,13 @@ class ShopFront extends GeneralController
  */
     public function allProducts()
     {
-        $sortBy    = request('sortBy') ?? null;
-        $sortOrder = request('sortOrder') ?? 'asc';
+        $filter_sort = request('filter_sort') ?? null;
+        $arrSort     = [];
+        if ($filter_sort) {
+            $arrSort = explode('_', $filter_sort);
+        }
+        $sortBy    = $arrSort[0] ?? null;
+        $sortOrder = $arrSort[1] ?? 'asc';
         $products  = (new ShopProduct)->getProducts($type = null, $limit = $this->configs['product_list'], $opt = 'paginate', $sortBy = null, $sortOrder = 'asc');
         return view($this->theme . '.shop_products_list',
             array(

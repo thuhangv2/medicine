@@ -572,4 +572,15 @@ return [
         'hotline' => 'Hot line',
         'address' => 'Address',
     ],
+    'filters'            => [
+        'sort'       => 'Select sort',
+        'price_desc' => 'Sort by price (desc)',
+        'price_asc'  => 'Sort by price (asc)',
+        'name_desc'  => 'Sort by name (desc)',
+        'name_asc'   => 'Sort by name (asc)',
+        'sort_desc'  => 'Sort by sort (desc)',
+        'sort_asc'   => 'Sort by sort (asc)',
+        'id_desc'    => 'Sort by id (desc)',
+        'id_asc'     => 'Sort by id (asc)',
+    ],
 ];
