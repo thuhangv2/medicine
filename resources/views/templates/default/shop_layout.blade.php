@@ -59,8 +59,8 @@
 @include($theme.'.header')
 
 <!--Module banner -->
-  @isset ($layouts['banner'])
-      @foreach ( $layouts['banner']  as $layout)
+  @isset ($layouts['banner_top'])
+      @foreach ( $layouts['banner_top']  as $layout)
         @if ($layout->page == null ||  $layout->page =='*' || $layout->page =='' || (isset($layout_page) && in_array($layout_page, $layout->page) ) )
           @if ($layout->type =='html')
             {!! $layout->text !!}
