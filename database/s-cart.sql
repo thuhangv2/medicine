@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.18, for Win64 (x86_64)
+-- MySQL dump 10.16  Distrib 10.1.28-MariaDB, for Win32 (AMD64)
 --
 -- Host: localhost    Database: s-cart
 -- ------------------------------------------------------
--- Server version	5.7.18-log
+-- Server version	10.1.28-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -64,7 +64,7 @@ CREATE TABLE `admin_operation_log` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `admin_operation_log_user_id_index` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +73,7 @@ CREATE TABLE `admin_operation_log` (
 
 LOCK TABLES `admin_operation_log` WRITE;
 /*!40000 ALTER TABLE `admin_operation_log` DISABLE KEYS */;
-INSERT INTO `admin_operation_log` VALUES (1,1,'system_admin/auth/setting','GET','127.0.0.1','[]','2019-03-26 03:13:44','2019-03-26 03:13:44'),(2,1,'system_admin/auth/setting','PUT','127.0.0.1','{\"name\":\"Administrator\",\"password\":\"admin\",\"password_confirmation\":\"admin\",\"_token\":\"KXvISrDSehDYOsfYpghE2eh5Ft0aWXTOB96VpGtZ\",\"_method\":\"PUT\",\"_previous_\":\"http:\\/\\/demoshop.local\\/system_admin\\/layout\\/5\\/edit\"}','2019-03-26 03:13:51','2019-03-26 03:13:51'),(3,1,'system_admin/auth/setting','GET','127.0.0.1','[]','2019-03-26 03:13:51','2019-03-26 03:13:51'),(4,1,'system_admin/modules/Other','GET','127.0.0.1','{\"_pjax\":\"#pjax-container\"}','2019-03-26 03:14:04','2019-03-26 03:14:04'),(5,1,'system_admin/modules/Cms','GET','127.0.0.1','{\"_pjax\":\"#pjax-container\"}','2019-03-26 03:14:06','2019-03-26 03:14:06'),(6,1,'system_admin/modules/uninstallModule','POST','127.0.0.1','{\"_token\":\"KXvISrDSehDYOsfYpghE2eh5Ft0aWXTOB96VpGtZ\",\"key\":\"Content\",\"group\":\"Cms\"}','2019-03-26 03:14:09','2019-03-26 03:14:09'),(7,1,'system_admin/modules/Cms','GET','127.0.0.1','[]','2019-03-26 03:14:10','2019-03-26 03:14:10'),(8,1,'system_admin/modules/uninstallModule','POST','127.0.0.1','{\"_token\":\"KXvISrDSehDYOsfYpghE2eh5Ft0aWXTOB96VpGtZ\",\"key\":\"News\",\"group\":\"Cms\"}','2019-03-26 03:14:12','2019-03-26 03:14:12'),(9,1,'system_admin/modules/Cms','GET','127.0.0.1','[]','2019-03-26 03:14:12','2019-03-26 03:14:12'),(10,1,'system_admin/layout','GET','127.0.0.1','{\"_pjax\":\"#pjax-container\"}','2019-03-26 03:14:15','2019-03-26 03:14:15'),(11,1,'system_admin/modules/api/shop_api','GET','127.0.0.1','{\"_pjax\":\"#pjax-container\"}','2019-03-26 03:14:20','2019-03-26 03:14:20'),(12,1,'system_admin','GET','127.0.0.1','[]','2019-03-26 03:16:20','2019-03-26 03:16:20'),(13,1,'system_admin/extensions/Payment','GET','127.0.0.1','{\"_pjax\":\"#pjax-container\"}','2019-03-26 03:16:25','2019-03-26 03:16:25'),(14,1,'system_admin/extensions/uninstallExtension','POST','127.0.0.1','{\"_token\":\"KXvISrDSehDYOsfYpghE2eh5Ft0aWXTOB96VpGtZ\",\"key\":\"Paypal\",\"group\":\"Payment\"}','2019-03-26 03:16:28','2019-03-26 03:16:28'),(15,1,'system_admin/extensions/Payment','GET','127.0.0.1','[]','2019-03-26 03:16:28','2019-03-26 03:16:28'),(16,1,'system_admin/backup_database','GET','127.0.0.1','{\"_pjax\":\"#pjax-container\"}','2019-03-26 03:17:23','2019-03-26 03:17:23'),(17,1,'system_admin/backup','POST','127.0.0.1','{\"_token\":\"KXvISrDSehDYOsfYpghE2eh5Ft0aWXTOB96VpGtZ\"}','2019-03-26 03:17:24','2019-03-26 03:17:24');
+INSERT INTO `admin_operation_log` VALUES (1,1,'system_admin/auth/setting','GET','127.0.0.1','[]','2019-03-26 03:13:44','2019-03-26 03:13:44'),(2,1,'system_admin/auth/setting','PUT','127.0.0.1','{\"name\":\"Administrator\",\"password\":\"admin\",\"password_confirmation\":\"admin\",\"_token\":\"KXvISrDSehDYOsfYpghE2eh5Ft0aWXTOB96VpGtZ\",\"_method\":\"PUT\",\"_previous_\":\"http:\\/\\/demoshop.local\\/system_admin\\/layout\\/5\\/edit\"}','2019-03-26 03:13:51','2019-03-26 03:13:51'),(3,1,'system_admin/auth/setting','GET','127.0.0.1','[]','2019-03-26 03:13:51','2019-03-26 03:13:51'),(4,1,'system_admin/modules/Other','GET','127.0.0.1','{\"_pjax\":\"#pjax-container\"}','2019-03-26 03:14:04','2019-03-26 03:14:04'),(5,1,'system_admin/modules/Cms','GET','127.0.0.1','{\"_pjax\":\"#pjax-container\"}','2019-03-26 03:14:06','2019-03-26 03:14:06'),(6,1,'system_admin/modules/uninstallModule','POST','127.0.0.1','{\"_token\":\"KXvISrDSehDYOsfYpghE2eh5Ft0aWXTOB96VpGtZ\",\"key\":\"Content\",\"group\":\"Cms\"}','2019-03-26 03:14:09','2019-03-26 03:14:09'),(7,1,'system_admin/modules/Cms','GET','127.0.0.1','[]','2019-03-26 03:14:10','2019-03-26 03:14:10'),(8,1,'system_admin/modules/uninstallModule','POST','127.0.0.1','{\"_token\":\"KXvISrDSehDYOsfYpghE2eh5Ft0aWXTOB96VpGtZ\",\"key\":\"News\",\"group\":\"Cms\"}','2019-03-26 03:14:12','2019-03-26 03:14:12'),(9,1,'system_admin/modules/Cms','GET','127.0.0.1','[]','2019-03-26 03:14:12','2019-03-26 03:14:12'),(10,1,'system_admin/layout','GET','127.0.0.1','{\"_pjax\":\"#pjax-container\"}','2019-03-26 03:14:15','2019-03-26 03:14:15'),(11,1,'system_admin/modules/api/shop_api','GET','127.0.0.1','{\"_pjax\":\"#pjax-container\"}','2019-03-26 03:14:20','2019-03-26 03:14:20'),(12,1,'system_admin','GET','127.0.0.1','[]','2019-03-26 03:16:20','2019-03-26 03:16:20'),(13,1,'system_admin/extensions/Payment','GET','127.0.0.1','{\"_pjax\":\"#pjax-container\"}','2019-03-26 03:16:25','2019-03-26 03:16:25'),(14,1,'system_admin/extensions/uninstallExtension','POST','127.0.0.1','{\"_token\":\"KXvISrDSehDYOsfYpghE2eh5Ft0aWXTOB96VpGtZ\",\"key\":\"Paypal\",\"group\":\"Payment\"}','2019-03-26 03:16:28','2019-03-26 03:16:28'),(15,1,'system_admin/extensions/Payment','GET','127.0.0.1','[]','2019-03-26 03:16:28','2019-03-26 03:16:28'),(16,1,'system_admin/backup_database','GET','127.0.0.1','{\"_pjax\":\"#pjax-container\"}','2019-03-26 03:17:23','2019-03-26 03:17:23'),(17,1,'system_admin/backup','POST','127.0.0.1','{\"_token\":\"KXvISrDSehDYOsfYpghE2eh5Ft0aWXTOB96VpGtZ\"}','2019-03-26 03:17:24','2019-03-26 03:17:24'),(18,1,'system_admin/backup_database','GET','127.0.0.1','[]','2019-03-27 23:18:00','2019-03-27 23:18:00'),(19,1,'system_admin/backup','POST','127.0.0.1','{\"_token\":\"GGfZdMmKfOJs1W4APt5kz6hpOWyvlZRTBOeQCnCE\"}','2019-03-27 23:29:55','2019-03-27 23:29:55');
 /*!40000 ALTER TABLE `admin_operation_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -318,7 +318,7 @@ CREATE TABLE `config` (
   `detail` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `key` (`key`)
-) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -327,7 +327,7 @@ CREATE TABLE `config` (
 
 LOCK TABLES `config` WRITE;
 /*!40000 ALTER TABLE `config` DISABLE KEYS */;
-INSERT INTO `config` VALUES (10,NULL,'config','shop_allow_guest','1',11,'language.admin.shop_allow_guest'),(11,NULL,'smtp','smtp_host',NULL,8,'language.admin.smtp_host'),(12,NULL,'smtp','smtp_user','',7,'language.admin.smtp_user'),(13,NULL,'smtp','smtp_password','',6,'language.admin.smtp_password'),(14,NULL,'smtp','smtp_security','',5,'language.admin.smtp_security'),(15,NULL,'smtp','smtp_port','',4,'language.admin.smtp_port'),(16,NULL,'smtp','smtp_mode','0',9,'language.admin.smtp_mode'),(18,NULL,'config','product_preorder','1',18,'language.admin.product_preorder'),(19,NULL,'config','product_display_out_of_stock','1',19,'language.admin.product_display_out_of_stock'),(20,NULL,'config','product_buy_out_of_stock','1',20,'language.admin.product_buy_out_of_stock'),(22,NULL,'config','show_date_available','1',21,'language.admin.show_date_available'),(26,NULL,'display','product_hot','6',0,'language.admin.hot_product'),(27,NULL,'display','product_new','6',0,'language.admin.new_product'),(28,NULL,'display','product_list','18',0,'language.admin.list_product'),(29,NULL,'display','product_relation','4',0,'language.admin.relation_product'),(30,NULL,'config','site_ssl','0',0,'language.admin.enable_https'),(32,NULL,'config','watermark','1',0,'language.admin.enable_watermark'),(44,NULL,'config','site_status','1',100,'language.admin.site_status'),(45,NULL,'display','product_viewed','4',0,'language.admin.viewed_product'),(47,'Extensions','Payment','Cash','1',0,'Extensions/Payment/Cash.title'),(48,'Extensions','Shipping','ShippingStandard','1',0,'Shipping Standard'),(55,'Extensions','Total','Discount','1',0,'Extensions/Total/Discount.title'),(64,'Modules','Other','LastViewProduct','1',0,'Modules/Other/LastViewProduct.title');
+INSERT INTO `config` VALUES (10,NULL,'config','shop_allow_guest','1',11,'language.admin.shop_allow_guest'),(11,NULL,'smtp','smtp_host',NULL,8,'language.admin.smtp_host'),(12,NULL,'smtp','smtp_user','',7,'language.admin.smtp_user'),(13,NULL,'smtp','smtp_password','',6,'language.admin.smtp_password'),(14,NULL,'smtp','smtp_security','',5,'language.admin.smtp_security'),(15,NULL,'smtp','smtp_port','',4,'language.admin.smtp_port'),(16,NULL,'smtp','smtp_mode','0',9,'language.admin.smtp_mode'),(18,NULL,'config','product_preorder','1',18,'language.admin.product_preorder'),(19,NULL,'config','product_display_out_of_stock','1',19,'language.admin.product_display_out_of_stock'),(20,NULL,'config','product_buy_out_of_stock','1',20,'language.admin.product_buy_out_of_stock'),(22,NULL,'config','show_date_available','1',21,'language.admin.show_date_available'),(26,NULL,'display','product_hot','6',0,'language.admin.hot_product'),(27,NULL,'display','product_new','6',0,'language.admin.new_product'),(28,NULL,'display','product_list','18',0,'language.admin.list_product'),(29,NULL,'display','product_relation','4',0,'language.admin.relation_product'),(30,NULL,'config','site_ssl','0',0,'language.admin.enable_https'),(32,NULL,'config','watermark','1',0,'language.admin.enable_watermark'),(44,NULL,'config','site_status','1',100,'language.admin.site_status'),(45,NULL,'display','product_viewed','4',0,'language.admin.viewed_product'),(47,'Extensions','Payment','Cash','1',0,'Extensions/Payment/Cash.title'),(48,'Extensions','Shipping','ShippingStandard','1',0,'Shipping Standard'),(55,'Extensions','Total','Discount','1',0,'Extensions/Total/Discount.title'),(64,'Modules','Other','LastViewProduct','1',0,'Modules/Other/LastViewProduct.title'),(65,NULL,'display','item_list','12',0,'language.admin.item_list');
 /*!40000 ALTER TABLE `config` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -463,7 +463,7 @@ CREATE TABLE `layout_page` (
   `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniquekey` (`uniquekey`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -472,7 +472,7 @@ CREATE TABLE `layout_page` (
 
 LOCK TABLES `layout_page` WRITE;
 /*!40000 ALTER TABLE `layout_page` DISABLE KEYS */;
-INSERT INTO `layout_page` VALUES (1,'home','Home page'),(2,'product_list','Product list'),(3,'product_detail','Product detail'),(4,'shop_cart','Shop cart'),(5,'shop_account','Account'),(6,'shop_profile','Profile'),(7,'shop_compare','Compare page'),(8,'shop_wishlist','Wishlist page');
+INSERT INTO `layout_page` VALUES (1,'home','Home page'),(2,'product_list','Product list'),(3,'product_detail','Product detail'),(4,'shop_cart','Shop cart'),(5,'shop_account','Account'),(6,'shop_profile','Profile'),(7,'shop_compare','Compare page'),(8,'shop_wishlist','Wishlist page'),(9,'item_list','Item list');
 /*!40000 ALTER TABLE `layout_page` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1279,6 +1279,31 @@ LOCK TABLES `shop_product_option` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `shop_product_recent_view`
+--
+
+DROP TABLE IF EXISTS `shop_product_recent_view`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `shop_product_recent_view` (
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY `customer_id_product_id` (`user_id`,`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shop_product_recent_view`
+--
+
+LOCK TABLES `shop_product_recent_view` WRITE;
+/*!40000 ALTER TABLE `shop_product_recent_view` DISABLE KEYS */;
+INSERT INTO `shop_product_recent_view` VALUES (3,35,'2018-08-27 08:58:21'),(3,38,'2018-08-27 09:44:08'),(3,41,'2018-08-27 10:19:33'),(3,42,'2018-08-27 10:02:03'),(3,44,'2018-08-27 10:19:52'),(3,46,'2018-08-27 10:14:29'),(3,47,'2018-08-27 10:01:57'),(3,48,'2018-08-27 10:01:49');
+/*!40000 ALTER TABLE `shop_product_recent_view` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `shop_shipping`
 --
 
@@ -1482,4 +1507,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-26 10:17:26
+-- Dump completed on 2019-03-28  6:29:58

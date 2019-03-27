@@ -7,7 +7,6 @@ use App\Models\Banner;
 use App\Models\Config;
 use App\Models\Language;
 use App\Models\Layout;
-use App\Models\ShopBrand;
 use App\Models\ShopCategory;
 use App\Models\ShopCurrency;
 use App\Models\Subscribe;
@@ -23,7 +22,6 @@ class GeneralController extends Controller
     public $theme_asset;
     public $path_file;
     public $logo;
-    public $brands;
     public $categories;
     public $languages;
     public $currencies;
@@ -56,7 +54,6 @@ class GeneralController extends Controller
         $this->theme         = 'templates.' . $this->configsGlobal['template'];
         $this->banners       = Banner::where('status', 1)->sort()->get();
         $this->logo          = $this->path_file . '/' . $this->configsGlobal['logo'];
-        $this->brands        = ShopBrand::getBrands();
         $this->categories    = ShopCategory::getCategories($categoryParent = 0);
         $this->languages     = Language::where('status', 1)->get()->keyBy('code');
         $this->currencies    = ShopCurrency::getAll();
@@ -71,7 +68,6 @@ class GeneralController extends Controller
         View::share('logo', $this->logo);
 
         View::share('categories', $this->categories);
-        View::share('brands', $this->brands);
         View::share('languages', $this->languages);
         View::share('currencies', $this->currencies);
 

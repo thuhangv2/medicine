@@ -14,15 +14,28 @@ class ShopVendor extends Model
     {
         return $this->hasMany(ShopProduct::class, 'vendor_id', 'id');
     }
-    /**
-     * [getVendor description]
-     * @param  [type] $sortBy    [description]
-     * @param  string $sortOrder [description]
-     * @return [type]            [description]
-     */
-    public static function getVendor($sortBy = null, $sortOrder = 'asc')
+
+    public function getVendorsList()
     {
-        return self::where('status', 1)->sort($sortBy, $sortOrder)->get();
+        return self::where('status', 1)->orderBy('id', 'desc')->orderBy('sort', 'desc')->get();
+    }
+
+    public function getVendors($limit = null, $opt = null, $sortBy = null, $sortOrder = 'asc')
+    {
+        $query = $this->where('status', 1);
+        $query = $query->sort($sortBy, $sortOrder);
+        if (!(int) $limit) {
+            return $query->get();
+        } else
+        if ($opt == 'paginate') {
+            return $query->paginate((int) $limit);
+        } else
+        if ($opt == 'random') {
+            return $query->inRandomOrder()->limit($limit)->get();
+        } else {
+            return $query->limit($limit)->get();
+        }
+
     }
 
     /**

@@ -168,12 +168,12 @@ class ShopFront extends GeneralController
     }
 
 /**
- * [productBrand description]
+ * [productToBrand description]
  * @param  [type] $name [description]
  * @param  [type] $id   [description]
  * @return [type]       [description]
  */
-    public function productBrand($name, $id)
+    public function productToBrand($name, $id)
     {
         $sortBy      = null;
         $sortOrder   = 'asc';
@@ -348,16 +348,33 @@ class ShopFront extends GeneralController
  * @param  Request $request [description]
  * @return [type]           [description]
  */
-    public function brands(Request $request)
+    public function getBrands(Request $request)
     {
-        $keyword = $request->get('keyword');
+        $sortBy      = null;
+        $sortOrder   = 'asc';
+        $filter_sort = request('filter_sort') ?? '';
+        $filterArr   = [
+            'name_desc' => ['name', 'desc'],
+            'name_asc'  => ['name', 'asc'],
+            'sort_desc' => ['sort', 'desc'],
+            'sort_asc'  => ['sort', 'asc'],
+            'id_desc'   => ['id', 'desc'],
+            'id_asc'    => ['id', 'asc'],
+        ];
+        if (array_key_exists($filter_sort, $filterArr)) {
+            $sortBy    = $filterArr[$filter_sort][0];
+            $sortOrder = $filterArr[$filter_sort][1];
+        }
+
+        $itemsList = (new ShopBrand)->getBrands($limit = $this->configs['item_list'], $opt = 'paginate', $sortBy, $sortOrder);
         return view($this->theme . '.shop_item_list',
             array(
                 'title'       => trans('language.brands'),
-                'itemsList'   => $this->banners,
+                'itemsList'   => $itemsList,
                 'keyword'     => '',
                 'description' => '',
-                'layout_page' => 'product_brand',
+                'layout_page' => 'item_list',
+                'filter_sort' => $filter_sort,
             ));
     }
 
@@ -366,16 +383,16 @@ class ShopFront extends GeneralController
  * @param  Request $request [description]
  * @return [type]           [description]
  */
-    public function vendors(Request $request)
+    public function getVendors(Request $request)
     {
-        $keyword = $request->get('keyword');
         return view($this->theme . '.shop_item_list',
             array(
                 'title'       => trans('language.vendors'),
-                'itemsList'   => $this->banners,
+                'itemsList'   => (new ShopVendor)->getVendors($limit = $this->configs['item_list'], $opt = 'paginate', $sortBy, $sortOrder),
                 'keyword'     => '',
                 'description' => '',
-                'layout_page' => 'product_vendor',
+                'layout_page' => 'item_list',
+                'filter_sort' => $filter_sort,
             ));
     }
 

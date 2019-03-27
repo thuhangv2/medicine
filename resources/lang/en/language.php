@@ -101,6 +101,7 @@ return [
         'hot_product'                  => 'Hot product',
         'new_product'                  => 'New product',
         'list_product'                 => 'List product',
+        'item_list'                    => 'Item list',
         'relation_product'             => 'Releation product',
         'viewed_product'               => 'Viewed product',
         'enable_https'                 => 'Enable https',

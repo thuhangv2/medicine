@@ -105,6 +105,7 @@ return [
         'hot_product'                  => 'Sản phẩm Hot',
         'new_product'                  => 'Sản phẩm mới nhất',
         'list_product'                 => 'Danh sách sản phẩm',
+        'item_list'                    => 'Danh sách item khác',
         'relation_product'             => 'Sản phẩm liên quan',
         'viewed_product'               => 'Sản phẩm đã xem',
         'enable_https'                 => 'Sử dụng https',
