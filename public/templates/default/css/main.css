@@ -2527,3 +2527,6 @@ li > a{
     font-size: 12px;
     display: block;
 }
+#breadcrumb{
+  z-index: 99;
+}

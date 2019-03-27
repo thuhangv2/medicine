@@ -149,7 +149,7 @@ class ShopProduct extends Model
         if (empty(\Helper::configs()['product_display_out_of_stock'])) {
             $query = $query->where('stock', '>', 0);
         }
-
+        $query = $query->sort($sortBy, $sortOrder);
         if (!(int) $limit) {
             return $query->get();
         } else
@@ -159,7 +159,7 @@ class ShopProduct extends Model
         if ($opt == 'random') {
             return $query->inRandomOrder()->limit($limit)->get();
         } else {
-            return $query->sort($sortBy, $sortOrder)->limit($limit)->get();
+            return $query->limit($limit)->get();
         }
     }
 

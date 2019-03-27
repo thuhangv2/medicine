@@ -38,7 +38,7 @@
       @endif
 <div style="clear: both; ">
     <ul class="pagination">
-      {{ $products->links() }}
+      {{ $products->appends(request()->except(['page','_token']))->links() }}
   </ul>
 </div>
 
@@ -61,15 +61,13 @@
         <div class="pull-right">
         <div>
           <select class="custom-select" name="filter_sort">
-            <option selected>{{ trans('language.filters.sort') }}</option>
-            <option value="price_asc">{{ trans('language.filters.price_asc') }}</option>
-            <option value="price_desc">{{ trans('language.filters.price_desc') }}</option>
-            <option value="name_asc">{{ trans('language.filters.name_asc') }}</option>
-            <option value="name_desc">{{ trans('language.filters.name_desc') }}</option>
-            <option value="sort_asc">{{ trans('language.filters.sort_asc') }}</option>
-            <option value="sort_desc">{{ trans('language.filters.sort_desc') }}</option>
-            <option value="id_asc">{{ trans('language.filters.id_asc') }}</option>
-            <option value="id_desc">{{ trans('language.filters.id_desc') }}</option>
+            <option value="">{{ trans('language.filters.sort') }}</option>
+            <option value="price_asc" {{ ($filter_sort =='price_asc')?'selected':'' }}>{{ trans('language.filters.price_asc') }}</option>
+            <option value="price_desc" {{ ($filter_sort =='price_desc')?'selected':'' }}>{{ trans('language.filters.price_desc') }}</option>
+            <option value="sort_asc" {{ ($filter_sort =='sort_asc')?'selected':'' }}>{{ trans('language.filters.sort_asc') }}</option>
+            <option value="sort_desc" {{ ($filter_sort =='sort_desc')?'selected':'' }}>{{ trans('language.filters.sort_desc') }}</option>
+            <option value="id_asc" {{ ($filter_sort =='id_asc')?'selected':'' }}>{{ trans('language.filters.id_asc') }}</option>
+            <option value="id_desc" {{ ($filter_sort =='id_desc')?'selected':'' }}>{{ trans('language.filters.id_desc') }}</option>
           </select>
         </div>
       </div>

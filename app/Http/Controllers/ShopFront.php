@@ -47,11 +47,25 @@ class ShopFront extends GeneralController
  */
     public function productToCategory($name, $id)
     {
-        $sortBy    = request('sortBy') ?? null;
-        $sortOrder = request('sortOrder') ?? 'asc';
-        $category  = (new ShopCategory)->find($id);
+        $sortBy      = null;
+        $sortOrder   = 'asc';
+        $filter_sort = request('filter_sort') ?? '';
+        $filterArr   = [
+            'price_desc' => ['price', 'desc'],
+            'price_asc'  => ['price', 'asc'],
+            'sort_desc'  => ['sort', 'desc'],
+            'sort_asc'   => ['sort', 'asc'],
+            'id_desc'    => ['id', 'desc'],
+            'id_asc'     => ['id', 'asc'],
+        ];
+        if (array_key_exists($filter_sort, $filterArr)) {
+            $sortBy    = $filterArr[$filter_sort][0];
+            $sortOrder = $filterArr[$filter_sort][1];
+        }
+
+        $category = (new ShopCategory)->find($id);
         if ($category) {
-            $products = $category->getProductsToCategory($id = $category->id, $limit = $this->configs['product_list'], $opt = 'paginate', $sortBy = null, $sortOrder = 'asc');
+            $products = $category->getProductsToCategory($id = $category->id, $limit = $this->configs['product_list'], $opt = 'paginate', $sortBy, $sortOrder);
             return view($this->theme . '.shop_products_list',
                 array(
                     'title'        => $category->name,
@@ -61,6 +75,7 @@ class ShopFront extends GeneralController
                     'products'     => $products,
                     'layout_page'  => 'product_list',
                     'og_image'     => url($category->getImage()),
+                    'filter_sort'  => $filter_sort,
                 )
             );
         } else {
@@ -76,14 +91,23 @@ class ShopFront extends GeneralController
  */
     public function allProducts()
     {
-        $filter_sort = request('filter_sort') ?? null;
-        $arrSort     = [];
-        if ($filter_sort) {
-            $arrSort = explode('_', $filter_sort);
+        $sortBy      = null;
+        $sortOrder   = 'asc';
+        $filter_sort = request('filter_sort') ?? '';
+        $filterArr   = [
+            'price_desc' => ['price', 'desc'],
+            'price_asc'  => ['price', 'asc'],
+            'sort_desc'  => ['sort', 'desc'],
+            'sort_asc'   => ['sort', 'asc'],
+            'id_desc'    => ['id', 'desc'],
+            'id_asc'     => ['id', 'asc'],
+        ];
+        if (array_key_exists($filter_sort, $filterArr)) {
+            $sortBy    = $filterArr[$filter_sort][0];
+            $sortOrder = $filterArr[$filter_sort][1];
         }
-        $sortBy    = $arrSort[0] ?? null;
-        $sortOrder = $arrSort[1] ?? 'asc';
-        $products  = (new ShopProduct)->getProducts($type = null, $limit = $this->configs['product_list'], $opt = 'paginate', $sortBy = null, $sortOrder = 'asc');
+
+        $products = (new ShopProduct)->getProducts($type = null, $limit = $this->configs['product_list'], $opt = 'paginate', $sortBy, $sortOrder);
         return view($this->theme . '.shop_products_list',
             array(
                 'title'       => trans('language.all_product'),
@@ -91,6 +115,7 @@ class ShopFront extends GeneralController
                 'keyword'     => $this->configsGlobal['keyword'],
                 'products'    => $products,
                 'layout_page' => 'product_list',
+                'filter_sort' => $filter_sort,
             )
         );
     }
@@ -131,7 +156,7 @@ class ShopFront extends GeneralController
                     'keyword'            => $this->configsGlobal['keyword'],
                     'product'            => $product,
                     'attributesGroup'    => ShopAttributeGroup::all()->keyBy('id'),
-                    'productsToCategory' => (new ShopCategory)->getProductsToCategory($id = $product->category_id, $limit = $this->configs['product_relation'], $opt = 'random', $sortBy = null, $sortOrder = 'asc'),
+                    'productsToCategory' => (new ShopCategory)->getProductsToCategory($id = $product->category_id, $limit = $this->configs['product_relation'], $opt = 'random', $sortBy, $sortOrder),
                     'og_image'           => url($product->getImage()),
                     'layout_page'        => 'product_detail',
                 )
@@ -150,6 +175,22 @@ class ShopFront extends GeneralController
  */
     public function productBrand($name, $id)
     {
+        $sortBy      = null;
+        $sortOrder   = 'asc';
+        $filter_sort = request('filter_sort') ?? '';
+        $filterArr   = [
+            'price_desc' => ['price', 'desc'],
+            'price_asc'  => ['price', 'asc'],
+            'sort_desc'  => ['sort', 'desc'],
+            'sort_asc'   => ['sort', 'asc'],
+            'id_desc'    => ['id', 'desc'],
+            'id_asc'     => ['id', 'asc'],
+        ];
+        if (array_key_exists($filter_sort, $filterArr)) {
+            $sortBy    = $filterArr[$filter_sort][0];
+            $sortOrder = $filterArr[$filter_sort][1];
+        }
+
         $brand = ShopBrand::find($id);
         return view($this->theme . '.shop_products_list',
             array(
@@ -157,7 +198,8 @@ class ShopFront extends GeneralController
                 'description' => '',
                 'keyword'     => '',
                 'layout_page' => 'product_list',
-                'products'    => $brand->products()->paginate(9),
+                'products'    => $brand->getProductsToBrand($type = null, $limit = $this->configs['product_list'], $opt = 'paginate', $sortBy, $sortOrder),
+                'filter_sort' => $filter_sort,
             )
         );
     }

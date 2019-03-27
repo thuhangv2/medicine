@@ -103,12 +103,12 @@ class ShopCategory extends Model
         $arrChild   = $this->arrChild($id);
         $arrChild[] = $id;
         $query      = (new ShopProduct)->where('status', 1)->whereIn('category_id', $arrChild)
-            ->orWhereRaw('category_other like "' . $id . ',%" or category_other like "%,' . $id . '" or category_other like "%,' . $id . ',%"')
-            ->sort($sortBy, $sortOrder);
+            ->orWhereRaw('category_other like "' . $id . ',%" or category_other like "%,' . $id . '" or category_other like "%,' . $id . ',%"');
         //Hidden product out of stock
         if (empty(\Helper::configs()['product_display_out_of_stock'])) {
             $query = $query->where('stock', '>', 0);
         }
+        $query = $query->sort($sortBy, $sortOrder);
         if (!(int) $limit) {
             return $query->get();
         } else
