@@ -230,12 +230,28 @@ class ShopFront extends GeneralController
  */
     public function search(Request $request)
     {
-        $keyword = $request->get('keyword');
+        $sortBy      = null;
+        $sortOrder   = 'asc';
+        $filter_sort = request('filter_sort') ?? '';
+        $filterArr   = [
+            'price_desc' => ['price', 'desc'],
+            'price_asc'  => ['price', 'asc'],
+            'sort_desc'  => ['sort', 'desc'],
+            'sort_asc'   => ['sort', 'asc'],
+            'id_desc'    => ['id', 'desc'],
+            'id_asc'     => ['id', 'asc'],
+        ];
+        if (array_key_exists($filter_sort, $filterArr)) {
+            $sortBy    = $filterArr[$filter_sort][0];
+            $sortOrder = $filterArr[$filter_sort][1];
+        }
+        $keyword = request('keyword') ?? '';
         return view($this->theme . '.shop_products_list',
             array(
                 'title'       => trans('language.search') . ': ' . $keyword,
-                'products'    => ShopProduct::getSearch($keyword),
+                'products'    => (new ShopProduct)->getSearch($keyword, $limit = $this->configs['product_list'], $sortBy, $sortOrder),
                 'layout_page' => 'product_list',
+                'filter_sort' => $filter_sort,
             ));
     }
 

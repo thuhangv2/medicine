@@ -4,8 +4,12 @@
 ### Fixed
 > Fix error route admin
 > Fix error process cart
+### Add
 > Support design layout: HTML, View, Module
-
+> Filter sort product
+### Optimize
+> Query model
+> Notify message
 
 
 ## v2.1.4 (2019-03-10)

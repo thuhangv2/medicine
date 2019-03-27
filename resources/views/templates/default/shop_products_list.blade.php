@@ -55,11 +55,16 @@
       </div>
 @endsection
 
-
 @section('filter')
   <form action="" method="GET" id="filter_sort">
         <div class="pull-right">
         <div>
+            @php
+              $queries = request()->except(['filter_sort','page']);
+            @endphp
+            @foreach ($queries as $key => $query)
+              <input type="hidden" name="{{ $key }}" value="{{ $query }}">
+            @endforeach
           <select class="custom-select" name="filter_sort">
             <option value="">{{ trans('language.filters.sort') }}</option>
             <option value="price_asc" {{ ($filter_sort =='price_asc')?'selected':'' }}>{{ trans('language.filters.price_asc') }}</option>
