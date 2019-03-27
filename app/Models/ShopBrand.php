@@ -1,5 +1,5 @@
 <?php
-
+#app/Models/ShopBrand.php
 namespace App\Models;
 
 use Helper;
