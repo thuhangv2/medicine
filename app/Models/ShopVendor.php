@@ -1,5 +1,5 @@
 <?php
-
+#app/Models/ShopVendor.php
 namespace App\Models;
 
 use Helper;
@@ -14,9 +14,15 @@ class ShopVendor extends Model
     {
         return $this->hasMany(ShopProduct::class, 'vendor_id', 'id');
     }
-    public static function getVendor()
+    /**
+     * [getVendor description]
+     * @param  [type] $sortBy    [description]
+     * @param  string $sortOrder [description]
+     * @return [type]            [description]
+     */
+    public static function getVendor($sortBy = null, $sortOrder = 'asc')
     {
-        return self::where('status', 1)->sort()->get();
+        return self::where('status', 1)->sort($sortBy, $sortOrder)->get();
     }
 
     /**
@@ -25,7 +31,7 @@ class ShopVendor extends Model
      */
     public function getUrl()
     {
-        return url('vendor/' . Helper::strToUrl($this->name) . '_' . $this->id . '.html');
+        return route('vendor', ['name' => Helper::strToUrl($this->name), 'id' => $this->id]);
     }
 
     /**
@@ -39,10 +45,10 @@ class ShopVendor extends Model
 
     }
 
-    //Scort
-    public function scopeSort($query, $column = null)
+//Scort
+    public function scopeSort($query, $sortBy = null, $sortOrder = 'asc')
     {
-        $column = $column ?? 'sort';
-        return $query->orderBy($column, 'asc')->orderBy('id', 'desc');
+        $sortBy = $sortBy ?? 'sort';
+        return $query->orderBy($sortBy, $sortOrder)->orderBy('id', 'desc');
     }
 }

@@ -580,4 +580,16 @@ return [
         'hotline' => 'SĐT',
         'address' => 'Địa chỉ',
     ],
+
+    'filters'            => [
+        'sort'       => 'Tùy chọn sắp xếp',
+        'price_desc' => 'Theo giá giảm dần',
+        'price_asc'  => 'Theo giá tăng dần',
+        'name_desc'  => 'Theo tên (z-a)',
+        'name_asc'   => 'Theo tên (a-z)',
+        'sort_desc'  => 'Theo thứ tự ưu tiên (desc)',
+        'sort_asc'   => 'Theo thứ tự ưu tiên (asc)',
+        'id_desc'    => 'Sản phẩm mới nhất',
+        'id_asc'     => 'Sản phẩm cũ nhất',
+    ],
 ];

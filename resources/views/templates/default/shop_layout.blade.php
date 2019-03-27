@@ -96,9 +96,15 @@
   <section>
     <div class="container">
       <div class="row">
-        <!--breadcrumb-->
-        @yield('breadcrumb')
-        <!--//breadcrumb-->
+        <div class="col-sm-12">
+          <!--breadcrumb-->
+          @yield('breadcrumb')
+          <!--//breadcrumb-->
+
+          <!--//fillter-->
+          @yield('filter')
+          <!--//fillter-->
+        </div>
 
         <!--body-->
         @section('main')
@@ -134,6 +140,7 @@
 <script src="{{ asset($theme_asset.'/js/jquery.scrollUp.min.js')}}"></script>
 <script src="{{ asset($theme_asset.'/js/jquery.prettyPhoto.js')}}"></script>
 <script src="{{ asset($theme_asset.'/js/main.js')}}"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js"></script>
 
 
 @stack('scripts')
@@ -177,7 +184,7 @@
                         'opacity': '0.5',
                             'position': 'absolute',
                             'width': '150px',
-                            'z-index': '99999999'
+                            'z-index': '9999'
                     })
                         .appendTo($('body'))
                         .animate({
@@ -204,9 +211,24 @@
                     }
                   }, 1000);
 
-                $('#cart-alert').html('<div class="cart-alert alert alert-success">'+data.msg+'</div>').fadeIn(100).delay(2000).fadeOut('slow');
+                $.notify({
+                    icon: 'glyphicon glyphicon-warning-sign',
+                    message: data.msg,
+                },{
+                    type: 'success'
+                });
+
+                // $('#cart-alert').html('<div class="cart-alert alert alert-success">'+data.msg+'</div>').fadeIn(100).delay(2000).fadeOut('slow');
                 }else{
-                  $('#cart-alert').html('<div class="cart-alert alert alert-danger">'+data.msg+'</div>').fadeIn(100).delay(2000).fadeOut('slow');
+                $.notify({
+                    icon: 'glyphicon glyphicon-warning-sign',
+                    message: data.msg,
+                },{
+                    type: 'danger'
+                });
+
+
+                  // $('#cart-alert').html('<div class="cart-alert alert alert-danger">'+data.msg+'</div>').fadeIn(100).delay(2000).fadeOut('slow');
                 }
 
                 }

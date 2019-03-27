@@ -90,20 +90,23 @@ class ShopCategory extends Model
         return $this->with('products')->where('parent', $id)->get();
     }
 /**
- * Get all products in category, include child category
- * @param  [type] $id    [description]
- * @param  [type] $limit [description]
- * @return [type]        [description]
+ * [getProductsToCategory description]
+ * @param  [type] $id        [description]
+ * @param  [type] $limit     [description]
+ * @param  [type] $opt       [description]
+ * @param  [type] $sortBy    [description]
+ * @param  string $sortOrder [description]
+ * @return [type]            [description]
  */
-    public function getProductsToCategory($id, $limit = null, $opt = null)
+    public function getProductsToCategory($id, $limit = null, $opt = null, $sortBy = null, $sortOrder = 'asc')
     {
         $arrChild   = $this->arrChild($id);
         $arrChild[] = $id;
         $query      = (new ShopProduct)->where('status', 1)->whereIn('category_id', $arrChild)
             ->orWhereRaw('category_other like "' . $id . ',%" or category_other like "%,' . $id . '" or category_other like "%,' . $id . ',%"')
-            ->sort();
+            ->sort($sortBy, $sortOrder);
         //Hidden product out of stock
-        if ((int) Config::select('value')->where('key', 'product_display_out_of_stock')->first()->value == 0) {
+        if (empty(\Helper::configs()['product_display_out_of_stock'])) {
             $query = $query->where('stock', '>', 0);
         }
         if (!(int) $limit) {
@@ -225,10 +228,10 @@ class ShopCategory extends Model
     }
 
 //Scort
-    public function scopeSort($query, $column = null)
+    public function scopeSort($query, $sortBy = null, $sortOrder = 'asc')
     {
-        $column = $column ?? 'sort';
-        return $query->orderBy($column, 'asc')->orderBy('id', 'desc');
+        $sortBy = $sortBy ?? 'sort';
+        return $query->orderBy($sortBy, $sortOrder)->orderBy('id', 'desc');
     }
 
 }

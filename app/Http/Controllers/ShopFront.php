@@ -47,9 +47,11 @@ class ShopFront extends GeneralController
  */
     public function productToCategory($name, $id)
     {
-        $category = (new ShopCategory)->find($id);
+        $sortBy    = request('sortBy') ?? null;
+        $sortOrder = request('sortOrder') ?? 'asc';
+        $category  = (new ShopCategory)->find($id);
         if ($category) {
-            $products = $category->getProductsToCategory($id = $category->id, $limit = $this->configs['product_list'], $opt = 'paginate');
+            $products = $category->getProductsToCategory($id = $category->id, $limit = $this->configs['product_list'], $opt = 'paginate', $sortBy = null, $sortOrder = 'asc');
             return view($this->theme . '.shop_products_list',
                 array(
                     'title'        => $category->name,
@@ -74,8 +76,14 @@ class ShopFront extends GeneralController
  */
     public function allProducts()
     {
-        $products = ShopProduct::where('status', 1)
-            ->sort()->paginate($this->configs['product_list']);
+        $filter_sort = request('filter_sort') ?? null;
+        $arrSort     = [];
+        if ($filter_sort) {
+            $arrSort = explode('_', $filter_sort);
+        }
+        $sortBy    = $arrSort[0] ?? null;
+        $sortOrder = $arrSort[1] ?? 'asc';
+        $products  = (new ShopProduct)->getProducts($type = null, $limit = $this->configs['product_list'], $opt = 'paginate', $sortBy = null, $sortOrder = 'asc');
         return view($this->theme . '.shop_products_list',
             array(
                 'title'       => trans('language.all_product'),
@@ -112,6 +120,9 @@ class ShopFront extends GeneralController
             }
             //End product last view
 
+            $sortBy    = request('sortBy') ?? null;
+            $sortOrder = request('sortOrder') ?? 'asc';
+
             //Check product available
             return view($this->theme . '.shop_product_detail',
                 array(
@@ -120,7 +131,7 @@ class ShopFront extends GeneralController
                     'keyword'            => $this->configsGlobal['keyword'],
                     'product'            => $product,
                     'attributesGroup'    => ShopAttributeGroup::all()->keyBy('id'),
-                    'productsToCategory' => (new ShopCategory)->getProductsToCategory($id = $product->category_id, $limit = $this->configs['product_relation'], $opt = 'random'),
+                    'productsToCategory' => (new ShopCategory)->getProductsToCategory($id = $product->category_id, $limit = $this->configs['product_relation'], $opt = 'random', $sortBy = null, $sortOrder = 'asc'),
                     'og_image'           => url($product->getImage()),
                     'layout_page'        => 'product_detail',
                 )

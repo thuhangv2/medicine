@@ -129,14 +129,16 @@ class ShopProduct extends Model
         }
     }
 
-    /**
-     * [getProducts description]
-     * @param  [type] $type  [description]
-     * @param  [type] $limit [description]
-     * @param  [type] $opt   [description]
-     * @return [type]        [description]
-     */
-    public function getProducts($type = null, $limit = null, $opt = null)
+/**
+ * [getProducts description]
+ * @param  [type] $type      [description]
+ * @param  [type] $limit     [description]
+ * @param  [type] $opt       [description]
+ * @param  [type] $sortBy    [description]
+ * @param  string $sortOrder [description]
+ * @return [type]            [description]
+ */
+    public function getProducts($type = null, $limit = null, $opt = null, $sortBy = null, $sortOrder = 'asc')
     {
         $query = ShopProduct::where('status', 1);
         if ($type) {
@@ -144,7 +146,7 @@ class ShopProduct extends Model
         }
 
         //Hidden product out of stock
-        if ((int) Config::select('value')->where('key', 'product_display_out_of_stock')->first()->value == 0) {
+        if (empty(\Helper::configs()['product_display_out_of_stock'])) {
             $query = $query->where('stock', '>', 0);
         }
 
@@ -157,7 +159,7 @@ class ShopProduct extends Model
         if ($opt == 'random') {
             return $query->inRandomOrder()->limit($limit)->get();
         } else {
-            return $query->sort()->limit($limit)->get();
+            return $query->sort($sortBy, $sortOrder)->limit($limit)->get();
         }
     }
 
@@ -397,11 +399,12 @@ class ShopProduct extends Model
         }
         return $html;
     }
+
 //Scort
-    public function scopeSort($query, $column = null)
+    public function scopeSort($query, $sortBy = null, $sortOrder = 'asc')
     {
-        $column = $column ?? 'sort';
-        return $query->orderBy($column, 'asc')->orderBy('id', 'desc');
+        $sortBy = $sortBy ?? 'sort';
+        return $query->orderBy($sortBy, $sortOrder)->orderBy('id', 'desc');
     }
 
     //Condition:

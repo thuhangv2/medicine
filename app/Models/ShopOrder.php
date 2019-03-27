@@ -1,5 +1,5 @@
 <?php
-
+#app/Models/ShopOrder.php
 namespace App\Models;
 
 use App\Models\ShopProduct;
@@ -66,8 +66,9 @@ class ShopOrder extends Model
         return self::where('id', $order_id)->update($arrFields);
     }
 //Scort
-    public function scopeSort($query)
+    public function scopeSort($query, $sortBy = null, $sortOrder = 'asc')
     {
-        return $query->orderBy('id', 'desc');
+        $sortBy = $sortBy ?? 'sort';
+        return $query->orderBy($sortBy, $sortOrder)->orderBy('id', 'desc');
     }
 }
