@@ -201,6 +201,7 @@
                   }, 1000);
 
                     $.notify({
+                      icon: 'glyphicon glyphicon-star',
                       message: data.msg
                     },{
                       type: 'success'
@@ -225,6 +226,7 @@
     @if(Session::has('message'))
     <script type="text/javascript">
         $.notify({
+          icon: 'glyphicon glyphicon-star',
           message: "{!! Session::get('message') !!}"
         },{
           type: 'success'
