@@ -34,41 +34,22 @@ class ShopCategory extends Model
     {
         return $this->hasMany(ShopCategoryDescription::class, 'shop_category_id', 'id');
     }
-    public function getTreeCategory($root = 0)
+
+    public function getTreeCategory($root = 0, &$list = null, $categories = null, &$st = '')
     {
-        $list   = [];
-        $result = $this->select('id', 'parent')
-            ->where('parent', $root)
-            ->get();
-        foreach ($result as $value) {
-            $list[$value['id']] = $value->getName();
-            if ($this->getChildrens($value['id'])->count() > 0) {
-                $this->getTreeCategoryTmp($value['id'], $list);
+        $categories  = $categories ?? $this->getFullCategories($all = false);
+        $list        = $list ?? [];
+        $lisCategory = $categories[$root];
+        foreach ($lisCategory as $category) {
+            $list[$category->id] = $st . $category->getName();
+            if (!empty($categories[$category->id])) {
+                $st .= '--';
+                $this->getTreeCategory($category->id, $list, $categories, $st);
+                $st = '';
             }
         }
+
         return $list;
-    }
-
-    public function getTreeCategoryTmp($id, &$list, $st = '--')
-    {
-        $result = $this->select('id', 'parent')
-            ->where('parent', $id)
-            ->get();
-        foreach ($result as $value) {
-            $list[$value['id']] = $st . ' ' . $value->getName();
-            $this->getTreeCategoryTmp($value['id'], $list, $st . '--');
-        }
-
-    }
-
-    public function checkChild($id)
-    {
-        return $this->where('parent', $id)->count();
-    }
-
-    public function arrChild($id)
-    {
-        return $this->where('parent', $id)->pluck('id')->all();
     }
 
 /**
@@ -80,15 +61,7 @@ class ShopCategory extends Model
         return $this->find($this->parent);
 
     }
-/**
- * Get category child
- * @param  [type] $id [description]
- * @return [type]     [description]
- */
-    public function getCateChild($id)
-    {
-        return $this->with('products')->where('parent', $id)->get();
-    }
+
 /**
  * [getProductsToCategory description]
  * @param  [type] $id        [description]
@@ -100,9 +73,7 @@ class ShopCategory extends Model
  */
     public function getProductsToCategory($id, $limit = null, $opt = null, $sortBy = null, $sortOrder = 'asc')
     {
-        $arrChild   = $this->arrChild($id);
-        $arrChild[] = $id;
-        $query      = (new ShopProduct)->where('status', 1)->whereIn('category_id', $arrChild)
+        $query = (new ShopProduct)->where('status', 1)->where('category_id', $id)
             ->orWhereRaw('category_other like "' . $id . ',%" or category_other like "%,' . $id . '" or category_other like "%,' . $id . ',%"');
         //Hidden product out of stock
         if (empty(\Helper::configs()['product_display_out_of_stock'])) {
@@ -139,16 +110,6 @@ class ShopCategory extends Model
         static::deleting(function ($category) {
             $category->descriptions()->delete();
         });
-    }
-
-/**
- * Get category child
- * @param  [type] $id [description]
- * @return [type]     [description]
- */
-    public function getChildrens($id)
-    {
-        return $this->with('products')->where('parent', $id)->get();
     }
 
 /**
@@ -232,6 +193,21 @@ class ShopCategory extends Model
     {
         $sortBy = $sortBy ?? 'sort';
         return $query->orderBy($sortBy, $sortOrder)->orderBy('id', 'desc');
+    }
+
+/**
+ * [getFullCategories description]
+ * @param  boolean $all [description]
+ * @return [object]       [description]
+ */
+    public function getFullCategories($all = true, $sortBy = null, $sortOrder = 'asc')
+    {
+        if ($all) {
+            $listFullCategory = $this->sort($sortBy, $sortOrder)->get()->groupBy('parent');
+        } else {
+            $listFullCategory = $this->where('status', 1)->sort($sortBy, $sortOrder)->get()->groupBy('parent');
+        }
+        return $listFullCategory;
     }
 
 }

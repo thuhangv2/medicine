@@ -127,8 +127,6 @@ class ShopCategoryController extends Controller
                 $form->divide();
             }
             $form->ignore($arrFields);
-//end language
-
             $arrCate = (new ShopCategory)->getTreeCategory();
             $arrCate = ['0' => '== ROOT =='] + $arrCate;
             $form->select('parent', trans('language.admin.parent_category'))->options($arrCate);

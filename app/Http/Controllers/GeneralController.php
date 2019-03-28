@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Config;
 use App\Models\Language;
 use App\Models\Layout;
-use App\Models\ShopCategory;
 use App\Models\ShopCurrency;
 use App\Models\Subscribe;
 use Illuminate\Http\Request;
@@ -21,7 +20,6 @@ class GeneralController extends Controller
     public $theme_asset;
     public $path_file;
     public $logo;
-    public $categories;
     public $languages;
     public $currencies;
 
@@ -52,7 +50,6 @@ class GeneralController extends Controller
         $this->theme_asset   = 'templates/' . $this->configsGlobal['template'];
         $this->theme         = 'templates.' . $this->configsGlobal['template'];
         $this->logo          = $this->path_file . '/' . $this->configsGlobal['logo'];
-        $this->categories    = ShopCategory::getCategories($categoryParent = 0);
         $this->languages     = Language::where('status', 1)->get()->keyBy('code');
         $this->currencies    = ShopCurrency::getAll();
 //Share variable
@@ -64,7 +61,6 @@ class GeneralController extends Controller
         View::share('theme', $this->theme);
         View::share('logo', $this->logo);
 
-        View::share('categories', $this->categories);
         View::share('languages', $this->languages);
         View::share('currencies', $this->currencies);
 

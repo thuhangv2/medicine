@@ -33,6 +33,7 @@ class ShopFront extends GeneralController
                 'keyword'      => $this->configsGlobal['keyword'],
                 'products_new' => (new ShopProduct)->getProducts($type = null, $limit = $this->configs['product_new'], $opt = null),
                 'products_hot' => (new ShopProduct)->getProducts($type = 1, $limit = $this->configs['product_hot'], $opt = 'random'),
+                'categories'   => (new ShopCategory)->getFullCategories(),
                 'layout_page'  => 'home',
 
             )

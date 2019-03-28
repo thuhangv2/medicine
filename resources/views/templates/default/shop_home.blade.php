@@ -80,13 +80,13 @@
           <div class="category-tab"><!--category-tab-->
             <div class="col-sm-12">
               <ul class="nav nav-tabs">
-                @foreach ($categories as $key => $category)
+                @foreach ($categories[0] as $key => $category)
                   <li {{ ($key ==0)?'class="active"':'' }}><a href="#cate{{ $key }}" data-toggle="tab">{{ $category->name }}</a></li>
                 @endforeach
               </ul>
             </div>
             <div class="tab-content">
-              @foreach ($categories as $key => $category)
+              @foreach ($categories[0] as $key => $category)
                 <div class="tab-pane fade {{ ($key ==0)?'active in':'' }}" id="cate{{ $key }}" >
                   @foreach ($category->getProductsToCategory($category->id,4) as $product)
                     <div class="col-sm-3">
