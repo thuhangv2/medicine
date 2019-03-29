@@ -3,8 +3,33 @@
 @section('center')
   <div class="features_items">
     <h2 class="title text-center">{{ $title }}</h2>
+
+    <div class="item-folder">
+    @isset ($itemsList)
+        @if($itemsList->count())
+          @foreach ($itemsList as  $key => $item)
+          <div class="col-sm-3 col-xs-4">
+              <div class="item-folder-wrapper product-single">
+                <div class="single-products">
+                  <div class="productinfo text-center product-box-{{ $item->id }}">
+                    <a href="{{ $item->getUrl() }}"><img src="{{ asset($item->getThumb()) }}" alt="{{ $item->name }}" /></a>
+                    <a href="{{ $item->getUrl() }}"><p>{{ $item->name }}</p></a>
+                  </div>
+                </div>
+              </div>
+          </div>
+          @endforeach
+        @endif
+    @endisset
+      <div style="clear: both; ">
+        <ul class="pagination">
+          {{ $products->appends(request()->except(['page','_token']))->links() }}
+      </ul>
+      </div>
+    </div>
+
       @if (count($products) ==0)
-        Not found content!
+        {{ trans('language.empty_product') }}
       @else
           @foreach ($products as  $key => $product)
           <div class="col-sm-4 col-xs-6">
@@ -34,12 +59,12 @@
           </div>
           @endforeach
       @endif
-<div style="clear: both; ">
-    <ul class="pagination">
-      {{ $products->appends(request()->except(['page','_token']))->links() }}
-  </ul>
-</div>
 
+    <div style="clear: both; ">
+        <ul class="pagination">
+          {{ $products->appends(request()->except(['page','_token']))->links() }}
+      </ul>
+    </div>
 </div>
 @endsection
 

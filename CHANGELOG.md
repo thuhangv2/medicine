@@ -3,6 +3,7 @@
 ### Upgrade laravel 5.7
 ### Fixed
 > Fix error route admin
+> Fix error route front-end
 > Fix error process cart
 ### Add
 > Support design layout: HTML, View, Module

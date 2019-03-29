@@ -98,17 +98,18 @@ class ShopFront extends GeneralController
 
         $category = (new ShopCategory)->find($id);
         if ($category) {
-            $products = $category->getProductsToCategory($id = $category->id, $limit = $this->configs['product_list'], $opt = 'paginate', $sortBy, $sortOrder);
+            $products  = $category->getProductsToCategory($id = $category->id, $limit = $this->configs['product_list'], $opt = 'paginate', $sortBy, $sortOrder);
+            $itemsList = (new ShopCategory)->getCategories($parent = $id, $limit = $this->configs['item_list'], $opt = 'paginate', $sortBy, $sortOrder);
             return view($this->theme . '.shop_products_list',
                 array(
-                    'title'        => $category->name,
-                    'description'  => $category->description,
-                    'keyword'      => $this->configsGlobal['keyword'],
-                    'categorySelf' => $category,
-                    'products'     => $products,
-                    'layout_page'  => 'product_list',
-                    'og_image'     => url($category->getImage()),
-                    'filter_sort'  => $filter_sort,
+                    'title'       => $category->name,
+                    'description' => $category->description,
+                    'keyword'     => $this->configsGlobal['keyword'],
+                    'products'    => $products,
+                    'itemsList'   => $itemsList,
+                    'layout_page' => 'product_list',
+                    'og_image'    => url($category->getImage()),
+                    'filter_sort' => $filter_sort,
                 )
             );
         } else {
