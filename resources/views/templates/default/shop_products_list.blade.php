@@ -4,8 +4,8 @@
   <div class="features_items">
     <h2 class="title text-center">{{ $title }}</h2>
 
-    <div class="item-folder">
     @isset ($itemsList)
+    <div class="item-folder">
         @if($itemsList->count())
           @foreach ($itemsList as  $key => $item)
           <div class="col-sm-3 col-xs-4">
@@ -20,13 +20,13 @@
           </div>
           @endforeach
         @endif
-    @endisset
       <div style="clear: both; ">
         <ul class="pagination">
           {{ $products->appends(request()->except(['page','_token']))->links() }}
       </ul>
       </div>
     </div>
+    @endisset
 
       @if (count($products) ==0)
         {{ trans('language.empty_product') }}
