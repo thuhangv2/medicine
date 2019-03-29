@@ -5,27 +5,27 @@
     <h2 class="title text-center">{{ $title }}</h2>
 
     @isset ($itemsList)
-    <div class="item-folder">
-        @if($itemsList->count())
-          @foreach ($itemsList as  $key => $item)
-          <div class="col-sm-3 col-xs-4">
-              <div class="item-folder-wrapper product-single">
-                <div class="single-products">
-                  <div class="productinfo text-center product-box-{{ $item->id }}">
-                    <a href="{{ $item->getUrl() }}"><img src="{{ asset($item->getThumb()) }}" alt="{{ $item->name }}" /></a>
-                    <a href="{{ $item->getUrl() }}"><p>{{ $item->name }}</p></a>
+      @if($itemsList->count())
+      <div class="item-folder">
+            @foreach ($itemsList as  $key => $item)
+            <div class="col-sm-3 col-xs-4">
+                <div class="item-folder-wrapper product-single">
+                  <div class="single-products">
+                    <div class="productinfo text-center product-box-{{ $item->id }}">
+                      <a href="{{ $item->getUrl() }}"><img src="{{ asset($item->getThumb()) }}" alt="{{ $item->name }}" /></a>
+                      <a href="{{ $item->getUrl() }}"><p>{{ $item->name }}</p></a>
+                    </div>
                   </div>
                 </div>
-              </div>
-          </div>
-          @endforeach
-        @endif
-      <div style="clear: both; ">
-        <ul class="pagination">
-          {{ $products->appends(request()->except(['page','_token']))->links() }}
-      </ul>
+            </div>
+            @endforeach
+        <div style="clear: both; ">
+          <ul class="pagination">
+            {{ $products->appends(request()->except(['page','_token']))->links() }}
+        </ul>
+        </div>
       </div>
-    </div>
+      @endif
     @endisset
 
       @if (count($products) ==0)
