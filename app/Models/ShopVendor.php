@@ -38,6 +38,29 @@ class ShopVendor extends Model
 
     }
 
+    public function getProductsToVendor($id, $limit = null, $opt = null, $sortBy = null, $sortOrder = 'asc')
+    {
+        $query = (new ShopProduct)->where('status', 1)->where('vendor_id', $id);
+
+        //Hidden product out of stock
+        if (empty(\Helper::configs()['product_display_out_of_stock'])) {
+            $query = $query->where('stock', '>', 0);
+        }
+        $query = $query->sort($sortBy, $sortOrder);
+        if (!(int) $limit) {
+            return $query->get();
+        } else
+        if ($opt == 'paginate') {
+            return $query->paginate((int) $limit);
+        } else
+        if ($opt == 'random') {
+            return $query->inRandomOrder()->limit($limit)->get();
+        } else {
+            return $query->limit($limit)->get();
+        }
+
+    }
+
     /**
      * [getUrl description]
      * @return [type] [description]

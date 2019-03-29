@@ -33,6 +33,7 @@ return [
     'shop'               => 'Cửa hàng',
     'cms_category'       => 'Danh mục CMS',
     'category'           => 'Danh mục',
+    'categories'         => 'Danh mục',
     'brands'             => 'Nhãn hiệu',
     'vendors'            => 'Nhà cung cấp',
     'maintenance'        => 'Xin lỗi, website đang bảo trì',

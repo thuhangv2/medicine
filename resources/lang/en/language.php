@@ -33,6 +33,7 @@ return [
     'shop'               => 'Shop',
     'cms_category'       => 'CMS categories',
     'category'           => 'Category',
+    'categories'         => 'Categories',
     'brands'             => 'Brands',
     'vendors'            => 'Vendors',
     'maintenance'        => 'Sorry! We are currently doing site maintenance!',

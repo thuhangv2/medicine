@@ -37,7 +37,7 @@ class ShopCategory extends Model
 
     public function getTreeCategory($root = 0, &$list = null, $categories = null, &$st = '')
     {
-        $categories  = $categories ?? $this->getFullCategories($all = false);
+        $categories  = $categories ?? $this->getFullCategories();
         $list        = $list ?? [];
         $lisCategory = $categories[$root];
         foreach ($lisCategory as $category) {
@@ -74,7 +74,7 @@ class ShopCategory extends Model
     public function getProductsToCategory($id, $limit = null, $opt = null, $sortBy = null, $sortOrder = 'asc')
     {
         $query = (new ShopProduct)->where('status', 1)->where('category_id', $id)
-            ->orWhereRaw('category_other like "' . $id . ',%" or category_other like "%,' . $id . '" or category_other like "%,' . $id . ',%"');
+            ->orWhereRaw('FIND_IN_SET(' . $id . ',category_other) >=1');
         //Hidden product out of stock
         if (empty(\Helper::configs()['product_display_out_of_stock'])) {
             $query = $query->where('stock', '>', 0);
@@ -93,15 +93,6 @@ class ShopCategory extends Model
         }
 
     }
-/**
- * [getCategories description]
- * @param  [type] $parent [description]
- * @return [type]         [description]
- */
-    public static function getCategories($parent)
-    {
-        return self::where('status', 1)->where('parent', $parent)->sort()->get();
-    }
 
     protected static function boot()
     {
@@ -110,6 +101,33 @@ class ShopCategory extends Model
         static::deleting(function ($category) {
             $category->descriptions()->delete();
         });
+    }
+
+/**
+ * [getCategories description]
+ * @param  [type] $parent    [description]
+ * @param  [type] $limit     [description]
+ * @param  [type] $opt       [description]
+ * @param  [type] $sortBy    [description]
+ * @param  string $sortOrder [description]
+ * @return [type]            [description]
+ */
+    public function getCategories($parent, $limit = null, $opt = null, $sortBy = null, $sortOrder = 'asc')
+    {
+        $query = $this->where('status', 1)->where('parent', $parent);
+        $query = $query->sort($sortBy, $sortOrder);
+        if (!(int) $limit) {
+            return $query->get();
+        } else
+        if ($opt == 'paginate') {
+            return $query->paginate((int) $limit);
+        } else
+        if ($opt == 'random') {
+            return $query->inRandomOrder()->limit($limit)->get();
+        } else {
+            return $query->limit($limit)->get();
+        }
+
     }
 
 /**

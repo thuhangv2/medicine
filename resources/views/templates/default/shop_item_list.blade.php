@@ -11,7 +11,7 @@
                               <div class="single-products">
                                 <div class="productinfo text-center product-box-{{ $item->id }}">
                                   <a href="{{ $item->getUrl() }}"><img src="{{ asset($item->getImage()) }}" alt="{{ $item->name }}" /></a>
-                                  <a href="{{ $item->getImage() }}"><p>{{ $item->name }}</p></a>
+                                  <a href="{{ $item->getUrl() }}"><p>{{ $item->name }}</p></a>
                                 </div>
                               </div>
                             </div>

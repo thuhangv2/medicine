@@ -44,7 +44,7 @@ Route::get('currency/{code}', function ($code) {
     return back();
 });
 
-//Cart
+//========Cart
 Route::get('/wishlist.html', 'ShopCart@wishlist')->name('wishlist');
 Route::get('/compare.html', 'ShopCart@compare')->name('compare');
 Route::get('/cart.html', 'ShopCart@getCart')->name('cart');
@@ -58,27 +58,46 @@ Route::get('/clearCart', 'ShopCart@clearCart')->name('clearCart');
 Route::post('/addToCart', 'ShopCart@addToCart')->name('addToCart');
 Route::post('/updateToCart', 'ShopCart@updateToCart')->name('updateToCart');
 Route::post('/storeOrder', 'ShopCart@storeOrder')->name('storeOrder');
-//End cart
+//========End cart
 
-//Front
+//========Front
+//Home
 Route::get('/', 'ShopFront@index')->name('home');
 Route::get('index.html', 'ShopFront@index');
-Route::get('/shop/{name}_{id}.html', 'ShopFront@productToCategory')
+//End home
+
+//Category
+Route::get('/categories', 'ShopFront@getCategories')->name('categories');
+Route::get('/category/{name}_{id}', 'ShopFront@productToCategory')
     ->where(['id' => '[0-9]+'])->name('category');
+//End category
+
+//Brand
+Route::get('/brands', 'ShopFront@getBrands')->name('brands');
+Route::get('/brand/{name}_{id}', 'ShopFront@productToBrand')
+    ->where(['id' => '[0-9]+'])->name('brand');
+//End brand
+
+//Vendor
+Route::get('/vendors', 'ShopFront@getVendors')->name('vendors');
+Route::get('/vendor/{name}_{id}', 'ShopFront@productToVendor')
+    ->where(['id' => '[0-9]+'])->name('vendor');
+//End vendor
+
+//Product
+Route::get('/products.html', 'ShopFront@allProducts')->name('products');
 Route::get('/product/{name}_{id}.html', 'ShopFront@productDetail')
     ->where(['id' => '[0-9]+'])->name('product');
-Route::get('/brand/{name}_{id}/{category?}', 'ShopFront@productToBrand')
-    ->where(['id' => '[0-9]+'])->name('brand');
-Route::get('/brands', 'ShopFront@getBrands')->name('brands');
-Route::get('/vendors', 'ShopFront@getVendors')->name('vendors');
-Route::get('/products.html', 'ShopFront@allProducts')->name('products');
+//End product
+
 Route::get('/search.html', 'ShopFront@search')->name('search');
 Route::get('/contact.html', 'ShopFront@getContact')->name('contact');
 Route::post('/contact.html', 'ShopFront@postContact')->name('postContact');
 Route::post('/subscribe', 'ShopFront@emailSubscribe')->name('subscribe');
+
 //--Please keep 2 lines route (pages + pageNotFound) at the bottom
 Route::get('/{key}.html', 'ShopFront@pages')->name('pages');
 Route::fallback('ShopFront@pageNotFound')->name('pageNotFound');
 //--end keep
 
-//End Front
+//=======End Front
