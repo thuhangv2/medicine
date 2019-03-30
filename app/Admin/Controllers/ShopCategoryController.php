@@ -127,7 +127,7 @@ class ShopCategoryController extends Controller
                 $form->divide();
             }
             $form->ignore($arrFields);
-            $arrCate = (new ShopCategory)->getTreeCategory();
+            $arrCate = (new ShopCategory)->getTreeCategories();
             $arrCate = ['0' => '== ROOT =='] + $arrCate;
             $form->select('parent', trans('language.admin.parent_category'))->options($arrCate);
             $form->image('image', trans('language.admin.image'))->uniqueName()->move('category')->removable();

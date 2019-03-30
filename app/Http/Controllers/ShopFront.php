@@ -18,7 +18,6 @@ class ShopFront extends GeneralController
     public function __construct()
     {
         parent::__construct();
-
     }
 /**
  * [index description]
@@ -33,7 +32,7 @@ class ShopFront extends GeneralController
                 'keyword'      => $this->configsGlobal['keyword'],
                 'products_new' => (new ShopProduct)->getProducts($type = null, $limit = $this->configs['product_new'], $opt = null),
                 'products_hot' => (new ShopProduct)->getProducts($type = 1, $limit = $this->configs['product_hot'], $opt = 'random'),
-                'categories'   => (new ShopCategory)->getFullCategories(),
+                'categories'   => (new ShopCategory)->getCategoriesAll(),
                 'layout_page'  => 'home',
 
             )
@@ -99,7 +98,7 @@ class ShopFront extends GeneralController
         $category = (new ShopCategory)->find($id);
         if ($category) {
             $products  = $category->getProductsToCategory($id = $category->id, $limit = $this->configs['product_list'], $opt = 'paginate', $sortBy, $sortOrder);
-            $itemsList = (new ShopCategory)->getCategories($parent = $id, $limit = $this->configs['item_list'], $opt = 'paginate', $sortBy, $sortOrder);
+            $itemsList = (new ShopCategory)->getCategories($parent = $id, $limit = null, $opt = null, $sortBy, $sortOrder);
             return view($this->theme . '.shop_products_list',
                 array(
                     'title'       => $category->name,

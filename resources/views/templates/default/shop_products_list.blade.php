@@ -20,9 +20,6 @@
             </div>
             @endforeach
         <div style="clear: both; ">
-          <ul class="pagination">
-            {{ $products->appends(request()->except(['page','_token']))->links() }}
-        </ul>
         </div>
       </div>
       @endif

@@ -35,23 +35,6 @@ class ShopCategory extends Model
         return $this->hasMany(ShopCategoryDescription::class, 'shop_category_id', 'id');
     }
 
-    public function getTreeCategory($root = 0, &$list = null, $categories = null, &$st = '')
-    {
-        $categories  = $categories ?? $this->getFullCategories();
-        $list        = $list ?? [];
-        $lisCategory = $categories[$root];
-        foreach ($lisCategory as $category) {
-            $list[$category->id] = $st . $category->getName();
-            if (!empty($categories[$category->id])) {
-                $st .= '--';
-                $this->getTreeCategory($category->id, $list, $categories, $st);
-                $st = '';
-            }
-        }
-
-        return $list;
-    }
-
 /**
  * Get category parent
  * @return [type]     [description]
@@ -73,8 +56,16 @@ class ShopCategory extends Model
  */
     public function getProductsToCategory($id, $limit = null, $opt = null, $sortBy = null, $sortOrder = 'asc')
     {
-        $query = (new ShopProduct)->where('status', 1)->where('category_id', $id)
-            ->orWhereRaw('FIND_IN_SET(' . $id . ',category_other) >=1');
+
+        $query = (new ShopProduct)->where('status', 1);
+        if (empty(\Helper::configs()['show_product_of_category_children'])) {
+            $query = $query->where('category_id', $id);
+        } else {
+            $arrCategory   = $this->getIdCategories($id);
+            $arrCategory[] = $id;
+            $query         = $query->whereIn('category_id', $arrCategory);
+        }
+        $query = $query->orWhereRaw('FIND_IN_SET(' . $id . ',category_other) >=1');
         //Hidden product out of stock
         if (empty(\Helper::configs()['product_display_out_of_stock'])) {
             $query = $query->where('stock', '>', 0);
@@ -128,6 +119,52 @@ class ShopCategory extends Model
             return $query->limit($limit)->get();
         }
 
+    }
+
+/**
+ * [getCategoriesAll description]
+ * @param  boolean $all [description]
+ * @return [object]       [description]
+ */
+    public function getCategoriesAll($all = true, $sortBy = null, $sortOrder = 'asc')
+    {
+        if ($all) {
+            $listFullCategory = $this->sort($sortBy, $sortOrder)->get()->groupBy('parent');
+        } else {
+            $listFullCategory = $this->where('status', 1)->sort($sortBy, $sortOrder)->get()->groupBy('parent');
+        }
+        return $listFullCategory;
+    }
+
+    public function getIdCategories($parent = 0, &$list = null, $categories = null)
+    {
+        $categories  = $categories ?? $this->getCategoriesAll();
+        $list        = $list ?? [];
+        $lisCategory = $categories[$parent];
+        foreach ($lisCategory as $category) {
+            $list[] = $category->id;
+            if (!empty($categories[$category->id])) {
+                $this->getIdCategories($category->id, $list, $categories);
+            }
+        }
+        return $list;
+    }
+
+    public function getTreeCategories($parent = 0, &$list = null, $categories = null, &$st = '')
+    {
+        $categories  = $categories ?? $this->getCategoriesAll();
+        $list        = $list ?? [];
+        $lisCategory = $categories[$parent];
+        foreach ($lisCategory as $category) {
+            $list[$category->id] = $st . $category->getName();
+            if (!empty($categories[$category->id])) {
+                $st .= '--';
+                $this->getTreeCategories($category->id, $list, $categories, $st);
+                $st = '';
+            }
+        }
+
+        return $list;
     }
 
 /**
@@ -211,21 +248,6 @@ class ShopCategory extends Model
     {
         $sortBy = $sortBy ?? 'sort';
         return $query->orderBy($sortBy, $sortOrder)->orderBy('id', 'desc');
-    }
-
-/**
- * [getFullCategories description]
- * @param  boolean $all [description]
- * @return [object]       [description]
- */
-    public function getFullCategories($all = true, $sortBy = null, $sortOrder = 'asc')
-    {
-        if ($all) {
-            $listFullCategory = $this->sort($sortBy, $sortOrder)->get()->groupBy('parent');
-        } else {
-            $listFullCategory = $this->where('status', 1)->sort($sortBy, $sortOrder)->get()->groupBy('parent');
-        }
-        return $listFullCategory;
     }
 
 }

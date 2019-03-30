@@ -1,5 +1,5 @@
   @php
-    $categories = (new \App\Models\ShopCategory)->getFullCategories()
+    $categories = (new \App\Models\ShopCategory)->getCategoriesAll()
   @endphp
   @if ($categories->count())
               <h2>{{ trans('language.category') }}</h2>
