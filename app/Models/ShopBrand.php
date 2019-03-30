@@ -86,7 +86,7 @@ class ShopBrand extends Model
     public function scopeSort($query, $sortBy = null, $sortOrder = 'asc')
     {
         $sortBy = $sortBy ?? 'sort';
-        return $query->orderBy($sortBy, $sortOrder)->orderBy('id', 'desc');
+        return $query->orderBy($sortBy, $sortOrder);
     }
 
 }

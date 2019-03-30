@@ -150,12 +150,15 @@ class ShopProduct extends Model
             $query = $query->where('stock', '>', 0);
         }
         $query = $query->sort($sortBy, $sortOrder);
+        //get all
         if (!(int) $limit) {
             return $query->get();
         } else
+        //paginate
         if ($opt == 'paginate') {
             return $query->paginate((int) $limit);
         } else
+        //random
         if ($opt == 'random') {
             return $query->inRandomOrder()->limit($limit)->get();
         } else {
@@ -362,12 +365,10 @@ class ShopProduct extends Model
  */
     public static function getArrayProductName()
     {
-        $products = self::select('id', 'sku')
-            ->get();
+        $products   = self::select('id', 'sku')->get();
         $arrProduct = [];
-        foreach ($products as $key => $value) {
-            $p                      = self::find($value->id);
-            $arrProduct[$value->id] = $p->getName() . ' (' . $p->sku . ')';
+        foreach ($products as $key => $product) {
+            $arrProduct[$product->id] = $product->name . ' (' . $product->sku . ')';
         }
         return $arrProduct;
     }
@@ -404,13 +405,15 @@ class ShopProduct extends Model
     public function scopeSort($query, $sortBy = null, $sortOrder = 'asc')
     {
         $sortBy = $sortBy ?? 'sort';
-        return $query->orderBy($sortBy, $sortOrder)->orderBy('id', 'desc');
+        return $query->orderBy($sortBy, $sortOrder);
     }
 
-    //Condition:
-    //Active
-    //In of stock or allow order out of stock
-    //Date availabe
+/**
+//Condition:
+//Active
+//In of stock or allow order out of stock
+//Date availabe
+ */
     public function allowSale()
     {
         if ($this->status &&
