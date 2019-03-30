@@ -13,6 +13,7 @@ Route::group([
     $router->get('/', 'HomeController@index')->name('homeAdmin');
     $router->resource('banner', BannerController::class)->names('bannerControl');
     $router->resource('layout', LayoutController::class)->names('layoutControl');
+    $router->resource('layout_url', LayoutUrlController::class)->names('layoutUrlControl');
     $router->resource('language', LanguageController::class)->names('languageControl');
     $router->resource('currencies', CurrencyController::class)->names('currencyControl');
     $router->resource('subscribe', EmailSubscribeController::class)->names('subscribeControl');
