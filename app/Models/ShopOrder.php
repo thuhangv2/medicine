@@ -66,9 +66,8 @@ class ShopOrder extends Model
         return self::where('id', $order_id)->update($arrFields);
     }
 //Scort
-    public function scopeSort($query, $sortBy = null, $sortOrder = 'asc')
+    public function scopeSort($query)
     {
-        $sortBy = $sortBy ?? 'sort';
-        return $query->orderBy($sortBy, $sortOrder)->orderBy('id', 'desc');
+        return $query->orderBy('id', 'desc');
     }
 }
