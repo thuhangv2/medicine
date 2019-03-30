@@ -32,7 +32,6 @@ return [
     'about'              => 'Giới thiệu',
     'shop'               => 'Cửa hàng',
     'cms_category'       => 'Danh mục CMS',
-    'category'           => 'Danh mục',
     'categories'         => 'Danh mục',
     'brands'             => 'Nhãn hiệu',
     'vendors'            => 'Nhà cung cấp',
@@ -247,6 +246,19 @@ return [
         'overview'     => 'Mô tả',
         'comment'      => 'Đánh giá',
     ],
+
+    'category'           => [
+        'name'        => 'Tên',
+        'keyword'     => 'Từ khóa',
+        'description' => 'Mô tả',
+        'image'       => 'Hình ảnh',
+        'parent'      => 'Danh mục cha',
+        'top'         => 'Hiển thị ngoài web',
+        'status'      => 'Trạng thái',
+        'sort'        => 'Sắp xếp',
+        'help_top'    => 'Hiển thị danh mục này bên ngoài website',
+    ],
+
     'promotion'          => [
         'code'        => 'Mã coupon',
         'value'       => 'Giá trị',

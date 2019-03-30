@@ -3,7 +3,7 @@
     $categoriesTop = (new \App\Models\ShopCategory)->getCategoriesTop();
   @endphp
   @if ($categoriesTop->count())
-              <h2>{{ trans('language.category') }}</h2>
+              <h2>{{ trans('language.categories') }}</h2>
               <div class="panel-group category-products" id="accordian">
               @foreach ($categoriesTop as $key =>  $category)
                 @if (!empty($categories[$category->id]))
