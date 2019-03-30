@@ -140,11 +140,13 @@ class ShopCategory extends Model
     {
         $categories  = $categories ?? $this->getCategoriesAll();
         $list        = $list ?? [];
-        $lisCategory = $categories[$parent];
-        foreach ($lisCategory as $category) {
-            $list[] = $category->id;
-            if (!empty($categories[$category->id])) {
-                $this->getIdCategories($category->id, $list, $categories);
+        $lisCategory = $categories[$parent] ?? [];
+        if (count($lisCategory)) {
+            foreach ($lisCategory as $category) {
+                $list[] = $category->id;
+                if (!empty($categories[$category->id])) {
+                    $this->getIdCategories($category->id, $list, $categories);
+                }
             }
         }
         return $list;
