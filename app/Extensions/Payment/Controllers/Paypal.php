@@ -139,19 +139,28 @@ class Paypal extends \App\Http\Controllers\Controller
         unset($data['currency']);
         session()->forget('data_payment');
         $transactionDescription = "From website";
-        $paypalCheckoutUrl      = $this->paypalSvc
-            ->setCurrency($currency)
-            ->setReturnUrl(route('returnPaypal', ['order_id' => $order_id]))
-            ->setCancelUrl(route('cart'))
-            ->setItem($data)
-            ->createPayment($transactionDescription);
-        if ($paypalCheckoutUrl) {
-            return redirect($paypalCheckoutUrl);
-        } else {
+        try {
+            $paypalCheckoutUrl = $this->paypalSvc
+                ->setCurrency($currency)
+                ->setReturnUrl(route('returnPaypal', ['order_id' => $order_id]))
+                ->setCancelUrl(route('cart'))
+                ->setItem($data)
+                ->createPayment($transactionDescription);
+            if ($paypalCheckoutUrl) {
+                return redirect($paypalCheckoutUrl);
+            } else {
+                $paypalConfigs = PaypalModel::first();
+                $msg           = 'Error while process Paypal';
+                (new ShopOrder)->updateStatus($order_id, $status = $paypalConfigs['paypal_order_status_faild'], $msg);
+                return redirect()->route('cart')->with(["error" => $msg]);
+            }
+        } catch (\Exception $e) {
             $paypalConfigs = PaypalModel::first();
-            ShopOrder::find($order_id)->update(['status' => $paypalConfigs['paypal_order_status_faild']]);
-            return redirect()->route('cart');
+            $msg           = 'Error while process Paypal';
+            (new ShopOrder)->updateStatus($order_id, $status = $paypalConfigs['paypal_order_status_faild'], $msg);
+            return redirect()->route('cart')->with(["error" => $msg]);
         }
+
     }
 
 /**

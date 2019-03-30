@@ -2,6 +2,7 @@
 #app/Models/ShopOrder.php
 namespace App\Models;
 
+use App\Models\ShopOrderHistory;
 use App\Models\ShopProduct;
 use Illuminate\Database\Eloquent\Model;
 
@@ -65,6 +66,20 @@ class ShopOrder extends Model
     {
         return self::where('id', $order_id)->update($arrFields);
     }
+
+    public function updateStatus($id, $status = 0, $msg = '')
+    {
+        $uID   = auth()->user()->id ?? 0;
+        $order = $this->find($id);
+        $order->update(['status' => (int) $status]);
+        $history           = new ShopOrderHistory();
+        $history->admin_id = 0;
+        $history->user_id  = $uID;
+        $history->content  = $msg;
+
+        $order->history()->save($history);
+    }
+
 //Scort
     public function scopeSort($query)
     {
