@@ -12,8 +12,9 @@
                     <h4 class="panel-title">
                       <a data-toggle="collapse" data-parent="#accordian" href="#{{ $key }}">
                         <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                        {{ $category->name }}
                       </a>
+                      <a href="{{ $category->getUrl() }}">  {{ $category->name }}</a>
+
                     </h4>
                   </div>
                   <div id="{{ $key }}" class="panel-collapse collapse">
@@ -31,7 +32,7 @@
                 @else
                   <div class="panel panel-default">
                     <div class="panel-heading">
-                      <h4 class="panel-title"><a href="{{ $category->getUrl() }}">{{ $category->name }}</a></h4>
+                      <a href="{{ $category->getUrl() }}"><h4 class="panel-title"><a href="{{ $category->getUrl() }}">{{ $category->name }}</a></h4></a>
                     </div>
                   </div>
                @endif

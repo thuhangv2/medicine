@@ -17,13 +17,12 @@ class ShopVendor extends Model
 
     public function getVendorsList()
     {
-        return self::where('status', 1)->orderBy('id', 'desc')->orderBy('sort', 'desc')->get();
+        return $this->orderBy('id', 'desc')->orderBy('sort', 'desc')->get();
     }
 
     public function getVendors($limit = null, $opt = null, $sortBy = null, $sortOrder = 'asc')
     {
-        $query = $this->where('status', 1);
-        $query = $query->sort($sortBy, $sortOrder);
+        $query = $this->sort($sortBy, $sortOrder);
         if (!(int) $limit) {
             return $query->get();
         } else

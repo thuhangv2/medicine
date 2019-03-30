@@ -9,6 +9,7 @@ use App\Models\ShopOrder;
 use App\Models\ShopOrderStatus;
 use App\Models\ShopPage;
 use App\Models\ShopProduct;
+use App\Models\ShopVendor;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -98,7 +99,7 @@ class ShopFront extends GeneralController
         $category = (new ShopCategory)->find($id);
         if ($category) {
             $products  = $category->getProductsToCategory($id = $category->id, $limit = $this->configs['product_list'], $opt = 'paginate', $sortBy, $sortOrder);
-            $itemsList = (new ShopCategory)->getCategories($parent = $id, $limit = null, $opt = null, $sortBy, $sortOrder);
+            $itemsList = (new ShopCategory)->getCategories($parent = $id);
             return view($this->theme . '.shop_products_list',
                 array(
                     'title'       => $category->name,
