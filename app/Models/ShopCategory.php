@@ -136,6 +136,13 @@ class ShopCategory extends Model
         return $listFullCategory;
     }
 
+/**
+ * Get all ID category children of parent
+ * @param  integer $parent     [description]
+ * @param  [type]  &$list      [description]
+ * @param  [type]  $categories [description]
+ * @return [array]              [description]
+ */
     public function getIdCategories($parent = 0, &$list = null, $categories = null)
     {
         $categories  = $categories ?? $this->getCategoriesAll();
@@ -152,6 +159,14 @@ class ShopCategory extends Model
         return $list;
     }
 
+/**
+ * Get tree category from parent
+ * @param  integer $parent     [description]
+ * @param  [type]  &$list      [description]
+ * @param  [type]  $categories [description]
+ * @param  string  &$st        [description]
+ * @return [array]              [tree]
+ */
     public function getTreeCategories($parent = 0, &$list = null, $categories = null, &$st = '')
     {
         $categories  = $categories ?? $this->getCategoriesAll();
