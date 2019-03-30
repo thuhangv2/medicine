@@ -47,17 +47,23 @@ class ShopCategory extends Model
 
 /**
  * [getProductsToCategory description]
- * @param  [type] $id        [description]
- * @param  [type] $limit     [description]
- * @param  [type] $opt       [description]
- * @param  [type] $sortBy    [description]
- * @param  string $sortOrder [description]
- * @return [type]            [description]
+ * @param  [type]  $id        [description]
+ * @param  [type]  $limit     [description]
+ * @param  [type]  $opt       [description]
+ * @param  [type]  $sortBy    [description]
+ * @param  string  $sortOrder [description]
+ * @param  integer $status    [description]
+ * @return [type]             [description]
  */
-    public function getProductsToCategory($id, $limit = null, $opt = null, $sortBy = null, $sortOrder = 'asc')
+    public function getProductsToCategory($id, $limit = null, $opt = null, $sortBy = null, $sortOrder = 'asc', $status = 1)
     {
 
-        $query = (new ShopProduct)->where('status', 1);
+        $query = (new ShopProduct);
+        //product actie
+        if ($status) {
+            $query = $query->where('status', 1);
+        }
+        //product of childen category
         if (empty(\Helper::configs()['show_product_of_category_children'])) {
             $query = $query->where('category_id', $id);
         } else {
@@ -65,21 +71,30 @@ class ShopCategory extends Model
             $arrCategory[] = $id;
             $query         = $query->whereIn('category_id', $arrCategory);
         }
+        //Include products link to other category
         $query = $query->orWhereRaw('FIND_IN_SET(' . $id . ',category_other) >=1');
+
         //Hidden product out of stock
         if (empty(\Helper::configs()['product_display_out_of_stock'])) {
             $query = $query->where('stock', '>', 0);
         }
+        //sort product
         $query = $query->sort($sortBy, $sortOrder);
+
+        //Get all product
         if (!(int) $limit) {
             return $query->get();
         } else
+        //paginate
         if ($opt == 'paginate') {
             return $query->paginate((int) $limit);
         } else
+        //random
         if ($opt == 'random') {
             return $query->inRandomOrder()->limit($limit)->get();
-        } else {
+        }
+        //
+        else {
             return $query->limit($limit)->get();
         }
 
@@ -139,49 +154,58 @@ class ShopCategory extends Model
 /**
  * Get all ID category children of parent
  * @param  integer $parent     [description]
- * @param  [type]  &$list      [description]
- * @param  [type]  $categories [description]
+ * @param  [type]  &$arrayID      [description]
+ * @param  [object]  $categories [description]
  * @return [array]              [description]
  */
-    public function getIdCategories($parent = 0, &$list = null, $categories = null)
+    public function getIdCategories($parent = 0, &$arrayID = null, $categories = null)
     {
         $categories  = $categories ?? $this->getCategoriesAll();
-        $list        = $list ?? [];
+        $arrayID     = $arrayID ?? [];
         $lisCategory = $categories[$parent] ?? [];
         if (count($lisCategory)) {
             foreach ($lisCategory as $category) {
-                $list[] = $category->id;
+                $arrayID[] = $category->id;
                 if (!empty($categories[$category->id])) {
-                    $this->getIdCategories($category->id, $list, $categories);
+                    $this->getIdCategories($category->id, $arrayID, $categories);
                 }
             }
         }
-        return $list;
+        return $arrayID;
     }
 
 /**
  * Get tree category from parent
  * @param  integer $parent     [description]
- * @param  [type]  &$list      [description]
+ * @param  [type]  &$tree      [description]
  * @param  [type]  $categories [description]
  * @param  string  &$st        [description]
  * @return [array]              [tree]
  */
-    public function getTreeCategories($parent = 0, &$list = null, $categories = null, &$st = '')
+    public function getTreeCategories($parent = 0, &$tree = null, $categories = null, &$st = '')
     {
         $categories  = $categories ?? $this->getCategoriesAll();
-        $list        = $list ?? [];
+        $tree        = $tree ?? [];
         $lisCategory = $categories[$parent];
         foreach ($lisCategory as $category) {
-            $list[$category->id] = $st . $category->getName();
+            $tree[$category->id] = $st . $category->getName();
             if (!empty($categories[$category->id])) {
                 $st .= '--';
-                $this->getTreeCategories($category->id, $list, $categories, $st);
+                $this->getTreeCategories($category->id, $tree, $categories, $st);
                 $st = '';
             }
         }
 
-        return $list;
+        return $tree;
+    }
+
+/**
+ * [getCategoriesTop description]
+ * @return [type] [description]
+ */
+    public function getCategoriesTop()
+    {
+        return $this->where('status', 1)->where('top', 1)->get();
     }
 
 /**

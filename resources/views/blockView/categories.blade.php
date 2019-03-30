@@ -1,12 +1,12 @@
   @php
-    $categories = (new \App\Models\ShopCategory)->getCategoriesAll()
+    $categories = (new \App\Models\ShopCategory)->getCategoriesAll();
+    $categoriesTop = (new \App\Models\ShopCategory)->getCategoriesTop();
   @endphp
-  @if ($categories->count())
+  @if ($categoriesTop->count())
               <h2>{{ trans('language.category') }}</h2>
               <div class="panel-group category-products" id="accordian">
-                <!--category-productsr-->
-              @foreach ($categories[0] as $key =>  $category)
-                @if ($categories[$category->id]->count())
+              @foreach ($categoriesTop as $key =>  $category)
+                @if (!empty($categories[$category->id]))
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h4 class="panel-title">
@@ -14,7 +14,6 @@
                         <span class="badge pull-right"><i class="fa fa-plus"></i></span>
                       </a>
                       <a href="{{ $category->getUrl() }}">  {{ $category->name }}</a>
-
                     </h4>
                   </div>
                   <div id="{{ $key }}" class="panel-collapse collapse">
@@ -22,7 +21,16 @@
                       <ul>
                         @foreach ($categories[$category->id] as $cateChild)
                             <li>
-                                <a href="{{ $cateChild->getUrl() }}">{{ $cateChild->name }}</a>
+                                - <a href="{{ $cateChild->getUrl() }}">{{ $cateChild->name }}</a>
+                                <ul>
+                                  @if (!empty($categories[$cateChild->id]))
+                                    @foreach ($categories[$cateChild->id] as $cateChild2)
+                                        <li>
+                                            -- <a href="{{ $cateChild2->getUrl() }}">{{ $cateChild2->name }}</a>
+                                        </li>
+                                    @endforeach
+                                  @endif
+                                </ul>
                             </li>
                         @endforeach
                       </ul>
@@ -37,5 +45,5 @@
                   </div>
                @endif
             @endforeach
-              </div><!--/category-products-->
+              </div>
   @endif
