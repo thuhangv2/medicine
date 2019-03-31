@@ -1,5 +1,5 @@
 <?php
-
+#app/Models/ShopVendor.php
 namespace App\Models;
 
 use Helper;
@@ -14,9 +14,50 @@ class ShopVendor extends Model
     {
         return $this->hasMany(ShopProduct::class, 'vendor_id', 'id');
     }
-    public static function getVendor()
+
+    public function getVendorsList()
     {
-        return self::where('status', 1)->sort()->get();
+        return $this->orderBy('id', 'desc')->orderBy('sort', 'desc')->get();
+    }
+
+    public function getVendors($limit = null, $opt = null, $sortBy = null, $sortOrder = 'asc')
+    {
+        $query = $this->sort($sortBy, $sortOrder);
+        if (!(int) $limit) {
+            return $query->get();
+        } else
+        if ($opt == 'paginate') {
+            return $query->paginate((int) $limit);
+        } else
+        if ($opt == 'random') {
+            return $query->inRandomOrder()->limit($limit)->get();
+        } else {
+            return $query->limit($limit)->get();
+        }
+
+    }
+
+    public function getProductsToVendor($id, $limit = null, $opt = null, $sortBy = null, $sortOrder = 'asc')
+    {
+        $query = (new ShopProduct)->where('status', 1)->where('vendor_id', $id);
+
+        //Hidden product out of stock
+        if (empty(\Helper::configs()['product_display_out_of_stock'])) {
+            $query = $query->where('stock', '>', 0);
+        }
+        $query = $query->sort($sortBy, $sortOrder);
+        if (!(int) $limit) {
+            return $query->get();
+        } else
+        if ($opt == 'paginate') {
+            return $query->paginate((int) $limit);
+        } else
+        if ($opt == 'random') {
+            return $query->inRandomOrder()->limit($limit)->get();
+        } else {
+            return $query->limit($limit)->get();
+        }
+
     }
 
     /**
@@ -25,7 +66,7 @@ class ShopVendor extends Model
      */
     public function getUrl()
     {
-        return url('vendor/' . Helper::strToUrl($this->name) . '_' . $this->id . '.html');
+        return route('vendor', ['name' => Helper::strToUrl($this->name), 'id' => $this->id]);
     }
 
     /**
@@ -39,10 +80,10 @@ class ShopVendor extends Model
 
     }
 
-    //Scort
-    public function scopeSort($query, $column = null)
+//Scort
+    public function scopeSort($query, $sortBy = null, $sortOrder = 'asc')
     {
-        $column = $column ?? 'sort';
-        return $query->orderBy($column, 'asc')->orderBy('id', 'desc');
+        $sortBy = $sortBy ?? 'sort';
+        return $query->orderBy($sortBy, $sortOrder);
     }
 }

@@ -86,7 +86,7 @@ class ShopProductController extends Controller
             $grid->image(trans('language.admin.image'))->image('', 50);
             $grid->sku(trans('language.product.sku'))->sortable();
             $grid->name(trans('language.product.product_name'))->sortable();
-            $grid->category()->name(trans('language.category'));
+            $grid->category()->name(trans('language.categories'));
             $grid->cost(trans('language.product.price_cost'))->display(function ($price) {
                 return number_format($price);
             });
@@ -170,7 +170,7 @@ class ShopProductController extends Controller
                 $arrBrand  = ['0' => '-- ' . trans('language.brands') . ' --'] + $arrBrand;
                 $arrVendor = ShopVendor::pluck('name', 'id')->all();
                 $arrVendor = ['0' => '-- ' . trans('language.vendor') . ' --'] + $arrVendor;
-                $arrCate   = (new ShopCategory)->getTreeCategory();
+                $arrCate   = (new ShopCategory)->getTreeCategories();
                 $form->select('category_id', trans('language.admin.shop_category'))->options($arrCate)
                     ->rules('required');
                 $form->image('image', trans('language.admin.image'))->uniqueName()->move('product');

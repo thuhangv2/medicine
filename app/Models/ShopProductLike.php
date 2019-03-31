@@ -1,5 +1,5 @@
 <?php
-
+#App\Models\ShopProductLike.php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;

@@ -9,6 +9,7 @@ use App\Models\ShopOrder;
 use App\Models\ShopOrderStatus;
 use App\Models\ShopPage;
 use App\Models\ShopProduct;
+use App\Models\ShopVendor;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +19,6 @@ class ShopFront extends GeneralController
     public function __construct()
     {
         parent::__construct();
-
     }
 /**
  * [index description]
@@ -31,13 +31,46 @@ class ShopFront extends GeneralController
                 'title'        => $this->configsGlobal['title'],
                 'description'  => $this->configsGlobal['description'],
                 'keyword'      => $this->configsGlobal['keyword'],
-                'banners'      => $this->banners,
                 'products_new' => (new ShopProduct)->getProducts($type = null, $limit = $this->configs['product_new'], $opt = null),
                 'products_hot' => (new ShopProduct)->getProducts($type = 1, $limit = $this->configs['product_hot'], $opt = 'random'),
+                'categories'   => (new ShopCategory)->getCategoriesAll(),
                 'layout_page'  => 'home',
 
             )
         );
+    }
+
+/**
+ * [getCategories description]
+ * @param  Request $request [description]
+ * @return [type]           [description]
+ */
+    public function getCategories(Request $request)
+    {
+        $sortBy      = null;
+        $sortOrder   = 'asc';
+        $filter_sort = request('filter_sort') ?? '';
+        $filterArr   = [
+            'sort_desc' => ['sort', 'desc'],
+            'sort_asc'  => ['sort', 'asc'],
+            'id_desc'   => ['id', 'desc'],
+            'id_asc'    => ['id', 'asc'],
+        ];
+        if (array_key_exists($filter_sort, $filterArr)) {
+            $sortBy    = $filterArr[$filter_sort][0];
+            $sortOrder = $filterArr[$filter_sort][1];
+        }
+
+        $itemsList = (new ShopCategory)->getCategories($parent = 0, $limit = $this->configs['item_list'], $opt = 'paginate', $sortBy, $sortOrder);
+        return view($this->theme . '.shop_item_list',
+            array(
+                'title'       => trans('language.categories'),
+                'itemsList'   => $itemsList,
+                'keyword'     => '',
+                'description' => '',
+                'layout_page' => 'item_list',
+                'filter_sort' => $filter_sort,
+            ));
     }
 
 /**
@@ -47,18 +80,36 @@ class ShopFront extends GeneralController
  */
     public function productToCategory($name, $id)
     {
+        $sortBy      = null;
+        $sortOrder   = 'asc';
+        $filter_sort = request('filter_sort') ?? '';
+        $filterArr   = [
+            'price_desc' => ['price', 'desc'],
+            'price_asc'  => ['price', 'asc'],
+            'sort_desc'  => ['sort', 'desc'],
+            'sort_asc'   => ['sort', 'asc'],
+            'id_desc'    => ['id', 'desc'],
+            'id_asc'     => ['id', 'asc'],
+        ];
+        if (array_key_exists($filter_sort, $filterArr)) {
+            $sortBy    = $filterArr[$filter_sort][0];
+            $sortOrder = $filterArr[$filter_sort][1];
+        }
+
         $category = (new ShopCategory)->find($id);
         if ($category) {
-            $products = $category->getProductsToCategory($id = $category->id, $limit = $this->configs['product_list'], $opt = 'paginate');
+            $products  = $category->getProductsToCategory($id = $category->id, $limit = $this->configs['product_list'], $opt = 'paginate', $sortBy, $sortOrder);
+            $itemsList = (new ShopCategory)->getCategories($parent = $id);
             return view($this->theme . '.shop_products_list',
                 array(
-                    'title'        => $category->name,
-                    'description'  => $category->description,
-                    'keyword'      => $this->configsGlobal['keyword'],
-                    'categorySelf' => $category,
-                    'products'     => $products,
-                    'layout_page'  => 'product_list',
-                    'og_image'     => url($category->getImage()),
+                    'title'       => $category->name,
+                    'description' => $category->description,
+                    'keyword'     => $this->configsGlobal['keyword'],
+                    'products'    => $products,
+                    'itemsList'   => $itemsList,
+                    'layout_page' => 'product_list',
+                    'og_image'    => url($category->getImage()),
+                    'filter_sort' => $filter_sort,
                 )
             );
         } else {
@@ -74,8 +125,23 @@ class ShopFront extends GeneralController
  */
     public function allProducts()
     {
-        $products = ShopProduct::where('status', 1)
-            ->sort()->paginate($this->configs['product_list']);
+        $sortBy      = null;
+        $sortOrder   = 'asc';
+        $filter_sort = request('filter_sort') ?? '';
+        $filterArr   = [
+            'price_desc' => ['price', 'desc'],
+            'price_asc'  => ['price', 'asc'],
+            'sort_desc'  => ['sort', 'desc'],
+            'sort_asc'   => ['sort', 'asc'],
+            'id_desc'    => ['id', 'desc'],
+            'id_asc'     => ['id', 'asc'],
+        ];
+        if (array_key_exists($filter_sort, $filterArr)) {
+            $sortBy    = $filterArr[$filter_sort][0];
+            $sortOrder = $filterArr[$filter_sort][1];
+        }
+
+        $products = (new ShopProduct)->getProducts($type = null, $limit = $this->configs['product_list'], $opt = 'paginate', $sortBy, $sortOrder);
         return view($this->theme . '.shop_products_list',
             array(
                 'title'       => trans('language.all_product'),
@@ -83,6 +149,7 @@ class ShopFront extends GeneralController
                 'keyword'     => $this->configsGlobal['keyword'],
                 'products'    => $products,
                 'layout_page' => 'product_list',
+                'filter_sort' => $filter_sort,
             )
         );
     }
@@ -112,6 +179,9 @@ class ShopFront extends GeneralController
             }
             //End product last view
 
+            $sortBy    = request('sortBy') ?? null;
+            $sortOrder = request('sortOrder') ?? 'asc';
+
             //Check product available
             return view($this->theme . '.shop_product_detail',
                 array(
@@ -120,7 +190,7 @@ class ShopFront extends GeneralController
                     'keyword'            => $this->configsGlobal['keyword'],
                     'product'            => $product,
                     'attributesGroup'    => ShopAttributeGroup::all()->keyBy('id'),
-                    'productsToCategory' => (new ShopCategory)->getProductsToCategory($id = $product->category_id, $limit = $this->configs['product_relation'], $opt = 'random'),
+                    'productsToCategory' => (new ShopCategory)->getProductsToCategory($id = $product->category_id, $limit = $this->configs['product_relation'], $opt = 'random', $sortBy, $sortOrder),
                     'og_image'           => url($product->getImage()),
                     'layout_page'        => 'product_detail',
                 )
@@ -130,15 +200,65 @@ class ShopFront extends GeneralController
         }
 
     }
+/**
+ * [brands description]
+ * @param  Request $request [description]
+ * @return [type]           [description]
+ */
+    public function getBrands(Request $request)
+    {
+        $sortBy      = null;
+        $sortOrder   = 'asc';
+        $filter_sort = request('filter_sort') ?? '';
+        $filterArr   = [
+            'name_desc' => ['name', 'desc'],
+            'name_asc'  => ['name', 'asc'],
+            'sort_desc' => ['sort', 'desc'],
+            'sort_asc'  => ['sort', 'asc'],
+            'id_desc'   => ['id', 'desc'],
+            'id_asc'    => ['id', 'asc'],
+        ];
+        if (array_key_exists($filter_sort, $filterArr)) {
+            $sortBy    = $filterArr[$filter_sort][0];
+            $sortOrder = $filterArr[$filter_sort][1];
+        }
+
+        $itemsList = (new ShopBrand)->getBrands($limit = $this->configs['item_list'], $opt = 'paginate', $sortBy, $sortOrder);
+        return view($this->theme . '.shop_item_list',
+            array(
+                'title'       => trans('language.brands'),
+                'itemsList'   => $itemsList,
+                'keyword'     => '',
+                'description' => '',
+                'layout_page' => 'item_list',
+                'filter_sort' => $filter_sort,
+            ));
+    }
 
 /**
- * [productBrand description]
+ * [productToBrand description]
  * @param  [type] $name [description]
  * @param  [type] $id   [description]
  * @return [type]       [description]
  */
-    public function productBrand($name, $id)
+    public function productToBrand($name, $id)
     {
+        $sortBy      = null;
+        $sortOrder   = 'asc';
+        $filter_sort = request('filter_sort') ?? '';
+        $filterArr   = [
+            'price_desc' => ['price', 'desc'],
+            'price_asc'  => ['price', 'asc'],
+            'sort_desc'  => ['sort', 'desc'],
+            'sort_asc'   => ['sort', 'asc'],
+            'id_desc'    => ['id', 'desc'],
+            'id_asc'     => ['id', 'asc'],
+        ];
+        if (array_key_exists($filter_sort, $filterArr)) {
+            $sortBy    = $filterArr[$filter_sort][0];
+            $sortOrder = $filterArr[$filter_sort][1];
+        }
+
         $brand = ShopBrand::find($id);
         return view($this->theme . '.shop_products_list',
             array(
@@ -146,7 +266,81 @@ class ShopFront extends GeneralController
                 'description' => '',
                 'keyword'     => '',
                 'layout_page' => 'product_list',
-                'products'    => $brand->products()->paginate(9),
+                'products'    => $brand->getProductsToBrand($id, $limit = $this->configs['product_list'], $opt = 'paginate', $sortBy, $sortOrder),
+                'filter_sort' => $filter_sort,
+            )
+        );
+    }
+
+/**
+ * [vendors description]
+ * @param  Request $request [description]
+ * @return [type]           [description]
+ */
+    public function getVendors(Request $request)
+    {
+        $sortBy      = null;
+        $sortOrder   = 'asc';
+        $filter_sort = request('filter_sort') ?? '';
+        $filterArr   = [
+            'name_desc' => ['name', 'desc'],
+            'name_asc'  => ['name', 'asc'],
+            'sort_desc' => ['sort', 'desc'],
+            'sort_asc'  => ['sort', 'asc'],
+            'id_desc'   => ['id', 'desc'],
+            'id_asc'    => ['id', 'asc'],
+        ];
+        if (array_key_exists($filter_sort, $filterArr)) {
+            $sortBy    = $filterArr[$filter_sort][0];
+            $sortOrder = $filterArr[$filter_sort][1];
+        }
+
+        $itemsList = (new ShopVendor)->getVendors($limit = $this->configs['item_list'], $opt = 'paginate', $sortBy, $sortOrder);
+
+        return view($this->theme . '.shop_item_list',
+            array(
+                'title'       => trans('language.vendors'),
+                'itemsList'   => $itemsList,
+                'keyword'     => '',
+                'description' => '',
+                'layout_page' => 'item_list',
+                'filter_sort' => $filter_sort,
+            ));
+    }
+
+/**
+ * [productToVendor description]
+ * @param  [type] $name [description]
+ * @param  [type] $id   [description]
+ * @return [type]       [description]
+ */
+    public function productToVendor($name, $id)
+    {
+        $sortBy      = null;
+        $sortOrder   = 'asc';
+        $filter_sort = request('filter_sort') ?? '';
+        $filterArr   = [
+            'price_desc' => ['price', 'desc'],
+            'price_asc'  => ['price', 'asc'],
+            'sort_desc'  => ['sort', 'desc'],
+            'sort_asc'   => ['sort', 'asc'],
+            'id_desc'    => ['id', 'desc'],
+            'id_asc'     => ['id', 'asc'],
+        ];
+        if (array_key_exists($filter_sort, $filterArr)) {
+            $sortBy    = $filterArr[$filter_sort][0];
+            $sortOrder = $filterArr[$filter_sort][1];
+        }
+
+        $vendor = ShopVendor::find($id);
+        return view($this->theme . '.shop_products_list',
+            array(
+                'title'       => $vendor->name,
+                'description' => '',
+                'keyword'     => '',
+                'layout_page' => 'product_list',
+                'products'    => $vendor->getProductsToVendor($id, $limit = $this->configs['product_list'], $opt = 'paginate', $sortBy, $sortOrder),
+                'filter_sort' => $filter_sort,
             )
         );
     }
@@ -177,12 +371,28 @@ class ShopFront extends GeneralController
  */
     public function search(Request $request)
     {
-        $keyword = $request->get('keyword');
+        $sortBy      = null;
+        $sortOrder   = 'asc';
+        $filter_sort = request('filter_sort') ?? '';
+        $filterArr   = [
+            'price_desc' => ['price', 'desc'],
+            'price_asc'  => ['price', 'asc'],
+            'sort_desc'  => ['sort', 'desc'],
+            'sort_asc'   => ['sort', 'asc'],
+            'id_desc'    => ['id', 'desc'],
+            'id_asc'     => ['id', 'asc'],
+        ];
+        if (array_key_exists($filter_sort, $filterArr)) {
+            $sortBy    = $filterArr[$filter_sort][0];
+            $sortOrder = $filterArr[$filter_sort][1];
+        }
+        $keyword = request('keyword') ?? '';
         return view($this->theme . '.shop_products_list',
             array(
                 'title'       => trans('language.search') . ': ' . $keyword,
-                'products'    => ShopProduct::getSearch($keyword),
+                'products'    => (new ShopProduct)->getSearch($keyword, $limit = $this->configs['product_list'], $sortBy, $sortOrder),
                 'layout_page' => 'product_list',
+                'filter_sort' => $filter_sort,
             ));
     }
 
@@ -272,42 +482,6 @@ class ShopFront extends GeneralController
     public function getPage($key = null)
     {
         return ShopPage::where('uniquekey', $key)->where('status', 1)->first();
-    }
-
-/**
- * [brands description]
- * @param  Request $request [description]
- * @return [type]           [description]
- */
-    public function brands(Request $request)
-    {
-        $keyword = $request->get('keyword');
-        return view($this->theme . '.shop_item_list',
-            array(
-                'title'       => trans('language.brands'),
-                'itemsList'   => $this->banners,
-                'keyword'     => '',
-                'description' => '',
-                'layout_page' => 'product_brand',
-            ));
-    }
-
-/**
- * [vendors description]
- * @param  Request $request [description]
- * @return [type]           [description]
- */
-    public function vendors(Request $request)
-    {
-        $keyword = $request->get('keyword');
-        return view($this->theme . '.shop_item_list',
-            array(
-                'title'       => trans('language.vendors'),
-                'itemsList'   => $this->banners,
-                'keyword'     => '',
-                'description' => '',
-                'layout_page' => 'product_vendor',
-            ));
     }
 
 }

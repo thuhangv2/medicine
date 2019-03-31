@@ -41,7 +41,7 @@ class HomeController extends Controller
                 $arrTotalsOrder  = [];
                 $arrTotalsAmount = [];
                 $rangDays        = new \DatePeriod(
-                    new \DateTime('-1 MONTH'),
+                    new \DateTime('-31 day'),
                     new \DateInterval('P1D'),
                     new \DateTime('+1 day')
                 );

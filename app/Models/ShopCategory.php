@@ -34,42 +34,6 @@ class ShopCategory extends Model
     {
         return $this->hasMany(ShopCategoryDescription::class, 'shop_category_id', 'id');
     }
-    public function getTreeCategory($root = 0)
-    {
-        $list   = [];
-        $result = $this->select('id', 'parent')
-            ->where('parent', $root)
-            ->get();
-        foreach ($result as $value) {
-            $list[$value['id']] = $value->getName();
-            if ($this->getChildrens($value['id'])->count() > 0) {
-                $this->getTreeCategoryTmp($value['id'], $list);
-            }
-        }
-        return $list;
-    }
-
-    public function getTreeCategoryTmp($id, &$list, $st = '--')
-    {
-        $result = $this->select('id', 'parent')
-            ->where('parent', $id)
-            ->get();
-        foreach ($result as $value) {
-            $list[$value['id']] = $st . ' ' . $value->getName();
-            $this->getTreeCategoryTmp($value['id'], $list, $st . '--');
-        }
-
-    }
-
-    public function checkChild($id)
-    {
-        return $this->where('parent', $id)->count();
-    }
-
-    public function arrChild($id)
-    {
-        return $this->where('parent', $id)->pluck('id')->all();
-    }
 
 /**
  * Get category parent
@@ -80,32 +44,84 @@ class ShopCategory extends Model
         return $this->find($this->parent);
 
     }
+
 /**
- * Get category child
- * @param  [type] $id [description]
- * @return [type]     [description]
+ * [getProductsToCategory description]
+ * @param  [type]  $id        [description]
+ * @param  [type]  $limit     [description]
+ * @param  [type]  $opt       [description]
+ * @param  [type]  $sortBy    [description]
+ * @param  string  $sortOrder [description]
+ * @param  integer $status    [description]
+ * @return [type]             [description]
  */
-    public function getCateChild($id)
+    public function getProductsToCategory($id, $limit = null, $opt = null, $sortBy = null, $sortOrder = 'asc', $status = 1)
     {
-        return $this->with('products')->where('parent', $id)->get();
-    }
-/**
- * Get all products in category, include child category
- * @param  [type] $id    [description]
- * @param  [type] $limit [description]
- * @return [type]        [description]
- */
-    public function getProductsToCategory($id, $limit = null, $opt = null)
-    {
-        $arrChild   = $this->arrChild($id);
-        $arrChild[] = $id;
-        $query      = (new ShopProduct)->where('status', 1)->whereIn('category_id', $arrChild)
-            ->orWhereRaw('category_other like "' . $id . ',%" or category_other like "%,' . $id . '" or category_other like "%,' . $id . ',%"')
-            ->sort();
+
+        $query = (new ShopProduct);
+        //product actie
+        if ($status) {
+            $query = $query->where('status', 1);
+        }
+        //product of childen category
+        if (empty(\Helper::configs()['show_product_of_category_children'])) {
+            $query = $query->where('category_id', $id);
+        } else {
+            $arrCategory   = $this->getIdCategories($id);
+            $arrCategory[] = $id;
+            $query         = $query->whereIn('category_id', $arrCategory);
+        }
+        //Include products link to other category
+        $query = $query->orWhereRaw('FIND_IN_SET(' . $id . ',category_other) >=1');
+
         //Hidden product out of stock
-        if ((int) Config::select('value')->where('key', 'product_display_out_of_stock')->first()->value == 0) {
+        if (empty(\Helper::configs()['product_display_out_of_stock'])) {
             $query = $query->where('stock', '>', 0);
         }
+        //sort product
+        $query = $query->sort($sortBy, $sortOrder);
+
+        //Get all product
+        if (!(int) $limit) {
+            return $query->get();
+        } else
+        //paginate
+        if ($opt == 'paginate') {
+            return $query->paginate((int) $limit);
+        } else
+        //random
+        if ($opt == 'random') {
+            return $query->inRandomOrder()->limit($limit)->get();
+        }
+        //
+        else {
+            return $query->limit($limit)->get();
+        }
+
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        // before delete() method call this
+        static::deleting(function ($category) {
+            $category->descriptions()->delete();
+        });
+    }
+
+/**
+ * [getCategories description]
+ * @param  [type] $parent    [description]
+ * @param  [type] $limit     [description]
+ * @param  [type] $opt       [description]
+ * @param  [type] $sortBy    [description]
+ * @param  string $sortOrder [description]
+ * @return [type]            [description]
+ */
+    public function getCategories($parent, $limit = null, $opt = null, $sortBy = null, $sortOrder = 'asc')
+    {
+        $query = $this->where('status', 1)->where('parent', $parent);
+        $query = $query->sort($sortBy, $sortOrder);
         if (!(int) $limit) {
             return $query->get();
         } else
@@ -119,33 +135,77 @@ class ShopCategory extends Model
         }
 
     }
-/**
- * [getCategories description]
- * @param  [type] $parent [description]
- * @return [type]         [description]
- */
-    public static function getCategories($parent)
-    {
-        return self::where('status', 1)->where('parent', $parent)->sort()->get();
-    }
 
-    protected static function boot()
+/**
+ * [getCategoriesAll description]
+ * @param  boolean $all [description]
+ * @return [object]       [description]
+ */
+    public function getCategoriesAll($all = true, $sortBy = null, $sortOrder = 'asc')
     {
-        parent::boot();
-        // before delete() method call this
-        static::deleting(function ($category) {
-            $category->descriptions()->delete();
-        });
+        if ($all) {
+            $listFullCategory = $this->sort($sortBy, $sortOrder)->get()->groupBy('parent');
+        } else {
+            $listFullCategory = $this->where('status', 1)->sort($sortBy, $sortOrder)->get()->groupBy('parent');
+        }
+        return $listFullCategory;
     }
 
 /**
- * Get category child
- * @param  [type] $id [description]
- * @return [type]     [description]
+ * Get all ID category children of parent
+ * @param  integer $parent     [description]
+ * @param  [type]  &$arrayID      [description]
+ * @param  [object]  $categories [description]
+ * @return [array]              [description]
  */
-    public function getChildrens($id)
+    public function getIdCategories($parent = 0, &$arrayID = null, $categories = null)
     {
-        return $this->with('products')->where('parent', $id)->get();
+        $categories  = $categories ?? $this->getCategoriesAll();
+        $arrayID     = $arrayID ?? [];
+        $lisCategory = $categories[$parent] ?? [];
+        if (count($lisCategory)) {
+            foreach ($lisCategory as $category) {
+                $arrayID[] = $category->id;
+                if (!empty($categories[$category->id])) {
+                    $this->getIdCategories($category->id, $arrayID, $categories);
+                }
+            }
+        }
+        return $arrayID;
+    }
+
+/**
+ * Get tree category from parent
+ * @param  integer $parent     [description]
+ * @param  [type]  &$tree      [description]
+ * @param  [type]  $categories [description]
+ * @param  string  &$st        [description]
+ * @return [array]              [tree]
+ */
+    public function getTreeCategories($parent = 0, &$tree = null, $categories = null, &$st = '')
+    {
+        $categories  = $categories ?? $this->getCategoriesAll();
+        $tree        = $tree ?? [];
+        $lisCategory = $categories[$parent];
+        foreach ($lisCategory as $category) {
+            $tree[$category->id] = $st . $category->getName();
+            if (!empty($categories[$category->id])) {
+                $st .= '--';
+                $this->getTreeCategories($category->id, $tree, $categories, $st);
+                $st = '';
+            }
+        }
+
+        return $tree;
+    }
+
+/**
+ * [getCategoriesTop description]
+ * @return [type] [description]
+ */
+    public function getCategoriesTop()
+    {
+        return $this->where('status', 1)->where('top', 1)->get();
     }
 
 /**
@@ -225,10 +285,10 @@ class ShopCategory extends Model
     }
 
 //Scort
-    public function scopeSort($query, $column = null)
+    public function scopeSort($query, $sortBy = null, $sortOrder = 'asc')
     {
-        $column = $column ?? 'sort';
-        return $query->orderBy($column, 'asc')->orderBy('id', 'desc');
+        $sortBy = $sortBy ?? 'sort';
+        return $query->orderBy($sortBy, $sortOrder);
     }
 
 }

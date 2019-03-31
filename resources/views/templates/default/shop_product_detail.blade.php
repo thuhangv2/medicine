@@ -1,6 +1,4 @@
 @extends($theme.'.shop_layout')
-@section('banner')
-@endsection
 
 @section('center')
           <div class="product-details"><!--product-details-->

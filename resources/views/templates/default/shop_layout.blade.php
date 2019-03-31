@@ -56,156 +56,26 @@
 </head><!--/head-->
 <body>
 
-  <header id="header"><!--header-->
-    <div class="header_top"><!--header_top-->
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-6">
-            <div class="contactinfo">
-              <ul class="nav nav-pills">
-                <li><a href="#"><i class="fa fa-phone"></i> {{ $configsGlobal['phone'] }}</a></li>
-                <li><a href="#"><i class="fa fa-envelope"></i> {{ $configsGlobal['email'] }}</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-sm-6">
-            <div class="btn-group pull-right">
-              <div class="btn-group locale">
-                @if (count($languages)>1)
-                <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown"><img src="{{ asset($path_file.'/'.$languages[app()->getLocale()]['icon']) }}" style="height: 25px;">
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                  @foreach ($languages as $key => $language)
-                    <li><a href="{{ url('locale/'.$key) }}"><img src="{{ asset($path_file.'/'.$language['icon']) }}" style="height: 25px;"></a></li>
-                  @endforeach
-                </ul>
-                @endif
-              </div>
-              @if (count($currencies)>1)
-               <div class="btn-group locale">
-                <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                  {{ \Helper::getCurrency()['name'] }}
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                  @foreach ($currencies as $key => $currency)
-                    <li><a href="{{ url('currency/'.$currency->code) }}">{{ $currency->name }}</a></li>
-                  @endforeach
-                </ul>
-              </div>
-              @endif
-            </div>
-          </div>
-        </div>
-      </div>
-    </div><!--/header_top-->
-    <div class="header-middle"><!--header-middle-->
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-4">
-            <div class="logo pull-left">
-              <a href="{{ route('home') }}"><img style="width: 150px;" src="{{ asset($logo) }}" alt="" /></a>
-            </div>
-          </div>
-          <div class="col-sm-8">
-            <div class="shop-menu pull-right">
-              <ul class="nav navbar-nav">
+@include($theme.'.header')
 
-                <li><a href="{{ route('wishlist') }}"><span  class="cart-qty  shopping-wishlist" id="shopping-wishlist">{{ Cart::instance('wishlist')->count() }}</span><i class="fa fa-star"></i> {{ trans('language.wishlist') }}</a></li>
-                <li><a href="{{ route('compare') }}"><span  class="cart-qty shopping-compare" id="shopping-compare">{{ Cart::instance('compare')->count() }}</span><i class="fa fa-crosshairs"></i> {{ trans('language.compare') }}</a></li>
-                <li><a href="{{ route('cart') }}"><span class="cart-qty shopping-cart" id="shopping-cart">{{ $carts['count'] }}</span><i class="fa fa-shopping-cart"></i> {{ trans('language.cart_title') }}</a>
-                </li>
-                @guest
-                <li><a href="{{ route('login') }}"><i class="fa fa-lock"></i> {{ trans('language.login') }}</a></li>
-                @else
-                <li><a href="{{ route('profile') }}"><i class="fa fa-user"></i> {{ trans('language.account') }}</a></li>
-                <li><a href="{{ route('logout') }}" rel="nofollow" onclick="event.preventDefault();
-                   document.getElementById('logout-form').submit();"><i class="fa fa-power-off"></i> {{ trans('language.logout') }}</a></li>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                {{ csrf_field() }}
-                </form>
-                @endguest
+<!--Module banner -->
+  @isset ($layouts['banner_top'])
+      @foreach ( $layouts['banner_top']  as $layout)
+        @if ($layout->page == null ||  $layout->page =='*' || $layout->page =='' || (isset($layout_page) && in_array($layout_page, $layout->page) ) )
+          @if ($layout->type =='html')
+            {!! $layout->text !!}
+          @elseif($layout->type =='view')
+            @if (view()->exists('blockView.'.$layout->text))
+             @include('blockView.'.$layout->text)
+            @endif
+          @elseif($layout->type =='module')
+            {!! (new $layout->text)->render() !!}
+          @endif
+        @endif
+      @endforeach
+  @endisset
+<!--//Module banner -->
 
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div><!--/header-middle-->
-
-    <div class="header-bottom"><!--header-bottom-->
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-9">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-            </div>
-            <div class="mainmenu pull-left">
-              <ul class="nav navbar-nav collapse navbar-collapse">
-                <li><a href="{{ route('home') }}" class="active">{{ trans('language.home') }}</a></li>
-                <li class="dropdown"><a href="#">{{ trans('language.shop') }}<i class="fa fa-angle-down"></i></a>
-                    <ul role="menu" class="sub-menu">
-                        <li><a href="{{ route('products') }}">{{ trans('language.all_product') }}</a></li>
-                        <li><a href="{{ route('compare') }}">{{ trans('language.compare') }}</a></li>
-                        <li><a href="{{ route('cart') }}">{{ trans('language.cart_title') }}</a></li>
-                        <li><a href="{{ route('login') }}">{{ trans('language.login') }}</a></li>
-                    </ul>
-                </li>
-                @if (!empty($configs['News']))
-                <li><a href="{{ route('news') }}">{{ trans('language.blog') }}</a></li>
-                @endif
-
-                @if (!empty($configs['Content']))
-                <li class="dropdown"><a href="#">{{ trans('language.cms_category') }}<i class="fa fa-angle-down"></i></a>
-                    <ul role="menu" class="sub-menu">
-                      @php
-                        $cmsCategories = (new \App\Modules\Cms\Models\CmsCategory)->where('status',1)->get();
-                      @endphp
-                      @foreach ($cmsCategories as $cmsCategory)
-                        <li><a href="{{ $cmsCategory->getUrl() }}">{{ $cmsCategory->title }}</a></li>
-                      @endforeach
-                    </ul>
-                </li>
-                @endif
-
-                <li><a href="{{ route('pages',['key'=>'about']) }}">{{ trans('language.about') }}</a></li>
-                <li><a href="{{ route('contact') }}">{{ trans('language.contact') }}</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-sm-3">
-            <div class="search_box pull-right">
-              <form id="searchbox" method="get" action="{{ route('search') }}" >
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="{{ trans('language.search_form.keyword') }}..." name="keyword">
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div><!--/header-bottom-->
-  </header><!--/header-->
-
-  @yield('banner')
-  <div id="cart-alert">
-  @if(Session::has('message'))
-      <div class="alert alert-success cart-alert">{!! Session::get('message') !!}
-      <button type="button" class="close" data-dismiss="alert">x</button>
-      </div>
-  @endif
-  @if(Session::has('error'))
-      <div class="alert alert-danger cart-alert">{!! Session::get('error') !!}
-      <button type="button" class="close" data-dismiss="alert">x</button>
-      </div>
-  @endif
-  </div>
 
 @if ($configs['site_status'])
 
@@ -231,9 +101,15 @@
   <section>
     <div class="container">
       <div class="row">
-        <!--breadcrumb-->
-        @yield('breadcrumb')
-        <!--//breadcrumb-->
+        <div class="col-sm-12" id="breadcrumb">
+          <!--breadcrumb-->
+          @yield('breadcrumb')
+          <!--//breadcrumb-->
+
+          <!--//fillter-->
+          @yield('filter')
+          <!--//fillter-->
+        </div>
 
         <!--body-->
         @section('main')
@@ -269,6 +145,7 @@
 <script src="{{ asset($theme_asset.'/js/jquery.scrollUp.min.js')}}"></script>
 <script src="{{ asset($theme_asset.'/js/jquery.prettyPhoto.js')}}"></script>
 <script src="{{ asset($theme_asset.'/js/main.js')}}"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/mouse0270-bootstrap-notify/3.1.7/bootstrap-notify.min.js"></script>
 
 
 @stack('scripts')
@@ -312,7 +189,7 @@
                         'opacity': '0.5',
                             'position': 'absolute',
                             'width': '150px',
-                            'z-index': '99999999'
+                            'z-index': '9999'
                     })
                         .appendTo($('body'))
                         .animate({
@@ -339,15 +216,61 @@
                     }
                   }, 1000);
 
-                $('#cart-alert').html('<div class="cart-alert alert alert-success">'+data.msg+'</div>').fadeIn(100).delay(2000).fadeOut('slow');
+                    $.notify({
+                      icon: 'glyphicon glyphicon-star',
+                      message: data.msg
+                    },{
+                      type: 'success'
+                    });
+                // $('#cart-alert').html('<div class="cart-alert alert alert-success">'+data.msg+'</div>').fadeIn(100).delay(2000).fadeOut('slow');
                 }else{
-                  $('#cart-alert').html('<div class="cart-alert alert alert-danger">'+data.msg+'</div>').fadeIn(100).delay(2000).fadeOut('slow');
+                  $.notify({
+                  icon: 'glyphicon glyphicon-warning-sign',
+                    message: data.msg
+                  },{
+                    type: 'danger'
+                  });
+                  // $('#cart-alert').html('<div class="cart-alert alert alert-danger">'+data.msg+'</div>').fadeIn(100).delay(2000).fadeOut('slow');
                 }
 
                 }
         });
     }
 </script>
+
+<!--message-->
+    @if(Session::has('message'))
+    <script type="text/javascript">
+        $.notify({
+          icon: 'glyphicon glyphicon-star',
+          message: "{!! Session::get('message') !!}"
+        },{
+          type: 'success'
+        });
+    </script>
+    @endif
+    @if(Session::has('error'))
+    <script type="text/javascript">
+        $.notify({
+        icon: 'glyphicon glyphicon-warning-sign',
+          message: "{!! Session::get('error') !!}"
+        },{
+          type: 'danger'
+        });
+    </script>
+    @endif
+    @if(Session::has('warning'))
+    <script type="text/javascript">
+        $.notify({
+        icon: 'glyphicon glyphicon-warning-sign',
+          message: "{!! Session::get('warning') !!}"
+        },{
+          type: 'warning'
+        });
+    </script>
+    @endif
+<!--//message-->
+
 
 <!--Module bottom -->
   @isset ($layouts['bottom'])

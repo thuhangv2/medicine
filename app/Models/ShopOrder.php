@@ -1,7 +1,8 @@
 <?php
-
+#app/Models/ShopOrder.php
 namespace App\Models;
 
+use App\Models\ShopOrderHistory;
 use App\Models\ShopProduct;
 use Illuminate\Database\Eloquent\Model;
 
@@ -47,9 +48,9 @@ class ShopOrder extends Model
                     $item->save();
                 }
             }
-            $order->details()->delete();
-            $order->orderTotal()->delete();
-            $order->history()->delete();
+            $order->details()->delete(); //delete order details
+            $order->orderTotal()->delete(); //delete order total
+            $order->history()->delete(); //delete history
 
         });
     }
@@ -65,6 +66,29 @@ class ShopOrder extends Model
     {
         return self::where('id', $order_id)->update($arrFields);
     }
+
+/**
+ * Update status order
+ * @param  [type]  $id     [description]
+ * @param  integer $status [description]
+ * @param  string  $msg    [description]
+ * @return [type]          [description]
+ */
+    public function updateStatus($id, $status = 0, $msg = '')
+    {
+        $uID   = auth()->user()->id ?? 0;
+        $order = $this->find($id);
+        //Update status
+        $order->update(['status' => (int) $status]);
+
+        //Update history
+        $history           = new ShopOrderHistory();
+        $history->admin_id = 0;
+        $history->user_id  = $uID;
+        $history->content  = $msg;
+        $order->history()->save($history);
+    }
+
 //Scort
     public function scopeSort($query)
     {

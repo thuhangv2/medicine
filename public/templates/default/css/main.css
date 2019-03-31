@@ -2527,3 +2527,15 @@ li > a{
     font-size: 12px;
     display: block;
 }
+#breadcrumb{
+  z-index: 99;
+}
+.item-folder{
+    border-bottom: 2px solid #d8cfcf;
+    margin-bottom: 5px;
+    text-align: center;
+}
+.item-folder-wrapper{
+    border: 1px solid #F7F7F5;
+    overflow: hidden;
+}

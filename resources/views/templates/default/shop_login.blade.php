@@ -2,7 +2,7 @@
 
 @section('main')
 
-    <section id="form"><!--form-->
+    <section id="form-login"><!--form-->
         <div class="container">
             <div class="row">
                 <h2 class="title text-center">{{ $title }}</h2>
@@ -31,11 +31,6 @@
                                         @endif
 
                             </div>
-
-{{--                             <span>
-                                <input type="checkbox" class="checkbox">
-                                Keep me signed in
-                            </span> --}}
                         <p class="lost_password form-group">
                             <a class="btn btn-link" href="{{ route('forgot') }}">
                                 Forgot password?

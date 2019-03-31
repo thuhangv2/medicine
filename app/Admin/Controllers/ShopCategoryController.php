@@ -76,15 +76,16 @@ class ShopCategoryController extends Controller
         return Admin::grid(ShopCategory::class, function (Grid $grid) {
 
             $grid->id('ID')->sortable();
-            $grid->image(trans('language.admin.image'))->image('', 50);
-            $grid->name(trans('language.admin.name'))->display(function () {
+            $grid->image(trans('language.category.image'))->image('', 50);
+            $grid->name(trans('language.category.name'))->display(function () {
                 return ShopCategory::find($this->id)->getName();
             });
-            $grid->parent(trans('language.admin.parent_category'))->display(function ($parent) {
+            $grid->parent(trans('language.category.parent'))->display(function ($parent) {
                 return (ShopCategory::find($parent)) ? ShopCategory::find($parent)->getName() : '';
-            });
-            $grid->status(trans('language.admin.status'))->switch();
-            $grid->sort(trans('language.admin.sort'))->editable();
+            })->sortable();
+            $grid->top(trans('language.category.top'))->switch()->sortable();
+            $grid->status(trans('language.category.status'))->switch()->sortable();
+            $grid->sort(trans('language.category.sort'))->editable();
             $grid->disableExport();
             $grid->model()->orderBy('id', 'desc');
             $grid->disableRowSelector();
@@ -118,23 +119,22 @@ class ShopCategoryController extends Controller
                 if ($languages->count() > 1) {
                     $form->html('<b>' . $language->name . '</b> <img style="height:25px" src="/' . config('filesystems.disks.path_file') . '/' . $language->icon . '">');
                 }
-                $form->text($language->code . '__name', trans('language.admin.name'))->rules('required', ['required' => trans('validation.required')])->default(!empty($langDescriptions->name) ? $langDescriptions->name : null);
-                $form->text($language->code . '__keyword', trans('language.admin.keyword'))->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
-                $form->text($language->code . '__description', trans('language.admin.description'))->rules('max:300', ['max' => trans('validation.max')])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
+                $form->text($language->code . '__name', trans('language.category.name'))->rules('required', ['required' => trans('validation.required')])->default(!empty($langDescriptions->name) ? $langDescriptions->name : null);
+                $form->text($language->code . '__keyword', trans('language.category.keyword'))->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
+                $form->text($language->code . '__description', trans('language.category.description'))->rules('max:300', ['max' => trans('validation.max')])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
                 $arrFields[] = $language->code . '__name';
                 $arrFields[] = $language->code . '__keyword';
                 $arrFields[] = $language->code . '__description';
                 $form->divide();
             }
             $form->ignore($arrFields);
-//end language
-
-            $arrCate = (new ShopCategory)->getTreeCategory();
+            $arrCate = (new ShopCategory)->getTreeCategories();
             $arrCate = ['0' => '== ROOT =='] + $arrCate;
-            $form->select('parent', trans('language.admin.parent_category'))->options($arrCate);
-            $form->image('image', trans('language.admin.image'))->uniqueName()->move('category')->removable();
-            $form->number('sort', trans('language.admin.sort'))->rules('numeric|min:0')->default(0);
-            $form->switch('status', trans('language.admin.status'));
+            $form->select('parent', trans('language.category.parent'))->options($arrCate);
+            $form->image('image', trans('language.category.image'))->uniqueName()->move('category')->removable();
+            $form->number('sort', trans('language.category.sort'))->rules('numeric|min:0')->default(0);
+            $form->switch('top', trans('language.category.top'))->help(trans('language.category.help_top'))->default(0);
+            $form->switch('status', trans('language.category.status'));
             $arrData = array();
 
             $form->saving(function (Form $form) use ($languages, &$arrData) {

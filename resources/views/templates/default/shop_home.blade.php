@@ -80,13 +80,13 @@
           <div class="category-tab"><!--category-tab-->
             <div class="col-sm-12">
               <ul class="nav nav-tabs">
-                @foreach ($categories as $key => $category)
+                @foreach ($categories[0] as $key => $category)
                   <li {{ ($key ==0)?'class="active"':'' }}><a href="#cate{{ $key }}" data-toggle="tab">{{ $category->name }}</a></li>
                 @endforeach
               </ul>
             </div>
             <div class="tab-content">
-              @foreach ($categories as $key => $category)
+              @foreach ($categories[0] as $key => $category)
                 <div class="tab-pane fade {{ ($key ==0)?'active in':'' }}" id="cate{{ $key }}" >
                   @foreach ($category->getProductsToCategory($category->id,4) as $product)
                     <div class="col-sm-3">
@@ -116,44 +116,6 @@
 
 @endsection
 
-@section('banner')
-@if (count($banners))
- <section id="slider"><!--slider-->
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-12">
-          <div id="slider-carousel" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-              @foreach ($banners as $key => $banner)
-              <li data-target="#slider-carousel" data-slide-to="{{ $key }}" class="{{ ($key)?'':'active' }}"></li>
-              @endforeach
-            </ol>
-            <div class="carousel-inner">
-               @foreach ($banners as $key => $banner)
-                  <div class="item {{ ($key)?'':'active' }}">
-                    <div class="col-sm-6">
-                      {!! $banner->html !!}
-                    </div>
-                    <div class="col-sm-6">
-                      <img src="{{ asset($path_file.'') }}/{{ $banner->image }}" class="girl img-responsive" alt="" />
-                    </div>
-                  </div>
-               @endforeach
-            </div>
-            <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
-              <i class="fa fa-angle-left"></i>
-            </a>
-            <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
-              <i class="fa fa-angle-right"></i>
-            </a>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </section><!--/slider-->
-@endif
-@endsection
 
 
 @push('styles')

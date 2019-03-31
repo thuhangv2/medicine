@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Banner;
 use App\Models\Config;
 use App\Models\Language;
 use App\Models\Layout;
-use App\Models\ShopBrand;
-use App\Models\ShopCategory;
+use App\Models\LayoutUrl;
 use App\Models\ShopCurrency;
 use App\Models\Subscribe;
 use Illuminate\Http\Request;
@@ -23,8 +21,6 @@ class GeneralController extends Controller
     public $theme_asset;
     public $path_file;
     public $logo;
-    public $brands;
-    public $categories;
     public $languages;
     public $currencies;
 
@@ -54,24 +50,19 @@ class GeneralController extends Controller
         $this->configs       = $configs;
         $this->theme_asset   = 'templates/' . $this->configsGlobal['template'];
         $this->theme         = 'templates.' . $this->configsGlobal['template'];
-        $this->banners       = Banner::where('status', 1)->sort()->get();
         $this->logo          = $this->path_file . '/' . $this->configsGlobal['logo'];
-        $this->brands        = ShopBrand::getBrands();
-        $this->categories    = ShopCategory::getCategories($categoryParent = 0);
         $this->languages     = Language::where('status', 1)->get()->keyBy('code');
         $this->currencies    = ShopCurrency::getAll();
 //Share variable
         View::share('path_file', $this->path_file);
-        View::share('banners', $this->banners);
         View::share('layouts', Layout::getLayout());
+        View::share('layoutsUrl', LayoutUrl::getAllUrl());
         View::share('configs', $this->configs);
         View::share('configsGlobal', $this->configsGlobal);
         View::share('theme_asset', $this->theme_asset);
         View::share('theme', $this->theme);
         View::share('logo', $this->logo);
 
-        View::share('categories', $this->categories);
-        View::share('brands', $this->brands);
         View::share('languages', $this->languages);
         View::share('currencies', $this->currencies);
 

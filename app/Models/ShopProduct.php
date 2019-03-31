@@ -129,14 +129,16 @@ class ShopProduct extends Model
         }
     }
 
-    /**
-     * [getProducts description]
-     * @param  [type] $type  [description]
-     * @param  [type] $limit [description]
-     * @param  [type] $opt   [description]
-     * @return [type]        [description]
-     */
-    public function getProducts($type = null, $limit = null, $opt = null)
+/**
+ * [getProducts description]
+ * @param  [type] $type      [description]
+ * @param  [type] $limit     [description]
+ * @param  [type] $opt       [description]
+ * @param  [type] $sortBy    [description]
+ * @param  string $sortOrder [description]
+ * @return [type]            [description]
+ */
+    public function getProducts($type = null, $limit = null, $opt = null, $sortBy = null, $sortOrder = 'asc')
     {
         $query = ShopProduct::where('status', 1);
         if ($type) {
@@ -144,36 +146,39 @@ class ShopProduct extends Model
         }
 
         //Hidden product out of stock
-        if ((int) Config::select('value')->where('key', 'product_display_out_of_stock')->first()->value == 0) {
+        if (empty(\Helper::configs()['product_display_out_of_stock'])) {
             $query = $query->where('stock', '>', 0);
         }
-
+        $query = $query->sort($sortBy, $sortOrder);
+        //get all
         if (!(int) $limit) {
             return $query->get();
         } else
+        //paginate
         if ($opt == 'paginate') {
             return $query->paginate((int) $limit);
         } else
+        //random
         if ($opt == 'random') {
             return $query->inRandomOrder()->limit($limit)->get();
         } else {
-            return $query->sort()->limit($limit)->get();
+            return $query->limit($limit)->get();
         }
     }
 
-    public static function getSearch($keyword, $limit = 12)
+    public function getSearch($keyword, $limit = 12, $sortBy = null, $sortOrder = 'asc')
     {
         $langs         = Language::pluck('id', 'code')->all();
         $currentlyLang = app()->getLocale();
         $idLang        = $langs[$currentlyLang] ?? 1;
-        return self::where('status', 1)
+        return $this->where('status', 1)
             ->leftJoin('shop_product_description', 'shop_product_description.product_id', 'shop_product.id')
             ->where('shop_product_description.lang_id', $idLang)
             ->where(function ($sql) use ($keyword) {
                 $sql->where('shop_product_description.name', 'like', '%' . $keyword . '%')
                     ->orWhere('shop_product.sku', 'like', '%' . $keyword . '%');
             })
-            ->sort()
+            ->sort($sortBy, $sortOrder)
             ->paginate($limit);
     }
 
@@ -360,12 +365,10 @@ class ShopProduct extends Model
  */
     public static function getArrayProductName()
     {
-        $products = self::select('id', 'sku')
-            ->get();
+        $products   = self::select('id', 'sku')->get();
         $arrProduct = [];
-        foreach ($products as $key => $value) {
-            $p                      = self::find($value->id);
-            $arrProduct[$value->id] = $p->getName() . ' (' . $p->sku . ')';
+        foreach ($products as $key => $product) {
+            $arrProduct[$product->id] = $product->name . ' (' . $product->sku . ')';
         }
         return $arrProduct;
     }
@@ -397,17 +400,20 @@ class ShopProduct extends Model
         }
         return $html;
     }
+
 //Scort
-    public function scopeSort($query, $column = null)
+    public function scopeSort($query, $sortBy = null, $sortOrder = 'asc')
     {
-        $column = $column ?? 'sort';
-        return $query->orderBy($column, 'asc')->orderBy('id', 'desc');
+        $sortBy = $sortBy ?? 'sort';
+        return $query->orderBy($sortBy, $sortOrder);
     }
 
-    //Condition:
-    //Active
-    //In of stock or allow order out of stock
-    //Date availabe
+/**
+//Condition:
+//Active
+//In of stock or allow order out of stock
+//Date availabe
+ */
     public function allowSale()
     {
         if ($this->status &&

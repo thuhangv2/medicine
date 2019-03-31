@@ -34,9 +34,11 @@
             <div class="single-widget">
               <h2>{{ trans('language.my_account') }}</h2>
               <ul class="nav nav-pills nav-stacked">
-                <li><a href="{{ route('profile') }}">{{ trans('language.my_profile') }}</a></li>
-                <li><a href="{{ route('compare') }}">{{ trans('language.compare_page') }}</a></li>
-                <li><a href="{{ route('wishlist') }}">{{ trans('language.wishlist_page') }}</a></li>
+                @if (!empty($layoutsUrl['footer']))
+                  @foreach ($layoutsUrl['footer'] as $url)
+                    <li><a {{ ($url->target =='_blank')?'target=_blank':''  }} href="{{ url($url->url) }}">{{ trans($url->name) }}</a></li>
+                  @endforeach
+                @endif
               </ul>
             </div>
           </div>

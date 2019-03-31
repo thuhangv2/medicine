@@ -3,9 +3,15 @@
 ### Upgrade laravel 5.7
 ### Fixed
 > Fix error route admin
+> Fix error route front-end
 > Fix error process cart
+### Add
 > Support design layout: HTML, View, Module
-
+> Management url
+> Filter sort product
+### Optimize
+> Query model
+> Notify message
 
 
 ## v2.1.4 (2019-03-10)
