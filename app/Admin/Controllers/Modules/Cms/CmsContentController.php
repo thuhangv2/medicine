@@ -71,7 +71,7 @@ class CmsContentController extends Controller
         $grid->id('ID')->sortable();
         $grid->title(trans('language.admin.title'))->sortable();
         $grid->image(trans('language.admin.image'))->image('', 50);
-        $grid->category(trans('language.category'))->display(function ($cate) {
+        $grid->category(trans('language.categories'))->display(function ($cate) {
             return $cate['title'];
         });
         $grid->status(trans('language.admin.status'))->switch();
@@ -126,7 +126,7 @@ class CmsContentController extends Controller
             $form->ignore($arrFields);
 //end language
             $arrCate = (new CmsCategory)->getTreeCategory();
-            $form->select('category_id', trans('language.category'))->options($arrCate)->rules('required');
+            $form->select('category_id', trans('language.categories'))->options($arrCate)->rules('required');
             $form->image('image', trans('language.admin.image'))->uniqueName()->move('cms_content')->removable();
             $form->switch('status', trans('language.admin.status'));
             $form->number('sort', trans('language.admin.sort'))->rules('numeric|min:0')->default(0);

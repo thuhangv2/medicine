@@ -7,6 +7,7 @@
 > Fix error process cart
 ### Add
 > Support design layout: HTML, View, Module
+> Management url
 > Filter sort product
 ### Optimize
 > Query model
