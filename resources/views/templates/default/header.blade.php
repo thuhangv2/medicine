@@ -101,6 +101,7 @@
                         <li><a href="{{ route('vendors') }}">{{ trans('language.vendors') }}</a></li>
                     </ul>
                 </li>
+
                 @if (!empty($configs['News']))
                 <li><a href="{{ route('news') }}">{{ trans('language.blog') }}</a></li>
                 @endif
@@ -118,8 +119,11 @@
                 </li>
                 @endif
 
-                <li><a href="{{ route('pages',['key'=>'about']) }}">{{ trans('language.about') }}</a></li>
-                <li><a href="{{ route('contact') }}">{{ trans('language.contact') }}</a></li>
+                  @if (!empty($layoutsUrl['menu']))
+                    @foreach ($layoutsUrl['menu'] as $url)
+                      <li><a {{ ($url->target =='_blank')?'target=_blank':''  }} href="{{ url($url->url) }}">{{ trans($url->name) }}</a></li>
+                    @endforeach
+                  @endif
               </ul>
             </div>
           </div>

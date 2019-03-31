@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Config;
 use App\Models\Language;
 use App\Models\Layout;
+use App\Models\LayoutUrl;
 use App\Models\ShopCurrency;
 use App\Models\Subscribe;
 use Illuminate\Http\Request;
@@ -55,6 +56,7 @@ class GeneralController extends Controller
 //Share variable
         View::share('path_file', $this->path_file);
         View::share('layouts', Layout::getLayout());
+        View::share('layoutsUrl', LayoutUrl::getAllUrl());
         View::share('configs', $this->configs);
         View::share('configsGlobal', $this->configsGlobal);
         View::share('theme_asset', $this->theme_asset);

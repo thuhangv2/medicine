@@ -8,5 +8,8 @@ class LayoutUrl extends Model
 {
     public $timestamps = false;
     public $table      = 'layout_url';
-
+    public static function getAllUrl()
+    {
+        return self::where('status', 1)->orderBy('sort', 'desc')->orderBy('id', 'desc')->get()->groupBy('group');
+    }
 }
