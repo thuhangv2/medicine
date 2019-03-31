@@ -18,6 +18,8 @@
 <p align="center"><img src="https://s-cart.org/images/screen/v22/s-cart-5.jpg"></p>
 <p align="center"><img src="https://s-cart.org/images/screen/v22/s-cart-6.jpg"></p>
 <p align="center"><img src="https://s-cart.org/images/screen/v22/s-cart-8.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v22/s-cart-9.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v22/s-cart-10.jpg"></p>
 
 
 
