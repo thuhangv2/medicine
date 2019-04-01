@@ -30,7 +30,7 @@ class Helper
             $str = preg_replace("/($uni)/i", $nonUnicode, $str);
         }
         return strtolower(preg_replace(
-            array('/[^a-zA-Z0-9\s-]/', '/[\s-]+|[-\s]+|[--]+/', '/^[-\s_]|[-_\s]$/'),
+            array('/[\'\/~`\!@#\$%\^&\*\(\)\+=\{\}\[\]\|;:"\<\>,\.\?\\\]/', '/[\s-]+|[-\s]+|[--]+/', '/^[-\s_]|[-_\s]$/'),
             array('', '-', ''),
             strtolower($str)));
     }
