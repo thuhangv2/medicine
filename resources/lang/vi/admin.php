@@ -161,7 +161,7 @@ return [
         'backup _restore'   => 'Sao lưu & Phục hồi',
         'subscribe_manager' => 'Quản lý đăng ký',
         'CMS_manager'       => 'Quản lý CMS',
-        'other_module'      => 'Khác module',
+        'other_module'      => 'Module khác',
         'url'               => 'URL',
         'cms_categories'    => 'Danh mục CMS',
         'cms_contents'      => 'Nội dung CMS',
