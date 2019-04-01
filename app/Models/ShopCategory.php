@@ -285,7 +285,7 @@ class ShopCategory extends Model
     }
 
 //Scort
-    public function scopeSort($query, $sortBy = null, $sortOrder = 'asc')
+    public function scopeSort($query, $sortBy = null, $sortOrder = 'desc')
     {
         $sortBy = $sortBy ?? 'sort';
         return $query->orderBy($sortBy, $sortOrder);
