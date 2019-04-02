@@ -29,33 +29,32 @@ class HomeController extends Controller
                 $row->column(4, new InfoBox(trans('language.admin.total_customer'), 'user', 'yellow', route('customerControl.index'), User::all()->count()));
             });
 
-// in 30 days
+// in 1 month
             $content->row(function (Row $row) {
-                $totals = ShopOrder::select(DB::raw('DATE(created_at) as date, sum(total) as total_amount, count(id) as total_order'))
-                    ->groupBy('date')
+
+                $totals = ShopOrder::select(DB::raw('DATE(created_at) as date, DATE_FORMAT(created_at, "%m/%d") as md, sum(total) as total_amount, count(id) as total_order'))
+                    ->groupBy('date', 'md')
                     ->having('date', '<=', date('Y-m-d'))
                     ->whereRaw('DATE(created_at) >=  DATE_SUB(DATE(NOW()), INTERVAL 1 MONTH)')
                     ->get();
+                $orderGroup = $totals->keyBy('md')->toArray();
 
                 $arrDays         = [];
                 $arrTotalsOrder  = [];
                 $arrTotalsAmount = [];
                 $rangDays        = new \DatePeriod(
-                    new \DateTime('-31 day'),
+                    new \DateTime('-1 month'),
                     new \DateInterval('P1D'),
                     new \DateTime('+1 day')
                 );
-                foreach ($rangDays as $i => $day) {
-                    $arrDays[$i]         = $day->format('m/d');
-                    $arrTotalsAmount[$i] = 0;
-                    $arrTotalsOrder[$i]  = 0;
-                }
 
-                foreach ($totals as $key => $value) {
-                    $day                   = (int) date('d', strtotime($value->date));
-                    $arrTotalsAmount[$day] = $value->total_amount;
-                    $arrTotalsOrder[$day]  = $value->total_order;
+                foreach ($rangDays as $i => $day) {
+                    $date                = $day->format('m/d');
+                    $arrDays[$i]         = $date;
+                    $arrTotalsAmount[$i] = isset($orderGroup[$date]) ? $orderGroup[$date]['total_amount'] : 0;
+                    $arrTotalsOrder[$i]  = isset($orderGroup[$date]) ? $orderGroup[$date]['total_order'] : 0;
                 }
+                // dd($orderGroup);
                 $max_order = max($arrTotalsOrder);
                 foreach ($arrTotalsAmount as $key => $value) {
                     if ($key != 0) {
