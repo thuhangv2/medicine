@@ -138,7 +138,7 @@ class ShopProduct extends Model
  * @param  string $sortOrder [description]
  * @return [type]            [description]
  */
-    public function getProducts($type = null, $limit = null, $opt = null, $sortBy = null, $sortOrder = 'asc')
+    public function getProducts($type = null, $limit = null, $opt = null, $sortBy = null, $sortOrder = 'desc')
     {
         $query = ShopProduct::where('status', 1);
         if ($type) {
@@ -166,7 +166,7 @@ class ShopProduct extends Model
         }
     }
 
-    public function getSearch($keyword, $limit = 12, $sortBy = null, $sortOrder = 'asc')
+    public function getSearch($keyword, $limit = 12, $sortBy = null, $sortOrder = 'desc')
     {
         $langs         = Language::pluck('id', 'code')->all();
         $currentlyLang = app()->getLocale();
@@ -404,7 +404,7 @@ class ShopProduct extends Model
 //Scort
     public function scopeSort($query, $sortBy = null, $sortOrder = 'desc')
     {
-        $sortBy = $sortBy ?? 'sort';
+        $sortBy = $sortBy ?? 'id';
         return $query->orderBy($sortBy, $sortOrder);
     }
 
