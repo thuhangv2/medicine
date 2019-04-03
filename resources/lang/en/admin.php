@@ -158,7 +158,7 @@ return [
         'modules'           => 'Modules',
         'cms'               => 'Cms',
         'templates_manager' => 'Templates manager',
-        'backup _restore'   => 'Backup & Restore',
+        'backup_restore'    => 'Backup & Restore',
         'subscribe_manager' => 'Subscribe manager',
         'CMS_manager'       => 'CMS Manager',
         'other_module'      => 'Other module',

@@ -158,7 +158,7 @@ return [
         'modules'           => 'Modules',
         'cms'               => 'Cms',
         'templates_manager' => 'Quản lý giao diện',
-        'backup _restore'   => 'Sao lưu & Phục hồi',
+        'backup_restore'    => 'Sao lưu & Phục hồi',
         'subscribe_manager' => 'Quản lý đăng ký',
         'CMS_manager'       => 'Quản lý CMS',
         'other_module'      => 'Module khác',
