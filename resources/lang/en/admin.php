@@ -169,5 +169,9 @@ return [
         'cms_manager'       => 'CMS_manager',
         'currencies'        => 'Currencies',
         'blog_news'         => 'Blog & News',
+        'email_setting'     => 'Email Setting',
+        'email_config'      => 'Email config',
+        'email_template'    => 'Email template',
+        'email_action'      => 'Email action',
     ],
 ];

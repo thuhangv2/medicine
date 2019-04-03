@@ -569,6 +569,7 @@ return [
         'download'   => 'Tải về',
         'remove'     => 'Gỡ bỏ',
         'status'     => 'Trạng thái',
+        'version'    => 'Phiên bản',
         'installing' => 'Đang cài đặt',
         'guide'      => 'Xem hướng dẫn <a target=_new href="https://s-cart.org/download/template.html?lang=vi">Ở ĐÂY</a>',
     ],

@@ -169,6 +169,10 @@ return [
         'cms_manager'       => 'Quản lý CMS',
         'currencies'        => 'Tiền tệ',
         'blog_news'         => 'Blog & Tin tức',
+        'email_setting'     => 'Thiết lập email',
+        'email_config'      => 'Cấu hình email',
+        'email_template'    => 'Mẫu email',
+        'email_action'      => 'Tác vụ email',
     ],
 
 ];
