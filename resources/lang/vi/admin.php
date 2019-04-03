@@ -139,7 +139,7 @@ return [
         'config_global'     => 'Cấu hình global',
         'config_language'   => 'Cấu hình ngôn ngữ',
         'config_info'       => 'Cấu hình thông tin',
-        'layout'            => 'Bố cục',
+        'template_layout'   => 'Giao diện & Bố cục',
         'localisation'      => 'Địa phương hóa',
         'vendor'            => 'Nhà cung cấp',
         'report_analytics'  => 'Báo cáo và phân tích',

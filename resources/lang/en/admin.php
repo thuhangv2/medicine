@@ -139,7 +139,7 @@ return [
         'config_global'     => 'Config global',
         'config_language'   => 'Config Language',
         'config_info'       => 'Config info',
-        'layout'            => 'Layout',
+        'template_layout'   => 'Template & Layout',
         'localisation'      => 'Localisation',
         'vendor'            => 'Vendor',
         'report_analytics'  => 'Report & Analytics',
