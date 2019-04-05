@@ -35,9 +35,8 @@ Column::extend('expand', Expands::class);
 Form::extend('ckeditor', CKEditor::class);
 //end Ckeditor
 Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) use ($languages) {
-    $path_file = config('filesystems.disks.path_file');
     if (count($languages) > 1) {
-        $navbar->left(view('admin.language', compact('languages', 'path_file')));
+        $navbar->left(view('admin.language'));
     }
     if (!empty(Admin::user()->username) && Admin::user()->username == 'test') {
         $navbar->left(trans('language.admin.note_test'));

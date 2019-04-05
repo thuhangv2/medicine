@@ -95,7 +95,7 @@ class ShopCart extends GeneralController
             ];
         }
         $shippingAddress = session('shippingAddress') ? json_decode(session('shippingAddress'), true) : $addressDefaul;
-        return view($this->theme . '.shop_cart',
+        return view(SITE_THEME . '.shop_cart',
             array(
                 'title'             => trans('language.cart_title'),
                 'description'       => '',
@@ -185,7 +185,7 @@ class ShopCart extends GeneralController
         $dataTotal           = ShopOrderTotal::processDataTotal($objects);
         session()->forget('paymentMethod'); //destroy paymentMethod
         session()->forget('shippingMethod'); //destroy shippingMethod
-        return view($this->theme . '.shop_checkout',
+        return view(SITE_THEME . '.shop_checkout',
             array(
                 'title'           => trans('language.checkout_title'),
                 'description'     => '',
@@ -559,7 +559,7 @@ class ShopCart extends GeneralController
     {
 
         $wishlist = Cart::instance('wishlist')->content();
-        return view($this->theme . '.shop_wishlist',
+        return view(SITE_THEME . '.shop_wishlist',
             array(
                 'title'       => trans('language.wishlist'),
                 'description' => '',
@@ -577,7 +577,7 @@ class ShopCart extends GeneralController
     public function compare()
     {
         $compare = Cart::instance('compare')->content();
-        return view($this->theme . '.shop_compare',
+        return view(SITE_THEME . '.shop_compare',
             array(
                 'title'       => trans('language.compare'),
                 'description' => '',

@@ -1,4 +1,4 @@
-@extends($theme.'.shop_layout')
+@extends(SITE_THEME.'.shop_layout')
 
 @section('center')
           <div class="product-details"><!--product-details-->
@@ -44,9 +44,9 @@
             <div class="col-sm-7">
               <div class="product-information"><!--/product-information-->
                 @if ($product->price != $product->getPrice())
-                <img src="{{ asset($theme_asset.'/images/home/sale2.png') }}" class="newarrival" alt="" />
+                <img src="{{ asset(SITE_THEME_ASSET.'/images/home/sale2.png') }}" class="newarrival" alt="" />
                 @elseif($product->type == 1)
-                <img src="{{ asset($theme_asset.'/images/home/new2.png') }}" class="newarrival" alt="" />
+                <img src="{{ asset(SITE_THEME_ASSET.'/images/home/new2.png') }}" class="newarrival" alt="" />
                 @endif
                 <h2>{{ $product->name }}</h2>
                 <p>SKU: {{ $product->sku }}</p>
@@ -140,9 +140,9 @@
                             <a href="{{ $product_rel->getUrl() }}"><p>{{ $product_rel->name }}</p></a>
                           </div>
                           @if ($product_rel->price != $product_rel->getPrice())
-                          <img src="{{ asset($theme_asset.'/images/home/sale.png') }}" class="new" alt="" />
+                          <img src="{{ asset(SITE_THEME_ASSET.'/images/home/sale.png') }}" class="new" alt="" />
                           @elseif($product_rel->type == 1)
-                          <img src="{{ asset($theme_asset.'/images/home/new.png') }}" class="new" alt="" />
+                          <img src="{{ asset(SITE_THEME_ASSET.'/images/home/new.png') }}" class="new" alt="" />
                           @endif
                       </div>
                     </div>

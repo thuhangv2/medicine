@@ -26,21 +26,21 @@
       @endforeach
   @endisset
 <!--//Module meta -->
-    <link href="{{ asset($theme_asset.'/css/bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{ asset($theme_asset.'/css/font-awesome.min.css')}}" rel="stylesheet">
-    <link href="{{ asset($theme_asset.'/css/prettyPhoto.css')}}" rel="stylesheet">
-    <link href="{{ asset($theme_asset.'/css/animate.css')}}" rel="stylesheet">
-    <link href="{{ asset($theme_asset.'/css/main.css')}}" rel="stylesheet">
-    <link href="{{ asset($theme_asset.'/css/responsive.css')}}" rel="stylesheet">
+    <link href="{{ asset(SITE_THEME_ASSET.'/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{ asset(SITE_THEME_ASSET.'/css/font-awesome.min.css')}}" rel="stylesheet">
+    <link href="{{ asset(SITE_THEME_ASSET.'/css/prettyPhoto.css')}}" rel="stylesheet">
+    <link href="{{ asset(SITE_THEME_ASSET.'/css/animate.css')}}" rel="stylesheet">
+    <link href="{{ asset(SITE_THEME_ASSET.'/css/main.css')}}" rel="stylesheet">
+    <link href="{{ asset(SITE_THEME_ASSET.'/css/responsive.css')}}" rel="stylesheet">
     <!--[if lt IE 9]>
-    <script src="{{ asset($theme_asset.'/js/html5shiv.js')}}"></script>
-    <script src="{{ asset($theme_asset.'/js/respond.min.js')}}"></script>
+    <script src="{{ asset(SITE_THEME_ASSET.'/js/html5shiv.js')}}"></script>
+    <script src="{{ asset(SITE_THEME_ASSET.'/js/respond.min.js')}}"></script>
     <![endif]-->
-    <link rel="shortcut icon" href="{{ asset($theme_asset.'/images/ico/favicon.ico')}}">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset($theme_asset.'/images/ico/apple-touch-icon-144-precomposed.png')}}">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset($theme_asset.'/images/ico/apple-touch-icon-114-precomposed.png')}}">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset($theme_asset.'/images/ico/apple-touch-icon-72-precomposed.png')}}">
-    <link rel="apple-touch-icon-precomposed" href="{{ asset($theme_asset.'/images/ico/apple-touch-icon-57-precomposed.png')}}">
+    <link rel="shortcut icon" href="{{ asset(SITE_THEME_ASSET.'/images/ico/favicon.ico')}}">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset(SITE_THEME_ASSET.'/images/ico/apple-touch-icon-144-precomposed.png')}}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset(SITE_THEME_ASSET.'/images/ico/apple-touch-icon-114-precomposed.png')}}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset(SITE_THEME_ASSET.'/images/ico/apple-touch-icon-72-precomposed.png')}}">
+    <link rel="apple-touch-icon-precomposed" href="{{ asset(SITE_THEME_ASSET.'/images/ico/apple-touch-icon-57-precomposed.png')}}">
 <!--Module header -->
   @isset ($layouts['header'])
       @foreach ( $layouts['header']  as $layout)
@@ -56,7 +56,7 @@
 </head><!--/head-->
 <body>
 
-@include($theme.'.header')
+@include(SITE_THEME.'.header')
 
 <!--Module banner -->
   @isset ($layouts['banner_top'])
@@ -113,9 +113,9 @@
 
         <!--body-->
         @section('main')
-          @include($theme.'.left')
-          @include($theme.'.center')
-          @include($theme.'.right')
+          @include(SITE_THEME.'.left')
+          @include(SITE_THEME.'.center')
+          @include(SITE_THEME.'.right')
         @show
         <!--//body-->
 
@@ -137,14 +137,14 @@
   </section>
 @endif
 
-@include($theme.'.footer')
+@include(SITE_THEME.'.footer')
 
-<script src="{{ asset($theme_asset.'/js/jquery.js')}}"></script>
-<script src="{{ asset($theme_asset.'/js/jquery-ui.min.js')}}"></script>
-<script src="{{ asset($theme_asset.'/js/bootstrap.min.js')}}"></script>
-<script src="{{ asset($theme_asset.'/js/jquery.scrollUp.min.js')}}"></script>
-<script src="{{ asset($theme_asset.'/js/jquery.prettyPhoto.js')}}"></script>
-<script src="{{ asset($theme_asset.'/js/main.js')}}"></script>
+<script src="{{ asset(SITE_THEME_ASSET.'/js/jquery.js')}}"></script>
+<script src="{{ asset(SITE_THEME_ASSET.'/js/jquery-ui.min.js')}}"></script>
+<script src="{{ asset(SITE_THEME_ASSET.'/js/bootstrap.min.js')}}"></script>
+<script src="{{ asset(SITE_THEME_ASSET.'/js/jquery.scrollUp.min.js')}}"></script>
+<script src="{{ asset(SITE_THEME_ASSET.'/js/jquery.prettyPhoto.js')}}"></script>
+<script src="{{ asset(SITE_THEME_ASSET.'/js/main.js')}}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/mouse0270-bootstrap-notify/3.1.7/bootstrap-notify.min.js"></script>
 
 

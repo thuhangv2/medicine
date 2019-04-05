@@ -24,7 +24,7 @@
         <div class="row">
           <div class="col-sm-3">
             <div class="single-widget">
-              <h2><a href="{{ route('home') }}"><img style="max-width: 150px;" src="{{  asset($logo) }}"></a></h2>
+              <h2><a href="{{ route('home') }}"><img style="max-width: 150px;" src="{{  asset(SITE_LOGO) }}"></a></h2>
              <ul class="nav nav-pills nav-stacked">
                <li>{{ $configsGlobal['title'] }}</li>
              </ul>

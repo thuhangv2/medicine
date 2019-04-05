@@ -20,11 +20,11 @@ class ShopProductImage extends Model
      */
     public function getThumb()
     {
-        $path_file = config('filesystems.disks.path_file', '');
-        if (!file_exists($path_file . '/thumb/' . $this->image)) {
-            return $path_file . '/' . $this->image;
+
+        if (!file_exists(SITE_PATH_FILE . '/thumb/' . $this->image)) {
+            return SITE_PATH_FILE . '/' . $this->image;
         } else {
-            return $path_file . '/thumb/' . $this->image;
+            return SITE_PATH_FILE . '/thumb/' . $this->image;
         }
     }
 
@@ -34,8 +34,8 @@ class ShopProductImage extends Model
  */
     public function getImage()
     {
-        $path_file = config('filesystems.disks.path_file', '');
-        return $path_file . '/' . $this->image;
+
+        return SITE_PATH_FILE . '/' . $this->image;
 
     }
 }

@@ -1,4 +1,4 @@
-@extends($theme.'.shop_layout')
+@extends(SITE_THEME.'.shop_layout')
 
 
 @section('main')

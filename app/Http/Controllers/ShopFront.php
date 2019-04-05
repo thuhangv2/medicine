@@ -26,11 +26,8 @@ class ShopFront extends GeneralController
  */
     public function index(Request $request)
     {
-        return view($this->theme . '.shop_home',
+        return view(SITE_THEME . '.shop_home',
             array(
-                'title'        => $this->configsGlobal['title'],
-                'description'  => $this->configsGlobal['description'],
-                'keyword'      => $this->configsGlobal['keyword'],
                 'products_new' => (new ShopProduct)->getProducts($type = null, $limit = $this->configs['product_new'], $opt = null),
                 'products_hot' => (new ShopProduct)->getProducts($type = 1, $limit = $this->configs['product_hot'], $opt = 'random'),
                 'categories'   => (new ShopCategory)->getCategoriesAll(),
@@ -62,7 +59,7 @@ class ShopFront extends GeneralController
         }
 
         $itemsList = (new ShopCategory)->getCategories($parent = 0, $limit = $this->configs['item_list'], $opt = 'paginate', $sortBy, $sortOrder);
-        return view($this->theme . '.shop_item_list',
+        return view(SITE_THEME . '.shop_item_list',
             array(
                 'title'       => trans('language.categories'),
                 'itemsList'   => $itemsList,
@@ -100,11 +97,11 @@ class ShopFront extends GeneralController
         if ($category) {
             $products  = $category->getProductsToCategory($id = $category->id, $limit = $this->configs['product_list'], $opt = 'paginate', $sortBy, $sortOrder);
             $itemsList = (new ShopCategory)->getCategories($parent = $id);
-            return view($this->theme . '.shop_products_list',
+            return view(SITE_THEME . '.shop_products_list',
                 array(
                     'title'       => $category->name,
                     'description' => $category->description,
-                    'keyword'     => $this->configsGlobal['keyword'],
+                    'keyword'     => '',
                     'products'    => $products,
                     'itemsList'   => $itemsList,
                     'layout_page' => 'product_list',
@@ -142,11 +139,11 @@ class ShopFront extends GeneralController
         }
 
         $products = (new ShopProduct)->getProducts($type = null, $limit = $this->configs['product_list'], $opt = 'paginate', $sortBy, $sortOrder);
-        return view($this->theme . '.shop_products_list',
+        return view(SITE_THEME . '.shop_products_list',
             array(
                 'title'       => trans('language.all_product'),
-                'description' => $this->configsGlobal['description'],
-                'keyword'     => $this->configsGlobal['keyword'],
+                'keyword'     => '',
+                'description' => '',
                 'products'    => $products,
                 'layout_page' => 'product_list',
                 'filter_sort' => $filter_sort,
@@ -183,11 +180,11 @@ class ShopFront extends GeneralController
             $sortOrder = request('sortOrder') ?? 'asc';
 
             //Check product available
-            return view($this->theme . '.shop_product_detail',
+            return view(SITE_THEME . '.shop_product_detail',
                 array(
                     'title'              => $product->name,
                     'description'        => $product->description,
-                    'keyword'            => $this->configsGlobal['keyword'],
+                    'keyword'            => '',
                     'product'            => $product,
                     'attributesGroup'    => ShopAttributeGroup::all()->keyBy('id'),
                     'productsToCategory' => (new ShopCategory)->getProductsToCategory($id = $product->category_id, $limit = $this->configs['product_relation'], $opt = 'random', $sortBy, $sortOrder),
@@ -224,7 +221,7 @@ class ShopFront extends GeneralController
         }
 
         $itemsList = (new ShopBrand)->getBrands($limit = $this->configs['item_list'], $opt = 'paginate', $sortBy, $sortOrder);
-        return view($this->theme . '.shop_item_list',
+        return view(SITE_THEME . '.shop_item_list',
             array(
                 'title'       => trans('language.brands'),
                 'itemsList'   => $itemsList,
@@ -260,7 +257,7 @@ class ShopFront extends GeneralController
         }
 
         $brand = ShopBrand::find($id);
-        return view($this->theme . '.shop_products_list',
+        return view(SITE_THEME . '.shop_products_list',
             array(
                 'title'       => $brand->name,
                 'description' => '',
@@ -297,7 +294,7 @@ class ShopFront extends GeneralController
 
         $itemsList = (new ShopVendor)->getVendors($limit = $this->configs['item_list'], $opt = 'paginate', $sortBy, $sortOrder);
 
-        return view($this->theme . '.shop_item_list',
+        return view(SITE_THEME . '.shop_item_list',
             array(
                 'title'       => trans('language.vendors'),
                 'itemsList'   => $itemsList,
@@ -333,7 +330,7 @@ class ShopFront extends GeneralController
         }
 
         $vendor = ShopVendor::find($id);
-        return view($this->theme . '.shop_products_list',
+        return view(SITE_THEME . '.shop_products_list',
             array(
                 'title'       => $vendor->name,
                 'description' => '',
@@ -355,7 +352,7 @@ class ShopFront extends GeneralController
         $id          = $user->id;
         $orders      = ShopOrder::with('orderTotal')->where('user_id', $id)->sort()->get();
         $statusOrder = ShopOrderStatus::pluck('name', 'id')->all();
-        return view($this->theme . '.shop_profile')->with(array(
+        return view(SITE_THEME . '.shop_profile')->with(array(
             'title'       => trans('language.my_profile'),
             'user'        => $user,
             'orders'      => $orders,
@@ -387,7 +384,7 @@ class ShopFront extends GeneralController
             $sortOrder = $filterArr[$filter_sort][1];
         }
         $keyword = request('keyword') ?? '';
-        return view($this->theme . '.shop_products_list',
+        return view(SITE_THEME . '.shop_products_list',
             array(
                 'title'       => trans('language.search') . ': ' . $keyword,
                 'products'    => (new ShopProduct)->getSearch($keyword, $limit = $this->configs['product_list'], $sortBy, $sortOrder),
@@ -403,13 +400,13 @@ class ShopFront extends GeneralController
     public function getContact()
     {
         $page = $this->getPage('contact');
-        return view($this->theme . '.shop_contact',
+        return view(SITE_THEME . '.shop_contact',
             array(
                 'title'       => trans('language.contact'),
                 'description' => '',
                 'page'        => $page,
-                'keyword'     => $this->configsGlobal['keyword'],
-                'og_image'    => $this->logo,
+                'keyword'     => '',
+                'og_image'    => '',
             )
         );
     }
@@ -462,11 +459,11 @@ class ShopFront extends GeneralController
     {
         $page = $this->getPage($key);
         if ($page) {
-            return view($this->theme . '.shop_page',
+            return view(SITE_THEME . '.shop_page',
                 array(
                     'title'       => $page->title,
                     'description' => '',
-                    'keyword'     => $this->configsGlobal['keyword'],
+                    'keyword'     => '',
                     'page'        => $page,
                 ));
         } else {
