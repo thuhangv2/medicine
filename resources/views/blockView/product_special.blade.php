@@ -16,9 +16,9 @@
                                 <a href="{{ $product_special->product->getUrl() }}"><p>{{ $product_special->product->name }}</p></a>
                               </div>
                           @if ($product_special->product->price != $product_special->product->getPrice())
-                          <img src="{{ asset($theme_asset.'/images/home/sale.png') }}" class="new" alt="" />
+                          <img src="{{ asset(SITE_THEME_ASSET.'/images/home/sale.png') }}" class="new" alt="" />
                           @elseif($product_special->product->type == 1)
-                          <img src="{{ asset($theme_asset.'/images/home/new.png') }}" class="new" alt="" />
+                          <img src="{{ asset(SITE_THEME_ASSET.'/images/home/new.png') }}" class="new" alt="" />
                           @endif
                           </div>
                         </div>
