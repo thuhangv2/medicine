@@ -20,7 +20,7 @@ class CmsCategory extends Model
     ];
     public function local()
     {
-        $lang = Language::pluck('id', 'code')->all();
+        $lang = Language::getArrayLanguages();
         return CmsCategoryDescription::where('cms_category_id', $this->id)
             ->where('lang_id', $lang[app()->getLocale()])
             ->first();

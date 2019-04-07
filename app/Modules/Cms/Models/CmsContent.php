@@ -21,7 +21,7 @@ class CmsContent extends Model
     ];
     public function local()
     {
-        $lang = Language::pluck('id', 'code')->all();
+        $lang = Language::getArrayLanguages();
         return CmsContentDescription::where('cms_content_id', $this->id)
             ->where('lang_id', $lang[app()->getLocale()])
             ->first();

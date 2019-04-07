@@ -22,7 +22,7 @@ class ShopProduct extends Model
 
     public function local()
     {
-        $lang = Language::pluck('id', 'code')->all();
+        $lang = Language::getArrayLanguages();
         return ShopProductDescription::where('product_id', $this->id)
             ->where('lang_id', $lang[app()->getLocale()])
             ->first();
@@ -167,7 +167,7 @@ class ShopProduct extends Model
 
     public function getSearch($keyword, $limit = 12, $sortBy = null, $sortOrder = 'desc')
     {
-        $langs         = Language::pluck('id', 'code')->all();
+        $langs         = Language::getArrayLanguages();
         $currentlyLang = app()->getLocale();
         $idLang        = $langs[$currentlyLang] ?? 1;
         return $this->where('status', 1)

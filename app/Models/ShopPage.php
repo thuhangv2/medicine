@@ -18,7 +18,7 @@ class ShopPage extends Model
     ];
     public function local()
     {
-        $lang = Language::pluck('id', 'code')->all();
+        $lang = Language::getArrayLanguages();
         return ShopPageDescription::where('page_id', $this->id)
             ->where('lang_id', $lang[app()->getLocale()])
             ->first();

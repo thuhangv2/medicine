@@ -72,13 +72,23 @@ class Helper
     //End currency
 
     //Value config
+    private static $configs = null;
     public static function configs()
     {
-        return Config::pluck('value', 'key')->all();
+        if (self::$configs !== null) {
+            return self::$configs;
+        }
+        self::$configs = Config::pluck('value', 'key')->all();
+        return self::$configs;
     }
+    private static $configsGlobal = null;
     public static function configsGlobal()
     {
-        return ConfigGlobal::first();
+        if (self::$configsGlobal !== null) {
+            return self::$configsGlobal;
+        }
+        self::$configsGlobal = ConfigGlobal::first();
+        return self::$configsGlobal;
     }
     //End config
 
