@@ -18,13 +18,6 @@ class ShopCategory extends Model
         'description',
     ];
 
-    public function local()
-    {
-        $lang = Language::getArrayLanguages();
-        return ShopCategoryDescription::where('shop_category_id', $this->id)
-            ->where('lang_id', $lang[app()->getLocale()])
-            ->first();
-    }
     public function products()
     {
         return $this->hasMany(ShopProduct::class, 'category_id', 'id');
@@ -58,7 +51,7 @@ class ShopCategory extends Model
     {
 
         $query = (new ShopProduct);
-        //product actie
+        //product active
         if ($status) {
             $query = $query->where('status', 1);
         }
@@ -142,10 +135,16 @@ class ShopCategory extends Model
  */
     public function getCategoriesAll($all = true, $sortBy = null, $sortOrder = 'asc')
     {
+        $lang    = Language::getArrayLanguages();
+        $lang_id = $lang[app()->getLocale()];
         if ($all) {
-            $listFullCategory = $this->sort($sortBy, $sortOrder)->get()->groupBy('parent');
+            $listFullCategory = $this->with(['descriptions' => function ($q) use ($lang_id) {
+                $q->where('lang_id', $lang_id);
+            }])->sort($sortBy, $sortOrder)->get()->groupBy('parent');
         } else {
-            $listFullCategory = $this->where('status', 1)->sort($sortBy, $sortOrder)->get()->groupBy('parent');
+            $listFullCategory = $this->with(['descriptions' => function ($q) use ($lang_id) {
+                $q->where('lang_id', $lang_id);
+            }])->where('status', 1)->sort($sortBy, $sortOrder)->get()->groupBy('parent');
         }
         return $listFullCategory;
     }
@@ -204,7 +203,11 @@ class ShopCategory extends Model
  */
     public function getCategoriesTop()
     {
-        return $this->where('status', 1)->where('top', 1)->get();
+        $lang    = Language::getArrayLanguages();
+        $lang_id = $lang[app()->getLocale()];
+        return $this->with(['descriptions' => function ($q) use ($lang_id) {
+            $q->where('lang_id', $lang_id);
+        }])->where('status', 1)->where('top', 1)->get();
     }
 
 /**
@@ -256,15 +259,15 @@ class ShopCategory extends Model
 //Fields language
     public function getName()
     {
-        return $this->local()->name;
+        return $this->processDescriptions()['name'] ?? '';
     }
     public function getKeyword()
     {
-        return $this->local()->keyword;
+        return $this->processDescriptions()['keyword'] ?? '';
     }
     public function getDescription()
     {
-        return $this->local()->description;
+        return $this->processDescriptions()['description'] ?? '';
     }
 
 //Attributes
@@ -288,6 +291,13 @@ class ShopCategory extends Model
     {
         $sortBy = $sortBy ?? 'sort';
         return $query->orderBy($sortBy, $sortOrder);
+    }
+
+    public function processDescriptions()
+    {
+        $lang    = Language::getArrayLanguages();
+        $lang_id = $lang[app()->getLocale()];
+        return $this->descriptions->keyBy('lang_id')[$lang_id];
     }
 
 }

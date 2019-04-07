@@ -2,7 +2,6 @@
 #app/Models/ConfigGlobal.php
 namespace App\Models;
 
-use App\Models\ConfigGlobalDescription;
 use App\Models\Language;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,31 +15,22 @@ class ConfigGlobal extends Model
         'keyword',
         'description',
     ];
-    private static $local;
-    public function local()
+    public function descriptions()
     {
-        if (self::$local !== null) {
-            return self::$local;
-        }
-        $lang        = Language::getArrayLanguages();
-        self::$local = ConfigGlobalDescription::where('config_id', $this->id)
-            ->where('lang_id', $lang[app()->getLocale()])
-            ->first();
-        return self::$local;
-
+        return $this->hasMany(ConfigGlobalDescription::class, 'config_id', 'id');
     }
     //Fields language
     public function getTitle()
     {
-        return $this->local()->title;
+        return $this->processDescriptions()['title'] ?? '';
     }
     public function getDescription()
     {
-        return $this->local()->description;
+        return $this->processDescriptions()['description'] ?? '';
     }
     public function getKeyword()
     {
-        return $this->local()->keyword;
+        return $this->processDescriptions()['keyword'] ?? '';
     }
     //Get Attributes
     public function getTitleAttribute()
@@ -54,5 +44,12 @@ class ConfigGlobal extends Model
     public function getKeywordAttribute()
     {
         return $this->getKeyword();
+    }
+
+    public function processDescriptions()
+    {
+        $lang    = Language::getArrayLanguages();
+        $lang_id = $lang[app()->getLocale()];
+        return $this->descriptions->keyBy('lang_id')[$lang_id];
     }
 }

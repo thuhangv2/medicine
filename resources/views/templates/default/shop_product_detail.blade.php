@@ -121,7 +121,7 @@
 
             </div>
           </div><!--/category-tab-->
-
+@if ($productsToCategory->count())
           <div class="recommended_items"><!--recommended_items-->
             <h2 class="title text-center">{{ trans('language.recommended_items') }}</h2>
 
@@ -154,6 +154,9 @@
               </div>
             </div>
           </div><!--/recommended_items-->
+@endif
+
+
 @endsection
 
 @section('breadcrumb')

@@ -224,7 +224,7 @@ class ShopCart extends GeneralController
                     'id'      => $product_id,
                     'name'    => $product->name,
                     'qty'     => $qty,
-                    'price'   => (new ShopProduct)->getPrice($product_id, $opt_sku),
+                    'price'   => (new ShopProduct)->getPrice($opt_sku),
                     'options' => $options,
                 )
             );
@@ -442,7 +442,7 @@ class ShopCart extends GeneralController
                             'id'      => $id,
                             'name'    => $product->name,
                             'qty'     => 1,
-                            'price'   => $product->getPrice($id),
+                            'price'   => $product->getPrice(),
                             'options' => $options,
                         )
                     );
@@ -466,7 +466,7 @@ class ShopCart extends GeneralController
                                 'id'    => $id,
                                 'name'  => $product->name,
                                 'qty'   => 1,
-                                'price' => $product->getPrice($id),
+                                'price' => $product->getPrice(),
                             )
                         );
                     } catch (\Exception $e) {

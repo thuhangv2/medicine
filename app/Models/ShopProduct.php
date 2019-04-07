@@ -20,13 +20,6 @@ class ShopProduct extends Model
         'content',
     ];
 
-    public function local()
-    {
-        $lang = Language::getArrayLanguages();
-        return ShopProductDescription::where('product_id', $this->id)
-            ->where('lang_id', $lang[app()->getLocale()])
-            ->first();
-    }
     public function brand()
     {
         return $this->belongsTo(ShopBrand::class, 'brand_id', 'id');
@@ -69,13 +62,12 @@ class ShopProduct extends Model
 
 /**
  * [getPrice description]
- * @param  [type] $id      [description]
  * @param  [type] $opt_sku [description]
  * @return [type]          [description]
  */
-    public function getPrice($id = null, $opt_sku = null)
+    public function getPrice($opt_sku = null)
     {
-        $id = ($id == null) ? $this->id : $id;
+        $id = $this->id;
 //Process product type
         /*
         if product have type, will use price of type
@@ -84,22 +76,11 @@ class ShopProduct extends Model
             return ShopProductOption::where('product_id', $id)->where('opt_sku', $opt_sku)->first()->opt_price;
         }
 //End type
-
-        $special = ShopSpecialPrice::where('product_id', $id)
-            ->where('status', 1)
-            ->where(function ($query) {
-                $query->where('date_end', '>=', date("Y-m-d"))
-                    ->orWhereNull('date_end');
-            })
-            ->where(function ($query) {
-                $query->where('date_start', '<=', date("Y-m-d"))
-                    ->orWhereNull('date_start');
-            })
-            ->first();
+        $special = $this->processSpecialPrice();
         if ($special) {
-            return $special->price;
+            return $special;
         } else {
-            return $this->find($id)->price;
+            return $this->price;
         }
     }
 
@@ -139,7 +120,11 @@ class ShopProduct extends Model
  */
     public function getProducts($type = null, $limit = null, $opt = null, $sortBy = null, $sortOrder = 'desc')
     {
-        $query = ShopProduct::where('status', 1);
+        $lang    = Language::getArrayLanguages();
+        $lang_id = $lang[app()->getLocale()];
+        $query   = ShopProduct::where('status', 1)->with(['descriptions' => function ($q) use ($lang_id) {
+            $q->where('lang_id', $lang_id);
+        }]);
         if ($type) {
             $query = $query->where('type', $type);
         }
@@ -322,19 +307,19 @@ class ShopProduct extends Model
 //Fields language
     public function getName()
     {
-        return $this->local()->name;
+        return $this->processDescriptions()['name'] ?? '';
     }
     public function getKeyword()
     {
-        return $this->local()->keyword;
+        return $this->processDescriptions()['keyword'] ?? '';
     }
     public function getDescription()
     {
-        return $this->local()->description;
+        return $this->processDescriptions()['description'] ?? '';
     }
     public function getContent()
     {
-        return $this->local()->content;
+        return $this->processDescriptions()['content'] ?? '';
     }
 
 //Attributes
@@ -422,6 +407,24 @@ class ShopProduct extends Model
         } else {
             return false;
         }
+    }
+    public function processDescriptions()
+    {
+        $lang    = Language::getArrayLanguages();
+        $lang_id = $lang[app()->getLocale()];
+        return $this->descriptions->keyBy('lang_id')[$lang_id];
+    }
+
+    public function processSpecialPrice()
+    {
+        $specials = $this->specialPrice;
+        foreach ($specials as $key => $special) {
+            if (($special['date_end'] >= date("Y-m-d") || $special['date_end'] == null)
+                && ($special['date_start'] <= date("Y-m-d") || $special['date_start'] == null)) {
+                return $special['price'];
+            }
+        }
+        return false;
     }
 
 }
