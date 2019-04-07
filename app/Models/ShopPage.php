@@ -15,7 +15,13 @@ class ShopPage extends Model
         'description',
         'content',
     ];
-
+    public $lang_id = 1;
+    public function __construct()
+    {
+        parent::__construct();
+        $lang          = Language::getArrayLanguages();
+        $this->lang_id = $lang[app()->getLocale()];
+    }
     //Fields language
     public function getTitle()
     {
@@ -62,8 +68,6 @@ class ShopPage extends Model
     }
     public function processDescriptions()
     {
-        $lang    = Language::getArrayLanguages();
-        $lang_id = $lang[app()->getLocale()];
-        return $this->descriptions->keyBy('lang_id')[$lang_id];
+        return $this->descriptions->keyBy('lang_id')[$this->lang_id];
     }
 }

@@ -19,7 +19,13 @@ class ShopProduct extends Model
         'description',
         'content',
     ];
-
+    public $lang_id = 1;
+    public function __construct()
+    {
+        parent::__construct();
+        $lang          = Language::getArrayLanguages();
+        $this->lang_id = $lang[app()->getLocale()];
+    }
     public function brand()
     {
         return $this->belongsTo(ShopBrand::class, 'brand_id', 'id');
@@ -120,8 +126,7 @@ class ShopProduct extends Model
  */
     public function getProducts($type = null, $limit = null, $opt = null, $sortBy = null, $sortOrder = 'desc')
     {
-        $lang    = Language::getArrayLanguages();
-        $lang_id = $lang[app()->getLocale()];
+        $lang_id = $this->lang_id;
         $query   = ShopProduct::where('status', 1)->with(['descriptions' => function ($q) use ($lang_id) {
             $q->where('lang_id', $lang_id);
         }]);
@@ -152,12 +157,13 @@ class ShopProduct extends Model
 
     public function getSearch($keyword, $limit = 12, $sortBy = null, $sortOrder = 'desc')
     {
-        $langs         = Language::getArrayLanguages();
-        $currentlyLang = app()->getLocale();
-        $idLang        = $langs[$currentlyLang] ?? 1;
-        return $this->where('status', 1)
+        $lang_id = $this->lang_id;
+
+        return $this->where('status', 1)->with(['descriptions' => function ($q) use ($lang_id) {
+            $q->where('lang_id', $lang_id);
+        }])
             ->leftJoin('shop_product_description', 'shop_product_description.product_id', 'shop_product.id')
-            ->where('shop_product_description.lang_id', $idLang)
+            ->where('shop_product_description.lang_id', $this->lang_id)
             ->where(function ($sql) use ($keyword) {
                 $sql->where('shop_product_description.name', 'like', '%' . $keyword . '%')
                     ->orWhere('shop_product.sku', 'like', '%' . $keyword . '%');
@@ -410,14 +416,12 @@ class ShopProduct extends Model
     }
     public function processDescriptions()
     {
-        $lang    = Language::getArrayLanguages();
-        $lang_id = $lang[app()->getLocale()];
-        return $this->descriptions->keyBy('lang_id')[$lang_id];
+        return $this->descriptions->keyBy('lang_id')[$this->lang_id];
     }
 
     public function processSpecialPrice()
     {
-        $specials = $this->specialPrice;
+        $specials = $this->specialPrice();
         foreach ($specials as $key => $special) {
             if (($special['date_end'] >= date("Y-m-d") || $special['date_end'] == null)
                 && ($special['date_start'] <= date("Y-m-d") || $special['date_start'] == null)) {

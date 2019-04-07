@@ -15,6 +15,13 @@ class ConfigGlobal extends Model
         'keyword',
         'description',
     ];
+    public $lang_id = 1;
+    public function __construct()
+    {
+        parent::__construct();
+        $lang          = Language::getArrayLanguages();
+        $this->lang_id = $lang[app()->getLocale()];
+    }
     public function descriptions()
     {
         return $this->hasMany(ConfigGlobalDescription::class, 'config_id', 'id');
@@ -48,8 +55,6 @@ class ConfigGlobal extends Model
 
     public function processDescriptions()
     {
-        $lang    = Language::getArrayLanguages();
-        $lang_id = $lang[app()->getLocale()];
-        return $this->descriptions->keyBy('lang_id')[$lang_id];
+        return $this->descriptions->keyBy('lang_id')[$this->lang_id];
     }
 }

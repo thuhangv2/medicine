@@ -1,6 +1,7 @@
   @php
-    $categories = (new \App\Models\ShopCategory)->getCategoriesAll();
-    $categoriesTop = (new \App\Models\ShopCategory)->getCategoriesTop();
+    $modelCategory = (new \App\Models\ShopCategory);
+    $categories = $modelCategory->getCategoriesAll();
+    $categoriesTop = $modelCategory->getCategoriesTop();
   @endphp
   @if ($categoriesTop->count())
               <h2>{{ trans('language.categories') }}</h2>
