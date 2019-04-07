@@ -27,19 +27,19 @@ class ShopPage extends Model
     //Fields language
     public function getTitle()
     {
-        return empty($this->local()->title) ? '' : $this->local()->title;
+        return $this->local()->title;
     }
     public function getKeyword()
     {
-        return empty($this->local()->keyword) ? '' : $this->local()->keyword;
+        return $this->local()->keyword;
     }
     public function getDescription()
     {
-        return empty($this->local()->description) ? '' : $this->local()->description;
+        return $this->local()->description;
     }
     public function getContent()
     {
-        return empty($this->local()->content) ? '' : $this->local()->content;
+        return $this->local()->content;
     }
 
     public function getUrl()

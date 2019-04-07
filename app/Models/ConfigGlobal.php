@@ -16,25 +16,31 @@ class ConfigGlobal extends Model
         'keyword',
         'description',
     ];
+    private static $local;
     public function local()
     {
-        $lang = Language::getArrayLanguages();
-        return ConfigGlobalDescription::where('config_id', $this->id)
+        if (self::$local !== null) {
+            return self::$local;
+        }
+        $lang        = Language::getArrayLanguages();
+        self::$local = ConfigGlobalDescription::where('config_id', $this->id)
             ->where('lang_id', $lang[app()->getLocale()])
             ->first();
+        return self::$local;
+
     }
     //Fields language
     public function getTitle()
     {
-        return empty($this->local()->title) ? '' : $this->local()->title;
+        return $this->local()->title;
     }
     public function getDescription()
     {
-        return empty($this->local()->description) ? '' : $this->local()->description;
+        return $this->local()->description;
     }
     public function getKeyword()
     {
-        return empty($this->local()->keyword) ? '' : $this->local()->keyword;
+        return $this->local()->keyword;
     }
     //Get Attributes
     public function getTitleAttribute()

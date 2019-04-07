@@ -3,10 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Language;
-use App\Models\Layout;
-use App\Models\LayoutUrl;
-use App\Models\ShopCurrency;
 use App\Models\Subscribe;
 use Illuminate\Http\Request;
 use Mail;
@@ -16,8 +12,6 @@ class GeneralController extends Controller
 {
     public $configs;
     public $configsGlobal;
-    public $languages;
-    public $currencies;
 
     public function __construct()
     {
@@ -27,13 +21,7 @@ class GeneralController extends Controller
         //============end config====
         $this->configsGlobal = $configsGlobal;
         $this->configs       = $configs;
-        $this->languages     = Language::where('status', 1)->get()->keyBy('code');
-        $this->currencies    = ShopCurrency::getAll();
-//Share variable
-        View::share('layouts', Layout::getLayout());
-        View::share('layoutsUrl', LayoutUrl::getAllUrl());
-        View::share('languages', $this->languages);
-        View::share('currencies', $this->currencies);
+        //Share variable
 
     }
 
