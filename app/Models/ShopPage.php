@@ -22,6 +22,10 @@ class ShopPage extends Model
         $lang          = Language::getArrayLanguages();
         $this->lang_id = $lang[app()->getLocale()];
     }
+    public function descriptions()
+    {
+        return $this->hasMany(ShopPageDescription::class, 'page_id', 'id');
+    }
     //Fields language
     public function getTitle()
     {
