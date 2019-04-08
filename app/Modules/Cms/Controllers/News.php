@@ -163,7 +163,7 @@ class News extends \App\Http\Controllers\GeneralController
                 )
             );
         } else {
-            return view($this->theme . '.notfound',
+            return view(SITE_THEME . '.notfound',
                 array(
                     'title'       => trans('language.not_found'),
                     'description' => '',
