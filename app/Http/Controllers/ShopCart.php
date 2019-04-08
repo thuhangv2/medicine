@@ -13,7 +13,6 @@ use Cart;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
@@ -655,17 +654,16 @@ class ShopCart extends GeneralController
         session()->forget('totalMethod'); //destroy totalMethod
         session()->forget('otherMethod'); //destroy otherMethod
         session()->forget('Discount'); //destroy Discount
-        //Send email
-        try {
-            $data = ShopOrder::with('details')->find($orderId)->toArray();
-            Mail::send('vendor.mail.order_new', $data, function ($message) use ($orderId) {
-                $message->to($this->configsGlobal['email'], $this->configsGlobal['title']);
-                $message->replyTo($this->configsGlobal['email'], $this->configsGlobal['title']);
-                $message->subject(trans('language.order.email.new_title') . '#' . $orderId);
-            });
-        } catch (\Exception $e) {
-            echo 'Error send mail';
-        } //
+
+        $data                 = ShopOrder::with('details')->find($orderId)->toArray();
+        $data['title_center'] = trans('language.order.email.new_title') . '#' . $orderId;
+
+        $config = [
+            'to'      => $this->configsGlobal['email'],
+            'subject' => trans('language.order.email.new_title') . '#' . $orderId,
+        ];
+        \Helper::sendMail('email.orderSuccessToAdmin', $data, $config, []);
+
         return redirect()->route('cart')->with('message', trans('language.order.success'));
     }
 }

@@ -434,19 +434,17 @@ class ShopFront extends GeneralController
             'phone.regex'      => trans('validation.phone'),
         ]);
         //Send email
-        try {
-            $data            = $request->all();
-            $data['content'] = str_replace("\n", "<br>", $data['content']);
-            Mail::send('vendor.mail.contact', $data, function ($message) use ($data) {
-                $message->to($this->configsGlobal['email'], $this->configsGlobal['title']);
-                $message->replyTo($data['email'], $data['name']);
-                $message->subject($data['title']);
-            });
-            return redirect()->route('contact')->with('message', trans('language.thank_contact'));
+        $data            = $request->all();
+        $data['content'] = str_replace("\n", "<br>", $data['content']);
 
-        } catch (\Exception $e) {
-            echo $e->getMessage();
-        } //
+        $config = [
+            'to'      => $this->configsGlobal['email'],
+            'replyTo' => $data['email'],
+            'subject' => $data['title'],
+        ];
+        \Helper::sendMail('email.contact', $data, $config, []);
+
+        return redirect()->route('contact')->with('message', trans('language.thank_contact'));
 
     }
 
