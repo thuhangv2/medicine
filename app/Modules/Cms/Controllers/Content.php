@@ -158,7 +158,7 @@ class Content extends \App\Http\Controllers\GeneralController
         $entries            = (new CmsCategory)->getContentsToCategory($id, $limit = $this->configs['product_new'], $opt = 'paginate');
         return view($this->configType . '::' . 'cms_category',
             array(
-                'title'       => $category_currently->title,
+                'title'       => $category_currently['title'],
                 'description' => $category_currently['description'],
                 'keyword'     => $category_currently['keyword'],
                 'entries'     => $entries,
@@ -177,7 +177,7 @@ class Content extends \App\Http\Controllers\GeneralController
                     'entry_currently' => $entry_currently,
                     'description'     => $entry_currently['description'],
                     'keyword'         => $entry_currently['keyword'],
-                    'og_image'        => url($this->path_file . '/' . $entry_currently->image),
+                    'og_image'        => url(SITE_PATH_FILE . '/' . $entry_currently->image),
                 )
             );
         } else {

@@ -18,13 +18,16 @@ class CmsNews extends Model
         'description',
         'content',
     ];
-
-    public function local()
+    public $lang_id = 1;
+    public function __construct()
     {
-        $lang = Language::getArrayLanguages();
-        return CmsNewsDescription::where('cms_news_id', $this->id)
-            ->where('lang_id', $lang[app()->getLocale()])
-            ->first();
+        parent::__construct();
+        $lang          = Language::getArrayLanguages();
+        $this->lang_id = $lang[app()->getLocale()];
+    }
+    public function descriptions()
+    {
+        return $this->hasMany(CmsNewsDescription::class, 'cms_news_id', 'id');
     }
     public function getItemsNews($limit = null, $opt = null)
     {
@@ -46,13 +49,13 @@ class CmsNews extends Model
     public function getThumb()
     {
         if ($this->image) {
-            $path_file = config('filesystems.disks.path_file', '');
-            if (!file_exists($path_file . '/thumb/' . $this->image)) {
+
+            if (!file_exists(SITE_PATH_FILE . '/thumb/' . $this->image)) {
                 return $this->getImage();
             } else {
-                if (!file_exists($path_file . '/thumb/' . $this->image)) {
+                if (!file_exists(SITE_PATH_FILE . '/thumb/' . $this->image)) {
                 } else {
-                    return $path_file . '/thumb/' . $this->image;
+                    return SITE_PATH_FILE . '/thumb/' . $this->image;
                 }
             }
         } else {
@@ -68,11 +71,11 @@ class CmsNews extends Model
     public function getImage()
     {
         if ($this->image) {
-            $path_file = config('filesystems.disks.path_file', '');
-            if (!file_exists($path_file . '/' . $this->image)) {
+
+            if (!file_exists(SITE_PATH_FILE . '/' . $this->image)) {
                 return 'images/no-image.jpg';
             } else {
-                return $path_file . '/' . $this->image;
+                return SITE_PATH_FILE . '/' . $this->image;
             }
         } else {
             return 'images/no-image.jpg';
@@ -91,19 +94,19 @@ class CmsNews extends Model
     //Fields language
     public function getTitle()
     {
-        return empty($this->local()->title) ? '' : $this->local()->title;
+        return $this->processDescriptions()['title'] ?? '';
     }
     public function getKeyword()
     {
-        return empty($this->local()->keyword) ? '' : $this->local()->keyword;
+        return $this->processDescriptions()['keyword'] ?? '';
     }
     public function getDescription()
     {
-        return empty($this->local()->description) ? '' : $this->local()->description;
+        return $this->processDescriptions()['description'] ?? '';
     }
     public function getContent()
     {
-        return empty($this->local()->content) ? '' : $this->local()->content;
+        return $this->processDescriptions()['content'] ?? '';
     }
 //Attributes
     public function getTitleAttribute()
@@ -131,6 +134,11 @@ class CmsNews extends Model
     {
         $column = $column ?? 'sort';
         return $query->orderBy($column, 'asc')->orderBy('id', 'desc');
+    }
+
+    public function processDescriptions()
+    {
+        return $this->descriptions->keyBy('lang_id')[$this->lang_id];
     }
 
 //=========================

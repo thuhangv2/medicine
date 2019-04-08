@@ -4,7 +4,6 @@ namespace App\Modules\Cms\Models;
 
 use App\Models\Language;
 use App\Modules\Cms\Models\CmsCategory;
-use App\Modules\Cms\Models\CmsContentDescription;
 use App\Modules\Cms\Models\CmsImage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
@@ -19,19 +18,22 @@ class CmsContent extends Model
         'description',
         'content',
     ];
-    public function local()
+    public $lang_id = 1;
+    public function __construct()
     {
-        $lang = Language::getArrayLanguages();
-        return CmsContentDescription::where('cms_content_id', $this->id)
-            ->where('lang_id', $lang[app()->getLocale()])
-            ->first();
+        parent::__construct();
+        $lang          = Language::getArrayLanguages();
+        $this->lang_id = $lang[app()->getLocale()];
     }
 
     public function category()
     {
         return $this->belongsTo(CmsCategory::class, 'category_id', 'id');
     }
-
+    public function descriptions()
+    {
+        return $this->hasMany(CmsContentDescription::class, 'cms_content_id', 'id');
+    }
     public function images()
     {
         return $this->hasMany(CmsImage::class, 'content_id', 'id');
@@ -44,13 +46,13 @@ class CmsContent extends Model
     public function getThumb()
     {
         if ($this->image) {
-            $path_file = config('filesystems.disks.path_file', '');
-            if (!file_exists($path_file . '/thumb/' . $this->image)) {
+
+            if (!file_exists(SITE_PATH_FILE . '/thumb/' . $this->image)) {
                 return $this->getImage();
             } else {
-                if (!file_exists($path_file . '/thumb/' . $this->image)) {
+                if (!file_exists(SITE_PATH_FILE . '/thumb/' . $this->image)) {
                 } else {
-                    return $path_file . '/thumb/' . $this->image;
+                    return SITE_PATH_FILE . '/thumb/' . $this->image;
                 }
             }
         } else {
@@ -66,11 +68,11 @@ class CmsContent extends Model
     public function getImage()
     {
         if ($this->image) {
-            $path_file = config('filesystems.disks.path_file', '');
-            if (!file_exists($path_file . '/' . $this->image)) {
+
+            if (!file_exists(SITE_PATH_FILE . '/' . $this->image)) {
                 return 'images/no-image.jpg';
             } else {
-                return $path_file . '/' . $this->image;
+                return SITE_PATH_FILE . '/' . $this->image;
             }
         } else {
             return 'images/no-image.jpg';
@@ -90,19 +92,19 @@ class CmsContent extends Model
     //Fields language
     public function getTitle()
     {
-        return empty($this->local()->title) ? '' : $this->local()->title;
+        return $this->processDescriptions()['title'] ?? '';
     }
     public function getKeyword()
     {
-        return empty($this->local()->keyword) ? '' : $this->local()->keyword;
+        return $this->processDescriptions()['keyword'] ?? '';
     }
     public function getDescription()
     {
-        return empty($this->local()->description) ? '' : $this->local()->description;
+        return $this->processDescriptions()['description'] ?? '';
     }
     public function getContent()
     {
-        return empty($this->local()->content) ? '' : $this->local()->content;
+        return $this->processDescriptions()['content'] ?? '';
     }
 //Attributes
     public function getTitleAttribute()
@@ -163,4 +165,8 @@ class CmsContent extends Model
         return $return;
     }
 
+    public function processDescriptions()
+    {
+        return $this->descriptions->keyBy('lang_id')[$this->lang_id];
+    }
 }

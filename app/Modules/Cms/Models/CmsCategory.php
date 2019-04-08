@@ -18,14 +18,17 @@ class CmsCategory extends Model
         'keyword',
         'description',
     ];
-    public function local()
+    public $lang_id = 1;
+    public function __construct()
     {
-        $lang = Language::getArrayLanguages();
-        return CmsCategoryDescription::where('cms_category_id', $this->id)
-            ->where('lang_id', $lang[app()->getLocale()])
-            ->first();
+        parent::__construct();
+        $lang          = Language::getArrayLanguages();
+        $this->lang_id = $lang[app()->getLocale()];
     }
-
+    public function descriptions()
+    {
+        return $this->hasMany(CmsCategoryDescription::class, 'cms_category_id', 'id');
+    }
     public function contents()
     {
         return $this->hasMany(CmsContent::class, 'category_id', 'id');
@@ -124,13 +127,12 @@ class CmsCategory extends Model
     public function getThumb()
     {
         if ($this->image) {
-            $path_file = config('filesystems.disks.path_file', '');
-            if (!file_exists($path_file . '/thumb/' . $this->image)) {
+            if (!file_exists(SITE_PATH_FILE . '/thumb/' . $this->image)) {
                 return $this->getImage();
             } else {
-                if (!file_exists($path_file . '/thumb/' . $this->image)) {
+                if (!file_exists(SITE_PATH_FILE . '/thumb/' . $this->image)) {
                 } else {
-                    return $path_file . '/thumb/' . $this->image;
+                    return SITE_PATH_FILE . '/thumb/' . $this->image;
                 }
             }
         } else {
@@ -146,11 +148,11 @@ class CmsCategory extends Model
     public function getImage()
     {
         if ($this->image) {
-            $path_file = config('filesystems.disks.path_file', '');
-            if (!file_exists($path_file . '/' . $this->image)) {
+
+            if (!file_exists(SITE_PATH_FILE . '/' . $this->image)) {
                 return 'images/no-image.jpg';
             } else {
-                return $path_file . '/' . $this->image;
+                return SITE_PATH_FILE . '/' . $this->image;
             }
         } else {
             return 'images/no-image.jpg';
@@ -166,15 +168,15 @@ class CmsCategory extends Model
     //Fields language
     public function getTitle()
     {
-        return empty($this->local()->title) ? '' : $this->local()->title;
+        return $this->processDescriptions()['title'] ?? '';
     }
     public function getKeyword()
     {
-        return empty($this->local()->keyword) ? '' : $this->local()->keyword;
+        return $this->processDescriptions()['keyword'] ?? '';
     }
     public function getDescription()
     {
-        return empty($this->local()->description) ? '' : $this->local()->description;
+        return $this->processDescriptions()['description'] ?? '';
     }
 
 //Attributes
@@ -228,6 +230,10 @@ class CmsCategory extends Model
             $return = ['error' => 1, 'msg' => 'Table ' . $this->table . ' exist!'];
         }
         return $return;
+    }
+    public function processDescriptions()
+    {
+        return $this->descriptions->keyBy('lang_id')[$this->lang_id];
     }
 
 }
