@@ -7,6 +7,7 @@ use App\Models\Language;
 use App\Models\Layout;
 use App\Models\LayoutUrl;
 use App\Models\ShopCurrency;
+use Illuminate\Support\Facades\Mail;
 
 class Helper
 {
@@ -185,6 +186,20 @@ class Helper
         }
 
         return $arrCart;
+    }
+
+    /**
+     * [sendMail description]
+     * @param  [type] $view            [description]
+     * @param  array  $data            [description]
+     * @param  array  $config          [description]
+     * @param  array  $attachments     [description]
+     * @param  array  $diskAttachments [description]
+     * @return [type]                  [description]
+     */
+    public static function sendMail($view, $data = array(), $config = array(), $fileAttach = array())
+    {
+        Mail::send(new \App\Mail\SendMail($view, $data, $config, $fileAttach));
     }
 
 }

@@ -42,6 +42,7 @@ class ScartServiceProvider extends ServiceProvider
         view()->share('currencies', $currencies);
         view()->share('layouts', $layouts);
         view()->share('layoutsUrl', $layoutsUrl);
+        define('SITE_TITLE', $configsGlobal['title']);
         define('SITE_THEME', 'templates.' . $configsGlobal['template']);
         define('SITE_THEME_ASSET', 'templates/' . $configsGlobal['template']);
         define('SITE_PATH_FILE', config('filesystems.disks.path_file', ''));

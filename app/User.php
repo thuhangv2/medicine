@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Notifications\ResetPassword;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -64,7 +63,17 @@ class User extends Authenticatable
     //Send email reset password
     public function sendPasswordResetNotification($token)
     {
-        $this->notify(new ResetPassword($token));
+        $data = [
+            'site_admin' => config('mail.from.name'),
+            'reset_link' => route('password.reset', ['token' => $token]),
+            'title'      => trans('email.reset_password.title'),
+        ];
+        $config = [
+            'to'      => $this->getEmailForPasswordReset(),
+            'subject' => trans('email.reset_password.reset_button'),
+        ];
+        \Helper::sendMail('email.resetPassword', $data, $config, [public_path() . '/images/no-image.jpg', public_path() . '/images/paypal.png']);
+
     }
 
 }
