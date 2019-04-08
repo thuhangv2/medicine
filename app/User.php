@@ -72,7 +72,7 @@ class User extends Authenticatable
             'to'      => $this->getEmailForPasswordReset(),
             'subject' => trans('email.reset_password.reset_button'),
         ];
-        \Helper::sendMail('email.resetPassword', $data, $config, []);
+        \Helper::sendMail('mail.resetPassword', $data, $config, []);
 
     }
 

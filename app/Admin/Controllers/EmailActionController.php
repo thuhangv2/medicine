@@ -9,11 +9,8 @@ use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
-use Encore\Admin\Layout\Row;
-use Encore\Admin\Widgets\Box;
-use Illuminate\Http\Request;
 
-class ConfigInfoController extends Controller
+class EmailActionController extends Controller
 {
     use HasResourceActions;
 
@@ -26,13 +23,9 @@ class ConfigInfoController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header(trans('language.admin.config_control'));
+            $content->header(trans('language.admin.config_email'));
             $content->description(' ');
             $content->body($this->grid());
-            $content->row(function (Row $row) {
-                $row->column(1 / 2, new Box(trans('language.admin.config_display'), $this->viewDisplayConfig()));
-            });
-
         });
     }
 
@@ -44,15 +37,16 @@ class ConfigInfoController extends Controller
     protected function grid()
     {
         $grid = new Grid(new Config);
-        $grid->detail(trans('language.admin.field_config'))->display(function ($detail) {
+        $grid->detail(trans('language.admin.email_action.manager'))->display(function ($detail) {
             return trans(htmlentities($detail));
         });
         $states = [
             '1' => ['value' => 1, 'text' => 'YES', 'color' => 'primary'],
             '0' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
         ];
-        $grid->value(trans('language.admin.use_mode'))->switch($states);
-        $grid->model()->where('code', 'config')->orderBy('sort', 'desc');
+        $grid->value(trans('language.admin.email_action.mode'))->switch($states);
+        $grid->sort(trans('language.admin.email_action.sort'));
+        $grid->model()->where('code', 'email_action')->orderBy('sort', 'asc');
         $grid->disableCreation();
         $grid->disableExport();
         $grid->disableRowSelector();
@@ -78,6 +72,7 @@ class ConfigInfoController extends Controller
             $form->display('id', 'ID');
             $form->text('code', 'Code');
             $form->text('key', 'Key');
+            $form->number('sort', 'Sort');
             $states = [
                 '1' => ['value' => 1, 'text' => 'YES', 'color' => 'primary'],
                 '0' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
@@ -89,40 +84,6 @@ class ConfigInfoController extends Controller
                 $tools->disableView();
             });
         });
-    }
-
-    public function updateConfigField(Request $request)
-    {
-        $data  = $request->all();
-        $key   = $data['pk'];
-        $field = $data['name'];
-        $value = $data['value'];
-        Config::where('key', $key)->update(['value' => $value]);
-
-    }
-
-    public function viewDisplayConfig()
-    {
-        $configs = Config::where('code', 'display')->orderBy('sort', 'desc')->get();
-        if ($configs === null) {
-            return trans('language.no_data');
-        }
-        $fields = [];
-        foreach ($configs as $key => $field) {
-            $data['title']    = $field->detail;
-            $data['field']    = $field->key;
-            $data['key']      = $field->key;
-            $data['value']    = $field->value;
-            $data['disabled'] = 0;
-            $data['required'] = 0;
-            $data['source']   = '';
-            $data['type']     = 'number';
-            $data['url']      = route('updateConfigField');
-            $fields[]         = $data;
-        }
-        return view('admin.CustomEdit')->with([
-            "datas" => $fields,
-        ])->render();
     }
 
 }

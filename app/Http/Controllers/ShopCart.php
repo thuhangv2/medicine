@@ -662,7 +662,7 @@ class ShopCart extends GeneralController
             'to'      => $this->configsGlobal['email'],
             'subject' => trans('language.order.email.new_title') . '#' . $orderId,
         ];
-        \Helper::sendMail('email.orderSuccessToAdmin', $data, $config, []);
+        \Helper::sendMail('mail.orderSuccessToAdmin', $data, $config, []);
 
         return redirect()->route('cart')->with('message', trans('language.order.success'));
     }

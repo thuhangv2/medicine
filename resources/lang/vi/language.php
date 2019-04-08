@@ -175,6 +175,22 @@ return [
         'detail'                            => 'Chi tiết',
         'access_denied'                     => 'Hành động từ chối!',
         'access_denied_msg'                 => 'Bạn không thể khóa ngôn ngữ này vì nó đang là mặc định. Phải thay đổi ngôn ngữ mặc định trước.',
+
+        'email_action'                      => [
+            'manager'                  => 'Quản lý action',
+            'type'                     => 'Loại gửi mail',
+            'mode'                     => 'Chế độ',
+            'sort'                     => 'Sắp xếp',
+            'order_success_to_admin'   => 'Gửi đơn hàng thành công cho admin',
+            'order_success_to_cutomer' => 'Gửi đơn hàng thành công cho khách',
+            'forgot_password'          => 'Gửi mail quên mật khẩu',
+            'welcome_customer'         => 'Gửi mail chào mừng',
+            'contact_to_customer'      => 'Gửi mail form liên hệ cho khách',
+            'contact_to_admin'         => 'Gửi mail form liên hệ cho admin',
+            'email_action_mode'        => 'Tắt/Mở chức năng gửi mail',
+            'email_action_smtp_mode'   => 'Sử dụng SMTP',
+        ],
+
     ],
     'order'              => [
         'title'                 => 'Đơn hàng',

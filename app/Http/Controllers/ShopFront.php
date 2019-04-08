@@ -442,7 +442,7 @@ class ShopFront extends GeneralController
             'replyTo' => $data['email'],
             'subject' => $data['title'],
         ];
-        \Helper::sendMail('email.contact', $data, $config, []);
+        \Helper::sendMail('mail.contact', $data, $config, []);
 
         return redirect()->route('contact')->with('message', trans('language.thank_contact'));
 
