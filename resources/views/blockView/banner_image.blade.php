@@ -19,7 +19,7 @@
                       {!! $banner->html !!}
                     </div>
                     <div class="col-sm-6">
-                      <img src="{{ asset($path_file.'') }}/{{ $banner->image }}" class="girl img-responsive" alt="" />
+                      <img src="{{ asset(SITE_PATH_FILE.'') }}/{{ $banner->image }}" class="girl img-responsive" alt="" />
                     </div>
                   </div>
                @endforeach

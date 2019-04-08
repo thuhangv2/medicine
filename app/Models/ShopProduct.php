@@ -2,7 +2,6 @@
 #app/Models/ShopProduct.php
 namespace App\Models;
 
-use App\Models\Config;
 use App\Models\Language;
 use App\Models\ShopAttributeGroup;
 use App\Models\ShopProductDescription;
@@ -20,13 +19,12 @@ class ShopProduct extends Model
         'description',
         'content',
     ];
-
-    public function local()
+    public $lang_id = 1;
+    public function __construct()
     {
-        $lang = Language::pluck('id', 'code')->all();
-        return ShopProductDescription::where('product_id', $this->id)
-            ->where('lang_id', $lang[app()->getLocale()])
-            ->first();
+        parent::__construct();
+        $lang          = Language::getArrayLanguages();
+        $this->lang_id = $lang[app()->getLocale()];
     }
     public function brand()
     {
@@ -70,13 +68,12 @@ class ShopProduct extends Model
 
 /**
  * [getPrice description]
- * @param  [type] $id      [description]
  * @param  [type] $opt_sku [description]
  * @return [type]          [description]
  */
-    public function getPrice($id = null, $opt_sku = null)
+    public function getPrice($opt_sku = null)
     {
-        $id = ($id == null) ? $this->id : $id;
+        $id = $this->id;
 //Process product type
         /*
         if product have type, will use price of type
@@ -85,22 +82,11 @@ class ShopProduct extends Model
             return ShopProductOption::where('product_id', $id)->where('opt_sku', $opt_sku)->first()->opt_price;
         }
 //End type
-
-        $special = ShopSpecialPrice::where('product_id', $id)
-            ->where('status', 1)
-            ->where(function ($query) {
-                $query->where('date_end', '>=', date("Y-m-d"))
-                    ->orWhereNull('date_end');
-            })
-            ->where(function ($query) {
-                $query->where('date_start', '<=', date("Y-m-d"))
-                    ->orWhereNull('date_start');
-            })
-            ->first();
+        $special = $this->processSpecialPrice();
         if ($special) {
-            return $special->price;
+            return $special;
         } else {
-            return $this->find($id)->price;
+            return $this->price;
         }
     }
 
@@ -138,9 +124,12 @@ class ShopProduct extends Model
  * @param  string $sortOrder [description]
  * @return [type]            [description]
  */
-    public function getProducts($type = null, $limit = null, $opt = null, $sortBy = null, $sortOrder = 'asc')
+    public function getProducts($type = null, $limit = null, $opt = null, $sortBy = null, $sortOrder = 'desc')
     {
-        $query = ShopProduct::where('status', 1);
+        $lang_id = $this->lang_id;
+        $query   = ShopProduct::where('status', 1)->with(['descriptions' => function ($q) use ($lang_id) {
+            $q->where('lang_id', $lang_id);
+        }]);
         if ($type) {
             $query = $query->where('type', $type);
         }
@@ -166,14 +155,15 @@ class ShopProduct extends Model
         }
     }
 
-    public function getSearch($keyword, $limit = 12, $sortBy = null, $sortOrder = 'asc')
+    public function getSearch($keyword, $limit = 12, $sortBy = null, $sortOrder = 'desc')
     {
-        $langs         = Language::pluck('id', 'code')->all();
-        $currentlyLang = app()->getLocale();
-        $idLang        = $langs[$currentlyLang] ?? 1;
-        return $this->where('status', 1)
+        $lang_id = $this->lang_id;
+
+        return $this->where('status', 1)->with(['descriptions' => function ($q) use ($lang_id) {
+            $q->where('lang_id', $lang_id);
+        }])
             ->leftJoin('shop_product_description', 'shop_product_description.product_id', 'shop_product.id')
-            ->where('shop_product_description.lang_id', $idLang)
+            ->where('shop_product_description.lang_id', $this->lang_id)
             ->where(function ($sql) use ($keyword) {
                 $sql->where('shop_product_description.name', 'like', '%' . $keyword . '%')
                     ->orWhere('shop_product.sku', 'like', '%' . $keyword . '%');
@@ -278,13 +268,13 @@ class ShopProduct extends Model
     public function getThumb()
     {
         if ($this->image) {
-            $path_file = config('filesystems.disks.path_file', '');
-            if (!file_exists($path_file . '/thumb/' . $this->image)) {
+
+            if (!file_exists(SITE_PATH_FILE . '/thumb/' . $this->image)) {
                 return $this->getImage();
             } else {
-                if (!file_exists($path_file . '/thumb/' . $this->image)) {
+                if (!file_exists(SITE_PATH_FILE . '/thumb/' . $this->image)) {
                 } else {
-                    return $path_file . '/thumb/' . $this->image;
+                    return SITE_PATH_FILE . '/thumb/' . $this->image;
                 }
             }
         } else {
@@ -300,11 +290,11 @@ class ShopProduct extends Model
     public function getImage()
     {
         if ($this->image) {
-            $path_file = config('filesystems.disks.path_file', '');
-            if (!file_exists($path_file . '/' . $this->image)) {
+
+            if (!file_exists(SITE_PATH_FILE . '/' . $this->image)) {
                 return 'images/no-image.jpg';
             } else {
-                return $path_file . '/' . $this->image;
+                return SITE_PATH_FILE . '/' . $this->image;
             }
         } else {
             return 'images/no-image.jpg';
@@ -323,19 +313,19 @@ class ShopProduct extends Model
 //Fields language
     public function getName()
     {
-        return empty($this->local()->name) ? '' : $this->local()->name;
+        return $this->processDescriptions()['name'] ?? '';
     }
     public function getKeyword()
     {
-        return empty($this->local()->keyword) ? '' : $this->local()->keyword;
+        return $this->processDescriptions()['keyword'] ?? '';
     }
     public function getDescription()
     {
-        return empty($this->local()->description) ? '' : $this->local()->description;
+        return $this->processDescriptions()['description'] ?? '';
     }
     public function getContent()
     {
-        return empty($this->local()->content) ? '' : $this->local()->content;
+        return $this->processDescriptions()['content'] ?? '';
     }
 
 //Attributes
@@ -402,9 +392,9 @@ class ShopProduct extends Model
     }
 
 //Scort
-    public function scopeSort($query, $sortBy = null, $sortOrder = 'asc')
+    public function scopeSort($query, $sortBy = null, $sortOrder = 'desc')
     {
-        $sortBy = $sortBy ?? 'sort';
+        $sortBy = $sortBy ?? 'id';
         return $query->orderBy($sortBy, $sortOrder);
     }
 
@@ -423,6 +413,22 @@ class ShopProduct extends Model
         } else {
             return false;
         }
+    }
+    public function processDescriptions()
+    {
+        return $this->descriptions->keyBy('lang_id')[$this->lang_id];
+    }
+
+    public function processSpecialPrice()
+    {
+        $specials = $this->specialPrice();
+        foreach ($specials as $key => $special) {
+            if (($special['date_end'] >= date("Y-m-d") || $special['date_end'] == null)
+                && ($special['date_start'] <= date("Y-m-d") || $special['date_start'] == null)) {
+                return $special['price'];
+            }
+        }
+        return false;
     }
 
 }

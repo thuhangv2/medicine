@@ -143,7 +143,6 @@ class News extends \App\Http\Controllers\GeneralController
                 'description' => $this->configsGlobal['description'],
                 'keyword'     => $this->configsGlobal['keyword'],
                 'news'        => $news,
-                'og_image'    => $this->logo,
             )
         );
     }
@@ -164,7 +163,7 @@ class News extends \App\Http\Controllers\GeneralController
                 )
             );
         } else {
-            return view($this->theme . '.notfound',
+            return view(SITE_THEME . '.notfound',
                 array(
                     'title'       => trans('language.not_found'),
                     'description' => '',

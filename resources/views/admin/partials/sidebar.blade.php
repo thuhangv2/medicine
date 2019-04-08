@@ -34,6 +34,9 @@
             @each('admin::partials.menu', Admin::menu(), 'item')
 
         </ul>
+
+@include('admin.partials.sidebar_bottom')
+
         <!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->

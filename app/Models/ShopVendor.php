@@ -75,13 +75,13 @@ class ShopVendor extends Model
      */
     public function getImage()
     {
-        $path_file = config('filesystems.disks.path_file', '');
-        return $path_file . '/' . $this->image;
+
+        return SITE_PATH_FILE . '/' . $this->image;
 
     }
 
 //Scort
-    public function scopeSort($query, $sortBy = null, $sortOrder = 'asc')
+    public function scopeSort($query, $sortBy = null, $sortOrder = 'desc')
     {
         $sortBy = $sortBy ?? 'sort';
         return $query->orderBy($sortBy, $sortOrder);

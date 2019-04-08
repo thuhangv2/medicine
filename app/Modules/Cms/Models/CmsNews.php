@@ -21,7 +21,7 @@ class CmsNews extends Model
 
     public function local()
     {
-        $lang = Language::pluck('id', 'code')->all();
+        $lang = Language::getArrayLanguages();
         return CmsNewsDescription::where('cms_news_id', $this->id)
             ->where('lang_id', $lang[app()->getLocale()])
             ->first();

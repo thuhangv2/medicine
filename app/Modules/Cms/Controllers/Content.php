@@ -162,7 +162,6 @@ class Content extends \App\Http\Controllers\GeneralController
                 'description' => $category_currently['description'],
                 'keyword'     => $category_currently['keyword'],
                 'entries'     => $entries,
-                'og_image'    => $this->logo,
             )
         );
     }
@@ -182,7 +181,7 @@ class Content extends \App\Http\Controllers\GeneralController
                 )
             );
         } else {
-            return view($this->theme . '.notfound',
+            return view(SITE_THEME . '.notfound',
                 array(
                     'title'       => trans('language.not_found'),
                     'description' => '',

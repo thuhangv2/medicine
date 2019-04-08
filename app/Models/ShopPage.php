@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\Language;
-use App\Models\ShopPageDescription;
 use Illuminate\Database\Eloquent\Model;
 
 class ShopPage extends Model
@@ -16,30 +15,33 @@ class ShopPage extends Model
         'description',
         'content',
     ];
-    public function local()
+    public $lang_id = 1;
+    public function __construct()
     {
-        $lang = Language::pluck('id', 'code')->all();
-        return ShopPageDescription::where('page_id', $this->id)
-            ->where('lang_id', $lang[app()->getLocale()])
-            ->first();
+        parent::__construct();
+        $lang          = Language::getArrayLanguages();
+        $this->lang_id = $lang[app()->getLocale()];
     }
-
+    public function descriptions()
+    {
+        return $this->hasMany(ShopPageDescription::class, 'page_id', 'id');
+    }
     //Fields language
     public function getTitle()
     {
-        return empty($this->local()->title) ? '' : $this->local()->title;
+        return $this->processDescriptions()['title'] ?? '';
     }
     public function getKeyword()
     {
-        return empty($this->local()->keyword) ? '' : $this->local()->keyword;
+        return $this->processDescriptions()['keyword'] ?? '';
     }
     public function getDescription()
     {
-        return empty($this->local()->description) ? '' : $this->local()->description;
+        return $this->processDescriptions()['description'] ?? '';
     }
     public function getContent()
     {
-        return empty($this->local()->content) ? '' : $this->local()->content;
+        return $this->processDescriptions()['content'] ?? '';
     }
 
     public function getUrl()
@@ -68,5 +70,8 @@ class ShopPage extends Model
         return $this->getContent();
 
     }
-
+    public function processDescriptions()
+    {
+        return $this->descriptions->keyBy('lang_id')[$this->lang_id];
+    }
 }

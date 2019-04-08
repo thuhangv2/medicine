@@ -9,6 +9,7 @@
 - Support design layout: HTML, View, Module
 - Management url
 - Filter sort product
+- Email config: template, action
 ### Optimize
 - Query model
 - Notify message

@@ -3,6 +3,9 @@ namespace App\Scart;
 
 use App\Models\Config;
 use App\Models\ConfigGlobal;
+use App\Models\Language;
+use App\Models\Layout;
+use App\Models\LayoutUrl;
 use App\Models\ShopCurrency;
 
 class Helper
@@ -30,7 +33,7 @@ class Helper
             $str = preg_replace("/($uni)/i", $nonUnicode, $str);
         }
         return strtolower(preg_replace(
-            array('/[^a-zA-Z0-9\s-]/', '/[\s-]+|[-\s]+|[--]+/', '/^[-\s_]|[-_\s]$/'),
+            array('/[\'\/~`\!@#\$%\^&\*\(\)\+=\{\}\[\]\|;:"\<\>,\.\?\\\]/', '/[\s-]+|[-\s]+|[--]+/', '/^[-\s_]|[-_\s]$/'),
             array('', '-', ''),
             strtolower($str)));
     }
@@ -69,16 +72,67 @@ class Helper
     {
         return ShopCurrency::getCurrency();
     }
+
+    private static $currencies = null;
+    public static function currencies()
+    {
+        if (self::$currencies !== null) {
+            return self::$currencies;
+        }
+        self::$currencies = ShopCurrency::getAll();
+        return self::$currencies;
+    }
+
     //End currency
 
+    private static $languages = null;
+    public static function languages()
+    {
+        if (self::$languages !== null) {
+            return self::$languages;
+        }
+        self::$languages = Language::where('status', 1)->get()->keyBy('code');
+        return self::$languages;
+    }
+
+    private static $layouts = null;
+    public static function layouts()
+    {
+        if (self::$layouts !== null) {
+            return self::$layouts;
+        }
+        self::$layouts = Layout::getLayout();
+        return self::$layouts;
+    }
+
+    private static $layoutsUrl = null;
+    public static function layoutsUrl()
+    {
+        if (self::$layoutsUrl !== null) {
+            return self::$layoutsUrl;
+        }
+        self::$layoutsUrl = LayoutUrl::getAllUrl();
+        return self::$layoutsUrl;
+    }
+
     //Value config
+    private static $configs = null;
     public static function configs()
     {
-        return Config::pluck('value', 'key')->all();
+        if (self::$configs !== null) {
+            return self::$configs;
+        }
+        self::$configs = Config::pluck('value', 'key')->all();
+        return self::$configs;
     }
+    private static $configsGlobal = null;
     public static function configsGlobal()
     {
-        return ConfigGlobal::first();
+        if (self::$configsGlobal !== null) {
+            return self::$configsGlobal;
+        }
+        self::$configsGlobal = ConfigGlobal::first();
+        return self::$configsGlobal;
     }
     //End config
 
