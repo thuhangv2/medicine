@@ -162,7 +162,6 @@ class Content extends \App\Http\Controllers\GeneralController
                 'description' => $category_currently['description'],
                 'keyword'     => $category_currently['keyword'],
                 'entries'     => $entries,
-                'og_image'    => $this->logo,
             )
         );
     }

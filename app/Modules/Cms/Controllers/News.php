@@ -143,7 +143,6 @@ class News extends \App\Http\Controllers\GeneralController
                 'description' => $this->configsGlobal['description'],
                 'keyword'     => $this->configsGlobal['keyword'],
                 'news'        => $news,
-                'og_image'    => $this->logo,
             )
         );
     }
