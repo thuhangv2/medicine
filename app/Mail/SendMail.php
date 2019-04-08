@@ -19,12 +19,14 @@ class SendMail extends Mailable
     public $data;
     public $config;
     public $fileAttach;
-    public function __construct($view, $data = array(), $config = array(), $fileAttach = array())
+    public $fileAttachData;
+    public function __construct($view, $data = array(), $config = array(), $fileAttach = array(), $fileAttachData = array())
     {
-        $this->view       = $view;
-        $this->data       = $data;
-        $this->config     = $config;
-        $this->fileAttach = $fileAttach;
+        $this->view           = $view;
+        $this->data           = $data;
+        $this->config         = $config;
+        $this->fileAttach     = $fileAttach;
+        $this->fileAttachData = $fileAttachData;
     }
 
     /**
@@ -51,6 +53,12 @@ class SendMail extends Mailable
         if (!empty($this->fileAttach)) {
             foreach ($this->fileAttach as $key => $attachment) {
                 $this->attach($attachment);
+            }
+
+        }
+        if (!empty($this->fileAttachData)) {
+            foreach ($this->fileAttachData as $key => $attachmentData) {
+                $this->attachData($attachmentData);
             }
 
         }
