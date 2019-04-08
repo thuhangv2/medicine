@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\GeneralController as GeneralController;
 use Auth;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
@@ -42,7 +41,7 @@ class ForgotPasswordController extends Controller
         if (Auth::user()) {
             return redirect()->route('home');
         }
-        return view((new GeneralController)->theme . '.shop_forgot',
+        return view(SITE_THEME . '.shop_forgot',
             array(
                 'title' => trans('language.for_got_password'),
             )

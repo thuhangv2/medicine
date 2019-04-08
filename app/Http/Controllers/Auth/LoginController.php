@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\GeneralController as GeneralController;
 use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -55,7 +54,7 @@ class LoginController extends Controller
         if (Auth::user()) {
             return redirect()->route('home');
         }
-        return view((new GeneralController)->theme . '.shop_login',
+        return view(SITE_THEME . '.shop_login',
             array(
                 'title' => trans('language.login'),
             )
