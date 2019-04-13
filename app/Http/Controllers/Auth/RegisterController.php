@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\EmailTemplate;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -86,8 +88,8 @@ class RegisterController extends Controller
                 $dataReplace = [
                     trans('email.welcome_customer.title'),
                 ];
-                $content = preg_replace($dataFind, $dataReplace, $content);
-                $data    = [
+                $content   = preg_replace($dataFind, $dataReplace, $content);
+                $data_mail = [
                     'content' => $content,
                 ];
 
@@ -96,7 +98,7 @@ class RegisterController extends Controller
                     'subject' => trans('email.welcome_customer.title'),
                 ];
 
-                \Helper::sendMail('mail.welcome_customer', $data, $config, []);
+                \Helper::sendMail('mail.welcome_customer', $data_mail, $config, []);
             }
         } else {
 
