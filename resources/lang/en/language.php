@@ -183,8 +183,9 @@ return [
             'welcome_customer'         => 'Send email welcome',
             'contact_to_customer'      => 'Send email contact to customer',
             'contact_to_admin'         => 'Send email contact to admin',
-            'email_action_mode'        => 'On/Off send mail',
-            'email_action_smtp_mode'   => 'On/Off SMTP',
+            'email_action_mode'        => 'ON/OFF send mail',
+            'email_action_smtp_mode'   => 'SMTP mode',
+            'other'                    => 'Other',
         ],
 
     ],

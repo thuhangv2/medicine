@@ -199,7 +199,11 @@ class Helper
  */
     public static function sendMail($view, $data = array(), $config = array(), $fileAttach = array(), $fileAttachData = array())
     {
-        Mail::send(new \App\Mail\SendMail($view, $data, $config, $fileAttach, $fileAttachData));
+        if (!empty(self::configs()['email_action_mode'])) {
+            Mail::send(new \App\Mail\SendMail($view, $data, $config, $fileAttach, $fileAttachData));
+        } else {
+            return false;
+        }
     }
 
 }

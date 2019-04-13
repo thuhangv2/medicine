@@ -1,4 +1,4 @@
-@extends('email.layout')
+@extends('mail.layout')
 
 @section('main')
                             <table class="inner-body" align="center" width="570" cellpadding="0" cellspacing="0">

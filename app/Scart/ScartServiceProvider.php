@@ -21,7 +21,7 @@ class ScartServiceProvider extends ServiceProvider
         $layouts       = \Helper::layouts();
         $layoutsUrl    = \Helper::layoutsUrl();
         config(['app.name' => $configsGlobal['title']]);
-        config(['mail.driver' => ($configs['smtp_mode']) ? 'smtp' : 'sendmail']);
+        config(['mail.driver' => ($configs['email_action_mode']) ? 'smtp' : 'sendmail']);
         config(['mail.host' => empty($configs['smtp_host']) ? env('MAIL_HOST', '') : $configs['smtp_host']]);
         config(['mail.port' => empty($configs['smtp_port']) ? env('MAIL_PORT', '') : $configs['smtp_port']]);
         config(['mail.encryption' => empty($configs['smtp_security']) ? env('MAIL_ENCRYPTION', '') : $configs['smtp_security']]);
