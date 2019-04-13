@@ -103,7 +103,7 @@ class EmailTemplateController extends Controller
         // $grid->text('Text')->display(function ($text) {
         //     return '<div style="max-width:250px; max-height:150px;overflow:auto;">' . htmlentities($text) . '</div>';
         // });
-        $grid->status('Status');
+        $grid->status('Status')->switch();
 
         return $grid;
     }
