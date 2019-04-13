@@ -68,7 +68,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
 
-        return User::create([
+        $user = User::create([
             'name'     => $data['reg_name'],
             'email'    => $data['reg_email'],
             'password' => bcrypt($data['reg_password']),
@@ -76,6 +76,41 @@ class RegisterController extends Controller
             'address1' => $data['reg_address1'],
             'address2' => $data['reg_address2'],
         ]);
+        if ($user) {
+            if (\Helper::configs()['welcome_customer']) {
+                $content = (new EmailTemplate)->where('group', 'welcome_customer')->where('status', 1)->first()->text;
+
+                $dataFind = [
+                    '/\{\{\$title\}\}/',
+                ];
+                $dataReplace = [
+                    trans('email.welcome_customer.title'),
+                ];
+                $content = preg_replace($dataFind, $dataReplace, $content);
+                $data    = [
+                    'content' => $content,
+                ];
+
+                $config = [
+                    'to'      => $data['reg_email'],
+                    'subject' => trans('email.welcome_customer.title'),
+                ];
+
+                \Helper::sendMail('mail.welcome_customer', $data, $config, []);
+            }
+        } else {
+
+        }
+        return $user;
+    }
+    public function showRegistrationForm()
+    {
+        return redirect()->route('register');
+        // return view('auth.register');
     }
 
+    protected function registered(Request $request, $user)
+    {
+        redirect()->route('home')->with(['message' => trans('account.register_success')]);
+    }
 }

@@ -19,7 +19,6 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'member'], function ($router) {
     $router->post('/login.html', 'LoginController@login')->name('postLogin');
     $router->get('/register.html', 'LoginController@showLoginForm')->name('register');
     $router->post('/register.html', 'RegisterController@register')->name('postRegister');
-    $router->redirect('/login', '/login.html', 301);
     $router->post('/logout', 'LoginController@logout')->name('logout');
     $router->post('/password/email', 'ForgotPasswordController@sendResetLinkEmail')->name('password.email');
     $router->post('/password/reset', 'ResetPasswordController@reset');

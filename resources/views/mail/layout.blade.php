@@ -48,15 +48,7 @@
                 <tbody>
                   <tr>
                   <td class="content-cell" style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;padding:35px">
-                    @isset ($title)
-                    <h1 style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;color:#2f3133;font-size:19px;font-weight:bold;margin-top:0;text-align:left">{{ $title }}</h1>
-                    @endisset
-                    @isset ($title_center)
-                    <h1 style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;color:#2f3133;font-size:19px;font-weight:bold;margin-top:0;text-align:center">{{ $title_center }}</h1>
-                    @endisset
-
                     @yield('main')
-
                       </td>
                     </tr>
                   </tbody>
