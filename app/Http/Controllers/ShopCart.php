@@ -2,6 +2,7 @@
 #app/Http/Controller/ShopCart.php
 namespace App\Http\Controllers;
 
+use App\Models\EmailTemplate;
 use App\Models\ShopAttributeGroup;
 use App\Models\ShopOrder;
 use App\Models\ShopOrderDetail;
@@ -655,14 +656,70 @@ class ShopCart extends GeneralController
         session()->forget('otherMethod'); //destroy otherMethod
         session()->forget('Discount'); //destroy Discount
 
-        $data                 = ShopOrder::with('details')->find($orderId)->toArray();
-        $data['title_center'] = trans('language.order.email.new_title') . '#' . $orderId;
+        $data = ShopOrder::with('details')->find($orderId)->toArray();
 
-        $config = [
-            'to'      => $this->configsGlobal['email'],
-            'subject' => trans('language.order.email.new_title') . '#' . $orderId,
-        ];
-        \Helper::sendMail('mail.orderSuccessToAdmin', $data, $config, []);
+        if (\Helper::configs()['order_success_to_admin']) {
+            $checkContent = (new EmailTemplate)->where('group', 'order_success_to_admin')->where('status', 1)->first();
+            if ($checkContent) {
+                $orderDetail = '';
+                $orderDetail .= '<tr>
+                                    <td>' . trans('language.email.order.sort') . '</td>
+                                    <td>' . trans('language.email.order.sku') . '</td>
+                                    <td>' . trans('language.email.order.name') . '</td>
+                                    <td>' . trans('language.email.order.note') . '</td>
+                                    <td>' . trans('language.email.order.qty') . '</td>
+                                    <td>' . trans('language.email.order.total') . '</td>
+                                </tr>';
+                foreach ($data['details'] as $key => $detail) {
+                    $orderDetail .= '<tr>
+                                    <td>' . $key . '</td>
+                                    <td>' . $detail['sku'] . '</td>
+                                    <td>' . $detail['name'] . '</td>
+                                    <td>' . \Helper::currencyRender($detail['price']) . '</td>
+                                    <td>' . number_format($detail['qty']) . '</td>
+                                    <td align="right">' . \Helper::currencyRender($detail['total_price']) . '</td>
+                                </tr>';
+                }
+
+                $content  = $checkContent->text;
+                $dataFind = [
+                    '/\{\{\$title\}\}/',
+                    '/\{\{\$orderID\}\}/',
+                    '/\{\{\$toname\}\}/',
+                    '/\{\{\$address\}\}/',
+                    '/\{\{\$phone\}\}/',
+                    '/\{\{\$comment\}\}/',
+                    '/\{\{\$orderDetail\}\}/',
+                    '/\{\{\$subtotal\}\}/',
+                    '/\{\{\$shipping\}\}/',
+                    '/\{\{\$discount\}\}/',
+                    '/\{\{\$total\}\}/',
+                ];
+                $dataReplace = [
+                    trans('language.order.email.new_title') . '#' . $orderId,
+                    $orderId,
+                    $data['toname'],
+                    $data['address1'] . ' ' . $data['address2'],
+                    $data['comment'],
+                    $orderDetail,
+                    \Helper::currencyRender($data['subtotal']),
+                    \Helper::currencyRender($data['shipping']),
+                    \Helper::currencyRender($data['discount']),
+                    \Helper::currencyRender($data['total']),
+                ];
+                $content   = preg_replace($dataFind, $dataReplace, $content);
+                $data_mail = [
+                    'content' => $content,
+                ];
+                $config = [
+                    'to'      => $this->configsGlobal['email'],
+                    'subject' => trans('language.order.email.new_title') . '#' . $orderId,
+                ];
+
+                \Helper::sendMail('mail.order_success_to_admin', $data_mail, $config, []);
+            }
+
+        }
 
         return redirect()->route('cart')->with('message', trans('language.order.success'));
     }
