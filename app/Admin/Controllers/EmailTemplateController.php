@@ -28,7 +28,6 @@ class EmailTemplateController extends Controller
             'order_success_to_cutomer' => trans('language.admin.email_action.order_success_to_cutomer'),
             'forgot_password'          => trans('language.admin.email_action.forgot_password'),
             'welcome_customer'         => trans('language.admin.email_action.welcome_customer'),
-            'contact_to_customer'      => trans('language.admin.email_action.contact_to_customer'),
             'contact_to_admin'         => trans('language.admin.email_action.contact_to_admin'),
             'other'                    => trans('language.admin.email_action.other'),
         ];

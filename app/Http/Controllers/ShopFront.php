@@ -2,6 +2,7 @@
 #app/Http/Controller/ShopFront.php
 namespace App\Http\Controllers;
 
+use App\Models\EmailTemplate;
 use App\Models\ShopAttributeGroup;
 use App\Models\ShopBrand;
 use App\Models\ShopCategory;
@@ -437,12 +438,38 @@ class ShopFront extends GeneralController
         $data            = $request->all();
         $data['content'] = str_replace("\n", "<br>", $data['content']);
 
-        $config = [
-            'to'      => $this->configsGlobal['email'],
-            'replyTo' => $data['email'],
-            'subject' => $data['title'],
-        ];
-        \Helper::sendMail('mail.contact', $data, $config, []);
+        if (\Helper::configs()['contact_to_admin']) {
+            $checkContent = (new EmailTemplate)->where('group', 'contact_to_admin')->where('status', 1)->first();
+            if ($checkContent) {
+                $content  = $checkContent->text;
+                $dataFind = [
+                    '/\{\{\$title\}\}/',
+                    '/\{\{\$name\}\}/',
+                    '/\{\{\$email\}\}/',
+                    '/\{\{\$phone\}\}/',
+                    '/\{\{\$content\}\}/',
+                ];
+                $dataReplace = [
+                    $data['title'],
+                    $data['name'],
+                    $data['email'],
+                    $data['phone'],
+                    $data['content'],
+                ];
+                $content    = preg_replace($dataFind, $dataReplace, $content);
+                $data_email = [
+                    'content' => $content,
+                ];
+
+                $config = [
+                    'to'      => $this->configsGlobal['email'],
+                    'replyTo' => $data['email'],
+                    'subject' => $data['title'],
+                ];
+                \Helper::sendMail('mail.contact_to_admin', $data_email, $config, []);
+            }
+
+        }
 
         return redirect()->route('contact')->with('message', trans('language.thank_contact'));
 

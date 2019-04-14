@@ -80,25 +80,29 @@ class RegisterController extends Controller
         ]);
         if ($user) {
             if (\Helper::configs()['welcome_customer']) {
-                $content = (new EmailTemplate)->where('group', 'welcome_customer')->where('status', 1)->first()->text;
 
-                $dataFind = [
-                    '/\{\{\$title\}\}/',
-                ];
-                $dataReplace = [
-                    trans('email.welcome_customer.title'),
-                ];
-                $content   = preg_replace($dataFind, $dataReplace, $content);
-                $data_mail = [
-                    'content' => $content,
-                ];
+                $checkContent = (new EmailTemplate)->where('group', 'welcome_customer')->where('status', 1)->first();
+                if ($checkContent) {
+                    $content  = $checkContent->text;
+                    $dataFind = [
+                        '/\{\{\$title\}\}/',
+                    ];
+                    $dataReplace = [
+                        trans('email.welcome_customer.title'),
+                    ];
+                    $content   = preg_replace($dataFind, $dataReplace, $content);
+                    $data_mail = [
+                        'content' => $content,
+                    ];
 
-                $config = [
-                    'to'      => $data['reg_email'],
-                    'subject' => trans('email.welcome_customer.title'),
-                ];
+                    $config = [
+                        'to'      => $data['reg_email'],
+                        'subject' => trans('email.welcome_customer.title'),
+                    ];
 
-                \Helper::sendMail('mail.welcome_customer', $data_mail, $config, []);
+                    \Helper::sendMail('mail.welcome_customer', $data_mail, $config, []);
+                }
+
             }
         } else {
 
