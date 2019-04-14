@@ -28,8 +28,10 @@ class ConfigInfoController extends Controller
 
             $content->header(trans('language.admin.config_control'));
             $content->description(' ');
-            $content->body($this->grid());
-            $content->row(function (Row $row) {
+            // $content->body($this->grid());
+            $body = $this->grid();
+            $content->row(function (Row $row) use ($body) {
+                $row->column(1 / 2, $body);
                 $row->column(1 / 2, new Box(trans('language.admin.config_display'), $this->viewDisplayConfig()));
             });
 
@@ -59,9 +61,7 @@ class ConfigInfoController extends Controller
         $grid->disableFilter();
         $grid->disableActions();
         $grid->disablePagination();
-        $grid->tools(function ($tools) {
-            $tools->disableRefreshButton();
-        });
+        $grid->disableTools();
         $grid->paginate(100);
         return $grid;
     }
