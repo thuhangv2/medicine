@@ -52,7 +52,7 @@ class EmailConfigController extends Controller
             '0' => ['value' => 0, 'text' => 'NO', 'color' => 'default'],
         ];
         $grid->value(trans('language.admin.email_action.mode'))->switch($states);
-        $grid->sort(trans('language.admin.email_action.sort'));
+        // $grid->sort(trans('language.admin.email_action.sort'));
         $grid->model()->where('code', 'email_action')->orderBy('sort', 'asc');
         $grid->disableCreation();
         $grid->disableExport();
