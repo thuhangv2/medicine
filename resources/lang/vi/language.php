@@ -189,6 +189,7 @@ return [
             'contact_to_admin'         => 'Gửi mail form liên hệ cho admin',
             'email_action_mode'        => 'Tắt/Mở chức năng gửi mail',
             'email_action_smtp_mode'   => 'Sử dụng SMTP',
+            'config_smtp'              => 'Cấu hình SMTP',
             'other'                    => 'Loại khác',
         ],
 

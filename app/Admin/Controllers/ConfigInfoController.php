@@ -100,7 +100,7 @@ class ConfigInfoController extends Controller
         Config::where('key', $key)->update(['value' => $value]);
 
     }
-
+//
     public function viewDisplayConfig()
     {
         $configs = Config::where('code', 'display')->orderBy('sort', 'desc')->get();
