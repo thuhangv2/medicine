@@ -13,7 +13,7 @@ class ScartServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (file_exists(base_path() . '/bootstrap/cache/services.php')) {
+        if (file_exists(base_path() . '/.env')) {
             //Config for  email
             $configs       = \Helper::configs();
             $configsGlobal = \Helper::configsGlobal();
