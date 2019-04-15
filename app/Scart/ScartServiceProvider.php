@@ -13,7 +13,7 @@ class ScartServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (file_exists(base_path() . '/.env')) {
+        if (!empty(env('APP_KEY'))) {
             //Config for  email
             $configs       = \Helper::configs();
             $configsGlobal = \Helper::configsGlobal();
