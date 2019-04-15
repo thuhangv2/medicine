@@ -13,7 +13,7 @@ class ScartServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        try {
+        if (file_exists(base_path() . '/bootstrap/cache/services.php')) {
             //Config for  email
             $configs       = \Helper::configs();
             $configsGlobal = \Helper::configsGlobal();
@@ -48,8 +48,6 @@ class ScartServiceProvider extends ServiceProvider
             define('SITE_THEME_ASSET', 'templates/' . $configsGlobal['template']);
             define('SITE_PATH_FILE', config('filesystems.disks.path_file', ''));
             define('SITE_LOGO', config('filesystems.disks.path_file', '') . '/' . $configsGlobal['logo']);
-        } catch (\Exception $e) {
-
         }
 
     }
