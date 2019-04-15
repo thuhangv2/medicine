@@ -21,7 +21,7 @@ class ScartServiceProvider extends ServiceProvider
         $layouts       = \Helper::layouts();
         $layoutsUrl    = \Helper::layoutsUrl();
         config(['app.name' => $configsGlobal['title']]);
-        config(['mail.driver' => ($configs['smtp_mode']) ? 'smtp' : 'sendmail']);
+        config(['mail.driver' => ($configs['email_action_mode']) ? 'smtp' : 'sendmail']);
         config(['mail.host' => empty($configs['smtp_host']) ? env('MAIL_HOST', '') : $configs['smtp_host']]);
         config(['mail.port' => empty($configs['smtp_port']) ? env('MAIL_PORT', '') : $configs['smtp_port']]);
         config(['mail.encryption' => empty($configs['smtp_security']) ? env('MAIL_ENCRYPTION', '') : $configs['smtp_security']]);
@@ -42,6 +42,7 @@ class ScartServiceProvider extends ServiceProvider
         view()->share('currencies', $currencies);
         view()->share('layouts', $layouts);
         view()->share('layoutsUrl', $layoutsUrl);
+        define('SITE_TITLE', $configsGlobal['title']);
         define('SITE_THEME', 'templates.' . $configsGlobal['template']);
         define('SITE_THEME_ASSET', 'templates/' . $configsGlobal['template']);
         define('SITE_PATH_FILE', config('filesystems.disks.path_file', ''));

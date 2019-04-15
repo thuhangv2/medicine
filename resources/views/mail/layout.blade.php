@@ -33,8 +33,8 @@
             {{-- header --}}
             <tr>
               <td class="header" style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;padding:25px 0;text-align:center">
-                <a href="{{ $data['site_url'] }}" style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;color:#bbbfc3;font-size:19px;font-weight:bold;text-decoration:none" target="_blank">
-                  {{ $data['site_title'] }}
+                <a href="{{ $site_url??route('home') }}" style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;color:#bbbfc3;font-size:19px;font-weight:bold;text-decoration:none" target="_blank">
+                  {{ $site_title??SITE_TITLE }}
                 </a>
               </td>
             </tr>
@@ -48,15 +48,7 @@
                 <tbody>
                   <tr>
                   <td class="content-cell" style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;padding:35px">
-                    @isset ($data['title'])
-                    <h1 style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;color:#2f3133;font-size:19px;font-weight:bold;margin-top:0;text-align:left">{{ $data['title'] }}</h1>
-                    @endisset
-                    @isset ($data['title_center'])
-                    <h1 style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;color:#2f3133;font-size:19px;font-weight:bold;margin-top:0;text-align:center">{{ $data['title_center'] }}</h1>
-                    @endisset
-
                     @yield('main')
-
                       </td>
                     </tr>
                   </tbody>
@@ -72,7 +64,7 @@
                   <table class="footer" align="center" width="570" cellpadding="0" cellspacing="0" style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;margin:0 auto;padding:0;text-align:center;width:570px">
                     <tbody><tr>
                       <td class="content-cell" align="center" style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;padding:35px">
-                        <p style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;line-height:1.5em;margin-top:0;color:#aeaeae;font-size:12px;text-align:center">&copy;2019 {{ $data['site_title'] }}. All rights reserved.</p>
+                        <p style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;line-height:1.5em;margin-top:0;color:#aeaeae;font-size:12px;text-align:center">&copy;{{ date('Y') }} {{ $site_title??SITE_TITLE }}. All rights reserved.</p>
                       </td>
                     </tr>
                   </tbody></table>

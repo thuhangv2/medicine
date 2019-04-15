@@ -22,7 +22,31 @@ use App\Models\ConfigGlobal;
 use App\Models\Language;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
+use Encore\Admin\Grid;
 use Encore\Admin\Grid\Column;
+
+Grid::init(function (Grid $grid) {
+
+    // $grid->disableActions();
+
+    // $grid->disablePagination();
+
+    // $grid->disableCreateButton();
+
+    // $grid->disableFilter();
+
+    // $grid->disableRowSelector();
+
+    // $grid->disableTools();
+
+    $grid->disableExport();
+
+    $grid->actions(function (Grid\Displayers\Actions $actions) {
+        $actions->disableView();
+        // $actions->disableEdit();
+        // $actions->disableDelete();
+    });
+});
 
 //Set language
 $configs_global = ConfigGlobal::first();

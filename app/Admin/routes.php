@@ -20,6 +20,8 @@ Route::group([
 //Config
     $router->resource('config_info', ConfigInfoController::class)->names('configInfoControl');
     $router->resource('config_global', ConfigGlobalController::class)->names('configGlobalControl');
+    $router->resource('email_config', EmailConfigController::class)->names('emailConfig');
+    $router->resource('email_template', EmailTemplateController::class)->names('emailTemplate');
     $router->get('config_template', 'TemplateController@index');
     $router->post('config_template', 'TemplateController@changeTemplate')->name('changeTemplate');
     $router->get('backup_database', 'BackupController@index');

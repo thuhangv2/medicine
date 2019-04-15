@@ -2,6 +2,7 @@
 #app/Http/Controller/ShopCart.php
 namespace App\Http\Controllers;
 
+use App\Models\EmailTemplate;
 use App\Models\ShopAttributeGroup;
 use App\Models\ShopOrder;
 use App\Models\ShopOrderDetail;
@@ -13,7 +14,6 @@ use Cart;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
@@ -655,17 +655,89 @@ class ShopCart extends GeneralController
         session()->forget('totalMethod'); //destroy totalMethod
         session()->forget('otherMethod'); //destroy otherMethod
         session()->forget('Discount'); //destroy Discount
-        //Send email
-        try {
-            $data = ShopOrder::with('details')->find($orderId)->toArray();
-            Mail::send('vendor.mail.order_new', $data, function ($message) use ($orderId) {
-                $message->to($this->configsGlobal['email'], $this->configsGlobal['title']);
-                $message->replyTo($this->configsGlobal['email'], $this->configsGlobal['title']);
-                $message->subject(trans('language.order.email.new_title') . '#' . $orderId);
-            });
-        } catch (\Exception $e) {
-            echo 'Error send mail';
-        } //
+
+        if (\Helper::configs()['order_success_to_admin'] || \Helper::configs()['order_success_to_customer']) {
+            $data                 = ShopOrder::with('details')->find($orderId)->toArray();
+            $checkContent         = (new EmailTemplate)->where('group', 'order_success_to_admin')->where('status', 1)->first();
+            $checkContentCustomer = (new EmailTemplate)->where('group', 'order_success_to_customer')->where('status', 1)->first();
+            if ($checkContent || $checkContentCustomer) {
+                $orderDetail = '';
+                $orderDetail .= '<tr>
+                                    <td>' . trans('language.email.order.sort') . '</td>
+                                    <td>' . trans('language.email.order.sku') . '</td>
+                                    <td>' . trans('language.email.order.name') . '</td>
+                                    <td>' . trans('language.email.order.price') . '</td>
+                                    <td>' . trans('language.email.order.qty') . '</td>
+                                    <td>' . trans('language.email.order.total') . '</td>
+                                </tr>';
+                foreach ($data['details'] as $key => $detail) {
+                    $orderDetail .= '<tr>
+                                    <td>' . ($key + 1) . '</td>
+                                    <td>' . $detail['sku'] . '</td>
+                                    <td>' . $detail['name'] . '</td>
+                                    <td>' . \Helper::currencyRender($detail['price'], '', '', '', false) . '</td>
+                                    <td>' . number_format($detail['qty']) . '</td>
+                                    <td align="right">' . \Helper::currencyRender($detail['total_price'], '', '', '', false) . '</td>
+                                </tr>';
+                }
+                $dataFind = [
+                    '/\{\{\$title\}\}/',
+                    '/\{\{\$orderID\}\}/',
+                    '/\{\{\$toname\}\}/',
+                    '/\{\{\$address\}\}/',
+                    '/\{\{\$email\}\}/',
+                    '/\{\{\$phone\}\}/',
+                    '/\{\{\$comment\}\}/',
+                    '/\{\{\$orderDetail\}\}/',
+                    '/\{\{\$subtotal\}\}/',
+                    '/\{\{\$shipping\}\}/',
+                    '/\{\{\$discount\}\}/',
+                    '/\{\{\$total\}\}/',
+                ];
+                $dataReplace = [
+                    trans('language.order.email.new_title') . '#' . $orderId,
+                    $orderId,
+                    $data['toname'],
+                    $data['address1'] . ' ' . $data['address2'],
+                    $data['email'],
+                    $data['phone'],
+                    $data['comment'],
+                    $orderDetail,
+                    \Helper::currencyRender($data['subtotal'], '', '', '', false),
+                    \Helper::currencyRender($data['shipping'], '', '', '', false),
+                    \Helper::currencyRender($data['discount'], '', '', '', false),
+                    \Helper::currencyRender($data['total'], '', '', '', false),
+                ];
+
+                if (\Helper::configs()['order_success_to_admin'] && $checkContent) {
+                    $content   = $checkContent->text;
+                    $content   = preg_replace($dataFind, $dataReplace, $content);
+                    $data_mail = [
+                        'content' => $content,
+                    ];
+                    $config = [
+                        'to'      => $this->configsGlobal['email'],
+                        'subject' => trans('language.order.email.new_title') . '#' . $orderId,
+                    ];
+                    \Helper::sendMail('mail.order_success_to_admin', $data_mail, $config, []);
+                }
+                if (\Helper::configs()['order_success_to_customer'] && $checkContentCustomer) {
+                    $contentCustomer    = $checkContentCustomer->text;
+                    $contentCustomer    = preg_replace($dataFind, $dataReplace, $contentCustomer);
+                    $data_mail_customer = [
+                        'content' => $contentCustomer,
+                    ];
+                    $config = [
+                        'to'      => $data['email'],
+                        'replyTo' => $this->configsGlobal['email'],
+                        'subject' => trans('language.order.email.new_title'),
+                    ];
+                    \Helper::sendMail('mail.order_success_to_customer', $data_mail_customer, $config, []);
+                }
+            }
+
+        }
+
         return redirect()->route('cart')->with('message', trans('language.order.success'));
     }
 }

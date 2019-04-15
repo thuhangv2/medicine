@@ -43,6 +43,9 @@
 </style>
 @php
     $totalOrder = \App\Models\ShopOrder::count();
+@endphp
+@if ($totalOrder)
+@php
     $totalProcessing = \App\Models\ShopOrder::where('status',1)->count();
     $totalDone = \App\Models\ShopOrder::where('status',4)->count();
     $totalNew = \App\Models\ShopOrder::where('status',0)->count();
@@ -51,32 +54,33 @@
     $percentNew = floor($totalNew/$totalOrder * 100);
     $percentOther = 100- $percentProcessing - $percentDone - $percentNew;
 @endphp
+    <div id="summary">
+    <ul>
+    <li>
+    <div>Orders Completed <span class="pull-right">{{ $percentProcessing }}%</span></div>
+    <div class="progress">
+    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {{ $percentProcessing }}%"> <span class="sr-only">{{ $percentProcessing }}%</span></div>
+    </div>
+    </li>
+    <li>
+    <div>Orders Processing <span class="pull-right">{{ $percentDone }}%</span></div>
+    <div class="progress">
+    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {{ $percentDone }}%"> <span class="sr-only">{{ $percentDone }}%</span></div>
+    </div>
+    </li>
+    <li>
+    <div>Orders New <span class="pull-right">{{ $percentNew }}%</span></div>
+    <div class="progress">
+    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {{ $percentNew }}%"> <span class="sr-only">{{ $percentNew }}%</span></div>
+    </div>
+    </li>
+    <li>
+    <div>Other Statuses <span class="pull-right">{{ $percentOther }}%</span></div>
+    <div class="progress">
+    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {{ $percentOther }}%"> <span class="sr-only">{{ $percentOther }}%</span></div>
+    </div>
+    </li>
+    </ul>
+    </div>
 
-<div id="summary">
-<ul>
-<li>
-<div>Orders Completed <span class="pull-right">{{ $percentProcessing }}%</span></div>
-<div class="progress">
-<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {{ $percentProcessing }}%"> <span class="sr-only">{{ $percentProcessing }}%</span></div>
-</div>
-</li>
-<li>
-<div>Orders Processing <span class="pull-right">{{ $percentDone }}%</span></div>
-<div class="progress">
-<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {{ $percentDone }}%"> <span class="sr-only">{{ $percentDone }}%</span></div>
-</div>
-</li>
-<li>
-<div>Orders New <span class="pull-right">{{ $percentNew }}%</span></div>
-<div class="progress">
-<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {{ $percentNew }}%"> <span class="sr-only">{{ $percentNew }}%</span></div>
-</div>
-</li>
-<li>
-<div>Other Statuses <span class="pull-right">{{ $percentOther }}%</span></div>
-<div class="progress">
-<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {{ $percentOther }}%"> <span class="sr-only">{{ $percentOther }}%</span></div>
-</div>
-</li>
-</ul>
-</div>
+@endif

@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Notifications\ResetPassword;
+use App\Models\EmailTemplate;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -64,7 +64,43 @@ class User extends Authenticatable
     //Send email reset password
     public function sendPasswordResetNotification($token)
     {
-        $this->notify(new ResetPassword($token));
+        if (\Helper::configs()['forgot_password']) {
+            $checkContent = (new EmailTemplate)->where('group', 'forgot_password')->where('status', 1)->first();
+            if ($checkContent) {
+                $content  = $checkContent->text;
+                $dataFind = [
+                    '/\{\{\$title\}\}/',
+                    '/\{\{\$text1\}\}/',
+                    '/\{\{\$text2\}\}/',
+                    '/\{\{\$text3\}\}/',
+                    '/\{\{\$reset_link\}\}/',
+                    '/\{\{\$reset_button\}\}/',
+                ];
+                $dataReplace = [
+                    trans('email.forgot_password.title'),
+                    trans('email.forgot_password.text1'),
+                    trans('email.forgot_password.text2', ['site_admin' => config('mail.from.name')]),
+                    trans('email.forgot_password.text3', ['reset_button' => trans('email.forgot_password.reset_button')]),
+                    route('password.reset', ['token' => $token]),
+                    trans('email.forgot_password.reset_button'),
+                ];
+                $content = preg_replace($dataFind, $dataReplace, $content);
+                $data    = [
+                    'content' => $content,
+                ];
+
+                $config = [
+                    'to'      => $this->getEmailForPasswordReset(),
+                    'subject' => trans('email.forgot_password.reset_button'),
+                ];
+
+                \Helper::sendMail('mail.forgot_password', $data, $config, []);
+            }
+
+        } else {
+            return false;
+        }
+
     }
 
 }
