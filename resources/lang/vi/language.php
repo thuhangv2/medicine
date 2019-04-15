@@ -403,6 +403,7 @@ return [
             'order_detail' => 'Chi tiết đặt hàng',
             'sort'         => 'Thứ tự',
             'sku'          => 'SKU',
+            'price'        => 'Giá',
             'name'         => 'Tên',
             'qty'          => 'Số lượng',
             'total'        => 'Tổng',

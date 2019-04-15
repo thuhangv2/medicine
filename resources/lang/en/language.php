@@ -398,6 +398,7 @@ return [
             'order_detail' => 'Order detail',
             'sort'         => 'No.',
             'sku'          => 'SKU',
+            'price'        => 'Price',
             'name'         => 'Name',
             'qty'          => 'Qty',
             'total'        => 'Total',
