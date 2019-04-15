@@ -2,6 +2,7 @@
 
 namespace App\Scart;
 
+use DB;
 use Illuminate\Support\ServiceProvider;
 
 class ScartServiceProvider extends ServiceProvider
@@ -13,7 +14,13 @@ class ScartServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (!empty(env('APP_KEY'))) {
+        try {
+            DB::connection()->getPdo();
+            $checkConnect = true;
+        } catch (\Exception $e) {
+            $checkConnect = false;
+        }
+        if ($checkConnect) {
             //Config for  email
             $configs       = \Helper::configs();
             $configsGlobal = \Helper::configsGlobal();
@@ -49,7 +56,6 @@ class ScartServiceProvider extends ServiceProvider
             define('SITE_PATH_FILE', config('filesystems.disks.path_file', ''));
             define('SITE_LOGO', config('filesystems.disks.path_file', '') . '/' . $configsGlobal['logo']);
         }
-
     }
 
     /**
