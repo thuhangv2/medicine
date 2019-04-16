@@ -22,7 +22,6 @@ class GeneralController extends Controller
         //============end config====
         $this->configsGlobal = $configsGlobal;
         $this->configs       = $configs;
-        //Share variable
 
     }
 

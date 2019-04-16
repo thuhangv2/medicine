@@ -57,8 +57,5 @@ class Controller extends BaseController
             define('SITE_LOGO', config('filesystems.disks.path_file', '') . '/' . $configsGlobal['logo']);
         }
 
-        $this->configsGlobal = $configsGlobal;
-        $this->configs       = $configs;
-
     }
 }
