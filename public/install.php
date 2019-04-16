@@ -36,22 +36,21 @@ if (request()->method() == 'POST' && request()->ajax()) {
                 $env = fopen(base_path() . "/.env", "w") or die(json_encode(['error' => 1, 'msg' => trans('language.install.env.error_open')]));
                 fwrite($env, $getEnv);
                 fclose($env);
-                echo json_encode(['error' => 0, 'msg' => trans('language.install.env.process_sucess')]);
-                exit();
             } catch (\Exception $e) {
                 echo json_encode(['error' => 1, 'msg' => $e->getMessage()]);
                 exit();
             }
+            echo json_encode(['error' => 0, 'msg' => trans('language.install.env.process_sucess')]);
             break;
 
         case 'step2':
             try {
                 shell_exec('php ../artisan key:generate');
-                echo json_encode(['error' => 0, 'msg' => trans('language.install.key.process_sucess')]);
             } catch (\Exception $e) {
                 echo json_encode(['error' => 1, 'msg' => $e->getMessage()]);
+                exit;
             }
-
+            echo json_encode(['error' => 0, 'msg' => trans('language.install.key.process_sucess')]);
             break;
 
         case 'step3':
@@ -63,10 +62,12 @@ if (request()->method() == 'POST' && request()->ajax()) {
             } else {
                 try {
                     DB::unprepared(file_get_contents($file));
-                    echo json_encode(['error' => 0, 'msg' => trans('language.install.database.process_sucess')]);
+
                 } catch (\Exception $e) {
                     echo json_encode(['error' => 1, 'msg' => explode("\n", $e->getMessage())[0]]);
+                    exit();
                 }
+                echo json_encode(['error' => 0, 'msg' => trans('language.install.database.process_sucess')]);
             }
 
             break;
@@ -80,13 +81,13 @@ if (request()->method() == 'POST' && request()->ajax()) {
                     echo json_encode(['error' => 1, 'msg' => trans('language.install.rename_error')]);
                     exit();
                 }
-                echo json_encode(['error' => 0, 'msg' => trans('language.install.permission.process_sucess')]);
-                exit();
+
             } catch (\Exception $e) {
                 echo json_encode(['error' => 1, 'msg' => $e->getMessage()]);
                 exit();
 
             }
+            echo json_encode(['error' => 0, 'msg' => trans('language.install.permission.process_sucess')]);
             break;
 
         default:
