@@ -131,6 +131,7 @@ return [
         'settings'          => 'Settings',
         'banners_manager'   => 'Banners Manager',
         'order_manager'     => 'Order Manager',
+        'orders_manager'    => 'Order Manager',
         'order_status'      => 'Order status',
         'payment_status'    => 'Payment Status',
         'shipping_status'   => 'Shipping status',
