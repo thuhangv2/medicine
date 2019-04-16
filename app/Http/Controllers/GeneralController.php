@@ -15,6 +15,7 @@ class GeneralController extends Controller
 
     public function __construct()
     {
+        parent::__construct();
         //=======Config====
         $configs       = \Helper::configs();
         $configsGlobal = \Helper::configsGlobal();

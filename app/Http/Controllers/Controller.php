@@ -41,11 +41,21 @@ class Controller extends BaseController
         view()->share('currencies', $currencies);
         view()->share('layouts', $layouts);
         view()->share('layoutsUrl', $layoutsUrl);
-        define('SITE_TITLE', $configsGlobal['title']);
-        define('SITE_THEME', 'templates.' . $configsGlobal['template']);
-        define('SITE_THEME_ASSET', 'templates/' . $configsGlobal['template']);
-        define('SITE_PATH_FILE', config('filesystems.disks.path_file', ''));
-        define('SITE_LOGO', config('filesystems.disks.path_file', '') . '/' . $configsGlobal['logo']);
+        if (defined('SITE_TITLE')) {
+            define('SITE_TITLE', $configsGlobal['title']);
+        }
+        if (!defined('SITE_THEME')) {
+            define('SITE_THEME', 'templates.' . $configsGlobal['template']);
+        }
+        if (!defined('SITE_THEME_ASSET')) {
+            define('SITE_THEME_ASSET', 'templates/' . $configsGlobal['template']);
+        }
+        if (!defined('SITE_PATH_FILE')) {
+            define('SITE_PATH_FILE', config('filesystems.disks.path_file', ''));
+        }
+        if (!defined('SITE_LOGO')) {
+            define('SITE_LOGO', config('filesystems.disks.path_file', '') . '/' . $configsGlobal['logo']);
+        }
 
         $this->configsGlobal = $configsGlobal;
         $this->configs       = $configs;
