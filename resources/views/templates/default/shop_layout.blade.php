@@ -6,15 +6,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{{ $description??'' }}">
-    <meta name="keyword" content="{{ $keyword??'' }}">
+    <meta name="description" content="{{ $description??$configsGlobal['description'] }}">
+    <meta name="keyword" content="{{ $keyword??$configsGlobal['keyword'] }}">
     <meta property="fb:app_id" content="{{ $configsGlobal['site_fb_appID'] }}" />
-    <title>{{$title??''}}</title>
+    <title>{{$title??$configsGlobal['title']}}</title>
     <meta property="og:image" content="{{ !empty($og_image)?$og_image:asset('images/org.jpg') }}" />
     <meta property="og:url" content="{{ \Request::fullUrl() }}" />
     <meta property="og:type" content="Website" />
-    <meta property="og:title" content="{{ $title??'' }}" />
-    <meta property="og:description" content="{{ $description??'' }}" />
+    <meta property="og:title" content="{{ $title??$configsGlobal['title'] }}" />
+    <meta property="og:description" content="{{ $description??$configsGlobal['description'] }}" />
 <!--Module meta -->
   @isset ($layouts['meta'])
       @foreach ( $layouts['meta']  as $layout)
