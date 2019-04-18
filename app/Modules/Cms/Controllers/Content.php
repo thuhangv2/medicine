@@ -177,7 +177,7 @@ class Content extends \App\Http\Controllers\GeneralController
                     'entry_currently' => $entry_currently,
                     'description'     => $entry_currently['description'],
                     'keyword'         => $entry_currently['keyword'],
-                    'og_image'        => url(SITE_PATH_FILE . '/' . $entry_currently->image),
+                    'og_image'        => url(PATH_FILE . '/' . $entry_currently->image),
                 )
             );
         } else {

@@ -78,7 +78,7 @@ class ShopBrand extends Model
     public function getImage()
     {
 
-        return SITE_PATH_FILE . '/' . $this->image;
+        return PATH_FILE . '/' . $this->image;
 
     }
 

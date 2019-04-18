@@ -13,7 +13,9 @@ class ScartServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        if (!defined('PATH_FILE')) {
+            define('PATH_FILE', config('filesystems.disks.path_file', ''));
+        }
     }
 
     /**

@@ -20,7 +20,7 @@ class Controller extends BaseController
         $layouts       = \Helper::layouts();
         $layoutsUrl    = \Helper::layoutsUrl();
         config(['app.name' => $configsGlobal['title']]);
-        config(['mail.driver' => ($configs['email_action_mode']) ? 'smtp' : 'sendmail']);
+        config(['mail.driver' => ($configs['email_action_smtp_mode']) ? 'smtp' : 'sendmail']);
         config(['mail.host' => empty($configs['smtp_host']) ? env('MAIL_HOST', '') : $configs['smtp_host']]);
         config(['mail.port' => empty($configs['smtp_port']) ? env('MAIL_PORT', '') : $configs['smtp_port']]);
         config(['mail.encryption' => empty($configs['smtp_security']) ? env('MAIL_ENCRYPTION', '') : $configs['smtp_security']]);
@@ -50,11 +50,9 @@ class Controller extends BaseController
         if (!defined('SITE_THEME_ASSET')) {
             define('SITE_THEME_ASSET', 'templates/' . $configsGlobal['template']);
         }
-        if (!defined('SITE_PATH_FILE')) {
-            define('SITE_PATH_FILE', config('filesystems.disks.path_file', ''));
-        }
+
         if (!defined('SITE_LOGO')) {
-            define('SITE_LOGO', config('filesystems.disks.path_file', '') . '/' . $configsGlobal['logo']);
+            define('SITE_LOGO', PATH_FILE . '/' . $configsGlobal['logo']);
         }
 
     }
