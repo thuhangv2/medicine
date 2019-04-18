@@ -203,7 +203,7 @@ class ShopCart extends GeneralController
     }
 
 /**
- * [postCart description]
+ * add to cart by post
  * @param  Request $request [description]
  * @return [type]           [description]
  */
@@ -224,7 +224,7 @@ class ShopCart extends GeneralController
                     'id'      => $product_id,
                     'name'    => $product->name,
                     'qty'     => $qty,
-                    'price'   => (new ShopProduct)->getPrice($opt_sku),
+                    'price'   => $product->getPrice($opt_sku),
                     'options' => $options,
                 )
             );
