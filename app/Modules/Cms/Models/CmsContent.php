@@ -47,12 +47,12 @@ class CmsContent extends Model
     {
         if ($this->image) {
 
-            if (!file_exists(SITE_PATH_FILE . '/thumb/' . $this->image)) {
+            if (!file_exists(PATH_FILE . '/thumb/' . $this->image)) {
                 return $this->getImage();
             } else {
-                if (!file_exists(SITE_PATH_FILE . '/thumb/' . $this->image)) {
+                if (!file_exists(PATH_FILE . '/thumb/' . $this->image)) {
                 } else {
-                    return SITE_PATH_FILE . '/thumb/' . $this->image;
+                    return PATH_FILE . '/thumb/' . $this->image;
                 }
             }
         } else {
@@ -69,10 +69,10 @@ class CmsContent extends Model
     {
         if ($this->image) {
 
-            if (!file_exists(SITE_PATH_FILE . '/' . $this->image)) {
+            if (!file_exists(PATH_FILE . '/' . $this->image)) {
                 return 'images/no-image.jpg';
             } else {
-                return SITE_PATH_FILE . '/' . $this->image;
+                return PATH_FILE . '/' . $this->image;
             }
         } else {
             return 'images/no-image.jpg';

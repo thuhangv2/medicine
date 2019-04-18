@@ -14,12 +14,12 @@
             <div class="btn-group pull-right">
               <div class="btn-group locale">
                 @if (count($languages)>1)
-                <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown"><img src="{{ asset(SITE_PATH_FILE.'/'.$languages[app()->getLocale()]['icon']) }}" style="height: 25px;">
+                <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown"><img src="{{ asset(PATH_FILE.'/'.$languages[app()->getLocale()]['icon']) }}" style="height: 25px;">
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
                   @foreach ($languages as $key => $language)
-                    <li><a href="{{ url('locale/'.$key) }}"><img src="{{ asset(SITE_PATH_FILE.'/'.$language['icon']) }}" style="height: 25px;"></a></li>
+                    <li><a href="{{ url('locale/'.$key) }}"><img src="{{ asset(PATH_FILE.'/'.$language['icon']) }}" style="height: 25px;"></a></li>
                   @endforeach
                 </ul>
                 @endif

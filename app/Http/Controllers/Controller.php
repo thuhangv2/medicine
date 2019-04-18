@@ -50,11 +50,9 @@ class Controller extends BaseController
         if (!defined('SITE_THEME_ASSET')) {
             define('SITE_THEME_ASSET', 'templates/' . $configsGlobal['template']);
         }
-        if (!defined('SITE_PATH_FILE')) {
-            define('SITE_PATH_FILE', config('filesystems.disks.path_file', ''));
-        }
+
         if (!defined('SITE_LOGO')) {
-            define('SITE_LOGO', config('filesystems.disks.path_file', '') . '/' . $configsGlobal['logo']);
+            define('SITE_LOGO', PATH_FILE . '/' . $configsGlobal['logo']);
         }
 
     }

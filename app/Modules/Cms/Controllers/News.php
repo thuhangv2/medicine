@@ -159,7 +159,7 @@ class News extends \App\Http\Controllers\GeneralController
                     'description'    => $this->configsGlobal['description'],
                     'keyword'        => $this->configsGlobal['keyword'],
                     'blogs'          => (new CmsNews)->getItemsNews($limit = 4),
-                    'og_image'       => url(SITE_PATH_FILE . '/' . $news_currently->image),
+                    'og_image'       => url(PATH_FILE . '/' . $news_currently->image),
                 )
             );
         } else {
