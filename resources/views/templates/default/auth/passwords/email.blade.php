@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends(SITE_THEME.'.shop_layout')
 
-@section('center')
+@section('main')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">

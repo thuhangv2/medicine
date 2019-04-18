@@ -3,9 +3,10 @@
 @section('main')
 <div class="container">
     <div class="row justify-content-center">
+        <div class="col-md-2">
+        </div>
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('password.request') }}" aria-label="{{ __('Reset Password') }}">
@@ -62,4 +63,13 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('breadcrumb')
+    <div class="breadcrumbs">
+        <ol class="breadcrumb">
+          <li><a href="{{ route('home') }}">Home</a></li>
+          <li class="active">{{ $title }}</li>
+        </ol>
+      </div>
 @endsection

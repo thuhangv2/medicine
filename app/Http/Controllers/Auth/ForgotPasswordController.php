@@ -43,7 +43,7 @@ class ForgotPasswordController extends Controller
         }
         return view(SITE_THEME . '.shop_forgot',
             array(
-                'title' => trans('language.for_got_password'),
+                'title' => trans('language.forgot_password'),
             )
         );
     }
