@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\ShopOrder;
 use App\Models\ShopOrderStatus;
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ShopAccount extends GeneralController
 {
@@ -34,6 +36,35 @@ class ShopAccount extends GeneralController
             'user'        => $user,
             'layout_page' => 'shop_profile',
         ));
+    }
+
+    public function postChangePassword(Request $request)
+    {
+        $user         = Auth::user();
+        $id           = $user->id;
+        $dataUser     = User::find($id);
+        $password     = $request->get('password');
+        $password_old = $request->get('password_old');
+        if (trim($password_old) == '') {
+            return redirect()->back()->with(['password_old_error' => trans('account.password_old_required')]);
+        } else {
+            if (!\Hash::check($password_old, $dataUser->password)) {
+                return redirect()->back()->with(['password_old_error' => trans('account.password_old_notcorrect')]);
+            }
+        }
+        $messages = [
+            'required' => trans('validation.required'),
+        ];
+        $v = Validator::make($request->all(), [
+            'password_old' => 'required',
+            'password'     => 'required|string|min:6|confirmed',
+        ], $messages);
+        if ($v->fails()) {
+            return redirect()->back()->withErrors($v->errors());
+        }
+
+        $dataUser->update(['password' => bcrypt($password)]);
+        return redirect()->route('member.index')->with(['message' => trans('account.update_success')]);
     }
 
     /**
