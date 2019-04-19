@@ -41,9 +41,9 @@ class ForgotPasswordController extends Controller
         if (Auth::user()) {
             return redirect()->route('home');
         }
-        return view(SITE_THEME . '.shop_forgot',
+        return view(SITE_THEME . '.auth.forgot',
             array(
-                'title' => trans('language.for_got_password'),
+                'title' => trans('language.forgot_password'),
             )
         );
     }
