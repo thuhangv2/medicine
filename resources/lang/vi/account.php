@@ -14,4 +14,9 @@ return [
     'password_confirm'        => 'Xác nhận mật khẩu',
     'password_old_required'   => 'Bạn chưa nhập mật khẩu hiện tại',
     'password_old_notcorrect' => 'Mật khẩu hiện tại chưa đúng',
+    'name'                    => 'Tên',
+    'email'                   => 'Email',
+    'phone'                   => 'Số điện thoại',
+    'address1'                => 'Quận/Huyện',
+    'address2'                => 'Tỉnh/Thành phố',
 ];

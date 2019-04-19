@@ -14,5 +14,7 @@ return [
     'password_confirm'        => 'Confirm password',
     'password_old_required'   => 'Old password is required!',
     'password_old_notcorrect' => 'Old password not correct!',
+    'address1'                => 'Address 1',
+    'address2'                => 'Address 2',
 
 ];

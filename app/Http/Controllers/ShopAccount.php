@@ -67,6 +67,41 @@ class ShopAccount extends GeneralController
         return redirect()->route('member.index')->with(['message' => trans('account.update_success')]);
     }
 
+    public function changeInfomation()
+    {
+        $user     = Auth::user();
+        $id       = $user->id;
+        $dataUser = User::find($id);
+        return view(SITE_THEME . '.account.change_infomation')->with(array(
+            'title'       => trans('account.change_infomation'),
+            'dataUser'    => $dataUser,
+            'layout_page' => 'shop_profile',
+        ));
+    }
+
+    public function postChangeInfomation(Request $request)
+    {
+        $user     = Auth::user();
+        $id       = $user->id;
+        $dataUser = User::find($id);
+
+        $messages = [
+            'required' => trans('validation.required'),
+        ];
+        $v = Validator::make($request->all(), [
+            'name'     => 'required',
+            'phone'    => 'required|regex:/^0[^0][0-9\-]{7,13}$/',
+            'address1' => 'required',
+            'address2' => 'required',
+        ], $messages);
+        if ($v->fails()) {
+            return redirect()->back()->withErrors($v->errors());
+        }
+
+        $dataUser->update($request->all());
+        return redirect()->route('member.index')->with(['message' => trans('account.update_success')]);
+    }
+
     /**
      * [profile description]
      * @return [type] [description]
