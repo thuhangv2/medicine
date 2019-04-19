@@ -45,7 +45,7 @@ class ResetPasswordController extends Controller
         if (Auth::user()) {
             return redirect()->route('home');
         }
-        return view(SITE_THEME . '.shop_reset',
+        return view(SITE_THEME . '.auth.reset',
             [
                 'title' => trans('language.reset_password'),
                 'token' => $token,
