@@ -19,10 +19,19 @@ class ShopAccount extends GeneralController
         $user = Auth::user();
         $id   = $user->id;
         return view(SITE_THEME . '.account.index')->with(array(
-            'title'       => trans('language.my_profile'),
+            'title'       => trans('account.my_profile'),
             'user'        => $user,
-            'orders'      => $orders,
-            'statusOrder' => $statusOrder,
+            'layout_page' => 'shop_profile',
+        ));
+    }
+
+    public function changePassword()
+    {
+        $user = Auth::user();
+        $id   = $user->id;
+        return view(SITE_THEME . '.account.change_password')->with(array(
+            'title'       => trans('account.change_password'),
+            'user'        => $user,
             'layout_page' => 'shop_profile',
         ));
     }
@@ -38,7 +47,7 @@ class ShopAccount extends GeneralController
         $orders      = ShopOrder::with('orderTotal')->where('user_id', $id)->sort()->get();
         $statusOrder = ShopOrderStatus::pluck('name', 'id')->all();
         return view(SITE_THEME . '.account.order_list')->with(array(
-            'title'       => trans('language.my_profile'),
+            'title'       => trans('account.order_list'),
             'user'        => $user,
             'orders'      => $orders,
             'statusOrder' => $statusOrder,

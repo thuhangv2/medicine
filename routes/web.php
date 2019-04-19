@@ -30,7 +30,9 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'member'], function ($router) {
 //Customer profile
 Route::group(['prefix' => 'member', 'middleware' => 'auth'], function ($router) {
     $router->get('/', 'ShopAccount@index')->name('member.index');
-    $router->get('/order_list.html', 'ShopAccount@orderList')->name('member.profile');
+    $router->get('/order_list.html', 'ShopAccount@orderList')->name('member.order_list');
+    $router->get('/change_password.html', 'ShopAccount@changePassword')->name('member.change_password');
+    $router->get('/update_infomation.html', 'ShopAccount@orderList')->name('member.update_infomation');
 });
 //End customer
 

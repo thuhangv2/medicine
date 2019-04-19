@@ -61,7 +61,7 @@
                 @guest
                 <li><a href="{{ route('login') }}"><i class="fa fa-lock"></i> {{ trans('language.login') }}</a></li>
                 @else
-                <li><a href="{{ route('member.profile') }}"><i class="fa fa-user"></i> {{ trans('language.account') }}</a></li>
+                <li><a href="{{ route('member.index') }}"><i class="fa fa-user"></i> {{ trans('language.account') }}</a></li>
                 <li><a href="{{ route('logout') }}" rel="nofollow" onclick="event.preventDefault();
                    document.getElementById('logout-form').submit();"><i class="fa fa-power-off"></i> {{ trans('language.logout') }}</a></li>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

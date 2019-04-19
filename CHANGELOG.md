@@ -10,6 +10,7 @@
 - Management url
 - Filter sort product
 - Email config: template, action
+- Account profile
 ### Optimize
 - Query model
 - Notify message
