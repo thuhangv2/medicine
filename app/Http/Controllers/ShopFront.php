@@ -6,14 +6,10 @@ use App\Models\EmailTemplate;
 use App\Models\ShopAttributeGroup;
 use App\Models\ShopBrand;
 use App\Models\ShopCategory;
-use App\Models\ShopOrder;
-use App\Models\ShopOrderStatus;
 use App\Models\ShopPage;
 use App\Models\ShopProduct;
 use App\Models\ShopVendor;
-use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ShopFront extends GeneralController
 {
@@ -341,25 +337,6 @@ class ShopFront extends GeneralController
                 'filter_sort' => $filter_sort,
             )
         );
-    }
-
-    /**
-     * [profile description]
-     * @return [type] [description]
-     */
-    public function profile()
-    {
-        $user        = Auth::user();
-        $id          = $user->id;
-        $orders      = ShopOrder::with('orderTotal')->where('user_id', $id)->sort()->get();
-        $statusOrder = ShopOrderStatus::pluck('name', 'id')->all();
-        return view(SITE_THEME . '.shop_profile')->with(array(
-            'title'       => trans('language.my_profile'),
-            'user'        => $user,
-            'orders'      => $orders,
-            'statusOrder' => $statusOrder,
-            'layout_page' => 'shop_profile',
-        ));
     }
 
 /**

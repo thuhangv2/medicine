@@ -26,10 +26,13 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'member'], function ($router) {
     $router->get('/forgot.html', 'ForgotPasswordController@showLinkRequestForm')->name('forgot');
 });
 //End Auth
-Route::get('/member/profile.html', [
-    'middleware' => 'auth',
-    'uses'       => 'ShopFront@profile',
-])->name('profile');
+
+//Customer profile
+Route::group(['prefix' => 'member', 'middleware' => 'auth'], function ($router) {
+    $router->get('/', 'ShopAccount@index')->name('member.index');
+    $router->get('/order_list.html', 'ShopAccount@orderList')->name('member.profile');
+});
+//End customer
 
 //Language
 Route::get('locale/{code}', function ($code) {
