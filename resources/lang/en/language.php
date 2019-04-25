@@ -74,6 +74,7 @@ return [
     ],
 
     'admin'              => [
+        'admin_log'                         => 'Admin logs',
         'note_test'                         => '<span style="font-size: 30px;
         color: #f3d80e;
         padding-left: 10%;

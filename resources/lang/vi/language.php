@@ -73,6 +73,7 @@ return [
     ],
 
     'admin'              => [
+        'admin_log'                         => 'Nhật ký truy cập admin',
         'home_blogs'                        => 'Số blog/Trang chủ',
         'home_contents'                     => 'Số dịch vụ/Trang chủ',
         'item_list'                         => 'Số item/Trang',

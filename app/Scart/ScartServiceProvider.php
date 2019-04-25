@@ -11,10 +11,13 @@ class ScartServiceProvider extends ServiceProvider
      *
      * @return void
      */
+    protected $ssl_mode = 0;
     public function boot()
     {
         $this->bootScart();
-
+        if ($this->ssl_mode) {
+            \URL::forceScheme('https');
+        }
     }
 
     /**
@@ -35,12 +38,13 @@ class ScartServiceProvider extends ServiceProvider
 
         try {
             //Config for  email
-            $configs       = \Helper::configs();
-            $configsGlobal = \Helper::configsGlobal();
-            $languages     = \Helper::languages();
-            $currencies    = \Helper::currencies();
-            $layouts       = \Helper::layouts();
-            $layoutsUrl    = \Helper::layoutsUrl();
+            $configs        = \Helper::configs();
+            $configsGlobal  = \Helper::configsGlobal();
+            $languages      = \Helper::languages();
+            $currencies     = \Helper::currencies();
+            $layouts        = \Helper::layouts();
+            $layoutsUrl     = \Helper::layoutsUrl();
+            $this->ssl_mode = $configs['site_ssl'] ?? false;
             config(['app.name' => $configsGlobal['title']]);
             config(['mail.driver' => ($configs['email_action_smtp_mode']) ? 'smtp' : 'sendmail']);
             config(['mail.host' => empty($configs['smtp_host']) ? env('MAIL_HOST', '') : $configs['smtp_host']]);
@@ -56,6 +60,11 @@ class ScartServiceProvider extends ServiceProvider
             ]
             );
             //email
+
+            //admin log
+            config(['admin.operation_log.enable' => ($configs['admin_log'] ? '1' : '0')]);
+            config(['admin.https' => ($configs['site_ssl'] ? '1' : '0')]);
+            //
 
             view()->share('configsGlobal', $configsGlobal);
             view()->share('configs', $configs);
