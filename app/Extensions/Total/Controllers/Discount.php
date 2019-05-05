@@ -12,6 +12,9 @@ class Discount extends \App\Http\Controllers\Controller
     protected $configCode = 'Total';
     protected $configType = 'Extensions';
     public $title;
+    public $version;
+    public $auth;
+    public $link;
     public $image;
     const ALLOW  = 1;
     const DENIED = 0;
@@ -28,6 +31,9 @@ class Discount extends \App\Http\Controllers\Controller
         $this->length          = 8;
         $this->mask            = '****-****';
         $this->discountService = new DiscountService;
+        $this->version         = '1.0';
+        $this->auth            = 'Naruto';
+        $this->link            = 'https://s-cart.org';
 
     }
 
@@ -45,6 +51,9 @@ class Discount extends \App\Http\Controllers\Controller
             'image'      => $this->image,
             'permission' => self::ALLOW,
             'value'      => 0,
+            'version'    => $this->version,
+            'auth'       => $this->auth,
+            'link'       => $this->link,
         ];
 
         $configs  = \Helper::configs();
@@ -64,6 +73,9 @@ class Discount extends \App\Http\Controllers\Controller
                 'image'      => $this->image,
                 'permission' => self::ALLOW,
                 'value'      => ($value > $subtotal) ? -$subtotal : -$value,
+                'version'    => $this->version,
+                'auth'       => $this->auth,
+                'link'       => $this->link,
             );
         }
         return $arrData;

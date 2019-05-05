@@ -230,12 +230,12 @@ class ShopCart extends GeneralController
             );
             return redirect()->route('cart')
                 ->with(
-                    ['message' => trans('language.cart.success', ['instance' => 'cart'])]
+                    ['message' => trans('cart.success', ['instance' => 'cart'])]
                 );
         } else {
             return redirect()->route('cart')
                 ->with(
-                    ['error' => trans('language.cart.dont_allow_sale')]
+                    ['error' => trans('cart.dont_allow_sale')]
                 );
         }
 
@@ -318,7 +318,7 @@ class ShopCart extends GeneralController
                 ShopOrderDetail::insert($arrDetail);
                 //If product out of stock
                 if (!$this->configs['product_buy_out_of_stock'] && $product->stock < $value->qty) {
-                    return redirect()->route('home')->with('error', trans('language.cart.over', ['item' => $product->sku]));
+                    return redirect()->route('home')->with('error', trans('cart.over', ['item' => $product->sku]));
                 } //
                 $product->stock -= $value->qty;
                 $product->sold += $value->qty;
@@ -345,19 +345,19 @@ class ShopCart extends GeneralController
                     $arrReturnModuleDiscount = json_decode($returnModuleDiscount, true);
                     if ($arrReturnModuleDiscount['error'] == 1) {
                         if ($arrReturnModuleDiscount['msg'] == 'error_code_not_exist') {
-                            $msg = trans('language.promotion.process.invalid');
+                            $msg = trans('promotion.process.invalid');
                         } elseif ($arrReturnModuleDiscount['msg'] == 'error_code_cant_use') {
-                            $msg = trans('language.promotion.process.over');
+                            $msg = trans('promotion.process.over');
                         } elseif ($arrReturnModuleDiscount['msg'] == 'error_code_expired_disabled') {
-                            $msg = trans('language.promotion.process.expire');
+                            $msg = trans('promotion.process.expire');
                         } elseif ($arrReturnModuleDiscount['msg'] == 'error_user_used') {
-                            $msg = trans('language.promotion.process.used');
+                            $msg = trans('promotion.process.used');
                         } elseif ($arrReturnModuleDiscount['msg'] == 'error_uID_input') {
-                            $msg = trans('language.promotion.process.user_id_invalid');
+                            $msg = trans('promotion.process.user_id_invalid');
                         } elseif ($arrReturnModuleDiscount['msg'] == 'error_login') {
-                            $msg = trans('language.promotion.process.must_login');
+                            $msg = trans('promotion.process.must_login');
                         } else {
-                            $msg = trans('language.promotion.process.undefined');
+                            $msg = trans('promotion.process.undefined');
                         }
                         return redirect()->route('cart')->with(['error_discount' => $msg]);
                     }
@@ -450,7 +450,7 @@ class ShopCart extends GeneralController
                     return response()->json(
                         [
                             'error' => 1,
-                            'msg'   => trans('language.cart.dont_allow_sale'),
+                            'msg'   => trans('cart.dont_allow_sale'),
                         ]
                     );
                 }
@@ -482,7 +482,7 @@ class ShopCart extends GeneralController
                     return response()->json(
                         [
                             'error' => 1,
-                            'msg'   => trans('language.cart.exist', ['instance' => $instance]),
+                            'msg'   => trans('cart.exist', ['instance' => $instance]),
                         ]
                     );
                 }
@@ -516,7 +516,7 @@ class ShopCart extends GeneralController
                 'instance'   => $instance,
                 'subtotal'   => $carts['subtotal'],
                 'html'       => $html,
-                'msg'        => trans('language.cart.success', ['instance' => ($instance == 'default') ? 'cart' : $instance]),
+                'msg'        => trans('cart.success', ['instance' => ($instance == 'default') ? 'cart' : $instance]),
             ]
         );
 
@@ -540,7 +540,7 @@ class ShopCart extends GeneralController
             return response()->json(
                 [
                     'error' => 1,
-                    'msg'   => trans('language.cart.over', ['item' => $product->sku]),
+                    'msg'   => trans('cart.over', ['item' => $product->sku]),
                 ]);
         } else {
             Cart::update($rowId, ($new_qty) ? $new_qty : 0);
@@ -663,12 +663,12 @@ class ShopCart extends GeneralController
             if ($checkContent || $checkContentCustomer) {
                 $orderDetail = '';
                 $orderDetail .= '<tr>
-                                    <td>' . trans('language.email.order.sort') . '</td>
-                                    <td>' . trans('language.email.order.sku') . '</td>
-                                    <td>' . trans('language.email.order.name') . '</td>
-                                    <td>' . trans('language.email.order.price') . '</td>
-                                    <td>' . trans('language.email.order.qty') . '</td>
-                                    <td>' . trans('language.email.order.total') . '</td>
+                                    <td>' . trans('email.order.sort') . '</td>
+                                    <td>' . trans('email.order.sku') . '</td>
+                                    <td>' . trans('email.order.name') . '</td>
+                                    <td>' . trans('email.order.price') . '</td>
+                                    <td>' . trans('email.order.qty') . '</td>
+                                    <td>' . trans('email.order.total') . '</td>
                                 </tr>';
                 foreach ($data['details'] as $key => $detail) {
                     $orderDetail .= '<tr>
@@ -695,7 +695,7 @@ class ShopCart extends GeneralController
                     '/\{\{\$total\}\}/',
                 ];
                 $dataReplace = [
-                    trans('language.order.email.new_title') . '#' . $orderId,
+                    trans('order.email.new_title') . '#' . $orderId,
                     $orderId,
                     $data['toname'],
                     $data['address1'] . ' ' . $data['address2'],
@@ -717,7 +717,7 @@ class ShopCart extends GeneralController
                     ];
                     $config = [
                         'to'      => $this->configsGlobal['email'],
-                        'subject' => trans('language.order.email.new_title') . '#' . $orderId,
+                        'subject' => trans('order.email.new_title') . '#' . $orderId,
                     ];
                     \Helper::sendMail('mail.order_success_to_admin', $data_mail, $config, []);
                 }
@@ -730,7 +730,7 @@ class ShopCart extends GeneralController
                     $config = [
                         'to'      => $data['email'],
                         'replyTo' => $this->configsGlobal['email'],
-                        'subject' => trans('language.order.email.new_title'),
+                        'subject' => trans('order.email.new_title'),
                     ];
                     \Helper::sendMail('mail.order_success_to_customer', $data_mail_customer, $config, []);
                 }
@@ -738,6 +738,6 @@ class ShopCart extends GeneralController
 
         }
 
-        return redirect()->route('cart')->with('message', trans('language.order.success'));
+        return redirect()->route('cart')->with('message', trans('order.success'));
     }
 }

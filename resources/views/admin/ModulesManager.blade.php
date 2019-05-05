@@ -10,11 +10,14 @@
              <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>{{ trans('language.modules.code') }}</th>
-                  <th>{{ trans('language.modules.name') }}</th>
-                  <th>{{ trans('language.modules.sort') }}</th>
-                  <th>{{ trans('language.modules.status') }}</th>
-                  <th>{{ trans('language.modules.action') }}</th>
+                  <th>{{ trans('Modules/language.code') }}</th>
+                  <th>{{ trans('Modules/language.name') }}</th>
+                  <th>{{ trans('Modules/language.version') }}</th>
+                  <th>{{ trans('Modules/language.auth') }}</th>
+                  <th>{{ trans('Modules/language.link') }}</th>
+                  <th>{{ trans('Modules/language.sort') }}</th>
+                  <th>{{ trans('Modules/language.status') }}</th>
+                  <th>{{ trans('Modules/language.action') }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -25,28 +28,32 @@
                   @else
                   @foreach ($modules as $key => $module)
                   @php
-                    $moduleClass = $namespace.'\\'.$module;
+                    $moduleClassName = $namespace.'\\'.$module;
+                    $moduleClass = new $moduleClassName;
                     if(!array_key_exists($module, $modulesInstalled->toArray())){
                       $moduleStatus = null;
-                      $moduleStatusTitle = trans('language.modules.not_install');
-                      $moduleAction = '<span onClick="installModule($(this),\''.$module.'\');" title="'.trans('language.modules.install').'" type="button" class="btn btn-flat btn-success"><i class="fa fa-plus-circle"></i></span>';
+                      $moduleStatusTitle = trans('Modules/language.not_install');
+                      $moduleAction = '<span onClick="installModule($(this),\''.$module.'\');" title="'.trans('Modules/language.install').'" type="button" class="btn btn-flat btn-success"><i class="fa fa-plus-circle"></i></span>';
                     }else{
                       if($modulesInstalled[$module]['value']){
                         $moduleStatus = 1;
-                        $moduleStatusTitle = trans('language.modules.actived');
-                        $moduleAction ='<span onClick="disableModule($(this),\''.$module.'\');" title="'.trans('language.modules.disable').'" type="button" class="btn btn-flat btn-warning btn-flat"><i class="fa fa-power-off"></i></span>&nbsp;
-                              <span onClick="uninstallModule($(this),\''.$module.'\');" title="'.trans('language.modules.remove').'" class="btn btn-flat btn-danger"><i class="fa fa-trash"></i></span>';
+                        $moduleStatusTitle = trans('Modules/language.actived');
+                        $moduleAction ='<span onClick="disableModule($(this),\''.$module.'\');" title="'.trans('Modules/language.disable').'" type="button" class="btn btn-flat btn-warning btn-flat"><i class="fa fa-power-off"></i></span>&nbsp;
+                              <span onClick="uninstallModule($(this),\''.$module.'\');" title="'.trans('Modules/language.remove').'" class="btn btn-flat btn-danger"><i class="fa fa-trash"></i></span>';
                       }else{
                         $moduleStatus = 0;
-                        $moduleStatusTitle = trans('language.modules.disabled');
-                        $moduleAction = '<span onClick="enableModule($(this),\''.$module.'\');" title="'.trans('language.modules.enable').'" type="button" class="btn btn-flat btn-primary"><i class="fa fa-paper-plane"></i></span>&nbsp;
-                              <span onClick="uninstallModule($(this),\''.$module.'\');" title="'.trans('language.modules.remove').'" class="btn btn-flat btn-danger"><i class="fa fa-trash"></i></span>';
+                        $moduleStatusTitle = trans('Modules/language.disabled');
+                        $moduleAction = '<span onClick="enableModule($(this),\''.$module.'\');" title="'.trans('Modules/language.enable').'" type="button" class="btn btn-flat btn-primary"><i class="fa fa-paper-plane"></i></span>&nbsp;
+                              <span onClick="uninstallModule($(this),\''.$module.'\');" title="'.trans('Modules/language.remove').'" class="btn btn-flat btn-danger"><i class="fa fa-trash"></i></span>';
                       }
                     }
                   @endphp
                     <tr>
                       <td>{{ $module }}</td>
-                      <td>{{ (new $moduleClass)->title }}</td>
+                      <td>{{ $moduleClass->title }}</td>
+                      <td>{{ $moduleClass->version??'' }}</td>
+                      <td>{{ $moduleClass->auth??'' }}</td>
+                      <td>{{ $moduleClass->link??'' }}</td>
                       <td>{{ isset($modulesInstalled[$module]['sort'])?$modulesInstalled[$module]['sort']:'' }}</td>
                       <td>{{ $moduleStatusTitle }}</td>
                       <td>{!! $moduleAction !!}</td>

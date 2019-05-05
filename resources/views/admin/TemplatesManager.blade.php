@@ -10,12 +10,12 @@
              <table id="main-table" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>{{ trans('language.templates.name') }}</th>
-                  <th>{{ trans('language.templates.auth') }}</th>
-                  <th>{{ trans('language.templates.email') }}</th>
-                  <th>{{ trans('language.templates.website') }}</th>
-                  <th>{{ trans('language.templates.version') }}</th>
-                  <th>{{ trans('language.templates.status') }}</th>
+                  <th>{{ trans('template.name') }}</th>
+                  <th>{{ trans('template.auth') }}</th>
+                  <th>{{ trans('template.email') }}</th>
+                  <th>{{ trans('template.website') }}</th>
+                  <th>{{ trans('template.version') }}</th>
+                  <th>{{ trans('template.status') }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -26,7 +26,7 @@
                      <td>{{ $template['config']['email']??'' }}</td>
                      <td>{{ $template['config']['website']??'' }}</td>
                      <td>{{ $template['config']['version']??'' }}</td>
-                      <td>{!! ($templateCurrent == $key)?'<button title="'.trans('language.templates.active').'"  class="btn">'.trans('language.templates.active').'</button >':'<button  onClick="enableTemplate($(this),\''.$key.'\');" title="'.trans('language.templates.inactive').'" data-loading-text="'.trans('language.templates.installing').'" class="btn btn-primary">'.trans('language.templates.inactive').'</button >' !!}</td>
+                      <td>{!! ($templateCurrent == $key)?'<button title="'.trans('template.active').'"  class="btn">'.trans('template.active').'</button >':'<button  onClick="enableTemplate($(this),\''.$key.'\');" title="'.trans('template.inactive').'" data-loading-text="'.trans('template.installing').'" class="btn btn-primary">'.trans('template.inactive').'</button >' !!}</td>
                     </tr>
                   @endforeach
                 </tbody>

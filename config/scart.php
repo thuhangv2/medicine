@@ -1,6 +1,6 @@
 <?php
 return [
-    'version'  => '2.2.5',
+    'version'  => '2.2.6',
     'homepage' => 'https://s-cart.org',
     'name'     => 'S-Cart',
     'title'    => 'Free Open Source eCommerce for Business',

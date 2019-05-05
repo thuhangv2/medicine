@@ -12,5 +12,24 @@ return [
     'welcome_customer' => [
         'title' => 'Chào mừng!',
     ],
+    'order'            => [
+        'title_1'      => 'Xin chào! :website trang web có đơn hàng mới!',
+        'order_id'     => 'Mã đơn hàng',
+        'toname'       => 'Tên khách hàng',
+        'address'      => 'Địa chỉ',
+        'phone'        => 'Điện thoại',
+        'note'         => 'Ghi chú',
+        'order_detail' => 'Chi tiết đặt hàng',
+        'sort'         => 'Thứ tự',
+        'sku'          => 'SKU',
+        'price'        => 'Giá',
+        'name'         => 'Tên',
+        'qty'          => 'Số lượng',
+        'total'        => 'Tổng',
+        'sub_total'    => 'Tiền hàng',
+        'shipping_fee' => 'Phí vận chuyển',
+        'discount'     => 'Giảm giá',
+        'order_total'  => 'Tổng số đơn hàng',
 
+    ],
 ];

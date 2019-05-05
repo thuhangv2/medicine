@@ -20,10 +20,10 @@ class ExtensionsController extends Controller
     public function __construct()
     {
         $this->namespaceGroup = [
-            'Shipping' => '\App\Extensions\Shipping\Controllers',
-            'Payment'  => '\App\Extensions\Payment\Controllers',
-            'Total'    => '\App\Extensions\Total\Controllers',
-            'Other'    => '\App\Extensions\Other\Controllers',
+            'shipping' => '\App\Extensions\Shipping\Controllers',
+            'payment'  => '\App\Extensions\Payment\Controllers',
+            'total'    => '\App\Extensions\Total\Controllers',
+            'other'    => '\App\Extensions\Other\Controllers',
         ];
 
     }
@@ -38,7 +38,7 @@ class ExtensionsController extends Controller
             $body = $this->extensionsGroup($group);
         }
         return $content
-            ->header(trans('language.extensions.manager'))
+            ->header(trans('Extensions/language.manager'))
             ->description(' ')
             ->body($body);
     }
@@ -53,7 +53,7 @@ class ExtensionsController extends Controller
         $extensionsInstalled = \Helper::getExtensionsGroup($group, $onlyActive = false);
         $extensions          = \FindClass::classNames('Extensions', $group);
         $namespace           = $this->namespaceGroup[$group];
-        $title               = trans('language.extensions.' . $group);
+        $title               = trans('Extensions/language.' . $group);
         return $this->render($extensionsInstalled, $extensions, $namespace, $title, $group);
     }
 

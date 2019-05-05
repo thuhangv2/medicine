@@ -17,6 +17,9 @@ class Content extends \App\Http\Controllers\GeneralController
     protected $configKey  = 'Content';
 
     public $title;
+    public $version;
+    public $auth;
+    public $link;
     const ON  = 1;
     const OFF = 0;
     public function __construct()
@@ -25,6 +28,9 @@ class Content extends \App\Http\Controllers\GeneralController
         $this->title = trans($this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title');
         app('view')->prependNamespace($this->configType,
             base_path('app/' . $this->configType . '/' . $this->configCode . '/Views'));
+        $this->version = '1.0';
+        $this->auth    = 'Naruto';
+        $this->link    = 'https://s-cart.org';
 
     }
     public function getData()
@@ -35,8 +41,11 @@ class Content extends \App\Http\Controllers\GeneralController
     public function processData()
     {
         $arrData = [
-            'title' => $this->title,
-            'code'  => $this->configKey,
+            'title'   => $this->title,
+            'code'    => $this->configKey,
+            'version' => $this->version,
+            'auth'    => $this->auth,
+            'link'    => $this->link,
         ];
         return $arrData;
     }

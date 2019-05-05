@@ -52,7 +52,7 @@
                 <p>SKU: {{ $product->sku }}</p>
                   {!! $product->showPrice() !!}
                 <span>
-                  <label>{{ trans('language.product.quantity') }}:</label>
+                  <label>{{ trans('product.quantity') }}:</label>
                   <input type="number" name="qty" value="1" />
                   <button type="submit" class="btn btn-fefault cart">
                     <i class="fa fa-shopping-cart"></i>
@@ -82,17 +82,17 @@
                   @endforeach
                 </div>
                 @endif
-                <p><b>{{ trans('language.product.availability') }}:</b>
+                <p><b>{{ trans('product.availability') }}:</b>
                 @if ($configs['show_date_available'] && $product->date_available >= date('Y-m-d H:i:s'))
                 {{ $product->date_available }}
                 @else
-                {{ trans('language.product.in_stock') }}
+                {{ trans('product.in_stock') }}
                 @endif
               </p>
-                <p><b>{{ trans('language.product.type') }}:</b> New</p>
-                <p><b>{{ trans('language.product.brand') }}:</b> {{ empty($product->brand->name)?'None':$product->brand->name }}</p>
+                <p><b>{{ trans('product.type') }}:</b> New</p>
+                <p><b>{{ trans('product.brand') }}:</b> {{ empty($product->brand->name)?'None':$product->brand->name }}</p>
                 <div class="short-description">
-                  <b>{{ trans('language.product.overview') }}:</b>
+                  <b>{{ trans('product.overview') }}:</b>
                   <p>{{ $product->description }}</p>
                 </div>
               <div class="addthis_inline_share_toolbox_yprn"></div>
@@ -104,8 +104,8 @@
           <div class="category-tab shop-details-tab"><!--category-tab-->
             <div class="col-sm-12">
               <ul class="nav nav-tabs">
-                <li class="active"><a href="#details" data-toggle="tab">{{ trans('language.product.description') }}</a></li>
-                <li><a href="#reviews" data-toggle="tab">{{ trans('language.product.comment') }}</a></li>
+                <li class="active"><a href="#details" data-toggle="tab">{{ trans('product.description') }}</a></li>
+                <li><a href="#reviews" data-toggle="tab">{{ trans('product.comment') }}</a></li>
               </ul>
             </div>
             <div class="tab-content">

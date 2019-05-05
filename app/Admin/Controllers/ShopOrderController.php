@@ -54,7 +54,7 @@ class ShopOrderController extends Controller
             $content->header(trans('language.admin.order_manager'));
             $content->description(' ');
             if ($keyword != "") {
-                $content->description(trans('language.order.search_keyword') . ': "' . $keyword . '"');
+                $content->description(trans('order.search_keyword') . ': "' . $keyword . '"');
             }
 
             $content->body($this->grid($keyword));
@@ -107,25 +107,25 @@ class ShopOrderController extends Controller
             $grid->email('Email')->display(function ($email) {
                 return empty($email) ? 'N/A' : '<div style="max-width:150px; overflow:auto;word-wrap: break-word;">' . $email . '</div>';
             });
-            $grid->subtotal(trans('language.order.sub_total'))->display(function ($price) {
+            $grid->subtotal(trans('order.sub_total'))->display(function ($price) {
                 return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
             });
-            $grid->shipping(trans('language.order.shipping_price'))->display(function ($price) {
+            $grid->shipping(trans('order.shipping_price'))->display(function ($price) {
                 return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
             });
-            $grid->discount(trans('language.order.discount'))->display(function ($price) {
+            $grid->discount(trans('order.discount'))->display(function ($price) {
                 return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
             });
-            $grid->total(trans('language.order.total'))->display(function ($price) {
+            $grid->total(trans('order.total'))->display(function ($price) {
                 return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
             });
-            $grid->received(trans('language.order.received'))->display(function ($price) {
+            $grid->received(trans('order.received'))->display(function ($price) {
                 return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
             });
-            $grid->payment_method(trans('language.order.payment_method'))->sortable();
+            $grid->payment_method(trans('order.payment_method'))->sortable();
 
-            $grid->currency(trans('language.order.currency'));
-            $grid->exchange_rate(trans('language.order.exchange_rate'));
+            $grid->currency(trans('order.currency'));
+            $grid->exchange_rate(trans('order.exchange_rate'));
             $statusOrder = $this->statusOrder;
             $grid->status(trans('language.admin.status'))->display(function ($status) use ($statusOrder) {
                 $style = "";
@@ -175,14 +175,14 @@ class ShopOrderController extends Controller
             foreach ($customers as $key => $value) {
                 $arrCustomer[$value['id']] = $value['name'] . "<" . $value['email'] . ">";
             }
-            $form->select('user_id', trans('language.order.select_customer'))->options($arrCustomer)->rules('required');
-            $form->text('toname', trans('language.order.shipping_name'));
-            $form->text('address1', trans('language.order.shipping_address1'));
-            $form->text('address2', trans('language.order.shipping_address2'));
-            $form->mobile('phone', trans('language.order.shipping_phone'));
-            $form->select('currency', trans('language.order.currency'))->options($this->currency)->rules('required');
-            $form->number('exchange_rate', trans('language.order.exchange_rate'));
-            $form->textarea('comment', trans('language.order.order_note'));
+            $form->select('user_id', trans('order.select_customer'))->options($arrCustomer)->rules('required');
+            $form->text('toname', trans('order.shipping_name'));
+            $form->text('address1', trans('order.shipping_address1'));
+            $form->text('address2', trans('order.shipping_address2'));
+            $form->mobile('phone', trans('order.shipping_phone'));
+            $form->select('currency', trans('order.currency'))->options($this->currency)->rules('required');
+            $form->number('exchange_rate', trans('order.exchange_rate'));
+            $form->textarea('comment', trans('order.order_note'));
             $form->select('status', trans('language.admin.status'))->options($this->statusOrder);
             $form->hidden('email');
             $form->divide();
@@ -402,7 +402,7 @@ JS;
             } else {
                 $style = 'style="font-weight:bold;"';
             }
-            $style_blance = '<tr ' . $style . ' class="data-balance"><td>' . trans('language.order.balance') . ':</td><td align="right">' . \Helper::currencyFormat($orderUpdated->balance) . '</td></tr>';
+            $style_blance = '<tr ' . $style . ' class="data-balance"><td>' . trans('order.balance') . ':</td><td align="right">' . \Helper::currencyFormat($orderUpdated->balance) . '</td></tr>';
             return json_encode(['stt' => 1, 'msg' => [
                 'total'          => \Helper::currencyFormat($orderUpdated->total),
                 'subtotal'       => \Helper::currencyFormat($orderUpdated->subtotal),
@@ -502,7 +502,7 @@ JS;
             //Add history
             $dataHistory = [
                 'order_id' => $pOrder,
-                'content'  => trans('language.product.edit_product') . ' #' . $pId . ': Data ' . json_encode($data),
+                'content'  => trans('product.edit_product') . ' #' . $pId . ': Data ' . json_encode($data),
                 'admin_id' => Admin::user()->id,
                 'add_date' => date('Y-m-d H:i:s'),
             ];

@@ -24,8 +24,8 @@ class ShopApiController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->row('<span style="font-size:15px;font-style: italic;">(' . trans('language.api.guide') . ')</span><br>')
-            ->header(trans('language.api.manager'))
+            ->row('<span style="font-size:15px;font-style: italic;">(' . trans('api.guide') . ')</span><br>')
+            ->header(trans('api.manager'))
             ->description(' ')
             ->body($this->grid());
     }
@@ -39,7 +39,7 @@ class ShopApiController extends Controller
     public function edit($id, Content $content)
     {
         return $content
-            ->header(trans('language.api.manager'))
+            ->header(trans('api.manager'))
             ->description(' ')
             ->body($this->form()->edit($id));
     }
@@ -52,7 +52,7 @@ class ShopApiController extends Controller
     public function create(Content $content)
     {
         return $content
-            ->header(trans('language.api.manager'))
+            ->header(trans('api.manager'))
             ->description(' ')
             ->body($this->form());
     }
@@ -72,8 +72,8 @@ class ShopApiController extends Controller
         ];
         $grid = new Grid(new ShopApi);
         $grid->id('ID')->sortable();
-        $grid->name(trans('language.api.name'))->sortable();
-        $grid->hidden_default(trans('language.api.hidden_default'))->display(function ($field) {
+        $grid->name(trans('api.name'))->sortable();
+        $grid->hidden_default(trans('api.hidden_default'))->display(function ($field) {
             if ($field) {
                 $html   = '';
                 $fields = explode(',', $field);
@@ -82,26 +82,26 @@ class ShopApiController extends Controller
                 }
                 return $html;
             } else {
-                return trans('language.api.no_hidden');
+                return trans('api.no_hidden');
             }
         });
         $grid->html('URL')->display(function () use ($arrApi) {
             return $arrApi[$this->name];
         });
-        $grid->secrets(trans('language.api.secret_key'))->expand(function () {
+        $grid->secrets(trans('api.secret_key'))->expand(function () {
             $secrets = $this->secrets;
             $html    = '';
             if ($secrets->count()) {
                 $html .= '
             <table width="100%" class="table-padding" border=1 style="border: 1px solid #d0bcbc;"><tr>
-            <td>' . trans('language.api.secret_key') . '</td>
-            <td>' . trans('language.api.hidden_fileds') . '</td>
-            <td>' . trans('language.api.ip_allow') . '</td>
-            <td>' . trans('language.api.ip_deny') . '</td>
-            <td>' . trans('language.api.created_at') . '</td>
-            <td>' . trans('language.api.updated_at') . '</td>
-            <td>' . trans('language.api.exp') . '</td>
-            <td>' . trans('language.api.status') . '</td>
+            <td>' . trans('api.secret_key') . '</td>
+            <td>' . trans('api.hidden_fileds') . '</td>
+            <td>' . trans('api.ip_allow') . '</td>
+            <td>' . trans('api.ip_deny') . '</td>
+            <td>' . trans('api.created_at') . '</td>
+            <td>' . trans('api.updated_at') . '</td>
+            <td>' . trans('api.exp') . '</td>
+            <td>' . trans('api.status') . '</td>
             </tr>';
                 foreach ($secrets as $key => $secret) {
                     $html_hidden_fileds = '';
@@ -124,12 +124,12 @@ class ShopApiController extends Controller
                 }
                 $html .= "</table>";
             } else {
-                $html .= '<p class="table-padding text-center">' . trans('language.api.no_secret') . '</p>';
+                $html .= '<p class="table-padding text-center">' . trans('api.no_secret') . '</p>';
             }
             return $html;
         }, trans('language.admin.detail'));
 
-        $grid->type(trans('language.api.type'))->display(function ($type) {
+        $grid->type(trans('api.type'))->display(function ($type) {
             $style = "";
             if ($type == 'private') {
                 $style = 'class="label label-primary"';
@@ -162,18 +162,18 @@ class ShopApiController extends Controller
     protected function form()
     {
         $form = new Form(new ShopApi);
-        $form->text('name', trans('language.api.name'))->rules(function ($form) {
+        $form->text('name', trans('api.name'))->rules(function ($form) {
             return 'required|unique:shop_api,name,' . $form->model()->id . ',id';
-        })->help(trans('language.api.name_help'));
-        $form->text('hidden_default', trans('language.api.hidden_default'))->help(trans('language.api.hidden_default_help'));
-        $form->select('type', trans('language.api.type'))->options($this->apiType)->help(trans('language.api.type_help'));
-        $form->hasMany('secrets', trans('language.api.secret_key'), function (Form\NestedForm $form) {
-            $form->text('secret_key', trans('language.api.secret_key'))->rules('required');
-            $form->text('hidden_fileds', trans('language.api.hidden_fileds'));
-            $form->text('ip_allow', trans('language.api.ip_allow'))->help(trans('language.api.ip_allow_help'));
-            $form->text('ip_deny', trans('language.api.ip_deny'));
-            $form->datetime('exp', trans('language.api.exp'));
-            $form->switch('status', trans('language.api.status'));
+        })->help(trans('api.name_help'));
+        $form->text('hidden_default', trans('api.hidden_default'))->help(trans('api.hidden_default_help'));
+        $form->select('type', trans('api.type'))->options($this->apiType)->help(trans('api.type_help'));
+        $form->hasMany('secrets', trans('api.secret_key'), function (Form\NestedForm $form) {
+            $form->text('secret_key', trans('api.secret_key'))->rules('required');
+            $form->text('hidden_fileds', trans('api.hidden_fileds'));
+            $form->text('ip_allow', trans('api.ip_allow'))->help(trans('api.ip_allow_help'));
+            $form->text('ip_deny', trans('api.ip_deny'));
+            $form->datetime('exp', trans('api.exp'));
+            $form->switch('status', trans('api.status'));
         });
         $form->disableViewCheck();
         $form->disableEditingCheck();

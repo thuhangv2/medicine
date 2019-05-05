@@ -98,7 +98,7 @@ class LayoutUrlController extends Controller
         $grid->module('Module');
         $grid->target('Action');
         $grid->group('Group');
-        $grid->status('Status')->switch()->editable();
+        $grid->status('Status')->switch();
         $grid->sort('Sort')->editable();
 
         return $grid;

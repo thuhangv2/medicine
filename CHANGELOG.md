@@ -11,6 +11,7 @@
 - Filter sort product
 - Email config: template, action
 - Account profile
+- Admin helper
 ### Optimize
 - Query model
 - Notify message

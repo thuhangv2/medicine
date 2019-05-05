@@ -12,14 +12,20 @@ class ShippingBasic extends \App\Http\Controllers\Controller
 
     public $title;
     public $image;
+    public $version;
+    public $auth;
+    public $link;
     const ALLOW  = 1;
     const DENIED = 0;
     const ON     = 1;
     const OFF    = 0;
     public function __construct()
     {
-        $this->title = trans($this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title');
-        $this->image = 'images/' . $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.png';
+        $this->title   = trans($this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title');
+        $this->image   = 'images/' . $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.png';
+        $this->version = '1.0';
+        $this->auth    = 'Naruto';
+        $this->link    = 'https://s-cart.org';
     }
 
     public function getData()
@@ -35,6 +41,9 @@ class ShippingBasic extends \App\Http\Controllers\Controller
             'image'      => $this->image,
             'permission' => self::ALLOW,
             'value'      => 200,
+            'version'    => $this->version,
+            'auth'       => $this->auth,
+            'link'       => $this->link,
         ];
         return $arrData;
     }
