@@ -33,14 +33,14 @@ if (request()->method() == 'POST' && request()->ajax()) {
                 if ($admin_url) {
                     $getEnv = str_replace('system_admin', $admin_url, $getEnv);
                 }
-                $env = fopen(base_path() . "/.env", "w") or die(json_encode(['error' => 1, 'msg' => trans('language.install.env.error_open')]));
+                $env = fopen(base_path() . "/.env", "w") or die(json_encode(['error' => 1, 'msg' => trans('install.env.error_open')]));
                 fwrite($env, $getEnv);
                 fclose($env);
             } catch (\Exception $e) {
                 echo json_encode(['error' => 1, 'msg' => $e->getMessage()]);
                 exit();
             }
-            echo json_encode(['error' => 0, 'msg' => trans('language.install.env.process_sucess')]);
+            echo json_encode(['error' => 0, 'msg' => trans('install.env.process_sucess')]);
             break;
 
         case 'step2':
@@ -50,7 +50,7 @@ if (request()->method() == 'POST' && request()->ajax()) {
                 echo json_encode(['error' => 1, 'msg' => $e->getMessage()]);
                 exit;
             }
-            echo json_encode(['error' => 0, 'msg' => trans('language.install.key.process_sucess')]);
+            echo json_encode(['error' => 0, 'msg' => trans('install.key.process_sucess')]);
             break;
 
         case 'step3':
@@ -58,7 +58,7 @@ if (request()->method() == 'POST' && request()->ajax()) {
             shell_exec('php ../artisan cache:clear');
             $file = base_path() . '/database/s-cart.sql';
             if (!file_exists($file)) {
-                echo json_encode(['error' => 1, 'msg' => trans('language.install.database.file_notfound')]);
+                echo json_encode(['error' => 1, 'msg' => trans('install.database.file_notfound')]);
             } else {
                 try {
                     DB::unprepared(file_get_contents($file));
@@ -67,7 +67,7 @@ if (request()->method() == 'POST' && request()->ajax()) {
                     echo json_encode(['error' => 1, 'msg' => explode("\n", $e->getMessage())[0]]);
                     exit();
                 }
-                echo json_encode(['error' => 0, 'msg' => trans('language.install.database.process_sucess')]);
+                echo json_encode(['error' => 0, 'msg' => trans('install.database.process_sucess')]);
             }
 
             break;
@@ -78,7 +78,7 @@ if (request()->method() == 'POST' && request()->ajax()) {
                 try {
                     rename(base_path() . '/public/install.php', base_path() . '/public/install.scart');
                 } catch (\Exception $e) {
-                    echo json_encode(['error' => 1, 'msg' => trans('language.install.rename_error')]);
+                    echo json_encode(['error' => 1, 'msg' => trans('install.rename_error')]);
                     exit();
                 }
 
@@ -87,7 +87,7 @@ if (request()->method() == 'POST' && request()->ajax()) {
                 exit();
 
             }
-            echo json_encode(['error' => 0, 'msg' => trans('language.install.permission.process_sucess')]);
+            echo json_encode(['error' => 0, 'msg' => trans('install.permission.process_sucess')]);
             break;
 
         default:
@@ -96,7 +96,7 @@ if (request()->method() == 'POST' && request()->ajax()) {
     }
 } else {
     echo view('install', array(
-        'title' => trans('language.install.title'))
+        'title' => trans('install.title'))
     );
     exit();
 }

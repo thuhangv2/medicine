@@ -99,8 +99,8 @@ Route::group([
 //
 
 //Process Simpe
-    $router->prefix('process')->group(function ($router) {
+    $router->prefix('shop_process')->group(function ($router) {
         $router->any('/productImport', 'ProcessController@importProduct')->name('productImport');
     });
-    $router->get('/report/{key}', 'ReportController@index')->name('report');
+    $router->get('/shop_report/{key}', 'ReportController@index')->name('report');
 });

@@ -30,7 +30,7 @@ class ModulesController extends Controller
     {
         $body = $this->modulesGroup($group);
         return $content
-            ->header(trans('language.modules.manager'))
+            ->header(trans('Modules/language.manager'))
             ->description(' ')
             ->body($body);
     }
@@ -45,7 +45,7 @@ class ModulesController extends Controller
         $modulesInstalled = \Helper::getExtensionsGroup($group, $onlyActive = false);
         $modules          = \FindClass::classNames('Modules', $group);
         $namespace        = $this->namespaceGroup[$group];
-        $title            = trans('language.modules.' . $group);
+        $title            = trans('Modules/language.' . $group);
         return $this->render($modulesInstalled, $modules, $namespace, $title, $group);
     }
 

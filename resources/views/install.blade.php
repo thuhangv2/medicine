@@ -32,39 +32,39 @@
             <div class="panel-body" >
                     <form  class="form-horizontal" id="formInstall">
                         <div id="div_database_host" class="form-group required">
-                            <label for="database_host"  required class="control-label col-md-4  requiredField"> {{ trans('language.install.database_host') }}<span class="asteriskField">*</span> </label>
+                            <label for="database_host"  required class="control-label col-md-4  requiredField"> {{ trans('install.database_host') }}<span class="asteriskField">*</span> </label>
                             <div class="controls col-md-8 ">
-                                <input class="input-md  textinput textInput form-control" id="database_host"  name="database_host" placeholder="{{ trans('language.install.database_host') }}" style="margin-bottom: 10px" type="text" value="127.0.0.1" />
+                                <input class="input-md  textinput textInput form-control" id="database_host"  name="database_host" placeholder="{{ trans('install.database_host') }}" style="margin-bottom: 10px" type="text" value="127.0.0.1" />
                             </div>
                         </div>
                         <div id="div_database_port" class="form-group required">
-                            <label for="database_port"  required class="control-label col-md-4  requiredField"> {{ trans('language.install.database_port') }}<span class="asteriskField">*</span> </label>
+                            <label for="database_port"  required class="control-label col-md-4  requiredField"> {{ trans('install.database_port') }}<span class="asteriskField">*</span> </label>
                             <div class="controls col-md-8 ">
-                                <input class="input-md  textinput textInput form-control" id="database_port"  name="database_port" placeholder="{{ trans('language.install.database_port') }}" style="margin-bottom: 10px" type="number" value="3306" />
+                                <input class="input-md  textinput textInput form-control" id="database_port"  name="database_port" placeholder="{{ trans('install.database_port') }}" style="margin-bottom: 10px" type="number" value="3306" />
                             </div>
                         </div>
                         <div id="div_database_name" class="form-group required">
-                            <label for="database_name"  required class="control-label col-md-4  requiredField"> {{ trans('language.install.database_name') }}<span class="asteriskField">*</span> </label>
+                            <label for="database_name"  required class="control-label col-md-4  requiredField"> {{ trans('install.database_name') }}<span class="asteriskField">*</span> </label>
                             <div class="controls col-md-8 ">
-                                <input class="input-md  textinput textInput form-control" id="database_name"  name="database_name" placeholder="{{ trans('language.install.database_name') }}" style="margin-bottom: 10px" type="text" value="s-cart" />
+                                <input class="input-md  textinput textInput form-control" id="database_name"  name="database_name" placeholder="{{ trans('install.database_name') }}" style="margin-bottom: 10px" type="text" value="s-cart" />
                             </div>
                         </div>
                         <div id="div_database_user" class="form-group required">
-                            <label for="database_user"  required class="control-label col-md-4  requiredField"> {{ trans('language.install.database_user') }}<span class="asteriskField">*</span> </label>
+                            <label for="database_user"  required class="control-label col-md-4  requiredField"> {{ trans('install.database_user') }}<span class="asteriskField">*</span> </label>
                             <div class="controls col-md-8 ">
-                                <input class="input-md  textinput textInput form-control" id="database_user"  name="database_user" placeholder="{{ trans('language.install.database_user') }}" style="margin-bottom: 10px" type="text" value="root" />
+                                <input class="input-md  textinput textInput form-control" id="database_user"  name="database_user" placeholder="{{ trans('install.database_user') }}" style="margin-bottom: 10px" type="text" value="root" />
                             </div>
                         </div>
                         <div id="div_database_password" class="form-group required">
-                            <label for="database_password"  required class="control-label col-md-4  requiredField"> {{ trans('language.install.database_password') }}<span class="asteriskField">*</span> </label>
+                            <label for="database_password"  required class="control-label col-md-4  requiredField"> {{ trans('install.database_password') }}<span class="asteriskField">*</span> </label>
                             <div class="controls col-md-8 ">
-                                <input class="input-md  textinput textInput form-control" id="database_password"  name="database_password" placeholder="{{ trans('language.install.database_password') }}" style="margin-bottom: 10px" type="password" value="" />
+                                <input class="input-md  textinput textInput form-control" id="database_password"  name="database_password" placeholder="{{ trans('install.database_password') }}" style="margin-bottom: 10px" type="password" value="" />
                             </div>
                         </div>
                         <div id="div_admin_url" class="form-group required">
-                            <label for="admin_url"  required class="control-label col-md-4  requiredField"> {{ trans('language.install.admin_url') }}<span class="asteriskField">*</span> </label>
+                            <label for="admin_url"  required class="control-label col-md-4  requiredField"> {{ trans('install.admin_url') }}<span class="asteriskField">*</span> </label>
                             <div class="controls col-md-8 ">
-                                <input class="input-md  textinput textInput form-control" id="admin_url"  name="admin_url" placeholder="{{ trans('language.install.admin_url') }}" style="margin-bottom: 10px" type="text" value="system_admin" />
+                                <input class="input-md  textinput textInput form-control" id="admin_url"  name="admin_url" placeholder="{{ trans('install.admin_url') }}" style="margin-bottom: 10px" type="text" value="system_admin" />
                             </div>
                         </div>
 
@@ -83,7 +83,7 @@
                         <div class="form-group">
                             <div class="controls col-md-4 "></div>
                             <div class="controls col-md-8 ">
-                                <input type="button" data-loading-text="{{ trans('language.install.installing_button') }}"  value="{{ trans('language.install.installing') }}" class="btn btn-primary btn btn-info" id="submit-install" />
+                                <input type="button" data-loading-text="{{ trans('install.installing_button') }}"  value="{{ trans('install.installing') }}" class="btn btn-primary btn btn-info" id="submit-install" />
                             </div>
                         </div>
                 </form>
@@ -100,7 +100,7 @@ $('#submit-install').click(function(event) {
         $(this).button('loading');
         $('#msg').removeClass('error');
         $('#msg').removeClass('success');
-            $('#msg').html('{{ trans('language.install.env.process') }}');
+            $('#msg').html('{{ trans('install.env.process') }}');
             $.ajax({
                 url: 'install.php',
                 type: 'POST',
@@ -137,7 +137,7 @@ $('#submit-install').click(function(event) {
             .fail(function() {
                 $('#msg').removeClass('success');
                 $('#msg').addClass('error');
-                $('#msg').html('{{ trans('language.install.env.error') }}');
+                $('#msg').html('{{ trans('install.env.error') }}');
                 // $(this).button('reset');
             })
     }
@@ -146,7 +146,7 @@ $('#submit-install').click(function(event) {
 function generateKey(){
     $('#msg').removeClass('error');
     $('#msg').removeClass('success');
-    $('#msg').html('{{ trans('language.install.key.process') }}');
+    $('#msg').html('{{ trans('install.key.process') }}');
     $.ajax({
         url: 'install.php',
         type: 'POST',
@@ -176,14 +176,14 @@ function generateKey(){
     .fail(function() {
         $('#msg').removeClass('success');
         $('#msg').addClass('error');
-        $('#msg').html('{{ trans('language.install.key.error') }}');
+        $('#msg').html('{{ trans('install.key.error') }}');
     })
 }
 
 function installDatabase(){
     $('#msg').removeClass('error');
     $('#msg').removeClass('success');
-    $('#msg').html('{{ trans('language.install.database.process') }}');
+    $('#msg').html('{{ trans('install.database.process') }}');
     $.ajax({
         url: 'install.php',
         type: 'POST',
@@ -213,14 +213,14 @@ function installDatabase(){
     .fail(function() {
         $('#msg').removeClass('success');
         $('#msg').addClass('error');
-        $('#msg').html('{{ trans('language.install.database.error') }}');
+        $('#msg').html('{{ trans('install.database.error') }}');
     })
 }
 
 function setPermission(){
     $('#msg').removeClass('error');
     $('#msg').removeClass('success');
-    $('#msg').html('{{ trans('language.install.permission.process') }}');
+    $('#msg').html('{{ trans('install.permission.process') }}');
     $.ajax({
         url: 'install.php',
         type: 'POST',
@@ -249,7 +249,7 @@ function setPermission(){
     .fail(function() {
         $('#msg').removeClass('success');
         $('#msg').addClass('error');
-        $('#msg').html('{{ trans('language.install.permission.error') }}');
+        $('#msg').html('{{ trans('install.permission.error') }}');
     })
 }
 
@@ -275,20 +275,20 @@ function validateForm(){
         },
         messages: {
             "database_host": {
-                required: "{{ trans('language.install.validate.database_host_required') }}",
+                required: "{{ trans('install.validate.database_host_required') }}",
             },
             "database_port": {
-                required: "{{ trans('language.install.validate.database_port_required') }}",
-                number: "{{ trans('language.install.validate.database_port_number') }}",
+                required: "{{ trans('install.validate.database_port_required') }}",
+                number: "{{ trans('install.validate.database_port_number') }}",
             },
             "admin_url": {
-                required: "{{ trans('language.install.validate.admin_url_required') }}",
+                required: "{{ trans('install.validate.admin_url_required') }}",
             },
             "database_name": {
-                required: "{{ trans('language.install.validate.database_name_required') }}",
+                required: "{{ trans('install.validate.database_name_required') }}",
             },
             "database_user": {
-                required: "{{ trans('language.install.validate.database_user_required') }}",
+                required: "{{ trans('install.validate.database_user_required') }}",
             }
         }
     }).valid();

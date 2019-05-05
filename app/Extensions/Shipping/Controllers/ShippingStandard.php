@@ -12,6 +12,9 @@ class ShippingStandard extends \App\Http\Controllers\Controller
     protected $configKey  = 'ShippingStandard';
 
     public $title;
+    public $version;
+    public $auth;
+    public $link;
     public $image;
     const ALLOW  = 1;
     const DENIED = 0;
@@ -19,8 +22,11 @@ class ShippingStandard extends \App\Http\Controllers\Controller
     const OFF    = 0;
     public function __construct()
     {
-        $this->title = trans($this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title');
-        $this->image = 'images/' . $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.png';
+        $this->title   = trans($this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title');
+        $this->image   = 'images/' . $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.png';
+        $this->version = '1.0';
+        $this->auth    = 'Naruto';
+        $this->link    = 'https://s-cart.org';
     }
 
     public function getData()
@@ -39,6 +45,9 @@ class ShippingStandard extends \App\Http\Controllers\Controller
                 'image'      => $this->image,
                 'permission' => self::ALLOW,
                 'value'      => 0,
+                'version'    => $this->version,
+                'auth'       => $this->auth,
+                'link'       => $this->link,
             ];
         } else {
             $arrData = [
@@ -47,6 +56,9 @@ class ShippingStandard extends \App\Http\Controllers\Controller
                 'image'      => $this->image,
                 'permission' => self::ALLOW,
                 'value'      => $shipping->fee,
+                'version'    => $this->version,
+                'auth'       => $this->auth,
+                'link'       => $this->link,
             ];
 
         }

@@ -25,8 +25,8 @@ class TemplateController extends Controller
     {
 
         return $content
-            ->row('<span style="font-size:15px;font-style: italic;">(' . trans('language.templates.guide') . ')</span><br>')
-            ->header(trans('language.templates.manager'))
+            ->row('<span style="font-size:15px;font-style: italic;">(' . trans('template.guide') . ')</span><br>')
+            ->header(trans('template.manager'))
             ->description(' ')
             ->body($this->render());
     }
@@ -51,7 +51,7 @@ class TemplateController extends Controller
         }
         return view('admin.TemplatesManager')->with(
             [
-                "title"           => trans('language.templates.title'),
+                "title"           => trans('template.title'),
                 "templates"       => $arrTemplates,
                 "templateCurrent" => \Helper::configsGlobal()['template'],
             ])->render();
