@@ -31,12 +31,12 @@
     <thead>
       <tr  style="background: #eaebec">
         <th style="width: 50px;">No.</th>
-        <th style="width: 100px;">{{ trans('language.product.sku') }}</th>
-        <th>{{ trans('language.product.name') }}</th>
-        <th>{{ trans('language.product.price') }}</th>
-        <th >{{ trans('language.product.quantity') }}</th>
-        <th>{{ trans('language.product.total_price') }}</th>
-        <th>{{ trans('language.cart.delete') }}</th>
+        <th style="width: 100px;">{{ trans('product.sku') }}</th>
+        <th>{{ trans('product.name') }}</th>
+        <th>{{ trans('product.price') }}</th>
+        <th >{{ trans('product.quantity') }}</th>
+        <th>{{ trans('product.total_price') }}</th>
+        <th>{{ trans('cart.delete') }}</th>
       </tr>
     </thead>
     <tbody>
@@ -76,10 +76,10 @@
         <tr  style="background: #eaebec">
             <td colspan="7">
                  <div class="pull-left">
-                <button class="btn btn-default" type="button" style="cursor: pointer;padding:10px 30px" onClick="location.href='{{ route('home') }}'"><i class="fa fa-arrow-left"></i>{{ trans('language.cart.back_to_shop') }}</button>
+                <button class="btn btn-default" type="button" style="cursor: pointer;padding:10px 30px" onClick="location.href='{{ route('home') }}'"><i class="fa fa-arrow-left"></i>{{ trans('cart.back_to_shop') }}</button>
                 </div>
                  <div class="pull-right">
-                <a onClick="return confirm('Confirm ?')" href="{{route('clearCart')}}"><button class="btn" type="button" style="cursor: pointer;padding:10px 30px">{{ trans('language.cart.remove_all') }}</button></a>
+                <a onClick="return confirm('Confirm ?')" href="{{route('clearCart')}}"><button class="btn" type="button" style="cursor: pointer;padding:10px 30px">{{ trans('cart.remove_all') }}</button></a>
                 </div>
             </td>
         </tr>
@@ -93,13 +93,13 @@
             <table class="table  table-bordered table-responsive">
                 <tr>
                     <td class="form-group{{ $errors->has('toname') ? ' has-error' : '' }}">
-                        <label for="phone" class="control-label"><i class="fa fa-user"></i> {{ trans('language.cart.to_name') }}:</label> <input name="toname" type="text" placeholder="{{ trans('language.cart.to_name') }}" value="{{(old('toname'))?old('toname'):$shippingAddress['toname']}}">
+                        <label for="phone" class="control-label"><i class="fa fa-user"></i> {{ trans('cart.to_name') }}:</label> <input name="toname" type="text" placeholder="{{ trans('cart.to_name') }}" value="{{(old('toname'))?old('toname'):$shippingAddress['toname']}}">
                             @if($errors->has('toname'))
                                 <span class="help-block">{{ $errors->first('toname') }}</span>
                             @endif
                         </td>
                     <td class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
-                        <label for="phone" class="control-label"><i class="fa fa-volume-control-phone"></i> {{ trans('language.cart.phone') }}:</label> <input name="phone" type="text" placeholder="{{ trans('language.cart.phone') }}" value="{{(old('phone'))?old('phone'):$shippingAddress['phone']}}">
+                        <label for="phone" class="control-label"><i class="fa fa-volume-control-phone"></i> {{ trans('cart.phone') }}:</label> <input name="phone" type="text" placeholder="{{ trans('cart.phone') }}" value="{{(old('phone'))?old('phone'):$shippingAddress['phone']}}">
                             @if($errors->has('phone'))
                                 <span class="help-block">{{ $errors->first('phone') }}</span>
                             @endif
@@ -107,7 +107,7 @@
                 </tr>
                 <tr>
                     <td colspan="2" class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                        <label for="email" class="control-label"><i class="fa fa-user"></i> {{ trans('language.cart.email') }}:</label> <input name="email" type="text" placeholder="{{ trans('language.cart.email') }}" value="{{(old('email'))?old('email'):$shippingAddress['email']}}">
+                        <label for="email" class="control-label"><i class="fa fa-user"></i> {{ trans('cart.email') }}:</label> <input name="email" type="text" placeholder="{{ trans('cart.email') }}" value="{{(old('email'))?old('email'):$shippingAddress['email']}}">
                             @if($errors->has('email'))
                                 <span class="help-block">{{ $errors->first('email') }}</span>
                             @endif
@@ -116,19 +116,19 @@
                 </tr>
 
                 <tr>
-                    <td class="form-group{{ $errors->has('address1') ? ' has-error' : '' }}"><label for="address1" class="control-label"><i class="fa fa-home"></i> {{ trans('language.cart.address1') }}:</label> <input name="address1" type="text" placeholder="{{ trans('language.cart.address1') }}" value="{{ (old('address1'))?old('address1'):$shippingAddress['address1']}}">
+                    <td class="form-group{{ $errors->has('address1') ? ' has-error' : '' }}"><label for="address1" class="control-label"><i class="fa fa-home"></i> {{ trans('cart.address1') }}:</label> <input name="address1" type="text" placeholder="{{ trans('cart.address1') }}" value="{{ (old('address1'))?old('address1'):$shippingAddress['address1']}}">
                             @if($errors->has('address1'))
                                 <span class="help-block">{{ $errors->first('address1') }}</span>
                             @endif</td>
-                    <td class="form-group{{ $errors->has('address2') ? ' has-error' : '' }}"><label for="address2" class="control-label"><i class="fa fa-university"></i> {{ trans('language.cart.address2') }}</label><input name="address2" type="text" placeholder="{{ trans('language.cart.address2') }}" value="{{ (old('address2'))?old('address2'):$shippingAddress['address2']}}">
+                    <td class="form-group{{ $errors->has('address2') ? ' has-error' : '' }}"><label for="address2" class="control-label"><i class="fa fa-university"></i> {{ trans('cart.address2') }}</label><input name="address2" type="text" placeholder="{{ trans('cart.address2') }}" value="{{ (old('address2'))?old('address2'):$shippingAddress['address2']}}">
                             @if($errors->has('address2'))
                                 <span class="help-block">{{ $errors->first('address2') }}</span>
                             @endif</td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <label  class="control-label"><i class="fa fa-file-image-o"></i> {{ trans('language.cart.note') }}:</label>
-                        <textarea rows="5" name="comment" placeholder="{{ trans('language.cart.note') }}....">{{ (old('comment'))?old('comment'):$shippingAddress['comment'] }}</textarea>
+                        <label  class="control-label"><i class="fa fa-file-image-o"></i> {{ trans('cart.note') }}:</label>
+                        <textarea rows="5" name="comment" placeholder="{{ trans('cart.note') }}....">{{ (old('comment'))?old('comment'):$shippingAddress['comment'] }}</textarea>
                     </td>
 
                 </tr>
@@ -163,12 +163,12 @@
         @if ($extensionDiscount)
                 <div class="row">
                   <div class="form-group col-md-6">
-                    <label class="control-label" for="inputGroupSuccess3"><i class="fa fa-exchange" aria-hidden="true"></i> {{ trans('language.cart.coupon') }}
-                        <span style="display:inline; cursor: pointer; display: {{ ($hasCoupon)?'inline':'none' }}" class="text-danger" id="removeCoupon">({{ trans('language.cart.remove_coupon') }} <i class="fa fa fa-times"></i>)</span>
+                    <label class="control-label" for="inputGroupSuccess3"><i class="fa fa-exchange" aria-hidden="true"></i> {{ trans('cart.coupon') }}
+                        <span style="display:inline; cursor: pointer; display: {{ ($hasCoupon)?'inline':'none' }}" class="text-danger" id="removeCoupon">({{ trans('cart.remove_coupon') }} <i class="fa fa fa-times"></i>)</span>
                     </label>
                     <div id="coupon-group" class="input-group {{ Session::has('error_discount')?'has-error':'' }}">
                       <input type="text" {{ ($extensionDiscount['permission'])?'':'disabled' }} placeholder="Your coupon" class="form-control" id="coupon-value" aria-describedby="inputGroupSuccess3Status">
-                      <span class="input-group-addon {{ ($extensionDiscount['permission'])?'':'disabled' }}"  {!! ($extensionDiscount['permission'])?'id="coupon-button"':'' !!} style="cursor: pointer;" data-loading-text="<i class='fa fa-spinner fa-spin'></i> checking">{{ trans('language.cart.apply') }}</span>
+                      <span class="input-group-addon {{ ($extensionDiscount['permission'])?'':'disabled' }}"  {!! ($extensionDiscount['permission'])?'id="coupon-button"':'' !!} style="cursor: pointer;" data-loading-text="<i class='fa fa-spinner fa-spin'></i> checking">{{ trans('cart.apply') }}</span>
                     </div>
                     <span class="status-coupon" style="display: none;" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                     <div class="coupon-msg  {{ Session::has('error_discount')?'text-danger':'' }}" style="text-align: left;padding-left: 10px;">{{ Session::has('error_discount')?Session::get('error_discount'):'' }}</div>
@@ -183,7 +183,7 @@
         <div class="row">
             <div class="col-md-12">
                     <div class="form-group {{ $errors->has('shippingMethod') ? ' has-error' : '' }}">
-                        <h3 class="control-label"><i class="fa fa-credit-card-alt"></i> {{ trans('language.cart.shipping_method') }}:<br></h3>
+                        <h3 class="control-label"><i class="fa fa-credit-card-alt"></i> {{ trans('cart.shipping_method') }}:<br></h3>
                         @if($errors->has('shippingMethod'))
                             <span class="help-block">{{ $errors->first('shippingMethod') }}</span>
                         @endif
@@ -208,7 +208,7 @@
         <div class="row">
             <div class="col-md-12">
                     <div class="form-group {{ $errors->has('paymentMethod') ? ' has-error' : '' }}">
-                        <h3 class="control-label"><i class="fa fa-credit-card-alt"></i> {{ trans('language.cart.payment_method') }}:<br></h3>
+                        <h3 class="control-label"><i class="fa fa-credit-card-alt"></i> {{ trans('cart.payment_method') }}:<br></h3>
                         @if($errors->has('paymentMethod'))
                             <span class="help-block">{{ $errors->first('paymentMethod') }}</span>
                         @endif
@@ -234,7 +234,7 @@
         <div class="row" style="padding-bottom: 20px;">
             <div class="col-md-12 text-center">
                     <div class="pull-right">
-                        <button class="btn btn-success" id="submit-order" type="button" style="cursor: pointer;padding:10px 30px"><i class="fa fa-check"></i> {{ trans('language.cart.checkout') }}</button>
+                        <button class="btn btn-success" id="submit-order" type="button" style="cursor: pointer;padding:10px 30px"><i class="fa fa-check"></i> {{ trans('cart.checkout') }}</button>
                     </div>
             </div>
         </div>
@@ -297,7 +297,7 @@ $('#submit-order').click(function(){
      var coupon = $('#coupon-value').val();
         if(coupon==''){
             $('#coupon-group').addClass('has-error');
-            $('.coupon-msg').html('{{ trans('language.cart.coupon_empty') }}').addClass('text-danger').show();
+            $('.coupon-msg').html('{{ trans('cart.coupon_empty') }}').addClass('text-danger').show();
         }else{
         $('#coupon-button').button('loading');
         setTimeout(function() {

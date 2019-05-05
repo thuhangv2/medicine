@@ -32,7 +32,7 @@ class ShopOrderTotal extends Model
 
         //Set subtotal
         $arraySubtotal = [
-            'title' => trans('language.total.sub_total'),
+            'title' => trans('order.total.sub_total'),
             'code'  => 'subtotal',
             'value' => $subtotal,
             'text'  => \Helper::currencyOnlyRender($subtotal, \Helper::currencyCode()),
@@ -54,7 +54,7 @@ class ShopOrderTotal extends Model
 
         }
         $arrayTotal = array(
-            'title' => trans('language.total.total'),
+            'title' => trans('order.total.total'),
             'code'  => 'total',
             'value' => $total,
             'text'  => \Helper::currencyOnlyRender($total, \Helper::currencyCode()),
@@ -126,7 +126,7 @@ class ShopOrderTotal extends Model
     {
         $arrDiscount = [];
         $arrDiscount = array(
-            'title' => trans('language.total.discount'),
+            'title' => trans('order.total.discount'),
             'code'  => 'discount',
             'value' => 0,
             'text'  => 0,
@@ -150,7 +150,7 @@ class ShopOrderTotal extends Model
     public function getReceived()
     {
         return array(
-            'title' => trans('language.total.received'),
+            'title' => trans('order.total.received'),
             'code'  => 'received',
             'value' => 0,
             'text'  => 0,

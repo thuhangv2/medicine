@@ -24,7 +24,7 @@ class ShopOrderStatusController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header(trans('language.order.order_status'));
+            $content->header(trans('order.order_status'));
             $content->description(' ');
 
             $content->body($this->grid());
@@ -41,7 +41,7 @@ class ShopOrderStatusController extends Controller
     {
         return Admin::content(function (Content $content) use ($id) {
 
-            $content->header(trans('language.order.order_status'));
+            $content->header(trans('order.order_status'));
             $content->description(' ');
 
             $content->body($this->form()->edit($id));
@@ -57,7 +57,7 @@ class ShopOrderStatusController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header(trans('language.order.order_status'));
+            $content->header(trans('order.order_status'));
             $content->description(' ');
 
             $content->body($this->form());

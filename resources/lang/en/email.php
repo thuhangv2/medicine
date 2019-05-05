@@ -12,4 +12,24 @@ return [
     'welcome_customer' => [
         'title' => 'Welcome!',
     ],
+    'order'            => [
+        'title_1'      => 'Hi! Website :website has new order!',
+        'order_id'     => 'Order ID',
+        'toname'       => 'Customer name',
+        'address'      => 'Address',
+        'phone'        => 'Phone',
+        'note'         => 'Note',
+        'order_detail' => 'Order detail',
+        'sort'         => 'No.',
+        'sku'          => 'SKU',
+        'price'        => 'Price',
+        'name'         => 'Name',
+        'qty'          => 'Qty',
+        'total'        => 'Total',
+        'sub_total'    => 'Sub total',
+        'shipping_fee' => 'Shipping fee',
+        'discount'     => 'Discount',
+        'order_total'  => 'Order total',
+    ],
+
 ];

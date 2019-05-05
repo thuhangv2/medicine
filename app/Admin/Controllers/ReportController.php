@@ -70,19 +70,19 @@ class ReportController extends Controller
     {
         $grid = new Grid(new ShopProduct);
         $grid->id('ID')->sortable();
-        $grid->sku(trans('language.product.sku'))->sortable();
-        $grid->name(trans('language.product.name'));
-        $grid->category()->name(trans('language.product.category'));
-        $grid->price(trans('language.product.price'))->display(function ($price) {
+        $grid->sku(trans('product.sku'))->sortable();
+        $grid->name(trans('product.name'));
+        $grid->category()->name(trans('product.category'));
+        $grid->price(trans('product.price'))->display(function ($price) {
             return number_format($price);
         })->sortable();
-        $grid->stock(trans('language.product.stock'))->display(function ($stock) {
+        $grid->stock(trans('product.stock'))->display(function ($stock) {
             return number_format($stock);
         })->sortable();
-        $grid->sold(trans('language.product.sold'))->display(function ($sold) {
+        $grid->sold(trans('product.sold'))->display(function ($sold) {
             return number_format($sold);
         })->sortable();
-        $grid->view(trans('language.product.view'))->display(function ($view) {
+        $grid->view(trans('product.view'))->display(function ($view) {
             return number_format($view);
         })->sortable();
 

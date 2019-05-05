@@ -25,7 +25,7 @@ class ShopCustomerController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header(trans('language.order.customer'));
+            $content->header(trans('order.customer'));
             $content->description(' ');
             $content->body($this->grid());
         });
@@ -41,7 +41,7 @@ class ShopCustomerController extends Controller
     {
         return Admin::content(function (Content $content) use ($id) {
 
-            $content->header(trans('language.order.customer'));
+            $content->header(trans('order.customer'));
             $content->description(' ');
 
             $content->body($this->form()->edit($id));
@@ -57,7 +57,7 @@ class ShopCustomerController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header(trans('language.order.customer'));
+            $content->header(trans('order.customer'));
             $content->description(' ');
 
             $content->body($this->form());
@@ -75,7 +75,7 @@ class ShopCustomerController extends Controller
 
             $grid->id('ID')->sortable();
             $grid->email('Email')->sortable();
-            $grid->name(trans('language.order.customer_name'))->sortable();
+            $grid->name(trans('order.customer_name'))->sortable();
 
             $grid->created_at(trans('language.admin.created_at'));
             $grid->updated_at(trans('language.admin.last_modify'));
@@ -97,12 +97,12 @@ class ShopCustomerController extends Controller
         return Admin::form(User::class, function (Form $form) {
 
             $form->display('id', 'ID');
-            $form->text('name', trans('language.order.customer_name'));
+            $form->text('name', trans('order.customer_name'));
             $form->email('email', 'Email');
             $form->password('password', 'Password');
-            $form->text('address1', trans('language.order.shipping_address1'));
-            $form->text('address2', trans('language.order.shipping_address2'));
-            $form->text('phone', trans('language.order.shipping_phone'));
+            $form->text('address1', trans('order.shipping_address1'));
+            $form->text('address2', trans('order.shipping_address2'));
+            $form->text('phone', trans('order.shipping_phone'));
             $form->saving(function (Form $form) {
                 if ($form->password) {
                     $form->password = bcrypt($form->password);

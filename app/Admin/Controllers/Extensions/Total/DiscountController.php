@@ -75,12 +75,12 @@ class DiscountController extends Controller
     {
         $grid = new Grid(new DiscountModel);
         $grid->id('ID')->sortable();
-        $grid->code(trans('language.promotion.code'));
-        $grid->reward(trans('language.promotion.value'))->display(function ($reward) {
+        $grid->code(trans('promotion.code'));
+        $grid->reward(trans('promotion.value'))->display(function ($reward) {
             return number_format($reward);
         });
         $arrType = $this->arrType;
-        $grid->type(trans('language.promotion.type'))->display(function ($type) use ($arrType) {
+        $grid->type(trans('promotion.type'))->display(function ($type) use ($arrType) {
             if ($type == 0) {
                 return "<span class='label label-success'>$arrType[$type]</span>";
             } elseif ($type == 1) {
@@ -89,23 +89,23 @@ class DiscountController extends Controller
                 return "<span class='label label-info'>$arrType[$type]</span>";
             }
         });
-        $grid->data(trans('language.promotion.description'));
-        $grid->number_uses(trans('language.promotion.maximum'));
-        $grid->used(trans('language.promotion.used'));
-        $grid->users(trans('language.promotion.history'))->expand(function () {
+        $grid->data(trans('promotion.description'));
+        $grid->number_uses(trans('promotion.maximum'));
+        $grid->used(trans('promotion.used'));
+        $grid->users(trans('promotion.history'))->expand(function () {
             $html      = '';
             $dataPromo = DiscountModel::find($this->id);
             if ($dataPromo) {
                 $html = '<br>';
                 foreach ($dataPromo->users as $key => $value) {
-                    $html .= '<span style="padding-left:20px;"><i class="fa fa-angle-double-right"></i> ' . trans('language.promotion.customer') . ' ID' . $value->pivot->user_id . trans('language.promotion.used_at') . $value->pivot->used_at . '.  ' . trans('language.promotion.content') . ': ' . $value->pivot->log . '</span><br>';
+                    $html .= '<span style="padding-left:20px;"><i class="fa fa-angle-double-right"></i> ' . trans('promotion.customer') . ' ID' . $value->pivot->user_id . trans('promotion.used_at') . $value->pivot->used_at . '.  ' . trans('promotion.content') . ': ' . $value->pivot->log . '</span><br>';
                 }
             }
             return $html . "<br>";
-        }, trans('language.promotion.history'));
-        $grid->login(trans('language.promotion.login'))->switch();
-        $grid->status(trans('language.promotion.status'))->switch();
-        $grid->expires_at(trans('language.promotion.expire'));
+        }, trans('promotion.history'));
+        $grid->login(trans('promotion.login'))->switch();
+        $grid->status(trans('promotion.status'))->switch();
+        $grid->expires_at(trans('promotion.expire'));
         $grid->disableExport();
         $grid->actions(function ($actions) {
             $actions->disableView();
@@ -121,17 +121,17 @@ class DiscountController extends Controller
     protected function form()
     {
         $form = new Form(new DiscountModel);
-        $form->text('code', trans('language.promotion.code'))->rules(function ($form) {
+        $form->text('code', trans('promotion.code'))->rules(function ($form) {
             return 'required|regex:/(^([0-9A-Za-z\-]+)$)/|unique:shop_discount,code,' . $form->model()->id . ',id';
-        }, ['unique' => trans('language.promotion.exist'), 'regex' => trans('language.promotion.validate')])->placeholder(trans('language.promotion.example') . ' SAVEOFF2018,SAVE50,...')->help(trans('language.promotion.validate'));
+        }, ['unique' => trans('promotion.exist'), 'regex' => trans('promotion.validate')])->placeholder(trans('promotion.example') . ' SAVEOFF2018,SAVE50,...')->help(trans('promotion.validate'));
 
-        $form->number('reward', trans('language.promotion.value'))->rules('numeric|min:0');
-        $form->select('type', trans('language.promotion.type'))->options($this->arrType)->help(trans('language.promotion.note'));
-        $form->text('data', trans('language.promotion.description'));
-        $form->number('number_uses', trans('language.promotion.maximum'))->default(1)->rules('numeric|min:0');
-        $form->datetime('expires_at', trans('language.promotion.expire'));
-        $form->switch('login', trans('language.promotion.login'));
-        $form->switch('status', trans('language.promotion.status'));
+        $form->number('reward', trans('promotion.value'))->rules('numeric|min:0');
+        $form->select('type', trans('promotion.type'))->options($this->arrType)->help(trans('promotion.note'));
+        $form->text('data', trans('promotion.description'));
+        $form->number('number_uses', trans('promotion.maximum'))->default(1)->rules('numeric|min:0');
+        $form->datetime('expires_at', trans('promotion.expire'));
+        $form->switch('login', trans('promotion.login'));
+        $form->switch('status', trans('promotion.status'));
         $form->disableViewCheck();
         $form->disableEditingCheck();
         $form->tools(function (Form\Tools $tools) {

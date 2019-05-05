@@ -101,7 +101,7 @@ class CmsContentController extends Controller
     {
         $form      = new Form(new CmsContent);
         $languages = Language::getLanguages();
-        $form->tab(trans('language.product.product_info'), function ($form) use ($languages) {
+        $form->tab(trans('product.product_info'), function ($form) use ($languages) {
 //Language
             $arrParameters = request()->route()->parameters();
             $idCheck       = (int) end($arrParameters);

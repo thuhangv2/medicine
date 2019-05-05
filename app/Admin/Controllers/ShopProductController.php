@@ -84,17 +84,17 @@ class ShopProductController extends Controller
 
             $grid->id('ID')->sortable();
             $grid->image(trans('language.admin.image'))->image('', 50);
-            $grid->sku(trans('language.product.sku'))->sortable();
-            $grid->name(trans('language.product.product_name'))->sortable();
+            $grid->sku(trans('product.sku'))->sortable();
+            $grid->name(trans('product.product_name'))->sortable();
             $grid->category()->name(trans('language.categories'));
-            $grid->cost(trans('language.product.price_cost'))->display(function ($price) {
+            $grid->cost(trans('product.price_cost'))->display(function ($price) {
                 return number_format($price);
             });
-            $grid->price(trans('language.product.price'))->display(function ($price) {
+            $grid->price(trans('product.price'))->display(function ($price) {
                 return number_format($price);
             });
             $arrType = $this->arrType;
-            $grid->type(trans('language.product.product_type'))->display(function ($type) use ($arrType) {
+            $grid->type(trans('product.product_type'))->display(function ($type) use ($arrType) {
                 $style = ($type == 1) ? 'class="label label-success"' : (($type == 2) ? '  class="label label-danger"' : 'class="label label-default"');
                 return '<span ' . $style . '>' . $arrType[$type] . '</span>';
             });
@@ -110,7 +110,7 @@ class ShopProductController extends Controller
                 $tools->append('<div class="pull-right">
 <div class="btn-group pull-right" style="margin-right: 10px">
     <a href="' . route('productImport') . '" class="btn btn-sm btn-success" title="New">
-        <i class="fa fa-save"></i><span class="hidden-xs">&nbsp;&nbsp;&nbsp;' . trans('language.product.import_multi') . '</span>
+        <i class="fa fa-save"></i><span class="hidden-xs">&nbsp;&nbsp;&nbsp;' . trans('product.import_multi') . '</span>
     </a>
 </div>
         </div>');
@@ -121,8 +121,8 @@ class ShopProductController extends Controller
             $grid->expandFilter();
             $grid->filter(function ($filter) {
                 $filter->disableIdFilter();
-                $filter->like('name', trans('language.product.name'));
-                $filter->like('sku', trans('language.product.sku'));
+                $filter->like('name', trans('product.name'));
+                $filter->like('sku', trans('product.sku'));
 
             });
         });
@@ -138,7 +138,7 @@ class ShopProductController extends Controller
 
         return Admin::form(ShopProduct::class, function (Form $form) use ($id) {
             $languages = Language::getLanguages();
-            $form->tab(trans('language.product.product_info'), function ($form) use ($languages) {
+            $form->tab(trans('product.product_info'), function ($form) use ($languages) {
 //Language
                 $arrParameters = request()->route()->parameters();
                 $idCheck       = (int) end($arrParameters);
@@ -152,7 +152,7 @@ class ShopProductController extends Controller
                         $form->html('<b>' . $language->name . '</b> <img style="height:25px" src="/' . config('filesystems.disks.path_file') . '/' . $language->icon . '">');
                     }
 
-                    $form->text($language->code . '__name', trans('language.product.product_name'))->rules('required', ['required' => trans('validation.required')])->default(!empty($langDescriptions->name) ? $langDescriptions->name : null);
+                    $form->text($language->code . '__name', trans('product.product_name'))->rules('required', ['required' => trans('validation.required')])->default(!empty($langDescriptions->name) ? $langDescriptions->name : null);
                     $form->text($language->code . '__keyword', trans('language.admin.keyword'))->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
                     $form->textarea($language->code . '__description', trans('language.admin.description'))->rules('max:300', ['max' => trans('validation.max')])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
                     $form->ckeditor($language->code . '__content', trans('language.admin.content'))->default(!empty($langDescriptions->content) ? $langDescriptions->content : null)->rules('required');
@@ -174,13 +174,13 @@ class ShopProductController extends Controller
                 $form->select('category_id', trans('language.admin.shop_category'))->options($arrCate)
                     ->rules('required');
                 $form->image('image', trans('language.admin.image'))->uniqueName()->move('product');
-                $form->currency('price', trans('language.product.price'))->symbol('')->options(['digits' => 0]);
-                $form->currency('cost', trans('language.product.price_cost'))->symbol('')->options(['digits' => 0]);
-                $form->number('stock', trans('language.product.stock'));
-                $form->text('sku', trans('language.product.sku'))
+                $form->currency('price', trans('product.price'))->symbol('')->options(['digits' => 0]);
+                $form->currency('cost', trans('product.price_cost'))->symbol('')->options(['digits' => 0]);
+                $form->number('stock', trans('product.stock'));
+                $form->text('sku', trans('product.sku'))
                     ->rules(function ($form) {
                         return 'required|regex:/(^([0-9A-Za-z\-]+)$)/|unique:shop_product,sku,' . $form->model()->id . ',id';
-                    }, ['regex' => trans('language.product.sku_validate')])
+                    }, ['regex' => trans('product.sku_validate')])
                     ->placeholder('Ex: ABKOOT01,ABKOOT02,...');
                 $form->select('brand_id', trans('language.brands'))->options($arrBrand)->default('0')
                     ->rules('required');
@@ -189,7 +189,7 @@ class ShopProductController extends Controller
                 $form->switch('status', trans('language.admin.status'));
                 $form->number('sort', trans('language.admin.sort'))->rules('numeric|min:0')->default(0);
                 $form->divide();
-                $form->radio('type', trans('language.product.product_type'))->options($this->arrType)->default('0');
+                $form->radio('type', trans('product.product_type'))->options($this->arrType)->default('0');
                 $form->datetime('date_available', trans('language.date_available'))->help(trans('language.default_available'));
 
             })->tab(trans('language.admin.sub_image'), function ($form) {
@@ -197,7 +197,7 @@ class ShopProductController extends Controller
                     $form->image('image', trans('language.admin.sub_image'))->uniqueName()->move('product_slide');
                 });
 
-            })->tab(trans('language.product.attribute'), function ($form) use ($id) {
+            })->tab(trans('product.attribute'), function ($form) use ($id) {
                 $groups = ShopAttributeGroup::pluck('name', 'id')->all();
                 $html   = '';
                 foreach ($groups as $key => $group) {
