@@ -98,7 +98,7 @@ class ProcessController extends Controller
 
     public function getImportProduct()
     {
-        return view('admin.ImportProduct')->render();
+        return view('admin.importProduct')->render();
 
     }
 
