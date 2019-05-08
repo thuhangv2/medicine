@@ -218,8 +218,13 @@ return [
     ],
 
     'process'            => [
-        'productImport'      => 'Import multiple product',
-        'productImport_text' => 'Download file format',
+        'productImport'            => 'Import/Update multiple products',
+        'product_info'             => 'Product info (Step 1)',
+        'product_info_note'        => '<b>Info:</b> SKU, price, stock ...',
+        'product_description'      => 'Product description (Step 2)',
+        'product_description_note' => '<b>Descriptions:</b> name, keyword, description...',
+        'productImport_text'       => 'Download file format',
+        'productImport_download'   => 'Download HERE',
     ],
 
     'profile'            => [
