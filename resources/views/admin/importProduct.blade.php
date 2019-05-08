@@ -15,7 +15,7 @@
 </div>
 @endif
 <div class="row">
-   <div class="col-md-6">
+ <div class="col-md-6">
 <form method="post" action="" enctype="multipart/form-data">
 <div>
 <h3>{{ trans('language.process.product_info') }}</h3>
@@ -35,7 +35,9 @@
    <input name="case" type="hidden" value="import_file_info">
 </form>
 </div>
+</div>
 
+<div class="row">
 <div class="col-md-6">
 <form method="post" action="" enctype="multipart/form-data">
 <div>
@@ -56,5 +58,4 @@
    <input name="case" type="hidden" value="import_file_description">
 </form>
 </div>
-
 </div>
