@@ -165,7 +165,6 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         /*
          * Package Service Providers...
@@ -233,7 +232,6 @@ return [
         'Cart'         => Gloudemans\Shoppingcart\Facades\Cart::class,
         'PDF'          => Barryvdh\DomPDF\Facade::class,
         'Image'        => Intervention\Image\Facades\Image::class,
-        'Excel'        => Maatwebsite\Excel\Facades\Excel::class,
         //scart
         'Helper'       => App\Scart\Helper::class,
         'FindClass'    => App\Scart\FindClass::class,

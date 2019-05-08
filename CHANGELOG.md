@@ -5,6 +5,8 @@
 - Fix error route admin
 - Fix error route front-end
 - Fix error process cart
+### Modify
+- Replace "maatwebsite/exce" by  "phpoffice/phpspreadsheet"
 ### Add
 - Support design layout: HTML, View, Module
 - Management url

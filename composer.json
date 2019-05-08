@@ -22,8 +22,8 @@
         "laravel-admin-ext/helpers": "^1.1",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
-        "maatwebsite/excel": "2.*",
         "paypal/rest-api-sdk-php": "^1.13",
+        "phpoffice/phpspreadsheet": "^1.6",
         "unisharp/laravel-filemanager": "^1.9"
     },
     "require-dev": {
