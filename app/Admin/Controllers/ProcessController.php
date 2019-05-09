@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\ShopProduct;
 use App\Models\ShopProductDescription;
+use App\Models\ShopSpecialPrice;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Content;
@@ -106,8 +107,8 @@ class ProcessController extends Controller
                                 $arrError[] = $sku . ': already not exist!';
                             } else {
                                 try {
-                                    $arrUnique   = ['product_id' => $checkProduct->id, 'lang_id' => (int) $row['B']];
-                                    $descriptons = [
+                                    $arrUnique = ['product_id' => $checkProduct->id, 'lang_id' => (int) $row['B']];
+                                    $fields    = [
                                         'name'        => $row['C'],
                                         'description' => $row['D'],
                                         'keyword'     => $row['E'],
@@ -116,7 +117,7 @@ class ProcessController extends Controller
                                     (new ShopProductDescription)
                                         ->updateOrInsert(
                                             $arrUnique,
-                                            $descriptons
+                                            $fields
                                         );
                                     $arrSuccess[] = $sku;
                                 } catch (\Exception $e) {
@@ -136,6 +137,59 @@ class ProcessController extends Controller
 
                     }
                     break;
+
+                case 'import_file_special_price':
+                    $reader        = IOFactory::createReader('Xls');
+                    $validatedData = \Validator::make($request->all(), [
+                        'import_file_special_price' => 'required|mimes:xlsx,xls',
+                    ]);
+                    if ($validatedData->fails()) {
+                        return redirect()->back()->withErrors($validatedData->errors());
+                    } else {
+
+                        $spreadsheet = $reader->load($request->file('import_file_special_price'));
+                        $sheet       = $spreadsheet->getActiveSheet();
+                        $maxCol      = $sheet->getHighestColumn();
+                        $maxRow      = $sheet->getHighestRow();
+                        $data        = $sheet->rangeToArray('A3:' . $maxCol . $maxRow, true, true, true, true);
+                        $arrError    = array();
+                        $arrSuccess  = array();
+                        foreach ($data as $key => $row) {
+                            $sku          = $row['A'];
+                            $checkProduct = ShopProduct::where('sku', $sku)->first();
+                            if (!$checkProduct) {
+                                $arrError[] = $sku . ': already not exist!';
+                            } else {
+                                try {
+                                    $arrUnique = ['product_id' => $checkProduct->id];
+                                    $fields    = [
+                                        'price'   => (int) $row['B'],
+                                        'status'  => (int) $row['C'],
+                                        'comment' => (int) $row['D'],
+                                    ];
+                                    (new ShopSpecialPrice)
+                                        ->updateOrInsert(
+                                            $arrUnique,
+                                            $fields
+                                        );
+                                    $arrSuccess[] = $sku;
+                                } catch (\Exception $e) {
+                                    $arrError[] = $sku . ': ' . $e->getMessage();
+                                }
+                            }
+
+                        }
+                        if ($arrSuccess) {
+                            $request->session()->flash('import_success', $arrSuccess);
+                        }
+                        if ($arrError) {
+                            $request->session()->flash('import_error', $arrError);
+                        }
+                        return back();
+
+                    }
+                    break;
+
                 default:
                     # code...
                     break;
