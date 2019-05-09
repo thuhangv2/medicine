@@ -218,13 +218,15 @@ return [
     ],
 
     'process'            => [
-        'productImport'            => 'Import/Update multiple products',
-        'product_info'             => 'Product info (Step 1)',
-        'product_info_note'        => '<b>Info:</b> SKU, price, stock ...',
-        'product_description'      => 'Product description (Step 2)',
-        'product_description_note' => '<b>Descriptions:</b> name, keyword, description...',
-        'productImport_text'       => 'Download file format',
-        'productImport_download'   => 'Download HERE',
+        'productImport'              => 'Import/Update multiple products',
+        'product_info'               => 'Product info (Step 1)',
+        'product_info_note'          => '<b>Info:</b> SKU, price, stock ...',
+        'product_description'        => 'Product description (Step 2)',
+        'product_description_note'   => '<b>Descriptions:</b> name, keyword, description...',
+        'product_special_price'      => 'Product special price (Step 2)',
+        'product_special_price_note' => '<b>Example:</b> price, status...',
+        'productImport_text'         => 'Download file format',
+        'productImport_download'     => 'Download HERE',
     ],
 
     'profile'            => [
