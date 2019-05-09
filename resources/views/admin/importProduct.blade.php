@@ -81,7 +81,7 @@
 </div>
 {{ csrf_field() }}
    <input id="input-b2" name="import_file_special_price" type="file" class="file" data-show-preview="false">
-   <input name="case" type="hidden" value="import_file_description">
+   <input name="case" type="hidden" value="import_file_special_price">
    <br><button  type="submit" class="btn btn-primary">Upload File</button>
 </form>
 </div>
