@@ -307,7 +307,7 @@ class ShopProduct extends Model
  */
     public function getUrl()
     {
-        return route('product', ['name' => \Helper::strToUrl($this->name), 'id' => $this->id]);
+        return route('product', ['name' => \Helper::strToUrl(empty($this->name) ? $this->sku : $this->name), 'id' => $this->id]);
     }
 
 //Fields language
@@ -416,7 +416,7 @@ class ShopProduct extends Model
     }
     public function processDescriptions()
     {
-        return $this->descriptions->keyBy('lang_id')[$this->lang_id];
+        return $this->descriptions->keyBy('lang_id')[$this->lang_id] ?? [];
     }
 
     public function processSpecialPrice()

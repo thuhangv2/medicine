@@ -72,6 +72,6 @@ class ShopPage extends Model
     }
     public function processDescriptions()
     {
-        return $this->descriptions->keyBy('lang_id')[$this->lang_id];
+        return $this->descriptions->keyBy('lang_id')[$this->lang_id] ?? [];
     }
 }

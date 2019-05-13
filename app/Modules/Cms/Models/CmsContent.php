@@ -86,7 +86,7 @@ class CmsContent extends Model
  */
     public function getUrl()
     {
-        return route('cmsContent', ['name' => \Helper::strToUrl($this->title), 'id' => $this->id]);
+        return route('cmsContent', ['name' => \Helper::strToUrl(empty($this->title) ? 'no-title' : $this->title), 'id' => $this->id]);
     }
 
     //Fields language
@@ -167,6 +167,6 @@ class CmsContent extends Model
 
     public function processDescriptions()
     {
-        return $this->descriptions->keyBy('lang_id')[$this->lang_id];
+        return $this->descriptions->keyBy('lang_id')[$this->lang_id] ?? [];
     }
 }
