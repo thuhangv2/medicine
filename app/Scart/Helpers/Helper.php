@@ -204,7 +204,7 @@ class Helper
             try {
                 Mail::send(new \App\Mail\SendMail($view, $data, $config, $fileAttach, $fileAttachData));
             } catch (\Exception $e) {
-                Log::error("View:" . $view . PHP_EOL . $e->getMessage());
+                Log::error("Sendmail view:" . $view . PHP_EOL . $e->getMessage());
             }
 
         } else {
