@@ -1,7 +1,8 @@
 <p align="center">
-    <img src="https://s-cart.org/logo.png" width="150"><br>
+    <img src="https://s-cart.org/logo.png" width="150">
 </p>
-<p align="center">Open source e-commerce for business use laravel framework</p>
+<p align="center">Free open source e-commerce for business use laravel framework<br>
+<b>composer create-project lanhktc/s-cart</b></p>
 <p align="center">
  <a href="https://s-cart.org">Home page</a> | <a href="https://demo.s-cart.org">Demo</a> | <a href="https://demo.s-cart.org/system_admin">Demo admin</a> | <a href="https://s-cart.org/installation.html">Installation</a> | <a href="https://s-cart.org/video-guide.html">Video Guide</a>
 </p>
@@ -44,7 +45,7 @@ Free Open source E-commerce use Laravel framework for Business
 - Categories product
 - Brand product
 - Api manager
-
+...
 ======= SYSTEM MANAGEMENT =======
 
 - Manage & permission users, groups
@@ -57,7 +58,7 @@ Free Open source E-commerce use Laravel framework for Business
 - Manage banner, logo
 - Configure email SMTP
 - System configuration: turn off website, hide / show products
-
+...
 ======= EXTENSIONS =======
 
 - Shipping
@@ -74,9 +75,9 @@ Free Open source E-commerce use Laravel framework for Business
 
 ## Requirements:
 
-Version 2.2.x:
+Version 3.0.x:
 
-> Core laravel framework 5.7. Requirements::
+> Core laravel framework 5.8. Requirements::
 
 ```
 - PHP >= 7.1.3
@@ -90,23 +91,6 @@ Version 2.2.x:
 - BCMath PHP Extension
 ```
 
-
-Version 1.6 ~ 2.1.x:
-
-> Core laravel framework 5.6. Requirements::
-
-```
-- PHP >= 7.1.3
-- OpenSSL PHP Extension
-- PDO PHP Extension
-- Mbstring PHP Extension
-- Tokenizer PHP Extension
-- XML PHP Extension
-- Ctype PHP Extension
-- JSON PHP Extension
-```
-
-
 ## Installation & configuration:
 
 <b>How to map your domain to s-cart? <a href="https://s-cart.org/installation.html">CLICK HERE</a></b>
@@ -118,6 +102,7 @@ composer create-project lanhktc/s-cart
 Step2:
 - Chmod -R 777 public/documents/website
 - Chmod -R 777 storage
+- Chmod -R 777 bootstrap/cache
 - Chmod -R 777 vendor
 - Folder thumbnail is  <b>public/documents/website/thumb</b>.
 
