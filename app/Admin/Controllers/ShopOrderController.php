@@ -47,8 +47,7 @@ class ShopOrderController extends Controller
      */
     public function index()
     {
-        $keyword = \Request::input('keyword');
-        $keyword = empty($keyword) ? "" : $keyword;
+        $keyword = request('keyword') ?? '';
         return Admin::content(function (Content $content) use ($keyword) {
 
             $content->header(trans('language.admin.order_manager'));
@@ -56,7 +55,6 @@ class ShopOrderController extends Controller
             if ($keyword != "") {
                 $content->description(trans('order.search_keyword') . ': "' . $keyword . '"');
             }
-
             $content->body($this->grid($keyword));
         });
     }
@@ -101,8 +99,8 @@ class ShopOrderController extends Controller
      */
     protected function grid($keyword)
     {
-        return Admin::grid(ShopOrder::class, function (Grid $grid) use ($keyword) {
 
+        return Admin::grid(ShopOrder::class, function (Grid $grid) use ($keyword) {
             $grid->id('ID')->sortable();
             $grid->email('Email')->display(function ($email) {
                 return empty($email) ? 'N/A' : '<div style="max-width:150px; overflow:auto;word-wrap: break-word;">' . $email . '</div>';
@@ -147,7 +145,6 @@ class ShopOrderController extends Controller
                 $actions->prepend('<a title="Show Customer detail" href="shop_order_edit/' . $actions->getkey() . '"><i class="fa fa-edit"></i></a>');
                 $actions->disableView();
             });
-
             $grid->created_at(trans('language.admin.created_at'));
             $grid->model()->orderBy('id', 'desc');
             if ($keyword != "") {
