@@ -70,7 +70,19 @@ class ExcelExpoter extends AbstractExporter
             ];
         }
 
-        $arrTitle = ['Số Order', 'Tổng tiền hàng', 'Tiền ship', 'Tiền giảm giá', 'Tổng tiền', 'ID khách hàng', 'Email', 'Tên người nhận', 'Địa chỉ', 'Số điện thoại', 'Ghi chú', 'Ngày tạo'];
+        $arrTitle = [
+            'ID',
+            trans('order.sub_total'),
+            trans('order.shipping_price'),
+            trans('order.discount'),
+            trans('order.order_total'),
+            trans('order.customer'),
+            trans('order.email'),
+            trans('order.customer_name'),
+            trans('order.shipping_address'),
+            trans('order.shipping_phone'),
+            trans('order.note'),
+            trans('order.date')];
         return array_merge([$arrTitle], $dataRows);
     }
 
@@ -89,7 +101,14 @@ class ExcelExpoter extends AbstractExporter
             ];
         }
 
-        $arrTitle = ['ID', 'Tên', 'Email', 'Địa chỉ', 'Số điện thoại', 'Ngày tạo'];
+        $arrTitle = [
+            trans('customer.id'),
+            trans('customer.name'),
+            trans('customer.email'),
+            trans('customer.address'),
+            trans('customer.phone'),
+            trans('customer.date'),
+        ];
         return array_merge([$arrTitle], $dataRows);
     }
 
@@ -116,7 +135,17 @@ class ExcelExpoter extends AbstractExporter
                 $value['created_at'],
             ];
         }
-        $arrTitle = ['ID', 'Tên', 'Email', 'Địa chỉ', 'Số điện thoại', 'Tổng đơn hàng', 'Tiển tiền hàng', 'Ngày tạo'];
+        $arrTitle = [
+            trans('customer.id'),
+            trans('customer.name'),
+            trans('customer.email'),
+            trans('customer.address'),
+            trans('customer.phone'),
+            trans('customer.total_order'),
+            trans('customer.total_amount'),
+            trans('customer.date'),
+        ];
+
         return array_merge([$arrTitle], $dataRows);
     }
 }

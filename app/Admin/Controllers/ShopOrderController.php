@@ -114,7 +114,7 @@ class ShopOrderController extends Controller
             $grid->discount(trans('order.discount'))->display(function ($price) {
                 return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
             });
-            $grid->total(trans('order.total.total'))->display(function ($price) {
+            $grid->total(trans('order.totals.total'))->display(function ($price) {
                 return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
             });
             $grid->received(trans('order.received'))->display(function ($price) {
