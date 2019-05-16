@@ -227,7 +227,7 @@ return [
         'product_info_note'          => '<b>Ví dụ:</b> SKU, price, stock ...',
         'product_description'        => 'Nội dung sản phẩm (Bước 2)',
         'product_description_note'   => '<b>Ví dụ:</b> Tên, từ khóa, mô tả...',
-        'product_special_price'      => 'Giá khuyến mãi (Bước 2)',
+        'product_special_price'      => 'Giá khuyến mãi (Bước 3)',
         'product_special_price_note' => '<b>Ví dụ:</b> giá khuyến mãi...',
         'productImport_text'         => 'Tải file mẫu',
         'productImport_download'     => 'Tải Ở ĐÂY',

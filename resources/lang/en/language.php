@@ -223,7 +223,7 @@ return [
         'product_info_note'          => '<b>Info:</b> SKU, price, stock ...',
         'product_description'        => 'Product description (Step 2)',
         'product_description_note'   => '<b>Descriptions:</b> name, keyword, description...',
-        'product_special_price'      => 'Product special price (Step 2)',
+        'product_special_price'      => 'Product special price (Step 3)',
         'product_special_price_note' => '<b>Example:</b> price special...',
         'productImport_text'         => 'Download file format',
         'productImport_download'     => 'Download HERE',
