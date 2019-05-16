@@ -29,7 +29,8 @@ class ConfigGlobalController extends Controller
             $content->header(trans('language.admin.info_global'));
             $content->description(' ');
 
-            $content->body($this->grid());
+            $content->body($this->viewInfo());
+            // $content->body($this->grid());
         });
     }
 
@@ -147,8 +148,13 @@ class ConfigGlobalController extends Controller
      */
     protected function form()
     {
-        $currencies = ShopCurrency::where('status', 1)->pluck('name', 'code')->all();
-        $form       = new Form(new ConfigGlobal);
+        $currencies   = ShopCurrency::where('status', 1)->pluck('name', 'code')->all();
+        $arrTimezones = [];
+        foreach (timezone_identifiers_list() as $key => $value) {
+            $arrTimezones[$value] = $value;
+        }
+        $timezones = $arrTimezones;
+        $form      = new Form(new ConfigGlobal);
         $form->image('logo', trans('language.config.logo'))->removable();
         if (\Helper::configs()['watermark']) {
             $form->image('watermark', trans('language.config.watermark'))->removable();
@@ -188,6 +194,8 @@ class ConfigGlobalController extends Controller
         $form->text('email', trans('language.config.email'));
         $form->select('locale', trans('language.config.language'))->options($arrLanguage);
         $form->select('currency', trans('language.config.currency'))->options($currencies)->rules('required');
+        $form->select('timezone', trans('language.config.timezone'))->options($timezones)->rules('required');
+        $form->ckeditor('maintain_content', trans('language.config.maintain_content'));
         $form->disableViewCheck();
         $form->disableEditingCheck();
         $form->tools(function (Form\Tools $tools) {
@@ -233,6 +241,25 @@ class ConfigGlobalController extends Controller
                 $show->id('ID');
             }));
         });
+    }
+
+    public function viewInfo()
+    {
+        $infosDescription = [];
+        $languages        = Language::getLanguages();
+        foreach ($languages as $key => $lang) {
+            $langDescriptions                      = ConfigGlobalDescription::where('lang_id', $key)->first();
+            $infosDescription['title'][$key]       = $langDescriptions['title'];
+            $infosDescription['description'][$key] = $langDescriptions['description'];
+            $infosDescription['keyword'][$key]     = $langDescriptions['keyword'];
+        }
+
+        $infos = ConfigGlobal::first();
+        return view('admin.ConfigGlobal')->with([
+            "infos"            => $infos,
+            "infosDescription" => $infosDescription,
+            "languages"        => $languages,
+        ])->render();
     }
 
 }

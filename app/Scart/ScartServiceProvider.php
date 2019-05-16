@@ -66,6 +66,10 @@ class ScartServiceProvider extends ServiceProvider
             config(['admin.https' => ($configs['site_ssl'] ? '1' : '0')]);
             //
 
+            // Time zone
+            config(['app.timezone' => ($configs['timezone'] ?? config('app.timezone'))]);
+            // End time zone
+
             view()->share('configsGlobal', $configsGlobal);
             view()->share('configs', $configs);
             view()->share('languages', $languages);
