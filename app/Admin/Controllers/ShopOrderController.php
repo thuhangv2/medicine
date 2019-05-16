@@ -154,7 +154,8 @@ class ShopOrderController extends Controller
                     ->orWhere('email', 'like', '%' . $keyword . '%')
                     ->orWhere('id', (int) $keyword);
             }
-            $grid->exporter(new ExcelExpoter('dataOrder', 'Order list'));
+            $grid->disableExport(false);
+            $grid->exporter(new ExcelExpoter($function = 'dataOrder', $filename = 'Order list', $title = 'Export data order', $sheetname = 'Sheet name'));
         });
     }
 
