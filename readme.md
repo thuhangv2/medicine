@@ -11,16 +11,16 @@
 <a href="https://packagist.org/packages/lanhktc/s-cart"><img src="https://poser.pugx.org/lanhktc/s-cart/v/stable.svg" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/lanhktc/s-cart"><img src="https://poser.pugx.org/lanhktc/s-cart/license.svg" alt="License"></a>
 </p>
-![product-list](https://s-cart.org/images/feature/product-list.jpg)
-![produproduct-detail](https://s-cart.org/images/feature/product-detail.jpg)
-![cart](https://s-cart.org/images/feature/cart.jpg)
-![dashboard](https://s-cart.org/images/feature/dashboard.jpg)
-![admin-permission](https://s-cart.org/images/feature/admin-permission.jpg)
-![order-manager](https://s-cart.org/images/feature/order-manager.jpg)
-![product-edit](https://s-cart.org/images/feature/product-edit.jpg)
-![extension](https://s-cart.org/images/feature/extension.jpg)
-![backup-restore](https://s-cart.org/images/feature/backup-restore.jpg)
-![layout](https://s-cart.org/images/feature/layout.jpg)
+
+<p align="center"><img src="https://s-cart.org/images/feature/product-detail.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/feature/cart.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/feature/dashboard.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/feature/admin-permission.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/feature/order-manager.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/feature/product-edit.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/feature/extension.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/feature/backup-restore.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/feature/layout.jpg"></p>
 
 ## About S-cart
 Free Open source E-commerce use Laravel framework for Business
