@@ -695,7 +695,7 @@ class ShopCart extends GeneralController
                     '/\{\{\$total\}\}/',
                 ];
                 $dataReplace = [
-                    trans('order.email.new_title') . '#' . $orderId,
+                    trans('order.send_mail.new_title') . '#' . $orderId,
                     $orderId,
                     $data['toname'],
                     $data['address1'] . ' ' . $data['address2'],
@@ -717,7 +717,7 @@ class ShopCart extends GeneralController
                     ];
                     $config = [
                         'to'      => $this->configsGlobal['email'],
-                        'subject' => trans('order.email.new_title') . '#' . $orderId,
+                        'subject' => trans('order.send_mail.new_title') . '#' . $orderId,
                     ];
                     \Helper::sendMail('mail.order_success_to_admin', $data_mail, $config, []);
                 }
@@ -730,7 +730,7 @@ class ShopCart extends GeneralController
                     $config = [
                         'to'      => $data['email'],
                         'replyTo' => $this->configsGlobal['email'],
-                        'subject' => trans('order.email.new_title'),
+                        'subject' => trans('order.send_mail.new_title'),
                     ];
                     \Helper::sendMail('mail.order_success_to_customer', $data_mail_customer, $config, []);
                 }

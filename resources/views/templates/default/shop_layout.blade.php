@@ -77,8 +77,6 @@
 <!--//Module banner -->
 
 
-@if ($configs['site_status'])
-
 <!--Module top -->
   @isset ($layouts['top'])
       @foreach ( $layouts['top']  as $layout)
@@ -122,20 +120,6 @@
       </div>
     </div>
   </section>
-
-@else
-  <section>
-    <div class="container">
-      <div class="row">
-        <div id="columns" class="container"  style="color:red;text-align: center;">
-          <img src="{{ asset('images/maintenance.png') }}"><br>
-          <h3><i class="fas fa-exclamation"></i>{{ trans('language.maintenance') }}</h3>
-            <!-- /.col -->
-        </div>
-      </div>
-    </div>
-  </section>
-@endif
 
 @include(SITE_THEME.'.footer')
 

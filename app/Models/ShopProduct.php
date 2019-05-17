@@ -176,14 +176,16 @@ class ShopProduct extends Model
     {
 
         $special = (new ShopSpecialPrice)
-            ->where('status', 1)
+            ->join($this->table, $this->table . '.id', '=', 'shop_special_price.product_id')
+            ->where('shop_special_price.status', 1)
+            ->where($this->table . '.status', 1)
             ->where(function ($query) {
-                $query->where('date_end', '>=', date("Y-m-d"))
-                    ->orWhereNull('date_end');
+                $query->where('shop_special_price.date_end', '>=', date("Y-m-d"))
+                    ->orWhereNull('shop_special_price.date_end');
             })
             ->where(function ($query) {
-                $query->where('date_start', '<=', date("Y-m-d"))
-                    ->orWhereNull('date_start');
+                $query->where('shop_special_price.date_start', '<=', date("Y-m-d"))
+                    ->orWhereNull('shop_special_price.date_start');
             })->with('product')
         ;
         if ($random) {
@@ -307,7 +309,7 @@ class ShopProduct extends Model
  */
     public function getUrl()
     {
-        return route('product', ['name' => \Helper::strToUrl($this->name), 'id' => $this->id]);
+        return route('product', ['name' => \Helper::strToUrl(empty($this->name) ? $this->sku : $this->name), 'id' => $this->id]);
     }
 
 //Fields language
@@ -416,7 +418,7 @@ class ShopProduct extends Model
     }
     public function processDescriptions()
     {
-        return $this->descriptions->keyBy('lang_id')[$this->lang_id];
+        return $this->descriptions->keyBy('lang_id')[$this->lang_id] ?? [];
     }
 
     public function processSpecialPrice()

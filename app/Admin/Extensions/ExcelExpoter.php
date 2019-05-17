@@ -4,27 +4,27 @@ namespace App\Admin\Extensions;
 
 use App\User;
 use Encore\Admin\Grid\Exporters\AbstractExporter;
-use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class ExcelExpoter extends AbstractExporter
 {
     public $filename;
     public $sheetname;
     public $limit;
-    public $type;
+    public $title;
     public $function;
-    public function __construct($function = null, $filename = 'Export File', $type = "xls", $sheetname = 'Sheet')
+    public function __construct($function = null, $filename = 'Export File', $title = "Title export", $sheetname = 'Sheet')
     {
         $this->filename  = $filename;
         $this->sheetname = $sheetname;
-        $this->type      = $type;
+        $this->title     = $title;
         $this->function  = $function;
 
     }
 
     public function export()
     {
-        // dd($this->getData());
         if ($this->function == null) {
             $dataExport = $this->getData();
             $header     = true;
@@ -32,25 +32,20 @@ class ExcelExpoter extends AbstractExporter
             $dataExport = $this->{$this->function}();
             $header     = false;
         }
-        Excel::create($this->filename, function ($excel) use ($dataExport, $header) {
-            $excel->sheet($this->sheetname, function ($sheet) use ($dataExport, $header) {
-                $sheet->fromArray($dataExport, $nullValue = null, $startCell = 'A1', $strictNullComparison = false, $headingGeneration = $header);
 
-                // $sheet->cell('A1', function ($cell) {$cell->setValue('Dữ Liệu');});
-                // $sheet->cell('B1', function ($cell) {$cell->setValue('Mã hóa');});
-                // $sheet->cell('C1', function ($cell) {$cell->setValue('Email');});
-                // if (!empty($data)) {
-                //     foreach ($data as $key => $value) {
-                //         $i = $key + 2;
-                //         $sheet->cell('A' . $i, $value['firstname']);
-                //         $sheet->cell('B' . $i, $value['lastname']);
-                //         $sheet->cell('C' . $i, $value['email']);
-                //     }
-                // }
+        $spreadsheet = new Spreadsheet();
 
-            });
+        $worksheet = $spreadsheet->getActiveSheet();
 
-        })->export($this->type);
+        $worksheet->setTitle($this->sheetname);
+        $worksheet->getCell('A1')->setValue($this->title);
+        $worksheet->fromArray($dataExport, $nullValue = null, $startCell = 'A2');
+        $writer = IOFactory::createWriter($spreadsheet, "Xls");
+        // $writer->save('write.xls');
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment; filename="' . $this->filename . '.xls"');
+        header('Cache-Control: max-age=0');
+        $writer->save("php://output");
     }
 
     public function dataOrder()
@@ -75,7 +70,19 @@ class ExcelExpoter extends AbstractExporter
             ];
         }
 
-        $arrTitle = ['Số Order', 'Tổng tiền hàng', 'Tiền ship', 'Tiền giảm giá', 'Tổng tiền', 'ID khách hàng', 'Email', 'Tên người nhận', 'Địa chỉ', 'Số điện thoại', 'Ghi chú', 'Ngày tạo'];
+        $arrTitle = [
+            'ID',
+            trans('order.sub_total'),
+            trans('order.shipping_price'),
+            trans('order.discount'),
+            trans('order.order_total'),
+            trans('order.customer'),
+            trans('order.email'),
+            trans('order.customer_name'),
+            trans('order.shipping_address'),
+            trans('order.shipping_phone'),
+            trans('order.note'),
+            trans('order.date')];
         return array_merge([$arrTitle], $dataRows);
     }
 
@@ -94,7 +101,14 @@ class ExcelExpoter extends AbstractExporter
             ];
         }
 
-        $arrTitle = ['ID', 'Tên', 'Email', 'Địa chỉ', 'Số điện thoại', 'Ngày tạo'];
+        $arrTitle = [
+            trans('customer.id'),
+            trans('customer.name'),
+            trans('customer.email'),
+            trans('customer.address'),
+            trans('customer.phone'),
+            trans('customer.date'),
+        ];
         return array_merge([$arrTitle], $dataRows);
     }
 
@@ -121,7 +135,17 @@ class ExcelExpoter extends AbstractExporter
                 $value['created_at'],
             ];
         }
-        $arrTitle = ['ID', 'Tên', 'Email', 'Địa chỉ', 'Số điện thoại', 'Tổng đơn hàng', 'Tiển tiền hàng', 'Ngày tạo'];
+        $arrTitle = [
+            trans('customer.id'),
+            trans('customer.name'),
+            trans('customer.email'),
+            trans('customer.address'),
+            trans('customer.phone'),
+            trans('customer.total_order'),
+            trans('customer.total_amount'),
+            trans('customer.date'),
+        ];
+
         return array_merge([$arrTitle], $dataRows);
     }
 }

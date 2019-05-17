@@ -88,7 +88,7 @@ class CmsNews extends Model
  */
     public function getUrl()
     {
-        return route('newsDetail', ['name' => Helper::strToUrl($this->title), 'id' => $this->id]);
+        return route('newsDetail', ['name' => Helper::strToUrl(empty($this->title) ? 'no-title' : $this->title), 'id' => $this->id]);
     }
 
     //Fields language
@@ -138,7 +138,7 @@ class CmsNews extends Model
 
     public function processDescriptions()
     {
-        return $this->descriptions->keyBy('lang_id')[$this->lang_id];
+        return $this->descriptions->keyBy('lang_id')[$this->lang_id] ?? [];
     }
 
 //=========================

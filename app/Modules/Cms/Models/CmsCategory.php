@@ -162,7 +162,7 @@ class CmsCategory extends Model
 
     public function getUrl()
     {
-        return route('cmsCategory', ['name' => \Helper::strToUrl($this->title), 'id' => $this->id]);
+        return route('cmsCategory', ['name' => \Helper::strToUrl(empty($this->title) ? 'no-title' : $this->title), 'id' => $this->id]);
     }
 
     //Fields language
@@ -233,7 +233,7 @@ class CmsCategory extends Model
     }
     public function processDescriptions()
     {
-        return $this->descriptions->keyBy('lang_id')[$this->lang_id];
+        return $this->descriptions->keyBy('lang_id')[$this->lang_id] ?? [];
     }
 
 }

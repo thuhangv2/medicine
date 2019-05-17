@@ -21,7 +21,21 @@ class GeneralController extends Controller
         //============end config====
         $this->configsGlobal = $configsGlobal;
         $this->configs       = $configs;
-
+        if (!$configs['site_status']) {
+            $maintain_content = $configsGlobal['maintain_content'] ?? '';
+            echo <<<HTML
+ <section>
+    <div class="container">
+      <div class="row">
+        <div id="columns" class="container">
+          $maintain_content
+        </div>
+      </div>
+    </div>
+  </section>
+HTML;
+            exit;
+        }
     }
 
 /**
