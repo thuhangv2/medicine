@@ -79,7 +79,7 @@ class LastViewProduct extends \App\Http\Controllers\GeneralController
         if (!$process) {
             $return = ['error' => 1, 'msg' => 'Error when uninstall'];
         }
-        (new Layout)->where('content', $this->namespace)->delete();
+        (new Layout)->where('text', $this->namespace)->delete();
         return $return;
     }
     public function enable()
@@ -145,7 +145,7 @@ class LastViewProduct extends \App\Http\Controllers\GeneralController
                 'position' => 'left',
                 'page'     => '',
                 'type'     => 'module',
-                'content'  => $this->namespace,
+                'text'     => $this->namespace,
                 'status'   => self::ON, //1- Enable extension; 0 - Disable
                 'sort'     => 0,
             ]

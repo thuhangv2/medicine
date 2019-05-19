@@ -74,7 +74,7 @@ Free Open source E-commerce use Laravel framework for Business
 
 ## Requirements:
 
-Version 3.0.x:
+Version 2.3.x:
 
 > Core laravel framework 5.8. Requirements::
 
