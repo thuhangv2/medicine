@@ -99,9 +99,7 @@ class EmailTemplateController extends Controller
         $grid->group('Group')->display(function ($group) use ($arrayGroup) {
             return $arrayGroup[$group];
         });
-        // $grid->text('Text')->display(function ($text) {
-        //     return '<div style="max-width:250px; max-height:150px;overflow:auto;">' . htmlentities($text) . '</div>';
-        // });
+
         $grid->status('Status')->switch();
 
         return $grid;

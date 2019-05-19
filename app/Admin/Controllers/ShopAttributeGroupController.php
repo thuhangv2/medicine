@@ -86,7 +86,7 @@ class ShopAttributeGroupController extends Controller
         $grid->status(trans('language.attribute.status'));
         $grid->sort(trans('language.attribute.sort'));
         $grid->type(trans('language.attribute.type'));
-
+        $grid->model()->orderBy('id', 'desc');
         return $grid;
     }
 

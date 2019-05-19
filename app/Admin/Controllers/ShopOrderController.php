@@ -2,7 +2,6 @@
 
 namespace App\Admin\Controllers;
 
-use App\Admin\Extensions\ExcelExpoter;
 use App\Http\Controllers\Controller;
 use App\Models\ShopAttributeGroup;
 use App\Models\ShopCurrency;
@@ -65,33 +64,26 @@ class ShopOrderController extends Controller
      * @param $id
      * @return Content
      */
-    public function edit($id)
+
+    public function edit($id, Content $content)
     {
-        return Admin::content(function (Content $content) use ($id) {
-
-            $content->header(trans('language.admin.order_manager'));
-            $content->description(' ');
-
-            $content->body($this->form()->edit($id));
-        });
+        return $content
+            ->header(trans('language.admin.order_manager'))
+            ->description(' ')
+            ->body($this->form()->edit($id));
     }
-
     /**
      * Create interface.
      *
      * @return Content
      */
-    public function create()
+    public function create(Content $content)
     {
-        return Admin::content(function (Content $content) {
-
-            $content->header(trans('language.admin.order_manager'));
-            $content->description(' ');
-
-            $content->body($this->form());
-        });
+        return $content
+            ->header(trans('language.admin.order_manager'))
+            ->description(' ')
+            ->body($this->form());
     }
-
     /**
      * Make a grid builder.
      *
@@ -100,63 +92,66 @@ class ShopOrderController extends Controller
     protected function grid($keyword)
     {
 
-        return Admin::grid(ShopOrder::class, function (Grid $grid) use ($keyword) {
-            $grid->id('ID')->sortable();
-            $grid->email('Email')->display(function ($email) {
-                return empty($email) ? 'N/A' : '<div style="max-width:150px; overflow:auto;word-wrap: break-word;">' . $email . '</div>';
-            });
-            $grid->subtotal(trans('order.sub_total'))->display(function ($price) {
-                return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
-            });
-            $grid->shipping(trans('order.shipping_price'))->display(function ($price) {
-                return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
-            });
-            $grid->discount(trans('order.discount'))->display(function ($price) {
-                return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
-            });
-            $grid->total(trans('order.totals.total'))->display(function ($price) {
-                return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
-            });
-            $grid->received(trans('order.received'))->display(function ($price) {
-                return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
-            });
-            $grid->payment_method(trans('order.payment_method'))->sortable();
-
-            $grid->currency(trans('order.currency'));
-            $grid->exchange_rate(trans('order.exchange_rate'));
-            $statusOrder = $this->statusOrder;
-            $grid->status(trans('language.admin.status'))->display(function ($status) use ($statusOrder) {
-                $style = "";
-                if ($status == 0) {
-                    $style = '';
-                } elseif ($status == 1) {
-                    $style = 'class="label label-primary"';
-                } elseif ($status == 2) {
-                    $style = 'class="label label-warning"';
-                } elseif ($status == 3) {
-                    $style = 'class="label label-danger"';
-                } elseif ($status == 4) {
-                    $style = 'class="label label-success"';
-                }
-                return "<span $style>" . $statusOrder[$status] . "</span>";
-            });
-            $grid->actions(function ($actions) {
-                $actions->disableEdit();
-                $actions->prepend('<a title="Show Customer detail" href="shop_order_edit/' . $actions->getkey() . '"><i class="fa fa-edit"></i></a>');
-                $actions->disableView();
-            });
-            $grid->created_at(trans('language.admin.created_at'));
-            $grid->model()->orderBy('id', 'desc');
-            if ($keyword != "") {
-                $grid->model()
-                    ->where('toname', 'like', '%' . $keyword . '%')
-                    ->orWhere('phone', 'like', '%' . $keyword . '%')
-                    ->orWhere('email', 'like', '%' . $keyword . '%')
-                    ->orWhere('id', (int) $keyword);
-            }
-            $grid->disableExport(false);
-            $grid->exporter(new ExcelExpoter($function = 'dataOrder', $filename = 'Order list', $title = 'Export data order', $sheetname = 'Sheet name'));
+        $grid = new Grid(new ShopOrder);
+        $grid->id('ID')->sortable();
+        $grid->email('Email')->display(function ($email) {
+            return empty($email) ? 'N/A' : '<div style="max-width:150px; overflow:auto;word-wrap: break-word;">' . $email . '</div>';
         });
+        $grid->subtotal(trans('order.sub_total'))->display(function ($price) {
+            return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
+        });
+        $grid->shipping(trans('order.shipping_price'))->display(function ($price) {
+            return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
+        });
+        $grid->discount(trans('order.discount'))->display(function ($price) {
+            return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
+        });
+        $grid->total(trans('order.totals.total'))->display(function ($price) {
+            return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
+        });
+        $grid->received(trans('order.received'))->display(function ($price) {
+            return empty($price) ? 0 : '<div style="max-width:100px; overflow:auto;word-wrap: break-word;">' . \Helper::currencyOnlyRender($price, $this->currency) . '</div>';
+        });
+        $grid->payment_method(trans('order.payment_method'))->sortable();
+
+        $grid->currency(trans('order.currency'));
+        $grid->exchange_rate(trans('order.exchange_rate'));
+        $statusOrder = $this->statusOrder;
+        $grid->status(trans('language.admin.status'))->display(function ($status) use ($statusOrder) {
+            $style = "";
+            if ($status == 0) {
+                $style = '';
+            } elseif ($status == 1) {
+                $style = 'class="label label-primary"';
+            } elseif ($status == 2) {
+                $style = 'class="label label-warning"';
+            } elseif ($status == 3) {
+                $style = 'class="label label-danger"';
+            } elseif ($status == 4) {
+                $style = 'class="label label-success"';
+            }
+            return "<span $style>" . $statusOrder[$status] . "</span>";
+        });
+        $grid->actions(function ($actions) {
+            $actions->disableEdit();
+            $actions->prepend('<a title="Show Customer detail" href="shop_order_edit/' . $actions->getkey() . '"><i class="fa fa-edit"></i></a>');
+            $actions->disableView();
+        });
+        $grid->created_at(trans('language.admin.created_at'));
+        $grid->model()->orderBy('id', 'desc');
+        if ($keyword != "") {
+            $grid->model()
+                ->where('toname', 'like', '%' . $keyword . '%')
+                ->orWhere('phone', 'like', '%' . $keyword . '%')
+                ->orWhere('email', 'like', '%' . $keyword . '%')
+                ->orWhere('id', (int) $keyword);
+        }
+//Export order list
+        $grid->disableExport(false); //Default disable button export
+        $options = ['filename' => 'Order', 'sheetname' => 'Sheet Name', 'title' => 'Export list orders'];
+        $grid->exporter((new \ProcessData)->exportFromAdmin($function = 'actionExportOrder', $options));
+//End export order list
+        return $grid;
     }
 
     /**
@@ -167,48 +162,48 @@ class ShopOrderController extends Controller
     protected function form()
     {
         Admin::script($this->jsProcess());
-        return Admin::form(ShopOrder::class, function (Form $form) {
-            $arrCustomer = array();
-            $customers   = User::all();
-            foreach ($customers as $key => $value) {
-                $arrCustomer[$value['id']] = $value['name'] . "<" . $value['email'] . ">";
-            }
-            $form->select('user_id', trans('order.select_customer'))->options($arrCustomer)->rules('required');
-            $form->text('toname', trans('order.shipping_name'));
-            $form->text('address1', trans('order.shipping_address1'));
-            $form->text('address2', trans('order.shipping_address2'));
-            $form->mobile('phone', trans('order.shipping_phone'));
-            $form->select('currency', trans('order.currency'))->options($this->currency)->rules('required');
-            $form->number('exchange_rate', trans('order.exchange_rate'));
-            $form->textarea('comment', trans('order.order_note'));
-            $form->select('status', trans('language.admin.status'))->options($this->statusOrder);
-            $form->hidden('email');
-            $form->divide();
-            $form->saving(function (Form $form) use ($customers) {
-                $checkCurrency = ShopCurrency::where('code', $form->currency)->first();
-                $checkUser     = User::find($form->user_id);
-                $form->email   = $checkUser->email;
-            });
-
-            $form->saved(function (Form $form) {
-                $id         = $form->model()->id;
-                $checkTotal = ShopOrderTotal::where('order_id', $id)->first();
-                if (!$checkTotal) {
-                    ShopOrderTotal::insert([
-                        ['code' => 'subtotal', 'value' => 0, 'title' => 'Subtotal', 'sort' => 1, 'order_id' => $id],
-                        ['code' => 'shipping', 'value' => 0, 'title' => 'Shipping', 'sort' => 10, 'order_id' => $id],
-                        ['code' => 'discount', 'value' => 0, 'title' => 'Discount', 'sort' => 20, 'order_id' => $id],
-                        ['code' => 'total', 'value' => 0, 'title' => 'Total', 'sort' => 100, 'order_id' => $id],
-                        ['code' => 'received', 'value' => 0, 'title' => 'Received', 'sort' => 200, 'order_id' => $id],
-                    ]);
-                }
-            });
-            $form->disableViewCheck();
-            $form->disableEditingCheck();
-            $form->tools(function (Form\Tools $tools) {
-                $tools->disableView();
-            });
+        $form        = new Form(new ShopOrder);
+        $arrCustomer = array();
+        $customers   = User::all();
+        foreach ($customers as $key => $value) {
+            $arrCustomer[$value['id']] = $value['name'] . "<" . $value['email'] . ">";
+        }
+        $form->select('user_id', trans('order.select_customer'))->options($arrCustomer)->rules('required');
+        $form->text('toname', trans('order.shipping_name'));
+        $form->text('address1', trans('order.shipping_address1'));
+        $form->text('address2', trans('order.shipping_address2'));
+        $form->mobile('phone', trans('order.shipping_phone'));
+        $form->select('currency', trans('order.currency'))->options($this->currency)->rules('required');
+        $form->number('exchange_rate', trans('order.exchange_rate'));
+        $form->textarea('comment', trans('order.order_note'));
+        $form->select('status', trans('language.admin.status'))->options($this->statusOrder);
+        $form->hidden('email');
+        $form->divide();
+        $form->saving(function (Form $form) use ($customers) {
+            $checkCurrency = ShopCurrency::where('code', $form->currency)->first();
+            $checkUser     = User::find($form->user_id);
+            $form->email   = $checkUser->email;
         });
+
+        $form->saved(function (Form $form) {
+            $id         = $form->model()->id;
+            $checkTotal = ShopOrderTotal::where('order_id', $id)->first();
+            if (!$checkTotal) {
+                ShopOrderTotal::insert([
+                    ['code' => 'subtotal', 'value' => 0, 'title' => 'Subtotal', 'sort' => 1, 'order_id' => $id],
+                    ['code' => 'shipping', 'value' => 0, 'title' => 'Shipping', 'sort' => 10, 'order_id' => $id],
+                    ['code' => 'discount', 'value' => 0, 'title' => 'Discount', 'sort' => 20, 'order_id' => $id],
+                    ['code' => 'total', 'value' => 0, 'title' => 'Total', 'sort' => 100, 'order_id' => $id],
+                    ['code' => 'received', 'value' => 0, 'title' => 'Received', 'sort' => 200, 'order_id' => $id],
+                ]);
+            }
+        });
+        $form->disableViewCheck();
+        $form->disableEditingCheck();
+        $form->tools(function (Form\Tools $tools) {
+            $tools->disableView();
+        });
+        return $form;
     }
 
     public function jsProcess()
@@ -245,15 +240,12 @@ class ShopOrderController extends Controller
 JS;
     }
 
-    public function show($id)
+    public function show($id, Content $content)
     {
-        return Admin::content(function (Content $content) use ($id) {
-            $content->header('');
-            $content->description('');
-            $content->body(Admin::show(ShopOrder::findOrFail($id), function (Show $show) {
-                $show->id('ID');
-            }));
-        });
+        return $content
+            ->header('Detail')
+            ->description('description')
+            ->body($this->detail($id));
     }
 
 /**
