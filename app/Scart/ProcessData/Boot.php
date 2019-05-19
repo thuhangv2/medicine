@@ -2,15 +2,15 @@
 /**
  * Boot to process data.
  *
- * @package    App\Action\ProcessData
+ * @package    App\Scart\ProcessData
  * @subpackage Boot
  * @copyright  Copyright (c) 2019 S-cart.
  * @author     Naruto<lanhktc@gmail.com>
  */
-namespace App\Action\ProcessData;
+namespace App\Scart\ProcessData;
 
-use App\Action\ProcessData\Export;
-use App\Action\ProcessData\ExportAdmin;
+use App\Scart\ProcessData\Export;
+use App\Scart\ProcessData\ExportAdmin;
 
 class Boot
 {
@@ -35,7 +35,7 @@ class Boot
     }
 
 /**
- * Export file with function name sepcify in App\Action\ProcessData\Export
+ * Export file with function name sepcify in App\Scart\ProcessData\Export
  *
  * @param  array  $dataExport
  * @param  array  $options
@@ -47,7 +47,7 @@ class Boot
     }
 
 /**
- * Export file in admin page with function name in  App\Action\ProcessData\ExportAdmin
+ * Export file in admin page with function name in  App\Scart\ProcessData\ExportAdmin
  *
  * @param  string|null $function
  * @param  array       $options

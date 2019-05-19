@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Action\ProcessData;
+namespace App\Scart\ProcessData;
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;

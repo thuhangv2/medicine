@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Action\ProcessData;
+namespace App\Scart\ProcessData;
 
 use App\Models\ShopCurrency;
 use App\User;

@@ -166,7 +166,7 @@ return [
         /*
          * S-Cart
          */
-        App\Scart\ScartServiceProvider::class,
+        App\Providers\ScartServiceProvider::class,
 
     ],
 
@@ -223,7 +223,7 @@ return [
         //scart
         'Helper'       => App\Scart\Helper::class,
         'FindClass'    => App\Scart\FindClass::class,
-        'ProcessData'  => App\Action\ProcessData\Boot::class,
+        'ProcessData'  => App\Scart\ProcessData\Boot::class,
     ],
 
     'debug_blacklist' => [
