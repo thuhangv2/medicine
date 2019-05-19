@@ -1,5 +1,5 @@
 # Release Notes
-## v3.0.x (2019)
+## v2.3.0 (2019)
 ### Upgrade laravel 5.8
 ### Fixed
 - Fix error getUrl when descripton null
