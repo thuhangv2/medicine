@@ -36,31 +36,37 @@ class ProcessController extends Controller
             $case = $request->get('case');
             switch ($case) {
                 case 'import_file_info':
-                    $reader        = IOFactory::createReader('Xls');
                     $validatedData = \Validator::make($request->all(), [
                         'import_file_info' => 'required|mimes:xlsx,xls',
                     ]);
                     if ($validatedData->fails()) {
                         return redirect()->back()->withErrors($validatedData->errors());
                     } else {
-
+                        $reader      = IOFactory::createReader('Xls');
                         $spreadsheet = $reader->load($request->file('import_file_info'));
                         $sheet       = $spreadsheet->getActiveSheet();
                         $maxCol      = $sheet->getHighestColumn();
                         $maxRow      = $sheet->getHighestRow();
-                        $data        = $sheet->rangeToArray('A3:' . $maxCol . $maxRow, true, true, true, true);
-                        $arrError    = array();
-                        $arrSuccess  = array();
+                        $data        = $sheet->rangeToArray('B3:' . $maxCol . $maxRow, true, true, true, true);
+                        $headings    = array_shift($data);
+                        array_walk(
+                            $data,
+                            function (&$row) use ($headings) {
+                                $row = array_combine($headings, $row);
+                            }
+                        );
+                        $arrError   = array();
+                        $arrSuccess = array();
                         // dd($data);
                         foreach ($data as $key => $row) {
                             $arrMapping                = array();
-                            $sku                       = $row['A'];
-                            $arrMapping['price']       = (int) $row['B'];
-                            $arrMapping['cost']        = (int) $row['E'];
-                            $arrMapping['stock']       = (int) $row['G'];
-                            $arrMapping['category_id'] = (int) $row['B'];
-                            $arrMapping['brand_id']    = (int) $row['C'];
-                            $arrMapping['vendor_id']   = (int) $row['D'];
+                            $sku                       = $row['sku'];
+                            $arrMapping['price']       = $row['price'];
+                            $arrMapping['cost']        = $row['cost'];
+                            $arrMapping['stock']       = $row['stock'];
+                            $arrMapping['category_id'] = $row['category_id'];
+                            $arrMapping['brand_id']    = $row['brand_id'];
+                            $arrMapping['vendor_id']   = $row['vendor_id'];
                             try {
                                 (new ShopProduct)
                                     ->updateOrInsert(
@@ -97,22 +103,29 @@ class ProcessController extends Controller
                         $sheet       = $spreadsheet->getActiveSheet();
                         $maxCol      = $sheet->getHighestColumn();
                         $maxRow      = $sheet->getHighestRow();
-                        $data        = $sheet->rangeToArray('A3:' . $maxCol . $maxRow, true, true, true, true);
-                        $arrError    = array();
-                        $arrSuccess  = array();
+                        $data        = $sheet->rangeToArray('B3:' . $maxCol . $maxRow, true, true, true, true);
+                        $headings    = array_shift($data);
+                        array_walk(
+                            $data,
+                            function (&$row) use ($headings) {
+                                $row = array_combine($headings, $row);
+                            }
+                        );
+                        $arrError   = array();
+                        $arrSuccess = array();
                         foreach ($data as $key => $row) {
-                            $sku          = $row['A'];
+                            $sku          = $row['sku'];
                             $checkProduct = ShopProduct::where('sku', $sku)->first();
                             if (!$checkProduct) {
                                 $arrError[] = $sku . ': already not exist!';
                             } else {
                                 try {
-                                    $arrUnique = ['product_id' => $checkProduct->id, 'lang_id' => (int) $row['B']];
+                                    $arrUnique = ['product_id' => $checkProduct->id, 'lang_id' => (int) $row['lang_id']];
                                     $fields    = [
-                                        'name'        => $row['C'],
-                                        'description' => $row['D'],
-                                        'keyword'     => $row['E'],
-                                        'content'     => $row['F'],
+                                        'name'        => $row['name'],
+                                        'description' => $row['description'],
+                                        'keyword'     => $row['keyword'],
+                                        'content'     => $row['content'],
                                     ];
                                     (new ShopProductDescription)
                                         ->updateOrInsert(
@@ -151,11 +164,18 @@ class ProcessController extends Controller
                         $sheet       = $spreadsheet->getActiveSheet();
                         $maxCol      = $sheet->getHighestColumn();
                         $maxRow      = $sheet->getHighestRow();
-                        $data        = $sheet->rangeToArray('A3:' . $maxCol . $maxRow, true, true, true, true);
-                        $arrError    = array();
-                        $arrSuccess  = array();
+                        $data        = $sheet->rangeToArray('B3:' . $maxCol . $maxRow, true, true, true, true);
+                        $headings    = array_shift($data);
+                        array_walk(
+                            $data,
+                            function (&$row) use ($headings) {
+                                $row = array_combine($headings, $row);
+                            }
+                        );
+                        $arrError   = array();
+                        $arrSuccess = array();
                         foreach ($data as $key => $row) {
-                            $sku          = $row['A'];
+                            $sku          = $row['sku'];
                             $checkProduct = ShopProduct::where('sku', $sku)->first();
                             if (!$checkProduct) {
                                 $arrError[] = $sku . ': already not exist!';
@@ -163,9 +183,9 @@ class ProcessController extends Controller
                                 try {
                                     $arrUnique = ['product_id' => $checkProduct->id];
                                     $fields    = [
-                                        'price'   => (int) $row['B'],
-                                        'status'  => (int) $row['C'],
-                                        'comment' => (int) $row['D'],
+                                        'price'   => (int) $row['price'],
+                                        'status'  => (int) $row['status'],
+                                        'comment' => (int) $row['comment'],
                                     ];
                                     (new ShopSpecialPrice)
                                         ->updateOrInsert(

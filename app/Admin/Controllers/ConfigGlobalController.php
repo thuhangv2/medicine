@@ -10,7 +10,6 @@ use App\Models\ShopCurrency;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Facades\Admin;
 use Encore\Admin\Form;
-use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 
 class ConfigGlobalController extends Controller
@@ -30,7 +29,6 @@ class ConfigGlobalController extends Controller
             $content->description(' ');
 
             $content->body($this->viewInfo());
-            // $content->body($this->grid());
         });
     }
 
@@ -66,80 +64,6 @@ class ConfigGlobalController extends Controller
     //         $content->body($this->form());
     //     });
     // }
-
-    /**
-     * Make a grid builder.
-     *
-     * @return Grid
-     */
-    protected function grid()
-    {
-        return Admin::grid(ConfigGlobal::class, function (Grid $grid) {
-
-            $grid->html('&nbsp;');
-
-            $grid->logo(trans('language.config.logo'))->image('', 50);
-            if (\Helper::configs()['watermark']) {
-                $grid->watermark(trans('language.config.watermark'))->image('', 50);
-            }
-
-            $languages = Language::getLanguages();
-            $grid->descriptions(trans('language.config.description'))->expand(function () use ($languages) {
-                $html = '<table width="100%" class="table-padding padding5" border=1 style="border: 1px solid #d0bcbc;"><tr>
-            <td>' . trans('language.config.language') . '</td>
-            <td>' . trans('language.config.title') . '</td>
-            <td>' . trans('language.config.description') . '</td>
-            <td>' . trans('language.config.keyword') . '</td>
-            </tr>';
-                foreach ($languages as $key => $lang) {
-                    $langDescriptions = ConfigGlobalDescription::where('config_id', $this->id)->where('lang_id', $key)->first();
-                    $html .= '<tr>
-            <td>' . $lang['name'] . '</td>
-            <td>' . $langDescriptions['title'] . '</td>
-            <td>' . $langDescriptions['description'] . '</td>
-            <td>' . $langDescriptions['keyword'] . '</td>
-            </tr>';
-                }
-                $html .= '</table>';
-                return $html;
-            }, trans('language.admin.detail'));
-
-            $grid->phone(trans('language.config.phone'));
-            $grid->long_phone(trans('language.config.long_phone'))->display(function ($text) {
-                return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
-            });
-            $grid->time_active(trans('language.config.time_active'))->display(function ($text) {
-                return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
-            });
-
-            $grid->address(trans('language.config.address'))->display(function ($text) {
-                return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
-            });
-            $grid->email(trans('language.config.email'))->display(function ($text) {
-                return '<div style="max-width:150px; overflow:auto;">' . $text . '</div>';
-            });
-            $grid->locale(trans('language.config.language'))->display(function ($locale) {
-                $languages = Language::pluck('name', 'code')->all();
-                return $languages[$locale];
-            });
-            $grid->currency(trans('language.config.currency'))->display(function ($currency) {
-                $currencies = ShopCurrency::pluck('name', 'code')->all();
-                return $currencies[$currency];
-            });
-            $grid->disableCreation();
-            $grid->disableExport();
-            $grid->disableRowSelector();
-            $grid->disableFilter();
-            $grid->disablePagination();
-            $grid->actions(function ($actions) {
-                $actions->disableView();
-                $actions->disableDelete();
-            });
-            $grid->tools(function ($tools) {
-                $tools->disableRefreshButton();
-            });
-        });
-    }
 
     /**
      * Make a form builder.

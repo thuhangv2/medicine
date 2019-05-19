@@ -2,7 +2,6 @@
 
 namespace App\Admin\Controllers;
 
-use App\Admin\Extensions\ExcelExpoter;
 use App\Http\Controllers\Controller;
 use App\User;
 use Encore\Admin\Controllers\HasResourceActions;
@@ -37,33 +36,26 @@ class ShopCustomerController extends Controller
      * @param $id
      * @return Content
      */
-    public function edit($id)
+
+    public function edit($id, Content $content)
     {
-        return Admin::content(function (Content $content) use ($id) {
-
-            $content->header(trans('order.customer'));
-            $content->description(' ');
-
-            $content->body($this->form()->edit($id));
-        });
+        return $content
+            ->header(trans('order.customer'))
+            ->description(' ')
+            ->body($this->form()->edit($id));
     }
-
     /**
      * Create interface.
      *
      * @return Content
      */
-    public function create()
+    public function create(Content $content)
     {
-        return Admin::content(function (Content $content) {
-
-            $content->header(trans('order.customer'));
-            $content->description(' ');
-
-            $content->body($this->form());
-        });
+        return $content
+            ->header(trans('order.customer'))
+            ->description(' ')
+            ->body($this->form());
     }
-
     /**
      * Make a grid builder.
      *
@@ -71,22 +63,25 @@ class ShopCustomerController extends Controller
      */
     protected function grid()
     {
-        return Admin::grid(User::class, function (Grid $grid) {
 
-            $grid->id('ID')->sortable();
-            $grid->email('Email')->sortable();
-            $grid->name(trans('order.customer_name'))->sortable();
+        $grid = new Grid(new User);
+        $grid->id('ID')->sortable();
+        $grid->email('Email')->sortable();
+        $grid->name(trans('order.customer_name'))->sortable();
 
-            $grid->created_at(trans('language.admin.created_at'));
-            $grid->updated_at(trans('language.admin.last_modify'));
-            $grid->model()->orderBy('id', 'desc');
-            $grid->disableExport(false);
-            $grid->exporter(new ExcelExpoter($function = 'dataCustomer', $filename = 'Customer list', $title = 'Export data Customer', $sheetname = 'Sheet name'));
-
-            $grid->actions(function ($actions) {
-                $actions->disableView();
-            });
+        $grid->created_at(trans('language.admin.created_at'));
+        $grid->updated_at(trans('language.admin.last_modify'));
+        $grid->model()->orderBy('id', 'desc');
+        $grid->actions(function ($actions) {
+            $actions->disableView();
         });
+//Export customer list
+        $grid->disableExport(false); //Default disable button export
+        $options = ['filename' => 'Customer', 'sheetname' => 'Sheet Name', 'title' => 'Export list customers'];
+        $grid->exporter((new \ProcessData)->exportFromAdmin($function = 'actionExportCustomer', $options));
+//End export customer list
+
+        return $grid;
     }
 
     /**
@@ -96,39 +91,35 @@ class ShopCustomerController extends Controller
      */
     protected function form()
     {
-        return Admin::form(User::class, function (Form $form) {
-
-            $form->display('id', 'ID');
-            $form->text('name', trans('order.customer_name'));
-            $form->email('email', 'Email');
-            $form->password('password', 'Password');
-            $form->text('address1', trans('order.shipping_address1'));
-            $form->text('address2', trans('order.shipping_address2'));
-            $form->text('phone', trans('order.shipping_phone'));
-            $form->saving(function (Form $form) {
-                if ($form->password) {
-                    $form->password = bcrypt($form->password);
-                } else {
-                    $form->password = $form->model()->password;
-                }
-            });
-            $form->disableViewCheck();
-            $form->disableEditingCheck();
-            $form->tools(function (Form\Tools $tools) {
-                $tools->disableView();
-            });
-
+        $form = new Form(new User);
+        $form->display('id', 'ID');
+        $form->text('name', trans('order.customer_name'));
+        $form->email('email', 'Email');
+        $form->password('password', 'Password');
+        $form->text('address1', trans('order.shipping_address1'));
+        $form->text('address2', trans('order.shipping_address2'));
+        $form->text('phone', trans('order.shipping_phone'));
+        $form->saving(function (Form $form) {
+            if ($form->password) {
+                $form->password = bcrypt($form->password);
+            } else {
+                $form->password = $form->model()->password;
+            }
         });
+        $form->disableViewCheck();
+        $form->disableEditingCheck();
+        $form->tools(function (Form\Tools $tools) {
+            $tools->disableView();
+        });
+
+        return $form;
     }
 
-    public function show($id)
+    public function show($id, Content $content)
     {
-        return Admin::content(function (Content $content) use ($id) {
-            $content->header('');
-            $content->description('');
-            $content->body(Admin::show(ShopCategory::findOrFail($id), function (Show $show) {
-                $show->id('ID');
-            }));
-        });
+        return $content
+            ->header('Detail')
+            ->description('description')
+            ->body($this->detail($id));
     }
 }

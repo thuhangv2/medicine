@@ -100,7 +100,7 @@ class LayoutUrlController extends Controller
         $grid->group('Group');
         $grid->status('Status')->switch();
         $grid->sort('Sort')->editable();
-
+        $grid->model()->orderBy('id', 'desc');
         return $grid;
     }
 

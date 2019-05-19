@@ -20,32 +20,26 @@ class EmailSubscribeController extends Controller
      *
      * @return Content
      */
-    public function index()
+
+    public function index(Content $content)
     {
-        return Admin::content(function (Content $content) {
-
-            $content->header(trans('language.subscribe.manager'));
-            $content->description(' ');
-
-            $content->body($this->grid());
-        });
+        return $content
+            ->header(trans('language.subscribe.manager'))
+            ->description('description')
+            ->body($this->grid());
     }
-
     /**
      * Edit interface.
      *
      * @param $id
      * @return Content
      */
-    public function edit($id)
+    public function edit($id, Content $content)
     {
-        return Admin::content(function (Content $content) use ($id) {
-
-            $content->header(trans('language.subscribe.manager'));
-            $content->description(' ');
-
-            $content->body($this->form()->edit($id));
-        });
+        return $content
+            ->header(trans('language.subscribe.manager'))
+            ->description('description')
+            ->body($this->form()->edit($id));
     }
 
     /**
@@ -71,21 +65,35 @@ class EmailSubscribeController extends Controller
      */
     protected function grid()
     {
-        return Admin::grid(Subscribe::class, function (Grid $grid) {
-
-            $grid->id('ID')->sortable();
-            $grid->email(trans('language.subscribe.email'))->sortable();
-            $grid->disableRowSelector();
-            $grid->disableFilter();
-            $grid->tools(function ($tools) {
-                $tools->disableRefreshButton();
-            });
-            $grid->disableExport();
-            $grid->actions(function ($actions) {
-                $actions->disableView();
-            });
-            $grid->model()->orderBy('id', 'desc');
+        $grid = new Grid(new Subscribe);
+        $grid->id('ID')->sortable();
+        $grid->email(trans('language.subscribe.email'))->sortable();
+        $grid->disableRowSelector();
+        $grid->disableFilter();
+        $grid->tools(function ($tools) {
+            $tools->disableRefreshButton();
         });
+        $grid->disableExport();
+        $grid->actions(function ($actions) {
+            $actions->disableView();
+        });
+        $grid->model()->orderBy('id', 'desc');
+        return $grid;
+    }
+
+    /**
+     * Show interface.
+     *
+     * @param mixed $id
+     * @param Content $content
+     * @return Content
+     */
+    public function show($id, Content $content)
+    {
+        return $content
+            ->header('Detail')
+            ->description('description')
+            ->body($this->detail($id));
     }
 
     /**
@@ -95,24 +103,15 @@ class EmailSubscribeController extends Controller
      */
     protected function form()
     {
-        return Admin::form(Subscribe::class, function (Form $form) {
-            $form->email('email', trans('language.subscribe.email'));
-            $form->disableViewCheck();
-            $form->disableEditingCheck();
-            $form->tools(function (Form\Tools $tools) {
-                $tools->disableView();
-            });
-        });
-    }
+        $form = new Form(new Subscribe);
 
-    public function show($id)
-    {
-        return Admin::content(function (Content $content) use ($id) {
-            $content->header('');
-            $content->description('');
-            $content->body(Admin::show(Subscribe::findOrFail($id), function (Show $show) {
-                $show->id('ID');
-            }));
+        $form->email('email', trans('language.subscribe.email'));
+        $form->disableViewCheck();
+        $form->disableEditingCheck();
+        $form->tools(function (Form\Tools $tools) {
+            $tools->disableView();
         });
+
+        return $form;
     }
 }

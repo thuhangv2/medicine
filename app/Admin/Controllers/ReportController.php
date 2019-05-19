@@ -2,7 +2,6 @@
 #app/Http/Admin/Controllers/ReportController.php
 namespace App\Admin\Controllers;
 
-use App\Admin\Extensions\ExcelExpoter;
 use App\Http\Controllers\Controller;
 use App\Models\ShopProduct;
 use App\User;
@@ -42,23 +41,29 @@ class ReportController extends Controller
         $grid->address(trans('language.customer.address'))->display(function () {
             return $this->address1 . ' ' . $this->address2;
         });
-        $grid->order_total(trans('language.customer.order_total'));
-        $grid->order_amount(trans('language.customer.amount_total'))->display(function ($order_amount) {
-            return number_format($order_amount);
-        });
 
         $grid->disableCreation();
         $grid->disableExport();
         $grid->disableRowSelector();
-        $grid->disableFilter();
+        // $grid->disableFilter();
+        $grid->expandFilter();
+        $grid->filter(function ($filter) {
+            $filter->disableIdFilter();
+            $filter->like('email', trans('customer.email'));
+            $filter->like('name', trans('customer.name'));
+        });
         $grid->disableActions();
         $grid->tools(function ($tools) {
             $tools->disableRefreshButton();
         });
         $grid->paginate(100);
-        $grid->disableExport(false);
-        $grid->exporter(new ExcelExpoter($function = 'dataCustomer', $filename = 'Customer list', $title = 'Export data Customer', $sheetname = 'Sheet name'));
 
+//Export customer report
+        $grid->disableExport(false); //Default disable button export
+        $options = ['filename' => 'Customer report', 'sheetname' => 'Sheet Name', 'title' => ''];
+        $grid->exporter((new \ProcessData)->exportFromAdmin($function = 'actionExportReportCustomer', $options));
+//End export customer report
+        $grid->model()->orderBy('id', 'desc');
         return $grid;
     }
 
@@ -90,14 +95,29 @@ class ReportController extends Controller
         $grid->disableCreation();
         $grid->disableExport();
         $grid->disableRowSelector();
-        $grid->disableFilter();
+        // $grid->disableFilter();
+        $grid->expandFilter();
+        $grid->filter(function ($filter) {
+            $filter->disableIdFilter();
+            $filter->like('name', trans('product.name'));
+            $filter->like('sku', trans('product.sku'));
+
+        });
         $grid->disableActions();
         $grid->tools(function ($tools) {
             $tools->disableRefreshButton();
         });
         $grid->paginate(100);
-        $grid->exporter(new ExcelExpoter('dataCustomer', 'Customer list'));
 
+//Export Customer report
+        $grid->disableExport(false); //Default disable button export
+        $options = ['filename' => 'Product report', 'sheetname' => 'Sheet Name', 'title' => ''];
+        $grid->exporter((new \ProcessData)->exportFromAdmin($function = 'actionExportReportProduct', $options));
+//End export Customer report
+        $grid->model()->orderBy('id', 'desc');
+        $grid->model()->orderBy('id', 'desc');
+        $grid->model()->leftJoin('shop_product_description', 'shop_product_description.product_id', '=', 'shop_product.id')
+            ->where('lang_id', session('locale_id'));
         return $grid;
     }
 

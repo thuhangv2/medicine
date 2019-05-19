@@ -71,25 +71,25 @@ class ShopVendorController extends Controller
      */
     protected function grid()
     {
-        return Admin::grid(ShopVendor::class, function (Grid $grid) {
 
-            $grid->id('ID')->sortable();
-            $grid->name(trans('language.admin.name'))->sortable();
-            $grid->phone(trans('language.admin.phone'));
-            $grid->email(trans('language.admin.email'));
-            $grid->address(trans('language.admin.address'));
-            $grid->image(trans('language.admin.image'))->image('', 50);
-            $grid->disableRowSelector();
-            $grid->disableFilter();
-            $grid->tools(function ($tools) {
-                $tools->disableRefreshButton();
-            });
-            $grid->disableExport();
-            $grid->actions(function ($actions) {
-                $actions->disableView();
-            });
-            $grid->model()->orderBy('id', 'desc');
+        $grid = new Grid(new ShopVendor);
+        $grid->id('ID')->sortable();
+        $grid->name(trans('language.admin.name'))->sortable();
+        $grid->phone(trans('language.admin.phone'));
+        $grid->email(trans('language.admin.email'));
+        $grid->address(trans('language.admin.address'));
+        $grid->image(trans('language.admin.image'))->image('', 50);
+        $grid->disableRowSelector();
+        $grid->disableFilter();
+        $grid->tools(function ($tools) {
+            $tools->disableRefreshButton();
         });
+        $grid->disableExport();
+        $grid->actions(function ($actions) {
+            $actions->disableView();
+        });
+        $grid->model()->orderBy('id', 'desc');
+        return $grid;
     }
 
     /**
@@ -99,30 +99,27 @@ class ShopVendorController extends Controller
      */
     protected function form()
     {
-        return Admin::form(ShopVendor::class, function (Form $form) {
 
-            $form->text('name', trans('language.admin.name'))->rules('required');
-            $form->email('email', trans('language.admin.email'));
-            $form->text('phone', trans('language.admin.phone'));
-            $form->textarea('address', trans('language.admin.address'));
-            $form->image('image', trans('language.admin.image'))->uniqueName()->move('vendor')->removable();
-            $form->number('sort', trans('language.admin.sort'))->rules('numeric|min:0')->default(0);
-            $form->disableViewCheck();
-            $form->disableEditingCheck();
-            $form->tools(function (Form\Tools $tools) {
-                $tools->disableView();
-            });
+        $form = new Form(new ShopVendor);
+        $form->text('name', trans('language.admin.name'))->rules('required');
+        $form->email('email', trans('language.admin.email'));
+        $form->text('phone', trans('language.admin.phone'));
+        $form->textarea('address', trans('language.admin.address'));
+        $form->image('image', trans('language.admin.image'))->uniqueName()->move('vendor')->removable();
+        $form->number('sort', trans('language.admin.sort'))->rules('numeric|min:0')->default(0);
+        $form->disableViewCheck();
+        $form->disableEditingCheck();
+        $form->tools(function (Form\Tools $tools) {
+            $tools->disableView();
         });
+        return $form;
     }
 
-    public function show($id)
+    public function show($id, Content $content)
     {
-        return Admin::content(function (Content $content) use ($id) {
-            $content->header('');
-            $content->description('');
-            $content->body(Admin::show(ShopVendor::findOrFail($id), function (Show $show) {
-                $show->id('ID');
-            }));
-        });
+        return $content
+            ->header('Detail')
+            ->description('description')
+            ->body($this->detail($id));
     }
 }
