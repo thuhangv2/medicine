@@ -36,6 +36,8 @@ if (request()->method() == 'POST' && request()->ajax()) {
                 $env = fopen(base_path() . "/.env", "w") or die(json_encode(['error' => 1, 'msg' => trans('install.env.error_open')]));
                 fwrite($env, $getEnv);
                 fclose($env);
+                exec('php ../artisan config:clear');
+                exec('php ../artisan cache:clear');
             } catch (\Exception $e) {
                 echo json_encode(['error' => 1, 'msg' => $e->getMessage()]);
                 exit();
@@ -46,9 +48,6 @@ if (request()->method() == 'POST' && request()->ajax()) {
         case 'step2':
             try {
                 shell_exec('php ../artisan key:generate');
-                shell_exec('php ../artisan config:clear');
-                shell_exec('php ../artisan cache:clear');
-                shell_exec('php ../artisan config:cache');
             } catch (\Exception $e) {
                 echo json_encode(['error' => 1, 'msg' => $e->getMessage()]);
                 exit;
@@ -82,6 +81,8 @@ if (request()->method() == 'POST' && request()->ajax()) {
                 exit();
 
             }
+
+            exec('php ../artisan config:cache');
             echo json_encode(['error' => 0, 'msg' => trans('install.permission.process_sucess')]);
             break;
 
