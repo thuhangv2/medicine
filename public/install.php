@@ -46,6 +46,9 @@ if (request()->method() == 'POST' && request()->ajax()) {
         case 'step2':
             try {
                 shell_exec('php ../artisan key:generate');
+                shell_exec('php ../artisan config:clear');
+                shell_exec('php ../artisan cache:clear');
+                shell_exec('php ../artisan config:cache');
             } catch (\Exception $e) {
                 echo json_encode(['error' => 1, 'msg' => $e->getMessage()]);
                 exit;
@@ -54,22 +57,14 @@ if (request()->method() == 'POST' && request()->ajax()) {
             break;
 
         case 'step3':
-            shell_exec('php ../artisan config:clear');
-            shell_exec('php ../artisan cache:clear');
-            $file = base_path() . '/database/s-cart.sql';
-            if (!file_exists($file)) {
-                echo json_encode(['error' => 1, 'msg' => trans('install.database.file_notfound')]);
-            } else {
-                try {
-                    DB::unprepared(file_get_contents($file));
+            try {
+                shell_exec('php ../artisan migrate');
 
-                } catch (\Exception $e) {
-                    echo json_encode(['error' => 1, 'msg' => explode("\n", $e->getMessage())[0]]);
-                    exit();
-                }
-                echo json_encode(['error' => 0, 'msg' => trans('install.database.process_sucess')]);
+            } catch (\Exception $e) {
+                echo json_encode(['error' => 1, 'msg' => explode("\n", $e->getMessage())[0]]);
+                exit();
             }
-
+            echo json_encode(['error' => 0, 'msg' => trans('install.database.process_sucess')]);
             break;
 
         case 'step4':

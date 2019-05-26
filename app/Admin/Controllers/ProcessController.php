@@ -37,7 +37,7 @@ class ProcessController extends Controller
             switch ($case) {
                 case 'import_file_info':
                     $validatedData = \Validator::make($request->all(), [
-                        'import_file_info' => 'required|mimes:xlsx,xls',
+                        'import_file_info' => 'max:10240|required|mimes:csv',
                     ]);
                     if ($validatedData->fails()) {
                         return redirect()->back()->withErrors($validatedData->errors());

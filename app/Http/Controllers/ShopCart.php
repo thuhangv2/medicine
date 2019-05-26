@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\Validator;
 
 class ShopCart extends GeneralController
 {
+    const ORDER_STATUS_NEW = 1;
+    const PAYMENT_UNPAID   = 1;
+    const SHIPPING_NOTSEND = 1;
+
     public function __construct()
     {
         parent::__construct();
@@ -280,9 +284,9 @@ class ShopCart extends GeneralController
             $arrOrder['shipping']        = $shipping;
             $arrOrder['discount']        = $discount;
             $arrOrder['received']        = $received;
-            $arrOrder['payment_status']  = 0;
-            $arrOrder['shipping_status'] = 0;
-            $arrOrder['status']          = 0;
+            $arrOrder['payment_status']  = self::PAYMENT_UNPAID;
+            $arrOrder['shipping_status'] = self::SHIPPING_NOTSEND;
+            $arrOrder['status']          = self::ORDER_STATUS_NEW;
             $arrOrder['currency']        = \Helper::currencyCode();
             $arrOrder['exchange_rate']   = \Helper::currencyRate();
             $arrOrder['total']           = $total;
