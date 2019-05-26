@@ -28,13 +28,28 @@
     <div class="col-md-12  col-sm-offset-1">
 
     <div class="col-md-4 col-sm-8">
-        <p style="text-align: center;"><img alt="Logo-Scart" title="Logo-Scart" src="images/scart-min.png" style="width: 130px; max-height: 50px"></p>
-        <p>
-            {{ trans('install.info.about') }}<br>
-            {!! trans('install.info.about_us') !!}<br>
-        </p>
-        <b>{{ trans('install.info.version') }}</b>: {{ config('scart.version') }}
-        <p>{!! trans('install.info.terms') !!}</p>
+        <div style="text-align: center;display: inline"><img alt="Logo-Scart" title="Logo-Scart" src="images/scart-min.png" style="width: 130px; max-height: 50px;padding: 5px;">
+        </div>
+
+        <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown"><img src="https://s-cart.org/documents/website/language/flag_uk.png" style="height: 25px;">
+        <span class="caret"></span>
+      </button>
+          <ul class="dropdown-menu" >
+              <li><a href="install.php"><img src="https://s-cart.org/documents/website/language/flag_uk.png" style="height: 25px;"></a></li>
+              <li><a href="install.php?lang=vi"><img src="https://s-cart.org/documents/website/language/flag_vn.png" style="height: 25px;"></a></li>
+          </ul>
+        </div>
+        <div style="clear: both;display: block;">
+            <p          >
+                {{ trans('install.info.about') }}<br>
+                {!! trans('install.info.about_us') !!}<br>
+                {!! trans('install.info.document') !!}<br>
+            </p>
+            <p><b>{{ trans('install.info.version') }}</b>: {{ config('scart.version') }}</p>
+            <p>{!! trans('install.info.terms') !!}</p>
+        </div>
+
     </div>
 
     <div id="signupbox"  class="mainbox col-md-6  col-sm-8">
@@ -122,7 +137,7 @@ $('#submit-install').click(function(event) {
         $('#msg').removeClass('success');
             $('#msg').html('{{ trans('install.env.process') }}');
             $.ajax({
-                url: 'install.php',
+                url: 'install.php{{ $path_lang }}',
                 type: 'POST',
                 dataType: 'json',
                 data: {
@@ -169,7 +184,7 @@ function generateKey(){
     $('#msg').removeClass('success');
     $('#msg').html('{{ trans('install.key.process') }}');
     $.ajax({
-        url: 'install.php',
+        url: 'install.php{{ $path_lang }}',
         type: 'POST',
         dataType: 'json',
         data: {step: 'step2'},
@@ -208,7 +223,7 @@ function installDatabase(){
     $('#msg').removeClass('success');
     $('#msg').html('{{ trans('install.database.process') }}');
     $.ajax({
-        url: 'install.php',
+        url: 'install.php{{ $path_lang }}',
         type: 'POST',
         dataType: 'json',
         data: {step: 'step3'},
@@ -247,7 +262,7 @@ function setPermission(){
     $('#msg').removeClass('success');
     $('#msg').html('{{ trans('install.permission.process') }}');
     $.ajax({
-        url: 'install.php',
+        url: 'install.php{{ $path_lang }}',
         type: 'POST',
         dataType: 'json',
         data: {step: 'step4'},

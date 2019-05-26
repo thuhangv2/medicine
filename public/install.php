@@ -10,6 +10,8 @@ $kernel   = $app->make(Illuminate\Contracts\Http\Kernel::class);
 $response = $kernel->handle(
     $request = Illuminate\Http\Request::capture()
 );
+$lang = request('lang') ?? 'en';
+app()->setlocale($lang);
 if (request()->method() == 'POST' && request()->ajax()) {
 
     $step = request('step');
@@ -92,7 +94,8 @@ if (request()->method() == 'POST' && request()->ajax()) {
     }
 } else {
     echo view('install', array(
-        'title' => trans('install.title'))
+        'path_lang' => (($lang != 'en') ? "?lang=" . $lang : ""),
+        'title'     => trans('install.title'))
     );
     exit();
 }
