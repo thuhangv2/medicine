@@ -10,6 +10,8 @@ $kernel   = $app->make(Illuminate\Contracts\Http\Kernel::class);
 $response = $kernel->handle(
     $request = Illuminate\Http\Request::capture()
 );
+$lang = request('lang') ?? 'en';
+app()->setlocale($lang);
 if (request()->method() == 'POST' && request()->ajax()) {
 
     $step = request('step');
@@ -36,6 +38,8 @@ if (request()->method() == 'POST' && request()->ajax()) {
                 $env = fopen(base_path() . "/.env", "w") or die(json_encode(['error' => 1, 'msg' => trans('install.env.error_open')]));
                 fwrite($env, $getEnv);
                 fclose($env);
+                exec('php ../artisan config:clear');
+                exec('php ../artisan cache:clear');
             } catch (\Exception $e) {
                 echo json_encode(['error' => 1, 'msg' => $e->getMessage()]);
                 exit();
@@ -54,22 +58,14 @@ if (request()->method() == 'POST' && request()->ajax()) {
             break;
 
         case 'step3':
-            shell_exec('php ../artisan config:clear');
-            shell_exec('php ../artisan cache:clear');
-            $file = base_path() . '/database/s-cart.sql';
-            if (!file_exists($file)) {
-                echo json_encode(['error' => 1, 'msg' => trans('install.database.file_notfound')]);
-            } else {
-                try {
-                    DB::unprepared(file_get_contents($file));
+            try {
+                shell_exec('php ../artisan migrate');
 
-                } catch (\Exception $e) {
-                    echo json_encode(['error' => 1, 'msg' => explode("\n", $e->getMessage())[0]]);
-                    exit();
-                }
-                echo json_encode(['error' => 0, 'msg' => trans('install.database.process_sucess')]);
+            } catch (\Exception $e) {
+                echo json_encode(['error' => 1, 'msg' => explode("\n", $e->getMessage())[0]]);
+                exit();
             }
-
+            echo json_encode(['error' => 0, 'msg' => trans('install.database.process_sucess')]);
             break;
 
         case 'step4':
@@ -87,6 +83,8 @@ if (request()->method() == 'POST' && request()->ajax()) {
                 exit();
 
             }
+
+            exec('php ../artisan config:cache');
             echo json_encode(['error' => 0, 'msg' => trans('install.permission.process_sucess')]);
             break;
 
@@ -96,7 +94,8 @@ if (request()->method() == 'POST' && request()->ajax()) {
     }
 } else {
     echo view('install', array(
-        'title' => trans('install.title'))
+        'path_lang' => (($lang != 'en') ? "?lang=" . $lang : ""),
+        'title'     => trans('install.title'))
     );
     exit();
 }

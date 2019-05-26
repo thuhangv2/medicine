@@ -22,11 +22,20 @@
     <div class="box-header with-border">
         <h3 class="box-title"><span class="glyphicon glyphicon-list-alt"></span> {{ trans('order.order_detail') }} #{{ $order->id }}</h3>
         <div class="box-tools">
-            <div class="btn-group pull-right" style="margin-right: 10px">
+            <div class="btn-group pull-right" style="margin-right: 0px">
                 <a href="{{ URL::previous() }}" class="btn btn-sm btn-default"><i class="fa fa-list"></i>&nbsp;{{ trans('admin.list') }}</a>
             </div>
             <div class="btn-group pull-right" style="margin-right: 10px">
-                <a class="btn btn-sm btn-default form-history-back"><i class="fa fa-arrow-left"></i>&nbsp;{{ trans('admin.back') }}</a>
+                <a class="btn btn-sm btn-twitter" title="Export"><i class="fa fa-file-excel-o"></i><span class="hidden-xs"> Excel</span></a>
+            </div>
+            <div class="btn-group pull-right" style="margin-right: 10px">
+                <a class="btn btn-sm btn-warning" title="Export"><i class="fa fa-file-pdf-o"></i><span class="hidden-xs"> PDF</span></a>
+            </div>
+            <div class="btn-group pull-right" style="margin-right: 10px">
+                <a class="btn btn-sm btn-info" title="Export"><i class="fa fa-file-word-o"></i><span class="hidden-xs"> Word</span></a>
+            </div>
+            <div class="btn-group pull-right" style="margin-right: 10px;border:1px solid #c5b5b5;border-radius: 3px;">
+                <a class="btn btn-sm" title="Export"><i class="fa fa-print"></i><span class="hidden-xs"> Print</span></a>
             </div>
         </div>
     </div>

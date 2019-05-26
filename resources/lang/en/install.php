@@ -1,5 +1,13 @@
 <?php
 return [
+    'info'              => [
+        'about'    => 'S-Cart is a free e-commerce website project for businesses, built on the Laravel framework (PHP & Mysql)',
+        'about_us' => '- About us, please visit <a target="_new" href="https://s-cart.org/">S-Cart\'s homepage</a>',
+        'document' => '- Installation guide <a target="_new" href="https://s-cart.org/installation.html">HERE</a>',
+        'version'  => 'Versions',
+        'terms'    => '<span style="color:red">*</span> Please read the terms before installing <a target="_new" href="https://s-cart.org/license.html">HERE</a>.',
+        '',
+    ],
     'env'               => [
         'process'        => 'Generating file .env',
         'error_open'     => 'Cant not open file .env.example',
@@ -30,7 +38,7 @@ return [
         'database_user_required' => 'Database user required',
         'admin_url_required'     => 'Admin path required',
     ],
-    'installing_button' => 'Đang cài đặt S-Cart',
+    'installing_button' => 'Installing S-Cart',
     'database_host'     => 'Database host',
     'database_port'     => 'Database port',
     'database_name'     => 'Database name',
@@ -40,4 +48,5 @@ return [
     'title'             => 'Install S-Cart',
     'installing'        => 'Begin Install',
     'rename_error'      => 'Can not rename file install.php. Please remove or rename it!',
+    'terms'             => '<span style="color:red">*</span> Agree with the terms and conditions',
 ];

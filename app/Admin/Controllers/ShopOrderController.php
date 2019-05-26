@@ -119,15 +119,20 @@ class ShopOrderController extends Controller
         $statusOrder = $this->statusOrder;
         $grid->status(trans('language.admin.status'))->display(function ($status) use ($statusOrder) {
             $style = "";
-            if ($status == 0) {
+            if ($status == 1) {
+                //new
                 $style = '';
-            } elseif ($status == 1) {
-                $style = 'class="label label-primary"';
             } elseif ($status == 2) {
-                $style = 'class="label label-warning"';
+                //processing
+                $style = 'class="label label-primary"';
             } elseif ($status == 3) {
-                $style = 'class="label label-danger"';
+                //Hold
+                $style = 'class="label label-warning"';
             } elseif ($status == 4) {
+                //Canceled
+                $style = 'class="label label-danger"';
+            } elseif ($status == 5) {
+                //Done
                 $style = 'class="label label-success"';
             }
             return "<span $style>" . $statusOrder[$status] . "</span>";
