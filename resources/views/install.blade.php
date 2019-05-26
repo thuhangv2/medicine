@@ -24,7 +24,20 @@
 </head>
 <body>
 <div class="container">
-    <div id="signupbox" style=" margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+    <div class="row" style=" margin-top:10px">
+    <div class="col-md-12  col-sm-offset-1">
+
+    <div class="col-md-4 col-sm-8">
+        <p style="text-align: center;"><img alt="Logo-Scart" title="Logo-Scart" src="images/scart-min.png" style="width: 130px; max-height: 50px"></p>
+        <p>
+            {{ trans('install.info.about') }}<br>
+            {!! trans('install.info.about_us') !!}<br>
+        </p>
+        <b>{{ trans('install.info.version') }}</b>: {{ config('scart.version') }}
+        <p>{!! trans('install.info.terms') !!}</p>
+    </div>
+
+    <div id="signupbox"  class="mainbox col-md-6  col-sm-8">
         <div class="panel panel-info">
             <div class="panel-heading">
                 <h1>{{ $title }}</h1>
@@ -63,22 +76,18 @@
                         </div>
                         <div id="div_admin_url" class="form-group required">
                             <label for="admin_url"  required class="control-label col-md-4  requiredField"> {{ trans('install.admin_url') }}<span class="asteriskField">*</span> </label>
-                            <div class="controls col-md-8 ">
+                            <div class="controls col-md-8">
                                 <input class="input-md  textinput textInput form-control" id="admin_url"  name="admin_url" placeholder="{{ trans('install.admin_url') }}" style="margin-bottom: 10px" type="text" value="system_admin" />
                             </div>
                         </div>
 
-{{--                         <div class="form-group">
+                        <div class="form-group">
                             <div class="controls col-md-offset-4 col-md-8 ">
-                                <div id="div_id_terms" class="checkbox required">
-                                    <label for="id_terms" class=" requiredField">
-                                         <input class="input-ms checkboxinput" id="id_terms" name="terms" style="margin-bottom: 10px" type="checkbox" />
-                                         Agree with the terms and conditions
-                                    </label>
-                                </div>
+                                <input required class="input-md checkboxinput" id="id_terms" name="terms" style="margin-bottom: 10px" type="checkbox" />
+                                         {!! trans('install.terms') !!}
 
                             </div>
-                        </div> --}}
+                        </div>
                         <div id="msg" class="form-group"></div>
                         <div class="form-group">
                             <div class="controls col-md-4 "></div>
@@ -96,6 +105,9 @@
                 </form>
             </div>
         </div>
+    </div>
+</div>
+
     </div>
 </div>
 </div>
@@ -137,7 +149,7 @@ $('#submit-install').click(function(event) {
                     $('#msg').html(data.msg);
                     $('.progress-bar').css("width","25%");
                     $('.progress-bar').html("25%");
-                    setTimeout(generateKey(), 4000);
+                    setTimeout(generateKey, 1000);
                 }else{
                     $('#msg').removeClass('success');
                     $('#msg').addClass('error');
@@ -148,7 +160,6 @@ $('#submit-install').click(function(event) {
                 $('#msg').removeClass('success');
                 $('#msg').addClass('error');
                 $('#msg').html('{{ trans('install.env.error') }}');
-                // $(this).button('reset');
             })
     }
 });
@@ -178,7 +189,7 @@ function generateKey(){
             $('#msg').html(data.msg);
             $('.progress-bar').css("width","50%");
             $('.progress-bar').html("50%");
-            setTimeout(installDatabase(), 4000);
+            setTimeout(installDatabase, 2000);
         }else{
             $('#msg').addClass('error');
             $('#msg').html(data.msg);
@@ -217,7 +228,7 @@ function installDatabase(){
             $('#msg').html(data.msg);
             $('.progress-bar').css("width","75%");
             $('.progress-bar').html("75%");
-            setTimeout(setPermission(), 4000);
+            setTimeout(setPermission, 2000);
         }else{
             $('#msg').addClass('error');
             $('#msg').html(data.msg);
@@ -256,7 +267,7 @@ function setPermission(){
             $('#msg').html(data.msg);
             $('.progress-bar').css("width","100%");
             $('.progress-bar').html("100%");
-            setTimeout(window.location.replace($('#admin_url').val()), 4000);
+            setTimeout(function(){ window.location.replace($('#admin_url').val()); }, 2000);
         }else{
             $('#msg').addClass('error');
             $('#msg').html(data.msg);

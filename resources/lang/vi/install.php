@@ -1,5 +1,11 @@
 <?php
 return [
+    'info'              => [
+        'about'    => 'S-Cart là một dự án website thương mại điện tử miễn phí cho doanh nghiệp, được xây dựng trên nền tảng Laravel framework (PHP & Mysql).',
+        'about_us' => 'Để hiểu thêm về chúng tôi, hãy ghé thăm <a target="_new" href="https://s-cart.org/">Trang chủ của S-Cart</a>',
+        'version'  => 'Phiên bản',
+        'terms'    => '<span style="color:red">*</span> Vui lòng đọc điều kiện trước khi cài đặt <a target="_new" href="https://s-cart.org/license.html">Ở ĐÂY</a>.',
+    ],
     'env'               => [
         'process'        => 'Đang tạo file .env',
         'error_open'     => 'Không thể mở file .env.example',
@@ -39,4 +45,5 @@ return [
     'title'             => 'Cài đặt S-Cart',
     'installing'        => 'Bắt đầu cài đặt',
     'rename_error'      => 'Không thể đổi tên tập tin install.php. Vui lòng xóa hoặc đổi tên nó thủ công!',
+    'terms'             => '<span style="color:red">*</span> Đồng ý với quy định cài đặt',
 ];
