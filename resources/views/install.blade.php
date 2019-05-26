@@ -86,6 +86,13 @@
                                 <input type="button" data-loading-text="{{ trans('install.installing_button') }}"  value="{{ trans('install.installing') }}" class="btn btn-primary btn btn-info" id="submit-install" />
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="progress" style="display: none;">
+                                  <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">0%</div>
+                                </div>
+                            </div>
+                        </div>
                 </form>
             </div>
         </div>
@@ -98,6 +105,7 @@ $('#submit-install').click(function(event) {
     validateForm();
     if($("#formInstall").valid()){
         $(this).button('loading');
+        $('.progress').show();
         $('#msg').removeClass('error');
         $('#msg').removeClass('success');
             $('#msg').html('{{ trans('install.env.process') }}');
@@ -127,7 +135,9 @@ $('#submit-install').click(function(event) {
                 {
                     $('#msg').addClass('success');
                     $('#msg').html(data.msg);
-                    setTimeout('generateKey()', 4000);
+                    $('.progress-bar').css("width","25%");
+                    $('.progress-bar').html("25%");
+                    setTimeout(generateKey(), 4000);
                 }else{
                     $('#msg').removeClass('success');
                     $('#msg').addClass('error');
@@ -166,7 +176,9 @@ function generateKey(){
         {
             $('#msg').addClass('success');
             $('#msg').html(data.msg);
-            setTimeout('installDatabase()', 4000);
+            $('.progress-bar').css("width","50%");
+            $('.progress-bar').html("50%");
+            setTimeout(installDatabase(), 4000);
         }else{
             $('#msg').addClass('error');
             $('#msg').html(data.msg);
@@ -203,7 +215,9 @@ function installDatabase(){
         {
             $('#msg').addClass('success');
             $('#msg').html(data.msg);
-            setTimeout('setPermission()', 4000);
+            $('.progress-bar').css("width","75%");
+            $('.progress-bar').html("75%");
+            setTimeout(setPermission(), 4000);
         }else{
             $('#msg').addClass('error');
             $('#msg').html(data.msg);
@@ -240,7 +254,9 @@ function setPermission(){
         {
             $('#msg').addClass('success');
             $('#msg').html(data.msg);
-            window.location.replace($('#admin_url').val());
+            $('.progress-bar').css("width","100%");
+            $('.progress-bar').html("100%");
+            setTimeout(window.location.replace($('#admin_url').val()), 4000);
         }else{
             $('#msg').addClass('error');
             $('#msg').html(data.msg);
