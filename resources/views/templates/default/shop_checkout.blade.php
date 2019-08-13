@@ -72,10 +72,6 @@
   </div>
 <form class="shipping_address" id="form-order" role="form" method="POST" action="{{ route('storeOrder') }}">
     {{ csrf_field() }}
-    <input type="hidden" name="address" value="{{ json_encode($address) }}">
-    <input type="hidden" name="dataTotal" value="{{ json_encode($dataTotal) }}">
-    <input type="hidden" name="payment" value="{{ $payment }}">
-    <input type="hidden" name="shipping" value="{{ $shipping }}">
     <div class="row">
     <div class="col-md-6">
         <h3 class="control-label"><i class="fa fa-credit-card-alt"></i> {{ trans('cart.shipping_address') }}:<br></h3>
@@ -131,7 +127,7 @@
                         <div class="form-group">
                                 <div>
                                     <label class="radio-inline">
-                                     <img title="{{ $paymentMethod['title'] }}" alt="{{ $paymentMethod['title'] }}" src="{{ asset($paymentMethod['image']) }}" style="width: 120px;">
+                                     <img title="{{ $paymentMethodData['title'] }}" alt="{{ $paymentMethodData['title'] }}" src="{{ asset($paymentMethodData['image']) }}" style="width: 120px;">
                                     </label>
                                 </div>
                         </div>
