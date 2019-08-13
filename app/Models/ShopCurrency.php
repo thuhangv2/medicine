@@ -10,16 +10,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShopCurrency extends Model
 {
-    public $table                   = 'shop_currency';
-    public $timestamps              = false;
-    protected static $code          = '';
-    protected static $name          = '';
-    protected static $symbol        = '';
+    public $table = 'shop_currency';
+    public $timestamps = false;
+    protected static $code = '';
+    protected static $name = '';
+    protected static $symbol = '';
     protected static $exchange_rate = 1;
-    protected static $precision     = 0;
-    protected static $symbol_first  = 0;
-    protected static $thousands     = ',';
-    protected static $decimal       = '.';
+    protected static $precision = 0;
+    protected static $symbol_first = 0;
+    protected static $thousands = ',';
+    protected static $decimal = '.';
 
 /**
  * [setCode description]
@@ -28,16 +28,16 @@ class ShopCurrency extends Model
 
     public static function setCode($code)
     {
-        self::$code    = $code;
+        self::$code = $code;
         $checkCurrency = self::where('code', $code)->first();
         if ($checkCurrency) {
-            self::$name          = $checkCurrency->name;
-            self::$symbol        = $checkCurrency->symbol;
+            self::$name = $checkCurrency->name;
+            self::$symbol = $checkCurrency->symbol;
             self::$exchange_rate = $checkCurrency->exchange_rate;
-            self::$precision     = $checkCurrency->precision;
-            self::$symbol_first  = $checkCurrency->symbol_first;
-            self::$thousands     = $checkCurrency->thousands;
-            self::$decimal       = ($checkCurrency->thousands == '.') ? ',' : '.';
+            self::$precision = $checkCurrency->precision;
+            self::$symbol_first = $checkCurrency->symbol_first;
+            self::$thousands = $checkCurrency->thousands;
+            self::$decimal = ($checkCurrency->thousands == '.') ? ',' : '.';
         }
     }
 
@@ -48,14 +48,14 @@ class ShopCurrency extends Model
     public static function getCurrency()
     {
         return [
-            'code'          => self::$code,
-            'name'          => self::$name,
-            'symbol'        => self::$symbol,
+            'code' => self::$code,
+            'name' => self::$name,
+            'symbol' => self::$symbol,
             'exchange_rate' => self::$exchange_rate,
-            'precision'     => self::$precision,
-            'symbol_first'  => self::$symbol_first,
-            'thousands'     => self::$thousands,
-            'decimal'       => self::$decimal,
+            'precision' => self::$precision,
+            'symbol_first' => self::$symbol_first,
+            'thousands' => self::$thousands,
+            'decimal' => self::$decimal,
         ];
     }
 
@@ -148,8 +148,8 @@ class ShopCurrency extends Model
     public static function onlyRender(float $money, $currency, $space_between_symbol = false, $include_symbol = true)
     {
         $checkCurrency = self::where('code', $currency)->first();
-        $space_symbol  = ($space_between_symbol) ? ' ' : '';
-        $symbol        = ($include_symbol) ? $checkCurrency['symbol'] : '';
+        $space_symbol = ($space_between_symbol) ? ' ' : '';
+        $symbol = ($include_symbol) ? $checkCurrency['symbol'] : '';
         if ($checkCurrency['symbol_first']) {
             if ($money < 0) {
                 return '-' . $symbol . $space_symbol . self::format(abs($money));
@@ -169,7 +169,7 @@ class ShopCurrency extends Model
  */
     public static function sumCart($details, float $rate = null)
     {
-        $sum  = 0;
+        $sum = 0;
         $rate = ($rate) ? $rate : self::$exchange_rate;
         foreach ($details as $detail) {
             $sum += $detail->qty * self::getValue($detail->price, $rate);
