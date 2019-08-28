@@ -13,18 +13,29 @@
 </p>
 <p align="center"><img src="https://s-cart.org/images/screen/v3x/home-1.jpg"></p>
 <p align="center"><img src="https://s-cart.org/images/screen/v3x/home-2.jpg"></p>
+Product detail
 <p align="center"><img src="https://s-cart.org/images/screen/v3x/detail-1.jpg"></p>
+Product bundle
 <p align="center"><img src="https://s-cart.org/images/screen/v3x/detail-bundle.jpg"></p>
+Product group
 <p align="center"><img src="https://s-cart.org/images/screen/v3x/detail-group.jpg"></p>
+Cart
 <p align="center"><img src="https://s-cart.org/images/screen/v3x/cart.jpg"></p>
+Admin homepage
 <p align="center"><img src="https://s-cart.org/images/screen/v3x/admin-home.jpg"></p>
 <p align="center"><img src="https://s-cart.org/images/screen/v3x/admin-home-1.jpg"></p>
 <p align="center"><img src="https://s-cart.org/images/screen/v3x/admin-home-2.jpg"></p>
+Order list
 <p align="center"><img src="https://s-cart.org/images/screen/v3x/order-list.jpg"></p>
+Order detail
 <p align="center"><img src="https://s-cart.org/images/screen/v3x/order-detail.jpg"></p>
+Product list
 <p align="center"><img src="https://s-cart.org/images/screen/v3x/product-list.jpg"></p>
+Product detail
 <p align="center"><img src="https://s-cart.org/images/screen/v3x/product-detail.jpg"></p>
+Auth
 <p align="center"><img src="https://s-cart.org/images/screen/v3x/auth.jpg"></p>
+Backup
 <p align="center"><img src="https://s-cart.org/images/screen/v3x/backup.jpg"></p>
 
 
