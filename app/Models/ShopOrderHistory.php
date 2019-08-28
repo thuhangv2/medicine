@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShopOrderHistory extends Model
 {
-    public $timestamps = false;
     public $table      = 'shop_order_history';
-
+	const CREATED_AT = 'add_date';
+	const UPDATED_AT = null;
+    protected $guarded           = [];
 }

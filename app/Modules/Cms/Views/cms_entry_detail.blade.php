@@ -1,4 +1,4 @@
-@extends(SITE_THEME.'.shop_layout')
+@extends('templates.'.sc_store('template').'.shop_layout')
 
 @section('main')
 
@@ -6,7 +6,7 @@
     <div class="container">
         <div class="row">
             <h2 class="title text-center">{{ $title }}</h2>
-            {!! $entry_currently->content !!}
+            {!! sc_html_render($entry_currently->content) !!}
         </div>
     </div>
 </section>

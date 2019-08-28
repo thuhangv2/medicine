@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Config;
+use App\Models\AdminConfig;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -77,7 +77,7 @@ class RouteServiceProvider extends ServiceProvider
             ->group(function () {
                 if (!is_file(base_path() . '/public/install.php')) {
                     try {
-                        $arrExts = Config::where('value', 1)
+                        $arrExts = AdminConfig::where('value', 1)
                             ->whereIn('type', ['Modules', 'Extensions'])
                             ->get()
                             ->toArray();

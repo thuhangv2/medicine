@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\GeneralController;
+use App\Models\ShopCountry;
 use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
-class LoginController extends Controller
+class LoginController extends GeneralController
 {
     /*
     |--------------------------------------------------------------------------
@@ -39,13 +40,14 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        parent::__construct();
         $this->middleware('guest')->except('logout');
     }
 
     protected function validateLogin(Request $request)
     {
         $this->validate($request, [
-            'email'    => 'required|string|email',
+            'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
     }
@@ -54,9 +56,10 @@ class LoginController extends Controller
         if (Auth::user()) {
             return redirect()->route('home');
         }
-        return view(SITE_THEME . '.shop_login',
+        return view('templates.' . sc_store('template') . '.shop_login',
             array(
-                'title' => trans('language.login'),
+                'title' => trans('front.login'),
+                'countries' => ShopCountry::getArray(),
             )
         );
     }

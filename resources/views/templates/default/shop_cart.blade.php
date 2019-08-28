@@ -1,4 +1,4 @@
-@extends(SITE_THEME.'.shop_layout')
+@extends('templates.'.sc_store('template').'.shop_layout')
 
 @section('main')
 <section>
@@ -14,7 +14,7 @@
     .shipping_address td{
         padding: 3px !important;
     }
-    .shipping_address textarea,.shipping_address input[type="text"]{
+    .shipping_address textarea,.shipping_address input[type="text"],.shipping_address option{
         width: 100%;
         padding: 7px !important;
     }
@@ -53,21 +53,21 @@
         <td>
             {{ $product->getName() }}<br>
 {{-- Process attributes --}}
-            @if ($item->options->att)
-            (
-                @foreach ($item->options->att as $keyAtt => $att)
-                    <b>{{ $attributesGroup[$keyAtt]['name'] }}</b>: <i>{{ $att }}</i> ;
-                @endforeach
-            )<br>
-            @endif
+                @if ($item->options->count())
+                    (
+                    @foreach ($item->options as $keyAtt => $att)
+                        <b>{{ $attributesGroup[$keyAtt] }}</b>: <i>{{ $att }}</i> ;
+                    @endforeach
+                    )<br>
+                @endif
 {{-- //end Process attributes --}}
             <a href="{{$product->getUrl() }}"><img width="100" src="{{asset($product->getImage())}}" alt=""></a>
         </td>
         <td>{!! $product->showPrice() !!}</td>
-        <td><input style="width: 70px;" type="number" onChange="updateCart('{{$item->rowId}}',{{ $item->id }});" class="item-qty" id="item-{{$item->id}}" name="qty-{{$item->id}}" value="{{$item->qty}}"><span class="text-danger item-qty-{{$item->id}}" style="display: none;"></span></td>
+        <td><input style="width: 70px;" type="number" data-id="{{ $item->id }}" data-rowid="{{$item->rowId}}" onChange="updateCart($(this));" class="item-qty" name="qty-{{$item->id}}" value="{{$item->qty}}"><span class="text-danger item-qty-{{$item->id}}" style="display: none;"></span></td>
         <td align="right">{{\Helper::currencyRender($item->subtotal)}}</td>
         <td>
-            <a onClick="return confirm('Confirm?')" title="Remove Item" alt="Remove Item" class="cart_quantity_delete" href="{{route("removeItem",['id'=>$item->rowId])}}"><i class="fa fa-times"></i></a>
+            <a onClick="return confirm('Confirm?')" title="Remove Item" alt="Remove Item" class="cart_quantity_delete" href="{{route("cart.remove",['id'=>$item->rowId])}}"><i class="fa fa-times"></i></a>
         </td>
     </tr>
     @endforeach
@@ -79,41 +79,67 @@
                 <button class="btn btn-default" type="button" style="cursor: pointer;padding:10px 30px" onClick="location.href='{{ route('home') }}'"><i class="fa fa-arrow-left"></i>{{ trans('cart.back_to_shop') }}</button>
                 </div>
                  <div class="pull-right">
-                <a onClick="return confirm('Confirm ?')" href="{{route('clearCart')}}"><button class="btn" type="button" style="cursor: pointer;padding:10px 30px">{{ trans('cart.remove_all') }}</button></a>
+                <a onClick="return confirm('Confirm ?')" href="{{route('cart.clear')}}"><button class="btn" type="button" style="cursor: pointer;padding:10px 30px">{{ trans('cart.remove_all') }}</button></a>
                 </div>
             </td>
         </tr>
     </tfoot>
   </table>
   </div>
-<form class="shipping_address" id="form-order" role="form" method="POST" action="{{ route('processCart') }}">
+<form class="shipping_address" id="form-order" role="form" method="POST" action="{{ route('checkout') }}">
 <div class="row">
     <div class="col-md-6">
-            {{ csrf_field() }}
+            @csrf
             <table class="table  table-bordered table-responsive">
                 <tr>
-                    <td class="form-group{{ $errors->has('toname') ? ' has-error' : '' }}">
-                        <label for="phone" class="control-label"><i class="fa fa-user"></i> {{ trans('cart.to_name') }}:</label> <input name="toname" type="text" placeholder="{{ trans('cart.to_name') }}" value="{{(old('toname'))?old('toname'):$shippingAddress['toname']}}">
-                            @if($errors->has('toname'))
-                                <span class="help-block">{{ $errors->first('toname') }}</span>
-                            @endif
-                        </td>
-                    <td class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
-                        <label for="phone" class="control-label"><i class="fa fa-volume-control-phone"></i> {{ trans('cart.phone') }}:</label> <input name="phone" type="text" placeholder="{{ trans('cart.phone') }}" value="{{(old('phone'))?old('phone'):$shippingAddress['phone']}}">
-                            @if($errors->has('phone'))
-                                <span class="help-block">{{ $errors->first('phone') }}</span>
+                <td class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
+                    <label for="phone" class="control-label"><i class="fa fa-user"></i> {{ trans('cart.first_name') }}:</label> <input name="first_name" type="text" placeholder="{{ trans('cart.first_name') }}" value="{{(old('first_name'))?old('first_name'):$shippingAddress['first_name']}}">
+                        @if($errors->has('first_name'))
+                            <span class="help-block">{{ $errors->first('first_name') }}</span>
+                        @endif
+                    </td>
+                    <td class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
+                        <label for="phone" class="control-label"><i class="fa fa-user"></i> {{ trans('cart.last_name') }}:</label> <input name="last_name" type="text" placeholder="{{ trans('cart.last_name') }}" value="{{(old('last_name'))?old('last_name'):$shippingAddress['last_name']}}">
+                            @if($errors->has('last_name'))
+                                <span class="help-block">{{ $errors->first('last_name') }}</span>
                             @endif
                         </td>
                 </tr>
                 <tr>
-                    <td colspan="2" class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                    <td  class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                         <label for="email" class="control-label"><i class="fa fa-user"></i> {{ trans('cart.email') }}:</label> <input name="email" type="text" placeholder="{{ trans('cart.email') }}" value="{{(old('email'))?old('email'):$shippingAddress['email']}}">
                             @if($errors->has('email'))
                                 <span class="help-block">{{ $errors->first('email') }}</span>
                             @endif
                     </td>
-
+                    <td class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
+                        <label for="phone" class="control-label"><i class="fa fa-phone" aria-hidden="true"></i> {{ trans('cart.phone') }}:</label> <input name="phone" type="text" placeholder="{{ trans('cart.phone') }}" value="{{(old('phone'))?old('phone'):$shippingAddress['phone']}}">
+                            @if($errors->has('phone'))
+                                <span class="help-block">{{ $errors->first('phone') }}</span>
+                            @endif
+                    </td>
                 </tr>
+
+                <tr>
+                    <td colspan="2" class="form-group{{ $errors->has('country') ? ' has-error' : '' }}">
+                        <label  for="country" class="control-label"><i class="fa fa-dribbble" aria-hidden="true"></i> {{ trans('cart.country') }}:</label>
+                        @php
+                            $ct = (old('country'))?old('country'):$shippingAddress['country'];
+                        @endphp
+                        <select class="form-control country " style="width: 100%;" name="country" >
+                            <option value="">__{{ trans('cart.country') }}__</option>
+                            @foreach ($countries as $k => $v)
+                                <option value="{{ $k }}" {{ ($ct ==$k) ? 'selected':'' }}>{{ $v }}</option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('country'))
+                            <span class="help-block">
+                                {{ $errors->first('country') }}
+                            </span>
+                        @endif
+                    </td>
+                </tr>
+
 
                 <tr>
                     <td class="form-group{{ $errors->has('address1') ? ' has-error' : '' }}"><label for="address1" class="control-label"><i class="fa fa-home"></i> {{ trans('cart.address1') }}:</label> <input name="address1" type="text" placeholder="{{ trans('cart.address1') }}" value="{{ (old('address1'))?old('address1'):$shippingAddress['address1']}}">
@@ -183,7 +209,7 @@
         <div class="row">
             <div class="col-md-12">
                     <div class="form-group {{ $errors->has('shippingMethod') ? ' has-error' : '' }}">
-                        <h3 class="control-label"><i class="fa fa-credit-card-alt"></i> {{ trans('cart.shipping_method') }}:<br></h3>
+                        <h3 class="control-label"><i class="fa fa-truck" aria-hidden="true"></i> {{ trans('cart.shipping_method') }}:<br></h3>
                         @if($errors->has('shippingMethod'))
                             <span class="help-block">{{ $errors->first('shippingMethod') }}</span>
                         @endif
@@ -261,17 +287,19 @@
 
 @push('scripts')
 <script type="text/javascript">
-    function updateCart(rowId,id){
-        var new_qty = $('#item-'+id).val();
+    function updateCart(obj){
+        var new_qty = obj.val();
+        var rowid = obj.data('rowid');
+        var id = obj.data('id');
             $.ajax({
-            url: '{{ route('updateToCart') }}',
+            url: '{{ route('cart.update') }}',
             type: 'POST',
             dataType: 'json',
-            async: true,
+            async: false,
             cache: false,
             data: {
                 id: id,
-                rowId: rowId,
+                rowId: rowid,
                 new_qty: new_qty,
                 _token:'{{ csrf_token() }}'},
             success: function(data){

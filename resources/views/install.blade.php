@@ -13,11 +13,11 @@
             #msg{
                 text-align: center;
             }
-            .error{
+            .error,.failed{
                 color: #ff0000;
                 font-weight: normal;
             }
-            .success{
+            .success,.passed{
                 color: #418802;
             }
         </style>
@@ -28,7 +28,7 @@
     <div class="col-md-12  col-sm-offset-1">
 
     <div class="col-md-4 col-sm-8">
-        <div style="text-align: center;display: inline"><img alt="Logo-Scart" title="Logo-Scart" src="images/scart-min.png" style="width: 130px; max-height: 50px;padding: 5px;">
+        <div style="text-align: center;display: inline"><img alt="Logo-Scart" title="Logo-Scart" src="/images/scart-min.png" style="width: 130px; max-height: 50px;padding: 5px;">
         </div>
 
         <div class="btn-group">
@@ -50,8 +50,19 @@
             <p>{!! trans('install.info.terms') !!}</p>
         </div>
 
-    </div>
+<h3>{{ trans('install.requirement_check') }}</h3>
+@if (count($requirements))
+    <ul>
+        @foreach ($requirements as $label => $result)
+            @php
+                $status = $result ? 'passed' : 'failed';
+            @endphp
+                <li>{{ $label }} ... <span class='{{ $status }}'>{{ $status }}</span></li>
+        @endforeach
+    </ul>
+@endif
 
+    </div>
     <div id="signupbox"  class="mainbox col-md-6  col-sm-8">
         <div class="panel panel-info">
             <div class="panel-heading">
@@ -60,39 +71,39 @@
             <div class="panel-body" >
                     <form  class="form-horizontal" id="formInstall">
                         <div id="div_database_host" class="form-group required">
-                            <label for="database_host"  required class="control-label col-md-4  requiredField"> {{ trans('install.database_host') }}<span class="asteriskField">*</span> </label>
+                            <label for="database_host"  required class="control-label col-md-4  requiredField"> {{ trans('install.database_host') }} </label>
                             <div class="controls col-md-8 ">
                                 <input class="input-md  textinput textInput form-control" id="database_host"  name="database_host" placeholder="{{ trans('install.database_host') }}" style="margin-bottom: 10px" type="text" value="127.0.0.1" />
                             </div>
                         </div>
                         <div id="div_database_port" class="form-group required">
-                            <label for="database_port"  required class="control-label col-md-4  requiredField"> {{ trans('install.database_port') }}<span class="asteriskField">*</span> </label>
+                            <label for="database_port"  required class="control-label col-md-4  requiredField"> {{ trans('install.database_port') }} </label>
                             <div class="controls col-md-8 ">
                                 <input class="input-md  textinput textInput form-control" id="database_port"  name="database_port" placeholder="{{ trans('install.database_port') }}" style="margin-bottom: 10px" type="number" value="3306" />
                             </div>
                         </div>
                         <div id="div_database_name" class="form-group required">
-                            <label for="database_name"  required class="control-label col-md-4  requiredField"> {{ trans('install.database_name') }}<span class="asteriskField">*</span> </label>
+                            <label for="database_name"  required class="control-label col-md-4  requiredField"> {{ trans('install.database_name') }} </label>
                             <div class="controls col-md-8 ">
                                 <input class="input-md  textinput textInput form-control" id="database_name"  name="database_name" placeholder="{{ trans('install.database_name') }}" style="margin-bottom: 10px" type="text" value="s-cart" />
                             </div>
                         </div>
                         <div id="div_database_user" class="form-group required">
-                            <label for="database_user"  required class="control-label col-md-4  requiredField"> {{ trans('install.database_user') }}<span class="asteriskField">*</span> </label>
+                            <label for="database_user"  required class="control-label col-md-4  requiredField"> {{ trans('install.database_user') }} </label>
                             <div class="controls col-md-8 ">
                                 <input class="input-md  textinput textInput form-control" id="database_user"  name="database_user" placeholder="{{ trans('install.database_user') }}" style="margin-bottom: 10px" type="text" value="root" />
                             </div>
                         </div>
                         <div id="div_database_password" class="form-group required">
-                            <label for="database_password"  required class="control-label col-md-4  requiredField"> {{ trans('install.database_password') }}<span class="asteriskField">*</span> </label>
+                            <label for="database_password"  required class="control-label col-md-4  requiredField"> {{ trans('install.database_password') }} </label>
                             <div class="controls col-md-8 ">
                                 <input class="input-md  textinput textInput form-control" id="database_password"  name="database_password" placeholder="{{ trans('install.database_password') }}" style="margin-bottom: 10px" type="password" value="" />
                             </div>
                         </div>
                         <div id="div_admin_url" class="form-group required">
-                            <label for="admin_url"  required class="control-label col-md-4  requiredField"> {{ trans('install.admin_url') }}<span class="asteriskField">*</span> </label>
+                            <label for="admin_url"  required class="control-label col-md-4  requiredField"> {{ trans('install.admin_url') }} </label>
                             <div class="controls col-md-8">
-                                <input class="input-md  textinput textInput form-control" id="admin_url"  name="admin_url" placeholder="{{ trans('install.admin_url') }}" style="margin-bottom: 10px" type="text" value="system_admin" />
+                                <input class="input-md  textinput textInput form-control" id="admin_url"  name="admin_url" placeholder="{{ trans('install.admin_url') }}" style="margin-bottom: 10px" type="text" value="sc_admin" />
                             </div>
                         </div>
 
@@ -107,7 +118,7 @@
                         <div class="form-group">
                             <div class="controls col-md-4 "></div>
                             <div class="controls col-md-8 ">
-                                <input type="button" data-loading-text="{{ trans('install.installing_button') }}"  value="{{ trans('install.installing') }}" class="btn btn-primary btn btn-info" id="submit-install" />
+                                <input type="button" {{ max($requirements)?'':'disabled'}} data-loading-text="{{ trans('install.installing_button') }}"  value="{{ trans('install.installing') }}" class="btn btn-primary btn btn-info" id="submit-install" />
                             </div>
                         </div>
                         <div class="row">
@@ -121,6 +132,7 @@
             </div>
         </div>
     </div>
+
 </div>
 
     </div>

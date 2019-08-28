@@ -2,50 +2,50 @@
 #app/Modules/Cms/Controllers/Content.php
 namespace App\Modules\Cms\Controllers;
 
-use App\Models\Config;
+use App\Admin\Models\AdminMenu;
+use App\Models\AdminConfig;
 use App\Modules\Cms\Models\CmsCategory;
 use App\Modules\Cms\Models\CmsCategoryDescription;
 use App\Modules\Cms\Models\CmsContent;
 use App\Modules\Cms\Models\CmsContentDescription;
 use App\Modules\Cms\Models\CmsImage;
-use Encore\Admin\Auth\Database\Menu;
+use App\Modules\ModuleDefault;
 
 class Content extends \App\Http\Controllers\GeneralController
 {
+    use ModuleDefault;
+
     protected $configType = 'Modules';
     protected $configCode = 'Cms';
-    protected $configKey  = 'Content';
+    protected $configKey = 'Content';
 
     public $title;
     public $version;
     public $auth;
     public $link;
-    const ON  = 1;
+    public $image;
+    const ON = 1;
     const OFF = 0;
     public function __construct()
     {
         parent::__construct();
         $this->title = trans($this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title');
-        app('view')->prependNamespace($this->configType,
-            base_path('app/' . $this->configType . '/' . $this->configCode . '/Views'));
+        $this->image = 'images/' . $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.png';
         $this->version = '1.0';
-        $this->auth    = 'Naruto';
-        $this->link    = 'https://s-cart.org';
+        $this->auth = 'Naruto';
+        $this->link = 'https://s-cart.org';
+        view()->addNamespace($this->configKey, app_path($this->configType . '/' . $this->configCode . '/Views'));
 
-    }
-    public function getData()
-    {
-        return $this->processData();
     }
 
     public function processData()
     {
         $arrData = [
-            'title'   => $this->title,
-            'code'    => $this->configKey,
+            'title' => $this->title,
+            'code' => $this->configKey,
             'version' => $this->version,
-            'auth'    => $this->auth,
-            'link'    => $this->link,
+            'auth' => $this->auth,
+            'link' => $this->link,
         ];
         return $arrData;
     }
@@ -53,30 +53,30 @@ class Content extends \App\Http\Controllers\GeneralController
     public function install()
     {
         $return = ['error' => 0, 'msg' => ''];
-        $check  = Config::where('key', $this->configKey)->first();
+        $check = AdminConfig::where('key', $this->configKey)->first();
         if ($check) {
             $return = ['error' => 1, 'msg' => 'Module exist'];
         } else {
-            $process = Config::insert(
+            $process = AdminConfig::insert(
                 [
-                    'code'   => $this->configCode,
-                    'key'    => $this->configKey,
-                    'type'   => $this->configType,
-                    'value'  => self::ON, //1- Enable extension; 0 - Disable
+                    'code' => $this->configCode,
+                    'key' => $this->configKey,
+                    'type' => $this->configType,
+                    'value' => self::ON, //1- Enable extension; 0 - Disable
                     'detail' => $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title',
                 ]
             );
             if (!$process) {
                 $return = ['error' => 1, 'msg' => 'Error when install'];
             } else {
-                $checkMenu = Menu::find('100');
+                $checkMenu = AdminMenu::find('100');
                 if (!$checkMenu) {
-                    Menu::insert([
-                        'id'        => 100,
-                        'order'     => 9,
+                    AdminMenu::insert([
+                        'id' => 100,
+                        'sort' => 102,
                         'parent_id' => 0,
-                        'title'     => 'CMS Manager',
-                        'icon'      => 'fa-coffee',
+                        'title' => 'lang::Modules/language.cms_manager',
+                        'icon' => 'fa-coffee',
                     ]);
                 }
                 (new CmsCategory)->installExtension();
@@ -84,21 +84,19 @@ class Content extends \App\Http\Controllers\GeneralController
                 (new CmsContent)->installExtension();
                 (new CmsContentDescription)->installExtension();
                 (new CmsImage)->installExtension();
-                Menu::insert(
+                AdminMenu::insert(
                     [
-                        'order'     => 10,
                         'parent_id' => 100,
-                        'title'     => 'Cms categories',
-                        'icon'      => 'fa-folder-open-o',
-                        'uri'       => 'modules/cms/cms_category',
+                        'title' => 'lang::Modules/language.cms_category',
+                        'icon' => 'fa-folder-open-o',
+                        'uri' => 'route::admin_cms_category.index',
                     ]);
-                Menu::insert(
+                AdminMenu::insert(
                     [
-                        'order'     => 10,
                         'parent_id' => 100,
-                        'title'     => 'Cms contents',
-                        'icon'      => 'fa-copy',
-                        'uri'       => 'modules/cms/cms_content',
+                        'title' => 'lang::Modules/language.cms_content',
+                        'icon' => 'fa-copy',
+                        'uri' => 'route::admin_cms_content.index',
                     ]
                 );
             }
@@ -108,8 +106,8 @@ class Content extends \App\Http\Controllers\GeneralController
 
     public function uninstall()
     {
-        $return  = ['error' => 0, 'msg' => ''];
-        $process = (new Config)->where('key', $this->configKey)->delete();
+        $return = ['error' => 0, 'msg' => ''];
+        $process = (new AdminConfig)->where('key', $this->configKey)->delete();
         if (!$process) {
             $return = ['error' => 1, 'msg' => 'Error when uninstall'];
         }
@@ -119,18 +117,18 @@ class Content extends \App\Http\Controllers\GeneralController
         (new CmsContentDescription)->uninstallExtension();
         (new CmsImage)->uninstallExtension();
         //Remove menu
-        (new Menu)->where('uri', 'modules/cms/cms_category')->delete();
-        (new Menu)->where('uri', 'modules/cms/cms_content')->delete();
-        if (!(new Menu)->where('parent_id', 100)->count()) {
-            (new Menu)->find(100)->delete();
+        (new AdminMenu)->where('uri', 'route::admin_cms_category.index')->delete();
+        (new AdminMenu)->where('uri', 'route::admin_cms_content.index')->delete();
+        if (!(new AdminMenu)->where('parent_id', 100)->count()) {
+            (new AdminMenu)->find(100)->delete();
         }
 
         return $return;
     }
     public function enable()
     {
-        $return  = ['error' => 0, 'msg' => ''];
-        $process = (new Config)->where('key', $this->configKey)->update(['value' => self::ON]);
+        $return = ['error' => 0, 'msg' => ''];
+        $process = (new AdminConfig)->where('key', $this->configKey)->update(['value' => self::ON]);
         if (!$process) {
             $return = ['error' => 1, 'msg' => 'Error enable'];
         }
@@ -138,21 +136,12 @@ class Content extends \App\Http\Controllers\GeneralController
     }
     public function disable()
     {
-        $return  = ['error' => 0, 'msg' => ''];
-        $process = (new Config)->where('key', $this->configKey)->update(['value' => self::OFF]);
+        $return = ['error' => 0, 'msg' => ''];
+        $process = (new AdminConfig)->where('key', $this->configKey)->update(['value' => self::OFF]);
         if (!$process) {
             $return = ['error' => 1, 'msg' => 'Error disable'];
         }
         return $return;
-    }
-
-    public function config()
-    {
-        //Process
-    }
-    public function processConfig($data)
-    {
-        //Process
     }
 
 //=======================
@@ -164,13 +153,13 @@ class Content extends \App\Http\Controllers\GeneralController
     public function category($name, $id)
     {
         $category_currently = CmsCategory::find($id);
-        $entries            = (new CmsCategory)->getContentsToCategory($id, $limit = $this->configs['product_new'], $opt = 'paginate');
-        return view($this->configType . '::' . 'cms_category',
+        $entries = (new CmsCategory)->getContentsToCategory($id, $limit = sc_config('product_new'), $opt = 'paginate');
+        return view($this->configKey . '::' . 'cms_category',
             array(
-                'title'       => $category_currently['title'],
+                'title' => $category_currently['title'],
                 'description' => $category_currently['description'],
-                'keyword'     => $category_currently['keyword'],
-                'entries'     => $entries,
+                'keyword' => $category_currently['keyword'],
+                'entries' => $entries,
             )
         );
     }
@@ -179,22 +168,22 @@ class Content extends \App\Http\Controllers\GeneralController
     {
         $entry_currently = CmsContent::find($id);
         if ($entry_currently) {
-            $title = ($entry_currently) ? $entry_currently->title : trans('language.not_found');
-            return view($this->configType . '::' . 'cms_entry_detail',
+            $title = ($entry_currently) ? $entry_currently->title : trans('front.not_found');
+            return view($this->configKey . '::' . 'cms_entry_detail',
                 array(
-                    'title'           => $title,
+                    'title' => $title,
                     'entry_currently' => $entry_currently,
-                    'description'     => $entry_currently['description'],
-                    'keyword'         => $entry_currently['keyword'],
-                    'og_image'        => url(PATH_FILE . '/' . $entry_currently->image),
+                    'description' => $entry_currently['description'],
+                    'keyword' => $entry_currently['keyword'],
+                    'og_image' => $entry_currently->getImage(),
                 )
             );
         } else {
-            return view(SITE_THEME . '.notfound',
+            return view('templates.' . sc_store('template') . '.notfound',
                 array(
-                    'title'       => trans('language.not_found'),
+                    'title' => trans('front.not_found'),
                     'description' => '',
-                    'keyword'     => $this->configsGlobal['keyword'],
+                    'keyword' => sc_store('keyword'),
                 )
             );
         }

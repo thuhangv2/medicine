@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\GeneralController;
 use Auth;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
-class ForgotPasswordController extends Controller
+class ForgotPasswordController extends GeneralController
 {
     /*
     |--------------------------------------------------------------------------
@@ -28,6 +28,7 @@ class ForgotPasswordController extends Controller
      */
     public function __construct()
     {
+        parent::__construct();
         $this->middleware('guest');
 
     }
@@ -41,9 +42,9 @@ class ForgotPasswordController extends Controller
         if (Auth::user()) {
             return redirect()->route('home');
         }
-        return view(SITE_THEME . '.auth.forgot',
+        return view('templates.' . sc_store('template') . '.auth.forgot',
             array(
-                'title' => trans('language.forgot_password'),
+                'title' => trans('front.forgot_password'),
             )
         );
     }

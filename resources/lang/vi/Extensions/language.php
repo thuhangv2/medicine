@@ -22,4 +22,6 @@ return [
     'auth'        => 'Tác giả',
     'version'     => 'Phiên bản',
     'link'        => 'Liên kết',
+    'image'       => 'Hình ảnh',
+    'empty'       => 'Chưa có extension nào!',
 ];

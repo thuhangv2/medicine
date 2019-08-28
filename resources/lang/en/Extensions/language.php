@@ -2,10 +2,10 @@
 
 return [
     'manager'     => 'Extensions manager',
-    'shipping'    => 'Shipping extensions',
-    'payment'     => 'Payment extensions',
-    'total'       => 'Total extensions',
-    'other'       => 'Other extensions',
+    'Shipping'    => 'Shipping extensions',
+    'Payment'     => 'Payment extensions',
+    'Total'       => 'Total extensions',
+    'Other'       => 'Other extensions',
     'code'        => 'Code',
     'name'        => 'Name',
     'sort'        => 'Sort',
@@ -22,4 +22,6 @@ return [
     'auth'        => 'Auth',
     'version'     => 'Version',
     'link'        => 'Link',
+    'image'       => 'Image',
+    'empty'       => 'Empty extension!',
 ];

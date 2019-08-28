@@ -3,7 +3,10 @@
 <!--Module top footer -->
   @isset ($layouts['footer'])
       @foreach ( $layouts['footer']  as $layout)
-        @if ($layout->page == null ||  $layout->page =='*' || $layout->page =='' || (isset($layout_page) && in_array($layout_page, $layout->page) ) )
+        @php
+          $arrPage = explode(',', $layout->page)
+        @endphp
+        @if ($layout->page == '*' ||  (isset($layout_page) && in_array($layout_page, $arrPage)))
           @if ($layout->type =='html')
             {!! $layout->text !!}
           @elseif($layout->type =='view')
@@ -24,19 +27,19 @@
         <div class="row">
           <div class="col-sm-3">
             <div class="single-widget">
-              <h2><a href="{{ route('home') }}"><img style="max-width: 150px;" src="{{  asset(SITE_LOGO) }}"></a></h2>
+              <h2><a href="{{ route('home') }}"><img style="max-width: 150px;" src="{{  asset(sc_store('logo')) }}"></a></h2>
              <ul class="nav nav-pills nav-stacked">
-               <li>{{ $configsGlobal['title'] }}</li>
+               <li>{{ sc_store('title') }}</li>
              </ul>
             </div>
           </div>
           <div class="col-sm-3">
             <div class="single-widget">
-              <h2>{{ trans('language.my_account') }}</h2>
+              <h2>{{ trans('front.my_account') }}</h2>
               <ul class="nav nav-pills nav-stacked">
                 @if (!empty($layoutsUrl['footer']))
                   @foreach ($layoutsUrl['footer'] as $url)
-                    <li><a {{ ($url->target =='_blank')?'target=_blank':''  }} href="{{ url($url->url) }}">{{ trans($url->name) }}</a></li>
+                    <li><a {{ ($url->target =='_blank')?'target=_blank':''  }} href="{{ sc_url_render($url->url) }}">{{ sc_language_render($url->name) }}</a></li>
                   @endforeach
                 @endif
               </ul>
@@ -44,23 +47,23 @@
           </div>
           <div class="col-sm-3">
             <div class="single-widget">
-              <h2>{{ trans('language.about') }}</h2>
+              <h2>{{ trans('front.about') }}</h2>
               <ul class="nav nav-pills nav-stacked">
-                <li><a href="#">{{ trans('language.shop_info.address') }}: {{ $configsGlobal['address'] }}</a></li>
-                <li><a href="#">{{ trans('language.shop_info.hotline') }}: {{ $configsGlobal['long_phone'] }}</a></li>
-                <li><a href="#">{{ trans('language.shop_info.email') }}: {{ $configsGlobal['email'] }}</a></li>
+                <li><a href="#">{{ trans('front.shop_info.address') }}: {{ sc_store('address') }}</a></li>
+                <li><a href="#">{{ trans('front.shop_info.hotline') }}: {{ sc_store('long_phone') }}</a></li>
+                <li><a href="#">{{ trans('front.shop_info.email') }}: {{ sc_store('email') }}</a></li>
             </ul>
             </div>
           </div>
           <div class="col-sm-3">
             <div class="single-widget">
-              <h2>{{ trans('language.subscribe.title') }}</h2>
+              <h2>{{ trans('front.subscribe.title') }}</h2>
               <form action="{{ route('subscribe') }}" method="post" class="searchform">
                 @csrf
 
-                <input type="email" name="subscribe_email" required="required" placeholder="{{ trans('language.subscribe.subscribe_email') }}">
+                <input type="email" name="subscribe_email" required="required" placeholder="{{ trans('front.subscribe.subscribe_email') }}">
                 <button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
-                <p>{{ trans('language.subscribe.subscribe_des') }}</p>
+                <p>{{ trans('front.subscribe.subscribe_des') }}</p>
               </form>
             </div>
           </div>

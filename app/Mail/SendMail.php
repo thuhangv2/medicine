@@ -22,10 +22,10 @@ class SendMail extends Mailable
     public $fileAttachData;
     public function __construct($view, $data = array(), $config = array(), $fileAttach = array(), $fileAttachData = array())
     {
-        $this->view           = $view;
-        $this->data           = $data;
-        $this->config         = $config;
-        $this->fileAttach     = $fileAttach;
+        $this->view = $view;
+        $this->data = $data;
+        $this->config = $config;
+        $this->fileAttach = $fileAttach;
         $this->fileAttachData = $fileAttachData;
     }
 

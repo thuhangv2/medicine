@@ -3,123 +3,106 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
-use Encore\Admin\Controllers\HasResourceActions;
-use Encore\Admin\Facades\Admin;
-use Encore\Admin\Layout\Content;
 use Illuminate\Http\Request;
 
 class ExtensionsController extends Controller
 {
-    use HasResourceActions;
+
     public $namespaceGroup;
-    /**
-     * Index interface.
-     *
-     * @return Content
-     */
+
     public function __construct()
     {
         $this->namespaceGroup = [
-            'shipping' => '\App\Extensions\Shipping\Controllers',
-            'payment'  => '\App\Extensions\Payment\Controllers',
-            'total'    => '\App\Extensions\Total\Controllers',
-            'other'    => '\App\Extensions\Other\Controllers',
+            'Shipping' => '\App\Extensions\Shipping\Controllers',
+            'Payment' => '\App\Extensions\Payment\Controllers',
+            'Total' => '\App\Extensions\Total\Controllers',
+            'Other' => '\App\Extensions\Other\Controllers',
         ];
 
     }
-    public function index($group, Content $content)
+    public function index($group)
     {
-        $action       = request('action');
+        $group = sc_word_format_class($group);
+        $action = request('action');
         $extensionKey = request('extensionKey');
         if ($action == 'config' && $extensionKey != '') {
             $namespace = $this->namespaceGroup[$group] . '\\' . $extensionKey;
-            $body      = (new $namespace)->config();
+            $body = (new $namespace)->config();
         } else {
             $body = $this->extensionsGroup($group);
         }
-        return $content
-            ->header(trans('Extensions/language.manager'))
-            ->description(' ')
-            ->body($body);
+        return $body;
     }
 
-/**
- * [extensionsGroup description]
- * @param  [type] $group [description]
- * @return [type]        [description]
- */
     protected function extensionsGroup($group)
     {
+        $group = sc_word_format_class($group);
         $extensionsInstalled = \Helper::getExtensionsGroup($group, $onlyActive = false);
-        $extensions          = \FindClass::classNames('Extensions', $group);
-        $namespace           = $this->namespaceGroup[$group];
-        $title               = trans('Extensions/language.' . $group);
+        $extensions = \FindClass::classNames('Extensions', $group);
+        $namespace = $this->namespaceGroup[$group];
+        $title = trans('Extensions/language.' . $group);
         return $this->render($extensionsInstalled, $extensions, $namespace, $title, $group);
     }
 
-/**
- * [render description]
- * @param  [type] $extensionsInstalled [description]
- * @param  [type] $extensions          [description]
- * @param  [type] $namespace           [description]
- * @param  [type] $title               [description]
- * @param  [type] $group                [description]
- * @return [type]                      [description]
- */
     public function render($extensionsInstalled, $extensions, $namespace, $title, $group)
     {
-        return view('admin.ExtensionsManager')->with(
+        return view('admin.screen.extension')->with(
             [
-                "title"               => $title,
-                "namespace"           => $namespace,
+                "title" => $title,
+                "namespace" => $namespace,
                 "extensionsInstalled" => $extensionsInstalled,
-                "extensions"          => $extensions,
-                "group"               => $group,
+                "extensions" => $extensions,
+                "group" => $group,
             ])->render();
     }
 
-    public function installExtension()
+    public function install()
     {
-        $key       = request('key');
-        $group     = request('group');
+        $key = request('key');
+        $group = request('group');
+        $group = sc_word_format_class($group);
         $namespace = $this->namespaceGroup[$group];
-        $class     = $namespace . '\\' . $key;
-        $response  = (new $class)->install();
+        $class = $namespace . '\\' . $key;
+        $response = (new $class)->install();
         return json_encode($response);
     }
-    public function uninstallExtension()
+    public function uninstall()
     {
-        $key       = request('key');
-        $group     = request('group');
+        $key = request('key');
+        $group = request('group');
+        $group = sc_word_format_class($group);
         $namespace = $this->namespaceGroup[$group];
-        $class     = $namespace . '\\' . $key;
-        $response  = (new $class)->uninstall();
+        $class = $namespace . '\\' . $key;
+        $response = (new $class)->uninstall();
         return json_encode($response);
     }
-    public function enableExtension()
+    public function enable()
     {
-        $key       = request('key');
-        $group     = request('group');
+        $key = request('key');
+        $group = request('group');
+        $group = sc_word_format_class($group);
         $namespace = $this->namespaceGroup[$group];
-        $class     = $namespace . '\\' . $key;
-        $response  = (new $class)->enable();
+        $class = $namespace . '\\' . $key;
+        $response = (new $class)->enable();
         return json_encode($response);
     }
-    public function disableExtension()
+    public function disable()
     {
-        $key       = request('key');
-        $group     = request('group');
+        $key = request('key');
+        $group = request('group');
+        $group = sc_word_format_class($group);
         $namespace = $this->namespaceGroup[$group];
-        $class     = $namespace . '\\' . $key;
-        $response  = (new $class)->disable();
+        $class = $namespace . '\\' . $key;
+        $response = (new $class)->disable();
         return json_encode($response);
     }
-    public function processExtension($group, $key)
+    public function process($group, $key)
     {
-        $data      = request()->all();
+        $group = sc_word_format_class($group);
+        $data = request()->all();
         $namespace = $this->namespaceGroup[$group];
-        $class     = $namespace . '\\' . $key;
-        $response  = (new $class)->processConfig($data);
+        $class = $namespace . '\\' . $key;
+        $response = (new $class)->process($data);
         return json_encode($response);
     }
 }

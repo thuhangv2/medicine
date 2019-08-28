@@ -28,8 +28,6 @@ Free Open source E-commerce use Laravel framework for Business
 
 ## Technology
 - Core <a href="https://laravel.com">Laravel Framework</a>
-- Back-end <a href="http://laravel-admin.org">Laravel Admin</a>
-- In addition, s-cart also integrates other free open source libraries.
 
 ## List Functions of S-cart
 
@@ -74,7 +72,7 @@ Free Open source E-commerce use Laravel framework for Business
 
 ## Requirements:
 
-Version 2.3.x:
+Version 3.x:
 
 > Core laravel framework 5.8. Requirements::
 
@@ -143,5 +141,5 @@ Step6:
 ## Demo:
 
 - Font-end : http://demo.s-cart.org
-- Back-end: http://demo.s-cart.org/system_admin   <code>User/pass: test/123456</code>
+- Back-end: http://demo.s-cart.org/sc_admin   <code>User/pass: test/123456</code>
 

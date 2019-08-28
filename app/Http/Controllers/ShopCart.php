@@ -4,14 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\EmailTemplate;
 use App\Models\ShopAttributeGroup;
+use App\Models\ShopCountry;
 use App\Models\ShopOrder;
-use App\Models\ShopOrderDetail;
-use App\Models\ShopOrderHistory;
 use App\Models\ShopOrderTotal;
 use App\Models\ShopProduct;
-use App\User;
 use Cart;
-use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -29,7 +26,7 @@ class ShopCart extends GeneralController
 
     }
 /**
- * [getCart description]
+ * Get list cart: screen get cart
  * @return [type] [description]
  */
     public function getCart()
@@ -81,31 +78,34 @@ class ShopCart extends GeneralController
         $user = auth()->user();
         if ($user) {
             $addressDefaul = [
-                'toname' => $user->name,
+                'first_name' => $user->first_name,
+                'last_name' => $user->last_name,
                 'email' => $user->email,
                 'address1' => $user->address1,
                 'address2' => $user->address2,
+                'country' => $user->country,
                 'phone' => $user->phone,
                 'comment' => '',
             ];
         } else {
             $addressDefaul = [
-                'toname' => '',
+                'first_name' => '',
+                'last_name' => '',
                 'email' => '',
                 'address1' => '',
                 'address2' => '',
+                'country' => '',
                 'phone' => '',
                 'comment' => '',
             ];
         }
         $shippingAddress = session('shippingAddress') ? session('shippingAddress') : $addressDefaul;
-        return view(SITE_THEME . '.shop_cart',
+        return view('templates.' . sc_store('template') . '.shop_cart',
             array(
-                'title' => trans('language.cart_title'),
+                'title' => trans('front.cart_title'),
                 'description' => '',
                 'keyword' => '',
                 'cart' => Cart::content(),
-                'attributesGroup' => ShopAttributeGroup::all()->keyBy('id'),
                 'shippingMethod' => $shippingMethod,
                 'paymentMethod' => $paymentMethod,
                 'totalMethod' => $totalMethod,
@@ -115,22 +115,23 @@ class ShopCart extends GeneralController
                 'shippingAddress' => $shippingAddress,
                 'uID' => $user->id ?? 0,
                 'layout_page' => 'shop_cart',
+                'countries' => ShopCountry::getArray(),
+                'attributesGroup' => ShopAttributeGroup::pluck('name', 'id')->all(),
             )
         );
     }
 
 /**
- * Process Cart
- * @param  Request $request [description]
- * @return [type]           [description]
+ * Process Cart, prepare for the checkout screen
+ * @return redirect
  */
-    public function processCart(Request $request)
+    public function processCart()
     {
         if (Cart::count() == 0) {
             return redirect()->route('cart');
         }
         //Not allow for guest
-        if (!$this->configs['shop_allow_guest'] && !auth()->user()) {
+        if (!sc_config('shop_allow_guest') && !auth()->user()) {
             return redirect()->route('login');
         } //
 
@@ -138,14 +139,16 @@ class ShopCart extends GeneralController
             'max' => trans('validation.max.string'),
             'required' => trans('validation.required'),
         ];
-        $v = Validator::make($request->all(), [
-            'toname' => 'required|max:100',
+        $v = Validator::make(request()->all(), [
+            'first_name' => 'required|max:100',
+            'last_name' => 'required|max:100',
             'address1' => 'required|max:100',
             'address2' => 'required|max:100',
             'phone' => 'required|regex:/^0[^0][0-9\-]{7,13}$/',
             'email' => 'required|string|email|max:255',
             'shippingMethod' => 'required',
             'paymentMethod' => 'required',
+            'country' => 'required|min:2',
         ], $messages);
         if ($v->fails()) {
             return redirect()->back()->withInput()->withErrors($v->errors());
@@ -153,20 +156,23 @@ class ShopCart extends GeneralController
         session(['shippingMethod' => request('shippingMethod')]);
         session(['paymentMethod' => request('paymentMethod')]);
         session(['shippingAddress' => [
-            'toname' => \Helper::sc_clean($request->get('toname')),
-            'email' => \Helper::sc_clean($request->get('email')),
-            'address1' => \Helper::sc_clean($request->get('address1')),
-            'address2' => \Helper::sc_clean($request->get('address2')),
-            'phone' => \Helper::sc_clean($request->get('phone')),
-            'comment' => \Helper::sc_clean($request->get('comment')),
-        ]]);
+            'first_name' => request('first_name'),
+            'last_name' => request('last_name'),
+            'email' => request('email'),
+            'country' => request('country'),
+            'address1' => request('address1'),
+            'address2' => request('address2'),
+            'phone' => request('phone'),
+            'comment' => request('comment'),
+        ],
+        ]);
         // dd(session()->all());
         return redirect()->route('checkout');
     }
 
 /**
- * [getCheckout description]
- * @return [type] [description]
+ * Checkout screen
+ * @return [view]
  */
     public function getCheckout()
     {
@@ -176,7 +182,7 @@ class ShopCart extends GeneralController
         //====================================================
         $paymentMethod = session('paymentMethod');
         $shippingMethod = session('shippingMethod');
-        $address = session('shippingAddress');
+        $shippingAddress = session('shippingAddress');
         $classShippingMethod = '\App\Extensions\Shipping\Controllers\\' . $shippingMethod;
         $shippingMethodData = (new $classShippingMethod)->getData();
         $classPaymentMethod = '\App\Extensions\Payment\Controllers\\' . $paymentMethod;
@@ -185,52 +191,48 @@ class ShopCart extends GeneralController
         $objects[] = (new ShopOrderTotal)->getShipping();
         $objects[] = (new ShopOrderTotal)->getDiscount();
         $objects[] = (new ShopOrderTotal)->getReceived();
-        session(['dataTotal' => ShopOrderTotal::processDataTotal($objects)]);
-        // session()->forget('paymentMethod'); //destroy paymentMethod
-        // session()->forget('shippingMethod'); //destroy shippingMethod
-        return view(SITE_THEME . '.shop_checkout',
+        $dataTotal = ShopOrderTotal::processDataTotal($objects);
+        //Set session dataTotal
+        session(['dataTotal' => $dataTotal]);
+        return view('templates.' . sc_store('template') . '.shop_checkout',
             array(
-                'title' => trans('language.checkout_title'),
+                'title' => trans('front.checkout_title'),
                 'description' => '',
                 'keyword' => '',
                 'cart' => Cart::content(),
-                'dataTotal' => session('dataTotal'),
+                'dataTotal' => $dataTotal,
                 'paymentMethodData' => $paymentMethodData,
                 'shippingMethodData' => $shippingMethodData,
-                'paymentMethod' => $paymentMethod,
-                'shippingMethod' => $shippingMethod,
-                'address' => $address,
-                'attributesGroup' => ShopAttributeGroup::all()->keyBy('id'),
+                'shippingAddress' => $shippingAddress,
+                'attributesGroup' => ShopAttributeGroup::getList(),
             )
         );
     }
 
 /**
- * add to cart by post
- * @param  Request $request [description]
+ * add to cart by post, always use page product detail
  * @return [type]           [description]
  */
-    public function postCart(Request $request)
+    public function addToCart()
     {
-        $data = $request->all();
+        $data = request()->all();
         $product_id = $data['product_id'];
-        $opt_sku = $data['opt_sku'] ?? null;
-        $attribute = $data['attribute'] ?? null;
+        $form_attr = $data['form_attr'] ?? null;
         $qty = $data['qty'];
         $product = ShopProduct::find($product_id);
         if ($product->allowSale()) {
             $options = array();
-            $options['opt'] = $opt_sku;
-            $options['att'] = $attribute;
-            Cart::add(
-                array(
-                    'id' => $product_id,
-                    'name' => $product->name,
-                    'qty' => $qty,
-                    'price' => $product->getPrice($opt_sku),
-                    'options' => $options,
-                )
+            $options = $form_attr;
+            $dataCart = array(
+                'id' => $product_id,
+                'name' => $product->name,
+                'qty' => $qty,
+                'price' => $product->getFinalPrice(),
             );
+            if ($options) {
+                $dataCart['options'] = $options;
+            }
+            Cart::add($dataCart);
             return redirect()->route('cart')
                 ->with(
                     ['message' => trans('cart.success', ['instance' => 'cart'])]
@@ -245,210 +247,158 @@ class ShopCart extends GeneralController
     }
 
 /**
- * [storeOrder description]
- * @param  Request $request [description]
- * @return [type]           [description]
+ * Add new order
  */
-    public function storeOrder(Request $request)
+    public function addOrder(Request $request)
     {
         if (Cart::count() == 0) {
             return redirect()->route('home');
         }
         //Not allow for guest
-        if (!$this->configs['shop_allow_guest'] && !auth()->user()) {
+        if (!sc_config('shop_allow_guest') && !auth()->user()) {
             return redirect()->route('login');
         } //
         $data = request()->all();
         if (!$data) {
             return redirect()->route('cart');
         } else {
-            $dataTotal = session('dataTotal');
-            $address = session('shippingAddress');
-            $paymentMethod = session('paymentMethod');
-            $shippingMethod = session('shippingMethod');
+            $dataTotal = session('dataTotal') ?? [];
+            $shippingAddress = session('shippingAddress') ?? [];
+            $payment_method = session('paymentMethod') ?? '';
+            $shipping_method = session('shippingMethod') ?? '';
         }
-        try {
-            //Process total
-            $subtotal = (new ShopOrderTotal)->sumValueTotal('subtotal', $dataTotal);
-            $shipping = (new ShopOrderTotal)->sumValueTotal('shipping', $dataTotal); //sum shipping
-            $discount = (new ShopOrderTotal)->sumValueTotal('discount', $dataTotal); //sum discount
-            $received = (new ShopOrderTotal)->sumValueTotal('received', $dataTotal); //sum received
-            $total = (new ShopOrderTotal)->sumValueTotal('total', $dataTotal);
-            $payment_method = $paymentMethod;
-            //end total
-            DB::connection('mysql')->beginTransaction();
-            $arrOrder['user_id'] = auth()->user()->id ?? 0;
 
-            $arrOrder['subtotal'] = $subtotal;
-            $arrOrder['shipping'] = $shipping;
-            $arrOrder['discount'] = $discount;
-            $arrOrder['received'] = $received;
-            $arrOrder['payment_status'] = self::PAYMENT_UNPAID;
-            $arrOrder['shipping_status'] = self::SHIPPING_NOTSEND;
-            $arrOrder['status'] = self::ORDER_STATUS_NEW;
-            $arrOrder['currency'] = \Helper::currencyCode();
-            $arrOrder['exchange_rate'] = \Helper::currencyRate();
-            $arrOrder['total'] = $total;
-            $arrOrder['balance'] = $total + $received;
-            $arrOrder['toname'] = $address['toname'];
-            $arrOrder['email'] = $address['email'];
-            $arrOrder['address1'] = $address['address1'];
-            $arrOrder['address2'] = $address['address2'];
-            $arrOrder['phone'] = $address['phone'];
-            $arrOrder['payment_method'] = $payment_method;
-            $arrOrder['comment'] = $address['comment'];
-            $arrOrder['created_at'] = date('Y-m-d H:i:s');
+        $uID = auth()->user()->id ?? 0;
+        //Process total
+        $subtotal = (new ShopOrderTotal)->sumValueTotal('subtotal', $dataTotal);
+        $shipping = (new ShopOrderTotal)->sumValueTotal('shipping', $dataTotal); //sum shipping
+        $discount = (new ShopOrderTotal)->sumValueTotal('discount', $dataTotal); //sum discount
+        $received = (new ShopOrderTotal)->sumValueTotal('received', $dataTotal); //sum received
+        $total = (new ShopOrderTotal)->sumValueTotal('total', $dataTotal);
+        //end total
 
-            //Insert to Order
-            $orderId = ShopOrder::insertGetId($arrOrder);
-            //
+        $dataOrder['user_id'] = $uID;
+        $dataOrder['subtotal'] = $subtotal;
+        $dataOrder['shipping'] = $shipping;
+        $dataOrder['discount'] = $discount;
+        $dataOrder['received'] = $received;
+        $dataOrder['payment_status'] = self::PAYMENT_UNPAID;
+        $dataOrder['shipping_status'] = self::SHIPPING_NOTSEND;
+        $dataOrder['status'] = self::ORDER_STATUS_NEW;
+        $dataOrder['currency'] = \Helper::currencyCode();
+        $dataOrder['exchange_rate'] = \Helper::currencyRate();
+        $dataOrder['total'] = $total;
+        $dataOrder['balance'] = $total + $received;
+        $dataOrder['first_name'] = $shippingAddress['first_name'];
+        $dataOrder['last_name'] = $shippingAddress['last_name'];
+        $dataOrder['email'] = $shippingAddress['email'];
+        $dataOrder['address1'] = $shippingAddress['address1'];
+        $dataOrder['address2'] = $shippingAddress['address2'];
+        $dataOrder['country'] = $shippingAddress['country'];
+        $dataOrder['phone'] = $shippingAddress['phone'];
+        $dataOrder['payment_method'] = $payment_method;
+        $dataOrder['shipping_method'] = $shipping_method;
+        $dataOrder['comment'] = $shippingAddress['comment'];
+        $dataOrder['user_agent'] = $request->header('User-Agent');
+        $dataOrder['ip'] = $request->ip();
+        $dataOrder['created_at'] = date('Y-m-d H:i:s');
 
-            //Insert order total
-            ShopOrderTotal::insertTotal($dataTotal, $orderId);
-            //End order total
+        $arrCartDetail = [];
+        foreach (Cart::content() as $cartItem) {
+            $arrDetail['product_id'] = $cartItem->id;
+            $arrDetail['name'] = $cartItem->name;
+            $arrDetail['price'] = \Helper::currencyValue($cartItem->price);
+            $arrDetail['qty'] = $cartItem->qty;
+            $arrDetail['attribute'] = ($cartItem->options) ? json_encode($cartItem->options) : null;
+            $arrDetail['total_price'] = \Helper::currencyValue($cartItem->price) * $cartItem->qty;
+            $arrCartDetail[] = $arrDetail;
+        }
 
-            foreach (Cart::content() as $value) {
-                $product = ShopProduct::find($value->id);
-                $arrDetail['order_id'] = $orderId;
-                $arrDetail['product_id'] = $value->id;
-                $arrDetail['name'] = $value->name;
-                $arrDetail['price'] = \Helper::currencyValue($value->price);
-                $arrDetail['qty'] = $value->qty;
-                $arrDetail['currency'] = \Helper::currencyCode();
-                $arrDetail['exchange_rate'] = \Helper::currencyRate();
-                $arrDetail['attribute'] = ($value->options->att) ? json_encode($value->options->att) : null;
-                $arrDetail['sku'] = $product->sku;
-                $arrDetail['total_price'] = \Helper::currencyValue($value->price) * $value->qty;
-                $arrDetail['created_at'] = date('Y-m-d H:i:s');
-                ShopOrderDetail::insert($arrDetail);
-                //If product out of stock
-                if (!$this->configs['product_buy_out_of_stock'] && $product->stock < $value->qty) {
-                    return redirect()->route('home')->with('error', trans('cart.over', ['item' => $product->sku]));
-                } //
-                $product->stock -= $value->qty;
-                $product->sold += $value->qty;
-                $product->save();
+        //Create new order
+        $createOrder = (new ShopOrder)->createOrder($dataOrder, $dataTotal, $arrCartDetail);
 
+        if ($createOrder['error'] == 1) {
+            return redirect()->route('cart')->with(['error' => $createOrder['msg']]);
+        } else {
+            $orderID = $createOrder['orderID'];
+        }
+
+        Cart::destroy(); // destroy cart
+
+        //Process paypal
+        if ($payment_method === 'Paypal') {
+            $data_payment = [];
+            foreach ($arrCartDetail as $item) {
+                $product = ShopProduct::find($item['product_id']);
+                $data_payment[] =
+                    [
+                    'name' => $item['name'],
+                    'quantity' => $item['qty'],
+                    'price' => \Helper::currencyValue($item['price']),
+                    'sku' => $product->sku,
+                ];
             }
-
-            //Add history
-            $dataHistory = [
-                'order_id' => $orderId,
-                'content' => 'New order',
-                'user_id' => auth()->user()->id ?? 0,
-                'add_date' => date('Y-m-d H:i:s'),
+            $data_payment[] =
+                [
+                'name' => 'Shipping',
+                'quantity' => 1,
+                'price' => $shipping,
+                'sku' => 'shipping',
             ];
-            ShopOrderHistory::insert($dataHistory);
-
-            //Process Discount
-            $codeDiscount = session('Discount') ?? '';
-            if ($codeDiscount) {
-                if (!empty(\Helper::configs()['Discount'])) {
-                    $moduleClass = '\App\Extensions\Total\Controllers\Discount';
-                    $uID = auth()->user()->id ?? 0;
-                    $returnModuleDiscount = (new $moduleClass)->apply($codeDiscount, $uID, $msg = 'Order #' . $orderId);
-                    $arrReturnModuleDiscount = json_decode($returnModuleDiscount, true);
-                    if ($arrReturnModuleDiscount['error'] == 1) {
-                        if ($arrReturnModuleDiscount['msg'] == 'error_code_not_exist') {
-                            $msg = trans('promotion.process.invalid');
-                        } elseif ($arrReturnModuleDiscount['msg'] == 'error_code_cant_use') {
-                            $msg = trans('promotion.process.over');
-                        } elseif ($arrReturnModuleDiscount['msg'] == 'error_code_expired_disabled') {
-                            $msg = trans('promotion.process.expire');
-                        } elseif ($arrReturnModuleDiscount['msg'] == 'error_user_used') {
-                            $msg = trans('promotion.process.used');
-                        } elseif ($arrReturnModuleDiscount['msg'] == 'error_uID_input') {
-                            $msg = trans('promotion.process.user_id_invalid');
-                        } elseif ($arrReturnModuleDiscount['msg'] == 'error_login') {
-                            $msg = trans('promotion.process.must_login');
-                        } else {
-                            $msg = trans('promotion.process.undefined');
-                        }
-                        return redirect()->route('cart')->with(['error_discount' => $msg]);
-                    }
-                }
-            }
-            //End process Discount
-
-            $dataItems = Cart::content();
-            Cart::destroy(); // destroy cart
-
-            //End discount
-            DB::connection('mysql')->commit();
-
-            //Process paypal
-            if ($payment_method === 'Paypal') {
-                $data_payment = [];
-                foreach ($dataItems as $value) {
-                    $product = ShopProduct::find($value->id);
-                    $data_payment[] =
-                        [
-                        'name' => $value->name,
-                        'quantity' => $value->qty,
-                        'price' => \Helper::currencyValue($value->price),
-                        'sku' => $product->sku,
-                    ];
-                }
-                $data_payment[] =
-                    [
-                    'name' => 'Shipping',
-                    'quantity' => 1,
-                    'price' => $shipping,
-                    'sku' => 'shipping',
-                ];
-                $data_payment[] =
-                    [
-                    'name' => 'Discount',
-                    'quantity' => 1,
-                    'price' => $discount,
-                    'sku' => 'discount',
-                ];
-                $data_payment['order_id'] = $orderId;
-                $data_payment['currency'] = \Helper::currencyCode();
-                return redirect()->route('paypal')->with('data_payment', $data_payment);
-            } else {
-                return $this->completeOrder($orderId);
-            }
-
-            //
-
-        } catch (\Exception $e) {
-            DB::connection('mysql')->rollBack();
-            echo 'Caught exception: ', $e->getMessage(), "\n";
-
+            $data_payment[] =
+                [
+                'name' => 'Discount',
+                'quantity' => 1,
+                'price' => $discount,
+                'sku' => 'discount',
+            ];
+            $data_payment['order_id'] = $orderID;
+            $data_payment['currency'] = \Helper::currencyCode();
+            return redirect()->route('paypal')->with('data_payment', $data_payment);
+        } else {
+            return $this->completeOrder($orderID);
         }
+
+        //
 
     }
 
 /**
- * [addToCart description]
+ * [addToCartAjax description]
  * @param Request $request [description]
  */
-    public function addToCart(Request $request)
+    public function addToCartAjax(Request $request)
     {
-        $instance = request('instance') ?? 'default';
-        $cart = \Cart::instance($instance);
         if (!$request->ajax()) {
             return redirect()->route('cart');
         }
+        $instance = request('instance') ?? 'default';
+        $cart = \Cart::instance($instance);
+
         $id = request('id');
-        $attribute = request('attribute') ?? null;
-        $opt_sku = request('opt_sku') ?? null;
-        $options = [];
-        $options['att'] = $attribute;
-        $options['opt'] = $opt_sku;
         $product = ShopProduct::find($id);
         $html = '';
         switch ($instance) {
             case 'default':
+                if ($product->attributes->count() || $product->kind == SC_PRODUCT_GROUP) {
+                    //Products have attributes or kind is group,
+                    //need to select properties before adding to the cart
+                    return response()->json(
+                        [
+                            'error' => 1,
+                            'redirect' => $product->getUrl(),
+                            'msg' => '',
+                        ]
+                    );
+                }
+
                 if ($product->allowSale()) {
                     $cart->add(
                         array(
                             'id' => $id,
                             'name' => $product->name,
                             'qty' => 1,
-                            'price' => $product->getPrice(),
-                            'options' => $options,
+                            'price' => $product->getFinalPrice(),
                         )
                     );
                 } else {
@@ -471,7 +421,7 @@ class ShopCart extends GeneralController
                                 'id' => $id,
                                 'name' => $product->name,
                                 'qty' => 1,
-                                'price' => $product->getPrice(),
+                                'price' => $product->getFinalPrice(),
                             )
                         );
                     } catch (\Exception $e) {
@@ -505,13 +455,13 @@ class ShopCart extends GeneralController
                 $html .= '<h3 class="product-price">' . $item['price'] . ' <span class="qty">x' . $item['qty'] . '</span></h3>';
                 $html .= '<h2 class="product-name"><a href="' . $item['url'] . '">' . $item['name'] . '</a></h2>';
                 $html .= '</div>';
-                $html .= '<a href="' . route("removeItem", ['id' => $item['rowId']]) . '"><button class="cancel-btn"><i class="fa fa-trash"></i></button></a>';
+                $html .= '<a href="' . route("cart.remove", ['id' => $item['rowId']]) . '"><button class="cancel-btn"><i class="fa fa-trash"></i></button></a>';
                 $html .= '</div>';
             }
             $html .= '</div></div>';
             $html .= '<div class="shopping-cart-btns">
-                    <a href="' . route('cart') . '"><button class="main-btn">' . trans('language.cart_title') . '</button></a>
-                    <a href="' . route('checkout') . '"><button class="primary-btn">' . trans('language.checkout_title') . ' <i class="fa fa-arrow-circle-right"></i></button></a>
+                    <a href="' . route('cart') . '"><button class="main-btn">' . trans('front.cart_title') . '</button></a>
+                    <a href="' . route('checkout') . '"><button class="primary-btn">' . trans('front.checkout_title') . ' <i class="fa fa-arrow-circle-right"></i></button></a>
                   </div>';
         }
         return response()->json(
@@ -537,11 +487,11 @@ class ShopCart extends GeneralController
         if (!$request->ajax()) {
             return redirect()->route('cart');
         }
-        $id = $request->get('id');
-        $rowId = $request->get('rowId');
+        $id = request('id');
+        $rowId = request('rowId');
         $product = ShopProduct::find($id);
-        $new_qty = $request->get('new_qty');
-        if ($product->stock < $new_qty && !$this->configs['product_buy_out_of_stock']) {
+        $new_qty = request('new_qty');
+        if ($product->stock < $new_qty && !sc_config('product_buy_out_of_stock')) {
             return response()->json(
                 [
                     'error' => 1,
@@ -564,9 +514,9 @@ class ShopCart extends GeneralController
     {
 
         $wishlist = Cart::instance('wishlist')->content();
-        return view(SITE_THEME . '.shop_wishlist',
+        return view('templates.' . sc_store('template') . '.shop_wishlist',
             array(
-                'title' => trans('language.wishlist'),
+                'title' => trans('front.wishlist'),
                 'description' => '',
                 'keyword' => '',
                 'wishlist' => $wishlist,
@@ -582,9 +532,9 @@ class ShopCart extends GeneralController
     public function compare()
     {
         $compare = Cart::instance('compare')->content();
-        return view(SITE_THEME . '.shop_compare',
+        return view('templates.' . sc_store('template') . '.shop_compare',
             array(
-                'title' => trans('language.compare'),
+                'title' => trans('front.compare'),
                 'description' => '',
                 'keyword' => '',
                 'compare' => $compare,
@@ -660,9 +610,8 @@ class ShopCart extends GeneralController
         session()->forget('totalMethod'); //destroy totalMethod
         session()->forget('otherMethod'); //destroy otherMethod
         session()->forget('Discount'); //destroy Discount
-        session()->forget('dataTotal'); //destroy dataTotal
 
-        if (\Helper::configs()['order_success_to_admin'] || \Helper::configs()['order_success_to_customer']) {
+        if (sc_config('order_success_to_admin') || sc_config('order_success_to_customer')) {
             $data = ShopOrder::with('details')->find($orderId)->toArray();
             $checkContent = (new EmailTemplate)->where('group', 'order_success_to_admin')->where('status', 1)->first();
             $checkContentCustomer = (new EmailTemplate)->where('group', 'order_success_to_customer')->where('status', 1)->first();
@@ -689,7 +638,8 @@ class ShopCart extends GeneralController
                 $dataFind = [
                     '/\{\{\$title\}\}/',
                     '/\{\{\$orderID\}\}/',
-                    '/\{\{\$toname\}\}/',
+                    '/\{\{\$first_name\}\}/',
+                    '/\{\{\$last_name\}\}/',
                     '/\{\{\$address\}\}/',
                     '/\{\{\$email\}\}/',
                     '/\{\{\$phone\}\}/',
@@ -703,7 +653,8 @@ class ShopCart extends GeneralController
                 $dataReplace = [
                     trans('order.send_mail.new_title') . '#' . $orderId,
                     $orderId,
-                    $data['toname'],
+                    $data['first_name'],
+                    $data['last_name'],
                     $data['address1'] . ' ' . $data['address2'],
                     $data['email'],
                     $data['phone'],
@@ -715,19 +666,19 @@ class ShopCart extends GeneralController
                     \Helper::currencyRender($data['total'], '', '', '', false),
                 ];
 
-                if (\Helper::configs()['order_success_to_admin'] && $checkContent) {
+                if (sc_config('order_success_to_admin') && $checkContent) {
                     $content = $checkContent->text;
                     $content = preg_replace($dataFind, $dataReplace, $content);
                     $data_mail = [
                         'content' => $content,
                     ];
                     $config = [
-                        'to' => $this->configsGlobal['email'],
+                        'to' => sc_store('email'),
                         'subject' => trans('order.send_mail.new_title') . '#' . $orderId,
                     ];
-                    \Helper::sendMail('mail.order_success_to_admin', $data_mail, $config, []);
+                    sc_send_mail('mail.order_success_to_admin', $data_mail, $config, []);
                 }
-                if (\Helper::configs()['order_success_to_customer'] && $checkContentCustomer) {
+                if (sc_config('order_success_to_customer') && $checkContentCustomer) {
                     $contentCustomer = $checkContentCustomer->text;
                     $contentCustomer = preg_replace($dataFind, $dataReplace, $contentCustomer);
                     $data_mail_customer = [
@@ -735,15 +686,15 @@ class ShopCart extends GeneralController
                     ];
                     $config = [
                         'to' => $data['email'],
-                        'replyTo' => $this->configsGlobal['email'],
+                        'replyTo' => sc_store('email'),
                         'subject' => trans('order.send_mail.new_title'),
                     ];
-                    \Helper::sendMail('mail.order_success_to_customer', $data_mail_customer, $config, []);
+                    sc_send_mail('mail.order_success_to_customer', $data_mail_customer, $config, []);
                 }
             }
 
         }
 
-        return redirect()->route('cart')->with('message', trans('order.success'));
+        return redirect()->route('cart')->with('success', trans('order.success'));
     }
 }

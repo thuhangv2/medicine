@@ -10,19 +10,20 @@ use View;
 
 class GeneralController extends Controller
 {
-    public $configs;
-    public $configsGlobal;
 
     public function __construct()
     {
-        //=======Config====
-        $configs       = \Helper::configs();
-        $configsGlobal = \Helper::configsGlobal();
-        //============end config====
-        $this->configsGlobal = $configsGlobal;
-        $this->configs       = $configs;
-        if (!$configs['site_status']) {
-            $maintain_content = $configsGlobal['maintain_content'] ?? '';
+        $languages = \Helper::languages();
+        $currencies = \Helper::currencies();
+        $layouts = \Helper::layouts();
+        $layoutsUrl = \Helper::layoutsUrl();
+        view()->share('languages', $languages);
+        view()->share('currencies', $currencies);
+        view()->share('layouts', $layouts);
+        view()->share('layoutsUrl', $layoutsUrl);
+
+        if (!sc_store('site_status')) {
+            $maintain_content = sc_store('maintain_content') ?? '';
             echo <<<HTML
  <section>
     <div class="container">
@@ -45,41 +46,41 @@ HTML;
  */
     public function emailSubscribe(Request $request)
     {
-        $data      = $request->all();
+        $data = $request->all();
         $validator = $request->validate([
             'subscribe_email' => 'required|email',
         ], [
             'subscribe_email.required' => trans('validation.required'),
-            'subscribe_email.email'    => trans('validation.email'),
+            'subscribe_email.email' => trans('validation.email'),
         ]);
 
         $checkEmail = Subscribe::where('email', $data['subscribe_email'])->first();
         if (!$checkEmail) {
             Subscribe::insert(['email' => $data['subscribe_email']]);
         }
-        return redirect()->back()->with(['message' => trans('language.subscribe.subscribe_success')]);
+        return redirect()->back()->with(['message' => trans('front.subscribe.subscribe_success')]);
     }
 
     public function pageNotFound()
     {
-        return view(SITE_THEME . '.notfound',
+        return view('templates.' . sc_store('template') . '.notfound',
             array(
-                'title'       => '404 - Page not found',
-                'msg'         => trans('language.page_not_found'),
+                'title' => '404 - Page not found',
+                'msg' => trans('front.page_not_found'),
                 'description' => '',
-                'keyword'     => '',
+                'keyword' => '',
 
             )
         );
     }
     public function itemNotFound()
     {
-        return view(SITE_THEME . '.notfound',
+        return view('templates.' . sc_store('template') . '.notfound',
             array(
-                'title'       => '404 - Item not found',
-                'msg'         => trans('language.item_not_found'),
+                'title' => '404 - Item not found',
+                'msg' => trans('front.item_not_found'),
                 'description' => '',
-                'keyword'     => '',
+                'keyword' => '',
 
             )
         );

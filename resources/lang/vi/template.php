@@ -6,7 +6,7 @@ return [
     'auth'       => 'Tác giả',
     'email'      => 'Email',
     'website'    => 'Website',
-    'active'     => 'Đang hoạt động',
+    'activated'  => 'Đang hoạt động',
     'inactive'   => 'Đang ẩn',
     'download'   => 'Tải về',
     'remove'     => 'Gỡ bỏ',
@@ -14,4 +14,8 @@ return [
     'version'    => 'Phiên bản',
     'installing' => 'Đang cài đặt',
     'guide'      => 'Xem hướng dẫn <a target=_new href="https://s-cart.org/download/template.html?lang=vi">Ở ĐÂY</a>',
+    'admin'      => [
+        'list'  => 'Danh sách giao diện',
+        'title' => 'Quan lý giao diện',
+    ],
 ];

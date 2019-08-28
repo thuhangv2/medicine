@@ -1,203 +1,318 @@
 <?php
-#app/Http/Admin/Controllers/Modules/Cms/CmsNewsController.php
-
+#app/Http/Admin/Controllers/CmsNewsController.php
 namespace App\Admin\Controllers\Modules\Cms;
 
 use App\Http\Controllers\Controller;
-use App\Models\Language;
+use App\Models\ShopLanguage;
 use App\Modules\Cms\Models\CmsNews;
 use App\Modules\Cms\Models\CmsNewsDescription;
-use Encore\Admin\Controllers\HasResourceActions;
-use Encore\Admin\Facades\Admin;
-use Encore\Admin\Form;
-use Encore\Admin\Grid;
-use Encore\Admin\Layout\Content;
-use Encore\Admin\Show;
+use Illuminate\Http\Request;
+use Validator;
 
 class CmsNewsController extends Controller
 {
-    use HasResourceActions;
+    public $lang, $languages;
 
-    /**
-     * Index interface.
-     *
-     * @return Content
-     */
-    public function index(Content $content)
+    public function __construct()
     {
-        return $content
-            ->header(trans('language.admin.cms_news'))
-            ->description(' ')
-            ->body($this->grid());
+        $this->lang = app()->getLocale();
+        $this->languages = ShopLanguage::getList();
+
     }
 
-    /**
-     * Edit interface.
-     *
-     * @param $id
-     * @return Content
-     */
-    public function edit($id, Content $content)
+    public function index()
     {
-        return $content
-            ->header(trans('language.admin.cms_news'))
-            ->description(' ')
-            ->body($this->form()->edit($id));
-    }
+        $data = [
+            'title' => trans('Modules/Cms/News.admin.list'),
+            'sub_title' => '',
+            'icon' => 'fa fa-indent',
+            'menu_left' => '',
+            'menu_right' => '',
+            'menu_sort' => '',
+            'script_sort' => '',
+            'menu_search' => '',
+            'script_search' => '',
+            'listTh' => '',
+            'dataTr' => '',
+            'pagination' => '',
+            'result_items' => '',
+            'url_delete_item' => '',
+        ];
 
-    /**
-     * Create interface.
-     *
-     * @return Content
-     */
-    public function create(Content $content)
-    {
-        return $content
-            ->header(trans('language.admin.cms_news'))
-            ->description(' ')
-            ->body($this->form());
-    }
+        $listTh = [
+            'title' => trans('Modules/Cms/News.title'),
+            'image' => trans('Modules/Cms/News.image'),
+            'sort' => trans('Modules/Cms/News.sort'),
+            'status' => trans('Modules/Cms/News.status'),
+            'action' => trans('Modules/Cms/News.admin.action'),
+        ];
+        $sort_order = request('sort_order') ?? 'id_desc';
+        $keyword = request('keyword') ?? '';
+        $arrSort = [
+            'id__desc' => trans('Modules/Cms/News.admin.sort_order.id_desc'),
+            'id__asc' => trans('Modules/Cms/News.admin.sort_order.id_asc'),
+            'title__desc' => trans('Modules/Cms/News.admin.sort_order.title_desc'),
+            'title__asc' => trans('Modules/Cms/News.admin.sort_order.title_asc'),
+        ];
+        $obj = new CmsNews;
 
-    /**
-     * Make a grid builder.
-     *
-     * @return Grid
-     */
-    protected function grid()
-    {
-        $grid = new Grid(new CmsNews);
-
-        $grid->id('ID')->sortable();
-        $grid->title(trans('language.admin.title'))->sortable();
-        $grid->image(trans('language.admin.image'))->image('', 50);
-        $grid->status(trans('language.admin.status'))->switch();
-        $grid->created_at(trans('language.admin.created_at'));
-        $grid->updated_at(trans('language.admin.last_modify'));
-        $grid->model()->orderBy('id', 'desc');
-        $grid->actions(function ($actions) {
-            $actions->disableView();
-        });
-        $grid->disableExport();
-        $grid->disableRowSelector();
-        $grid->disableFilter();
-        $grid->tools(function ($tools) {
-            $tools->disableRefreshButton();
-        });
-        $grid->paginate(100);
-
-        return $grid;
-    }
-
-    /**
-     * Make a form builder.
-     *
-     * @return Form
-     */
-    protected function form()
-    {
-        $form = new Form(new CmsNews);
-//Language
-        $arrParameters = request()->route()->parameters();
-        $idCheck       = (int) end($arrParameters);
-        $languages     = Language::getLanguages();
-        $arrFields     = array();
-        foreach ($languages as $key => $language) {
-            if ($idCheck) {
-                $langDescriptions = CmsNewsDescription::where('cms_news_id', $idCheck)->where('lang_id', $language->id)->first();
-            }
-            if ($languages->count() > 1) {
-                $form->html('<b>' . $language->name . '</b> <img style="height:25px" src="/' . config('filesystems.disks.path_file') . '/' . $language->icon . '">');
-            }
-            $form->text($language->code . '__title', trans('language.admin.title'))->rules('required', ['required' => trans('validation.required')])->default(!empty($langDescriptions->title) ? $langDescriptions->title : null);
-            $form->text($language->code . '__keyword', trans('language.admin.keyword'))->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
-            $form->text($language->code . '__description', trans('language.admin.description'))->rules('max:300', ['max' => trans('validation.max')])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
-            $form->ckeditor($language->code . '__content', trans('language.admin.content'))->default(!empty($langDescriptions->content) ? $langDescriptions->content : null);
-            $arrFields[] = $language->code . '__title';
-            $arrFields[] = $language->code . '__keyword';
-            $arrFields[] = $language->code . '__description';
-            $arrFields[] = $language->code . '__content';
-            $form->divide();
+        $obj = $obj
+            ->leftJoin('cms_news_description', 'cms_news_description.cms_news_id', 'cms_news.id')
+            ->where('cms_news_description.lang', $this->lang);
+        if ($keyword) {
+            $obj = $obj->whereRaw('(cms_news_description.title like "%' . $keyword . '%" )');
         }
-        $form->ignore($arrFields);
-//end language
+        if ($sort_order && array_key_exists($sort_order, $arrSort)) {
+            $field = explode('__', $sort_order)[0];
+            $sort_field = explode('__', $sort_order)[1];
+            $obj = $obj->orderBy($field, $sort_field);
 
-        $form->image('image', trans('language.admin.image'))->uniqueName()->move('cms_content')->removable();
-        $form->switch('status', trans('language.admin.status'));
-        $form->number('sort', trans('language.admin.sort'))->rules('numeric|min:0')->default(0);
+        } else {
+            $obj = $obj->orderBy('id', 'desc');
+        }
+        $dataTmp = $obj->paginate(20);
 
-        $arrData = array();
-        $form->saving(function (Form $form) use ($languages, &$arrData) {
-            //Lang
-            foreach ($languages as $key => $language) {
-                $arrData[$language->code]['title']       = request($language->code . '__title');
-                $arrData[$language->code]['keyword']     = request($language->code . '__keyword');
-                $arrData[$language->code]['description'] = request($language->code . '__description');
-                $arrData[$language->code]['content']     = request($language->code . '__content');
+        $dataTr = [];
+        foreach ($dataTmp as $key => $row) {
+            $dataTr[] = [
+                'title' => $row['title'],
+                'image' => sc_image_render($row['image'], '50px'),
+                'sort' => $row['sort'],
+                'status' => $row['status'] ? '<span class="label label-success">ON</span>' : '<span class="label label-danger">OFF</span>',
+                'action' => '
+                    <a href="' . route('admin_cms_news.edit', ['id' => $row['id']]) . '"><span title="' . trans('Modules/Cms/News.admin.edit') . '" type="button" class="btn btn-flat btn-primary"><i class="fa fa-edit"></i></span></a>&nbsp;
 
-            }
-            //end lang
-        });
+                    <span onclick="deleteItem(' . $row['id'] . ');"  title="' . trans('admin.delete') . '" class="btn btn-flat btn-danger"><i class="fa fa-trash"></i></span>'
+                ,
+            ];
+        }
 
-        $form->saved(function (Form $form) use ($languages, &$arrData) {
+        $data['listTh'] = $listTh;
+        $data['dataTr'] = $dataTr;
+        $data['pagination'] = $dataTmp->appends(request()->except(['_token', '_pjax']))->links('admin.component.pagination');
+        $data['result_items'] = trans('Modules/Cms/News.admin.result_item', ['item_from' => $dataTmp->firstItem(), 'item_to' => $dataTmp->lastItem(), 'item_total' => $dataTmp->total()]);
+//menu_left
+        $data['menu_left'] = '<div class="pull-left">
+                    <button type="button" class="btn btn-default grid-select-all"><i class="fa fa-square-o"></i></button> &nbsp;
 
-            $id = $form->model()->id;
-            //Lang
-            foreach ($languages as $key => $language) {
-                if (array_filter($arrData[$language->code], function ($v, $k) {
-                    return $v != null;
-                }, ARRAY_FILTER_USE_BOTH)) {
-                    $arrData[$language->code]['cms_news_id'] = $id;
-                    $arrData[$language->code]['lang_id']     = $language->id;
-                    CmsNewsDescription::where('lang_id', $arrData[$language->code]['lang_id'])->where('cms_news_id', $arrData[$language->code]['cms_news_id'])->delete();
-                    CmsNewsDescription::insert($arrData[$language->code]);
-                }
-            }
+                    <a class="btn   btn-flat btn-danger grid-trash" title="Delete"><i class="fa fa-trash-o"></i><span class="hidden-xs"> ' . trans('admin.delete') . '</span></a> &nbsp;
 
-            //end lang
+                    <a class="btn   btn-flat btn-primary grid-refresh" title="Refresh"><i class="fa fa-refresh"></i><span class="hidden-xs"> ' . trans('admin.refresh') . '</span></a> &nbsp;</div>
+                    ';
+//=menu_left
 
-            $file_path_admin = config('filesystems.disks.admin.root');
-            $statusWatermark = \Helper::configs()['watermark'];
-            $fileWatermark   = $file_path_admin . '/' . \Helper::configsGlobal()['watermark'];
-            try {
-                //image primary
-                \Helper::processImageThumb($pathRoot = $file_path_admin, $pathFile = $form->model()->image, $widthThumb = 250, $heightThumb = null, $statusWatermark, $fileWatermark);
-            } catch (\Exception $e) {
-                echo $e->getMessage();
-            }
+//menu_right
+        $data['menu_right'] = '
+                        <div class="btn-group pull-right" style="margin-right: 10px">
+                           <a href="' . route('admin_cms_news.create') . '" class="btn  btn-success  btn-flat" title="New" id="button_create_new">
+                           <i class="fa fa-plus"></i><span class="hidden-xs">' . trans('admin.add_new') . '</span>
+                           </a>
+                        </div>
 
-        });
-        $form->disableViewCheck();
-        $form->disableEditingCheck();
-        $form->tools(function (Form\Tools $tools) {
-            $tools->disableView();
-        });
-        return $form;
+                        ';
+//=menu_right
+
+//menu_sort
+
+        $optionSort = '';
+        foreach ($arrSort as $key => $status) {
+            $optionSort .= '<option  ' . (($sort_order == $key) ? "selected" : "") . ' value="' . $key . '">' . $status . '</option>';
+        }
+
+        $data['menu_sort'] = '
+                       <div class="btn-group pull-left">
+                        <div class="form-group">
+                           <select class="form-control" id="order_sort">
+                            ' . $optionSort . '
+                           </select>
+                         </div>
+                       </div>
+
+                       <div class="btn-group pull-left">
+                           <a class="btn btn-flat btn-primary" title="Sort" id="button_sort">
+                              <i class="fa fa-sort-amount-asc"></i><span class="hidden-xs"> ' . trans('admin.sort') . '</span>
+                           </a>
+                       </div>';
+
+        $data['script_sort'] = "$('#button_sort').click(function(event) {
+      var url = '" . route('admin_cms_news.index') . "?sort_order='+$('#order_sort option:selected').val();
+      $.pjax({url: url, container: '#pjax-container'})
+    });";
+
+//=menu_sort
+
+//menu_search
+
+        $data['menu_search'] = '
+                <form action="' . route('admin_cms_news.index') . '" id="button_search">
+                   <div onclick="$(this).submit();" class="btn-group pull-right">
+                           <a class="btn btn-flat btn-primary" title="Refresh">
+                              <i class="fa  fa-search"></i><span class="hidden-xs"> ' . trans('admin.search') . '</span>
+                           </a>
+                   </div>
+                   <div class="btn-group pull-right">
+                         <div class="form-group">
+                           <input type="text" name="keyword" class="form-control" placeholder="' . trans('Modules/Cms/News.admin.search_place') . '" value="' . $keyword . '">
+                         </div>
+                   </div>
+                </form>';
+//=menu_search
+
+        $data['url_delete_item'] = route('admin_cms_news.delete');
+
+        return view('admin.screen.list')
+            ->with($data);
     }
 
-    /**
-     * Show interface.
-     *
-     * @param mixed $id
-     * @param Content $content
-     * @return Content
-     */
-    public function show($id, Content $content)
+/**
+ * Form create new order in admin
+ * @return [type] [description]
+ */
+    public function create()
     {
-        return $content
-            ->header('Detail')
-            ->description(' ')
-            ->body($this->detail($id));
+        $cms_news = [];
+        $data = [
+            'title' => trans('Modules/Cms/News.admin.add_new_title'),
+            'sub_title' => '',
+            'title_description' => trans('Modules/Cms/News.admin.add_new_des'),
+            'icon' => 'fa fa-plus',
+            'languages' => $this->languages,
+            'cms_news' => $cms_news,
+            'url_action' => route('admin_cms_news.create'),
+
+        ];
+
+        return view('admin.screen.cms_news')
+            ->with($data);
     }
 
-    /**
-     * Make a show builder.
-     *
-     * @param mixed $id
-     * @return Show
-     */
-    protected function detail($id)
+/**
+ * Post create new order in admin
+ * @return [type] [description]
+ */
+    public function postCreate()
     {
-        $show = new Show(CmsNews::findOrFail($id));
-        return $show;
+
+        $data = request()->all();
+        $validator = Validator::make($data, [
+            'descriptions.*.title' => 'required|string|max:100',
+        ], [
+            'descriptions.*.title.required' => trans('validation.required', ['attribute' => trans('Modules/Cms/News.title')]),
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $dataInsert = [
+            'image' => $data['image'],
+            'sort' => $data['sort'],
+            'status' => !empty($data['status']) ? 1 : 0,
+        ];
+        $id = CmsNews::insertGetId($dataInsert);
+        $dataDes = [];
+        $languages = $this->languages;
+        foreach ($languages as $code => $value) {
+            $dataDes[] = [
+                'cms_news_id' => $id,
+                'lang' => $code,
+                'title' => $data['descriptions'][$code]['title'],
+                'keyword' => $data['descriptions'][$code]['keyword'],
+                'description' => $data['descriptions'][$code]['description'],
+                'content' => $data['descriptions'][$code]['content'],
+            ];
+        }
+        CmsNewsDescription::insert($dataDes);
+
+        return redirect()->route('admin_cms_news.index')->with('success', trans('Modules/Cms/News.admin.create_success'));
+
     }
+
+/**
+ * Form edit
+ */
+    public function edit($id)
+    {
+        $cms_news = CmsNews::find($id);
+        if ($cms_news === null) {
+            return 'no data';
+        }
+        $data = [
+            'title' => trans('Modules/Cms/News.admin.edit'),
+            'sub_title' => '',
+            'title_description' => '',
+            'icon' => 'fa fa-pencil-square-o',
+            'languages' => $this->languages,
+            'cms_news' => $cms_news,
+            'url_action' => route('admin_cms_news.edit', ['id' => $cms_news['id']]),
+        ];
+        return view('admin.screen.cms_news')
+            ->with($data);
+    }
+
+/**
+ * update status
+ */
+    public function postEdit($id)
+    {
+        $cms_news = CmsNews::find($id);
+        $data = request()->all();
+        $validator = Validator::make($data, [
+            'descriptions.*.title' => 'required|string|max:100',
+        ], [
+            'descriptions.*.title.required' => trans('validation.required', ['attribute' => trans('Modules/Cms/News.title')]),
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+//Edit
+
+        $dataUpdate = [
+            'image' => $data['image'],
+            'sort' => $data['sort'],
+            'status' => !empty($data['status']) ? 1 : 0,
+        ];
+
+        $obj = CmsNews::find($id);
+        $obj->update($dataUpdate);
+        $obj->descriptions()->delete();
+        $dataDes = [];
+        foreach ($data['descriptions'] as $code => $row) {
+            $dataDes[] = [
+                'cms_news_id' => $id,
+                'lang' => $code,
+                'title' => $row['title'],
+                'keyword' => $row['keyword'],
+                'description' => $row['description'],
+                'content' => $row['content'],
+            ];
+        }
+        CmsNewsDescription::insert($dataDes);
+
+//
+        return redirect()->route('admin_cms_news.index')->with('success', trans('Modules/Cms/News.admin.edit_success'));
+
+    }
+
+/*
+Delete list Item
+Need mothod destroy to boot deleting in model
+ */
+    public function deleteList()
+    {
+        if (!request()->ajax()) {
+            return response()->json(['error' => 1, 'msg' => 'Method not allow!']);
+        } else {
+            $ids = request('ids');
+            $arrID = explode(',', $ids);
+            CmsNews::destroy($arrID);
+            return response()->json(['error' => 0, 'msg' => '']);
+        }
+    }
+
 }

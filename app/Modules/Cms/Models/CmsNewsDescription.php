@@ -8,10 +8,12 @@ use Illuminate\Support\Facades\Schema;
 
 class CmsNewsDescription extends Model
 {
-    protected $primaryKey = null;
+    protected $primaryKey = ['lang', 'cms_news_id'];
+    public $incrementing  = false;
+    protected $guarded    = [];
     public $timestamps    = false;
     public $table         = 'cms_news_description';
-    protected $fillable   = ['lang_id', 'title', 'description', 'keyword', 'cms_news_id', 'content'];
+    protected $fillable   = ['lang', 'title', 'description', 'keyword', 'cms_news_id', 'content'];
 
     //=============
     public function uninstallExtension()
@@ -28,12 +30,12 @@ class CmsNewsDescription extends Model
             try {
                 Schema::create($this->table, function (Blueprint $table) {
                     $table->integer('cms_news_id');
-                    $table->integer('lang_id');
+                    $table->string('lang', 10);
                     $table->string('title', 200)->nullable();
                     $table->string('keyword', 200)->nullable();
                     $table->string('description', 200)->nullable();
                     $table->text('content')->nullable();
-                    $table->unique(['cms_news_id', 'lang_id']);
+                    $table->primary(['cms_news_id', 'lang']);
                 });
             } catch (\Exception $e) {
                 $return = ['error' => 1, 'msg' => $e->getMessage()];

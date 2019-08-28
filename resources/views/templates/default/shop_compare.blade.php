@@ -1,4 +1,4 @@
-@extends(SITE_THEME.'.shop_layout')
+@extends('templates.'.sc_store('template').'.shop_layout')
 
 @section('main')
 <section >
@@ -31,7 +31,7 @@
             <hr>
             {!! $product->description !!}
             <hr>
-            <a onClick="return confirm('Confirm')" title="Remove Item" alt="Remove Item" class="cart_quantity_delete" href="{{route("removeItemCompare",['id'=>$item->rowId])}}"><i class="fa fa-times"></i></a>
+            <a onClick="return confirm('Confirm')" title="Remove Item" alt="Remove Item" class="cart_quantity_delete" href="{{route("compare.remove",['id'=>$item->rowId])}}"><i class="fa fa-times"></i></a>
        </td>
        @if ($n % 4 == 0)
       </tr>

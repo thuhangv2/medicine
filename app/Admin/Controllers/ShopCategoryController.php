@@ -3,193 +3,331 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Language;
 use App\Models\ShopCategory;
 use App\Models\ShopCategoryDescription;
-use Encore\Admin\Controllers\HasResourceActions;
-use Encore\Admin\Facades\Admin;
-use Encore\Admin\Form;
-use Encore\Admin\Grid;
-use Encore\Admin\Layout\Content;
-use Encore\Admin\Show;
+use App\Models\ShopLanguage;
+use Illuminate\Http\Request;
+use Validator;
 
 class ShopCategoryController extends Controller
 {
-    use HasResourceActions;
+    public $lang, $languages;
 
-    /**
-     * Index interface.
-     *
-     * @return Content
-     */
+    public function __construct()
+    {
+        $this->lang = app()->getLocale();
+        $this->languages = ShopLanguage::getList();
+
+    }
+
     public function index()
     {
-        return Admin::content(function (Content $content) {
+        $data = [
+            'title' => trans('category.admin.list'),
+            'sub_title' => '',
+            'icon' => 'fa fa-indent',
+            'menu_left' => '',
+            'menu_right' => '',
+            'menu_sort' => '',
+            'script_sort' => '',
+            'menu_search' => '',
+            'script_search' => '',
+            'listTh' => '',
+            'dataTr' => '',
+            'pagination' => '',
+            'result_items' => '',
+            'url_delete_item' => '',
+        ];
 
-            $content->header(trans('language.admin.shop_category'));
-            $content->description(' ');
+        $listTh = [
+            'check_row' => '',
+            'id' => trans('category.id'),
+            'image' => trans('category.image'),
+            'name' => trans('category.name'),
+            'parent' => trans('category.parent'),
+            'top' => trans('category.top'),
+            'status' => trans('category.status'),
+            'sort' => trans('category.sort'),
+            'action' => trans('category.admin.action'),
+        ];
+        $sort_order = request('sort_order') ?? 'id_desc';
+        $keyword = request('keyword') ?? '';
+        $arrSort = [
+            'id__desc' => trans('category.admin.sort_order.id_desc'),
+            'id__asc' => trans('category.admin.sort_order.id_asc'),
+            'name__desc' => trans('category.admin.sort_order.name_desc'),
+            'name__asc' => trans('category.admin.sort_order.name_asc'),
+        ];
+        $obj = new ShopCategory;
 
-            $content->body($this->grid());
-        });
+        $obj = $obj
+            ->leftJoin('shop_category_description', 'shop_category_description.category_id', 'shop_category.id')
+            ->where('shop_category_description.lang', $this->lang);
+        if ($keyword) {
+            $obj = $obj->whereRaw('(id = ' . (int) $keyword . ' OR shop_category_description.name like "%' . $keyword . '%" )');
+        }
+        if ($sort_order && array_key_exists($sort_order, $arrSort)) {
+            $field = explode('__', $sort_order)[0];
+            $sort_field = explode('__', $sort_order)[1];
+            $obj = $obj->orderBy($field, $sort_field);
+
+        } else {
+            $obj = $obj->orderBy('id', 'desc');
+        }
+        $dataTmp = $obj->paginate(20);
+
+        $dataTr = [];
+        foreach ($dataTmp as $key => $row) {
+            $dataTr[] = [
+                'check_row' => '<input type="checkbox" class="grid-row-checkbox" data-id="' . $row['id'] . '">',
+                'id' => $row['id'],
+                'image' => sc_image_render($row->getThumb(), '50px', '50px'),
+                'name' => $row['name'],
+                'parent' => $row['parent'] ? ($row->getParent() ? $row->getParent()['name'] : '') : 'ROOT',
+                'top' => $row['top'] ? '<span class="label label-success">ON</span>' : '<span class="label label-danger">OFF</span>',
+                'status' => $row['status'] ? '<span class="label label-success">ON</span>' : '<span class="label label-danger">OFF</span>',
+                'sort' => $row['sort'],
+                'action' => '
+                    <a href="' . route('admin_category.edit', ['id' => $row['id']]) . '"><span title="' . trans('category.admin.edit') . '" type="button" class="btn btn-flat btn-primary"><i class="fa fa-edit"></i></span></a>&nbsp;
+
+                    <span onclick="deleteItem(' . $row['id'] . ');"  title="' . trans('admin.delete') . '" class="btn btn-flat btn-danger"><i class="fa fa-trash"></i></span>'
+                ,
+            ];
+        }
+
+        $data['listTh'] = $listTh;
+        $data['dataTr'] = $dataTr;
+        $data['pagination'] = $dataTmp->appends(request()->except(['_token', '_pjax']))->links('admin.component.pagination');
+        $data['result_items'] = trans('category.admin.result_item', ['item_from' => $dataTmp->firstItem(), 'item_to' => $dataTmp->lastItem(), 'item_total' => $dataTmp->total()]);
+//menu_left
+        $data['menu_left'] = '<div class="pull-left">
+                    <button type="button" class="btn btn-default grid-select-all"><i class="fa fa-square-o"></i></button> &nbsp;
+
+                    <a class="btn   btn-flat btn-danger grid-trash" title="Delete"><i class="fa fa-trash-o"></i><span class="hidden-xs"> ' . trans('admin.delete') . '</span></a> &nbsp;
+
+                    <a class="btn   btn-flat btn-primary grid-refresh" title="Refresh"><i class="fa fa-refresh"></i><span class="hidden-xs"> ' . trans('admin.refresh') . '</span></a> &nbsp;</div>
+                    ';
+//=menu_left
+
+//menu_right
+        $data['menu_right'] = '
+                        <div class="btn-group pull-right" style="margin-right: 10px">
+                           <a href="' . route('admin_category.create') . '" class="btn  btn-success  btn-flat" title="New" id="button_create_new">
+                           <i class="fa fa-plus"></i><span class="hidden-xs">' . trans('admin.add_new') . '</span>
+                           </a>
+                        </div>
+
+                        ';
+//=menu_right
+
+//menu_sort
+
+        $optionSort = '';
+        foreach ($arrSort as $key => $status) {
+            $optionSort .= '<option  ' . (($sort_order == $key) ? "selected" : "") . ' value="' . $key . '">' . $status . '</option>';
+        }
+
+        $data['menu_sort'] = '
+                       <div class="btn-group pull-left">
+                        <div class="form-group">
+                           <select class="form-control" id="order_sort">
+                            ' . $optionSort . '
+                           </select>
+                         </div>
+                       </div>
+
+                       <div class="btn-group pull-left">
+                           <a class="btn btn-flat btn-primary" title="Sort" id="button_sort">
+                              <i class="fa fa-sort-amount-asc"></i><span class="hidden-xs"> ' . trans('admin.sort') . '</span>
+                           </a>
+                       </div>';
+
+        $data['script_sort'] = "$('#button_sort').click(function(event) {
+      var url = '" . route('admin_category.index') . "?sort_order='+$('#order_sort option:selected').val();
+      $.pjax({url: url, container: '#pjax-container'})
+    });";
+
+//=menu_sort
+
+//menu_search
+
+        $data['menu_search'] = '
+                <form action="' . route('admin_category.index') . '" id="button_search">
+                   <div onclick="$(this).submit();" class="btn-group pull-right">
+                           <a class="btn btn-flat btn-primary" title="Refresh">
+                              <i class="fa  fa-search"></i><span class="hidden-xs"> ' . trans('admin.search') . '</span>
+                           </a>
+                   </div>
+                   <div class="btn-group pull-right">
+                         <div class="form-group">
+                           <input type="text" name="keyword" class="form-control" placeholder="' . trans('category.admin.search_place') . '" value="' . $keyword . '">
+                         </div>
+                   </div>
+                </form>';
+//=menu_search
+
+        $data['url_delete_item'] = route('admin_category.delete');
+
+        return view('admin.screen.list')
+            ->with($data);
     }
 
-    /**
-     * Edit interface.
-     *
-     * @param $id
-     * @return Content
-     */
-    public function edit($id)
-    {
-        return Admin::content(function (Content $content) use ($id) {
-
-            $content->header(trans('language.admin.shop_category'));
-            $content->description(' ');
-
-            $content->body($this->form()->edit($id));
-        });
-    }
-
-    /**
-     * Create interface.
-     *
-     * @return Content
-     */
+/**
+ * Form create new order in admin
+ * @return [type] [description]
+ */
     public function create()
     {
-        return Admin::content(function (Content $content) {
+        $data = [
+            'title' => trans('category.admin.add_new_title'),
+            'sub_title' => '',
+            'title_description' => trans('category.admin.add_new_des'),
+            'icon' => 'fa fa-plus',
+            'languages' => $this->languages,
+            'category' => [],
+            'categories' => (new ShopCategory)->getTreeCategories(),
+            'url_action' => route('admin_category.create'),
 
-            $content->header(trans('language.admin.shop_category'));
-            $content->description(' ');
+        ];
 
-            $content->body($this->form());
-        });
+        return view('admin.screen.category')
+            ->with($data);
     }
 
-    /**
-     * Make a grid builder.
-     *
-     * @return Grid
-     */
-    protected function grid()
+/**
+ * Post create new order in admin
+ * @return [type] [description]
+ */
+    public function postCreate()
     {
+        $data = request()->all();
+        $dataOrigin = request()->all();
+        $validator = Validator::make($dataOrigin, [
+            'image' => 'required',
+            'sort' => 'numeric|min:0',
+            'descriptions.*.name' => 'required|string|max:100',
+        ], [
+            'descriptions.*.name.required' => trans('validation.required', ['attribute' => trans('category.name')]),
+        ]);
 
-        $grid = new Grid(new ShopCategory);
-        $grid->id('ID')->sortable();
-        $grid->image(trans('language.category.image'))->image('', 50);
-        $grid->name(trans('language.category.name'))->display(function () {
-            return ShopCategory::find($this->id)->getName();
-        });
-        $grid->parent(trans('language.category.parent'))->display(function ($parent) {
-            return (ShopCategory::find($parent)) ? ShopCategory::find($parent)->getName() : '';
-        })->sortable();
-        $grid->top(trans('language.category.top'))->switch()->sortable();
-        $grid->status(trans('language.category.status'))->switch()->sortable();
-        $grid->sort(trans('language.category.sort'))->editable();
-        $grid->disableExport();
-        $grid->model()->orderBy('id', 'desc');
-        $grid->disableRowSelector();
-        $grid->disableFilter();
-        $grid->actions(function ($actions) {
-            $actions->disableView();
-        });
-        $grid->tools(function ($tools) {
-            $tools->disableRefreshButton();
-        });
-        $grid->model()->orderBy('id', 'desc');
-        return $grid;
-    }
-
-    /**
-     * Make a form builder.
-     *
-     * @return Form
-     */
-    protected function form()
-    {
-        $form = new Form(new ShopCategory);
-//Language
-        $arrParameters = request()->route()->parameters();
-        $idCheck       = (int) end($arrParameters);
-        $languages     = Language::getLanguages();
-        $arrFields     = array();
-        foreach ($languages as $key => $language) {
-            if ($idCheck) {
-                $langDescriptions = ShopCategoryDescription::where('shop_category_id', $idCheck)->where('lang_id', $language->id)->first();
-            }
-            if ($languages->count() > 1) {
-                $form->html('<b>' . $language->name . '</b> <img style="height:25px" src="/' . config('filesystems.disks.path_file') . '/' . $language->icon . '">');
-            }
-            $form->text($language->code . '__name', trans('language.category.name'))->rules('required', ['required' => trans('validation.required')])->default(!empty($langDescriptions->name) ? $langDescriptions->name : null);
-            $form->text($language->code . '__keyword', trans('language.category.keyword'))->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
-            $form->text($language->code . '__description', trans('language.category.description'))->rules('max:300', ['max' => trans('validation.max')])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
-            $arrFields[] = $language->code . '__name';
-            $arrFields[] = $language->code . '__keyword';
-            $arrFields[] = $language->code . '__description';
-            $form->divide();
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
         }
-        $form->ignore($arrFields);
-        $arrCate = (new ShopCategory)->getTreeCategories();
-        $arrCate = ['0' => '== ROOT =='] + $arrCate;
-        $form->select('parent', trans('language.category.parent'))->options($arrCate);
-        $form->image('image', trans('language.category.image'))->uniqueName()->move('category')->removable();
-        $form->number('sort', trans('language.category.sort'))->rules('numeric|min:0')->default(0);
-        $form->switch('top', trans('language.category.top'))->help(trans('language.category.help_top'))->default(0);
-        $form->switch('status', trans('language.category.status'));
-        $arrData = array();
 
-        $form->saving(function (Form $form) use ($languages, &$arrData) {
-            //Lang
-            foreach ($languages as $key => $language) {
-                $arrData[$language->code]['name']        = request($language->code . '__name');
-                $arrData[$language->code]['keyword']     = request($language->code . '__keyword');
-                $arrData[$language->code]['description'] = request($language->code . '__description');
+        $dataInsert = [
+            'image' => $data['image'],
+            'parent' => (int) $data['parent'],
+            'top' => !empty($data['top']) ? 1 : 0,
+            'status' => !empty($data['status']) ? 1 : 0,
+            'sort' => (int) $data['sort'],
+        ];
+        $id = ShopCategory::insertGetId($dataInsert);
+        $dataDes = [];
+        $languages = $this->languages;
+        foreach ($languages as $code => $value) {
+            $dataDes[] = [
+                'category_id' => $id,
+                'lang' => $code,
+                'name' => $data['descriptions'][$code]['name'],
+                'keyword' => $data['descriptions'][$code]['keyword'],
+                'description' => $data['descriptions'][$code]['description'],
+            ];
+        }
+        ShopCategoryDescription::insert($dataDes);
 
-            }
-            //end lang
-        });
+        return redirect()->route('admin_category.index')->with('success', trans('category.admin.create_success'));
 
-        $form->saved(function (Form $form) use ($languages, &$arrData) {
-            $idForm = $form->model()->id;
-
-            //Language
-            foreach ($languages as $key => $language) {
-                if (array_filter($arrData[$language->code], function ($v, $k) {
-                    return $v != null;
-                }, ARRAY_FILTER_USE_BOTH)) {
-                    $arrData[$language->code]['shop_category_id'] = $idForm;
-                    $arrData[$language->code]['lang_id']          = $language->id;
-                    ShopCategoryDescription::where('lang_id', $arrData[$language->code]['lang_id'])->where('shop_category_id', $arrData[$language->code]['shop_category_id'])->delete();
-                    ShopCategoryDescription::insert($arrData[$language->code]);
-                }
-            }
-            //End language
-
-            $file_path_admin = config('filesystems.disks.admin.root');
-            $statusWatermark = \Helper::configs()['watermark'];
-            $fileWatermark   = $file_path_admin . '/' . \Helper::configsGlobal()['watermark'];
-            try {
-                //image primary
-                \Helper::processImageThumb($pathRoot = $file_path_admin, $pathFile = $form->model()->image, $widthThumb = 250, $heightThumb = null, $statusWatermark, $fileWatermark);
-
-            } catch (\Exception $e) {
-                echo $e->getMessage();
-            }
-
-        });
-        $form->disableViewCheck();
-        $form->disableEditingCheck();
-        $form->tools(function (Form\Tools $tools) {
-            $tools->disableView();
-        });
-        return $form;
     }
 
-    public function show($id, Content $content)
+/**
+ * Form edit
+ */
+    public function edit($id)
     {
-        return $content
-            ->header('Detail')
-            ->description('description')
-            ->body($this->detail($id));
+        $category = ShopCategory::find($id);
+        if ($category === null) {
+            return 'no data';
+        }
+        $data = [
+            'title' => trans('category.admin.edit'),
+            'sub_title' => '',
+            'title_description' => '',
+            'icon' => 'fa fa-pencil-square-o',
+            'languages' => $this->languages,
+            'category' => $category,
+            'categories' => (new ShopCategory)->getTreeCategories(),
+            'url_action' => route('admin_category.edit', ['id' => $category['id']]),
+        ];
+        return view('admin.screen.category')
+            ->with($data);
     }
+
+/**
+ * update status
+ */
+    public function postEdit($id)
+    {
+        $data = request()->all();
+        $dataOrigin = request()->all();
+        $validator = Validator::make($dataOrigin, [
+            'image' => 'required',
+            'sort' => 'numeric|min:0',
+            'descriptions.*.name' => 'required|string|max:100',
+        ], [
+            'descriptions.*.name.required' => trans('validation.required', ['attribute' => trans('category.name')]),
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+//Edit
+
+        $dataUpdate = [
+            'image' => $data['image'],
+            'parent' => $data['parent'],
+            'sort' => $data['sort'],
+            'top' => empty($data['top']) ? 0 : 1,
+            'status' => empty($data['status']) ? 0 : 1,
+        ];
+
+        $obj = ShopCategory::find($id);
+        $obj->update($dataUpdate);
+        $obj->descriptions()->delete();
+        $dataDes = [];
+        foreach ($data['descriptions'] as $code => $row) {
+            $dataDes[] = [
+                'category_id' => $id,
+                'lang' => $code,
+                'name' => $row['name'],
+                'keyword' => $row['keyword'],
+                'description' => $row['description'],
+            ];
+        }
+        ShopCategoryDescription::insert($dataDes);
+
+//
+        return redirect()->route('admin_category.index')->with('success', trans('category.admin.edit_success'));
+
+    }
+
+/*
+Delete list Item
+Need mothod destroy to boot deleting in model
+ */
+    public function deleteList()
+    {
+        if (!request()->ajax()) {
+            return response()->json(['error' => 1, 'msg' => 'Method not allow!']);
+        } else {
+            $ids = request('ids');
+            $arrID = explode(',', $ids);
+            ShopCategory::destroy($arrID);
+            return response()->json(['error' => 0, 'msg' => '']);
+        }
+    }
+
 }

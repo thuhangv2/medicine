@@ -49,7 +49,7 @@ class Backup extends Command
     public function handle()
     {
         if (count(glob(storage_path() . "/backups/*.sql")) >= self::LIMIT) {
-            echo json_encode(['error' => 1, 'msg' => trans('language.backup.limit_backup')]);
+            echo json_encode(['error' => 1, 'msg' => trans('backup.limit_backup')]);
             exit;
         }
         try {

@@ -3,14 +3,10 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
-use Encore\Admin\Controllers\HasResourceActions;
-use Encore\Admin\Facades\Admin;
-use Encore\Admin\Layout\Content;
 use Illuminate\Http\Request;
 
 class ModulesController extends Controller
 {
-    use HasResourceActions;
     public $namespaceGroup;
     /**
      * Index interface.
@@ -20,98 +16,86 @@ class ModulesController extends Controller
     public function __construct()
     {
         $this->namespaceGroup = [
-            'cms'   => '\App\Modules\Cms\Controllers',
-            'api'   => '\App\Modules\Api\Controllers',
-            'other' => '\App\Modules\Other\Controllers',
+            'Cms' => '\App\Modules\Cms\Controllers',
+            'Other' => '\App\Modules\Other\Controllers',
         ];
 
     }
-    public function index($group, Content $content)
+    public function index($group)
     {
         $body = $this->modulesGroup($group);
-        return $content
-            ->header(trans('Modules/language.manager'))
-            ->description(' ')
-            ->body($body);
+        return $body;
     }
 
-/**
- * [modulesGroup description]
- * @param  [type] $group [description]
- * @return [type]        [description]
- */
     protected function modulesGroup($group)
     {
+        $group = sc_word_format_class($group);
         $modulesInstalled = \Helper::getExtensionsGroup($group, $onlyActive = false);
-        $modules          = \FindClass::classNames('Modules', $group);
-        $namespace        = $this->namespaceGroup[$group];
-        $title            = trans('Modules/language.' . $group);
+        $modules = \FindClass::classNames('Modules', $group);
+        $namespace = $this->namespaceGroup[$group];
+        $title = trans('Modules/language.' . $group);
         return $this->render($modulesInstalled, $modules, $namespace, $title, $group);
     }
 
-/**
- * [render description]
- * @param  [type] $modulesInstalled [description]
- * @param  [type] $modules          [description]
- * @param  [type] $namespace           [description]
- * @param  [type] $title               [description]
- * @param  [type] $group                [description]
- * @return [type]                      [description]
- */
     public function render($modulesInstalled, $modules, $namespace, $title, $group)
     {
-        return view('admin.ModulesManager')->with(
+        return view('admin.screen.module')->with(
             [
-                "title"            => $title,
-                "namespace"        => $namespace,
+                "title" => $title,
+                "namespace" => $namespace,
                 "modulesInstalled" => $modulesInstalled,
-                "modules"          => $modules,
-                "group"            => $group,
-            ])->render();
+                "modules" => $modules,
+                "group" => $group,
+            ]);
     }
 
-    public function installModule()
+    public function install()
     {
-        $key       = request('key');
-        $group     = request('group');
+        $key = request('key');
+        $group = request('group');
+        $group = sc_word_format_class($group);
         $namespace = $this->namespaceGroup[$group];
-        $class     = $namespace . '\\' . $key;
-        $response  = (new $class)->install();
+        $class = $namespace . '\\' . $key;
+        $response = (new $class)->install();
         return json_encode($response);
     }
-    public function uninstallModule()
+    public function uninstall()
     {
-        $key       = request('key');
-        $group     = request('group');
+        $key = request('key');
+        $group = request('group');
+        $group = sc_word_format_class($group);
         $namespace = $this->namespaceGroup[$group];
-        $class     = $namespace . '\\' . $key;
-        $response  = (new $class)->uninstall();
+        $class = $namespace . '\\' . $key;
+        $response = (new $class)->uninstall();
         return json_encode($response);
     }
-    public function enableModule()
+    public function enable()
     {
-        $key       = request('key');
-        $group     = request('group');
+        $key = request('key');
+        $group = request('group');
+        $group = sc_word_format_class($group);
         $namespace = $this->namespaceGroup[$group];
-        $class     = $namespace . '\\' . $key;
-        $response  = (new $class)->enable();
+        $class = $namespace . '\\' . $key;
+        $response = (new $class)->enable();
         return json_encode($response);
     }
-    public function disableModule()
+    public function disable()
     {
-        $key       = request('key');
-        $group     = request('group');
+        $key = request('key');
+        $group = request('group');
+        $group = sc_word_format_class($group);
         $namespace = $this->namespaceGroup[$group];
-        $class     = $namespace . '\\' . $key;
-        $response  = (new $class)->disable();
+        $class = $namespace . '\\' . $key;
+        $response = (new $class)->disable();
         return json_encode($response);
     }
-    public function processModule($group, $key)
+    public function process($group, $key)
     {
-        $data      = request()->all();
+        $data = request()->all();
+        $group = sc_word_format_class($group);
         $namespace = $this->namespaceGroup[$group];
-        $class     = $namespace . '\\' . $key;
-        $response  = (new $class)->processConfig($data);
+        $class = $namespace . '\\' . $key;
+        $response = (new $class)->processConfig($data);
         return json_encode($response);
     }
 }

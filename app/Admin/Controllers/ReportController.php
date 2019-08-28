@@ -3,122 +3,190 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\ShopAttributeGroup;
+use App\Models\ShopLanguage;
 use App\Models\ShopProduct;
-use App\User;
-use Encore\Admin\Controllers\HasResourceActions;
-use Encore\Admin\Facades\Admin;
-use Encore\Admin\Grid;
-use Encore\Admin\Layout\Content;
+use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
-    use HasResourceActions;
-    /**
-     * Index interface.
-     *
-     * @return Content
-     */
-    public function index($key, Content $content)
+    public $lang, $languages, $types, $kinds, $virtuals, $attributeGroup;
+
+    public function __construct()
     {
-        return $content
-            ->header('Index')
-            ->description(' ')
-            ->body($this->{$key}());
+        $this->lang = app()->getLocale();
+        $this->languages = ShopLanguage::getList();
+        $this->attributeGroup = ShopAttributeGroup::getList();
+        $this->types = [
+            SC_PRODUCT_NORMAL => trans('product.types.normal'),
+            SC_PRODUCT_NEW => trans('product.types.new'),
+            SC_PRODUCT_HOT => trans('product.types.hot'),
+        ];
+        $this->kinds = [
+            SC_PRODUCT_SINGLE => trans('product.kinds.single'),
+            SC_PRODUCT_BUILD => trans('product.kinds.build'),
+            SC_PRODUCT_GROUP => trans('product.kinds.group'),
+        ];
+        $this->virtuals = [
+            SC_VIRTUAL_PHYSICAL => trans('product.virtuals.physical'),
+            SC_VIRTUAL_DOWNLOAD => trans('product.virtuals.download'),
+            SC_VIRTUAL_ONLY_VIEW => trans('product.virtuals.only_view'),
+            SC_VIRTUAL_SERVICE => trans('product.virtuals.service'),
+        ];
+
     }
 
-    /**
-     * Make a grid builder.
-     *
-     * @return Grid
-     */
-    protected function customer()
+    public function product()
     {
-        $grid = new Grid(new User);
-        $grid->id('ID')->sortable();
-        $grid->name(trans('language.customer.name'))->sortable();
-        $grid->email('Email')->sortable();
-        $grid->phone(trans('language.customer.phone'))->sortable();
-        $grid->address(trans('language.customer.address'))->display(function () {
-            return $this->address1 . ' ' . $this->address2;
-        });
+        $data = [
+            'title' => trans('product.admin.list'),
+            'sub_title' => '',
+            'icon' => 'fa fa-indent',
+            'menu_left' => '',
+            'menu_right' => '',
+            'menu_sort' => '',
+            'script_sort' => '',
+            'menu_search' => '',
+            'script_search' => '',
+            'listTh' => '',
+            'dataTr' => '',
+            'pagination' => '',
+            'result_items' => '',
+            'url_delete_item' => '',
+        ];
 
-        $grid->disableCreation();
-        $grid->disableExport();
-        $grid->disableRowSelector();
-        // $grid->disableFilter();
-        $grid->expandFilter();
-        $grid->filter(function ($filter) {
-            $filter->disableIdFilter();
-            $filter->like('email', trans('customer.email'));
-            $filter->like('name', trans('customer.name'));
-        });
-        $grid->disableActions();
-        $grid->tools(function ($tools) {
-            $tools->disableRefreshButton();
-        });
-        $grid->paginate(100);
+        $listTh = [
+            'id' => trans('product.id'),
+            'image' => trans('product.image'),
+            'sku' => trans('product.sku'),
+            'name' => trans('product.name'),
+            'price' => trans('product.price'),
+            'stock' => trans('product.stock'),
+            'sold' => trans('product.sold'),
+            'view' => trans('product.view'),
+            'kind' => trans('product.kind'),
+            'type' => trans('product.type'),
+            'status' => trans('product.status'),
+        ];
+        $sort_order = request('sort_order') ?? 'id_desc';
+        $keyword = request('keyword') ?? '';
+        $arrSort = [
+            'id__desc' => trans('product.admin.sort_order.id_desc'),
+            'id__asc' => trans('product.admin.sort_order.id_asc'),
+            'name__desc' => trans('product.admin.sort_order.name_desc'),
+            'name__asc' => trans('product.admin.sort_order.name_asc'),
+            'sold__desc' => trans('product.admin.sort_order.sold_desc'),
+            'sold__asc' => trans('product.admin.sort_order.sold_asc'),
+            'view__desc' => trans('product.admin.sort_order.view_desc'),
+            'view__asc' => trans('product.admin.sort_order.view_asc'),
+        ];
+        $obj = new ShopProduct;
 
-//Export customer report
-        $grid->disableExport(false); //Default disable button export
-        $options = ['filename' => 'Customer report', 'sheetname' => 'Sheet Name', 'title' => ''];
-        $grid->exporter((new \ProcessData)->exportFromAdmin($function = 'actionExportReportCustomer', $options));
-//End export customer report
-        $grid->model()->orderBy('id', 'desc');
-        return $grid;
-    }
+        $obj = $obj
+            ->leftJoin('shop_product_description', 'shop_product_description.product_id', 'shop_product.id')
+            ->where('shop_product_description.lang', $this->lang);
+        if ($keyword) {
+            $obj = $obj->whereRaw('(shop_product_description.name like "%' . $keyword . '%"  OR sku like "%' . $keyword . '%")');
+        }
+        if ($sort_order && array_key_exists($sort_order, $arrSort)) {
+            $field = explode('__', $sort_order)[0];
+            $sort_field = explode('__', $sort_order)[1];
+            $obj = $obj->orderBy($field, $sort_field);
 
-    /**
-     * Make a grid builder.
-     *
-     * @return Grid
-     */
-    protected function product()
-    {
-        $grid = new Grid(new ShopProduct);
-        $grid->id('ID')->sortable();
-        $grid->sku(trans('product.sku'))->sortable();
-        $grid->name(trans('product.name'));
-        $grid->category()->name(trans('product.category'));
-        $grid->price(trans('product.price'))->display(function ($price) {
-            return number_format($price);
-        })->sortable();
-        $grid->stock(trans('product.stock'))->display(function ($stock) {
-            return number_format($stock);
-        })->sortable();
-        $grid->sold(trans('product.sold'))->display(function ($sold) {
-            return number_format($sold);
-        })->sortable();
-        $grid->view(trans('product.view'))->display(function ($view) {
-            return number_format($view);
-        })->sortable();
+        } else {
+            $obj = $obj->orderBy('id', 'desc');
+        }
+        $dataTmp = $obj->paginate(20);
 
-        $grid->disableCreation();
-        $grid->disableExport();
-        $grid->disableRowSelector();
-        // $grid->disableFilter();
-        $grid->expandFilter();
-        $grid->filter(function ($filter) {
-            $filter->disableIdFilter();
-            $filter->like('name', trans('product.name'));
-            $filter->like('sku', trans('product.sku'));
+        $dataTr = [];
+        foreach ($dataTmp as $key => $row) {
+            $kind = $this->kinds[$row['kind']] ?? $row['kind'];
+            if ($row['kind'] == SC_PRODUCT_BUILD) {
+                $kind = '<span class="label label-success">' . $kind . '</span>';
+            } elseif ($row['kind'] == SC_PRODUCT_GROUP) {
+                $kind = '<span class="label label-danger">' . $kind . '</span>';
+            }
+            $type = $this->types[$row['type']] ?? $row['type'];
+            if ($row['type'] == SC_PRODUCT_NEW) {
+                $type = '<span class="label label-success">' . $type . '</span>';
+            } elseif ($row['type'] == SC_PRODUCT_HOT) {
+                $type = '<span class="label label-danger">' . $type . '</span>';
+            }
 
-        });
-        $grid->disableActions();
-        $grid->tools(function ($tools) {
-            $tools->disableRefreshButton();
-        });
-        $grid->paginate(100);
+            $dataTr[] = [
+                'id' => $row['id'],
+                'image' => sc_image_render($row['image'], '50px'),
+                'sku' => $row['sku'],
+                'name' => $row['name'],
+                'price' => $row['price'],
+                'stock' => $row['stock'],
+                'sold' => $row['sold'],
+                'view' => $row['view'],
+                'kind' => $kind,
+                'type' => $type,
+                'status' => $row['status'] ? '<span class="label label-success">ON</span>' : '<span class="label label-danger">OFF</span>',
+            ];
+        }
 
-//Export Customer report
-        $grid->disableExport(false); //Default disable button export
-        $options = ['filename' => 'Product report', 'sheetname' => 'Sheet Name', 'title' => ''];
-        $grid->exporter((new \ProcessData)->exportFromAdmin($function = 'actionExportReportProduct', $options));
-//End export Customer report
-        $grid->model()->orderBy('id', 'desc');
-        $grid->model()->orderBy('id', 'desc');
-        $grid->model()->leftJoin('shop_product_description', 'shop_product_description.product_id', '=', 'shop_product.id')
-            ->where('lang_id', session('locale_id'));
-        return $grid;
+        $data['listTh'] = $listTh;
+        $data['dataTr'] = $dataTr;
+        $data['pagination'] = $dataTmp->appends(request()->except(['_token', '_pjax']))->links('admin.component.pagination');
+        $data['result_items'] = trans('product.admin.result_item', ['item_from' => $dataTmp->firstItem(), 'item_to' => $dataTmp->lastItem(), 'item_total' => $dataTmp->total()]);
+//menu_left
+        $data['menu_left'] = '<div class="pull-left">
+
+                    <a class="btn   btn-flat btn-primary grid-refresh" title="Refresh"><i class="fa fa-refresh"></i><span class="hidden-xs"> ' . trans('admin.refresh') . '</span></a> &nbsp;</div>
+                    ';
+//=menu_left
+
+//menu_sort
+
+        $optionSort = '';
+        foreach ($arrSort as $key => $status) {
+            $optionSort .= '<option  ' . (($sort_order == $key) ? "selected" : "") . ' value="' . $key . '">' . $status . '</option>';
+        }
+
+        $data['menu_sort'] = '
+                       <div class="btn-group pull-left">
+                        <div class="form-group">
+                           <select class="form-control" id="order_sort">
+                            ' . $optionSort . '
+                           </select>
+                         </div>
+                       </div>
+
+                       <div class="btn-group pull-left">
+                           <a class="btn btn-flat btn-primary" title="Sort" id="button_sort">
+                              <i class="fa fa-sort-amount-asc"></i><span class="hidden-xs"> ' . trans('admin.sort') . '</span>
+                           </a>
+                       </div>';
+
+        $data['script_sort'] = "$('#button_sort').click(function(event) {
+      var url = '" . route('admin_report.product') . "?sort_order='+$('#order_sort option:selected').val();
+      $.pjax({url: url, container: '#pjax-container'})
+    });";
+
+//=menu_sort
+
+//menu_search
+
+        $data['menu_search'] = '
+                <form action="' . route('admin_report.product') . '" id="button_search">
+                   <div onclick="$(this).submit();" class="btn-group pull-right">
+                           <a class="btn btn-flat btn-primary" title="Refresh">
+                              <i class="fa  fa-search"></i><span class="hidden-xs"> ' . trans('admin.search') . '</span>
+                           </a>
+                   </div>
+                   <div class="btn-group pull-right">
+                         <div class="form-group">
+                           <input type="text" name="keyword" class="form-control" placeholder="' . trans('product.admin.search_place') . '" value="' . $keyword . '">
+                         </div>
+                   </div>
+                </form>';
+//=menu_search
+
+        return view('admin.screen.list')
+            ->with($data);
     }
 
 }

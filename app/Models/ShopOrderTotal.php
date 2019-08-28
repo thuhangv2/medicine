@@ -8,16 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShopOrderTotal extends Model
 {
-    public $table           = 'shop_order_total';
+    protected $table = 'shop_order_total';
+    protected $fillable = ['order_id', 'title', 'code', 'value', 'text', 'sort'];
+    protected $guarded = [];
     const POSITION_SUBTOTAL = 1;
     const POSITION_SHIPPING = 10;
     const POSITION_DISCOUNT = 20;
-    const POSITION_TOTAL    = 100;
+    const POSITION_TOTAL = 100;
     const POSITION_RECEIVED = 200;
-    const NOT_YET_PAY       = 0;
-    const PART_PAY          = 1;
-    const PAID              = 2;
-    const NEED_REFUND       = 3;
+    const NOT_YET_PAY = 0;
+    const PART_PAY = 1;
+    const PAID = 2;
+    const NEED_REFUND = 3;
 
 /**
  * [processDataTotal description]
@@ -33,10 +35,10 @@ class ShopOrderTotal extends Model
         //Set subtotal
         $arraySubtotal = [
             'title' => trans('order.totals.sub_total'),
-            'code'  => 'subtotal',
+            'code' => 'subtotal',
             'value' => $subtotal,
-            'text'  => \Helper::currencyOnlyRender($subtotal, \Helper::currencyCode()),
-            'sort'  => self::POSITION_SUBTOTAL,
+            'text' => \Helper::currencyOnlyRender($subtotal, \Helper::currencyCode()),
+            'sort' => self::POSITION_SUBTOTAL,
         ];
 
         // set total
@@ -44,7 +46,7 @@ class ShopOrderTotal extends Model
         foreach ($objects as $key => $object) {
             if ($object) {
                 $objects[$key]['value'] = \Helper::currencyValue($object['value']);
-                $objects[$key]['text']  = \Helper::currencyRender($object['value']);
+                $objects[$key]['text'] = \Helper::currencyRender($object['value']);
                 if ($object['code'] != 'received') {
                     $total += \Helper::currencyValue($object['value']);
                 }
@@ -55,10 +57,10 @@ class ShopOrderTotal extends Model
         }
         $arrayTotal = array(
             'title' => trans('order.totals.total'),
-            'code'  => 'total',
+            'code' => 'total',
             'value' => $total,
-            'text'  => \Helper::currencyOnlyRender($total, \Helper::currencyCode()),
-            'sort'  => self::POSITION_TOTAL,
+            'text' => \Helper::currencyOnlyRender($total, \Helper::currencyCode()),
+            'sort' => self::POSITION_TOTAL,
         );
 
         $objects[] = $arraySubtotal;
@@ -81,7 +83,7 @@ class ShopOrderTotal extends Model
      */
     public function sumValueTotal($code, $dataTotal)
     {
-        $keys  = array_keys(array_column($dataTotal, 'code'), $code);
+        $keys = array_keys(array_column($dataTotal, 'code'), $code);
         $value = 0;
         foreach ($keys as $key => $object) {
             $value += $dataTotal[$object]['value'];
@@ -91,17 +93,17 @@ class ShopOrderTotal extends Model
 
     public function getShipping()
     {
-        $arrShipping    = [];
+        $arrShipping = [];
         $shippingMethod = session('shippingMethod') ?? '';
         if ($shippingMethod) {
-            $moduleClass          = '\App\Extensions\Shipping\Controllers\\' . $shippingMethod;
+            $moduleClass = '\App\Extensions\Shipping\Controllers\\' . $shippingMethod;
             $returnModuleShipping = (new $moduleClass)->getData();
-            $arrShipping          = [
+            $arrShipping = [
                 'title' => $returnModuleShipping['title'],
-                'code'  => 'shipping',
+                'code' => 'shipping',
                 'value' => $returnModuleShipping['value'],
-                'text'  => $returnModuleShipping['value'],
-                'sort'  => self::POSITION_SHIPPING,
+                'text' => $returnModuleShipping['value'],
+                'sort' => self::POSITION_SHIPPING,
             ];
         }
         return $arrShipping;
@@ -109,13 +111,13 @@ class ShopOrderTotal extends Model
 
     public function getPayment()
     {
-        $arrPayment    = [];
+        $arrPayment = [];
         $paymentMethod = session('paymentMethod') ?? '';
         if ($paymentMethod) {
-            $moduleClass         = '\App\Extensions\Payment\Controllers\\' . $paymentMethod;
+            $moduleClass = '\App\Extensions\Payment\Controllers\\' . $paymentMethod;
             $returnModulePayment = (new $moduleClass)->getData();
-            $arrPayment          = [
-                'title'  => $returnModulePayment['title'],
+            $arrPayment = [
+                'title' => $returnModulePayment['title'],
                 'method' => $paymentMethod,
             ];
         }
@@ -127,20 +129,20 @@ class ShopOrderTotal extends Model
         $arrDiscount = [];
         $arrDiscount = array(
             'title' => trans('order.totals.discount'),
-            'code'  => 'discount',
+            'code' => 'discount',
             'value' => 0,
-            'text'  => 0,
-            'sort'  => self::POSITION_DISCOUNT,
+            'text' => 0,
+            'sort' => self::POSITION_DISCOUNT,
         );
-        if (!empty(\Helper::configs()['Discount'])) {
-            $moduleClass          = '\App\Extensions\Total\Controllers\Discount';
+        if (!empty(sc_config('Discount'))) {
+            $moduleClass = '\App\Extensions\Total\Controllers\Discount';
             $returnModuleDiscount = (new $moduleClass)->getData();
-            $arrDiscount          = [
+            $arrDiscount = [
                 'title' => $returnModuleDiscount['title'],
-                'code'  => 'discount',
+                'code' => 'discount',
                 'value' => $returnModuleDiscount['value'],
-                'text'  => $returnModuleDiscount['value'],
-                'sort'  => self::POSITION_DISCOUNT,
+                'text' => $returnModuleDiscount['value'],
+                'sort' => self::POSITION_DISCOUNT,
             ];
         }
 
@@ -151,10 +153,10 @@ class ShopOrderTotal extends Model
     {
         return array(
             'title' => trans('order.totals.received'),
-            'code'  => 'received',
+            'code' => 'received',
             'value' => 0,
-            'text'  => 0,
-            'sort'  => self::POSITION_RECEIVED,
+            'text' => 0,
+            'sort' => self::POSITION_RECEIVED,
         );
     }
 
@@ -182,11 +184,11 @@ class ShopOrderTotal extends Model
     {
 
         try {
-            $order           = ShopOrder::find($order_id);
+            $order = ShopOrder::find($order_id);
             $order->subtotal = $subtotal_value;
-            $total           = $subtotal_value + $order->discount + $order->shipping;
-            $balance         = $total + $order->received;
-            $payment_status  = 0;
+            $total = $subtotal_value + $order->discount + $order->shipping;
+            $balance = $total + $order->received;
+            $payment_status = 0;
             if ($balance == $total) {
                 $payment_status = self::NOT_YET_PAY; //Not pay
             } elseif ($balance < 0) {
@@ -197,16 +199,16 @@ class ShopOrderTotal extends Model
                 $payment_status = self::PART_PAY; //Part pay
             }
             $order->payment_status = $payment_status;
-            $order->total          = $total;
-            $order->balance        = $balance;
+            $order->total = $total;
+            $order->balance = $balance;
             $order->save();
 
             //Update total
-            $updateTotal        = self::where('order_id', $order_id)->where('code', 'total')->first();
+            $updateTotal = self::where('order_id', $order_id)->where('code', 'total')->first();
             $updateTotal->value = $total;
             $updateTotal->save();
             //Update Subtotal
-            $updateSubTotal        = self::where('order_id', $order_id)->where('code', 'subtotal')->first();
+            $updateSubTotal = self::where('order_id', $order_id)->where('code', 'subtotal')->first();
             $updateSubTotal->value = $subtotal_value;
             $updateSubTotal->save();
 
@@ -215,20 +217,6 @@ class ShopOrderTotal extends Model
             return $e->getMessage();
         }
 
-    }
-/**
- * Insert item order total
- * @param  [type] $data     [description]
- * @param  [type] $order_id [description]
- * @return [type]           [description]
- */
-    public static function insertTotal($data, $order_id)
-    {
-        for ($i = 0; $i < count($data); $i++) {
-            $data[$i]['order_id']   = $order_id;
-            $data[$i]['created_at'] = date('Y-m-d H:i:s');
-        }
-        return self::insert($data);
     }
 
 /**
@@ -239,16 +227,16 @@ class ShopOrderTotal extends Model
     public static function updateField($field)
     {
         //Udate field
-        $upField             = self::find($field['id']);
-        $upField->value      = $field['value'];
-        $upField->text       = $field['text'];
+        $upField = self::find($field['id']);
+        $upField->value = $field['value'];
+        $upField->text = $field['text'];
         $upField->updated_at = date('Y-m-d H:i:s');
         $upField->save();
         $order_id = $upField->order_id;
 
         //Sum value item order total
         $totalData = self::where('order_id', $order_id)->get();
-        $total     = $discount     = $shipping     = $received     = 0;
+        $total = $discount = $shipping = $received = 0;
         foreach ($totalData as $key => $value) {
             if ($value['code'] === 'subtotal') {
                 $total += $value['value'];
@@ -267,17 +255,17 @@ class ShopOrderTotal extends Model
         }
 
         //Update total
-        $updateTotal        = self::where('order_id', $order_id)->where('code', 'total')->first();
+        $updateTotal = self::where('order_id', $order_id)->where('code', 'total')->first();
         $updateTotal->value = $total;
         $updateTotal->save();
 
         //Update Order
-        $order           = ShopOrder::find($order_id);
+        $order = ShopOrder::find($order_id);
         $order->discount = $discount;
         $order->shipping = $shipping;
         $order->received = $received;
-        $order->balance  = $total + $received;
-        $order->total    = $total;
+        $order->balance = $total + $received;
+        $order->total = $total;
         $order->save();
 
         return $order_id;
