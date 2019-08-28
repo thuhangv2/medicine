@@ -66,7 +66,7 @@ CREATE TABLE `admin_log` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `admin_log_user_id_index` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,7 +75,7 @@ CREATE TABLE `admin_log` (
 
 LOCK TABLES `admin_log` WRITE;
 /*!40000 ALTER TABLE `admin_log` DISABLE KEYS */;
-INSERT INTO `admin_log` VALUES (1,1,'sc_admin','GET','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','[]','2019-08-28 13:51:55','2019-08-28 13:51:55'),(2,1,'sc_admin','GET','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','[]','2019-08-28 13:52:18','2019-08-28 13:52:18'),(3,1,'sc_admin','GET','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','[]','2019-08-28 13:55:06','2019-08-28 13:55:06'),(4,1,'sc_admin/backup','GET','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','[]','2019-08-28 13:55:26','2019-08-28 13:55:26'),(5,1,'sc_admin/backup/generate','POST','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','{\"_token\":\"Pp3kQrBZAqvwDsIFJwEjr7kowvBHmbVPdlyqBrX4\"}','2019-08-28 13:55:29','2019-08-28 13:55:29');
+INSERT INTO `admin_log` VALUES (1,1,'sc_admin','GET','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','[]','2019-08-28 15:45:55','2019-08-28 15:45:55'),(2,1,'sc_admin/backup','GET','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','[]','2019-08-28 15:46:03','2019-08-28 15:46:03'),(3,1,'sc_admin/backup/generate','POST','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','{\"_token\":\"lniClmaDbH562j7koK9d9m0TFCYJST9On8SzHGPl\"}','2019-08-28 15:46:08','2019-08-28 15:46:08');
 /*!40000 ALTER TABLE `admin_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,7 +163,7 @@ CREATE TABLE `admin_permission` (
 
 LOCK TABLES `admin_permission` WRITE;
 /*!40000 ALTER TABLE `admin_permission` DISABLE KEYS */;
-INSERT INTO `admin_permission` VALUES (1,'Admin manager','admin.manager','GET::sc_admin/user,GET::sc_admin/role,GET::sc_admin/permission,ANY::sc_admin/log/*,ANY::sc_admin/menu/*','2019-08-28 13:48:35',NULL),(2,'Dashboard','dashboard','GET::sc_admin','2019-08-28 13:48:35',NULL),(3,'Auth manager','auth.full','ANY::sc_admin/auth/*','2019-08-28 13:48:35',NULL),(4,'Setting manager','setting.full','ANY::sc_admin/config/*,ANY::sc_admin/store/*,ANY::sc_admin/email/*,ANY::sc_admin/email_template/*,ANY::sc_admin/language/*,ANY::sc_admin/currency/*,ANY::sc_admin/backup/*','2019-08-28 13:48:35',NULL),(5,'Upload management','upload.full','ANY::sc_admin/uploads/*','2019-08-28 13:48:35',NULL),(6,'Module manager','module.full','ANY::sc_admin/module/**','2019-08-28 13:48:35',NULL),(7,'Extension manager','extension.full','ANY::sc_admin/extension/**','2019-08-28 13:48:35',NULL),(8,'CMS manager','cms.full','ANY::sc_admin/page/*,ANY::sc_admin/banner/*,ANY::sc_admin/cms_category/*,ANY::sc_admin/cms_content/*,ANY::sc_admin/cms_news/*','2019-08-28 13:48:35',NULL),(11,'Discount manager','discount.full','ANY::sc_admin/shop_discount/**','2019-08-28 13:48:35',NULL),(14,'Shipping status','shipping_status.full','ANY::sc_admin/shipping_status/**','2019-08-28 13:48:35',NULL),(15,'Payment  status','payment_status.full','ANY::sc_admin/payment_status/**','2019-08-28 13:48:35',NULL),(17,'Customer manager','customer.full','ANY::sc_admin/customer/*,ANY::sc_admin/subscribe/*','2019-08-28 13:48:35',NULL),(18,'Order status','order_status.full','ANY::sc_admin/order_status/*','2019-08-28 13:48:35',NULL),(19,'Product manager','product.full','ANY::sc_admin/category/*,ANY::sc_admin/vendor/*,ANY::sc_admin/brand/*,ANY::sc_admin/attribute_group/*,ANY::sc_admin/product/*','2019-08-28 13:48:35',NULL),(20,'Order Manager','order.full','ANY::sc_admin/order/*','2019-08-28 13:48:35',NULL),(21,'Report manager','report.full','ANY::sc_admin/report/*','2019-08-28 13:48:35',NULL);
+INSERT INTO `admin_permission` VALUES (1,'Admin manager','admin.manager','GET::sc_admin/user,GET::sc_admin/role,GET::sc_admin/permission,ANY::sc_admin/log/*,ANY::sc_admin/menu/*','2019-08-28 15:45:40',NULL),(2,'Dashboard','dashboard','GET::sc_admin','2019-08-28 15:45:40',NULL),(3,'Auth manager','auth.full','ANY::sc_admin/auth/*','2019-08-28 15:45:40',NULL),(4,'Setting manager','setting.full','ANY::sc_admin/config/*,ANY::sc_admin/store/*,ANY::sc_admin/email/*,ANY::sc_admin/email_template/*,ANY::sc_admin/language/*,ANY::sc_admin/currency/*,ANY::sc_admin/backup/*','2019-08-28 15:45:40',NULL),(5,'Upload management','upload.full','ANY::sc_admin/uploads/*','2019-08-28 15:45:40',NULL),(6,'Module manager','module.full','ANY::sc_admin/module/**','2019-08-28 15:45:40',NULL),(7,'Extension manager','extension.full','ANY::sc_admin/extension/**','2019-08-28 15:45:40',NULL),(8,'CMS manager','cms.full','ANY::sc_admin/page/*,ANY::sc_admin/banner/*,ANY::sc_admin/cms_category/*,ANY::sc_admin/cms_content/*,ANY::sc_admin/cms_news/*','2019-08-28 15:45:40',NULL),(11,'Discount manager','discount.full','ANY::sc_admin/shop_discount/**','2019-08-28 15:45:40',NULL),(14,'Shipping status','shipping_status.full','ANY::sc_admin/shipping_status/**','2019-08-28 15:45:40',NULL),(15,'Payment  status','payment_status.full','ANY::sc_admin/payment_status/**','2019-08-28 15:45:40',NULL),(17,'Customer manager','customer.full','ANY::sc_admin/customer/*,ANY::sc_admin/subscribe/*','2019-08-28 15:45:40',NULL),(18,'Order status','order_status.full','ANY::sc_admin/order_status/*','2019-08-28 15:45:40',NULL),(19,'Product manager','product.full','ANY::sc_admin/category/*,ANY::sc_admin/vendor/*,ANY::sc_admin/brand/*,ANY::sc_admin/attribute_group/*,ANY::sc_admin/product/*','2019-08-28 15:45:40',NULL),(20,'Order Manager','order.full','ANY::sc_admin/order/*','2019-08-28 15:45:40',NULL),(21,'Report manager','report.full','ANY::sc_admin/report/*','2019-08-28 15:45:40',NULL);
 /*!40000 ALTER TABLE `admin_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -192,7 +192,7 @@ CREATE TABLE `admin_role` (
 
 LOCK TABLES `admin_role` WRITE;
 /*!40000 ALTER TABLE `admin_role` DISABLE KEYS */;
-INSERT INTO `admin_role` VALUES (1,'Administrator','administrator','2019-08-28 13:48:35',NULL),(2,'Group only View','view.all','2019-08-28 13:48:35',NULL),(3,'Manager','manager','2019-08-28 13:48:35',NULL),(4,'Cms manager','cms','2019-08-28 13:48:35',NULL),(5,'Accountant','accountant','2019-08-28 13:48:35',NULL),(6,'Marketing','maketing','2019-08-28 13:48:35',NULL);
+INSERT INTO `admin_role` VALUES (1,'Administrator','administrator','2019-08-28 15:45:40',NULL),(2,'Group only View','view.all','2019-08-28 15:45:40',NULL),(3,'Manager','manager','2019-08-28 15:45:40',NULL),(4,'Cms manager','cms','2019-08-28 15:45:40',NULL),(5,'Accountant','accountant','2019-08-28 15:45:40',NULL),(6,'Marketing','maketing','2019-08-28 15:45:40',NULL);
 /*!40000 ALTER TABLE `admin_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -219,7 +219,7 @@ CREATE TABLE `admin_role_menu` (
 
 LOCK TABLES `admin_role_menu` WRITE;
 /*!40000 ALTER TABLE `admin_role_menu` DISABLE KEYS */;
-INSERT INTO `admin_role_menu` VALUES (1,38,'2019-08-28 13:48:35',NULL),(2,38,'2019-08-28 13:48:35',NULL),(3,38,'2019-08-28 13:48:35',NULL);
+INSERT INTO `admin_role_menu` VALUES (1,38,'2019-08-28 15:45:40',NULL),(2,38,'2019-08-28 15:45:40',NULL),(3,38,'2019-08-28 15:45:40',NULL);
 /*!40000 ALTER TABLE `admin_role_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -246,7 +246,7 @@ CREATE TABLE `admin_role_permission` (
 
 LOCK TABLES `admin_role_permission` WRITE;
 /*!40000 ALTER TABLE `admin_role_permission` DISABLE KEYS */;
-INSERT INTO `admin_role_permission` VALUES (3,1,'2019-08-28 13:48:35',NULL),(3,2,'2019-08-28 13:48:35',NULL),(3,3,'2019-08-28 13:48:35',NULL),(3,4,'2019-08-28 13:48:35',NULL),(3,5,'2019-08-28 13:48:35',NULL),(3,8,'2019-08-28 13:48:35',NULL),(3,11,'2019-08-28 13:48:35',NULL),(3,14,'2019-08-28 13:48:35',NULL),(3,15,'2019-08-28 13:48:35',NULL),(3,17,'2019-08-28 13:48:35',NULL),(3,18,'2019-08-28 13:48:35',NULL),(3,19,'2019-08-28 13:48:35',NULL),(3,20,'2019-08-28 13:48:35',NULL),(3,21,'2019-08-28 13:48:35',NULL),(4,3,'2019-08-28 13:48:35',NULL),(4,8,'2019-08-28 13:48:35',NULL),(5,2,'2019-08-28 13:48:35',NULL),(5,3,'2019-08-28 13:48:35',NULL),(5,20,'2019-08-28 13:48:35',NULL),(5,21,'2019-08-28 13:48:35',NULL),(6,2,'2019-08-28 13:48:35',NULL),(6,3,'2019-08-28 13:48:35',NULL),(6,5,'2019-08-28 13:48:35',NULL),(6,8,'2019-08-28 13:48:35',NULL),(6,11,'2019-08-28 13:48:35',NULL),(6,14,'2019-08-28 13:48:35',NULL),(6,15,'2019-08-28 13:48:35',NULL),(6,17,'2019-08-28 13:48:35',NULL),(6,18,'2019-08-28 13:48:35',NULL),(6,19,'2019-08-28 13:48:35',NULL),(6,20,'2019-08-28 13:48:35',NULL),(6,21,'2019-08-28 13:48:35',NULL);
+INSERT INTO `admin_role_permission` VALUES (3,1,'2019-08-28 15:45:40',NULL),(3,2,'2019-08-28 15:45:40',NULL),(3,3,'2019-08-28 15:45:40',NULL),(3,4,'2019-08-28 15:45:40',NULL),(3,5,'2019-08-28 15:45:40',NULL),(3,8,'2019-08-28 15:45:40',NULL),(3,11,'2019-08-28 15:45:40',NULL),(3,14,'2019-08-28 15:45:40',NULL),(3,15,'2019-08-28 15:45:40',NULL),(3,17,'2019-08-28 15:45:40',NULL),(3,18,'2019-08-28 15:45:40',NULL),(3,19,'2019-08-28 15:45:40',NULL),(3,20,'2019-08-28 15:45:40',NULL),(3,21,'2019-08-28 15:45:40',NULL),(4,3,'2019-08-28 15:45:40',NULL),(4,8,'2019-08-28 15:45:40',NULL),(5,2,'2019-08-28 15:45:40',NULL),(5,3,'2019-08-28 15:45:40',NULL),(5,20,'2019-08-28 15:45:40',NULL),(5,21,'2019-08-28 15:45:40',NULL),(6,2,'2019-08-28 15:45:40',NULL),(6,3,'2019-08-28 15:45:40',NULL),(6,5,'2019-08-28 15:45:40',NULL),(6,8,'2019-08-28 15:45:40',NULL),(6,11,'2019-08-28 15:45:40',NULL),(6,14,'2019-08-28 15:45:40',NULL),(6,15,'2019-08-28 15:45:40',NULL),(6,17,'2019-08-28 15:45:40',NULL),(6,18,'2019-08-28 15:45:40',NULL),(6,19,'2019-08-28 15:45:40',NULL),(6,20,'2019-08-28 15:45:40',NULL),(6,21,'2019-08-28 15:45:40',NULL);
 /*!40000 ALTER TABLE `admin_role_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -306,7 +306,7 @@ CREATE TABLE `admin_store` (
 
 LOCK TABLES `admin_store` WRITE;
 /*!40000 ALTER TABLE `admin_store` DISABLE KEYS */;
-INSERT INTO `admin_store` VALUES (1,'/storage/logo/scart-mid.png',1,'0123456789','Support: 0987654321','admin@gmail.com','','123st - abc - xyz','Asia/Ho_Chi_Minh','en','USD','default');
+INSERT INTO `admin_store` VALUES (1,'/storage/logo/scart-mid.png',1,'0123456789','Support: 0987654321','admin-demo@s-cart.org','','123st - abc - xyz','Asia/Ho_Chi_Minh','en','USD','default');
 /*!40000 ALTER TABLE `admin_store` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -335,7 +335,7 @@ CREATE TABLE `admin_store_description` (
 
 LOCK TABLES `admin_store_description` WRITE;
 /*!40000 ALTER TABLE `admin_store_description` DISABLE KEYS */;
-INSERT INTO `admin_store_description` VALUES (1,'en','S-cart Pro: Best Laravel eCommerce Platform for Business','Free website shopping cart for business','','<center><img src=\"/images/maintenance.png\" />\r\n<h3><span style=\"color:#e74c3c;\"><strong>Sorry! We are currently doing site maintenance!</strong></span></h3>\r\n</center>'),(1,'vi','S-cart Pro: Mã nguồn website thương mại điện tử cho doanh nghiệp','Laravel shopping cart for business','','<center><img src=\"/images/maintenance.png\" />\r\n<h3><span style=\"color:#e74c3c;\"><strong>Sorry! We are currently doing site maintenance!</strong></span></h3>\r\n</center>');
+INSERT INTO `admin_store_description` VALUES (1,'en','Demo S-cart : Free Laravel eCommerce for Business','Free website shopping cart for business','','<center><img src=\"/images/maintenance.png\" />\r\n<h3><span style=\"color:#e74c3c;\"><strong>Sorry! We are currently doing site maintenance!</strong></span></h3>\r\n</center>'),(1,'vi','Demo S-cart: Mã nguồn website thương mại điện tử miễn phí cho doanh nghiệp','Laravel shopping cart for business','','<center><img src=\"/images/maintenance.png\" />\r\n<h3><span style=\"color:#e74c3c;\"><strong>Sorry! We are currently doing site maintenance!</strong></span></h3>\r\n</center>');
 /*!40000 ALTER TABLE `admin_store_description` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -366,7 +366,7 @@ CREATE TABLE `admin_user` (
 
 LOCK TABLES `admin_user` WRITE;
 /*!40000 ALTER TABLE `admin_user` DISABLE KEYS */;
-INSERT INTO `admin_user` VALUES (1,'admin','$2y$10$JcmAHe5eUZ2rS0jU1GWr/.xhwCnh2RU13qwjTPcqfmtZXjZxcryPO','Administrator','/admin/avatar/user.jpg','c7bqLnol5MXGXud7hAqWMimed1iUKE8yG5i4XVP5GudKlXBrX5nDn6QcsE1N','2019-08-28 13:48:35',NULL);
+INSERT INTO `admin_user` VALUES (1,'admin','$2y$10$JcmAHe5eUZ2rS0jU1GWr/.xhwCnh2RU13qwjTPcqfmtZXjZxcryPO','Administrator','/admin/avatar/user.jpg','Kl3O7Q25MtkMBn4srjPv1Xw18oHp4aJYdERASkYllJByowSoduWZUHstaKPu','2019-08-28 15:45:40',NULL);
 /*!40000 ALTER TABLE `admin_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1029,7 +1029,7 @@ CREATE TABLE `shop_order` (
 
 LOCK TABLES `shop_order` WRITE;
 /*!40000 ALTER TABLE `shop_order` DISABLE KEYS */;
-INSERT INTO `shop_order` VALUES (1,1,5000,2000,0,1,1,1,0,7000,'USD',1.00,0,7000,'Naruto','Kun','ADDRESS 1','ADDRESS 2','VN','667151172','test@test.com','ok','Cash','ShippingStandard',NULL,NULL,NULL,'2019-08-28 13:48:38',NULL);
+INSERT INTO `shop_order` VALUES (1,1,5000,2000,0,1,1,1,0,7000,'USD',1.00,0,7000,'Naruto','Kun','ADDRESS 1','ADDRESS 2','VN','667151172','test@test.com','ok','Cash','ShippingStandard',NULL,NULL,NULL,'2019-08-28 15:45:43',NULL);
 /*!40000 ALTER TABLE `shop_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1093,7 +1093,7 @@ CREATE TABLE `shop_order_history` (
 
 LOCK TABLES `shop_order_history` WRITE;
 /*!40000 ALTER TABLE `shop_order_history` DISABLE KEYS */;
-INSERT INTO `shop_order_history` VALUES (1,1,'New order',0,1,1,'2019-08-28 20:48:38');
+INSERT INTO `shop_order_history` VALUES (1,1,'New order',0,1,1,'2019-08-28 22:45:43');
 /*!40000 ALTER TABLE `shop_order_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1602,7 +1602,7 @@ CREATE TABLE `shop_user` (
 
 LOCK TABLES `shop_user` WRITE;
 /*!40000 ALTER TABLE `shop_user` DISABLE KEYS */;
-INSERT INTO `shop_user` VALUES (1,'Naruto','Kun','test@test.com','$2y$10$yZFA5dBjkGQFt9sK9Y7oV.OzM79DcMG4smDbFsboJemhfbILRFue.','ADDRESS 1','ADDRESS 2','VN','0667151172',NULL,1,1,'2019-08-28 13:48:38',NULL);
+INSERT INTO `shop_user` VALUES (1,'Naruto','Kun','test@test.com','$2y$10$8AWw/ujX1UZjXcvkfx1obemNN8mU07yGdqIKmiJEQ3QKR9kBBDMvq','ADDRESS 1','ADDRESS 2','VN','0667151172',NULL,1,1,'2019-08-28 15:45:43',NULL);
 /*!40000 ALTER TABLE `shop_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1645,4 +1645,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-28 20:55:32
+-- Dump completed on 2019-08-28 22:46:11

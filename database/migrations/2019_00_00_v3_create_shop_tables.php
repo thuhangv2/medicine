@@ -556,14 +556,14 @@ class CreateShopTables extends Migration
 
         ]);
         DB::table('admin_store')->insert(
-            ['logo' => '/storage/logo/scart-mid.png', 'site_status' => 1, 'template' => 'default', 'phone' => '0123456789', 'long_phone' => 'Support: 0987654321', 'email' => 'admin@gmail.com', 'time_active' => '', 'address' => '123st - abc - xyz', 'locale' => 'en', 'timezone' => 'Asia/Ho_Chi_Minh', 'currency' => 'USD']
+            ['logo' => '/storage/logo/scart-mid.png', 'site_status' => 1, 'template' => 'default', 'phone' => '0123456789', 'long_phone' => 'Support: 0987654321', 'email' => 'admin-demo@s-cart.org', 'time_active' => '', 'address' => '123st - abc - xyz', 'locale' => 'en', 'timezone' => 'Asia/Ho_Chi_Minh', 'currency' => 'USD']
         );
 
         DB::table('admin_store_description')->insert([
-            ['config_id' => '1', 'lang' => 'en', 'title' => 'S-cart Pro: Best Laravel eCommerce Platform for Business', 'description' => 'Free website shopping cart for business', 'keyword' => '', 'maintain_content' => '<center><img src="/images/maintenance.png" />
+            ['config_id' => '1', 'lang' => 'en', 'title' => 'Demo S-cart : Free Laravel eCommerce for Business', 'description' => 'Free website shopping cart for business', 'keyword' => '', 'maintain_content' => '<center><img src="/images/maintenance.png" />
 <h3><span style="color:#e74c3c;"><strong>Sorry! We are currently doing site maintenance!</strong></span></h3>
 </center>'],
-            ['config_id' => '1', 'lang' => 'vi', 'title' => 'S-cart Pro: Mã nguồn website thương mại điện tử cho doanh nghiệp', 'description' => 'Laravel shopping cart for business', 'keyword' => '', 'maintain_content' => '<center><img src="/images/maintenance.png" />
+            ['config_id' => '1', 'lang' => 'vi', 'title' => 'Demo S-cart: Mã nguồn website thương mại điện tử miễn phí cho doanh nghiệp', 'description' => 'Laravel shopping cart for business', 'keyword' => '', 'maintain_content' => '<center><img src="/images/maintenance.png" />
 <h3><span style="color:#e74c3c;"><strong>Sorry! We are currently doing site maintenance!</strong></span></h3>
 </center>'],
         ]);
