@@ -27,8 +27,8 @@ class Discount extends \App\Http\Controllers\GeneralController
     public function __construct()
     {
         parent::__construct();
-        $this->title = trans('Extensions/' . $this->configCode . '/' . $this->configKey . '.title');
-        $this->image = 'images/Extensions/' . $this->configCode . '/' . $this->configKey . '.png';
+        $this->title = trans($this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title');
+        $this->image = 'images/' . $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.png';
         $this->separator = false;
         $this->suffix = false;
         $this->prefix = false;
