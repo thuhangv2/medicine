@@ -4,23 +4,29 @@
 <p align="center">Free open source e-commerce for business use laravel framework<br>
 <b>composer create-project lanhktc/s-cart</b></p>
 <p align="center">
- <a href="https://s-cart.org">Home page</a> | <a href="https://demo.s-cart.org">Demo</a> | <a href="https://demo.s-cart.org/system_admin">Demo admin</a> | <a href="https://s-cart.org/installation.html">Installation</a> | <a href="https://s-cart.org/video-guide.html">Video Guide</a>
+ <a href="https://s-cart.org">Home page</a> | <a href="https://demo.s-cart.org">Demo</a> | <a href="https://demo.s-cart.org/system_admin">Demo admin</a> | <a href="https://s-cart.org/installation.html">Installation</a> | <a href="https://s-cart.org/pro.html">S-Cart Pro</a> | <a href="https://s-cart.org/video-guide.html">Video Guide</a>
 </p>
 <p align="center">
 <a href="https://packagist.org/packages/lanhktc/s-cart"><img src="https://poser.pugx.org/lanhktc/s-cart/d/total.svg" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/lanhktc/s-cart"><img src="https://poser.pugx.org/lanhktc/s-cart/v/stable.svg" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/lanhktc/s-cart"><img src="https://poser.pugx.org/lanhktc/s-cart/license.svg" alt="License"></a>
 </p>
-<p align="center"><img src="https://s-cart.org/images/screen/v30/product-list.jpg"></p>
-<p align="center"><img src="https://s-cart.org/images/screen/v30/product-detail.jpg"></p>
-<p align="center"><img src="https://s-cart.org/images/screen/v30/cart.jpg"></p>
-<p align="center"><img src="https://s-cart.org/images/screen/v30/dashboard.jpg"></p>
-<p align="center"><img src="https://s-cart.org/images/screen/v30/admin-permission.jpg"></p>
-<p align="center"><img src="https://s-cart.org/images/screen/v30/order-manager.jpg"></p>
-<p align="center"><img src="https://s-cart.org/images/screen/v30/product-edit.jpg"></p>
-<p align="center"><img src="https://s-cart.org/images/screen/v30/extension.jpg"></p>
-<p align="center"><img src="https://s-cart.org/images/screen/v30/backup-restore.jpg"></p>
-<p align="center"><img src="https://s-cart.org/images/screen/v30/layout.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v3x/home-1.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v3x/home-2.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v3x/detail-1.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v3x/detail-bundle.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v3x/detail-group.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v3x/cart.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v3x/admin-home.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v3x/admin-home-1.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v3x/admin-home-2.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v3x/order-list.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v3x/order-detail.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v3x/product-list.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v3x/product-detail.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v3x/auth.jpg"></p>
+<p align="center"><img src="https://s-cart.org/images/screen/v3x/backup.jpg"></p>
+
 
 
 ## About S-cart
