@@ -42,12 +42,12 @@
         </div>
         <div style="clear: both;display: block;">
             <p          >
-                {{ trans('install.info.about_pro') }}<br>
+                {{ trans('install.info.about') }}<br>
                 {!! trans('install.info.about_us') !!}<br>
                 {!! trans('install.info.document') !!}<br>
             </p>
             <p><b>{{ trans('install.info.version') }}</b>: {{ config('scart.version') }}</p>
-            <p>{!! trans('install.info.terms_pro') !!}</p>
+            <p>{!! trans('install.info.terms') !!}</p>
         </div>
 
 <h3>{{ trans('install.requirement_check') }}</h3>
