@@ -17,8 +17,7 @@ class Currency
      */
     public function handle($request, Closure $next)
     {
-        $configsGlobal = \Helper::configsGlobal();
-        ShopCurrency::setCode(session('currency') ?? $configsGlobal['currency']);
+        ShopCurrency::setCode(session('currency') ?? sc_store('currency'));
         return $next($request);
     }
 }

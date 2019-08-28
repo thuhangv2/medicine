@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\GeneralController;
 use Auth;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
 
-class ResetPasswordController extends Controller
+class ResetPasswordController extends GeneralController
 {
     /*
     |--------------------------------------------------------------------------
@@ -37,6 +37,7 @@ class ResetPasswordController extends Controller
      */
     public function __construct()
     {
+        parent::__construct(); //
         $this->middleware('guest');
     }
 
@@ -45,9 +46,9 @@ class ResetPasswordController extends Controller
         if (Auth::user()) {
             return redirect()->route('home');
         }
-        return view(SITE_THEME . '.auth.reset',
+        return view('templates.' . sc_store('template') . '.auth.reset',
             [
-                'title' => trans('language.reset_password'),
+                'title' => trans('front.reset_password'),
                 'token' => $token,
                 'email' => $request->email,
             ]

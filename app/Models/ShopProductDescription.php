@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShopProductDescription extends Model
 {
-    protected $primaryKey = null;
+    protected $primaryKey = ['lang', 'product_id'];
+    public $incrementing  = false;
+    protected $guarded    = [];
     public $timestamps    = false;
     public $table         = 'shop_product_description';
-    protected $fillable   = ['lang_id', 'name', 'description', 'keyword', 'content', 'shop_product_id'];
 }

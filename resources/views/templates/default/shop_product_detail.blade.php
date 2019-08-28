@@ -1,15 +1,11 @@
-@extends(SITE_THEME.'.shop_layout')
+@extends('templates.'.sc_store('template').'.shop_layout')
 
 @section('center')
           <div class="product-details"><!--product-details-->
-            <div class="col-sm-5">
+            <div class="col-sm-6">
 
 
-              <div id="similar-product" class="carousel slide" data-ride="carousel">
-                  <!-- Wrapper for slides -->
-                  <div class="carousel-inner">
-
-                  <div id="similar-product" class="carousel slide" data-ride="carousel">
+              <div id="product-detail-image" class="carousel slide" data-ride="carousel">
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner">
                       <div class="view-product item active"  data-slide-number="0">
@@ -23,79 +19,93 @@
                         @endforeach
                     @endif
                     </div>
-                  </div>
-            @if ($product->images->count())
-                  <!-- Controls -->
-                  <a class="left item-control" href="#similar-product" data-slide="prev">
-                  <i class="fa fa-angle-left"></i>
-                  </a>
-                  <a class="right item-control" href="#similar-product" data-slide="next">
-                  <i class="fa fa-angle-right"></i>
-                  </a>
-              @endif
-                  </div>
+                  {{-- </div> --}}
               </div>
-
+              @if ($product->images->count())
+                    <!-- Controls -->
+                    <a class="left item-control" style="display: inherit;" href="#product-detail-image" data-slide="prev">
+                    <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a class="right item-control" href="#product-detail-image" data-slide="next">
+                    <i class="fa fa-angle-right"></i>
+                    </a>
+                @endif
             </div>
 
-        <form id="buy_block" action="{{ route('postCart') }}" method="post">
+        <form id="buy_block" action="{{ route('cart.add') }}" method="post">
           {{ csrf_field() }}
-          <input type="hidden" name="product_id" value="{{ $product->id }}" />
-            <div class="col-sm-7">
+          <input type="hidden" name="product_id" id="product-detail-id" value="{{ $product->id }}" />
+            <div class="col-sm-6">
               <div class="product-information"><!--/product-information-->
-                @if ($product->price != $product->getPrice())
-                <img src="{{ asset(SITE_THEME_ASSET.'/images/home/sale2.png') }}" class="newarrival" alt="" />
-                @elseif($product->type == 1)
-                <img src="{{ asset(SITE_THEME_ASSET.'/images/home/new2.png') }}" class="newarrival" alt="" />
+                @if ($product->price != $product->getFinalPrice() && $product->kind != SC_PRODUCT_GROUP)
+                <img src="{{ asset('templates/'.sc_store('template').'/images/home/sale2.png') }}" class="newarrival" alt="" />
+                @elseif($product->type == SC_PRODUCT_NEW)
+                <img src="{{ asset('templates/'.sc_store('template').'/images/home/new2.png') }}" class="newarrival" alt="" />
+                @elseif($product->type == SC_PRODUCT_HOT)
+                <img src="{{ asset('templates/'.sc_store('template').'/images/home/hot2.png') }}" class="newarrival" alt="" />
+                @elseif($product->kind == SC_PRODUCT_BUILD)
+                <img src="{{ asset('templates/'.sc_store('template').'/images/home/bundle2.png') }}" class="newarrival" alt="" />
+                @elseif($product->kind == SC_PRODUCT_GROUP)
+                <img src="{{ asset('templates/'.sc_store('template').'/images/home/group2.png') }}" class="newarrival" alt="" />
                 @endif
-                <h2>{{ $product->name }}</h2>
-                <p>SKU: {{ $product->sku }}</p>
+
+                <h2  id="product-detail-name">{{ $product->name }}</h2>
+                <p>SKU: <span  id="product-detail-model">{{ $product->sku }}</span></p>
+                <div id="product-detail-price">
                   {!! $product->showPrice() !!}
+                </div>
                 <span>
                   <label>{{ trans('product.quantity') }}:</label>
-                  <input type="number" name="qty" value="1" />
+                  <input type="number" name="qty" value="1" min="1" />
                   <button type="submit" class="btn btn-fefault cart">
                     <i class="fa fa-shopping-cart"></i>
-                    {{trans('language.add_to_cart')}}
+                    {{trans('front.add_to_cart')}}
                   </button>
                 </span>
-                @if ($product->attGroupBy())
-                <div class="form-group">
-                  @foreach ($product->attGroupBy() as $keyAtt => $attributes)
-                    @if ($attributesGroup[$keyAtt]['type'] =='select')
-                    <div class="input-group">
-                      <label>{{ $attributesGroup[$keyAtt]['name'] }}:</label>
-                       <select class="form-control" style="max-width: 100px;" name="attribute[{{ $keyAtt }}]">
-                        @foreach ($attributes as $attribute)
-                          <option value="{{ $attribute->name }}" {{ ($k ==0)?'selected':'' }}> {{ $attribute->name }}</option>
-                        @endforeach
-                      </select>
-                    </div>
-                    @elseif($attributesGroup[$keyAtt]['type'] =='radio')
-                     <div class="input-group">
-                      <label>{{ $attributesGroup[$keyAtt]['name'] }}:</label><br>
-                      @foreach ($attributes as $k => $attribute)
-                        <label class="radio-inline"><input type="radio" name="attribute[{{ $keyAtt }}]" value="{{ $attribute->name }}" {{ ($k ==0)?'checked':'' }}> {{ $attribute->name }}</label>
-                      @endforeach
-                    </div>
+                <div  id="product-detail-attr">
+                  @if ($product->attributes())
+                  {!! $product->renderAttributeDetails() !!}
+                  @endif
+                </div>
+                <b>{{ trans('product.availability') }}:</b>
+                <span id="product-detail-available">
+                    @if (sc_config('show_date_available') && $product->date_available >= date('Y-m-d H:i:s'))
+                    {{ $product->date_available }}
+                    @elseif($product->stock <=0 && sc_config('product_buy_out_of_stock') == 0)
+                    {{ trans('product.out_stock') }}
+                    @else
+                    {{ trans('product.in_stock') }}
                     @endif
-                  @endforeach
-                </div>
-                @endif
-                <p><b>{{ trans('product.availability') }}:</b>
-                @if ($configs['show_date_available'] && $product->date_available >= date('Y-m-d H:i:s'))
-                {{ $product->date_available }}
-                @else
-                {{ trans('product.in_stock') }}
-                @endif
-              </p>
-                <p><b>{{ trans('product.type') }}:</b> New</p>
-                <p><b>{{ trans('product.brand') }}:</b> {{ empty($product->brand->name)?'None':$product->brand->name }}</p>
-                <div class="short-description">
-                  <b>{{ trans('product.overview') }}:</b>
-                  <p>{{ $product->description }}</p>
-                </div>
-              <div class="addthis_inline_share_toolbox_yprn"></div>
+                </span>
+                <br>
+                <b>{{ trans('product.brand') }}:</b> <span id="product-detail-brand">{{ empty($product->brand->name)?'None':$product->brand->name }}</span><br>
+
+              @if ($product->kind == SC_PRODUCT_GROUP)
+              <div class="products-group">
+                @php
+                  $groups = $product->groups
+                @endphp
+                <b>{{ trans('product.groups') }}</b>:<br>
+                @foreach ($groups as $group)
+                  <span class="product-group" data-id="{{ $group->product_id }}">{!! sc_image_render($group->product->image) !!}</span>
+                @endforeach
+              </div>
+              @endif
+
+              @if ($product->kind == SC_PRODUCT_BUILD)
+              <div class="products-group">
+                @php
+                  $builds = $product->builds
+                @endphp
+                <b>{{ trans('product.builds') }}</b>:<br>
+                <span class="product-build">{!! sc_image_render($product->image) !!} = </span>
+                @foreach ($builds as $k => $build)
+                  {!! ($k)?'<i class="fa fa-plus" aria-hidden="true"></i>':'' !!} <span class="product-build">{{ $build->quantity }} x <a target="_new" href="{{ $build->product->getUrl() }}">{!! sc_image_render($build->product->image) !!}</a></span>
+                @endforeach
+              </div>
+              @endif
+
+
               </div><!--/product-information-->
             </div>
           </div><!--/product-details-->
@@ -105,25 +115,17 @@
             <div class="col-sm-12">
               <ul class="nav nav-tabs">
                 <li class="active"><a href="#details" data-toggle="tab">{{ trans('product.description') }}</a></li>
-                <li><a href="#reviews" data-toggle="tab">{{ trans('product.comment') }}</a></li>
               </ul>
             </div>
             <div class="tab-content">
-              <div class="tab-pane fade  active in" id="details" >
-                {!! $product->content !!}
+              <div class="tab-pane fade  active in" id="product-detail-content" >
+                {!! sc_html_render($product->content) !!}
               </div>
-
-              <div class="tab-pane fade" id="reviews" >
-                <div class="col-sm-12">
-<div class="fb-comments" data-href="{{ $product->getUrl() }}" data-numposts="5"></div>
-                </div>
-              </div>
-
             </div>
           </div><!--/category-tab-->
 @if ($productsToCategory->count())
           <div class="recommended_items"><!--recommended_items-->
-            <h2 class="title text-center">{{ trans('language.recommended_items') }}</h2>
+            <h2 class="title text-center">{{ trans('front.recommended_items') }}</h2>
 
             <div id="recommended-item-carousel" class="carousel slide">
               <div class="carousel-inner">
@@ -139,10 +141,10 @@
                         {!! $product_rel->showPrice() !!}
                             <a href="{{ $product_rel->getUrl() }}"><p>{{ $product_rel->name }}</p></a>
                           </div>
-                          @if ($product_rel->price != $product_rel->getPrice())
-                          <img src="{{ asset(SITE_THEME_ASSET.'/images/home/sale.png') }}" class="new" alt="" />
+                          @if ($product_rel->price != $product_rel->getFinalPrice())
+                          <img src="{{ asset('templates/'.sc_store('template').'/images/home/sale.png') }}" class="new" alt="" />
                           @elseif($product_rel->type == 1)
-                          <img src="{{ asset(SITE_THEME_ASSET.'/images/home/new.png') }}" class="new" alt="" />
+                          <img src="{{ asset('templates/'.sc_store('template').'/images/home/new.png') }}" class="new" alt="" />
                           @endif
                       </div>
                     </div>
@@ -165,7 +167,38 @@
 @push('styles')
 
 @endpush
+
 @push('scripts')
-<!-- Go to www.addthis.com/dashboard to customize your tools -->
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5bd09e60b8c26cab"></script>
+<script type="text/javascript">
+  $('.product-group').click(function(event) {
+    if($(this).hasClass('active')){
+      return;
+    }
+    $('.product-group').removeClass('active');
+    $(this).addClass('active');
+    var id = $(this).data("id");
+      $.ajax({
+          url:'{{ route("product.info") }}',
+          type:'POST',
+          dataType:'json',
+          data:{id:id,"_token": "{{ csrf_token() }}"},
+          beforeSend: function(){
+              $('#loading').show();
+          },
+          success: function(data){
+            console.log(data);
+            $('#product-detail-name').html(data.name);
+            $('#product-detail-model').html(data.sku);
+            $('#product-detail-price').html(data.showPrice);
+            $('#product-detail-brand').html(data.brand_name);
+            $('#product-detail-image').html(data.showImages);
+            $('#product-detail-available').html(data.availability);
+            $('#product-detail-id').val(data.id);
+            $('#product-detail-image').carousel();
+            $('#loading').hide();
+          }
+      });
+
+  });
+</script>
 @endpush

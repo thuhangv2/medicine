@@ -3,7 +3,6 @@
 namespace App\Extensions\Total\Providers;
 
 use App\Extensions\Total\Models\Discount as DiscountModel;
-use App\Models\Config;
 use App\Models\ShopOrderTotal;
 use Carbon\Carbon;
 
@@ -19,10 +18,10 @@ class DiscountService
     {
 
         $this->separator = false;
-        $this->suffix    = false;
-        $this->prefix    = false;
-        $this->length    = 8;
-        $this->mask      = '****-****';
+        $this->suffix = false;
+        $this->prefix = false;
+        $this->length = 8;
+        $this->mask = '****-****';
 
     }
 
@@ -55,19 +54,19 @@ class DiscountService
      *
      * @return \Illuminate\Support\Collection
      */
-    public function create($amount = 1, $reward = 0, $number_uses = 1, $type = null, array $data = [], $expires_in = null)
+    public function create($amount = 1, $reward = 0, $limit = 1, $type = null, array $data = [], $expires_in = null)
     {
         $records = [];
 
         foreach ($this->output($amount) as $code) {
             $records[] = [
-                'code'        => $code,
-                'reward'      => $reward,
-                'data'        => json_encode($data),
-                'expires_at'  => $expires_in ? Carbon::now()->addDays($expires_in) : null,
-                'number_uses' => $number_uses,
-                'type'        => $type,
-                'status'      => 1,
+                'code' => $code,
+                'reward' => $reward,
+                'data' => json_encode($data),
+                'expires_at' => $expires_in ? Carbon::now()->addDays($expires_in) : null,
+                'limit' => $limit,
+                'type' => $type,
+                'status' => 1,
             ];
         }
 
@@ -89,7 +88,7 @@ class DiscountService
  */
     public function check($code, $uID = null)
     {
-        $uID       = (int) $uID;
+        $uID = (int) $uID;
         $promocode = DiscountModel::byCode($code)->first();
         if ($promocode === null) {
             return json_encode(['error' => 1, 'msg' => "error_code_not_exist"]);
@@ -99,7 +98,7 @@ class DiscountService
             return json_encode(['error' => 1, 'msg' => "error_login"]);
         }
 
-        if ($promocode->number_uses == 0 || $promocode->number_uses <= $promocode->used) {
+        if ($promocode->limit == 0 || $promocode->limit <= $promocode->used) {
             return json_encode(['error' => 1, 'msg' => "error_code_cant_use"]);
         }
 
@@ -137,7 +136,7 @@ class DiscountService
             try {
                 $promocode->users()->attach($uID, [
                     'used_at' => Carbon::now(),
-                    'log'     => $msg,
+                    'log' => $msg,
                 ]);
                 // increment used
                 $promocode->used += 1;
@@ -206,12 +205,12 @@ class DiscountService
     public function generate()
     {
         $characters = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
-        $promocode  = '';
-        $random     = [];
+        $promocode = '';
+        $random = [];
 
         for ($i = 1; $i <= $this->length; $i++) {
             $character = $characters[rand(0, strlen($characters) - 1)];
-            $random[]  = $character;
+            $random[] = $character;
         }
 
         shuffle($random);
@@ -270,9 +269,9 @@ class DiscountService
  */
     public function useDiscount()
     {
-        $html  = '';
-        $code  = request('code');
-        $uID   = request('uID');
+        $html = '';
+        $code = request('code');
+        $uID = request('uID');
         $check = json_decode($this->check($code, $uID), true);
         if ($check['error'] == 1) {
             $error = 1;
@@ -296,7 +295,7 @@ class DiscountService
             if ($content['type'] === 1) {
                 //Point use in my page
                 $error = 1;
-                $msg   = trans('promotion.process.not_allow');
+                $msg = trans('promotion.process.not_allow');
             } else {
                 $arrType = [
                     '0' => trans('promotion.cash'),
@@ -304,10 +303,10 @@ class DiscountService
                     '2' => trans('promotion.%'),
                 ];
                 $error = 0;
-                $msg   = trans('promotion.process.completed');
+                $msg = trans('promotion.process.completed');
                 session(['Discount' => $code]);
 
-                $objects   = array();
+                $objects = array();
                 $objects[] = (new ShopOrderTotal)->getShipping();
                 $objects[] = (new ShopOrderTotal)->getDiscount();
                 $objects[] = (new ShopOrderTotal)->getReceived();
@@ -336,7 +335,7 @@ class DiscountService
     {
         $html = '';
         session()->forget('Discount'); //destroy coupon
-        $objects   = array();
+        $objects = array();
         $objects[] = (new ShopOrderTotal)->getShipping();
         $objects[] = (new ShopOrderTotal)->getDiscount();
         $objects[] = (new ShopOrderTotal)->getReceived();
@@ -351,4 +350,5 @@ class DiscountService
         }
         return json_encode(['html' => $html]);
     }
+
 }

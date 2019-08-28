@@ -2,12 +2,13 @@
 #app/Models/ShopOrderDetail.php
 namespace App\Models;
 
+use App\Models\ShopProduct;
 use Illuminate\Database\Eloquent\Model;
 
 class ShopOrderDetail extends Model
 {
-    protected $table    = 'shop_order_detail';
-    protected $fillable = ['product_id', 'price', 'order_id', 'qty', 'total_price', 'sku', 'option'];
+    protected $table = 'shop_order_detail';
+    protected $guarded = [];
     public function order()
     {
         return $this->belongsTo(ShopOrder::class, 'order_id', 'id');
@@ -21,5 +22,16 @@ class ShopOrderDetail extends Model
     public function updateDetail($id, $data)
     {
         return $this->where('id', $id)->update($data);
+    }
+    public function addNewDetail($data)
+    {
+        if ($data) {
+            $this->insert($data);
+            //Update stock, sold
+            foreach ($data as $key => $item) {
+                //Update stock, sold
+                ShopProduct::updateStock($item['product_id'], $item['qty']);
+            }
+        }
     }
 }

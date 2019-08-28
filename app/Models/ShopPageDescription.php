@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShopPageDescription extends Model
 {
-    protected $primaryKey = null;
+    protected $primaryKey = ['lang', 'page_id'];
+    public $incrementing  = false;
+    protected $guarded    = [];
     public $timestamps    = false;
     public $table         = 'shop_page_description';
-    protected $fillable   = ['lang_id', 'title', 'description', 'keyword', 'page_id', 'content'];
 }

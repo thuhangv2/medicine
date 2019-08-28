@@ -2,13 +2,21 @@
 #app/Models/ShopVendor.php
 namespace App\Models;
 
-use Helper;
 use Illuminate\Database\Eloquent\Model;
 
 class ShopVendor extends Model
 {
     public $timestamps = false;
-    public $table      = 'shop_vendor';
+    public $table = 'shop_vendor';
+    protected $guarded = [];
+    private static $getList = null;
+    public static function getList()
+    {
+        if (self::$getList == null) {
+            self::$getList = self::get()->keyBy('id');
+        }
+        return self::$getList;
+    }
 
     public function products()
     {
@@ -42,7 +50,7 @@ class ShopVendor extends Model
         $query = (new ShopProduct)->where('status', 1)->where('vendor_id', $id);
 
         //Hidden product out of stock
-        if (empty(\Helper::configs()['product_display_out_of_stock'])) {
+        if (empty(sc_config('product_display_out_of_stock'))) {
             $query = $query->where('stock', '>', 0);
         }
         $query = $query->sort($sortBy, $sortOrder);
@@ -60,23 +68,37 @@ class ShopVendor extends Model
 
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+        // before delete() method call this
+        static::deleting(function ($vendor) {
+        });
+    }
+
     /**
      * [getUrl description]
      * @return [type] [description]
      */
     public function getUrl()
     {
-        return route('vendor', ['name' => Helper::strToUrl($this->name), 'id' => $this->id]);
+        return route('vendor', ['name' => sc_word_format_url($this->name), 'id' => $this->id]);
     }
 
-    /**
-     * [getImage description]
-     * @return [type] [description]
-     */
+/*
+Get thumb
+ */
+    public function getThumb()
+    {
+        return sc_image_get_path_thumb($this->image);
+    }
+
+/*
+Get image
+ */
     public function getImage()
     {
-
-        return PATH_FILE . '/' . $this->image;
+        return sc_image_get_path($this->image);
 
     }
 

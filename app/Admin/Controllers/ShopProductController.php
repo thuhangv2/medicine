@@ -1,347 +1,750 @@
 <?php
-#app/Admin/Controller/ShopProductController.php
+#app/Http/Admin/Controllers/ShopProductController.php
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Config;
-use App\Models\Language;
-use App\Models\ShopAttributeDetail;
 use App\Models\ShopAttributeGroup;
 use App\Models\ShopBrand;
 use App\Models\ShopCategory;
+use App\Models\ShopLanguage;
 use App\Models\ShopProduct;
+use App\Models\ShopProductAttribute;
+use App\Models\ShopProductBuild;
 use App\Models\ShopProductDescription;
+use App\Models\ShopProductGroup;
+use App\Models\ShopProductImage;
 use App\Models\ShopVendor;
-use Encore\Admin\Controllers\HasResourceActions;
-use Encore\Admin\Facades\Admin;
-use Encore\Admin\Form;
-use Encore\Admin\Grid;
-use Encore\Admin\Layout\Content;
-use Encore\Admin\Show;
 use Illuminate\Http\Request;
+use Validator;
 
 class ShopProductController extends Controller
 {
-    use HasResourceActions;
-    public $arrType = ['0' => 'Default', '1' => 'New'];
+    public $lang, $languages, $types, $kinds, $virtuals, $attributeGroup;
 
-    /**
-     * Index interface.
-     *
-     * @return Content
-     */
+    public function __construct()
+    {
+        $this->lang = app()->getLocale();
+        $this->languages = ShopLanguage::getList();
+        $this->attributeGroup = ShopAttributeGroup::getList();
+        $this->types = [
+            SC_PRODUCT_NORMAL => trans('product.types.normal'),
+            SC_PRODUCT_NEW => trans('product.types.new'),
+            SC_PRODUCT_HOT => trans('product.types.hot'),
+        ];
+        $this->kinds = [
+            SC_PRODUCT_SINGLE => trans('product.kinds.single'),
+            SC_PRODUCT_BUILD => trans('product.kinds.build'),
+            SC_PRODUCT_GROUP => trans('product.kinds.group'),
+        ];
+        $this->virtuals = [
+            SC_VIRTUAL_PHYSICAL => trans('product.virtuals.physical'),
+            SC_VIRTUAL_DOWNLOAD => trans('product.virtuals.download'),
+            SC_VIRTUAL_ONLY_VIEW => trans('product.virtuals.only_view'),
+            SC_VIRTUAL_SERVICE => trans('product.virtuals.service'),
+        ];
+
+    }
+
     public function index()
     {
-        return Admin::content(function (Content $content) {
-            $content->header(trans('language.admin.product_manager'));
-            $content->description(' ');
-            $content->body($this->grid());
+        $data = [
+            'title' => trans('product.admin.list'),
+            'sub_title' => '',
+            'icon' => 'fa fa-indent',
+            'menu_left' => '',
+            'menu_right' => '',
+            'menu_sort' => '',
+            'script_sort' => '',
+            'menu_search' => '',
+            'script_search' => '',
+            'listTh' => '',
+            'dataTr' => '',
+            'pagination' => '',
+            'result_items' => '',
+            'url_delete_item' => '',
+        ];
 
-        });
+        $listTh = [
+            'check_row' => '',
+            'id' => trans('product.id'),
+            'image' => trans('product.image'),
+            'sku' => trans('product.sku'),
+            'name' => trans('product.name'),
+            'category' => trans('product.category'),
+            'cost' => trans('product.cost'),
+            'price' => trans('product.price'),
+            'type' => trans('product.type'),
+            'kind' => trans('product.kind'),
+            'virtual' => trans('product.virtual'),
+            'status' => trans('product.status'),
+            'action' => trans('product.admin.action'),
+        ];
+        $sort_order = request('sort_order') ?? 'id_desc';
+        $keyword = request('keyword') ?? '';
+        $arrSort = [
+            'id__desc' => trans('product.admin.sort_order.id_desc'),
+            'id__asc' => trans('product.admin.sort_order.id_asc'),
+            'name__desc' => trans('product.admin.sort_order.name_desc'),
+            'name__asc' => trans('product.admin.sort_order.name_asc'),
+        ];
+        $obj = new ShopProduct;
+
+        $obj = $obj
+            ->leftJoin('shop_product_description', 'shop_product_description.product_id', 'shop_product.id')
+            ->where('shop_product_description.lang', $this->lang);
+        if ($keyword) {
+            $obj = $obj->whereRaw('(id = ' . (int) $keyword . ' OR shop_product_description.name like "%' . $keyword . '%" )');
+        }
+        if ($sort_order && array_key_exists($sort_order, $arrSort)) {
+            $field = explode('__', $sort_order)[0];
+            $sort_field = explode('__', $sort_order)[1];
+            $obj = $obj->orderBy($field, $sort_field);
+
+        } else {
+            $obj = $obj->orderBy('id', 'desc');
+        }
+        $dataTmp = $obj->paginate(20);
+
+        $dataTr = [];
+        foreach ($dataTmp as $key => $row) {
+            $kind = $this->kinds[$row['kind']] ?? $row['kind'];
+            if ($row['kind'] == SC_PRODUCT_BUILD) {
+                $kind = '<span class="label label-success">' . $kind . '</span>';
+            } elseif ($row['kind'] == SC_PRODUCT_GROUP) {
+                $kind = '<span class="label label-danger">' . $kind . '</span>';
+            }
+            $type = $this->types[$row['type']] ?? $row['type'];
+            if ($row['type'] == SC_PRODUCT_NEW) {
+                $type = '<span class="label label-success">' . $type . '</span>';
+            } elseif ($row['type'] == SC_PRODUCT_HOT) {
+                $type = '<span class="label label-danger">' . $type . '</span>';
+            }
+            $dataTr[] = [
+                'check_row' => '<input type="checkbox" class="grid-row-checkbox" data-id="' . $row['id'] . '">',
+                'id' => $row['id'],
+                'image' => sc_image_render($row->getThumb(), '50px', '50px'),
+                'sku' => $row['sku'],
+                'name' => $row['name'],
+                'category' => implode('; ', $row->categories->pluck('name')->toArray()),
+                'cost' => $row['cost'],
+                'price' => $row['price'],
+                'type' => $type,
+                'kind' => $kind,
+                'virtual' => $this->virtuals[$row['virtual']] ?? $row['virtual'],
+                'status' => $row['status'] ? '<span class="label label-success">ON</span>' : '<span class="label label-danger">OFF</span>',
+                'action' => '
+                    <a href="' . route('admin_product.edit', ['id' => $row['id']]) . '"><span title="' . trans('product.admin.edit') . '" type="button" class="btn btn-flat btn-primary"><i class="fa fa-edit"></i></span></a>&nbsp;
+
+                    <span onclick="deleteItem(' . $row['id'] . ');"  title="' . trans('admin.delete') . '" class="btn btn-flat btn-danger"><i class="fa fa-trash"></i></span>'
+                ,
+            ];
+        }
+
+        $data['listTh'] = $listTh;
+        $data['dataTr'] = $dataTr;
+        $data['pagination'] = $dataTmp->appends(request()->except(['_token', '_pjax']))->links('admin.component.pagination');
+        $data['result_items'] = trans('product.admin.result_item', ['item_from' => $dataTmp->firstItem(), 'item_to' => $dataTmp->lastItem(), 'item_total' => $dataTmp->total()]);
+//menu_left
+        $data['menu_left'] = '<div class="pull-left">
+                    <button type="button" class="btn btn-default grid-select-all"><i class="fa fa-square-o"></i></button> &nbsp;
+
+                    <a class="btn   btn-flat btn-danger grid-trash" title="Delete"><i class="fa fa-trash-o"></i><span class="hidden-xs"> ' . trans('admin.delete') . '</span></a> &nbsp;
+
+                    <a class="btn   btn-flat btn-primary grid-refresh" title="Refresh"><i class="fa fa-refresh"></i><span class="hidden-xs"> ' . trans('admin.refresh') . '</span></a> &nbsp;</div>
+                    ';
+//=menu_left
+
+//menu_right
+        $data['menu_right'] = '
+                        <div class="btn-group pull-right" style="margin-right: 10px">
+                           <a href="' . route('admin_product.create') . '" class="btn  btn-success  btn-flat" title="New" id="button_create_new">
+                           <i class="fa fa-plus"></i><span class="hidden-xs">' . trans('admin.add_new') . '</span>
+                           </a>
+                        </div>
+
+                        ';
+//=menu_right
+
+//menu_sort
+
+        $optionSort = '';
+        foreach ($arrSort as $key => $status) {
+            $optionSort .= '<option  ' . (($sort_order == $key) ? "selected" : "") . ' value="' . $key . '">' . $status . '</option>';
+        }
+
+        $data['menu_sort'] = '
+                       <div class="btn-group pull-left">
+                        <div class="form-group">
+                           <select class="form-control" id="order_sort">
+                            ' . $optionSort . '
+                           </select>
+                         </div>
+                       </div>
+
+                       <div class="btn-group pull-left">
+                           <a class="btn btn-flat btn-primary" title="Sort" id="button_sort">
+                              <i class="fa fa-sort-amount-asc"></i><span class="hidden-xs"> ' . trans('admin.sort') . '</span>
+                           </a>
+                       </div>';
+
+        $data['script_sort'] = "$('#button_sort').click(function(event) {
+      var url = '" . route('admin_product.index') . "?sort_order='+$('#order_sort option:selected').val();
+      $.pjax({url: url, container: '#pjax-container'})
+    });";
+
+//=menu_sort
+
+//menu_search
+
+        $data['menu_search'] = '
+                <form action="' . route('admin_product.index') . '" id="button_search">
+                   <div onclick="$(this).submit();" class="btn-group pull-right">
+                           <a class="btn btn-flat btn-primary" title="Refresh">
+                              <i class="fa  fa-search"></i><span class="hidden-xs"> ' . trans('admin.search') . '</span>
+                           </a>
+                   </div>
+                   <div class="btn-group pull-right">
+                         <div class="form-group">
+                           <input type="text" name="keyword" class="form-control" placeholder="' . trans('product.admin.search_place') . '" value="' . $keyword . '">
+                         </div>
+                   </div>
+                </form>';
+//=menu_search
+
+        $data['url_delete_item'] = route('admin_product.delete');
+
+        return view('admin.screen.list')
+            ->with($data);
     }
 
-    /**
-     * Edit interface.
-     *
-     * @param $id
-     * @return Content
-     */
-    public function edit($id)
-    {
-        return Admin::content(function (Content $content) use ($id) {
-
-            $content->header(trans('language.admin.product_manager'));
-            $content->description(' ');
-
-            $content->body($this->form($id)->edit($id));
-        });
-    }
-
-    /**
-     * Create interface.
-     *
-     * @return Content
-     */
+/**
+ * Form create new order in admin
+ * @return [type] [description]
+ */
     public function create()
     {
-        return Admin::content(function (Content $content) {
+        $listProductSingle = (new ShopProduct)->getListSigle();
 
-            $content->header(trans('language.admin.product_manager'));
-            $content->description(' ');
+        // html select product group
+        $htmlSelectGroup = '<div class="select-product">';
+        $htmlSelectGroup .= '<table width="100%"><tr><td width="80%"><select class="form-control productInGroup select2" data-placeholder="' . trans('product.admin.select_product_in_group') . '" style="width: 100%;" name="productInGroup[]" >';
+        $htmlSelectGroup .= '';
+        foreach ($listProductSingle as $k => $v) {
+            $htmlSelectGroup .= '<option value="' . $k . '">' . $v['name'] . '</option>';
+        }
+        $htmlSelectGroup .= '</select></td><td><span title="Remove" class="btn btn-flat btn-danger removeproductInGroup"><i class="fa fa-times"></i></span></td></tr></table>';
+        $htmlSelectGroup .= '</div>';
+        //End select product group
 
-            $content->body($this->form());
-        });
+        // html select product build
+        $htmlSelectBuild = '<div class="select-product">';
+        $htmlSelectBuild .= '<table width="100%"><tr><td width="70%"><select class="form-control productInGroup select2" data-placeholder="' . trans('product.admin.select_product_in_build') . '" style="width: 100%;" name="productBuild[]" >';
+        $htmlSelectBuild .= '';
+        foreach ($listProductSingle as $k => $v) {
+            $htmlSelectBuild .= '<option value="' . $k . '">' . $v['name'] . '</option>';
+        }
+        $htmlSelectBuild .= '</select></td><td style="width:100px"><input class="form-control"  type="number" name="productBuildQty[]" value="1" min=1></td><td><span title="Remove" class="btn btn-flat btn-danger removeproductBuild"><i class="fa fa-times"></i></span></td></tr></table>';
+        $htmlSelectBuild .= '</div>';
+        //end select product build
+
+        // html select attribute
+        $htmlProductAtrribute = '<tr><td><br><input type="text" name="attribute[attribute_group][]" value="attribute_value" class="form-control input-sm" placeholder="' . trans('product.admin.add_attribute_place') . '" /></td><td><br><span title="Remove" class="btn btn-flat btn-sm btn-danger removeAttribute"><i class="fa fa-times"></i></span></td></tr>';
+        //end select attribute
+
+        // html add more images
+        $htmlMoreImage = '<div class="input-group"><input type="text" id="id_sub_image" name="sub_image[]" value="image_value" class="form-control input-sm sub_image" placeholder=""  /><span class="input-group-btn"><a data-input="id_sub_image" data-preview="preview_sub_image" data-type="product" class="btn btn-sm btn-primary lfm"><i class="fa fa-picture-o"></i> Choose</a></span></div><div id="preview_sub_image" class="img_holder"></div>';
+        //end add more images
+
+        $data = [
+            'title' => trans('product.admin.add_new_title'),
+            'sub_title' => '',
+            'title_description' => trans('product.admin.add_new_des'),
+            'icon' => 'fa fa-plus',
+            'languages' => $this->languages,
+            'categories' => (new ShopCategory)->getTreeCategories(),
+            'brands' => (new ShopBrand)->getList(),
+            'vendors' => (new ShopVendor)->getList(),
+            'types' => $this->types,
+            'virtuals' => $this->virtuals,
+            'kinds' => $this->kinds,
+            'attributeGroup' => $this->attributeGroup,
+            'htmlSelectGroup' => $htmlSelectGroup,
+            'htmlSelectBuild' => $htmlSelectBuild,
+            'listProductSingle' => $listProductSingle,
+            'htmlProductAtrribute' => $htmlProductAtrribute,
+            'htmlMoreImage' => $htmlMoreImage,
+        ];
+
+        return view('admin.screen.product_add')
+            ->with($data);
     }
 
-    /**
-     * Make a grid builder.
-     *
-     * @return Grid
-     */
-    protected function grid()
+/**
+ * Post create new order in admin
+ * @return [type] [description]
+ */
+
+    public function postCreate()
     {
-        $grid = new Grid(new ShopProduct);
-        $grid->id('ID')->sortable();
-        $grid->image(trans('language.admin.image'))->image('', 50);
-        $grid->sku(trans('product.sku'))->sortable();
-        $grid->name(trans('product.product_name'))->sortable();
-        $grid->category()->name(trans('language.categories'));
-        $grid->cost(trans('product.price_cost'))->display(function ($price) {
-            return number_format($price);
-        });
-        $grid->price(trans('product.price'))->display(function ($price) {
-            return number_format($price);
-        });
-        $arrType = $this->arrType;
-        $grid->type(trans('product.product_type'))->display(function ($type) use ($arrType) {
-            $style = ($type == 1) ? 'class="label label-success"' : (($type == 2) ? '  class="label label-danger"' : 'class="label label-default"');
-            return '<span ' . $style . '>' . $arrType[$type] . '</span>';
-        });
-        $grid->status(trans('language.admin.status'))->switch();
-        $grid->created_at(trans('language.admin.created_at'));
-        $grid->disableExport(false);
-        $grid->actions(function ($actions) {
-            $actions->disableView();
-        });
 
-        $grid->tools(function ($tools) {
-            $tools->append('<div class="pull-right">
-<div class="btn-group pull-right" style="margin-right: 10px">
-    <a href="' . route('productImport') . '" class="btn btn-sm btn-success" title="New">
-        <i class="fa fa-save"></i><span class="hidden-xs">&nbsp;&nbsp;&nbsp;' . trans('product.import_multi') . '</span>
-    </a>
-</div>
-        </div>');
-        });
-        $grid->expandFilter();
-        $grid->filter(function ($filter) {
-            $filter->disableIdFilter();
-            $filter->like('name', trans('product.name'));
-            $filter->like('sku', trans('product.sku'));
+        $data = request()->all();
+        $dataOrigin = request()->all();
+        switch ($data['kind']) {
+            case SC_PRODUCT_SINGLE: // product single
+                $arrValidation = [
+                    'kind' => 'required',
+                    'image' => 'required',
+                    'sort' => 'numeric|min:0',
+                    'descriptions.*.name' => 'required|string|max:100',
+                    'descriptions.*.content' => 'required|string',
+                    'category' => 'required',
+                    'sku' => 'required|regex:/(^([0-9A-Za-z\-\._]+)$)/|unique:shop_product,sku',
+                    'vendor_id' => 'required',
+                    'brand_id' => 'required',
+                ];
+                $arrMsg = [
+                    'descriptions.*.name.required' => trans('validation.required', ['attribute' => trans('product.name')]),
+                    'descriptions.*.content.required' => trans('validation.required', ['attribute' => trans('product.content')]),
+                    'category.required' => trans('validation.required', ['attribute' => trans('product.category')]),
+                    'sku.regex' => trans('product.sku_validate'),
+                ];
+                break;
+            case SC_PRODUCT_BUILD: //product build
+                $arrValidation = [
+                    'kind' => 'required',
+                    'image' => 'required',
+                    'sort' => 'numeric|min:0',
+                    'descriptions.*.name' => 'required|string|max:100',
+                    'category' => 'required',
+                    'sku' => 'required|regex:/(^([0-9A-Za-z\-\._]+)$)/|unique:shop_product,sku',
+                    'vendor_id' => 'required',
+                    'brand_id' => 'required',
+                    'productBuild' => 'required',
+                    'productBuildQty' => 'required',
 
-        });
-        $grid->model()->orderBy('id', 'desc');
-        $grid->model()->leftJoin('shop_product_description', 'shop_product_description.product_id', '=', 'shop_product.id')
-            ->where('lang_id', session('locale_id'));
+                ];
+                $arrMsg = [
+                    'descriptions.*.name.required' => trans('validation.required', ['attribute' => trans('product.name')]),
+                    'category.required' => trans('validation.required', ['attribute' => trans('product.category')]),
+                    'sku.regex' => trans('product.sku_validate'),
+                ];
+                break;
 
-        return $grid;
-    }
+            case SC_PRODUCT_GROUP: //product group
+                $arrValidation = [
+                    'kind' => 'required',
+                    'productInGroup' => 'required',
+                    'sku' => 'required|regex:/(^([0-9A-Za-z\-\._]+)$)/|unique:shop_product,sku',
+                    'sort' => 'numeric|min:0',
+                    'descriptions.*.name' => 'required|string|max:100',
+                ];
+                $arrMsg = [
+                    'descriptions.*.name.required' => trans('validation.required', ['attribute' => trans('product.name')]),
+                ];
+                break;
 
-    /**
-     * Make a form builder.
-     *
-     * @return Form
-     */
-    protected function form($id = null)
-    {
-        $form      = new Form(new ShopProduct);
-        $languages = Language::getLanguages();
-        $form->tab(trans('product.product_info'), function ($form) use ($languages) {
-//Language
-            $arrParameters = request()->route()->parameters();
-            $idCheck       = (int) end($arrParameters);
+            default:
+                $arrValidation = [
+                    'kind' => 'required',
+                ];
+                break;
+        }
 
-            $arrFields = array();
-            foreach ($languages as $key => $language) {
-                if ($idCheck) {
-                    $langDescriptions = ShopProductDescription::where('product_id', $idCheck)->where('lang_id', $language->id)->first();
-                }
-                if ($languages->count() > 1) {
-                    $form->html('<b>' . $language->name . '</b> <img style="height:25px" src="/' . config('filesystems.disks.path_file') . '/' . $language->icon . '">');
-                }
+        $validator = Validator::make($dataOrigin, $arrValidation, $arrMsg ?? []);
 
-                $form->text($language->code . '__name', trans('product.product_name'))->rules('required', ['required' => trans('validation.required')])->default(!empty($langDescriptions->name) ? $langDescriptions->name : null);
-                $form->text($language->code . '__keyword', trans('language.admin.keyword'))->default(!empty($langDescriptions->keyword) ? $langDescriptions->keyword : null);
-                $form->textarea($language->code . '__description', trans('language.admin.description'))->rules('max:300', ['max' => trans('validation.max')])->default(!empty($langDescriptions->description) ? $langDescriptions->description : null);
-                $form->ckeditor($language->code . '__content', trans('language.admin.content'))->default(!empty($langDescriptions->content) ? $langDescriptions->content : null)->rules('required');
-                $arrFields[] = $language->code . '__name';
-                $arrFields[] = $language->code . '__keyword';
-                $arrFields[] = $language->code . '__description';
-                $arrFields[] = $language->code . '__content';
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
 
-                $form->divide();
-            }
-            $form->ignore($arrFields);
-//end language
+        $category = $data['category'] ?? [];
+        $attribute = $data['attribute'] ?? [];
+        $descriptions = $data['descriptions'];
+        $productInGroup = $data['productInGroup'] ?? [];
+        $productBuild = $data['productBuild'] ?? [];
+        $productBuildQty = $data['productBuildQty'] ?? [];
+        $subImages = $data['sub_image'] ?? [];
+        $dataInsert = [
+            'brand_id' => $data['brand_id'],
+            'vendor_id' => $data['vendor_id'],
+            'price' => $data['price'],
+            'cost' => $data['cost'],
+            'stock' => $data['stock'],
+            'type' => $data['type'],
+            'kind' => $data['kind'],
+            'virtual' => $data['virtual'],
+            'date_available' => !empty($data['date_available']) ? $data['date_available'] : null,
+            'sku' => $data['sku'],
+            'image' => $data['image'],
+            'status' => (!empty($data['status']) ? 1 : 0),
+            'sort' => (int) $data['sort'],
+        ];
 
-            $arrBrand  = ShopBrand::pluck('name', 'id')->all();
-            $arrBrand  = ['0' => '-- ' . trans('language.brands') . ' --'] + $arrBrand;
-            $arrVendor = ShopVendor::pluck('name', 'id')->all();
-            $arrVendor = ['0' => '-- ' . trans('language.vendor') . ' --'] + $arrVendor;
-            $arrCate   = (new ShopCategory)->getTreeCategories();
-            $form->select('category_id', trans('language.admin.shop_category'))->options($arrCate)
-                ->rules('required');
-            $form->image('image', trans('language.admin.image'))->uniqueName()->move('product');
-            $form->currency('price', trans('product.price'))->symbol('')->options(['digits' => 0]);
-            $form->currency('cost', trans('product.price_cost'))->symbol('')->options(['digits' => 0]);
-            $form->number('stock', trans('product.stock'));
-            $form->text('sku', trans('product.sku'))
-                ->rules(function ($form) {
-                    return 'required|regex:/(^([0-9A-Za-z\-]+)$)/|unique:shop_product,sku,' . $form->model()->id . ',id';
-                }, ['regex' => trans('product.sku_validate')])
-                ->placeholder('Ex: ABKOOT01,ABKOOT02,...');
-            $form->select('brand_id', trans('language.brands'))->options($arrBrand)->default('0')
-                ->rules('required');
-            $form->select('vendor_id', trans('language.vendor'))->options($arrVendor)->default('0')
-                ->rules('required');
-            $form->switch('status', trans('language.admin.status'));
-            $form->number('sort', trans('language.admin.sort'))->rules('numeric|min:0')->default(0);
-            $form->divide();
-            $form->radio('type', trans('product.product_type'))->options($this->arrType)->default('0');
-            $form->datetime('date_available', trans('language.date_available'))->help(trans('language.default_available'));
+        //insert product
+        $id = ShopProduct::insertGetId($dataInsert);
+        $product = ShopProduct::find($id);
 
-        })->tab(trans('language.admin.sub_image'), function ($form) {
-            $form->hasMany('images', ' ', function (Form\NestedForm $form) {
-                $form->image('image', trans('language.admin.sub_image'))->uniqueName()->move('product_slide');
-            });
+        //Promoton price
+        if (isset($data['price_promotion']) && in_array($data['kind'], [SC_PRODUCT_SINGLE, SC_PRODUCT_BUILD])) {
+            $arrPromotion['price_promotion'] = $data['price_promotion'];
+            $arrPromotion['date_start'] = $data['price_promotion_start'] ? $data['price_promotion_start'] : null;
+            $arrPromotion['date_end'] = $data['price_promotion_end'] ? $data['price_promotion_end'] : null;
+            $product->promotionPrice()->create($arrPromotion);
+        }
 
-        })->tab(trans('product.attribute'), function ($form) use ($id) {
-            $groups = ShopAttributeGroup::pluck('name', 'id')->all();
-            $html   = '';
-            foreach ($groups as $key => $group) {
-                ${'group_' . $key} = ShopAttributeDetail::where('product_id', $id)->where('attribute_id', $key)->get();
-                $html .= '
-                        <table class="table box  table-bordered table-responsive">
-                            <thead>
-                              <tr>
-                                <th colspan="4">' . $group . '</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                                      <tr>
-                                        <td><span> ' . trans('language.attribute.detail_name') . ' ' . $group . '</span></td>
-                                        <td></td>
-                                      </tr>';
-                if (count(${'group_' . $key}) == 0) {
-                    $html .= '<tr id="no-item-' . $key . '">
-                                <td colspan="4" align="center" style="color:#cc2a2a">' . trans('language.attribute.no_item') . '</td>
-                              </tr>';
-                } else {
-
-                    foreach (${'group_' . $key} as $key2 => $value2) {
-                        $html .= '
-                                      <tr>
-                                        <td>
-                                        <span><div class="input-group"><input  type="text" name="group[' . $key . '][name][]" value="' . $value2['name'] . '" class="form-control" placeholder="' . trans('language.attribute.detail_name') . '"></div></span>
-                                        </td>
-                                        <td>
-                                         <button onclick="removeItemForm(this);" class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal"  data-placement="top" rel="tooltip" data-original-title="" title="Remove item"><span class="glyphicon glyphicon-remove"></span>' . trans('admin.remove') . '</button>
-                                        </td>
-                                      </tr>';
-                    }
-                }
-
-                $html .= '
-                               <tr id="addnew-' . $key . '">
-                                <td colspan="8">  <button type="button" class="btn btn-sm btn-success"  onclick="morItem(' . $key . ');" rel="tooltip" data-original-title="" title="Add new item"><i class="fa fa-plus"></i> ' . trans('language.attribute.add_more') . '</button>
-                        </td>
-                              </tr>
-                        <tr>
-                        </tr>
-                            </tbody>
-                          </table>';
-            }
-            $detail_name = trans('language.attribute.detail_name');
-            $remove      = trans('admin.remove');
-            $script      = <<<SCRIPT
-<script>
-                function morItem(id){
-                        $("#no-item-"+id).remove();
-                    $("tr#addnew-"+id).before("<tr><td><span><span class=\"input-group\"><input  type=\"text\" name=\"group["+id+"][name][]\" value=\"\" class=\"form-control\" placeholder=\"$detail_name\"></span></span></td><td><button onclick=\"removeItemForm(this);\" class=\"btn btn-danger btn-xs\" data-title=\"Delete\" data-toggle=\"modal\"  data-placement=\"top\" rel=\"tooltip\" data-original-title=\"\" title=\"Remove item\"><span class=\"glyphicon glyphicon-remove\"></span> $remove</button></td></tr>");
-                    }
-
-                    function removeItemForm(elmnt){
-                      elmnt.closest("tr").remove();
-                    }
-
-                </script>
-SCRIPT;
-            $form->html($html . $script);
-
-        });
-
-        $arrData = array();
-        $form->saving(function (Form $form) use ($languages, &$arrData) {
-            //Lang
-            foreach ($languages as $key => $language) {
-                $arrData[$language->code]['name']        = request($language->code . '__name');
-                $arrData[$language->code]['keyword']     = request($language->code . '__keyword');
-                $arrData[$language->code]['description'] = request($language->code . '__description');
-                $arrData[$language->code]['content']     = request($language->code . '__content');
-
-            }
-            //end lang
-        });
-
-        //saved
-        $form->saved(function (Form $form) use ($languages, &$arrData) {
-            $id = $form->model()->id;
-            //Lang
-            foreach ($languages as $key => $language) {
-                if (array_filter($arrData[$language->code], function ($v, $k) {
-                    return $v != null;
-                }, ARRAY_FILTER_USE_BOTH)) {
-                    $arrData[$language->code]['product_id'] = $id;
-                    $arrData[$language->code]['lang_id']    = $language->id;
-                    ShopProductDescription::where('lang_id', $arrData[$language->code]['lang_id'])->where('product_id', $arrData[$language->code]['product_id'])->delete();
-                    ShopProductDescription::insert($arrData[$language->code]);
+        //Insert category
+        if ($category && in_array($data['kind'], [SC_PRODUCT_SINGLE, SC_PRODUCT_BUILD])) {
+            $product->categories()->attach($category);
+        }
+        //Insert group
+        if ($productInGroup && $data['kind'] == SC_PRODUCT_GROUP) {
+            $arrDataGroup = [];
+            foreach ($productInGroup as $pID) {
+                if ((int) $pID) {
+                    $arrDataGroup[$pID] = new ShopProductGroup(['product_id' => $pID]);
                 }
             }
-            //end lang
-            $product         = ShopProduct::find($id);
-            $file_path_admin = config('filesystems.disks.admin.root');
-            $statusWatermark = \Helper::configs()['watermark'];
-            $fileWatermark   = $file_path_admin . '/' . \Helper::configsGlobal()['watermark'];
-            try {
-                //image primary
-                \Helper::processImageThumb($pathRoot = $file_path_admin, $pathFile = $product->image, $widthThumb = 250, $heightThumb = null, $statusWatermark, $fileWatermark);
+            $product->groups()->saveMany($arrDataGroup);
+        }
 
-                if (($product->images)) {
-                    foreach ($product->images as $key => $image) {
-                        //images slide
-                        \Helper::processImageThumb($pathRoot = $file_path_admin, $pathFile = $image->image, $widthThumb = 250, $heightThumb = null, $statusWatermark, $fileWatermark);
-                    }
+        //Insert Build
+        if ($productBuild && $data['kind'] == SC_PRODUCT_BUILD) {
+            $arrDataBuild = [];
+            foreach ($productBuild as $key => $pID) {
+                if ((int) $pID) {
+                    $arrDataBuild[$pID] = new ShopProductBuild(['product_id' => $pID, 'quantity' => $productBuildQty[$key]]);
                 }
-
-                if (($product->options)) {
-                    foreach ($product->options as $key => $image) {
-                        //images options
-                        \Helper::processImageThumb($pathRoot = $file_path_admin, $pathFile = $image->opt_image, $widthThumb = 250, $heightThumb = null, $statusWatermark, $fileWatermark);
-                    }
-                }
-
-            } catch (\Exception $e) {
-                echo $e->getMessage();
             }
+            $product->builds()->saveMany($arrDataBuild);
+        }
 
-            ShopAttributeDetail::where('product_id', $id)->delete();
-            $groups = $form->group;
-            if ($groups > 0) {
-                foreach ($groups as $attID => $group) {
-                    foreach ($group['name'] as $key => $value) {
-                        if ($value != '') {
-                            ShopAttributeDetail::insert(['name' => $value, 'attribute_id' => $attID, 'product_id' => $id]);
+        //Insert attribute
+        if ($attribute && $data['kind'] == SC_PRODUCT_SINGLE) {
+            $arrDataAtt = [];
+            foreach ($attribute as $group => $rowGroup) {
+                if (count($rowGroup)) {
+                    foreach ($rowGroup as $key => $nameAtt) {
+                        if ($nameAtt) {
+                            $arrDataAtt[] = new ShopProductAttribute(['name' => $nameAtt, 'attribute_group_id' => $group]);
                         }
-
                     }
                 }
+
+            }
+            $product->attributes()->saveMany($arrDataAtt);
+        }
+
+        //Insert description
+        $dataDes = [];
+        $languages = $this->languages;
+        foreach ($languages as $code => $value) {
+            $dataDes[] = [
+                'product_id' => $product->id,
+                'lang' => $code,
+                'name' => $descriptions[$code]['name'],
+                'keyword' => $descriptions[$code]['keyword'],
+                'description' => $descriptions[$code]['description'],
+                'content' => $descriptions[$code]['content'] ?? '',
+            ];
+        }
+
+        ShopProductDescription::insert($dataDes);
+
+        //Insert sub mages
+        if ($subImages && in_array($data['kind'], [SC_PRODUCT_SINGLE, SC_PRODUCT_BUILD])) {
+            $arrSubImages = [];
+            foreach ($subImages as $key => $image) {
+                if ($image) {
+                    $arrSubImages[] = new ShopProductImage(['image' => $image]);
+                }
+            }
+            $product->images()->saveMany($arrSubImages);
+        }
+
+        return redirect()->route('admin_product.index')->with('success', trans('product.admin.create_success'));
+
+    }
+
+/**
+ * Form edit
+ */
+    public function edit($id)
+    {
+        $product = ShopProduct::find($id);
+        if ($product === null) {
+            return 'no data';
+        }
+
+        $listProductSingle = (new ShopProduct)->getListSigle();
+
+        // html select product group
+        $htmlSelectGroup = '<div class="select-product">';
+        $htmlSelectGroup .= '<table width="100%"><tr><td width="80%"><select class="form-control productInGroup select2" data-placeholder="' . trans('product.admin.select_product_in_group') . '" style="width: 100%;" name="productInGroup[]" >';
+        $htmlSelectGroup .= '';
+        foreach ($listProductSingle as $k => $v) {
+            $htmlSelectGroup .= '<option value="' . $k . '">' . $v['name'] . '</option>';
+        }
+        $htmlSelectGroup .= '</select></td><td><span title="Remove" class="btn btn-flat btn-danger removeproductInGroup"><i class="fa fa-times"></i></span></td></tr></table>';
+        $htmlSelectGroup .= '</div>';
+        //End select product group
+
+        // html select product build
+        $htmlSelectBuild = '<div class="select-product">';
+        $htmlSelectBuild .= '<table width="100%"><tr><td width="70%"><select class="form-control productInGroup select2" data-placeholder="' . trans('product.admin.select_product_in_build') . '" style="width: 100%;" name="productBuild[]" >';
+        $htmlSelectBuild .= '';
+        foreach ($listProductSingle as $k => $v) {
+            $htmlSelectBuild .= '<option value="' . $k . '">' . $v['name'] . '</option>';
+        }
+        $htmlSelectBuild .= '</select></td><td style="width:100px"><input class="form-control"  type="number" name="productBuildQty[]" value="1" min=1></td><td><span title="Remove" class="btn btn-flat btn-danger removeproductBuild"><i class="fa fa-times"></i></span></td></tr></table>';
+        $htmlSelectBuild .= '</div>';
+        //end select product build
+
+        // html select attribute
+        $htmlProductAtrribute = '<tr><td><br><input type="text" name="attribute[attribute_group][]" value="attribute_value" class="form-control input-sm" placeholder="' . trans('product.admin.add_attribute_place') . '" /></td><td><br><span title="Remove" class="btn btn-flat btn-sm btn-danger removeAttribute"><i class="fa fa-times"></i></span></td></tr>';
+        //end select attribute
+
+        $data = [
+            'title' => trans('product.admin.edit'),
+            'sub_title' => '',
+            'title_description' => '',
+            'icon' => 'fa fa-pencil-square-o',
+            'languages' => $this->languages,
+            'product' => $product,
+            'categories' => (new ShopCategory)->getTreeCategories(),
+            'brands' => (new ShopBrand)->getList(),
+            'vendors' => (new ShopVendor)->getList(),
+            'types' => $this->types,
+            'virtuals' => $this->virtuals,
+            'kinds' => $this->kinds,
+            'attributeGroup' => $this->attributeGroup,
+            'htmlSelectGroup' => $htmlSelectGroup,
+            'htmlSelectBuild' => $htmlSelectBuild,
+            'listProductSingle' => $listProductSingle,
+            'htmlProductAtrribute' => $htmlProductAtrribute,
+        ];
+        return view('admin.screen.product_edit')
+            ->with($data);
+    }
+
+/**
+ * update status
+ */
+    public function postEdit($id)
+    {
+        $product = ShopProduct::find($id);
+        $data = request()->all();
+        $dataOrigin = request()->all();
+        switch ($product['kind']) {
+            case SC_PRODUCT_SINGLE: // product single
+                $arrValidation = [
+                    'image' => 'required',
+                    'sort' => 'numeric|min:0',
+                    'descriptions.*.name' => 'required|string|max:100',
+                    'descriptions.*.content' => 'required|string',
+                    'category' => 'required',
+                    'sku' => 'required|regex:/(^([0-9A-Za-z\-\._]+)$)/|unique:shop_product,sku,' . $product->id . ',id',
+                    'vendor_id' => 'required',
+                    'brand_id' => 'required',
+                ];
+                $arrMsg = [
+                    'descriptions.*.name.required' => trans('validation.required', ['attribute' => trans('product.name')]),
+                    'descriptions.*.content.required' => trans('validation.required', ['attribute' => trans('product.content')]),
+                    'category.required' => trans('validation.required', ['attribute' => trans('product.category')]),
+                    'sku.regex' => trans('product.sku_validate'),
+                ];
+                break;
+            case SC_PRODUCT_BUILD: //product build
+                $arrValidation = [
+                    'image' => 'required',
+                    'sort' => 'numeric|min:0',
+                    'descriptions.*.name' => 'required|string|max:100',
+                    'category' => 'required',
+                    'sku' => 'required|regex:/(^([0-9A-Za-z\-\._]+)$)/|unique:shop_product,sku,' . $product->id . ',id',
+                    'vendor_id' => 'required',
+                    'brand_id' => 'required',
+                    'productBuild' => 'required',
+                    'productBuildQty' => 'required',
+                ];
+                $arrMsg = [
+                    'descriptions.*.name.required' => trans('validation.required', ['attribute' => trans('product.name')]),
+                    'category.required' => trans('validation.required', ['attribute' => trans('product.category')]),
+                    'sku.regex' => trans('product.sku_validate'),
+                ];
+                break;
+
+            case SC_PRODUCT_GROUP: //product group
+                $arrValidation = [
+                    'sku' => 'required|regex:/(^([0-9A-Za-z\-\._]+)$)/|unique:shop_product,sku,' . $product->id . ',id',
+                    'productInGroup' => 'required',
+                    'sort' => 'numeric|min:0',
+                    'descriptions.*.name' => 'required|string|max:100',
+                ];
+                $arrMsg = [
+                    'descriptions.*.name.required' => trans('validation.required', ['attribute' => trans('product.name')]),
+                ];
+                break;
+
+            default:
+                break;
+        }
+
+        $validator = Validator::make($dataOrigin, $arrValidation, $arrMsg ?? []);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+//Edit
+
+        $category = $data['category'] ?? [];
+        $attribute = $data['attribute'] ?? [];
+        $descriptions = $data['descriptions'];
+        $productInGroup = $data['productInGroup'] ?? [];
+        $productBuild = $data['productBuild'] ?? [];
+        $productBuildQty = $data['productBuildQty'] ?? [];
+        $subImages = $data['sub_image'] ?? [];
+        $dataUpdate = [
+            'image' => $data['image'] ?? '',
+            'brand_id' => $data['brand_id'] ?? 0,
+            'vendor_id' => $data['vendor_id'] ?? 0,
+            'price' => $data['price'] ?? 0,
+            'cost' => $data['cost'] ?? 0,
+            'stock' => $data['stock'] ?? 0,
+            'type' => $data['type'] ?? SC_PRODUCT_NORMAL,
+            'virtual' => $data['virtual'] ?? SC_VIRTUAL_PHYSICAL,
+            'date_available' => !empty($data['date_available']) ? $data['date_available'] : null,
+            'sku' => $data['sku'],
+            'status' => (!empty($data['status']) ? 1 : 0),
+            'sort' => (int) $data['sort'],
+        ];
+
+        $product->update($dataUpdate);
+
+        //Promoton price
+        $product->promotionPrice()->delete();
+        if (isset($data['price_promotion']) && in_array($product['kind'], [SC_PRODUCT_SINGLE, SC_PRODUCT_BUILD])) {
+            $arrPromotion['price_promotion'] = $data['price_promotion'];
+            $arrPromotion['date_start'] = $data['price_promotion_start'] ? $data['price_promotion_start'] : null;
+            $arrPromotion['date_end'] = $data['price_promotion_end'] ? $data['price_promotion_end'] : null;
+            $product->promotionPrice()->create($arrPromotion);
+        }
+
+        $product->descriptions()->delete();
+        $dataDes = [];
+        foreach ($data['descriptions'] as $code => $row) {
+            $dataDes[] = [
+                'product_id' => $id,
+                'lang' => $code,
+                'name' => $row['name'],
+                'keyword' => $row['keyword'],
+                'description' => $row['description'],
+                'content' => $row['content'] ?? '',
+            ];
+        }
+        ShopProductDescription::insert($dataDes);
+
+        //Update category
+        if (in_array($product['kind'], [SC_PRODUCT_SINGLE, SC_PRODUCT_BUILD])) {
+            $product->categories()->detach();
+            if (count($category)) {
+                $product->categories()->attach($category);
             }
 
-        });
-        $form->disableViewCheck();
-        $form->disableEditingCheck();
-        $form->tools(function (Form\Tools $tools) {
-            $tools->disableView();
-        });
-        return $form;
+        }
+
+        //Update group
+        if ($product['kind'] == SC_PRODUCT_GROUP) {
+            $product->groups()->delete();
+            if (count($productInGroup)) {
+                $arrDataGroup = [];
+                foreach ($productInGroup as $pID) {
+                    if ((int) $pID) {
+                        $arrDataGroup[$pID] = new ShopProductGroup(['product_id' => $pID]);
+                    }
+                }
+                $product->groups()->saveMany($arrDataGroup);
+            }
+
+        }
+
+        //Update Build
+        if ($product['kind'] == SC_PRODUCT_BUILD) {
+            $product->builds()->delete();
+            if (count($productBuild)) {
+                $arrDataBuild = [];
+                foreach ($productBuild as $key => $pID) {
+                    if ((int) $pID) {
+                        $arrDataBuild[$pID] = new ShopProductBuild(['product_id' => $pID, 'quantity' => $productBuildQty[$key]]);
+                    }
+                }
+                $product->builds()->saveMany($arrDataBuild);
+            }
+
+        }
+
+        //Update attribute
+        if ($product['kind'] == SC_PRODUCT_SINGLE) {
+            $product->attributes()->delete();
+            if (count($attribute)) {
+                $arrDataAtt = [];
+                foreach ($attribute as $group => $rowGroup) {
+                    if (count($rowGroup)) {
+                        foreach ($rowGroup as $key => $nameAtt) {
+                            if ($nameAtt) {
+                                $arrDataAtt[] = new ShopProductAttribute(['name' => $nameAtt, 'attribute_group_id' => $group]);
+                            }
+                        }
+                    }
+
+                }
+                $product->attributes()->saveMany($arrDataAtt);
+            }
+
+        }
+
+        //Update sub mages
+        if ($subImages && in_array($product['kind'], [SC_PRODUCT_SINGLE, SC_PRODUCT_BUILD])) {
+            $product->images()->delete();
+            $arrSubImages = [];
+            foreach ($subImages as $key => $image) {
+                if ($image) {
+                    $arrSubImages[] = new ShopProductImage(['image' => $image]);
+                }
+            }
+            $product->images()->saveMany($arrSubImages);
+        }
+
+//
+        return redirect()->route('admin_product.index')->with('success', trans('product.admin.edit_success'));
 
     }
 
-    public function show($id, Content $content)
+/*
+Delete list Item
+Need mothod destroy to boot deleting in model
+ */
+    public function deleteList()
     {
-        return $content
-            ->header('Detail')
-            ->description('description')
-            ->body($this->detail($id));
+        if (!request()->ajax()) {
+            return response()->json(['error' => 1, 'msg' => 'Method not allow!']);
+        } else {
+            $ids = request('ids');
+            $arrID = explode(',', $ids);
+            $arrCantDelete = [];
+            foreach ($arrID as $key => $id) {
+                if (ShopProductBuild::where('product_id', $id)->first() || ShopProductGroup::where('product_id', $id)->first()) {
+                    $arrCantDelete[] = $id;}
+            }
+            if (count($arrCantDelete)) {
+                return response()->json(['error' => 1, 'msg' => trans('product.admin.cant_remove_child') . ': ' . json_encode($arrCantDelete)]);
+            } else {
+                ShopProduct::destroy($arrID);
+                return response()->json(['error' => 0, 'msg' => '']);
+            }
+
+        }
     }
+
 }

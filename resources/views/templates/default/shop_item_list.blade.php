@@ -1,4 +1,4 @@
-@extends(SITE_THEME.'.shop_layout')
+@extends('templates.'.sc_store('template').'.shop_layout')
 
 @section('main')
 <div class="row">
@@ -49,13 +49,13 @@
               <input type="hidden" name="{{ $key }}" value="{{ $query }}">
             @endforeach
           <select class="custom-select" name="filter_sort">
-            <option value="">{{ trans('language.filters.sort') }}</option>
-            <option value="name_asc" {{ ($filter_sort =='name_asc')?'selected':'' }}>{{ trans('language.filters.name_asc') }}</option>
-            <option value="name_desc" {{ ($filter_sort =='name_desc')?'selected':'' }}>{{ trans('language.filters.name_desc') }}</option>
-            <option value="sort_asc" {{ ($filter_sort =='sort_asc')?'selected':'' }}>{{ trans('language.filters.sort_asc') }}</option>
-            <option value="sort_desc" {{ ($filter_sort =='sort_desc')?'selected':'' }}>{{ trans('language.filters.sort_desc') }}</option>
-            <option value="id_asc" {{ ($filter_sort =='id_asc')?'selected':'' }}>{{ trans('language.filters.id_asc') }}</option>
-            <option value="id_desc" {{ ($filter_sort =='id_desc')?'selected':'' }}>{{ trans('language.filters.id_desc') }}</option>
+            <option value="">{{ trans('front.filters.sort') }}</option>
+            <option value="name_asc" {{ ($filter_sort =='name_asc')?'selected':'' }}>{{ trans('front.filters.name_asc') }}</option>
+            <option value="name_desc" {{ ($filter_sort =='name_desc')?'selected':'' }}>{{ trans('front.filters.name_desc') }}</option>
+            <option value="sort_asc" {{ ($filter_sort =='sort_asc')?'selected':'' }}>{{ trans('front.filters.sort_asc') }}</option>
+            <option value="sort_desc" {{ ($filter_sort =='sort_desc')?'selected':'' }}>{{ trans('front.filters.sort_desc') }}</option>
+            <option value="id_asc" {{ ($filter_sort =='id_asc')?'selected':'' }}>{{ trans('front.filters.id_asc') }}</option>
+            <option value="id_desc" {{ ($filter_sort =='id_desc')?'selected':'' }}>{{ trans('front.filters.id_desc') }}</option>
           </select>
         </div>
       </div>

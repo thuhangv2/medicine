@@ -5,12 +5,15 @@
       <!--Module left -->
           @isset ($layouts['left'])
               @foreach ( $layouts['left']  as $layout)
-                @if ($layout->page == null ||  $layout->page =='*' || $layout->page =='' || (isset($layout_page) && in_array($layout_page, $layout->page) ) )
+              @php
+                $arrPage = explode(',', $layout->page)
+              @endphp
+                @if ($layout->page == '*' ||  (isset($layout_page) && in_array($layout_page, $arrPage)))
                   @if ($layout->type =='html')
                     {!! $layout->text !!}
                   @elseif($layout->type =='view')
-                    @if (view()->exists('blockView.'.$layout->text))
-                     @include('blockView.'.$layout->text)
+                    @if (view()->exists('block.'.$layout->text))
+                     @include('block.'.$layout->text)
                     @endif
                   @elseif($layout->type =='module')
                     {!! (new $layout->text)->render() !!}

@@ -12,7 +12,7 @@ class Discount extends Model
     public $timestamps    = false;
     public $table         = 'shop_discount';
     public $table_related = 'shop_discount_user';
-    protected $fillable   = ['code', 'reward', 'type', 'expires_at', 'number_uses', 'used', 'status', 'login'];
+    protected $guarded    = [];
     protected $dates      = ['expires_at'];
     public function __construct(array $attributes = [])
     {
@@ -38,9 +38,9 @@ class Discount extends Model
                     $table->increments('id');
                     $table->string('code', 32)->unique();
                     $table->integer('reward')->default(0);
-                    $table->tinyInteger('type')->default(0);
+                    $table->string('type')->default('point');
                     $table->text('data')->nullable();
-                    $table->integer('number_uses')->default(1);
+                    $table->integer('limit')->default(1);
                     $table->integer('used')->default(0);
                     $table->tinyInteger('status')->default(1);
                     $table->integer('login')->default(0);
@@ -81,7 +81,7 @@ class Discount extends Model
      */
     public function users()
     {
-        return $this->belongsToMany(\App\User::class, $this->table_related)
+        return $this->belongsToMany(\App\Models\ShopUser::class, $this->table_related, 'user_id','discount_id')
             ->withPivot('used_at', 'log');
     }
 

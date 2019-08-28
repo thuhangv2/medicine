@@ -54,16 +54,16 @@ Route::get('currency/{code}', function ($code) {
 Route::get('/wishlist.html', 'ShopCart@wishlist')->name('wishlist');
 Route::get('/compare.html', 'ShopCart@compare')->name('compare');
 Route::get('/cart.html', 'ShopCart@getCart')->name('cart');
-Route::post('/cart.html', 'ShopCart@postCart')->name('postCart');
+Route::post('/cart.html', 'ShopCart@addToCart')->name('cart.add');
 Route::get('/checkout.html', 'ShopCart@getCheckout')->name('checkout');
-Route::post('/checkout.html', 'ShopCart@processCart')->name('processCart');
-Route::get('/removeItem/{id}', 'ShopCart@removeItem')->name('removeItem');
-Route::get('/removeItemWishlist/{id}', 'ShopCart@removeItemWishlist')->name('removeItemWishlist');
-Route::get('/removeItemCompare/{id}', 'ShopCart@removeItemCompare')->name('removeItemCompare');
-Route::get('/clearCart', 'ShopCart@clearCart')->name('clearCart');
-Route::post('/addToCart', 'ShopCart@addToCart')->name('addToCart');
-Route::post('/updateToCart', 'ShopCart@updateToCart')->name('updateToCart');
-Route::post('/storeOrder', 'ShopCart@storeOrder')->name('storeOrder');
+Route::post('/checkout.html', 'ShopCart@processCart')->name('checkout.prepare');
+Route::get('/removeItem/{id}', 'ShopCart@removeItem')->name('cart.remove');
+Route::get('/removeItemWishlist/{id}', 'ShopCart@removeItemWishlist')->name('wishlist.remove');
+Route::get('/removeItemCompare/{id}', 'ShopCart@removeItemCompare')->name('compare.remove');
+Route::get('/clearCart', 'ShopCart@clearCart')->name('cart.clear');
+Route::post('/addToCartAjax', 'ShopCart@addToCartAjax')->name('cart.add_ajax');
+Route::post('/updateToCart', 'ShopCart@updateToCart')->name('cart.update');
+Route::post('/addOrder', 'ShopCart@addOrder')->name('addOrder');
 //========End cart
 
 //========Front
@@ -91,19 +91,20 @@ Route::get('/vendor/{name}_{id}', 'ShopFront@productToVendor')
 //End vendor
 
 //Product
-Route::get('/products.html', 'ShopFront@allProducts')->name('products');
+Route::get('/products.html', 'ShopFront@allProducts')->name('product.all');
+Route::post('/productInfo', 'ShopFront@productInfo')->name('product.info');
 Route::get('/product/{name}_{id}.html', 'ShopFront@productDetail')
-    ->where(['id' => '[0-9]+'])->name('product');
+    ->where(['id' => '[0-9]+'])->name('product.detail');
 //End product
 
 Route::get('/search.html', 'ShopFront@search')->name('search');
+Route::post('/subscribe', 'ShopFront@emailSubscribe')->name('subscribe');
 Route::get('/contact.html', 'ShopFront@getContact')->name('contact');
 Route::post('/contact.html', 'ShopFront@postContact')->name('postContact');
-Route::post('/subscribe', 'ShopFront@emailSubscribe')->name('subscribe');
 
 //--Please keep 2 lines route (pages + pageNotFound) at the bottom
 Route::get('/{key}.html', 'ShopFront@pages')->name('pages');
-Route::fallback('ShopFront@pageNotFound')->name('pageNotFound');
+// Route::fallback('ShopFront@pageNotFound')->name('pageNotFound'); //Make sure before using this route. There will be disadvantages when detecting 404 errors for static files like images, scripts ..
 //--end keep
 
 //=======End Front

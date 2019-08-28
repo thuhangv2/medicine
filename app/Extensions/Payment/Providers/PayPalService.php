@@ -2,7 +2,8 @@
 #App\Extension\Payment\Providers\PayPalService.php
 namespace App\Extensions\Payment\Providers;
 
-use App\Extensions\Payment\Models\Paypal as PaypalModel;
+use App\Http\Controllers\ShopCart;
+use App\Models\ShopOrder;
 use PayPal\Api\Amount;
 use PayPal\Api\Item;
 use PayPal\Api\ItemList;
@@ -28,34 +29,26 @@ class PayPalService
     private $returnUrl;
     // return link when customer click cancel
     private $cancelUrl;
-    private $paypalConfigs;
-
     public function __construct()
     {
-        $checkTableExist = (new PaypalModel)->checkTableExist();
-        if ($checkTableExist) {
-            $paypalConfigs    = PaypalModel::first();
-            $paypal_env       = config('paypal');
-            $client_id        = empty($paypalConfigs['paypal_client_id']) ? $paypal_env['client_id'] : $paypalConfigs['paypal_client_id'];
-            $secret           = empty($paypalConfigs['paypal_secrect']) ? $paypal_env['secret'] : $paypalConfigs['paypal_secrect'];
-            $this->apiContext = new ApiContext(
-                new OAuthTokenCredential(
-                    $client_id,
-                    $secret
-                )
-            );
-            $this->apiContext->setConfig([
-                'mode'                   => $paypalConfigs['paypal_mode'],
-                'http.ConnectionTimeOut' => 30,
-                'log.logEnabled'         => $paypalConfigs['paypal_log'],
-                'log.FileName'           => storage_path() . '/' . $paypalConfigs['paypal_path_log'],
-                'log.LogLevel'           => $paypalConfigs['paypal_logLevel'],
-            ]);
-            $this->paymentCurrency = $paypalConfigs['paypal_currency'];
-
-            $this->totalAmount = 0;
-        }
-
+        $paypal_env = config('paypal');
+        $client_id = empty(sc_config('paypal_client_id')) ? $paypal_env['client_id'] : sc_config('paypal_client_id');
+        $secret = empty(sc_config('paypal_secrect')) ? $paypal_env['secret'] : sc_config('paypal_secrect');
+        $this->apiContext = new ApiContext(
+            new OAuthTokenCredential(
+                $client_id,
+                $secret
+            )
+        );
+        $this->apiContext->setConfig([
+            'mode' => sc_config('paypal_mode'),
+            'http.ConnectionTimeOut' => 30,
+            'log.logEnabled' => sc_config('paypal_log'),
+            'log.FileName' => storage_path() . '/' . sc_config('paypal_path_log'),
+            'log.LogLevel' => sc_config('paypal_logLevel'),
+        ]);
+        $this->paymentCurrency = sc_config('paypal_currency');
+        $this->totalAmount = 0;
     }
 
 /**
@@ -185,18 +178,12 @@ class PayPalService
     {
         $checkoutUrl = false;
 
-        // Chọn kiểu thanh toán.
         $payer = new Payer();
         $payer->setPaymentMethod('paypal');
 
-        // Danh sách các item
         $itemList = new ItemList();
         $itemList->setItems($this->itemList);
 
-        // Tổng tiền và kiểu tiền sẽ sử dụng để thanh toán.
-        // Bạn nên đồng nhất kiểu tiền của item và kiểu tiền của đơn hàng
-        // tránh trường hợp đơn vị tiền của item là JPY nhưng của đơn hàng
-        // lại là USD nhé.
         $amount = new Amount();
         $amount->setCurrency($this->paymentCurrency)
             ->setTotal($this->totalAmount);
@@ -299,7 +286,7 @@ class PayPalService
     public function getPaymentList($limit = 10, $offset = 0)
     {
         $params = [
-            'count'       => $limit,
+            'count' => $limit,
             'start_index' => $offset,
         ];
 
@@ -328,4 +315,61 @@ class PayPalService
 
         return $paymentDetails;
     }
+
+    public function index(Request $request)
+    {
+        $data = session('data_payment');
+        $order_id = $data['order_id'];
+        $currency = $data['currency'];
+        unset($data['order_id']);
+        unset($data['currency']);
+        session()->forget('data_payment');
+        $transactionDescription = "From website";
+        try {
+            $paypalCheckoutUrl = $this
+                ->setCurrency($currency)
+                ->setReturnUrl(route('returnPaypal', ['order_id' => $order_id]))
+                ->setCancelUrl(route('cart'))
+                ->setItem($data)
+                ->createPayment($transactionDescription);
+            if ($paypalCheckoutUrl) {
+                return redirect($paypalCheckoutUrl);
+            } else {
+                $msg = 'Error while process Paypal case';
+                (new ShopOrder)->updateStatus($order_id, $status = sc_config('paypal_order_status_faild'), $msg);
+                return redirect()->route('cart')->with(["error" => $msg]);
+            }
+        } catch (\Exception $e) {
+            $msg = $e->getMessage();
+            (new ShopOrder)->updateStatus($order_id, $status = sc_config('paypal_order_status_faild'), $msg);
+            return redirect()->route('cart')->with(["error" => $msg]);
+        }
+
+    }
+
+    public function getReturn($order_id)
+    {
+        if (!empty(session('paypal_payment_id'))) {
+            $paymentStatus = $this->getPaymentStatus();
+            // dd($paymentStatus);
+            if ($paymentStatus) {
+                ShopOrder::find($order_id)->update(['transaction' => $paymentStatus->id, 'status' => sc_config('paypal_order_status_success')]);
+                //Add history
+                $dataHistory = [
+                    'order_id' => $order_id,
+                    'content' => 'Transaction ' . $paymentStatus->id,
+                    'user_id' => auth()->user()->id ?? 0,
+                    'order_status_id' => sc_config('paypal_order_status_success'),
+                ];
+                (new ShopOrder)->addOrderHistory($dataHistory);
+                return (new ShopCart)->completeOrder($order_id);
+            } else {
+                return redirect()->route('cart')->with(['error' => 'Have an error paypal']);
+            }
+        } else {
+            return redirect()->route('cart')->with(['error' => 'Can\'t get payment id']);
+        }
+
+    }
+
 }

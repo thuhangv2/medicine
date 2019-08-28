@@ -2,56 +2,49 @@
 #app\Extensions\Payment\Controllers\Paypal.php
 namespace App\Extensions\Payment\Controllers;
 
-use App\Extensions\Payment\Models\Paypal as PaypalModel;
-use App\Extensions\Payment\Providers\PayPalService as PayPalSvc;
-use App\Http\Controllers\ShopCart;
-use App\Models\Config;
-use App\Models\ShopOrder;
-use App\Models\ShopOrderHistory;
+use App\Extensions\ExtensionDefault;
+use App\Models\AdminConfig;
 use App\Models\ShopOrderStatus;
-use Illuminate\Http\Request;
 
-class Paypal extends \App\Http\Controllers\Controller
+class Paypal extends \App\Http\Controllers\GeneralController
 {
+    use ExtensionDefault;
+
     protected $configType = 'Extensions';
     protected $configCode = 'Payment';
-    protected $configKey  = 'Paypal';
+    protected $configKey = 'Paypal';
     public $title;
     public $version;
     public $auth;
     public $link;
     public $image;
-    const ALLOW  = 1;
+    const ALLOW = 1;
     const DENIED = 0;
-    const ON     = 1;
-    const OFF    = 0;
-    private $paypalSvc;
+    const ON = 1;
+    const OFF = 0;
+    const ORDER_STATUS_PROCESSING = 2;
+    const ORDER_STATUS_FAILD = 6;
 
     public function __construct()
     {
-        $this->title     = trans($this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title');
-        $this->image     = 'images/' . $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.png';
-        $this->paypalSvc = new PayPalSvc;
-        $this->version   = '1.0';
-        $this->auth      = 'Naruto';
-        $this->link      = 'https://s-cart.org';
-    }
-
-    public function getData()
-    {
-        return $this->processData();
+        parent::__construct();
+        $this->title = trans($this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title');
+        $this->image = 'images/' . $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.png';
+        $this->version = '1.0';
+        $this->auth = 'Naruto';
+        $this->link = 'https://s-cart.org';
     }
 
     public function processData()
     {
         $arrData = [
-            'title'      => $this->title,
-            'code'       => $this->configKey,
-            'image'      => $this->image,
+            'title' => $this->title,
+            'code' => $this->configKey,
+            'image' => $this->image,
             'permission' => self::ALLOW,
-            'version'    => $this->version,
-            'auth'       => $this->auth,
-            'link'       => $this->link,
+            'version' => $this->version,
+            'auth' => $this->auth,
+            'link' => $this->link,
         ];
         return $arrData;
     }
@@ -59,24 +52,100 @@ class Paypal extends \App\Http\Controllers\Controller
     public function install()
     {
         $return = ['error' => 0, 'msg' => ''];
-        $check  = Config::where('key', $this->configKey)->first();
+        $check = AdminConfig::where('key', $this->configKey)->first();
         if ($check) {
             $return = ['error' => 1, 'msg' => 'Module exist'];
         } else {
-            $process = Config::insert(
+
+            $configPaypal = [
                 [
-                    'code'   => $this->configCode,
-                    'key'    => $this->configKey,
-                    'type'   => $this->configType,
-                    'sort'   => 0, // Sort extensions in group
-                    'value'  => self::ON, //1- Enable extension; 0 - Disable
-                    'detail' => $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title',
-                ]
+                    'type' => $this->configType,
+                    'code' => $this->configCode,
+                    'key' => $this->configKey,
+                    'sort' => 0, // Sort extensions in group
+                    'value' => self::ON, //1- Enable extension; 0 - Disable
+                    'detail' => 'lang::' . $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title',
+                ],
+                [
+                    'type' => '',
+                    'code' => 'paypal_config',
+                    'key' => 'paypal_client_id',
+                    'sort' => 0, // Sort extensions in group
+                    'value' => '',
+                    'detail' => 'lang::' . $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.paypal_client_id',
+                ],
+                [
+                    'type' => '',
+                    'code' => 'paypal_config',
+                    'key' => 'paypal_secrect',
+                    'sort' => 0, // Sort extensions in group
+                    'value' => '',
+                    'detail' => 'lang::' . $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.paypal_secrect',
+                ],
+                [
+                    'type' => '',
+                    'code' => 'paypal_config',
+                    'key' => 'paypal_log',
+                    'sort' => 0, // Sort extensions in group
+                    'value' => '0',
+                    'detail' => 'lang::' . $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.paypal_log',
+                ],
+
+                [
+                    'type' => '',
+                    'code' => 'paypal_config',
+                    'key' => 'paypal_path_log',
+                    'sort' => 0, // Sort extensions in group
+                    'value' => 'logs/paypal.log',
+                    'detail' => 'lang::' . $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.paypal_path_log',
+                ],
+                [
+                    'type' => '',
+                    'code' => 'paypal_config',
+                    'key' => 'paypal_mode',
+                    'sort' => 0, // Sort extensions in group
+                    'value' => 'sandbox',
+                    'detail' => 'lang::' . $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.paypal_mode',
+                ],
+
+                [
+                    'type' => '',
+                    'code' => 'paypal_config',
+                    'key' => 'paypal_logLevel',
+                    'sort' => 0, // Sort extensions in group
+                    'value' => 'DEBUG',
+                    'detail' => 'lang::' . $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.paypal_logLevel',
+                ],
+                [
+                    'type' => '',
+                    'code' => 'paypal_config',
+                    'key' => 'paypal_currency',
+                    'sort' => 0, // Sort extensions in group
+                    'value' => 'USD',
+                    'detail' => 'lang::' . $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.paypal_currency',
+                ],
+                [
+                    'type' => '',
+                    'code' => 'paypal_config',
+                    'key' => 'paypal_order_status_success',
+                    'sort' => 0, // Sort extensions in group
+                    'value' => self::ORDER_STATUS_PROCESSING,
+                    'detail' => 'lang::' . $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.paypal_order_status_success',
+                ],
+                [
+                    'type' => '',
+                    'code' => 'paypal_config',
+                    'key' => 'paypal_order_status_faild',
+                    'sort' => 0, // Sort extensions in group
+                    'value' => self::ORDER_STATUS_FAILD,
+                    'detail' => 'lang::' . $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.paypal_order_status_faild',
+                ],
+            ];
+            $process = AdminConfig::insert(
+                $configPaypal
             );
             if (!$process) {
                 $return = ['error' => 1, 'msg' => 'Error when install'];
-            } else {
-                $return = (new PaypalModel)->installExtension();
             }
         }
         return $return;
@@ -84,18 +153,18 @@ class Paypal extends \App\Http\Controllers\Controller
 
     public function uninstall()
     {
-        $return  = ['error' => 0, 'msg' => ''];
-        $process = (new Config)->where('key', $this->configKey)->delete();
-        if (!$process) {
+        $return = ['error' => 0, 'msg' => ''];
+        $process = (new AdminConfig)->where('key', $this->configKey)->delete();
+        $process2 = (new AdminConfig)->whereIn('key', ['paypal_client_id', 'paypal_secrect', 'paypal_log', 'paypal_path_log', 'paypal_mode', 'paypal_logLevel', 'paypal_currency', 'paypal_order_status_success', 'paypal_order_status_faild'])->delete();
+        if (!$process & !$process2) {
             $return = ['error' => 1, 'msg' => 'Error when uninstall'];
         }
-        (new PaypalModel)->uninstallExtension();
         return $return;
     }
     public function enable()
     {
-        $return  = ['error' => 0, 'msg' => ''];
-        $process = (new Config)->where('key', $this->configKey)->update(['value' => self::ON]);
+        $return = ['error' => 0, 'msg' => ''];
+        $process = (new AdminConfig)->where('key', $this->configKey)->update(['value' => self::ON]);
         if (!$process) {
             $return = ['error' => 1, 'msg' => 'Error enable'];
         }
@@ -103,8 +172,8 @@ class Paypal extends \App\Http\Controllers\Controller
     }
     public function disable()
     {
-        $return  = ['error' => 0, 'msg' => ''];
-        $process = (new Config)->where('key', $this->configKey)->update(['value' => self::OFF]);
+        $return = ['error' => 0, 'msg' => ''];
+        $process = (new AdminConfig)->where('key', $this->configKey)->update(['value' => self::OFF]);
         if (!$process) {
             $return = ['error' => 1, 'msg' => 'Error disable'];
         }
@@ -113,94 +182,24 @@ class Paypal extends \App\Http\Controllers\Controller
 
     public function config()
     {
-        return view('admin.' . $this->configType . '.' . $this->configCode . '.' . $this->configKey)->with(
+        view()->addNamespace($this->configKey, app_path($this->configType . '/' . $this->configCode . '/Views'));
+        return view($this->configKey . '::' . $this->configKey)->with(
             [
-                'group'           => $this->configCode,
-                'key'             => $this->configKey,
-                'title'           => $this->title,
+                'group' => $this->configCode,
+                'key' => $this->configKey,
+                'title' => $this->title,
                 'jsonStatusOrder' => json_encode(ShopOrderStatus::mapValue()),
-                'data'            => PaypalModel::first(),
-            ])->render();
+            ]);
     }
 
-    public function processConfig($data)
+    public function process($data)
     {
-        $return  = ['error' => 0, 'msg' => ''];
-        $process = PaypalModel::where('id', $data['pk'])->update([$data['name'] => $data['value']]);
+        $return = ['error' => 0, 'msg' => ''];
+        $process = AdminConfig::where('key', $data['pk'])->update(['value' => $data['value']]);
         if (!$process) {
             $return = ['error' => 1, 'msg' => 'Error update'];
         }
         return $return;
-    }
-
-//===========process===
-    /**
-     * Send data to Paypal
-     * @param  Request $request [description]
-     * @return [type]           [description]
-     */
-    public function index(Request $request)
-    {
-        $data     = session('data_payment');
-        $order_id = $data['order_id'];
-        $currency = $data['currency'];
-        unset($data['order_id']);
-        unset($data['currency']);
-        session()->forget('data_payment');
-        $transactionDescription = "From website";
-        try {
-            $paypalCheckoutUrl = $this->paypalSvc
-                ->setCurrency($currency)
-                ->setReturnUrl(route('returnPaypal', ['order_id' => $order_id]))
-                ->setCancelUrl(route('cart'))
-                ->setItem($data)
-                ->createPayment($transactionDescription);
-            if ($paypalCheckoutUrl) {
-                return redirect($paypalCheckoutUrl);
-            } else {
-                $paypalConfigs = PaypalModel::first();
-                $msg           = 'Error while process Paypal';
-                (new ShopOrder)->updateStatus($order_id, $status = $paypalConfigs['paypal_order_status_faild'], $msg);
-                return redirect()->route('cart')->with(["error" => $msg]);
-            }
-        } catch (\Exception $e) {
-            $paypalConfigs = PaypalModel::first();
-            $msg           = 'Error while process Paypal';
-            (new ShopOrder)->updateStatus($order_id, $status = $paypalConfigs['paypal_order_status_faild'], $msg);
-            return redirect()->route('cart')->with(["error" => $msg]);
-        }
-
-    }
-
-/**
- * [getReturn description]
- * @param  [type] $order_id [description]
- * @return [type]           [description]
- */
-    public function getReturn($order_id)
-    {
-        if (!empty(session('paypal_payment_id'))) {
-            $paymentStatus = $this->paypalSvc->getPaymentStatus();
-            // dd($paymentStatus);
-            if ($paymentStatus) {
-                $paypalConfigs = PaypalModel::first();
-                ShopOrder::find($order_id)->update(['transaction' => $paymentStatus->id, 'status' => $paypalConfigs['paypal_order_status_success']]);
-                //Add history
-                $dataHistory = [
-                    'order_id' => $order_id,
-                    'content'  => 'Transaction ' . $paymentStatus->id,
-                    'user_id'  => auth()->user()->id ?? 0,
-                    'add_date' => date('Y-m-d H:i:s'),
-                ];
-                ShopOrderHistory::insert($dataHistory);
-                return (new ShopCart)->completeOrder($order_id);
-            } else {
-                return redirect()->route('cart')->with(['error' => 'Have an error paypal']);
-            }
-        } else {
-            return redirect()->route('cart')->with(['error' => 'Can\'t get payment id']);
-        }
-
     }
 
 }

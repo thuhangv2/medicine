@@ -1,4 +1,4 @@
-@extends(SITE_THEME.'.shop_layout')
+@extends('templates.'.sc_store('template').'.shop_layout')
 
 @section('main')
 
@@ -12,18 +12,18 @@
             <div class="row">
                 <div class="col-sm-8">
                     <div class="contact-form">
-                        <h2 class="title text-center">{{ trans('language.contact_form.title') }}</h2>
+                        <h2 class="title text-center">{{ trans('front.contact_form.title') }}</h2>
                         <form method="post" action="{{ route('postContact') }}" class="contact-form">
                         {{ csrf_field() }}
                         <div id="contactFormWrapper" style="margin: 30px;">
                         <div class="row">
                                 <div class="col-md-12 collapsed-block">
-                                    {!! $page->content !!}
+                                    {!!  sc_word_format_class($page->content) !!}
                                 </div>
                                 <div class="col-md-12 col-xs-12">
                                     <div class="row">
                                         <div class="col-sm-4 form-group {{ $errors->has('name') ? ' has-error' : '' }}">
-                                            <label>{{ trans('language.contact_form.name') }}:</label>
+                                            <label>{{ trans('front.contact_form.name') }}:</label>
                                             <input type="text"  class="form-control {{ ($errors->has('name'))?"input-error":"" }}"  name="name" placeholder="Your name..." value="{{ old('name') }}">
                                             @if ($errors->has('name'))
                                                 <span class="help-block">
@@ -32,7 +32,7 @@
                                             @endif
                                         </div>
                                         <div class="col-sm-4 form-group {{ $errors->has('email') ? ' has-error' : '' }}">
-                                            <label>{{ trans('language.contact_form.email') }}:</label>
+                                            <label>{{ trans('front.contact_form.email') }}:</label>
                                             <input  type="email" class="form-control {{ ($errors->has('email'))?"input-error":"" }}"  name="email" placeholder="Your email..." value="{{ old('email') }}">
                                             @if ($errors->has('email'))
                                                 <span class="help-block">
@@ -41,7 +41,7 @@
                                             @endif
                                         </div>
                                         <div class="col-sm-4 form-group {{ $errors->has('phone') ? ' has-error' : '' }}">
-                                            <label>{{ trans('language.contact_form.phone') }}:</label>
+                                            <label>{{ trans('front.contact_form.phone') }}:</label>
                                             <input  type="telephone" class="form-control {{ ($errors->has('phone'))?"input-error":"" }}"  name="phone" placeholder="Your phone..." value="{{ old('phone') }}">
                                             @if ($errors->has('phone'))
                                                 <span class="help-block">
@@ -53,7 +53,7 @@
 
                                     <div class="row">
                                         <div class="col-sm-12 form-group {{ $errors->has('title') ? ' has-error' : '' }}">
-                                            <label class="control-label">{{ trans('language.contact_form.subject') }}:</label>
+                                            <label class="control-label">{{ trans('front.contact_form.subject') }}:</label>
                                             <input  type="text" class="form-control {{ ($errors->has('title'))?"input-error":"" }}"  name="title" placeholder="Subject..." value="{{ old('title') }}">
                                             @if ($errors->has('title'))
                                                 <span class="help-block">
@@ -62,7 +62,7 @@
                                             @endif
                                         </div>
                                         <div class="col-sm-12 form-group {{ $errors->has('content') ? ' has-error' : '' }}">
-                                            <label class="control-label">{{ trans('language.contact_form.content') }}:</label>
+                                            <label class="control-label">{{ trans('front.contact_form.content') }}:</label>
                                             <textarea  class="form-control {{ ($errors->has('content'))?"input-error":"" }}" rows="5" cols="75"  name="content" placeholder="Your Message...">{{ old('content') }}</textarea>
                                             @if ($errors->has('content'))
                                                 <span class="help-block">
@@ -73,7 +73,7 @@
                                         </div>
                                     </div>
                                     <div class="btn-toolbar form-group">
-                                        <input type="submit"  value="{{ trans('language.contact_form.submit') }}" class="btn btn-primary">
+                                        <input type="submit"  value="{{ trans('front.contact_form.submit') }}" class="btn btn-primary">
                                     </div>
                                 </div>
                         </div>
@@ -83,12 +83,12 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="contact-info">
-                        <h2 class="title text-center">{{ trans('language.contact_form.info') }}</h2>
+                        <h2 class="title text-center">{{ trans('front.contact_form.info') }}</h2>
                         <address>
-                            <p>{{ $configsGlobal['title'] }}</p>
-                            <p>{{ $configsGlobal['address'] }}</p>
-                            <p>{{ $configsGlobal['long_phone'] }}</p>
-                            <p>{{ $configsGlobal['email'] }}</p>
+                            <p>{{ sc_store('title') }}</p>
+                            <p>{{ sc_store('address') }}</p>
+                            <p>{{ sc_store('long_phone') }}</p>
+                            <p>{{ sc_store('email') }}</p>
                         </address>
                         <div class="social-networks">
                             <h2 class="title text-center">Social Networking</h2>

@@ -10,6 +10,7 @@ class ShippingStandard extends Model
 {
     public $timestamps = false;
     public $table      = 'shipping_standard';
+    protected $guarded = [];
     public function uninstallExtension()
     {
         if (Schema::hasTable($this->table)) {

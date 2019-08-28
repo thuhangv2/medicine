@@ -6,7 +6,7 @@ return [
     'auth'       => 'Author',
     'email'      => 'Email',
     'website'    => 'Website',
-    'active'     => 'Active',
+    'activated'  => 'Activated',
     'inactive'   => 'Inactive',
     'download'   => 'Download',
     'remove'     => 'Remove',
@@ -14,4 +14,8 @@ return [
     'version'    => 'Version',
     'installing' => 'Installing',
     'guide'      => 'Read document in <a target=_new href="https://s-cart.org/download/template.html">HERE</a>',
+    'admin'      => [
+        'list'  => 'Template list',
+        'title' => 'Template manager',
+    ],
 ];

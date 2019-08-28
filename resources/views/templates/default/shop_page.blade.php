@@ -1,11 +1,11 @@
-@extends(SITE_THEME.'.shop_layout')
+@extends('templates.'.sc_store('template').'.shop_layout')
 
 @section('main')
 <section >
 <div class="container">
     <div class="row">
         <h2 class="title text-center">{{ $title }}</h2>
-        {!! $page->content !!}
+        {!! sc_html_render($page->content) !!}
 </div>
 </div>
 </section>

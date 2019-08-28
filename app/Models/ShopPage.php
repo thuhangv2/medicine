@@ -2,25 +2,24 @@
 #app/Models/ShopPage.php
 namespace App\Models;
 
-use App\Models\Language;
 use Illuminate\Database\Eloquent\Model;
 
 class ShopPage extends Model
 {
     public $timestamps = false;
-    public $table      = 'shop_page';
+    public $table = 'shop_page';
+    protected $guarded = [];
     protected $appends = [
         'title',
         'keyword',
         'description',
         'content',
     ];
-    public $lang_id = 1;
+    public $lang = 'en';
     public function __construct()
     {
         parent::__construct();
-        $lang          = Language::getArrayLanguages();
-        $this->lang_id = $lang[app()->getLocale()];
+        $this->lang = app()->getLocale();
     }
     public function descriptions()
     {
@@ -44,9 +43,26 @@ class ShopPage extends Model
         return $this->processDescriptions()['content'] ?? '';
     }
 
+/*
+Get thumb
+ */
+    public function getThumb()
+    {
+        return sc_image_get_path_thumb($this->image);
+    }
+
+/*
+Get image
+ */
+    public function getImage()
+    {
+        return sc_image_get_path($this->image);
+
+    }
+
     public function getUrl()
     {
-        return route('pages', ['name' => $this->uniquekey]);
+        return route('pages', ['name' => $this->key]);
     }
 
 //Attributes
@@ -72,6 +88,6 @@ class ShopPage extends Model
     }
     public function processDescriptions()
     {
-        return $this->descriptions->keyBy('lang_id')[$this->lang_id] ?? [];
+        return $this->descriptions->keyBy('lang')[$this->lang] ?? [];
     }
 }

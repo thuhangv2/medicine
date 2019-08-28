@@ -1,4 +1,4 @@
-@extends(SITE_THEME.'.shop_layout')
+@extends('templates.'.sc_store('template').'.shop_layout')
 
 @section('main')
 <div class="container">
@@ -12,19 +12,30 @@
                     <form method="POST" action="{{ route('member.post_change_infomation') }}">
                         @csrf
 
-                        <div class="form-group row {{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ trans('account.name') }}</label>
+                        <div class="form-group row {{ $errors->has('first_name') ? ' has-error' : '' }}">
+                            <label for="first_name" class="col-md-4 col-form-label text-md-right">{{ trans('account.first_name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" required value="{{ (old('name'))?old('name'):$dataUser['name']}}">
+                                <input id="first_name" type="text" class="form-control" name="first_name" required value="{{ (old('first_name'))?old('first_name'):$dataUser['first_name']}}">
 
-                                @if($errors->has('name'))
-                                    <span class="help-block">{{ $errors->first('name') }}</span>
+                                @if($errors->has('first_name'))
+                                    <span class="help-block">{{ $errors->first('first_name') }}</span>
                                 @endif
 
                             </div>
                         </div>
+                        <div class="form-group row {{ $errors->has('last_name') ? ' has-error' : '' }}">
+                            <label for="last_name" class="col-md-4 col-form-label text-md-right">{{ trans('account.last_name') }}</label>
 
+                            <div class="col-md-6">
+                                <input id="last_name" type="text" class="form-control" name="last_name" required value="{{ (old('last_name'))?old('last_name'):$dataUser['last_name']}}">
+
+                                @if($errors->has('last_name'))
+                                    <span class="help-block">{{ $errors->first('last_name') }}</span>
+                                @endif
+
+                            </div>
+                        </div>
                         <div class="form-group row {{ $errors->has('phone') ? ' has-error' : '' }}">
                             <label for="phone" class="col-md-4 col-form-label text-md-right">{{ trans('account.phone') }}</label>
 
@@ -63,7 +74,6 @@
 
                        <div class="form-group row {{ $errors->has('address2') ? ' has-error' : '' }}">
                             <label for="address2" class="col-md-4 col-form-label text-md-right">{{ trans('account.address2') }}</label>
-
                             <div class="col-md-6">
                                 <input id="address2" type="text" class="form-control" name="address2" required value="{{ (old('address2'))?old('address2'):$dataUser['address2']}}">
 
@@ -73,6 +83,26 @@
 
                             </div>
                         </div>
+@php
+    $country = (old('country'))?old('country'):$dataUser['country'];
+@endphp
+
+                    <div class="form-group row {{ $errors->has('country') ? ' has-error' : '' }}">
+                            <label for="country" class="col-md-4 col-form-label text-md-right">{{ trans('account.country') }}</label>
+                            <div class="col-md-6">
+                            <select class="form-control country" style="width: 100%;" name="country" >
+                                <option>__{{ trans('account.country') }}__</option>
+                                @foreach ($countries as $k => $v)
+                                    <option value="{{ $k }}" {{ ($country ==$k) ? 'selected':'' }}>{{ $v }}</option>
+                                @endforeach
+                            </select>
+                                @if ($errors->has('country'))
+                                    <span class="help-block">
+                                        {{ $errors->first('country') }}
+                                    </span>
+                                @endif
+                            </div>
+                    </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">

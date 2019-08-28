@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Language;
+use App\Models\ShopLanguage;
 use Closure;
 use Session;
 
@@ -18,14 +18,13 @@ class Localization
     public function handle($request, Closure $next)
     {
 //Set language
-        $configsGlobal = \Helper::configsGlobal();
-        $languages     = Language::where('status', 1)->get()->keyBy('code');
+        $languages = ShopLanguage::getList();
         $requestLocale = $request->get('lang');
         if ($requestLocale) {
             $detectLocale = $requestLocale;
         } else
         if (!Session::has('locale')) {
-            $detectLocale = $configsGlobal['locale'] ?? config('app.locale');
+            $detectLocale = sc_store('locale') ?? config('app.locale');
         } else {
             $detectLocale = session('locale');
         }

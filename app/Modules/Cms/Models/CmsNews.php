@@ -2,28 +2,26 @@
 #app/Modules/Cms/Models/CmsNews.php
 namespace App\Modules\Cms\Models;
 
-use App\Models\Language;
 use App\Modules\Cms\Models\CmsNewsDescription;
-use Helper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class CmsNews extends Model
 {
-    public $table      = 'cms_news';
+    public $table = 'cms_news';
+    protected $guarded = [];
     protected $appends = [
         'title',
         'keyword',
         'description',
         'content',
     ];
-    public $lang_id = 1;
+    public $lang = 'en';
     public function __construct()
     {
         parent::__construct();
-        $lang          = Language::getArrayLanguages();
-        $this->lang_id = $lang[app()->getLocale()];
+        $this->lang = app()->getLocale();
     }
     public function descriptions()
     {
@@ -42,44 +40,20 @@ class CmsNews extends Model
         }
 
     }
-/**
- * [getThumb description]
- * @return [type] [description]
+/*
+Get thumb
  */
     public function getThumb()
     {
-        if ($this->image) {
-
-            if (!file_exists(PATH_FILE . '/thumb/' . $this->image)) {
-                return $this->getImage();
-            } else {
-                if (!file_exists(PATH_FILE . '/thumb/' . $this->image)) {
-                } else {
-                    return PATH_FILE . '/thumb/' . $this->image;
-                }
-            }
-        } else {
-            return 'images/no-image.jpg';
-        }
-
+        return sc_image_get_path_thumb($this->image);
     }
 
-/**
- * [getImage description]
- * @return [type] [description]
+/*
+Get image
  */
     public function getImage()
     {
-        if ($this->image) {
-
-            if (!file_exists(PATH_FILE . '/' . $this->image)) {
-                return 'images/no-image.jpg';
-            } else {
-                return PATH_FILE . '/' . $this->image;
-            }
-        } else {
-            return 'images/no-image.jpg';
-        }
+        return sc_image_get_path($this->image);
 
     }
 /**
@@ -88,7 +62,7 @@ class CmsNews extends Model
  */
     public function getUrl()
     {
-        return route('newsDetail', ['name' => Helper::strToUrl(empty($this->title) ? 'no-title' : $this->title), 'id' => $this->id]);
+        return route('newsDetail', ['name' => sc_word_format_url(empty($this->title) ? 'no-title' : $this->title), 'id' => $this->id]);
     }
 
     //Fields language
@@ -138,7 +112,7 @@ class CmsNews extends Model
 
     public function processDescriptions()
     {
-        return $this->descriptions->keyBy('lang_id')[$this->lang_id] ?? [];
+        return $this->descriptions->keyBy('lang')[$this->lang] ?? [];
     }
 
 //=========================

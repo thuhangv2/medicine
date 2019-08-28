@@ -25,4 +25,7 @@ return [
     'address1'         => 'Tỉnh/Thành phố',
     'address2'         => 'Quận/Huyện',
     'note'             => 'Ghi chú đơn hàng',
+    'country'          => 'Quốc gia',
+    'fist_name'          => 'Tên',
+    'last_name'          => 'Họ',
 ];

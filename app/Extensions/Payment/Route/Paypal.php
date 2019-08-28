@@ -3,8 +3,8 @@
 Route::group(
     [
         'prefix'    => 'extension/payment',
-        'namespace' => 'App\Extensions\Payment\Controllers',
+        'namespace' => 'App\Extensions\Payment\Providers',
     ], function () {
-        Route::get('paypal', 'Paypal@index')->name('paypal');
-        Route::get('return/{order_id}', 'Paypal@getReturn')->name('returnPaypal');
+        Route::get('paypal', 'PayPalService@index')->name('paypal');
+        Route::get('return/{order_id}', 'PayPalService@getReturn')->name('returnPaypal');
     });

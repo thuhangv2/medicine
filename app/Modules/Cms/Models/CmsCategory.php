@@ -2,7 +2,6 @@
 #app/Modules/Cms/Models/CmsCategory.php
 namespace App\Modules\Cms\Models;
 
-use App\Models\Language;
 use App\Modules\Cms\Models\CmsCategoryDescription;
 use App\Modules\Cms\Models\CmsContent;
 use Illuminate\Database\Eloquent\Model;
@@ -12,18 +11,18 @@ use Illuminate\Support\Facades\Schema;
 class CmsCategory extends Model
 {
     public $timestamps = false;
-    public $table      = 'cms_category';
+    public $table = 'cms_category';
+    protected $guarded = [];
     protected $appends = [
         'title',
         'keyword',
         'description',
     ];
-    public $lang_id = 1;
+    public $lang = 'en';
     public function __construct()
     {
         parent::__construct();
-        $lang          = Language::getArrayLanguages();
-        $this->lang_id = $lang[app()->getLocale()];
+        $this->lang = app()->getLocale();
     }
     public function descriptions()
     {
@@ -31,12 +30,12 @@ class CmsCategory extends Model
     }
     public function contents()
     {
-        return $this->hasMany(CmsContent::class, 'category_id', 'id');
+        return $this->hasMany(CmsContent::class, 'cms_category_id', 'id');
     }
 
     public function getTreeCategory($root = 0)
     {
-        $list   = [];
+        $list = [];
         $result = $this->select('id', 'parent')
             ->where('parent', $root)
             ->get();
@@ -59,6 +58,23 @@ class CmsCategory extends Model
             $this->getTreeCategoryTmp($value['id'], $list, $st . '--');
         }
 
+    }
+
+    public function getTreeCategories($parent = 0, &$tree = null, $categories = null, &$st = '')
+    {
+        $categories = $categories ?? $this->getCategoriesAll();
+        $tree = $tree ?? [];
+        $lisCategory = $categories[$parent] ?? [];
+        foreach ($lisCategory as $category) {
+            $tree[$category->id] = $st . $category->title;
+            if (!empty($categories[$category->id])) {
+                $st .= '--';
+                $this->getTreeCategories($category->id, $tree, $categories, $st);
+                $st = '';
+            }
+        }
+
+        return $tree;
     }
 
     public function checkChild($id)
@@ -97,9 +113,9 @@ class CmsCategory extends Model
  */
     public function getContentsToCategory($id, $limit = null, $opt = null)
     {
-        $arrChild   = $this->arrChild($id);
+        $arrChild = $this->arrChild($id);
         $arrChild[] = $id;
-        $query      = (new CmsContent)->where('status', 1)->whereIn('category_id', $arrChild)->sort();
+        $query = (new CmsContent)->where('status', 1)->whereIn('cms_category_id', $arrChild)->sort();
         if (!(int) $limit) {
             return $query->get();
         } else
@@ -110,59 +126,88 @@ class CmsCategory extends Model
         }
 
     }
-/**
- * [getCategories description]
- * @param  [type] $parent [description]
- * @return [type]         [description]
- */
-    public static function getCategories($parent)
+
+    public function getCategories($parent, $limit = null, $opt = null, $sortBy = null, $sortOrder = 'asc')
     {
-        return self::where('status', 1)->where('parent', $parent)->sort()->get();
+        $query = $this->where('status', 1)->where('parent', $parent);
+        $query = $query->sort($sortBy, $sortOrder);
+        if (!(int) $limit) {
+            return $query->get();
+        } else
+        if ($opt == 'paginate') {
+            return $query->paginate((int) $limit);
+        } else
+        if ($opt == 'random') {
+            return $query->inRandomOrder()->limit($limit)->get();
+        } else {
+            return $query->limit($limit)->get();
+        }
+
     }
 
-/**
- * [getThumb description]
- * @return [type] [description]
+    public function getCategoriesAll($onlyActive = false, $sortBy = null, $sortOrder = 'asc')
+    {
+        $listFullCategory = [];
+        if (sc_config('cache_status')) {
+            if (!Cache::has('all_cms_cate_' . $onlyActive . $sortBy . $sortOrder)) {
+
+                if ($onlyActive) {
+                    $listFullCategory = $this->getCategoriesActive($sortBy = null, $sortOrder = 'asc');
+                } else {
+                    $listFullCategory = $this->getCategoriesFull($sortBy = null, $sortOrder = 'asc');
+                }
+                Cache::put('all_cms_cate_' . $onlyActive . $sortBy . $sortOrder, $listFullCategory, $seconds = sc_config('cache_time', 600));
+            }
+            return Cache::get('all_cms_cate_' . $onlyActive . $sortBy . $sortOrder);
+        } else {
+            if ($onlyActive) {
+                $listFullCategory = $this->getCategoriesActive($sortBy = null, $sortOrder = 'asc');
+            } else {
+                $listFullCategory = $this->getCategoriesFull($sortBy = null, $sortOrder = 'asc');
+            }
+            return $listFullCategory;
+        }
+
+    }
+
+    public function getCategoriesActive($sortBy = null, $sortOrder = 'asc')
+    {
+        $lang = $this->lang;
+        $listFullCategory = $this->with(['descriptions' => function ($q) use ($lang) {
+            $q->where('lang', $lang);
+        }])->where('status', 1)->sort($sortBy, $sortOrder)->get()->groupBy('parent');
+        return $listFullCategory;
+    }
+
+    public function getCategoriesFull($sortBy = null, $sortOrder = 'asc')
+    {
+        $lang = $this->lang;
+        $listFullCategory = $this->with(['descriptions' => function ($q) use ($lang) {
+            $q->where('lang', $lang);
+        }])->sort($sortBy, $sortOrder)->get()->groupBy('parent');
+        return $listFullCategory;
+    }
+
+/*
+Get thumb
  */
     public function getThumb()
     {
-        if ($this->image) {
-            if (!file_exists(PATH_FILE . '/thumb/' . $this->image)) {
-                return $this->getImage();
-            } else {
-                if (!file_exists(PATH_FILE . '/thumb/' . $this->image)) {
-                } else {
-                    return PATH_FILE . '/thumb/' . $this->image;
-                }
-            }
-        } else {
-            return 'images/no-image.jpg';
-        }
-
+        return sc_image_get_path_thumb($this->image);
     }
 
-/**
- * [getImage description]
- * @return [type] [description]
+/*
+Get image
  */
     public function getImage()
     {
-        if ($this->image) {
-
-            if (!file_exists(PATH_FILE . '/' . $this->image)) {
-                return 'images/no-image.jpg';
-            } else {
-                return PATH_FILE . '/' . $this->image;
-            }
-        } else {
-            return 'images/no-image.jpg';
-        }
+        return sc_image_get_path($this->image);
 
     }
 
     public function getUrl()
     {
-        return route('cmsCategory', ['name' => \Helper::strToUrl(empty($this->title) ? 'no-title' : $this->title), 'id' => $this->id]);
+        return route('cmsCategory', ['name' => sc_word_format_url(empty($this->title) ? 'no-title' : $this->title), 'id' => $this->id]);
     }
 
     //Fields language
@@ -193,6 +238,16 @@ class CmsCategory extends Model
     {
         return $this->getDescription();
 
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        // before delete() method call this
+        static::deleting(function ($category) {
+            //Delete category descrition
+            $category->descriptions()->delete();
+        });
     }
 
 //Scort
@@ -233,7 +288,7 @@ class CmsCategory extends Model
     }
     public function processDescriptions()
     {
-        return $this->descriptions->keyBy('lang_id')[$this->lang_id] ?? [];
+        return $this->descriptions->keyBy('lang')[$this->lang] ?? [];
     }
 
 }

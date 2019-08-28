@@ -1,4 +1,4 @@
-@extends(SITE_THEME.'.shop_layout')
+@extends('templates.'.sc_store('template').'.shop_layout')
 
 @section('main')
 <section>
@@ -52,10 +52,10 @@
         <td>
             {{ $product->getName() }}<br>
 {{-- Process attributes --}}
-            @if ($item->options->att)
+            @if ($item->options->count())
             (
-                @foreach ($item->options->att as $keyAtt => $att)
-                    <b>{{ $attributesGroup[$keyAtt]['name'] }}</b>: <i>{{ $att }}</i> ;
+                @foreach ($item->options as $keyAtt => $att)
+                    <b>{{ $attributesGroup[$keyAtt] }}</b>: <i>{{ $att }}</i> ;
                 @endforeach
             )<br>
             @endif
@@ -70,31 +70,35 @@
     </tbody>
   </table>
   </div>
-<form class="shipping_address" id="form-order" role="form" method="POST" action="{{ route('storeOrder') }}">
+<form class="shipping_address" id="form-order" role="form" method="POST" action="{{ route('addOrder') }}">
     {{ csrf_field() }}
     <div class="row">
     <div class="col-md-6">
-        <h3 class="control-label"><i class="fa fa-credit-card-alt"></i> {{ trans('cart.shipping_address') }}:<br></h3>
+        <h3 class="control-label"><i class="fa fa-truck" aria-hidden="true"></i> {{ trans('cart.shipping_address') }}:<br></h3>
         <table class="table box table-bordered" id="showTotal">
             <tr>
-                <th>{{ trans('cart.to_name') }}:</td>
-                <td>{{ $address['toname'] }}</td>
+                <th>{{ trans('cart.first_name') }}:</td>
+                <td>{{ $shippingAddress['first_name'] }}</td>
+            </tr>
+            <tr>
+                <th>{{ trans('cart.last_name') }}:</td>
+                <td>{{ $shippingAddress['last_name'] }}</td>
             </tr>
             <tr>
                 <th>{{ trans('cart.phone') }}:</td>
-                <td>{{ $address['phone'] }}</td>
+                <td>{{ $shippingAddress['phone'] }}</td>
             </tr>
              <tr>
                 <th>{{ trans('cart.email') }}:</td>
-                <td>{{ $address['email'] }}</td>
+                <td>{{ $shippingAddress['email'] }}</td>
             </tr>
              <tr>
                 <th>{{ trans('cart.address') }}:</td>
-                <td>{{ $address['address1'].' '.$address['address2'] }}</td>
+                <td>{{ $shippingAddress['address1'].' '.$shippingAddress['address2'].','.$shippingAddress['country'] }}</td>
             </tr>
              <tr>
                 <th>{{ trans('cart.note') }}:</td>
-                <td>{{ $address['comment'] }}</td>
+                <td>{{ $shippingAddress['comment'] }}</td>
             </tr>
         </table>
     </div>
@@ -162,7 +166,7 @@
     <div class="breadcrumbs">
         <ol class="breadcrumb">
           <li><a href="{{ route('home') }}">Home</a></li>
-          <li><a href="{{ route('cart') }}">{{ trans('language.cart_title') }}</a></li>
+          <li><a href="{{ route('cart') }}">{{ trans('front.cart_title') }}</a></li>
           <li class="active">{{ $title }}</li>
         </ol>
       </div>

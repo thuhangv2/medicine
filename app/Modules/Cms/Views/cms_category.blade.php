@@ -1,4 +1,4 @@
-@extends(SITE_THEME.'.shop_layout')
+@extends('templates.'.sc_store('template').'.shop_layout')
 
 @section('main')
 <section >
@@ -21,7 +21,7 @@
                       <h3 class="entry-title"><a href="{{ $entryDetail->getUrl() }}">{{ $entryDetail->title }}</a></h3>
                       <div class="entry-meta-data"> <span class="author">  <span class="date"><i class="pe-7s-date"></i>&nbsp; {{ $entryDetail->created_at }}</span> </div>
                       <div class="entry-excerpt">{{ $entryDetail->description }}</div>
-                      <a href="{{ $entryDetail->getUrl() }}" class="button read-more">{{ trans('language.view_more') }}&nbsp; <i class="fa fa-angle-double-right"></i></a> </div>
+                      <a href="{{ $entryDetail->getUrl() }}" class="button read-more">{{ trans('front.view_more') }}&nbsp; <i class="fa fa-angle-double-right"></i></a> </div>
                   </div>
                 </article>
                 <hr>
