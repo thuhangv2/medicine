@@ -15,7 +15,7 @@ class DiscountController extends Controller
     {
 
         $data = [
-            'title' => trans('Extensions\Total\Discount.admin.list'),
+            'title' => trans('Extensions/Total/Discount.admin.list'),
             'sub_title' => '',
             'icon' => 'fa fa-indent',
             'menu_left' => '',
@@ -32,25 +32,25 @@ class DiscountController extends Controller
         ];
 
         $listTh = [
-            'id' => trans('Extensions\Total\Discount.id'),
-            'code' => trans('Extensions\Total\Discount.code'),
-            'reward' => trans('Extensions\Total\Discount.reward'),
-            'type' => trans('Extensions\Total\Discount.type'),
-            'data' => trans('Extensions\Total\Discount.data'),
-            'limit' => trans('Extensions\Total\Discount.limit'),
-            'used' => trans('Extensions\Total\Discount.used'),
-            'status' => trans('Extensions\Total\Discount.status'),
-            'login' => trans('Extensions\Total\Discount.login'),
-            'expires_at' => trans('Extensions\Total\Discount.expires_at'),
-            'action' => trans('Extensions\Total\Discount.admin.action'),
+            'id' => trans('Extensions/Total/Discount.id'),
+            'code' => trans('Extensions/Total/Discount.code'),
+            'reward' => trans('Extensions/Total/Discount.reward'),
+            'type' => trans('Extensions/Total/Discount.type'),
+            'data' => trans('Extensions/Total/Discount.data'),
+            'limit' => trans('Extensions/Total/Discount.limit'),
+            'used' => trans('Extensions/Total/Discount.used'),
+            'status' => trans('Extensions/Total/Discount.status'),
+            'login' => trans('Extensions/Total/Discount.login'),
+            'expires_at' => trans('Extensions/Total/Discount.expires_at'),
+            'action' => trans('Extensions/Total/Discount.admin.action'),
         ];
         $sort_order = request('sort_order') ?? 'id_desc';
         $keyword = request('keyword') ?? '';
         $arrSort = [
-            'id__desc' => trans('Extensions\Total\Discount.admin.sort_order.id_desc'),
-            'id__asc' => trans('Extensions\Total\Discount.admin.sort_order.id_asc'),
-            'code__desc' => trans('Extensions\Total\Discount.admin.sort_order.code_desc'),
-            'code__asc' => trans('Extensions\Total\Discount.admin.sort_order.code_asc'),
+            'id__desc' => trans('Extensions/Total/Discount.admin.sort_order.id_desc'),
+            'id__asc' => trans('Extensions/Total/Discount.admin.sort_order.id_asc'),
+            'code__desc' => trans('Extensions/Total/Discount.admin.sort_order.code_desc'),
+            'code__asc' => trans('Extensions/Total/Discount.admin.sort_order.code_asc'),
         ];
         $obj = new Discount;
         if ($keyword) {
@@ -80,9 +80,9 @@ class DiscountController extends Controller
                 'login' => $row['login'],
                 'expires_at' => $row['expires_at'],
                 'action' => '
-                    <a href="' . route('admin_discount.edit', ['id' => $row['id']]) . '"><span title="' . trans('Extensions\Total\Discount.admin.edit') . '" type="button" class="btn btn-flat btn-primary"><i class="fa fa-edit"></i></span></a>&nbsp;
+                    <a href="' . route('admin_discount.edit', ['id' => $row['id']]) . '"><span title="' . trans('Extensions/Total/Discount.admin.edit') . '" type="button" class="btn btn-flat btn-primary"><i class="fa fa-edit"></i></span></a>&nbsp;
 
-                  <span onclick="deleteItem(' . $row['id'] . ');"  title="' . trans('Extensions\Total\Discount.admin.delete') . '" class="btn btn-flat btn-danger"><i class="fa fa-trash"></i></span>
+                  <span onclick="deleteItem(' . $row['id'] . ');"  title="' . trans('Extensions/Total/Discount.admin.delete') . '" class="btn btn-flat btn-danger"><i class="fa fa-trash"></i></span>
                   ',
             ];
         }
@@ -90,7 +90,7 @@ class DiscountController extends Controller
         $data['listTh'] = $listTh;
         $data['dataTr'] = $dataTr;
         $data['pagination'] = $dataTmp->appends(request()->except(['_token', '_pjax']))->links('admin.component.pagination');
-        $data['result_items'] = trans('Extensions\Total\Discount.admin.result_item', ['item_from' => $dataTmp->firstItem(), 'item_to' => $dataTmp->lastItem(), 'item_total' => $dataTmp->total()]);
+        $data['result_items'] = trans('Extensions/Total/Discount.admin.result_item', ['item_from' => $dataTmp->firstItem(), 'item_to' => $dataTmp->lastItem(), 'item_total' => $dataTmp->total()]);
 
 //menu_left
         $data['menu_left'] = '<div class="pull-left">
@@ -105,7 +105,7 @@ class DiscountController extends Controller
 //menu_right
         $data['menu_right'] = '<div class="btn-group pull-right" style="margin-right: 10px">
                            <a href="' . route('admin_discount.create') . '" class="btn  btn-success  btn-flat" title="New" id="button_create_new">
-                           <i class="fa fa-plus"></i><span class="hidden-xs">' . trans('Extensions\Total\Discount.admin.add_new') . '</span>
+                           <i class="fa fa-plus"></i><span class="hidden-xs">' . trans('Extensions/Total/Discount.admin.add_new') . '</span>
                            </a>
                         </div>';
 //=menu_right
@@ -150,7 +150,7 @@ class DiscountController extends Controller
                    </div>
                    <div class="btn-group pull-right">
                          <div class="form-group">
-                           <input type="text" name="keyword" class="form-control" placeholder="' . trans('Extensions\Total\Discount.admin.search_place') . '" value="' . $keyword . '">
+                           <input type="text" name="keyword" class="form-control" placeholder="' . trans('Extensions/Total/Discount.admin.search_place') . '" value="' . $keyword . '">
                          </div>
                    </div>
                 </form>';
@@ -169,9 +169,9 @@ class DiscountController extends Controller
     public function create()
     {
         $data = [
-            'title' => trans('Extensions\Total\Discount.admin.add_new_title'),
+            'title' => trans('Extensions/Total/Discount.admin.add_new_title'),
             'sub_title' => '',
-            'title_description' => trans('Extensions\Total\Discount.admin.add_new_des'),
+            'title_description' => trans('Extensions/Total/Discount.admin.add_new_des'),
             'icon' => 'fa fa-plus',
             'discount' => [],
             'url_action' => route('admin_discount.create'),
@@ -193,7 +193,7 @@ class DiscountController extends Controller
             'reward' => 'required',
             'type' => 'required',
         ], [
-            'code.regex' => trans('Extensions\Total\Discount.admin.code_validate'),
+            'code.regex' => trans('Extensions/Total/Discount.admin.code_validate'),
         ]);
 
         if ($validator->fails()) {
@@ -214,7 +214,7 @@ class DiscountController extends Controller
         ];
         Discount::create($dataInsert);
 //
-        return redirect()->route('admin_discount.index')->with('success', trans('Extensions\Total\Discount.admin.create_success'));
+        return redirect()->route('admin_discount.index')->with('success', trans('Extensions/Total/Discount.admin.create_success'));
 
     }
 
@@ -252,7 +252,7 @@ class DiscountController extends Controller
             'reward' => 'required',
             'type' => 'required',
         ], [
-            'code.regex' => trans('Extensions\Total\Discount.admin.code_validate'),
+            'code.regex' => trans('Extensions/Total/Discount.admin.code_validate'),
         ]);
 
         if ($validator->fails()) {
@@ -275,7 +275,7 @@ class DiscountController extends Controller
 
         $discount->update($dataUpdate);
 //
-        return redirect()->route('admin_discount.index')->with('success', trans('Extensions\Total\Discount.admin.edit_success'));
+        return redirect()->route('admin_discount.index')->with('success', trans('Extensions/Total/Discount.admin.edit_success'));
 
     }
 
