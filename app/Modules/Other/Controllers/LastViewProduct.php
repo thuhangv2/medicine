@@ -5,9 +5,12 @@ namespace App\Modules\Other\Controllers;
 use App\Models\AdminConfig;
 use App\Models\ShopLayout;
 use App\Models\ShopProduct;
+use App\Modules\ModuleDefault;
 
 class LastViewProduct extends \App\Http\Controllers\GeneralController
 {
+    use ModuleDefault;
+
     protected $configType = 'Modules';
     protected $configCode = 'Other';
     protected $configKey = 'LastViewProduct';
@@ -17,6 +20,7 @@ class LastViewProduct extends \App\Http\Controllers\GeneralController
     public $version;
     public $auth;
     public $link;
+    public $image;
     const ON = 1;
     const OFF = 0;
     public function __construct()
