@@ -44,7 +44,7 @@
       <div class="icon">
           <i class="fa fa-user"></i>
       </div>
-      <a href="{{ route('admin_user.index') }}" class="small-box-footer">
+      <a href="{{ route('admin_customer.index') }}" class="small-box-footer">
           {{ trans('admin.more') }}&nbsp;
           <i class="fa fa-arrow-circle-right"></i>
       </a>
