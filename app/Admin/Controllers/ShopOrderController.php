@@ -105,7 +105,7 @@ class ShopOrderController extends Controller
 
         $styleStatus = $this->statusOrder;
         array_walk($styleStatus, function (&$v, $k) {
-            $v = '<span class="' . (ShopOrder::$mapStyleStatus[$k] ?? '') . '">' . $v . '</span>';
+            $v = '<span class="label label-' . (ShopOrder::$mapStyleStatus[$k] ?? 'light') . '">' . $v . '</span>';
         });
         $dataTr = [];
         foreach ($dataTmp as $key => $row) {

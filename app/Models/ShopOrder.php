@@ -14,12 +14,12 @@ class ShopOrder extends Model
     public $table = 'shop_order';
     protected $guarded = [];
     public static $mapStyleStatus = [
-        '1' => '', //new
-        '2' => 'label label-primary', //processing
-        '3' => 'label label-warning', //Hold
-        '4' => 'label label-danger', //Cancel
-        '5' => 'label label-success', //Success
-        '6' => 'label label-default', //Failed
+        '1' => 'info', //new
+        '2' => 'primary', //processing
+        '3' => 'warning', //Hold
+        '4' => 'danger', //Cancel
+        '5' => 'success', //Success
+        '6' => 'default', //Failed
     ];
 
     public function details()

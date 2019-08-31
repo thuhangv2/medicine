@@ -40,46 +40,34 @@
     -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
     box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
 }
+.progress-bar-default {
+    background-color: #000;
+}
 </style>
 @php
     $totalOrder = \App\Models\ShopOrder::count();
+    $styleStatus = \App\Models\ShopOrder::$mapStyleStatus;
 @endphp
 @if ($totalOrder)
 @php
-    $totalProcessing = \App\Models\ShopOrder::where('status',2)->count();
-    $totalDone = \App\Models\ShopOrder::where('status',5)->count();
-    $totalNew = \App\Models\ShopOrder::where('status',1)->count();
-    $percentProcessing = floor($totalProcessing * 100/$totalOrder);
-    $percentDone = floor($totalDone/$totalOrder * 100);
-    $percentNew = floor($totalNew/$totalOrder * 100);
-    $percentOther = 100- $percentProcessing - $percentDone - $percentNew;
+    $arrStatus = \App\Models\ShopOrderStatus::pluck('name','id')->all();
+    $groupOrder = (new \App\Models\ShopOrder)->all()->groupBy('status');
 @endphp
     <div id="summary">
     <ul>
-    <li>
-    <div>Orders Completed <span class="pull-right">{{ $percentProcessing }}%</span></div>
-    <div class="progress">
-    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {{ $percentProcessing }}%"> <span class="sr-only">{{ $percentProcessing }}%</span></div>
-    </div>
-    </li>
-    <li>
-    <div>Orders Processing <span class="pull-right">{{ $percentDone }}%</span></div>
-    <div class="progress">
-    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {{ $percentDone }}%"> <span class="sr-only">{{ $percentDone }}%</span></div>
-    </div>
-    </li>
-    <li>
-    <div>Orders New <span class="pull-right">{{ $percentNew }}%</span></div>
-    <div class="progress">
-    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {{ $percentNew }}%"> <span class="sr-only">{{ $percentNew }}%</span></div>
-    </div>
-    </li>
-    <li>
-    <div>Other Statuses <span class="pull-right">{{ $percentOther }}%</span></div>
-    <div class="progress">
-    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {{ $percentOther }}%"> <span class="sr-only">{{ $percentOther }}%</span></div>
-    </div>
-    </li>
+        @foreach ($groupOrder as $status => $element)
+        @php
+            $style = $styleStatus[$status]??'light';
+            $percent = floor($element->count() * 100/$totalOrder);
+        @endphp
+            <li>
+                <div>Orders {{ $arrStatus[$status]??'' }} <span class="pull-right">{{ $percent }}%</span></div>
+                <div class="progress">
+                <div class="progress-bar progress-bar-{{ $style }}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {{ $percent }}%"> <span class="sr-only">{{ $percent }}%</span></div>
+                </div>
+            </li>
+        @endforeach
+
     </ul>
     </div>
 
