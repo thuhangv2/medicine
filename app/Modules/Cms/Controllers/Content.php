@@ -63,7 +63,7 @@ class Content extends \App\Http\Controllers\GeneralController
                     'key' => $this->configKey,
                     'type' => $this->configType,
                     'value' => self::ON, //1- Enable extension; 0 - Disable
-                    'detail' => $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title',
+                    'detail' => 'lang::' . $this->configType . '/' . $this->configCode . '/' . $this->configKey . '.title',
                 ]
             );
             if (!$process) {
