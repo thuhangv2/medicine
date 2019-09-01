@@ -139,7 +139,7 @@
                     <tr>
                       <td><a href="{{ route('admin_order.detail',['id'=>$order->id]) }}">Order#{{ $order->id }}</a></td>
                       <td>{{ $order->email }}</td>
-                      <td><span class="{{ $mapStyleStatus[$order->status]??'' }}">{{ $order->orderStatus->name }}</span></td>
+                      <td><span class="label label-{{ $mapStyleStatus[$order->status]??'' }}">{{ $order->orderStatus->name }}</span></td>
                       <td>{{ $order->created_at }}</td>
                     </tr>
   @endforeach
