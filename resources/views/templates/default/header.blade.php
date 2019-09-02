@@ -27,7 +27,7 @@
               @if (count($currencies)>1)
                <div class="btn-group locale">
                 <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                  {{ \Helper::getCurrency()['name'] }}
+                  {{ sc_currency_info()['name'] }}
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
@@ -102,9 +102,7 @@
                     </ul>
                 </li>
 
-                @if (!empty(sc_config('News')))
                 <li><a href="{{ route('news') }}">{{ trans('front.blog') }}</a></li>
-                @endif
 
                 @if (!empty(sc_config('Content')))
                 <li class="dropdown"><a href="#">{{ trans('front.cms_category') }}<i class="fa fa-angle-down"></i></a>

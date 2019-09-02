@@ -105,7 +105,7 @@ class ShopOrderController extends Controller
 
         $styleStatus = $this->statusOrder;
         array_walk($styleStatus, function (&$v, $k) {
-            $v = '<span class="' . (ShopOrder::$mapStyleStatus[$k] ?? '') . '">' . $v . '</span>';
+            $v = '<span class="label label-' . (ShopOrder::$mapStyleStatus[$k] ?? 'light') . '">' . $v . '</span>';
         });
         $dataTr = [];
         foreach ($dataTmp as $key => $row) {
@@ -113,10 +113,10 @@ class ShopOrderController extends Controller
                 'check_row' => '<input type="checkbox" class="grid-row-checkbox" data-id="' . $row['id'] . '">',
                 'id' => $row['id'],
                 'email' => $row['email'] ?? 'N/A',
-                'subtotal' => \Helper::currencyOnlyRender($row['subtotal'] ?? 0, $row['currency']),
-                'shipping' => \Helper::currencyOnlyRender($row['shipping'] ?? 0, $row['currency']),
-                'discount' => \Helper::currencyOnlyRender($row['discount'] ?? 0, $row['currency']),
-                'total' => \Helper::currencyOnlyRender($row['total'] ?? 0, $row['currency']),
+                'subtotal' => sc_currency_render_symbol($row['subtotal'] ?? 0, $row['currency']),
+                'shipping' => sc_currency_render_symbol($row['shipping'] ?? 0, $row['currency']),
+                'discount' => sc_currency_render_symbol($row['discount'] ?? 0, $row['currency']),
+                'total' => sc_currency_render_symbol($row['total'] ?? 0, $row['currency']),
                 'payment_method' => $row['payment_method'],
                 'currency' => $row['currency'] . '/' . $row['exchange_rate'],
                 'status' => $styleStatus[$row['status']],
@@ -231,11 +231,11 @@ class ShopOrderController extends Controller
             'title_description' => trans('order.admin.add_new_des'),
             'icon' => 'fa fa-plus',
         ];
-        $paymentMethodTmp = \Helper::getExtensionsGroup('payment', $onlyActive = false);
+        $paymentMethodTmp = sc_get_extension('payment', $onlyActive = false);
         foreach ($paymentMethodTmp as $key => $value) {
             $paymentMethod[$key] = sc_language_render($value->detail);
         }
-        $shippingMethodTmp = \Helper::getExtensionsGroup('shipping', $onlyActive = false);
+        $shippingMethodTmp = sc_get_extension('shipping', $onlyActive = false);
         foreach ($shippingMethodTmp as $key => $value) {
             $shippingMethod[$key] = trans($value->detail);
         }
@@ -343,11 +343,11 @@ class ShopOrderController extends Controller
             return 'no data';
         }
         $products = ShopProduct::getArrayProductName();
-        $paymentMethodTmp = \Helper::getExtensionsGroup('payment', $onlyActive = false);
+        $paymentMethodTmp = sc_get_extension('payment', $onlyActive = false);
         foreach ($paymentMethodTmp as $key => $value) {
             $paymentMethod[$key] = sc_language_render($value->detail);
         }
-        $shippingMethodTmp = \Helper::getExtensionsGroup('shipping', $onlyActive = false);
+        $shippingMethodTmp = sc_get_extension('shipping', $onlyActive = false);
         foreach ($shippingMethodTmp as $key => $value) {
             $shippingMethod[$key] = sc_language_render($value->detail);
         }
@@ -420,7 +420,7 @@ class ShopOrderController extends Controller
                 'id' => $id,
                 'code' => $field,
                 'value' => $value,
-                'text' => \Helper::currencyOnlyRender($value, $order->currency),
+                'text' => sc_currency_render_symbol($value, $order->currency),
             ];
             ShopOrderTotal::updateField($fieldTotal);
         } else {
@@ -452,13 +452,13 @@ class ShopOrderController extends Controller
             } else {
                 $style = 'style="font-weight:bold;"';
             }
-            $blance = '<tr ' . $style . ' class="data-balance"><td>' . trans('order.balance') . ':</td><td align="right">' . \Helper::currencyFormat($orderUpdated->balance) . '</td></tr>';
+            $blance = '<tr ' . $style . ' class="data-balance"><td>' . trans('order.balance') . ':</td><td align="right">' . sc_currency_format($orderUpdated->balance) . '</td></tr>';
             return json_encode(['error' => 0, 'msg' => [
-                'total' => \Helper::currencyFormat($orderUpdated->total),
-                'subtotal' => \Helper::currencyFormat($orderUpdated->subtotal),
-                'shipping' => \Helper::currencyFormat($orderUpdated->shipping),
-                'discount' => \Helper::currencyFormat($orderUpdated->discount),
-                'received' => \Helper::currencyFormat($orderUpdated->received),
+                'total' => sc_currency_format($orderUpdated->total),
+                'subtotal' => sc_currency_format($orderUpdated->subtotal),
+                'shipping' => sc_currency_format($orderUpdated->shipping),
+                'discount' => sc_currency_format($orderUpdated->discount),
+                'received' => sc_currency_format($orderUpdated->received),
                 'balance' => $blance,
             ],
             ]);
@@ -583,14 +583,14 @@ class ShopOrderController extends Controller
             } else {
                 $style = 'style="font-weight:bold;"';
             }
-            $blance = '<tr ' . $style . ' class="data-balance"><td>' . trans('order.balance') . ':</td><td align="right">' . \Helper::currencyFormat($orderUpdated->balance) . '</td></tr>';
+            $blance = '<tr ' . $style . ' class="data-balance"><td>' . trans('order.balance') . ':</td><td align="right">' . sc_currency_format($orderUpdated->balance) . '</td></tr>';
             $arrayReturn = ['error' => 0, 'msg' => [
-                'total' => \Helper::currencyFormat($orderUpdated->total),
-                'subtotal' => \Helper::currencyFormat($orderUpdated->subtotal),
-                'shipping' => \Helper::currencyFormat($orderUpdated->shipping),
-                'discount' => \Helper::currencyFormat($orderUpdated->discount),
-                'received' => \Helper::currencyFormat($orderUpdated->received),
-                'item_total_price' => \Helper::currencyOnlyRender($item->total_price, $item->currency),
+                'total' => sc_currency_format($orderUpdated->total),
+                'subtotal' => sc_currency_format($orderUpdated->subtotal),
+                'shipping' => sc_currency_format($orderUpdated->shipping),
+                'discount' => sc_currency_format($orderUpdated->discount),
+                'received' => sc_currency_format($orderUpdated->received),
+                'item_total_price' => sc_currency_render_symbol($item->total_price, $item->currency),
                 'item_id' => $id,
                 'balance' => $blance,
             ],

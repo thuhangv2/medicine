@@ -37,7 +37,7 @@ class ExtensionsController extends Controller
     protected function extensionsGroup($group)
     {
         $group = sc_word_format_class($group);
-        $extensionsInstalled = \Helper::getExtensionsGroup($group, $onlyActive = false);
+        $extensionsInstalled = sc_get_extension($group, $onlyActive = false);
         $extensions = \FindClass::classNames('Extensions', $group);
         $namespace = $this->namespaceGroup[$group];
         $title = trans('Extensions/language.' . $group);

@@ -1,6 +1,48 @@
 <?php
+use App\Library\Helper;
 use App\Models\AdminConfig;
 use App\Models\AdminStore;
+use App\Models\ShopLanguage;
+use App\Models\ShopLayout;
+use App\Models\ShopLayoutUrl;
+
+/*
+Get extension in group
+ */
+if (!function_exists('sc_get_extension')) {
+    function sc_get_extension($group, $onlyActive = true)
+    {
+        return AdminConfig::getExtensionsGroup($group, $onlyActive);
+    }
+}
+
+/*
+Get all layouts link
+ */
+if (!function_exists('sc_link')) {
+    function sc_link()
+    {
+        if (Helper::$layoutsUrl !== null) {
+            return Helper::$layoutsUrl;
+        }
+        Helper::$layoutsUrl = ShopLayoutUrl::getGroup();
+        return Helper::$layoutsUrl;
+    }
+}
+
+/*
+Get all layouts
+ */
+if (!function_exists('sc_layouts')) {
+    function sc_layouts()
+    {
+        if (Helper::$layouts !== null) {
+            return Helper::$layouts;
+        }
+        Helper::$layouts = ShopLayout::getLayout();
+        return Helper::$layouts;
+    }
+}
 
 /*
 String to Url
@@ -102,6 +144,18 @@ if (!function_exists('sc_url_render')) {
             return url($string);
         }
         return url($string);
+    }
+}
+
+//Get all language
+if (!function_exists('sc_language_all')) {
+    function sc_language_all()
+    {
+        if (Helper::$languages !== null) {
+            return Helper::$languages;
+        }
+        Helper::$languages = ShopLanguage::getList();
+        return Helper::$languages;
     }
 }
 

@@ -44,7 +44,7 @@
       <div class="icon">
           <i class="fa fa-user"></i>
       </div>
-      <a href="{{ route('admin_user.index') }}" class="small-box-footer">
+      <a href="{{ route('admin_customer.index') }}" class="small-box-footer">
           {{ trans('admin.more') }}&nbsp;
           <i class="fa fa-arrow-circle-right"></i>
       </a>
@@ -139,7 +139,7 @@
                     <tr>
                       <td><a href="{{ route('admin_order.detail',['id'=>$order->id]) }}">Order#{{ $order->id }}</a></td>
                       <td>{{ $order->email }}</td>
-                      <td><span class="{{ $mapStyleStatus[$order->status]??'' }}">{{ $order->orderStatus->name }}</span></td>
+                      <td><span class="label label-{{ $mapStyleStatus[$order->status]??'' }}">{{ $order->orderStatus->name }}</span></td>
                       <td>{{ $order->created_at }}</td>
                     </tr>
   @endforeach

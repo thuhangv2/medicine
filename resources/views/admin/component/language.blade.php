@@ -1,5 +1,5 @@
 @php
-    $languages     = \Helper::languages();
+    $languages     = sc_language_all();
 @endphp
 <div style="margin:10px;" class="btn-group">
     <button type="button" class="dropdown-toggle usa" data-toggle="dropdown" aria-expanded="false"><img src="{{ asset($languages[session('locale')??app()->getLocale()]['icon']) }}" style="height: 25px;"><span class="caret"></span>

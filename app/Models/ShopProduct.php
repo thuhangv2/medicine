@@ -150,13 +150,13 @@ Get final price
 
             default:
                 if ($this->price == $priceFinal) {
-                    $str = '<span class="' . (($classNew) ? $classNew : 'new-price') . '">' . \Helper::currencyRender($this->price) . '</span>';
+                    $str = '<span class="' . (($classNew) ? $classNew : 'new-price') . '">' . sc_currency_render($this->price) . '</span>';
                     if ($divWrap != null) {
                         $str = '<div class="' . $divWrap . '">' . $str . '</div>';
                     }
                     return $str;
                 } else {
-                    $str = '<span class="' . (($classNew) ? $classNew : 'new-price') . '">' . \Helper::currencyRender($priceFinal) . '</span><span class="' . (($classNew) ? $classOld : 'old-price') . '">' . \Helper::currencyRender($this->price) . '</span>';
+                    $str = '<span class="' . (($classNew) ? $classNew : 'new-price') . '">' . sc_currency_render($priceFinal) . '</span><span class="' . (($classNew) ? $classOld : 'old-price') . '">' . sc_currency_render($this->price) . '</span>';
                     if ($divWrap != null) {
                         $str = '<div class="' . $divWrap . '">' . $str . '</div>';
                     }

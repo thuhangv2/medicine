@@ -139,8 +139,9 @@ class CreateAdminTables extends Migration
             ['id' => 7, 'parent_id' => 0, 'sort' => 100, 'title' => 'lang::ADMIN CONTENT', 'icon' => '', 'uri' => '', 'type' => 1],
             ['id' => 8, 'parent_id' => 0, 'sort' => 200, 'title' => 'lang::ADMIN EXTENSION', 'icon' => '', 'uri' => '', 'type' => 1],
             ['id' => 9, 'parent_id' => 0, 'sort' => 300, 'title' => 'lang::ADMIN SYSTEM', 'icon' => '', 'uri' => '', 'type' => 1],
-            ['id' => 33, 'parent_id' => 0, 'sort' => 102, 'title' => 'lang::banner.admin.title', 'icon' => 'fa-image', 'uri' => 'route::admin_banner.index', 'type' => 0],
-            ['id' => 10, 'parent_id' => 0, 'sort' => 101, 'title' => 'lang::page.admin.title', 'icon' => 'fa-clone', 'uri' => 'route::admin_page.index', 'type' => 0],
+            ['id' => 33, 'parent_id' => 0, 'sort' => 101, 'title' => 'lang::banner.admin.title', 'icon' => 'fa-image', 'uri' => 'route::admin_banner.index', 'type' => 0],
+            ['id' => 10, 'parent_id' => 0, 'sort' => 102, 'title' => 'lang::page.admin.title', 'icon' => 'fa-clone', 'uri' => 'route::admin_page.index', 'type' => 0],
+            ['id' => 52, 'parent_id' => 0, 'sort' => 103, 'title' => 'lang::news.admin.title', 'icon' => 'fa-file-powerpoint-o', 'uri' => 'route::admin_news.index', 'type' => 0],
             ['id' => 11, 'parent_id' => 1, 'sort' => 6, 'title' => 'lang::shipping_status.admin.title', 'icon' => 'fa-truck', 'uri' => 'route::admin_shipping_status.index', 'type' => 0],
             ['id' => 12, 'parent_id' => 1, 'sort' => 3, 'title' => 'lang::order.admin.title', 'icon' => 'fa-shopping-cart', 'uri' => 'route::admin_order.index', 'type' => 0],
             ['id' => 13, 'parent_id' => 1, 'sort' => 4, 'title' => 'lang::order_status.admin.title', 'icon' => 'fa-asterisk', 'uri' => 'route::admin_order_status.index', 'type' => 0],
@@ -192,7 +193,7 @@ class CreateAdminTables extends Migration
             ['id' => '5', 'name' => 'Upload management', 'slug' => 'upload.full', 'http_uri' => 'ANY::sc_admin/uploads/*', 'created_at' => date('Y-m-d H:i:s')],
             ['id' => '6', 'name' => 'Module manager', 'slug' => 'module.full', 'http_uri' => 'ANY::sc_admin/module/**', 'created_at' => date('Y-m-d H:i:s')],
             ['id' => '7', 'name' => 'Extension manager', 'slug' => 'extension.full', 'http_uri' => 'ANY::sc_admin/extension/**', 'created_at' => date('Y-m-d H:i:s')],
-            ['id' => '8', 'name' => 'CMS manager', 'slug' => 'cms.full', 'http_uri' => 'ANY::sc_admin/page/*,ANY::sc_admin/banner/*,ANY::sc_admin/cms_category/*,ANY::sc_admin/cms_content/*,ANY::sc_admin/cms_news/*', 'created_at' => date('Y-m-d H:i:s')],
+            ['id' => '8', 'name' => 'CMS manager', 'slug' => 'cms.full', 'http_uri' => 'ANY::sc_admin/page/*,ANY::sc_admin/banner/*,ANY::sc_admin/cms_category/*,ANY::sc_admin/cms_content/*,ANY::sc_admin/news/*', 'created_at' => date('Y-m-d H:i:s')],
             ['id' => '11', 'name' => 'Discount manager', 'slug' => 'discount.full', 'http_uri' => 'ANY::sc_admin/shop_discount/**', 'created_at' => date('Y-m-d H:i:s')],
             ['id' => '14', 'name' => 'Shipping status', 'slug' => 'shipping_status.full', 'http_uri' => 'ANY::sc_admin/shipping_status/**', 'created_at' => date('Y-m-d H:i:s')],
             ['id' => '15', 'name' => 'Payment  status', 'slug' => 'payment_status.full', 'http_uri' => 'ANY::sc_admin/payment_status/**', 'created_at' => date('Y-m-d H:i:s')],
@@ -253,6 +254,7 @@ class CreateAdminTables extends Migration
             ['role_id' => 6, 'permission_id' => 21, 'created_at' => date('Y-m-d H:i:s')],
             ['role_id' => 6, 'permission_id' => 14, 'created_at' => date('Y-m-d H:i:s')],
             ['role_id' => 6, 'permission_id' => 18, 'created_at' => date('Y-m-d H:i:s')],
+            ['role_id' => 4, 'permission_id' => 5, 'created_at' => date('Y-m-d H:i:s')],
         ]
         );
 

@@ -34,7 +34,7 @@ class ShopCart extends GeneralController
         session()->forget('paymentMethod'); //destroy paymentMethod
         session()->forget('shippingMethod'); //destroy shippingMethod
         //Shipping
-        $moduleShipping = \Helper::getExtensionsGroup('shipping');
+        $moduleShipping = sc_get_extension('shipping');
         $sourcesShipping = \FindClass::classNames('Extensions', 'shipping');
         $shippingMethod = array();
         foreach ($moduleShipping as $key => $module) {
@@ -44,7 +44,7 @@ class ShopCart extends GeneralController
             }
         }
         //Payment
-        $modulePayment = \Helper::getExtensionsGroup('payment');
+        $modulePayment = sc_get_extension('payment');
         $sourcesPayment = \FindClass::classNames('Extensions', 'payment');
         $paymentMethod = array();
         foreach ($modulePayment as $key => $module) {
@@ -54,7 +54,7 @@ class ShopCart extends GeneralController
             }
         }
         //Total
-        $moduleTotal = \Helper::getExtensionsGroup('total');
+        $moduleTotal = sc_get_extension('total');
         $sourcesTotal = \FindClass::classNames('Extensions', 'total');
         $totalMethod = array();
         foreach ($moduleTotal as $key => $module) {
@@ -285,8 +285,8 @@ class ShopCart extends GeneralController
         $dataOrder['payment_status'] = self::PAYMENT_UNPAID;
         $dataOrder['shipping_status'] = self::SHIPPING_NOTSEND;
         $dataOrder['status'] = self::ORDER_STATUS_NEW;
-        $dataOrder['currency'] = \Helper::currencyCode();
-        $dataOrder['exchange_rate'] = \Helper::currencyRate();
+        $dataOrder['currency'] = sc_currency_code();
+        $dataOrder['exchange_rate'] = sc_currency_rate();
         $dataOrder['total'] = $total;
         $dataOrder['balance'] = $total + $received;
         $dataOrder['first_name'] = $shippingAddress['first_name'];
@@ -307,10 +307,10 @@ class ShopCart extends GeneralController
         foreach (Cart::content() as $cartItem) {
             $arrDetail['product_id'] = $cartItem->id;
             $arrDetail['name'] = $cartItem->name;
-            $arrDetail['price'] = \Helper::currencyValue($cartItem->price);
+            $arrDetail['price'] = sc_currency_value($cartItem->price);
             $arrDetail['qty'] = $cartItem->qty;
             $arrDetail['attribute'] = ($cartItem->options) ? json_encode($cartItem->options) : null;
-            $arrDetail['total_price'] = \Helper::currencyValue($cartItem->price) * $cartItem->qty;
+            $arrDetail['total_price'] = sc_currency_value($cartItem->price) * $cartItem->qty;
             $arrCartDetail[] = $arrDetail;
         }
 
@@ -334,7 +334,7 @@ class ShopCart extends GeneralController
                     [
                     'name' => $item['name'],
                     'quantity' => $item['qty'],
-                    'price' => \Helper::currencyValue($item['price']),
+                    'price' => sc_currency_value($item['price']),
                     'sku' => $product->sku,
                 ];
             }
@@ -353,7 +353,7 @@ class ShopCart extends GeneralController
                 'sku' => 'discount',
             ];
             $data_payment['order_id'] = $orderID;
-            $data_payment['currency'] = \Helper::currencyCode();
+            $data_payment['currency'] = sc_currency_code();
             return redirect()->route('paypal')->with('data_payment', $data_payment);
         } else {
             return $this->completeOrder($orderID);
@@ -444,7 +444,7 @@ class ShopCart extends GeneralController
                 break;
         }
 
-        $carts = \Helper::getListCart($instance);
+        $carts = \Cart::getListCart($instance);
         if ($instance == 'default' && $carts['count']) {
             $html .= '<div><div class="shopping-cart-list">';
             foreach ($carts['items'] as $item) {
@@ -630,9 +630,9 @@ class ShopCart extends GeneralController
                                     <td>' . ($key + 1) . '</td>
                                     <td>' . $detail['sku'] . '</td>
                                     <td>' . $detail['name'] . '</td>
-                                    <td>' . \Helper::currencyRender($detail['price'], '', '', '', false) . '</td>
+                                    <td>' . sc_currency_render($detail['price'], '', '', '', false) . '</td>
                                     <td>' . number_format($detail['qty']) . '</td>
-                                    <td align="right">' . \Helper::currencyRender($detail['total_price'], '', '', '', false) . '</td>
+                                    <td align="right">' . sc_currency_render($detail['total_price'], '', '', '', false) . '</td>
                                 </tr>';
                 }
                 $dataFind = [
@@ -660,10 +660,10 @@ class ShopCart extends GeneralController
                     $data['phone'],
                     $data['comment'],
                     $orderDetail,
-                    \Helper::currencyRender($data['subtotal'], '', '', '', false),
-                    \Helper::currencyRender($data['shipping'], '', '', '', false),
-                    \Helper::currencyRender($data['discount'], '', '', '', false),
-                    \Helper::currencyRender($data['total'], '', '', '', false),
+                    sc_currency_render($data['subtotal'], '', '', '', false),
+                    sc_currency_render($data['shipping'], '', '', '', false),
+                    sc_currency_render($data['discount'], '', '', '', false),
+                    sc_currency_render($data['total'], '', '', '', false),
                 ];
 
                 if (sc_config('order_success_to_admin') && $checkContent) {

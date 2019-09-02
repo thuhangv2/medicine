@@ -115,7 +115,7 @@
                             <td>{{ $item->sku }}</td>
                             <td class="product_price"><a href="#" class="edit-item-detail" data-value="{{ $item->price }}" data-name="price" data-type="number" min=0 data-pk="{{ $item->id }}" data-url="{{ route("admin_order.edit_item") }}" data-title="{{ trans('product.price') }}">{{ $item->price }}</a></td>
                             <td class="product_qty">x <a href="#" class="edit-item-detail" data-value="{{ $item->qty }}" data-name="qty" data-type="number" min=0 data-pk="{{ $item->id }}" data-url="{{ route("admin_order.edit_item") }}" data-title="{{ trans('order.qty') }}"> {{ $item->qty }}</a></td>
-                            <td class="product_total item_id_{{ $item->id }}">{{ \Helper::currencyOnlyRender($item->total_price,$order->currency)}}</td>
+                            <td class="product_total item_id_{{ $item->id }}">{{ sc_currency_render_symbol($item->total_price,$order->currency)}}</td>
                             <td>
                                 <button  onclick="deleteItem({{ $item->id }});" class="btn btn-danger btn-xs" data-title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
                             </td>
@@ -146,7 +146,7 @@
                 <table   class="table table-bordered">
                   @foreach ($dataTotal as $element)
                     @if ($element['code'] =='subtotal')
-                      <tr><td  class="td-title-normal">{!! $element['title'] !!}:</td><td style="text-align:right" class="data-{{ $element['code'] }}">{{ \Helper::currencyFormat($element['value']) }}</td></tr>
+                      <tr><td  class="td-title-normal">{!! $element['title'] !!}:</td><td style="text-align:right" class="data-{{ $element['code'] }}">{{ sc_currency_format($element['value']) }}</td></tr>
                     @endif
                     @if ($element['code'] =='shipping')
                       <tr><td>{!! $element['title'] !!}:</td><td style="text-align:right"><a href="#" class="updatePrice data-{{ $element['code'] }}"  data-name="{{ $element['code'] }}" data-type="text" data-pk="{{ $element['id'] }}" data-url="{{ route("admin_order.update") }}" data-title="{{ trans('order.shipping_price') }}">{{$element['value'] }}</a></td></tr>
@@ -156,7 +156,7 @@
                     @endif
 
                      @if ($element['code'] =='total')
-                      <tr style="background:#f5f3f3;font-weight: bold;"><td>{!! $element['title'] !!}:</td><td style="text-align:right" class="data-{{ $element['code'] }}">{{ \Helper::currencyFormat($element['value']) }}</td></tr>
+                      <tr style="background:#f5f3f3;font-weight: bold;"><td>{!! $element['title'] !!}:</td><td style="text-align:right" class="data-{{ $element['code'] }}">{{ sc_currency_format($element['value']) }}</td></tr>
                     @endif
 
                     @if ($element['code'] =='received')
@@ -165,7 +165,7 @@
 
                   @endforeach
 
-                    <tr  {!! $style !!}  class="data-balance"><td>{{ trans('order.balance') }}:</td><td style="text-align:right">{{($order->balance === NULL)?\Helper::currencyFormat($order->total):\Helper::currencyFormat($order->balance) }}</td></tr>
+                    <tr  {!! $style !!}  class="data-balance"><td>{{ trans('order.balance') }}:</td><td style="text-align:right">{{($order->balance === NULL)?sc_currency_format($order->total):sc_currency_format($order->balance) }}</td></tr>
               </table>
             </div>
 

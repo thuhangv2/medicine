@@ -383,13 +383,13 @@ Route::group([
         $router->post('/delete', 'Modules\Cms\CmsContentController@deleteList')->name('admin_cms_content.delete');
     });
 
-    $router->group(['prefix' => 'cms_news'], function ($router) {
-        $router->get('/', 'Modules\Cms\CmsNewsController@index')->name('admin_cms_news.index');
-        $router->get('create', 'Modules\Cms\CmsNewsController@create')->name('admin_cms_news.create');
-        $router->post('/create', 'Modules\Cms\CmsNewsController@postCreate')->name('admin_cms_news.create');
-        $router->get('/edit/{id}', 'Modules\Cms\CmsNewsController@edit')->name('admin_cms_news.edit');
-        $router->post('/edit/{id}', 'Modules\Cms\CmsNewsController@postEdit')->name('admin_cms_news.edit');
-        $router->post('/delete', 'Modules\Cms\CmsNewsController@deleteList')->name('admin_cms_news.delete');
+    $router->group(['prefix' => 'news'], function ($router) {
+        $router->get('/', 'ShopNewsController@index')->name('admin_news.index');
+        $router->get('create', 'ShopNewsController@create')->name('admin_news.create');
+        $router->post('/create', 'ShopNewsController@postCreate')->name('admin_news.create');
+        $router->get('/edit/{id}', 'ShopNewsController@edit')->name('admin_news.edit');
+        $router->post('/edit/{id}', 'ShopNewsController@postEdit')->name('admin_news.edit');
+        $router->post('/delete', 'ShopNewsController@deleteList')->name('admin_news.delete');
     });
 
 //end modules

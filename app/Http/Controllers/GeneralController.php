@@ -13,10 +13,10 @@ class GeneralController extends Controller
 
     public function __construct()
     {
-        $languages = \Helper::languages();
-        $currencies = \Helper::currencies();
-        $layouts = \Helper::layouts();
-        $layoutsUrl = \Helper::layoutsUrl();
+        $languages = sc_language_all();
+        $currencies = sc_currency_all();
+        $layouts = sc_layouts();
+        $layoutsUrl = sc_link();
         view()->share('languages', $languages);
         view()->share('currencies', $currencies);
         view()->share('layouts', $layouts);

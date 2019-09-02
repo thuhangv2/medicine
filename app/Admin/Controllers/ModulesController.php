@@ -30,7 +30,7 @@ class ModulesController extends Controller
     protected function modulesGroup($group)
     {
         $group = sc_word_format_class($group);
-        $modulesInstalled = \Helper::getExtensionsGroup($group, $onlyActive = false);
+        $modulesInstalled = sc_get_extension($group, $onlyActive = false);
         $modules = \FindClass::classNames('Modules', $group);
         $namespace = $this->namespaceGroup[$group];
         $title = trans('Modules/language.' . $group);

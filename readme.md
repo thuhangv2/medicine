@@ -114,11 +114,8 @@ Step1: Install last version S-cart
 composer create-project lanhktc/s-cart
 ```
 Step2:
-- Chmod -R 777 public/documents/website
 - Chmod -R 777 storage
-- Chmod -R 777 bootstrap/cache
 - Chmod -R 777 vendor
-- Folder thumbnail is  <b>public/documents/website/thumb</b>.
 
 Step3:
 ```
