@@ -99,11 +99,15 @@ Route::get('/product/{name}_{id}.html', 'ShopFront@productDetail')
 
 Route::get('/search.html', 'ShopFront@search')->name('search');
 Route::post('/subscribe', 'ShopFront@emailSubscribe')->name('subscribe');
-Route::get('/contact.html', 'ShopFront@getContact')->name('contact');
-Route::post('/contact.html', 'ShopFront@postContact')->name('postContact');
+//Content
+Route::get('/contact.html', 'ContentFront@getContact')->name('contact');
+Route::post('/contact.html', 'ContentFront@postContact')->name('postContact');
+Route::get('/news.html', 'ContentFront@news')->name('news');
+Route::get('/news/{name}_{id}.html', 'ContentFront@newsDetail')
+    ->where(['id' => '[0-9]+'])->name('newsDetail');
 
 //--Please keep 2 lines route (pages + pageNotFound) at the bottom
-Route::get('/{key}.html', 'ShopFront@pages')->name('pages');
+Route::get('/{key}.html', 'ContentFront@pages')->name('pages');
 // Route::fallback('ShopFront@pageNotFound')->name('pageNotFound'); //Make sure before using this route. There will be disadvantages when detecting 404 errors for static files like images, scripts ..
 //--end keep
 

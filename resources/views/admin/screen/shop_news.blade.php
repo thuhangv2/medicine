@@ -9,7 +9,7 @@
 
                     <div class="box-tools">
                         <div class="btn-group pull-right" style="margin-right: 5px">
-                            <a href="{{ route('admin_cms_news.index') }}" class="btn  btn-flat btn-default" title="List"><i class="fa fa-list"></i><span class="hidden-xs"> {{trans('admin.back_list')}}</span></a>
+                            <a href="{{ route('admin_news.index') }}" class="btn  btn-flat btn-default" title="List"><i class="fa fa-list"></i><span class="hidden-xs"> {{trans('admin.back_list')}}</span></a>
                         </div>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
                     <div class="box-body">
                         <div class="fields-group">
 @php
-    $descriptions = $cms_news?$cms_news->descriptions->keyBy('lang')->toArray():[];
+    $descriptions = $shopNews?$shopNews->descriptions->keyBy('lang')->toArray():[];
 @endphp
 
 @foreach ($languages as $code => $language)
@@ -35,7 +35,7 @@
                             </div>
 
                             <div class="form-group   {{ $errors->has('descriptions.'.$code.'.title') ? ' has-error' : '' }}">
-                                <label for="{{ $code }}__title" class="col-sm-2  control-label">{{ trans('Modules/Cms/News.title') }}</label>
+                                <label for="{{ $code }}__title" class="col-sm-2  control-label">{{ trans('news.title') }}</label>
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-pencil fa-fw"></i></span>
@@ -50,7 +50,7 @@
                             </div>
 
                             <div class="form-group   {{ $errors->has('descriptions.'.$code.'.keyword') ? ' has-error' : '' }}">
-                                <label for="{{ $code }}__keyword" class="col-sm-2  control-label">{{ trans('Modules/Cms/News.keyword') }}</label>
+                                <label for="{{ $code }}__keyword" class="col-sm-2  control-label">{{ trans('news.keyword') }}</label>
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-pencil fa-fw"></i></span>
@@ -65,7 +65,7 @@
                             </div>
 
                             <div class="form-group   {{ $errors->has('descriptions.'.$code.'.description') ? ' has-error' : '' }}">
-                                <label for="{{ $code }}__description" class="col-sm-2  control-label">{{ trans('Modules/Cms/News.description') }}</label>
+                                <label for="{{ $code }}__description" class="col-sm-2  control-label">{{ trans('news.description') }}</label>
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-pencil fa-fw"></i></span>
@@ -99,10 +99,10 @@
 
 
                             <div class="form-group   {{ $errors->has('image') ? ' has-error' : '' }}">
-                                <label for="image" class="col-sm-2  control-label">{{ trans('Modules/Cms/News.image') }}</label>
+                                <label for="image" class="col-sm-2  control-label">{{ trans('news.image') }}</label>
                                 <div class="col-sm-8">
                                     <div class="input-group">
-                                        <input type="text" id="image" name="image" value="{{ old('image',$cms_news['image']??'') }}" class="form-control input-sm image" placeholder=""  />
+                                        <input type="text" id="image" name="image" value="{{ old('image',$shopNews['image']??'') }}" class="form-control input-sm image" placeholder=""  />
                                        <span class="input-group-btn">
                                          <a data-input="image" data-preview="preview_image" data-type="content" class="btn btn-sm btn-primary lfm">
                                            <i class="fa fa-picture-o"></i> {{trans('product.admin.choose_image')}}
@@ -114,16 +114,16 @@
                                                 {{ $errors->first('image') }}
                                             </span>
                                         @endif
-                                    <div id="preview_image" class="img_holder"><img src="{{ old('image',$cms_news['image']??'') }}"></div>
+                                    <div id="preview_image" class="img_holder"><img src="{{ old('image',$shopNews['image']??'') }}"></div>
                                 </div>
                             </div>
 
                             <div class="form-group   {{ $errors->has('sort') ? ' has-error' : '' }}">
-                                <label for="sort" class="col-sm-2  control-label">{{ trans('Modules/Cms/News.sort') }}</label>
+                                <label for="sort" class="col-sm-2  control-label">{{ trans('news.sort') }}</label>
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-pencil fa-fw"></i></span>
-                                        <input type="number" style="width: 100px;"  id="sort" name="sort" value="{{ old()?old('sort'):$cms_news['sort']??0 }}" class="form-control sort" placeholder="" />
+                                        <input type="number" style="width: 100px;"  id="sort" name="sort" value="{{ old()?old('sort'):$shopNews['sort']??0 }}" class="form-control sort" placeholder="" />
                                     </div>
                                         @if ($errors->has('sort'))
                                             <span class="help-block">
@@ -134,9 +134,9 @@
                             </div>
 
                             <div class="form-group  ">
-                                <label for="status" class="col-sm-2  control-label">{{ trans('Modules/Cms/News.status') }}</label>
+                                <label for="status" class="col-sm-2  control-label">{{ trans('news.status') }}</label>
                                 <div class="col-sm-8">
-                                <input type="checkbox" name="status"  {{ old('status',(empty($cms_news['status'])?0:1))?'checked':''}}>
+                                <input type="checkbox" name="status"  {{ old('status',(empty($shopNews['status'])?0:1))?'checked':''}}>
 
                                 </div>
                             </div>

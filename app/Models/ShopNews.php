@@ -1,15 +1,13 @@
 <?php
-#app/Modules/Cms/Models/CmsNews.php
-namespace App\Modules\Cms\Models;
+#app/Models/ShopNews.php
+namespace App\Models;
 
-use App\Modules\Cms\Models\CmsNewsDescription;
+use App\Models\ShopNewsDescription;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
-class CmsNews extends Model
+class ShopNews extends Model
 {
-    public $table = 'cms_news';
+    public $table = 'shop_news';
     protected $guarded = [];
     protected $appends = [
         'title',
@@ -25,11 +23,11 @@ class CmsNews extends Model
     }
     public function descriptions()
     {
-        return $this->hasMany(CmsNewsDescription::class, 'cms_news_id', 'id');
+        return $this->hasMany(ShopNewsDescription::class, 'shop_news_id', 'id');
     }
     public function getItemsNews($limit = null, $opt = null)
     {
-        $query = (new CmsNews)->where('status', 1)->sort();
+        $query = (new ShopNews)->where('status', 1)->sort();
         if (!(int) $limit) {
             return $query->get();
         } else
@@ -113,37 +111,6 @@ Get image
     public function processDescriptions()
     {
         return $this->descriptions->keyBy('lang')[$this->lang] ?? [];
-    }
-
-//=========================
-
-    public function uninstallExtension()
-    {
-        if (Schema::hasTable($this->table)) {
-            Schema::drop($this->table);
-        }
-    }
-
-    public function installExtension()
-    {
-        $return = ['error' => 0, 'msg' => 'Install modules success'];
-        if (!Schema::hasTable($this->table)) {
-            try {
-                Schema::create($this->table, function (Blueprint $table) {
-                    $table->increments('id');
-                    $table->string('image', 200)->nullable();
-                    $table->tinyInteger('sort')->default(0);
-                    $table->tinyInteger('status')->default(0);
-                    $table->timestamp('created_at')->nullable();
-                    $table->timestamp('updated_at')->nullable();
-                });
-            } catch (\Exception $e) {
-                $return = ['error' => 1, 'msg' => $e->getMessage()];
-            }
-        } else {
-            $return = ['error' => 1, 'msg' => 'Table ' . $this->table . ' exist!'];
-        }
-        return $return;
     }
 
 }
