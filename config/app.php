@@ -222,7 +222,6 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         //scart
         'Cart' => App\Library\ShoppingCart\Facades\Cart::class,
-        'Helper' => App\Library\Helper::class,
         'FindClass' => App\Library\FindClass::class,
         'ProcessData' => App\Library\ProcessData\Boot::class,
         'Admin' => App\Admin\Admin::class,

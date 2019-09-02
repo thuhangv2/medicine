@@ -64,7 +64,7 @@
         </td>
         <td>{!! $product->showPrice() !!}</td>
         <td>{{$item->qty}}</td>
-        <td align="right">{{\Helper::currencyRender($item->subtotal)}}</td>
+        <td align="right">{{sc_currency_render($item->subtotal)}}</td>
     </tr>
     @endforeach
     </tbody>

@@ -29,7 +29,7 @@ class ShopOrderTotal extends Model
  */
     public static function processDataTotal(array $objects = [])
     {
-        $subtotal = \Helper::currencySumCart(Cart::content());
+        $subtotal = sc_currency_sumcart(Cart::content());
         //You can't use Cart::subtotal(), becase when use currency, Cart::subtotal() may be not equal $subtotal
 
         //Set subtotal
@@ -37,7 +37,7 @@ class ShopOrderTotal extends Model
             'title' => trans('order.totals.sub_total'),
             'code' => 'subtotal',
             'value' => $subtotal,
-            'text' => \Helper::currencyOnlyRender($subtotal, \Helper::currencyCode()),
+            'text' => sc_currency_render_symbol($subtotal, sc_currency_code()),
             'sort' => self::POSITION_SUBTOTAL,
         ];
 
@@ -45,10 +45,10 @@ class ShopOrderTotal extends Model
         $total = $subtotal;
         foreach ($objects as $key => $object) {
             if ($object) {
-                $objects[$key]['value'] = \Helper::currencyValue($object['value']);
-                $objects[$key]['text'] = \Helper::currencyRender($object['value']);
+                $objects[$key]['value'] = sc_currency_value($object['value']);
+                $objects[$key]['text'] = sc_currency_render($object['value']);
                 if ($object['code'] != 'received') {
-                    $total += \Helper::currencyValue($object['value']);
+                    $total += sc_currency_value($object['value']);
                 }
             } else {
                 unset($objects[$key]);
@@ -59,7 +59,7 @@ class ShopOrderTotal extends Model
             'title' => trans('order.totals.total'),
             'code' => 'total',
             'value' => $total,
-            'text' => \Helper::currencyOnlyRender($total, \Helper::currencyCode()),
+            'text' => sc_currency_render_symbol($total, sc_currency_code()),
             'sort' => self::POSITION_TOTAL,
         );
 

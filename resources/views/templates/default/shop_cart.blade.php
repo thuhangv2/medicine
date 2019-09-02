@@ -65,7 +65,7 @@
         </td>
         <td>{!! $product->showPrice() !!}</td>
         <td><input style="width: 70px;" type="number" data-id="{{ $item->id }}" data-rowid="{{$item->rowId}}" onChange="updateCart($(this));" class="item-qty" name="qty-{{$item->id}}" value="{{$item->qty}}"><span class="text-danger item-qty-{{$item->id}}" style="display: none;"></span></td>
-        <td align="right">{{\Helper::currencyRender($item->subtotal)}}</td>
+        <td align="right">{{sc_currency_render($item->subtotal)}}</td>
         <td>
             <a onClick="return confirm('Confirm?')" title="Remove Item" alt="Remove Item" class="cart_quantity_delete" href="{{route("cart.remove",['id'=>$item->rowId])}}"><i class="fa fa-times"></i></a>
         </td>
@@ -220,7 +220,7 @@
                             <div>
                                 <label class="radio-inline">
                                  <input type="radio" name="shippingMethod" value="{{ $shipping['code'] }}"  {{ (old('shippingMethod') == $key)?'checked':'' }} style="position: relative;" {{ ($shipping['permission'])?'':'disabled' }}>
-                                 {{ $shipping['title'] }} ({{ \Helper::currencyRender($shipping['value']) }})
+                                 {{ $shipping['title'] }} ({{ sc_currency_render($shipping['value']) }})
                                 </label>
                             </div>
                         @endforeach

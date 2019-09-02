@@ -1,5 +1,5 @@
 @php
-  $carts = \Helper::getListCart();
+  $carts = \Cart::getListCart();
 @endphp
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
