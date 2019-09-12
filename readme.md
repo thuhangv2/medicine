@@ -116,6 +116,7 @@ composer create-project lanhktc/s-cart
 Step2:
 - Chmod -R 777 storage
 - Chmod -R 777 vendor
+- Chmod -R 777 public/data
 
 Step3:
 ```

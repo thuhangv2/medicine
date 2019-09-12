@@ -43,7 +43,6 @@ if (request()->method() == 'POST' && request()->ajax()) {
                 Artisan::call('route:clear');
                 Artisan::call('config:clear');
                 Artisan::call('cache:clear');
-                Artisan::call('storage:link');
             } catch (\Exception $e) {
                 echo json_encode(['error' => 1, 'msg' => $e->getMessage()]);
                 exit();
@@ -127,8 +126,8 @@ if (request()->method() == 'POST' && request()->ajax()) {
 function foldes_permissions()
 {
     $foldes = array(
-        base_path() . '/storage/',
         base_path() . '/vendor/',
+        public_path() . '/data/',
     );
     exec('chmod o+w -R ' . implode(' ', $foldes));
 }
