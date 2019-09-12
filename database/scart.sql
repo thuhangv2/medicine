@@ -1,8 +1,8 @@
--- MySQL dump 10.17  Distrib 10.3.16-MariaDB, for Win64 (AMD64)
+-- MariaDB dump 10.17  Distrib 10.4.6-MariaDB, for Win64 (AMD64)
 --
 -- Host: localhost    Database: s-cart
 -- ------------------------------------------------------
--- Server version	10.3.16-MariaDB
+-- Server version	5.7.18-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -29,7 +29,7 @@ CREATE TABLE `admin_config` (
   `key` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `value` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `store_id` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
-  `sort` tinyint(4) NOT NULL DEFAULT 0,
+  `sort` tinyint(4) NOT NULL DEFAULT '0',
   `detail` varchar(300) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `admin_config_key_unique` (`key`),
@@ -66,7 +66,7 @@ CREATE TABLE `admin_log` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `admin_log_user_id_index` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,7 +75,7 @@ CREATE TABLE `admin_log` (
 
 LOCK TABLES `admin_log` WRITE;
 /*!40000 ALTER TABLE `admin_log` DISABLE KEYS */;
-INSERT INTO `admin_log` VALUES (1,1,'sc_admin','GET','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','[]','2019-08-28 15:45:55','2019-08-28 15:45:55'),(2,1,'sc_admin/backup','GET','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','[]','2019-08-28 15:46:03','2019-08-28 15:46:03'),(3,1,'sc_admin/backup/generate','POST','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','{\"_token\":\"lniClmaDbH562j7koK9d9m0TFCYJST9On8SzHGPl\"}','2019-08-28 15:46:08','2019-08-28 15:46:08');
+INSERT INTO `admin_log` VALUES (2,1,'sc_admin/backup','GET','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','[]','2019-09-12 05:29:06','2019-09-12 05:29:06'),(3,1,'sc_admin/backup/generate','POST','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','{\"_token\":\"x85iX6rEWAUmyZfdrDU6MUH12HShMdg69eNPmJs7\"}','2019-09-12 05:29:09','2019-09-12 05:29:09'),(4,1,'sc_admin/backup/generate','POST','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','{\"_token\":\"x85iX6rEWAUmyZfdrDU6MUH12HShMdg69eNPmJs7\"}','2019-09-12 05:30:26','2019-09-12 05:30:26'),(5,1,'sc_admin/backup','GET','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','[]','2019-09-12 05:30:29','2019-09-12 05:30:29'),(6,1,'sc_admin/backup/generate','POST','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','{\"_token\":\"x85iX6rEWAUmyZfdrDU6MUH12HShMdg69eNPmJs7\"}','2019-09-12 05:30:30','2019-09-12 05:30:30'),(7,1,'sc_admin/backup','GET','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','[]','2019-09-12 05:30:58','2019-09-12 05:30:58'),(8,1,'sc_admin/backup/generate','POST','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','{\"_token\":\"x85iX6rEWAUmyZfdrDU6MUH12HShMdg69eNPmJs7\"}','2019-09-12 05:31:00','2019-09-12 05:31:00'),(9,1,'sc_admin/backup','GET','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','[]','2019-09-12 05:32:47','2019-09-12 05:32:47'),(10,1,'sc_admin/backup/generate','POST','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','{\"_token\":\"x85iX6rEWAUmyZfdrDU6MUH12HShMdg69eNPmJs7\"}','2019-09-12 05:32:49','2019-09-12 05:32:49'),(11,1,'sc_admin','GET','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','[]','2019-09-12 06:11:40','2019-09-12 06:11:40'),(12,1,'sc_admin/log','GET','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','[]','2019-09-12 06:11:45','2019-09-12 06:11:45'),(13,1,'sc_admin/log/delete','POST','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','{\"ids\":\"1\",\"_token\":\"x85iX6rEWAUmyZfdrDU6MUH12HShMdg69eNPmJs7\"}','2019-09-12 06:11:50','2019-09-12 06:11:50'),(14,1,'sc_admin/log','GET','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','{\"_pjax\":\"#pjax-container\"}','2019-09-12 06:11:50','2019-09-12 06:11:50'),(15,1,'sc_admin/backup','GET','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','[]','2019-09-12 06:12:00','2019-09-12 06:12:00'),(16,1,'sc_admin/backup/generate','POST','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','{\"_token\":\"x85iX6rEWAUmyZfdrDU6MUH12HShMdg69eNPmJs7\"}','2019-09-12 06:12:01','2019-09-12 06:12:01'),(17,1,'sc_admin/backup/generate','POST','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','{\"_token\":\"x85iX6rEWAUmyZfdrDU6MUH12HShMdg69eNPmJs7\"}','2019-09-12 06:12:15','2019-09-12 06:12:15'),(18,1,'sc_admin/backup','GET','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','[]','2019-09-12 06:13:16','2019-09-12 06:13:16'),(19,1,'sc_admin/backup/generate','POST','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','{\"_token\":\"x85iX6rEWAUmyZfdrDU6MUH12HShMdg69eNPmJs7\"}','2019-09-12 06:13:18','2019-09-12 06:13:18'),(20,1,'sc_admin','GET','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','[]','2019-09-12 06:16:04','2019-09-12 06:16:04'),(21,1,'sc_admin/backup','GET','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','[]','2019-09-12 06:16:09','2019-09-12 06:16:09'),(22,1,'sc_admin/backup/generate','POST','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','{\"_token\":\"Esvsw6JsTb9bEbqE8KBnvQ3SwijiYrthyJY8jCEk\"}','2019-09-12 06:16:12','2019-09-12 06:16:12');
 /*!40000 ALTER TABLE `admin_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -88,17 +88,17 @@ DROP TABLE IF EXISTS `admin_menu`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `admin_menu` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `parent_id` int(11) NOT NULL DEFAULT 0,
-  `sort` int(11) NOT NULL DEFAULT 0,
+  `parent_id` int(11) NOT NULL DEFAULT '0',
+  `sort` int(11) NOT NULL DEFAULT '0',
   `title` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `icon` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `uri` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `type` int(11) NOT NULL DEFAULT 0,
+  `type` int(11) NOT NULL DEFAULT '0',
   `permission` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -107,7 +107,7 @@ CREATE TABLE `admin_menu` (
 
 LOCK TABLES `admin_menu` WRITE;
 /*!40000 ALTER TABLE `admin_menu` DISABLE KEYS */;
-INSERT INTO `admin_menu` VALUES (1,0,11,'lang::admin.menu_titles.order_manager','fa-cart-arrow-down','',0,NULL,NULL,NULL),(2,0,12,'lang::admin.menu_titles.product_mamager','fa-folder-open','',0,NULL,NULL,NULL),(3,0,13,'lang::admin.menu_titles.customer_manager','fa-group','',0,NULL,NULL,NULL),(4,0,201,'lang::admin.menu_titles.template_layout','fa-object-ungroup','',0,NULL,NULL,NULL),(5,0,301,'lang::admin.menu_titles.config_manager','fa-cogs','',0,NULL,NULL,NULL),(6,0,10,'lang::ADMIN SHOP','','',1,NULL,NULL,NULL),(7,0,100,'lang::ADMIN CONTENT','','',1,NULL,NULL,NULL),(8,0,200,'lang::ADMIN EXTENSION','','',1,NULL,NULL,NULL),(9,0,300,'lang::ADMIN SYSTEM','','',1,NULL,NULL,NULL),(10,0,101,'lang::page.admin.title','fa-clone','route::admin_page.index',0,NULL,NULL,NULL),(11,1,6,'lang::shipping_status.admin.title','fa-truck','route::admin_shipping_status.index',0,NULL,NULL,NULL),(12,1,3,'lang::order.admin.title','fa-shopping-cart','route::admin_order.index',0,NULL,NULL,NULL),(13,1,4,'lang::order_status.admin.title','fa-asterisk','route::admin_order_status.index',0,NULL,NULL,NULL),(14,1,5,'lang::payment_status.admin.title','fa-recycle','route::admin_payment_status.index',0,NULL,NULL,NULL),(15,2,0,'lang::category.admin.title','fa-folder-open-o','route::admin_category.index',0,NULL,NULL,NULL),(16,2,0,'lang::product.admin.title','fa-file-photo-o','route::admin_product.index',0,NULL,NULL,NULL),(17,2,0,'lang::vendor.admin.title','fa-user-secret','route::admin_vendor.index',0,NULL,NULL,NULL),(18,2,0,'lang::brand.admin.title','fa-bank','route::admin_brand.index',0,NULL,NULL,NULL),(19,2,0,'lang::attribute_group.admin.title','fa-bars','route::admin_attribute_group.index',0,NULL,NULL,NULL),(20,3,0,'lang::customer.admin.title','fa-user','route::admin_customer.index',0,NULL,NULL,NULL),(21,3,0,'lang::subscribe.admin.title','fa-user-circle-o','route::admin_subscribe.index',0,NULL,NULL,NULL),(22,4,0,'lang::layout.admin.title','fa-newspaper-o','route::admin_layout.index',0,NULL,NULL,NULL),(23,4,0,'lang::layout_url.admin.title','fa-chrome','route::admin_layout_url.index',0,NULL,NULL,NULL),(24,4,0,'lang::template.admin.title','fa-columns','route::admin_template.index',0,NULL,NULL,NULL),(25,5,0,'lang::config.admin.title','fa-cog','route::admin_config.index',0,NULL,NULL,NULL),(26,5,0,'lang::store.admin.title','fa-cogs','route::admin_store.index',0,NULL,NULL,NULL),(27,5,0,'lang::admin.menu_titles.email_setting','fa-envelope','',0,NULL,NULL,NULL),(28,27,0,'lang::email.admin.title','fa-cog','route::admin_email.index',0,NULL,NULL,NULL),(29,27,0,'lang::email_template.admin.title','fa-bars','route::admin_email_template.index',0,NULL,NULL,NULL),(30,5,0,'lang::admin.menu_titles.localisation','fa-shirtsinbulk','',0,NULL,NULL,NULL),(31,30,0,'lang::language.admin.title','fa-pagelines','route::admin_language.index',0,NULL,NULL,NULL),(32,30,0,'lang::currency.admin.title','fa-dollar','route::admin_currency.index',0,NULL,NULL,NULL),(33,0,102,'lang::banner.admin.title','fa-image','route::admin_banner.index',0,NULL,NULL,NULL),(34,5,0,'lang::backup.admin.title','fa-save','route::admin_backup.index',0,NULL,NULL,NULL),(35,0,202,'lang::admin.menu_titles.extensions','fa-puzzle-piece','',0,NULL,NULL,NULL),(36,0,202,'lang::admin.menu_titles.modules','fa-codepen','',0,NULL,NULL,NULL),(37,0,302,'lang::admin.menu_titles.report_manager','fa-pie-chart','',0,NULL,NULL,NULL),(38,0,0,'lang::admin.menu_titles.admin','fa-sitemap','',0,NULL,NULL,NULL),(39,35,0,'lang::Extensions/language.Payment','fa-money','admin::extension/payment',0,NULL,NULL,NULL),(40,35,0,'lang::Extensions/language.Shipping','fa-ambulance','admin::extension/shipping',0,NULL,NULL,NULL),(41,35,0,'lang::Extensions/language.Total','fa-cog','admin::extension/total',0,NULL,NULL,NULL),(42,35,0,'lang::Extensions/language.Other','fa-circle-thin','admin::extension/other',0,NULL,NULL,NULL),(43,36,0,'lang::Modules/language.Cms','fa-modx','admin::module/cms',0,NULL,NULL,NULL),(44,36,0,'lang::Modules/language.Other','fa-bars','admin::module/other',0,NULL,NULL,NULL),(45,38,0,'lang::admin.menu_titles.users','fa-users','admin::user',0,NULL,NULL,NULL),(46,38,0,'lang::admin.menu_titles.roles','fa-user','admin::role',0,NULL,NULL,NULL),(47,38,0,'lang::admin.menu_titles.permission','fa-ban','admin::permission',0,NULL,NULL,NULL),(48,38,0,'lang::admin.menu_titles.menu','fa-bars','admin::menu',0,NULL,NULL,NULL),(49,38,0,'lang::admin.menu_titles.operation_log','fa-history','admin::log',0,NULL,NULL,NULL),(50,0,302,'lang::admin.menu_titles.api_manager','fa-plug','',0,NULL,NULL,NULL),(51,37,0,'lang::admin.menu_titles.report_product','fa-bars','admin::report/product',0,NULL,NULL,NULL);
+INSERT INTO `admin_menu` VALUES (1,0,11,'lang::admin.menu_titles.order_manager','fa-cart-arrow-down','',0,NULL,NULL,NULL),(2,0,12,'lang::admin.menu_titles.product_mamager','fa-folder-open','',0,NULL,NULL,NULL),(3,0,13,'lang::admin.menu_titles.customer_manager','fa-group','',0,NULL,NULL,NULL),(4,0,201,'lang::admin.menu_titles.template_layout','fa-object-ungroup','',0,NULL,NULL,NULL),(5,0,301,'lang::admin.menu_titles.config_manager','fa-cogs','',0,NULL,NULL,NULL),(6,0,10,'lang::ADMIN SHOP','','',1,NULL,NULL,NULL),(7,0,100,'lang::ADMIN CONTENT','','',1,NULL,NULL,NULL),(8,0,200,'lang::ADMIN EXTENSION','','',1,NULL,NULL,NULL),(9,0,300,'lang::ADMIN SYSTEM','','',1,NULL,NULL,NULL),(10,0,102,'lang::page.admin.title','fa-clone','route::admin_page.index',0,NULL,NULL,NULL),(11,1,6,'lang::shipping_status.admin.title','fa-truck','route::admin_shipping_status.index',0,NULL,NULL,NULL),(12,1,3,'lang::order.admin.title','fa-shopping-cart','route::admin_order.index',0,NULL,NULL,NULL),(13,1,4,'lang::order_status.admin.title','fa-asterisk','route::admin_order_status.index',0,NULL,NULL,NULL),(14,1,5,'lang::payment_status.admin.title','fa-recycle','route::admin_payment_status.index',0,NULL,NULL,NULL),(15,2,0,'lang::category.admin.title','fa-folder-open-o','route::admin_category.index',0,NULL,NULL,NULL),(16,2,0,'lang::product.admin.title','fa-file-photo-o','route::admin_product.index',0,NULL,NULL,NULL),(17,2,0,'lang::vendor.admin.title','fa-user-secret','route::admin_vendor.index',0,NULL,NULL,NULL),(18,2,0,'lang::brand.admin.title','fa-bank','route::admin_brand.index',0,NULL,NULL,NULL),(19,2,0,'lang::attribute_group.admin.title','fa-bars','route::admin_attribute_group.index',0,NULL,NULL,NULL),(20,3,0,'lang::customer.admin.title','fa-user','route::admin_customer.index',0,NULL,NULL,NULL),(21,3,0,'lang::subscribe.admin.title','fa-user-circle-o','route::admin_subscribe.index',0,NULL,NULL,NULL),(22,4,0,'lang::layout.admin.title','fa-newspaper-o','route::admin_layout.index',0,NULL,NULL,NULL),(23,4,0,'lang::layout_url.admin.title','fa-chrome','route::admin_layout_url.index',0,NULL,NULL,NULL),(24,4,0,'lang::template.admin.title','fa-columns','route::admin_template.index',0,NULL,NULL,NULL),(25,5,0,'lang::config.admin.title','fa-cog','route::admin_config.index',0,NULL,NULL,NULL),(26,5,0,'lang::store.admin.title','fa-cogs','route::admin_store.index',0,NULL,NULL,NULL),(27,5,0,'lang::admin.menu_titles.email_setting','fa-envelope','',0,NULL,NULL,NULL),(28,27,0,'lang::email.admin.title','fa-cog','route::admin_email.index',0,NULL,NULL,NULL),(29,27,0,'lang::email_template.admin.title','fa-bars','route::admin_email_template.index',0,NULL,NULL,NULL),(30,5,0,'lang::admin.menu_titles.localisation','fa-shirtsinbulk','',0,NULL,NULL,NULL),(31,30,0,'lang::language.admin.title','fa-pagelines','route::admin_language.index',0,NULL,NULL,NULL),(32,30,0,'lang::currency.admin.title','fa-dollar','route::admin_currency.index',0,NULL,NULL,NULL),(33,0,101,'lang::banner.admin.title','fa-image','route::admin_banner.index',0,NULL,NULL,NULL),(34,5,0,'lang::backup.admin.title','fa-save','route::admin_backup.index',0,NULL,NULL,NULL),(35,0,202,'lang::admin.menu_titles.extensions','fa-puzzle-piece','',0,NULL,NULL,NULL),(36,0,202,'lang::admin.menu_titles.modules','fa-codepen','',0,NULL,NULL,NULL),(37,0,302,'lang::admin.menu_titles.report_manager','fa-pie-chart','',0,NULL,NULL,NULL),(38,0,0,'lang::admin.menu_titles.admin','fa-sitemap','',0,NULL,NULL,NULL),(39,35,0,'lang::Extensions/language.Payment','fa-money','admin::extension/payment',0,NULL,NULL,NULL),(40,35,0,'lang::Extensions/language.Shipping','fa-ambulance','admin::extension/shipping',0,NULL,NULL,NULL),(41,35,0,'lang::Extensions/language.Total','fa-cog','admin::extension/total',0,NULL,NULL,NULL),(42,35,0,'lang::Extensions/language.Other','fa-circle-thin','admin::extension/other',0,NULL,NULL,NULL),(43,36,0,'lang::Modules/language.Cms','fa-modx','admin::module/cms',0,NULL,NULL,NULL),(44,36,0,'lang::Modules/language.Other','fa-bars','admin::module/other',0,NULL,NULL,NULL),(45,38,0,'lang::admin.menu_titles.users','fa-users','admin::user',0,NULL,NULL,NULL),(46,38,0,'lang::admin.menu_titles.roles','fa-user','admin::role',0,NULL,NULL,NULL),(47,38,0,'lang::admin.menu_titles.permission','fa-ban','admin::permission',0,NULL,NULL,NULL),(48,38,0,'lang::admin.menu_titles.menu','fa-bars','admin::menu',0,NULL,NULL,NULL),(49,38,0,'lang::admin.menu_titles.operation_log','fa-history','admin::log',0,NULL,NULL,NULL),(50,0,302,'lang::admin.menu_titles.api_manager','fa-plug','',0,NULL,NULL,NULL),(51,37,0,'lang::admin.menu_titles.report_product','fa-bars','admin::report/product',0,NULL,NULL,NULL),(52,0,103,'lang::news.admin.title','fa-file-powerpoint-o','route::admin_news.index',0,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `admin_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,7 +148,7 @@ CREATE TABLE `admin_permission` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `slug` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `http_uri` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `http_uri` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -163,7 +163,7 @@ CREATE TABLE `admin_permission` (
 
 LOCK TABLES `admin_permission` WRITE;
 /*!40000 ALTER TABLE `admin_permission` DISABLE KEYS */;
-INSERT INTO `admin_permission` VALUES (1,'Admin manager','admin.manager','GET::sc_admin/user,GET::sc_admin/role,GET::sc_admin/permission,ANY::sc_admin/log/*,ANY::sc_admin/menu/*','2019-08-28 15:45:40',NULL),(2,'Dashboard','dashboard','GET::sc_admin','2019-08-28 15:45:40',NULL),(3,'Auth manager','auth.full','ANY::sc_admin/auth/*','2019-08-28 15:45:40',NULL),(4,'Setting manager','setting.full','ANY::sc_admin/config/*,ANY::sc_admin/store/*,ANY::sc_admin/email/*,ANY::sc_admin/email_template/*,ANY::sc_admin/language/*,ANY::sc_admin/currency/*,ANY::sc_admin/backup/*','2019-08-28 15:45:40',NULL),(5,'Upload management','upload.full','ANY::sc_admin/uploads/*','2019-08-28 15:45:40',NULL),(6,'Module manager','module.full','ANY::sc_admin/module/**','2019-08-28 15:45:40',NULL),(7,'Extension manager','extension.full','ANY::sc_admin/extension/**','2019-08-28 15:45:40',NULL),(8,'CMS manager','cms.full','ANY::sc_admin/page/*,ANY::sc_admin/banner/*,ANY::sc_admin/cms_category/*,ANY::sc_admin/cms_content/*,ANY::sc_admin/cms_news/*','2019-08-28 15:45:40',NULL),(11,'Discount manager','discount.full','ANY::sc_admin/shop_discount/**','2019-08-28 15:45:40',NULL),(14,'Shipping status','shipping_status.full','ANY::sc_admin/shipping_status/**','2019-08-28 15:45:40',NULL),(15,'Payment  status','payment_status.full','ANY::sc_admin/payment_status/**','2019-08-28 15:45:40',NULL),(17,'Customer manager','customer.full','ANY::sc_admin/customer/*,ANY::sc_admin/subscribe/*','2019-08-28 15:45:40',NULL),(18,'Order status','order_status.full','ANY::sc_admin/order_status/*','2019-08-28 15:45:40',NULL),(19,'Product manager','product.full','ANY::sc_admin/category/*,ANY::sc_admin/vendor/*,ANY::sc_admin/brand/*,ANY::sc_admin/attribute_group/*,ANY::sc_admin/product/*','2019-08-28 15:45:40',NULL),(20,'Order Manager','order.full','ANY::sc_admin/order/*','2019-08-28 15:45:40',NULL),(21,'Report manager','report.full','ANY::sc_admin/report/*','2019-08-28 15:45:40',NULL);
+INSERT INTO `admin_permission` VALUES (1,'Admin manager','admin.manager','GET::sc_admin/user,GET::sc_admin/role,GET::sc_admin/permission,ANY::sc_admin/log/*,ANY::sc_admin/menu/*','2019-09-12 05:27:54',NULL),(2,'Dashboard','dashboard','GET::sc_admin','2019-09-12 05:27:54',NULL),(3,'Auth manager','auth.full','ANY::sc_admin/auth/*','2019-09-12 05:27:54',NULL),(4,'Setting manager','setting.full','ANY::sc_admin/config/*,ANY::sc_admin/store/*,ANY::sc_admin/email/*,ANY::sc_admin/email_template/*,ANY::sc_admin/language/*,ANY::sc_admin/currency/*,ANY::sc_admin/backup/*','2019-09-12 05:27:54',NULL),(5,'Upload management','upload.full','ANY::sc_admin/uploads/*','2019-09-12 05:27:54',NULL),(6,'Module manager','module.full','ANY::sc_admin/module/**','2019-09-12 05:27:54',NULL),(7,'Extension manager','extension.full','ANY::sc_admin/extension/**','2019-09-12 05:27:54',NULL),(8,'CMS manager','cms.full','ANY::sc_admin/page/*,ANY::sc_admin/banner/*,ANY::sc_admin/cms_category/*,ANY::sc_admin/cms_content/*,ANY::sc_admin/news/*','2019-09-12 05:27:54',NULL),(11,'Discount manager','discount.full','ANY::sc_admin/shop_discount/**','2019-09-12 05:27:54',NULL),(14,'Shipping status','shipping_status.full','ANY::sc_admin/shipping_status/**','2019-09-12 05:27:54',NULL),(15,'Payment  status','payment_status.full','ANY::sc_admin/payment_status/**','2019-09-12 05:27:54',NULL),(17,'Customer manager','customer.full','ANY::sc_admin/customer/*,ANY::sc_admin/subscribe/*','2019-09-12 05:27:54',NULL),(18,'Order status','order_status.full','ANY::sc_admin/order_status/*','2019-09-12 05:27:54',NULL),(19,'Product manager','product.full','ANY::sc_admin/category/*,ANY::sc_admin/vendor/*,ANY::sc_admin/brand/*,ANY::sc_admin/attribute_group/*,ANY::sc_admin/product/*','2019-09-12 05:27:54',NULL),(20,'Order Manager','order.full','ANY::sc_admin/order/*','2019-09-12 05:27:54',NULL),(21,'Report manager','report.full','ANY::sc_admin/report/*','2019-09-12 05:27:54',NULL);
 /*!40000 ALTER TABLE `admin_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -192,7 +192,7 @@ CREATE TABLE `admin_role` (
 
 LOCK TABLES `admin_role` WRITE;
 /*!40000 ALTER TABLE `admin_role` DISABLE KEYS */;
-INSERT INTO `admin_role` VALUES (1,'Administrator','administrator','2019-08-28 15:45:40',NULL),(2,'Group only View','view.all','2019-08-28 15:45:40',NULL),(3,'Manager','manager','2019-08-28 15:45:40',NULL),(4,'Cms manager','cms','2019-08-28 15:45:40',NULL),(5,'Accountant','accountant','2019-08-28 15:45:40',NULL),(6,'Marketing','maketing','2019-08-28 15:45:40',NULL);
+INSERT INTO `admin_role` VALUES (1,'Administrator','administrator','2019-09-12 05:27:54',NULL),(2,'Group only View','view.all','2019-09-12 05:27:54',NULL),(3,'Manager','manager','2019-09-12 05:27:54',NULL),(4,'Cms manager','cms','2019-09-12 05:27:54',NULL),(5,'Accountant','accountant','2019-09-12 05:27:54',NULL),(6,'Marketing','maketing','2019-09-12 05:27:54',NULL);
 /*!40000 ALTER TABLE `admin_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -219,7 +219,7 @@ CREATE TABLE `admin_role_menu` (
 
 LOCK TABLES `admin_role_menu` WRITE;
 /*!40000 ALTER TABLE `admin_role_menu` DISABLE KEYS */;
-INSERT INTO `admin_role_menu` VALUES (1,38,'2019-08-28 15:45:40',NULL),(2,38,'2019-08-28 15:45:40',NULL),(3,38,'2019-08-28 15:45:40',NULL);
+INSERT INTO `admin_role_menu` VALUES (1,38,'2019-09-12 05:27:54',NULL),(2,38,'2019-09-12 05:27:54',NULL),(3,38,'2019-09-12 05:27:54',NULL);
 /*!40000 ALTER TABLE `admin_role_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -246,7 +246,7 @@ CREATE TABLE `admin_role_permission` (
 
 LOCK TABLES `admin_role_permission` WRITE;
 /*!40000 ALTER TABLE `admin_role_permission` DISABLE KEYS */;
-INSERT INTO `admin_role_permission` VALUES (3,1,'2019-08-28 15:45:40',NULL),(3,2,'2019-08-28 15:45:40',NULL),(3,3,'2019-08-28 15:45:40',NULL),(3,4,'2019-08-28 15:45:40',NULL),(3,5,'2019-08-28 15:45:40',NULL),(3,8,'2019-08-28 15:45:40',NULL),(3,11,'2019-08-28 15:45:40',NULL),(3,14,'2019-08-28 15:45:40',NULL),(3,15,'2019-08-28 15:45:40',NULL),(3,17,'2019-08-28 15:45:40',NULL),(3,18,'2019-08-28 15:45:40',NULL),(3,19,'2019-08-28 15:45:40',NULL),(3,20,'2019-08-28 15:45:40',NULL),(3,21,'2019-08-28 15:45:40',NULL),(4,3,'2019-08-28 15:45:40',NULL),(4,8,'2019-08-28 15:45:40',NULL),(5,2,'2019-08-28 15:45:40',NULL),(5,3,'2019-08-28 15:45:40',NULL),(5,20,'2019-08-28 15:45:40',NULL),(5,21,'2019-08-28 15:45:40',NULL),(6,2,'2019-08-28 15:45:40',NULL),(6,3,'2019-08-28 15:45:40',NULL),(6,5,'2019-08-28 15:45:40',NULL),(6,8,'2019-08-28 15:45:40',NULL),(6,11,'2019-08-28 15:45:40',NULL),(6,14,'2019-08-28 15:45:40',NULL),(6,15,'2019-08-28 15:45:40',NULL),(6,17,'2019-08-28 15:45:40',NULL),(6,18,'2019-08-28 15:45:40',NULL),(6,19,'2019-08-28 15:45:40',NULL),(6,20,'2019-08-28 15:45:40',NULL),(6,21,'2019-08-28 15:45:40',NULL);
+INSERT INTO `admin_role_permission` VALUES (3,1,'2019-09-12 05:27:54',NULL),(3,2,'2019-09-12 05:27:54',NULL),(3,3,'2019-09-12 05:27:54',NULL),(3,4,'2019-09-12 05:27:54',NULL),(3,5,'2019-09-12 05:27:54',NULL),(3,8,'2019-09-12 05:27:54',NULL),(3,11,'2019-09-12 05:27:54',NULL),(3,14,'2019-09-12 05:27:54',NULL),(3,15,'2019-09-12 05:27:54',NULL),(3,17,'2019-09-12 05:27:54',NULL),(3,18,'2019-09-12 05:27:54',NULL),(3,19,'2019-09-12 05:27:54',NULL),(3,20,'2019-09-12 05:27:54',NULL),(3,21,'2019-09-12 05:27:54',NULL),(4,3,'2019-09-12 05:27:54',NULL),(4,5,'2019-09-12 05:27:54',NULL),(4,8,'2019-09-12 05:27:54',NULL),(5,2,'2019-09-12 05:27:54',NULL),(5,3,'2019-09-12 05:27:54',NULL),(5,20,'2019-09-12 05:27:54',NULL),(5,21,'2019-09-12 05:27:54',NULL),(6,2,'2019-09-12 05:27:54',NULL),(6,3,'2019-09-12 05:27:54',NULL),(6,5,'2019-09-12 05:27:54',NULL),(6,8,'2019-09-12 05:27:54',NULL),(6,11,'2019-09-12 05:27:54',NULL),(6,14,'2019-09-12 05:27:54',NULL),(6,15,'2019-09-12 05:27:54',NULL),(6,17,'2019-09-12 05:27:54',NULL),(6,18,'2019-09-12 05:27:54',NULL),(6,19,'2019-09-12 05:27:54',NULL),(6,20,'2019-09-12 05:27:54',NULL),(6,21,'2019-09-12 05:27:54',NULL);
 /*!40000 ALTER TABLE `admin_role_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -286,7 +286,7 @@ DROP TABLE IF EXISTS `admin_store`;
 CREATE TABLE `admin_store` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `logo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `site_status` tinyint(4) NOT NULL DEFAULT 1,
+  `site_status` tinyint(4) NOT NULL DEFAULT '1',
   `phone` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `long_phone` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -306,7 +306,7 @@ CREATE TABLE `admin_store` (
 
 LOCK TABLES `admin_store` WRITE;
 /*!40000 ALTER TABLE `admin_store` DISABLE KEYS */;
-INSERT INTO `admin_store` VALUES (1,'/storage/logo/scart-mid.png',1,'0123456789','Support: 0987654321','admin-demo@s-cart.org','','123st - abc - xyz','Asia/Ho_Chi_Minh','en','USD','default');
+INSERT INTO `admin_store` VALUES (1,'/data/logo/scart-mid.png',1,'0123456789','Support: 0987654321','admin-demo@s-cart.org','','123st - abc - xyz','Asia/Ho_Chi_Minh','en','USD','default');
 /*!40000 ALTER TABLE `admin_store` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -323,7 +323,7 @@ CREATE TABLE `admin_store_description` (
   `title` varchar(300) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(300) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `keyword` varchar(300) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `maintain_content` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `maintain_content` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`config_id`,`lang`),
   KEY `admin_store_description_lang_index` (`lang`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -366,7 +366,7 @@ CREATE TABLE `admin_user` (
 
 LOCK TABLES `admin_user` WRITE;
 /*!40000 ALTER TABLE `admin_user` DISABLE KEYS */;
-INSERT INTO `admin_user` VALUES (1,'admin','$2y$10$JcmAHe5eUZ2rS0jU1GWr/.xhwCnh2RU13qwjTPcqfmtZXjZxcryPO','Administrator','/admin/avatar/user.jpg','Kl3O7Q25MtkMBn4srjPv1Xw18oHp4aJYdERASkYllJByowSoduWZUHstaKPu','2019-08-28 15:45:40',NULL);
+INSERT INTO `admin_user` VALUES (1,'admin','$2y$10$JcmAHe5eUZ2rS0jU1GWr/.xhwCnh2RU13qwjTPcqfmtZXjZxcryPO','Administrator','/admin/avatar/user.jpg','bdHjGsn19eHw82g7ZyUHaPdBMUHyKfk8szCh5aDaUL9yKPKGWVoNKYTYJOVp','2019-09-12 05:27:54',NULL);
 /*!40000 ALTER TABLE `admin_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -512,7 +512,7 @@ CREATE TABLE `shop_api_process` (
   `ip_allow` varchar(300) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `ip_deny` varchar(300) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `exp` datetime DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 0,
+  `status` tinyint(4) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -540,8 +540,8 @@ DROP TABLE IF EXISTS `shop_attribute_group`;
 CREATE TABLE `shop_attribute_group` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 0,
-  `sort` tinyint(4) NOT NULL DEFAULT 0,
+  `status` tinyint(4) NOT NULL DEFAULT '0',
+  `sort` tinyint(4) NOT NULL DEFAULT '0',
   `type` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'radio,select,checkbox',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -568,11 +568,11 @@ CREATE TABLE `shop_banner` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `url` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `html` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 0,
-  `sort` tinyint(4) NOT NULL DEFAULT 0,
-  `click` tinyint(4) NOT NULL DEFAULT 0,
-  `type` tinyint(4) NOT NULL DEFAULT 0,
+  `html` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(4) NOT NULL DEFAULT '0',
+  `sort` tinyint(4) NOT NULL DEFAULT '0',
+  `click` tinyint(4) NOT NULL DEFAULT '0',
+  `type` tinyint(4) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -585,7 +585,7 @@ CREATE TABLE `shop_banner` (
 
 LOCK TABLES `shop_banner` WRITE;
 /*!40000 ALTER TABLE `shop_banner` DISABLE KEYS */;
-INSERT INTO `shop_banner` VALUES (1,'/storage/banner/Main-banner-1-1903x600.jpg',NULL,'',1,0,0,1,NULL,NULL),(2,'/storage/banner/Main-banner-3-1903x600.jpg',NULL,'',1,0,0,1,NULL,NULL);
+INSERT INTO `shop_banner` VALUES (1,'/data/banner/Main-banner-1-1903x600.jpg',NULL,'',1,0,0,1,NULL,NULL),(2,'/data/banner/Main-banner-3-1903x600.jpg',NULL,'',1,0,0,1,NULL,NULL);
 /*!40000 ALTER TABLE `shop_banner` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -601,8 +601,8 @@ CREATE TABLE `shop_brand` (
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `url` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 0,
-  `sort` tinyint(4) NOT NULL DEFAULT 0,
+  `status` tinyint(4) NOT NULL DEFAULT '0',
+  `sort` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -613,7 +613,7 @@ CREATE TABLE `shop_brand` (
 
 LOCK TABLES `shop_brand` WRITE;
 /*!40000 ALTER TABLE `shop_brand` DISABLE KEYS */;
-INSERT INTO `shop_brand` VALUES (1,'Husq','/storage/brand/01-181x52.png','',1,0),(2,'Ideal','/storage/brand/02-181x52.png','',1,0),(3,'Apex','/storage/brand/03-181x52.png','',1,0),(4,'CST','/storage/brand/04-181x52.png','',1,0),(5,'Klein','/storage/brand/05-181x52.png','',1,0),(6,'Metabo','/storage/brand/06-181x52.png','',1,0),(7,'Avatar','/storage/brand/07-181x52.png','',1,0),(8,'Brand KA','/storage/brand/08-181x52.png','',1,0);
+INSERT INTO `shop_brand` VALUES (1,'Husq','/data/brand/01-181x52.png','',1,0),(2,'Ideal','/data/brand/02-181x52.png','',1,0),(3,'Apex','/data/brand/03-181x52.png','',1,0),(4,'CST','/data/brand/04-181x52.png','',1,0),(5,'Klein','/data/brand/05-181x52.png','',1,0),(6,'Metabo','/data/brand/06-181x52.png','',1,0),(7,'Avatar','/data/brand/07-181x52.png','',1,0),(8,'Brand KA','/data/brand/08-181x52.png','',1,0);
 /*!40000 ALTER TABLE `shop_brand` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -627,10 +627,10 @@ DROP TABLE IF EXISTS `shop_category`;
 CREATE TABLE `shop_category` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `parent` int(11) NOT NULL DEFAULT 0,
-  `top` int(11) DEFAULT 0,
-  `status` tinyint(4) NOT NULL DEFAULT 0,
-  `sort` tinyint(4) NOT NULL DEFAULT 0,
+  `parent` int(11) NOT NULL DEFAULT '0',
+  `top` int(11) DEFAULT '0',
+  `status` tinyint(4) NOT NULL DEFAULT '0',
+  `sort` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -641,7 +641,7 @@ CREATE TABLE `shop_category` (
 
 LOCK TABLES `shop_category` WRITE;
 /*!40000 ALTER TABLE `shop_category` DISABLE KEYS */;
-INSERT INTO `shop_category` VALUES (1,'/storage/category/img-40.jpg',0,1,1,0),(2,'/storage/category/img-44.jpg',0,1,1,0),(3,'/storage/category/img-42.jpg',1,1,1,0),(4,'/storage/category/img-18.jpg',0,1,1,0),(5,'/storage/category/img-14.jpg',1,1,1,0),(6,'/storage/category/img-14.jpg',1,0,1,0),(7,'/storage/category/img-40.jpg',1,0,1,0),(8,'/storage/category/img-14.jpg',2,0,1,0),(9,'/storage/category/img-18.jpg',2,1,1,0),(10,'/storage/category/img-14.jpg',2,0,1,0),(11,'/storage/category/img-40.jpg',4,0,1,0),(12,'/storage/category/img-42.jpg4',4,0,1,3),(13,'/storage/category/img-40.jpg',4,0,1,3);
+INSERT INTO `shop_category` VALUES (1,'/data/category/img-40.jpg',0,1,1,0),(2,'/data/category/img-44.jpg',0,1,1,0),(3,'/data/category/img-42.jpg',1,1,1,0),(4,'/data/category/img-18.jpg',0,1,1,0),(5,'/data/category/img-14.jpg',1,1,1,0),(6,'/data/category/img-14.jpg',1,0,1,0),(7,'/data/category/img-40.jpg',1,0,1,0),(8,'/data/category/img-14.jpg',2,0,1,0),(9,'/data/category/img-18.jpg',2,1,1,0),(10,'/data/category/img-14.jpg',2,0,1,0),(11,'/data/category/img-40.jpg',4,0,1,0),(12,'/data/category/img-42.jpg4',4,0,1,3),(13,'/data/category/img-40.jpg',4,0,1,3);
 /*!40000 ALTER TABLE `shop_category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -712,11 +712,11 @@ CREATE TABLE `shop_currency` (
   `code` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `symbol` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `exchange_rate` double(8,2) NOT NULL,
-  `precision` tinyint(4) NOT NULL DEFAULT 2,
-  `symbol_first` tinyint(4) NOT NULL DEFAULT 0,
+  `precision` tinyint(4) NOT NULL DEFAULT '2',
+  `symbol_first` tinyint(4) NOT NULL DEFAULT '0',
   `thousands` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ',',
-  `status` tinyint(4) NOT NULL DEFAULT 0,
-  `sort` tinyint(4) NOT NULL DEFAULT 0,
+  `status` tinyint(4) NOT NULL DEFAULT '0',
+  `sort` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `shop_currency_code_unique` (`code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -742,13 +742,13 @@ DROP TABLE IF EXISTS `shop_discount`;
 CREATE TABLE `shop_discount` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `code` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `reward` int(11) NOT NULL DEFAULT 2,
+  `reward` int(11) NOT NULL DEFAULT '2',
   `type` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'point' COMMENT 'point - Point; percent - %',
   `data` varchar(300) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `limit` int(11) NOT NULL DEFAULT 1,
-  `used` int(11) NOT NULL DEFAULT 0,
-  `login` int(11) NOT NULL DEFAULT 0,
-  `status` tinyint(4) NOT NULL DEFAULT 0,
+  `limit` int(11) NOT NULL DEFAULT '1',
+  `used` int(11) NOT NULL DEFAULT '0',
+  `login` int(11) NOT NULL DEFAULT '0',
+  `status` tinyint(4) NOT NULL DEFAULT '0',
   `expires_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `shop_discount_code_unique` (`code`)
@@ -800,7 +800,7 @@ CREATE TABLE `shop_email_template` (
   `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `group` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `text` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 0,
+  `status` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -827,8 +827,8 @@ CREATE TABLE `shop_language` (
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `code` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `icon` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 0,
-  `sort` tinyint(4) NOT NULL DEFAULT 0,
+  `status` tinyint(4) NOT NULL DEFAULT '0',
+  `sort` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `shop_language_code_unique` (`code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -840,7 +840,7 @@ CREATE TABLE `shop_language` (
 
 LOCK TABLES `shop_language` WRITE;
 /*!40000 ALTER TABLE `shop_language` DISABLE KEYS */;
-INSERT INTO `shop_language` VALUES (1,'English','en','/storage/language/flag_uk.png',1,1),(2,'Tiếng Việt','vi','/storage/language/flag_vn.png',1,1);
+INSERT INTO `shop_language` VALUES (1,'English','en','/data/language/flag_uk.png',1,1),(2,'Tiếng Việt','vi','/data/language/flag_vn.png',1,1);
 /*!40000 ALTER TABLE `shop_language` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -857,9 +857,9 @@ CREATE TABLE `shop_layout` (
   `position` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `page` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `type` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `text` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 0,
-  `sort` tinyint(4) NOT NULL DEFAULT 0,
+  `text` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(4) NOT NULL DEFAULT '0',
+  `sort` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -966,8 +966,8 @@ CREATE TABLE `shop_layout_url` (
   `target` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `group` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `module` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 0,
-  `sort` tinyint(4) NOT NULL DEFAULT 0,
+  `status` tinyint(4) NOT NULL DEFAULT '0',
+  `sort` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -983,6 +983,60 @@ INSERT INTO `shop_layout_url` VALUES (1,'lang::front.contact','route::pages::con
 UNLOCK TABLES;
 
 --
+-- Table structure for table `shop_news`
+--
+
+DROP TABLE IF EXISTS `shop_news`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `shop_news` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `image` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sort` tinyint(4) NOT NULL DEFAULT '0',
+  `status` tinyint(4) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shop_news`
+--
+
+LOCK TABLES `shop_news` WRITE;
+/*!40000 ALTER TABLE `shop_news` DISABLE KEYS */;
+/*!40000 ALTER TABLE `shop_news` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shop_news_description`
+--
+
+DROP TABLE IF EXISTS `shop_news_description`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `shop_news_description` (
+  `shop_news_id` int(11) NOT NULL,
+  `lang` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `keyword` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `content` text COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`shop_news_id`,`lang`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shop_news_description`
+--
+
+LOCK TABLES `shop_news_description` WRITE;
+/*!40000 ALTER TABLE `shop_news_description` DISABLE KEYS */;
+/*!40000 ALTER TABLE `shop_news_description` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `shop_order`
 --
 
@@ -992,18 +1046,18 @@ DROP TABLE IF EXISTS `shop_order`;
 CREATE TABLE `shop_order` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `subtotal` int(11) DEFAULT 0,
-  `shipping` int(11) DEFAULT 0,
-  `discount` int(11) DEFAULT 0,
-  `payment_status` int(11) NOT NULL DEFAULT 1,
-  `shipping_status` int(11) NOT NULL DEFAULT 1,
-  `status` int(11) NOT NULL DEFAULT 0,
-  `tax` int(11) DEFAULT 0,
-  `total` int(11) DEFAULT 0,
+  `subtotal` int(11) DEFAULT '0',
+  `shipping` int(11) DEFAULT '0',
+  `discount` int(11) DEFAULT '0',
+  `payment_status` int(11) NOT NULL DEFAULT '1',
+  `shipping_status` int(11) NOT NULL DEFAULT '1',
+  `status` int(11) NOT NULL DEFAULT '0',
+  `tax` int(11) DEFAULT '0',
+  `total` int(11) DEFAULT '0',
   `currency` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `exchange_rate` double(8,2) DEFAULT NULL,
-  `received` int(11) DEFAULT 0,
-  `balance` int(11) DEFAULT 0,
+  `received` int(11) DEFAULT '0',
+  `balance` int(11) DEFAULT '0',
   `first_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `address1` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1029,7 +1083,7 @@ CREATE TABLE `shop_order` (
 
 LOCK TABLES `shop_order` WRITE;
 /*!40000 ALTER TABLE `shop_order` DISABLE KEYS */;
-INSERT INTO `shop_order` VALUES (1,1,5000,2000,0,1,1,1,0,7000,'USD',1.00,0,7000,'Naruto','Kun','ADDRESS 1','ADDRESS 2','VN','667151172','test@test.com','ok','Cash','ShippingStandard',NULL,NULL,NULL,'2019-08-28 15:45:43',NULL);
+INSERT INTO `shop_order` VALUES (1,1,5000,2000,0,1,1,1,0,7000,'USD',1.00,0,7000,'Naruto','Kun','ADDRESS 1','ADDRESS 2','VN','667151172','test@test.com','ok','Cash','ShippingStandard',NULL,NULL,NULL,'2019-09-12 05:27:58',NULL);
 /*!40000 ALTER TABLE `shop_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1045,9 +1099,9 @@ CREATE TABLE `shop_order_detail` (
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `price` int(11) NOT NULL DEFAULT 0,
-  `qty` int(11) NOT NULL DEFAULT 0,
-  `total_price` int(11) NOT NULL DEFAULT 0,
+  `price` int(11) NOT NULL DEFAULT '0',
+  `qty` int(11) NOT NULL DEFAULT '0',
+  `total_price` int(11) NOT NULL DEFAULT '0',
   `sku` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `currency` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `exchange_rate` double(8,2) DEFAULT NULL,
@@ -1079,9 +1133,9 @@ CREATE TABLE `shop_order_history` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `content` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `admin_id` int(11) NOT NULL DEFAULT 0,
-  `user_id` int(11) NOT NULL DEFAULT 0,
-  `order_status_id` int(11) NOT NULL DEFAULT 0,
+  `admin_id` int(11) NOT NULL DEFAULT '0',
+  `user_id` int(11) NOT NULL DEFAULT '0',
+  `order_status_id` int(11) NOT NULL DEFAULT '0',
   `add_date` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1093,7 +1147,7 @@ CREATE TABLE `shop_order_history` (
 
 LOCK TABLES `shop_order_history` WRITE;
 /*!40000 ALTER TABLE `shop_order_history` DISABLE KEYS */;
-INSERT INTO `shop_order_history` VALUES (1,1,'New order',0,1,1,'2019-08-28 22:45:43');
+INSERT INTO `shop_order_history` VALUES (1,1,'New order',0,1,1,'2019-09-12 12:27:58');
 /*!40000 ALTER TABLE `shop_order_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1133,9 +1187,9 @@ CREATE TABLE `shop_order_total` (
   `order_id` int(11) NOT NULL,
   `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `code` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` int(11) NOT NULL DEFAULT 0,
+  `value` int(11) NOT NULL DEFAULT '0',
   `text` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `sort` int(11) NOT NULL DEFAULT 1,
+  `sort` int(11) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1163,7 +1217,7 @@ CREATE TABLE `shop_page` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `key` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 0,
+  `status` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `shop_page_key_unique` (`key`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1192,7 +1246,7 @@ CREATE TABLE `shop_page_description` (
   `title` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `keyword` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `content` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `content` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`page_id`,`lang`),
   KEY `shop_page_description_lang_index` (`lang`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1204,7 +1258,7 @@ CREATE TABLE `shop_page_description` (
 
 LOCK TABLES `shop_page_description` WRITE;
 /*!40000 ALTER TABLE `shop_page_description` DISABLE KEYS */;
-INSERT INTO `shop_page_description` VALUES (1,'en','About','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n'),(1,'vi','Giới thiệu','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n'),(2,'en','Contact','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n'),(2,'vi','Liên hệ với chúng tôi','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n');
+INSERT INTO `shop_page_description` VALUES (1,'en','About','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n'),(1,'vi','Giới thiệu','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n'),(2,'en','Contact','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n'),(2,'vi','Liên hệ với chúng tôi','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>\r\n');
 /*!40000 ALTER TABLE `shop_page_description` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1243,18 +1297,18 @@ CREATE TABLE `shop_product` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `sku` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `brand_id` int(11) DEFAULT 0,
-  `vendor_id` int(11) DEFAULT 0,
-  `price` int(11) DEFAULT 0,
-  `cost` int(11) DEFAULT 0,
-  `stock` int(11) DEFAULT 0,
-  `sold` int(11) DEFAULT 0,
-  `type` tinyint(4) DEFAULT 0,
-  `kind` tinyint(4) NOT NULL DEFAULT 0 COMMENT '0:single, 1:bundle, 2:group',
-  `virtual` tinyint(4) DEFAULT 0 COMMENT '0:physical, 1:download, 2:only view, 3: Service',
-  `status` tinyint(4) NOT NULL DEFAULT 0,
-  `sort` tinyint(4) NOT NULL DEFAULT 0,
-  `view` int(11) NOT NULL DEFAULT 0,
+  `brand_id` int(11) DEFAULT '0',
+  `vendor_id` int(11) DEFAULT '0',
+  `price` int(11) DEFAULT '0',
+  `cost` int(11) DEFAULT '0',
+  `stock` int(11) DEFAULT '0',
+  `sold` int(11) DEFAULT '0',
+  `type` tinyint(4) DEFAULT '0',
+  `kind` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0:single, 1:bundle, 2:group',
+  `virtual` tinyint(4) DEFAULT '0' COMMENT '0:physical, 1:download, 2:only view, 3: Service',
+  `status` tinyint(4) NOT NULL DEFAULT '0',
+  `sort` tinyint(4) NOT NULL DEFAULT '0',
+  `view` int(11) NOT NULL DEFAULT '0',
   `date_lastview` datetime DEFAULT NULL,
   `date_available` date DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1276,7 +1330,7 @@ CREATE TABLE `shop_product` (
 
 LOCK TABLES `shop_product` WRITE;
 /*!40000 ALTER TABLE `shop_product` DISABLE KEYS */;
-INSERT INTO `shop_product` VALUES (1,'ABCZZ','/storage/product/img-1.jpg',1,1,15000,10000,99,1,2,0,0,1,0,0,NULL,'2020-02-03',NULL,NULL),(2,'LEDFAN1','/storage/product/img-4.jpg',1,1,15000,10000,100,0,1,0,0,1,0,0,NULL,NULL,NULL,NULL),(3,'CLOCKFAN1','/storage/product/img-11.jpg',2,1,15000,10000,100,0,0,0,0,1,0,0,NULL,NULL,NULL,NULL),(4,'CLOCKFAN2','/storage/product/img-14.jpg',3,1,15000,10000,100,0,0,0,0,1,0,0,NULL,NULL,NULL,NULL),(5,'CLOCKFAN3','/storage/product/img-15.jpg',1,1,15000,10000,100,0,0,0,0,1,0,0,NULL,NULL,NULL,NULL),(6,'TMC2208','/storage/product/img-16.jpg',1,1,15000,10000,100,0,1,0,0,1,0,0,NULL,NULL,NULL,NULL),(7,'FILAMENT','/storage/product/img-17.jpg',2,1,15000,10000,100,0,0,0,0,1,0,0,NULL,NULL,NULL,NULL),(8,'A4988','/storage/product/img-18.jpg',2,1,15000,10000,100,0,2,0,0,1,0,0,NULL,NULL,NULL,NULL),(9,'ANYCUBIC-P','/storage/product/img-20.jpg',2,1,15000,10000,100,0,2,0,0,1,0,0,NULL,NULL,NULL,NULL),(10,'3DHLFD-P','/storage/product/img-21.jpg',4,1,15000,10000,100,0,2,0,0,1,0,0,NULL,NULL,NULL,NULL),(11,'SS495A','/storage/product/img-22.jpg',2,1,15000,10000,100,0,0,0,0,1,0,0,NULL,NULL,NULL,NULL),(12,'3D-CARBON1.75','/storage/product/img-23.jpg',2,1,15000,10000,100,0,2,0,0,1,0,0,NULL,NULL,NULL,NULL),(13,'3D-GOLD1.75','/storage/product/img-34.jpg',3,1,10000,5000,0,0,0,0,0,1,0,0,NULL,NULL,NULL,NULL),(14,'LCD12864-3D','/storage/product/img-13.jpg',3,1,15000,10000,100,0,0,0,0,1,0,0,NULL,NULL,NULL,NULL),(15,'LCD2004-3D','/storage/product/img-41.jpg',3,1,15000,10000,100,0,0,1,0,1,0,0,NULL,NULL,NULL,NULL),(16,'RAMPS1.5-3D','/storage/product/img-42.jpg',2,1,0,0,0,0,0,2,0,1,0,0,NULL,NULL,NULL,NULL),(17,'ALOKK1-AY','/storage/product/img-26.jpg',3,1,15000,10000,100,0,0,0,0,1,0,0,NULL,NULL,NULL,NULL);
+INSERT INTO `shop_product` VALUES (1,'ABCZZ','/data/product/img-1.jpg',1,1,15000,10000,99,1,2,0,0,1,0,0,NULL,'2020-02-03',NULL,NULL),(2,'LEDFAN1','/data/product/img-4.jpg',1,1,15000,10000,100,0,1,0,0,1,0,0,NULL,NULL,NULL,NULL),(3,'CLOCKFAN1','/data/product/img-11.jpg',2,1,15000,10000,100,0,0,0,0,1,0,0,NULL,NULL,NULL,NULL),(4,'CLOCKFAN2','/data/product/img-14.jpg',3,1,15000,10000,100,0,0,0,0,1,0,0,NULL,NULL,NULL,NULL),(5,'CLOCKFAN3','/data/product/img-15.jpg',1,1,15000,10000,100,0,0,0,0,1,0,0,NULL,NULL,NULL,NULL),(6,'TMC2208','/data/product/img-16.jpg',1,1,15000,10000,100,0,1,0,0,1,0,0,NULL,NULL,NULL,NULL),(7,'FILAMENT','/data/product/img-17.jpg',2,1,15000,10000,100,0,0,0,0,1,0,0,NULL,NULL,NULL,NULL),(8,'A4988','/data/product/img-18.jpg',2,1,15000,10000,100,0,2,0,0,1,0,0,NULL,NULL,NULL,NULL),(9,'ANYCUBIC-P','/data/product/img-20.jpg',2,1,15000,10000,100,0,2,0,0,1,0,0,NULL,NULL,NULL,NULL),(10,'3DHLFD-P','/data/product/img-21.jpg',4,1,15000,10000,100,0,2,0,0,1,0,0,NULL,NULL,NULL,NULL),(11,'SS495A','/data/product/img-22.jpg',2,1,15000,10000,100,0,0,0,0,1,0,0,NULL,NULL,NULL,NULL),(12,'3D-CARBON1.75','/data/product/img-23.jpg',2,1,15000,10000,100,0,2,0,0,1,0,0,NULL,NULL,NULL,NULL),(13,'3D-GOLD1.75','/data/product/img-34.jpg',3,1,10000,5000,0,0,0,0,0,1,0,0,NULL,NULL,NULL,NULL),(14,'LCD12864-3D','/data/product/img-13.jpg',3,1,15000,10000,100,0,0,0,0,1,0,0,NULL,NULL,NULL,NULL),(15,'LCD2004-3D','/data/product/img-41.jpg',3,1,15000,10000,100,0,0,1,0,1,0,0,NULL,NULL,NULL,NULL),(16,'RAMPS1.5-3D','/data/product/img-42.jpg',2,1,0,0,0,0,0,2,0,1,0,0,NULL,NULL,NULL,NULL),(17,'ALOKK1-AY','/data/product/img-26.jpg',3,1,15000,10000,100,0,0,0,0,1,0,0,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `shop_product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1292,7 +1346,7 @@ CREATE TABLE `shop_product_attribute` (
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `attribute_group_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `sort` tinyint(4) NOT NULL DEFAULT 0,
+  `sort` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `shop_product_attribute_product_id_attribute_group_id_index` (`product_id`,`attribute_group_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1370,7 +1424,7 @@ CREATE TABLE `shop_product_description` (
   `name` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `keyword` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `content` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `content` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`product_id`,`lang`),
   KEY `shop_product_description_lang_index` (`lang`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1382,7 +1436,7 @@ CREATE TABLE `shop_product_description` (
 
 LOCK TABLES `shop_product_description` WRITE;
 /*!40000 ALTER TABLE `shop_product_description` DISABLE KEYS */;
-INSERT INTO `shop_product_description` VALUES (1,'en','Easy Polo Black Edition 1','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(1,'vi','Easy Polo Black Edition 1','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(2,'en','Easy Polo Black Edition 2','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(2,'vi','Easy Polo Black Edition 2','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(3,'en','Easy Polo Black Edition 3','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(3,'vi','Easy Polo Black Edition 3','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(4,'en','Easy Polo Black Edition 4','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(4,'vi','Easy Polo Black Edition 4','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(5,'en','Easy Polo Black Edition 5','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(5,'vi','Easy Polo Black Edition 5','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(6,'en','Easy Polo Black Edition 6','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(6,'vi','Easy Polo Black Edition 6','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(7,'en','Easy Polo Black Edition 7','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(7,'vi','Easy Polo Black Edition 7','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(8,'en','Easy Polo Black Edition 8','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(8,'vi','Easy Polo Black Edition 8','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(9,'en','Easy Polo Black Edition 9','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(9,'vi','Easy Polo Black Edition 9','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(10,'en','Easy Polo Black Edition 10','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(10,'vi','Easy Polo Black Edition 10','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(11,'en','Easy Polo Black Edition 11','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(11,'vi','Easy Polo Black Edition 11','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(12,'en','Easy Polo Black Edition 12','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(12,'vi','Easy Polo Black Edition 12','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(13,'en','Easy Polo Black Edition 13','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(13,'vi','Easy Polo Black Edition 13','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(14,'en','Easy Polo Black Edition 14','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(14,'vi','Easy Polo Black Edition 14','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(15,'en','Easy Polo Black Edition 15','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(15,'vi','Easy Polo Black Edition 15','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(16,'en','Easy Polo Black Edition 16','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(16,'vi','Easy Polo Black Edition 16','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(17,'en','Easy Polo Black Edition 17','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(17,'vi','Easy Polo Black Edition 17','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/storage/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>');
+INSERT INTO `shop_product_description` VALUES (1,'en','Easy Polo Black Edition 1','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(1,'vi','Easy Polo Black Edition 1','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(2,'en','Easy Polo Black Edition 2','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(2,'vi','Easy Polo Black Edition 2','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(3,'en','Easy Polo Black Edition 3','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(3,'vi','Easy Polo Black Edition 3','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(4,'en','Easy Polo Black Edition 4','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(4,'vi','Easy Polo Black Edition 4','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(5,'en','Easy Polo Black Edition 5','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(5,'vi','Easy Polo Black Edition 5','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(6,'en','Easy Polo Black Edition 6','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(6,'vi','Easy Polo Black Edition 6','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(7,'en','Easy Polo Black Edition 7','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(7,'vi','Easy Polo Black Edition 7','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(8,'en','Easy Polo Black Edition 8','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(8,'vi','Easy Polo Black Edition 8','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(9,'en','Easy Polo Black Edition 9','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(9,'vi','Easy Polo Black Edition 9','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(10,'en','Easy Polo Black Edition 10','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(10,'vi','Easy Polo Black Edition 10','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(11,'en','Easy Polo Black Edition 11','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(11,'vi','Easy Polo Black Edition 11','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(12,'en','Easy Polo Black Edition 12','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(12,'vi','Easy Polo Black Edition 12','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(13,'en','Easy Polo Black Edition 13','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(13,'vi','Easy Polo Black Edition 13','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(14,'en','Easy Polo Black Edition 14','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(14,'vi','Easy Polo Black Edition 14','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(15,'en','Easy Polo Black Edition 15','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(15,'vi','Easy Polo Black Edition 15','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(16,'en','Easy Polo Black Edition 16','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(16,'vi','Easy Polo Black Edition 16','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(17,'en','Easy Polo Black Edition 17','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'),(17,'vi','Easy Polo Black Edition 17','','','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<img alt=\"\" src=\"/data/product/img-21.jpg\" style=\"width: 262px; height: 262px; float: right; margin: 10px;\" /></p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>');
 /*!40000 ALTER TABLE `shop_product_description` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1420,7 +1474,7 @@ DROP TABLE IF EXISTS `shop_product_image`;
 CREATE TABLE `shop_product_image` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `product_id` int(11) NOT NULL DEFAULT 0,
+  `product_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `shop_product_image_product_id_index` (`product_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1432,7 +1486,7 @@ CREATE TABLE `shop_product_image` (
 
 LOCK TABLES `shop_product_image` WRITE;
 /*!40000 ALTER TABLE `shop_product_image` DISABLE KEYS */;
-INSERT INTO `shop_product_image` VALUES (1,'/storage/product/img-32.jpg',1),(2,'/storage/product/img-33.jpg',1),(3,'/storage/product/img-22.jpg',11),(4,'/storage/product/img-23.jpg',2),(5,'/storage/product/img-14.jpg',11),(6,'/storage/product/img-12.jpg',5),(7,'/storage/product/img-11.jpg',5),(8,'/storage/product/img-9.jpg',2),(9,'/storage/product/img-19.jpg',2),(10,'/storage/product/img-21.jpg',9),(11,'/storage/product/img-22.jpg',8),(12,'/storage/product/img-20.jpg',7),(13,'/storage/product/img-26.jpg',7),(14,'/storage/product/img-27.jpg',5),(15,'/storage/product/img-40.jpg',4),(16,'/storage/product/img-14.jpg',15),(17,'/storage/product/img-23.jpg',15),(18,'/storage/product/img-12.jpg',17),(19,'/storage/product/img-11.jpg',17),(20,'/storage/product/img-32.jpg',17);
+INSERT INTO `shop_product_image` VALUES (1,'/data/product/img-32.jpg',1),(2,'/data/product/img-33.jpg',1),(3,'/data/product/img-22.jpg',11),(4,'/data/product/img-23.jpg',2),(5,'/data/product/img-14.jpg',11),(6,'/data/product/img-12.jpg',5),(7,'/data/product/img-11.jpg',5),(8,'/data/product/img-9.jpg',2),(9,'/data/product/img-19.jpg',2),(10,'/data/product/img-21.jpg',9),(11,'/data/product/img-22.jpg',8),(12,'/data/product/img-20.jpg',7),(13,'/data/product/img-26.jpg',7),(14,'/data/product/img-27.jpg',5),(15,'/data/product/img-40.jpg',4),(16,'/data/product/img-14.jpg',15),(17,'/data/product/img-23.jpg',15),(18,'/data/product/img-12.jpg',17),(19,'/data/product/img-11.jpg',17),(20,'/data/product/img-32.jpg',17);
 /*!40000 ALTER TABLE `shop_product_image` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1448,7 +1502,7 @@ CREATE TABLE `shop_product_promotion` (
   `price_promotion` int(11) NOT NULL,
   `date_start` datetime DEFAULT NULL,
   `date_end` datetime DEFAULT NULL,
-  `status_promotion` int(11) NOT NULL DEFAULT 1,
+  `status_promotion` int(11) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`product_id`)
@@ -1474,10 +1528,10 @@ DROP TABLE IF EXISTS `shop_shipping`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `shop_shipping` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `type` int(11) NOT NULL DEFAULT 0,
-  `value` int(11) NOT NULL DEFAULT 0,
-  `free` int(11) NOT NULL DEFAULT 0,
-  `status` int(11) NOT NULL DEFAULT 1,
+  `type` int(11) NOT NULL DEFAULT '0',
+  `value` int(11) NOT NULL DEFAULT '0',
+  `free` int(11) NOT NULL DEFAULT '0',
+  `status` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1552,7 +1606,7 @@ DROP TABLE IF EXISTS `shop_subscribe`;
 CREATE TABLE `shop_subscribe` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `email` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -1587,8 +1641,8 @@ CREATE TABLE `shop_user` (
   `country` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'VN',
   `phone` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
-  `group` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `group` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -1602,7 +1656,7 @@ CREATE TABLE `shop_user` (
 
 LOCK TABLES `shop_user` WRITE;
 /*!40000 ALTER TABLE `shop_user` DISABLE KEYS */;
-INSERT INTO `shop_user` VALUES (1,'Naruto','Kun','test@test.com','$2y$10$8AWw/ujX1UZjXcvkfx1obemNN8mU07yGdqIKmiJEQ3QKR9kBBDMvq','ADDRESS 1','ADDRESS 2','VN','0667151172',NULL,1,1,'2019-08-28 15:45:43',NULL);
+INSERT INTO `shop_user` VALUES (1,'Naruto','Kun','test@test.com','$2y$10$s3MPynwGFZd7gr5puYzgmeUiC1Ug04DTtEs0SeWIVP3nQGWkqFtTy','ADDRESS 1','ADDRESS 2','VN','0667151172',NULL,1,1,'2019-09-12 05:27:58',NULL);
 /*!40000 ALTER TABLE `shop_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1621,7 +1675,7 @@ CREATE TABLE `shop_vendor` (
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `address` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `url` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `sort` tinyint(4) NOT NULL DEFAULT 0,
+  `sort` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1632,7 +1686,7 @@ CREATE TABLE `shop_vendor` (
 
 LOCK TABLES `shop_vendor` WRITE;
 /*!40000 ALTER TABLE `shop_vendor` DISABLE KEYS */;
-INSERT INTO `shop_vendor` VALUES (1,'ABC distributor','abc@abc.com','012496657567','/storage/vendor/vendor.png','','',0);
+INSERT INTO `shop_vendor` VALUES (1,'ABC distributor','abc@abc.com','012496657567','/data/vendor/vendor.png','','',0);
 /*!40000 ALTER TABLE `shop_vendor` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -1645,4 +1699,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-28 22:46:11
+-- Dump completed on 2019-09-12 13:32:38
