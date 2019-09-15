@@ -267,3 +267,13 @@ if (!function_exists('sc_log')) {
         \Illuminate\Support\Facades\Log::error($msg);
     }
 }
+
+/*
+Render block
+ */
+if (!function_exists('sc_block_render')) {
+    function sc_block_render($nameSpace)
+    {
+        return \App\Library\FindClass::renderClass($nameSpace);
+    }
+}
