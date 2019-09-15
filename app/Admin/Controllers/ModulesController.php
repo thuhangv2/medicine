@@ -18,6 +18,7 @@ class ModulesController extends Controller
         $this->namespaceGroup = [
             'Cms' => '\App\Modules\Cms\Controllers',
             'Other' => '\App\Modules\Other\Controllers',
+            'Block' => '\App\Modules\Block\Controllers',
         ];
 
     }

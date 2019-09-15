@@ -12,7 +12,6 @@ class FindClass
     {
         $fileRepository = new FileRepository();
         $parserFactory = new ParserFactory();
-
         return new FqcnRepository($fileRepository, $parserFactory);
     }
     public static function classNames($folder, $group = null)
@@ -39,6 +38,31 @@ class FindClass
             return self::start()->findInFor($path, $module);
         } else {
             return self::start()->findIn($path);
+        }
+    }
+
+/*
+Render class
+ */
+    public static function renderClass($nameSpacce, $directory = null)
+    {
+        $fullPath = $directory ?: app_path() . '/Modules/Block/Controllers';
+        if ($fullPath) {
+            try {
+                $arr = self::start()->findInFor($fullPath, $nameSpacce);
+                if ($arr) {
+                    $className = '\\' . $arr[0];
+                    if (class_exists($className)) {
+                        $class = (new $className);
+                        if (method_exists($class, 'render')) {
+                            echo $class->render();
+                        }
+                    }
+                }
+            } catch (\Exception $e) {
+                // return $e->getMessage();
+            }
+
         }
     }
 }

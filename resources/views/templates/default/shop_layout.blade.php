@@ -78,7 +78,7 @@
              @include('block.'.$layout->text)
             @endif
           @elseif($layout->type =='module')
-            {!! (new $layout->text)->render() !!}
+            {!! sc_block_render($layout->text) !!}
           @endif
         @endif
       @endforeach
@@ -100,7 +100,7 @@
              @include('block.'.$layout->text)
             @endif
           @elseif($layout->type =='module')
-            {!! (new $layout->text)->render() !!}
+            {!! sc_block_render($layout->text) !!}
           @endif
         @endif
       @endforeach
@@ -248,7 +248,7 @@
              @include('block.'.$layout->text)
             @endif
           @elseif($layout->type =='module')
-            {!! (new $layout->text)->render() !!}
+            {!! sc_block_render($layout->text) !!}
           @endif
         @endif
       @endforeach

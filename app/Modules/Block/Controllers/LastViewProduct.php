@@ -1,6 +1,6 @@
 <?php
-#app/Modules/Other/Controllers/LastViewProduct.php
-namespace App\Modules\Other\Controllers;
+#app/Modules/Block/Controllers/LastViewProduct.php
+namespace App\Modules\Block\Controllers;
 
 use App\Models\AdminConfig;
 use App\Models\ShopLayout;
@@ -12,7 +12,7 @@ class LastViewProduct extends \App\Http\Controllers\GeneralController
     use ModuleDefault;
 
     protected $configType = 'Modules';
-    protected $configCode = 'Other';
+    protected $configCode = 'Block';
     protected $configKey = 'LastViewProduct';
     protected $namespace = '';
 

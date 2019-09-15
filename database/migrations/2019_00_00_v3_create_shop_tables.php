@@ -554,7 +554,7 @@ class CreateShopTables extends Migration
             ['type' => '', 'code' => 'email_action', 'key' => 'welcome_customer', 'value' => '0', 'sort' => '4', 'detail' => 'lang::email.email_action.welcome_customer', 'store_id' => '1'],
             ['type' => '', 'code' => 'email_action', 'key' => 'contact_to_admin', 'value' => '1', 'sort' => '6', 'detail' => 'lang::email.email_action.contact_to_admin', 'store_id' => '1'],
             ['type' => '', 'code' => 'email_action', 'key' => 'email_action_smtp_mode', 'value' => '0', 'sort' => '6', 'detail' => 'lang::email.email_action.email_action_smtp_mode', 'store_id' => '1'],
-            ['type' => 'Modules', 'code' => 'Other', 'key' => 'LastViewProduct', 'value' => '1', 'sort' => '0', 'detail' => 'lang::Modules/Other/LastViewProduct.title', 'store_id' => '1'],
+            ['type' => 'Modules', 'code' => 'Block', 'key' => 'LastViewProduct', 'value' => '1', 'sort' => '0', 'detail' => 'lang::Modules/Block/LastViewProduct.title', 'store_id' => '1'],
             ['type' => 'Extensions', 'code' => 'Payment', 'key' => 'Cash', 'value' => '1', 'sort' => '0', 'detail' => 'lang::Extensions/Payment/Cash.title', 'store_id' => '1'],
             ['type' => 'Extensions', 'code' => 'Shipping', 'key' => 'ShippingStandard', 'value' => '1', 'sort' => '0', 'detail' => 'lang::Shipping Standard', 'store_id' => '1'],
             ['type' => '', 'code' => 'smtp', 'key' => 'smtp_host', 'value' => '', 'sort' => '8', 'detail' => 'lang::email.smtp_host', 'store_id' => '1'],
@@ -749,7 +749,7 @@ class CreateShopTables extends Migration
             ['name' => 'Brands', 'position' => 'left', 'page' => 'home,item_list', 'type' => 'view', 'text' => 'brands_left', 'status' => '1', 'sort' => '3'],
             ['name' => 'Banner home', 'position' => 'banner_top', 'page' => 'home', 'type' => 'view', 'text' => 'banner_image', 'status' => '1', 'sort' => '0'],
             ['name' => 'Categories', 'position' => 'left', 'page' => 'home,product_list,product_detail,shop_wishlist', 'type' => 'view', 'text' => 'categories', 'status' => '1', 'sort' => '4'],
-            ['name' => 'Product last view', 'position' => 'left', 'page' => '*', 'type' => 'module', 'text' => '\App\Modules\Other\Controllers\LastViewProduct', 'status' => '1', 'sort' => '0'],
+            ['name' => 'Product last view', 'position' => 'left', 'page' => '*', 'type' => 'module', 'text' => 'LastViewProduct', 'status' => '1', 'sort' => '0'],
 
         ]);
 
