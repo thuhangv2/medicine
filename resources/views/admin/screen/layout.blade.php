@@ -110,7 +110,11 @@
                                         </select>
                                         <span class="help-block"><i class="fa fa-info-circle"></i> {{ trans('layout.admin.helper_view') }}</span>
                                     @elseif ($dataType =='module')
-                                        <input type="text" name="text" value="{!! old('text',$layout['text']??'') !!}" class="form-control name" placeholder="Layout text">
+                                        <select name="text" class="form-control text">
+                                            @foreach ($listModuleBlock as $module)
+                                                <option value="{!! $module !!}" {{ (old('text',$layout['text']??'') == $module)?'selected':'' }} >{{ $module }}</option>
+                                            @endforeach
+                                        </select>
                                         <span class="help-block"><i class="fa fa-info-circle"></i> {{ trans('layout.admin.helper_module') }}</span>
                                     @else
                                         <textarea name="text" class="form-control text" rows="5" placeholder="Layout text">
@@ -224,7 +228,7 @@ $(function () {
        obj.before('<select name="text" class="form-control text">@foreach ($listViewBlock as $view)<option value="{{ $view }}">{{ $view }}</option>@endforeach</select><span class="help-block"><i class="fa fa-info-circle"></i> {{ trans('layout.admin.helper_view') }}</span>');
        obj.remove();
     }else if(type =='module'){
-       obj.before('<input type="text" name="text" value="" class="form-control name" placeholder="Layout text"><span class="help-block"><i class="fa fa-info-circle"></i> {{ trans('layout.admin.helper_module') }}</span>');
+       obj.before('<select name="text" class="form-control text">@foreach ($listModuleBlock as $module)<option value="{{ $module }}">{{ $module }}</option>@endforeach</select><span class="help-block"><i class="fa fa-info-circle"></i> {{ trans('layout.admin.helper_module') }}</span>');
        obj.remove();
     }
     });

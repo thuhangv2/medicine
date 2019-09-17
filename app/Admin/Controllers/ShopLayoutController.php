@@ -130,6 +130,7 @@ class ShopLayoutController extends Controller
     public function create()
     {
         $listViewBlock = $this->getListViewBlock();
+        $listModuleBlock = $this->getListModuleBlock();
         $data = [
             'title' => trans('layout.admin.add_new_title'),
             'sub_title' => '',
@@ -139,6 +140,7 @@ class ShopLayoutController extends Controller
             'layoutPage' => $this->layoutPage,
             'layoutType' => $this->layoutType,
             'listViewBlock' => $listViewBlock,
+            'listModuleBlock' => $listModuleBlock,
             'layout' => [],
             'url_action' => route('admin_layout.create'),
         ];
@@ -194,6 +196,7 @@ class ShopLayoutController extends Controller
             return 'no data';
         }
         $listViewBlock = $this->getListViewBlock();
+        $listModuleBlock = $this->getListModuleBlock();
 
         $data = [
             'title' => trans('layout.admin.edit'),
@@ -204,6 +207,7 @@ class ShopLayoutController extends Controller
             'layoutPage' => $this->layoutPage,
             'layoutType' => $this->layoutType,
             'listViewBlock' => $listViewBlock,
+            'listModuleBlock' => $listModuleBlock,
             'layout' => $layout,
             'url_action' => route('admin_layout.edit', ['id' => $layout['id']]),
         ];
@@ -274,4 +278,18 @@ Need mothod destroy to boot deleting in model
         }
         return $arrView;
     }
+
+    public function getListModuleBlock()
+    {
+        $arrModule = [];
+        foreach (glob(base_path() . "/app/Modules/Block/Controllers/*.php") as $file) {
+            if (file_exists($file)) {
+                $arr = explode('/', $file);
+                $tmp = substr(end($arr), 0, -4);
+                $arrModule[$tmp] = $tmp;
+            }
+        }
+        return $arrModule;
+    }
+
 }
