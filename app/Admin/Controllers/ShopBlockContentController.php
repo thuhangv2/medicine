@@ -3,7 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\ShopLayout;
+use App\Models\ShopBlockContent;
 use App\Models\ShopLayoutPage;
 use App\Models\ShopLayoutPosition;
 use App\Models\ShopLayoutType;
@@ -53,7 +53,7 @@ class ShopBlockContentController extends Controller
             'status' => trans('block_content.status'),
             'action' => trans('block_content.admin.action'),
         ];
-        $layout = new ShopLayout;
+        $layout = new ShopBlockContent;
         $layout = $layout;
         $layout = $layout->orderBy('id', 'desc');
         $dataTmp = $layout->paginate(20);
@@ -180,7 +180,7 @@ class ShopBlockContentController extends Controller
             'sort' => (int) $data['sort'],
             'status' => (empty($data['status']) ? 0 : 1),
         ];
-        ShopLayout::create($dataInsert);
+        ShopBlockContent::create($dataInsert);
 //
         return redirect()->route('admin_block_content.index')->with('success', trans('block_content.admin.create_success'));
 
@@ -191,7 +191,7 @@ class ShopBlockContentController extends Controller
  */
     public function edit($id)
     {
-        $layout = ShopLayout::find($id);
+        $layout = ShopBlockContent::find($id);
         if ($layout === null) {
             return 'no data';
         }
@@ -244,7 +244,7 @@ class ShopBlockContentController extends Controller
             'sort' => (int) $data['sort'],
             'status' => (empty($data['status']) ? 0 : 1),
         ];
-        $layout = ShopLayout::find($id);
+        $layout = ShopBlockContent::find($id);
         $layout->update($dataUpdate);
 //
         return redirect()->route('admin_block_content.index')->with('success', trans('block_content.admin.edit_success'));
@@ -262,7 +262,7 @@ Need mothod destroy to boot deleting in model
         } else {
             $ids = request('ids');
             $arrID = explode(',', $ids);
-            ShopLayout::destroy($arrID);
+            ShopBlockContent::destroy($arrID);
             return response()->json(['error' => 0, 'msg' => '']);
         }
     }

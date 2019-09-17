@@ -3,7 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\ShopLayoutUrl;
+use App\Models\ShopLink;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -48,7 +48,7 @@ class ShopLinkController extends Controller
             'status' => trans('link.status'),
             'action' => trans('link.admin.action'),
         ];
-        $objOrder = new ShopLayoutUrl;
+        $objOrder = new ShopLink;
         $objOrder = $objOrder->orderBy('id', 'desc');
         $dataTmp = $objOrder->paginate(20);
 
@@ -148,7 +148,7 @@ class ShopLinkController extends Controller
             'sort' => $data['sort'],
             'status' => empty($data['status']) ? 0 : 1,
         ];
-        ShopLayoutUrl::create($dataInsert);
+        ShopLink::create($dataInsert);
 //
         return redirect()->route('admin_link.index')->with('success', trans('link.admin.create_success'));
 
@@ -159,7 +159,7 @@ class ShopLinkController extends Controller
  */
     public function edit($id)
     {
-        $layout_url = ShopLayoutUrl::find($id);
+        $layout_url = ShopLink::find($id);
         if ($layout_url === null) {
             return 'no data';
         }
@@ -206,7 +206,7 @@ class ShopLinkController extends Controller
             'sort' => $data['sort'],
             'status' => empty($data['status']) ? 0 : 1,
         ];
-        $obj = ShopLayoutUrl::find($id);
+        $obj = ShopLink::find($id);
         $obj->update($dataUpdate);
 //
         return redirect()->route('admin_link.index')->with('success', trans('link.admin.edit_success'));
@@ -224,7 +224,7 @@ Need mothod destroy to boot deleting in model
         } else {
             $ids = request('ids');
             $arrID = explode(',', $ids);
-            ShopLayoutUrl::destroy($arrID);
+            ShopLink::destroy($arrID);
             return response()->json(['error' => 0, 'msg' => '']);
         }
     }

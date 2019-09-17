@@ -80,7 +80,7 @@ class CreateShopTables extends Migration
             $table->tinyInteger('sort')->default(0);
         });
 
-        Schema::create('shop_layout', function (Blueprint $table) {
+        Schema::create('shop_block_content', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 100);
             $table->string('position', 100);
@@ -109,7 +109,7 @@ class CreateShopTables extends Migration
             $table->string('name', 100);
         });
 
-        Schema::create('shop_layout_url', function (Blueprint $table) {
+        Schema::create('shop_link', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 100);
             $table->string('url', 100);
@@ -486,11 +486,11 @@ class CreateShopTables extends Migration
         Schema::dropIfExists('admin_store_description');
         Schema::dropIfExists('shop_email_template');
         Schema::dropIfExists('shop_language');
-        Schema::dropIfExists('shop_layout');
+        Schema::dropIfExists('shop_block_content');
         Schema::dropIfExists('shop_layout_page');
         Schema::dropIfExists('shop_layout_position');
         Schema::dropIfExists('shop_layout_type');
-        Schema::dropIfExists('shop_layout_url');
+        Schema::dropIfExists('shop_link');
         Schema::dropIfExists('password_resets');
         Schema::dropIfExists('shipping_standard');
         Schema::dropIfExists('shop_api');
@@ -726,7 +726,7 @@ class CreateShopTables extends Migration
             ['id' => '2', 'name' => 'Tiếng Việt', 'code' => 'vi', 'icon' => '/data/language/flag_vn.png', 'status' => '1', 'sort' => '1'],
         ]);
 
-        DB::table('shop_layout')->insert([
+        DB::table('shop_block_content')->insert([
             ['name' => 'Facebook code', 'position' => 'top', 'page' => '*', 'type' => 'html', 'text' => '<div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -779,7 +779,7 @@ class CreateShopTables extends Migration
             ['key' => 'view', 'name' => 'View'],
             ['key' => 'module', 'name' => 'Module'],
         ]);
-        DB::table('shop_layout_url')->insert([
+        DB::table('shop_link')->insert([
             ['name' => 'lang::front.contact', 'url' => 'route::pages::contact', 'target' => '_self', 'module' => '', 'group' => 'menu', 'status' => '1', 'sort' => '3'],
             ['name' => 'lang::front.about', 'url' => 'route::pages::about', 'target' => '_self', 'module' => '', 'group' => 'menu', 'status' => '1', 'sort' => '4'],
             ['name' => 'S-Cart', 'url' => 'https://s-cart.org', 'target' => '_blank', 'module' => '', 'group' => 'menu', 'status' => '1', 'sort' => '0'],
