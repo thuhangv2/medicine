@@ -1,14 +1,14 @@
 <?php
-#app/Models/ShopLayoutUrl.php
+#app/Models/ShopLink.php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ShopLayoutUrl extends Model
+class ShopLink extends Model
 {
-    public $timestamps         = false;
-    public $table              = 'shop_layout_url';
-    protected $guarded         = [];
+    public $timestamps = false;
+    public $table = 'shop_link';
+    protected $guarded = [];
     protected static $getGroup = null;
 
     public static function getGroup()

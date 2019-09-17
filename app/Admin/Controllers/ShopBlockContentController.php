@@ -1,16 +1,16 @@
 <?php
-#app/Http/Admin/Controllers/ShopLayoutController.php
+#app/Http/Admin/Controllers/ShopBlockContentController.php
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\ShopLayout;
+use App\Models\ShopBlockContent;
 use App\Models\ShopLayoutPage;
 use App\Models\ShopLayoutPosition;
 use App\Models\ShopLayoutType;
 use Illuminate\Http\Request;
 use Validator;
 
-class ShopLayoutController extends Controller
+class ShopBlockContentController extends Controller
 {
 
     public $layoutPage;
@@ -27,7 +27,7 @@ class ShopLayoutController extends Controller
     {
 
         $data = [
-            'title' => trans('layout.admin.list'),
+            'title' => trans('block_content.admin.list'),
             'sub_title' => '',
             'icon' => 'fa fa-indent',
             'menu_left' => '',
@@ -44,16 +44,16 @@ class ShopLayoutController extends Controller
         ];
 
         $listTh = [
-            'id' => trans('layout.id'),
-            'name' => trans('layout.name'),
-            'type' => trans('layout.type'),
-            'position' => trans('layout.position'),
-            'page' => trans('layout.page'),
-            'text' => trans('layout.text'),
-            'status' => trans('layout.status'),
-            'action' => trans('layout.admin.action'),
+            'id' => trans('block_content.id'),
+            'name' => trans('block_content.name'),
+            'type' => trans('block_content.type'),
+            'position' => trans('block_content.position'),
+            'page' => trans('block_content.page'),
+            'text' => trans('block_content.text'),
+            'status' => trans('block_content.status'),
+            'action' => trans('block_content.admin.action'),
         ];
-        $layout = new ShopLayout;
+        $layout = new ShopBlockContent;
         $layout = $layout;
         $layout = $layout->orderBy('id', 'desc');
         $dataTmp = $layout->paginate(20);
@@ -91,9 +91,9 @@ class ShopLayoutController extends Controller
                 'text' => htmlspecialchars($row['text']),
                 'status' => $row['status'] ? '<span class="label label-success">ON</span>' : '<span class="label label-danger">OFF</span>',
                 'action' => '
-                    <a href="' . route('admin_layout.edit', ['id' => $row['id']]) . '"><span title="' . trans('layout.admin.edit') . '" type="button" class="btn btn-flat btn-primary"><i class="fa fa-edit"></i></span></a>&nbsp;
+                    <a href="' . route('admin_block_content.edit', ['id' => $row['id']]) . '"><span title="' . trans('block_content.admin.edit') . '" type="button" class="btn btn-flat btn-primary"><i class="fa fa-edit"></i></span></a>&nbsp;
 
-                  <span onclick="deleteItem(' . $row['id'] . ');"  title="' . trans('layout.admin.delete') . '" class="btn btn-flat btn-danger"><i class="fa fa-trash"></i></span>
+                  <span onclick="deleteItem(' . $row['id'] . ');"  title="' . trans('block_content.admin.delete') . '" class="btn btn-flat btn-danger"><i class="fa fa-trash"></i></span>
                   ',
             ];
         }
@@ -101,23 +101,23 @@ class ShopLayoutController extends Controller
         $data['listTh'] = $listTh;
         $data['dataTr'] = $dataTr;
         $data['pagination'] = $dataTmp->appends(request()->except(['_token', '_pjax']))->links('admin.component.pagination');
-        $data['result_items'] = trans('layout.admin.result_item', ['item_from' => $dataTmp->firstItem(), 'item_to' => $dataTmp->lastItem(), 'item_total' => $dataTmp->total()]);
+        $data['result_items'] = trans('block_content.admin.result_item', ['item_from' => $dataTmp->firstItem(), 'item_to' => $dataTmp->lastItem(), 'item_total' => $dataTmp->total()]);
 
 //menu_left
         $data['menu_left'] = '<div class="pull-left">
-                      <a class="btn   btn-flat btn-primary grid-refresh" title="Refresh"><i class="fa fa-refresh"></i><span class="hidden-xs"> ' . trans('layout.admin.refresh') . '</span></a> &nbsp;
+                      <a class="btn   btn-flat btn-primary grid-refresh" title="Refresh"><i class="fa fa-refresh"></i><span class="hidden-xs"> ' . trans('block_content.admin.refresh') . '</span></a> &nbsp;
                       </div>';
 //=menu_left
 
 //menu_right
         $data['menu_right'] = '<div class="btn-group pull-right" style="margin-right: 10px">
-                           <a href="' . route('admin_layout.create') . '" class="btn  btn-success  btn-flat" title="New" id="button_create_new">
-                           <i class="fa fa-plus"></i><span class="hidden-xs">' . trans('layout.admin.add_new') . '</span>
+                           <a href="' . route('admin_block_content.create') . '" class="btn  btn-success  btn-flat" title="New" id="button_create_new">
+                           <i class="fa fa-plus"></i><span class="hidden-xs">' . trans('block_content.admin.add_new') . '</span>
                            </a>
                         </div>';
 //=menu_right
 
-        $data['url_delete_item'] = route('admin_layout.delete');
+        $data['url_delete_item'] = route('admin_block_content.delete');
 
         return view('admin.screen.list')
             ->with($data);
@@ -130,19 +130,21 @@ class ShopLayoutController extends Controller
     public function create()
     {
         $listViewBlock = $this->getListViewBlock();
+        $listModuleBlock = $this->getListModuleBlock();
         $data = [
-            'title' => trans('layout.admin.add_new_title'),
+            'title' => trans('block_content.admin.add_new_title'),
             'sub_title' => '',
-            'title_description' => trans('layout.admin.add_new_des'),
+            'title_description' => trans('block_content.admin.add_new_des'),
             'icon' => 'fa fa-plus',
             'layoutPosition' => $this->layoutPosition,
             'layoutPage' => $this->layoutPage,
             'layoutType' => $this->layoutType,
             'listViewBlock' => $listViewBlock,
+            'listModuleBlock' => $listModuleBlock,
             'layout' => [],
-            'url_action' => route('admin_layout.create'),
+            'url_action' => route('admin_block_content.create'),
         ];
-        return view('admin.screen.layout')
+        return view('admin.screen.block_content')
             ->with($data);
     }
 
@@ -178,9 +180,9 @@ class ShopLayoutController extends Controller
             'sort' => (int) $data['sort'],
             'status' => (empty($data['status']) ? 0 : 1),
         ];
-        ShopLayout::create($dataInsert);
+        ShopBlockContent::create($dataInsert);
 //
-        return redirect()->route('admin_layout.index')->with('success', trans('layout.admin.create_success'));
+        return redirect()->route('admin_block_content.index')->with('success', trans('block_content.admin.create_success'));
 
     }
 
@@ -189,14 +191,15 @@ class ShopLayoutController extends Controller
  */
     public function edit($id)
     {
-        $layout = ShopLayout::find($id);
+        $layout = ShopBlockContent::find($id);
         if ($layout === null) {
             return 'no data';
         }
         $listViewBlock = $this->getListViewBlock();
+        $listModuleBlock = $this->getListModuleBlock();
 
         $data = [
-            'title' => trans('layout.admin.edit'),
+            'title' => trans('block_content.admin.edit'),
             'sub_title' => '',
             'title_description' => '',
             'icon' => 'fa fa-pencil-square-o',
@@ -204,10 +207,11 @@ class ShopLayoutController extends Controller
             'layoutPage' => $this->layoutPage,
             'layoutType' => $this->layoutType,
             'listViewBlock' => $listViewBlock,
+            'listModuleBlock' => $listModuleBlock,
             'layout' => $layout,
-            'url_action' => route('admin_layout.edit', ['id' => $layout['id']]),
+            'url_action' => route('admin_block_content.edit', ['id' => $layout['id']]),
         ];
-        return view('admin.screen.layout')
+        return view('admin.screen.block_content')
             ->with($data);
     }
 
@@ -240,10 +244,10 @@ class ShopLayoutController extends Controller
             'sort' => (int) $data['sort'],
             'status' => (empty($data['status']) ? 0 : 1),
         ];
-        $layout = ShopLayout::find($id);
+        $layout = ShopBlockContent::find($id);
         $layout->update($dataUpdate);
 //
-        return redirect()->route('admin_layout.index')->with('success', trans('layout.admin.edit_success'));
+        return redirect()->route('admin_block_content.index')->with('success', trans('block_content.admin.edit_success'));
 
     }
 
@@ -258,7 +262,7 @@ Need mothod destroy to boot deleting in model
         } else {
             $ids = request('ids');
             $arrID = explode(',', $ids);
-            ShopLayout::destroy($arrID);
+            ShopBlockContent::destroy($arrID);
             return response()->json(['error' => 0, 'msg' => '']);
         }
     }
@@ -274,4 +278,18 @@ Need mothod destroy to boot deleting in model
         }
         return $arrView;
     }
+
+    public function getListModuleBlock()
+    {
+        $arrModule = [];
+        foreach (glob(base_path() . "/app/Modules/Block/Controllers/*.php") as $file) {
+            if (file_exists($file)) {
+                $arr = explode('/', $file);
+                $tmp = substr(end($arr), 0, -4);
+                $arrModule[$tmp] = $tmp;
+            }
+        }
+        return $arrModule;
+    }
+
 }

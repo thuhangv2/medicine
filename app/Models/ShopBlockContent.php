@@ -1,14 +1,14 @@
 <?php
-#app/Models/ShopLayout.php
+#app/Models/ShopBlockContent.php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ShopLayout extends Model
+class ShopBlockContent extends Model
 {
-    public $timestamps        = false;
-    public $table             = 'shop_layout';
-    protected $guarded        = [];
+    public $timestamps = false;
+    public $table = 'shop_block_content';
+    protected $guarded = [];
     private static $getLayout = null;
 
     public static function getLayout()

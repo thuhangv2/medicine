@@ -55,7 +55,7 @@ Render class
                     if (class_exists($className)) {
                         $class = (new $className);
                         if (method_exists($class, 'render')) {
-                            echo $class->render();
+                            return $class->render();
                         }
                     }
                 }
