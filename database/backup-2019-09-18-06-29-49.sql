@@ -75,7 +75,7 @@ CREATE TABLE `admin_log` (
 
 LOCK TABLES `admin_log` WRITE;
 /*!40000 ALTER TABLE `admin_log` DISABLE KEYS */;
-INSERT INTO `admin_log` VALUES (1,1,'sc_admin','GET','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','[]','2019-09-17 14:56:07','2019-09-17 14:56:07'),(2,1,'sc_admin/backup','GET','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','[]','2019-09-17 14:56:20','2019-09-17 14:56:20'),(3,1,'sc_admin/backup/generate','POST','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','{\"_token\":\"CcUeE8AfY7CgcycqAH7rYFlaHzHATNGjlDXRK9yE\"}','2019-09-17 14:56:25','2019-09-17 14:56:25');
+INSERT INTO `admin_log` VALUES (1,1,'sc_admin','GET','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','[]','2019-09-17 23:29:39','2019-09-17 23:29:39'),(2,1,'sc_admin/backup','GET','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','[]','2019-09-17 23:29:45','2019-09-17 23:29:45'),(3,1,'sc_admin/backup/generate','POST','127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36','{\"_token\":\"hNigEH8roLxCJ7on3dZeLNjqnrUek9Vp2jTTcHhx\"}','2019-09-17 23:29:48','2019-09-17 23:29:48');
 /*!40000 ALTER TABLE `admin_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,7 +107,7 @@ CREATE TABLE `admin_menu` (
 
 LOCK TABLES `admin_menu` WRITE;
 /*!40000 ALTER TABLE `admin_menu` DISABLE KEYS */;
-INSERT INTO `admin_menu` VALUES (1,0,11,'lang::admin.menu_titles.order_manager','fa-cart-arrow-down','',0,NULL,NULL,NULL),(2,0,12,'lang::admin.menu_titles.product_mamager','fa-folder-open','',0,NULL,NULL,NULL),(3,0,13,'lang::admin.menu_titles.customer_manager','fa-group','',0,NULL,NULL,NULL),(4,0,201,'lang::admin.menu_titles.template_layout','fa-object-ungroup','',0,NULL,NULL,NULL),(5,0,301,'lang::admin.menu_titles.config_manager','fa-cogs','',0,NULL,NULL,NULL),(6,0,10,'lang::ADMIN SHOP','','',1,NULL,NULL,NULL),(7,0,100,'lang::ADMIN CONTENT','','',1,NULL,NULL,NULL),(8,0,200,'lang::ADMIN EXTENSION','','',1,NULL,NULL,NULL),(9,0,300,'lang::ADMIN SYSTEM','','',1,NULL,NULL,NULL),(10,0,102,'lang::page.admin.title','fa-clone','route::admin_page.index',0,NULL,NULL,NULL),(11,1,6,'lang::shipping_status.admin.title','fa-truck','route::admin_shipping_status.index',0,NULL,NULL,NULL),(12,1,3,'lang::order.admin.title','fa-shopping-cart','route::admin_order.index',0,NULL,NULL,NULL),(13,1,4,'lang::order_status.admin.title','fa-asterisk','route::admin_order_status.index',0,NULL,NULL,NULL),(14,1,5,'lang::payment_status.admin.title','fa-recycle','route::admin_payment_status.index',0,NULL,NULL,NULL),(15,2,0,'lang::category.admin.title','fa-folder-open-o','route::admin_category.index',0,NULL,NULL,NULL),(16,2,0,'lang::product.admin.title','fa-file-photo-o','route::admin_product.index',0,NULL,NULL,NULL),(17,2,0,'lang::vendor.admin.title','fa-user-secret','route::admin_vendor.index',0,NULL,NULL,NULL),(18,2,0,'lang::brand.admin.title','fa-bank','route::admin_brand.index',0,NULL,NULL,NULL),(19,2,0,'lang::attribute_group.admin.title','fa-bars','route::admin_attribute_group.index',0,NULL,NULL,NULL),(20,3,0,'lang::customer.admin.title','fa-user','route::admin_customer.index',0,NULL,NULL,NULL),(21,3,0,'lang::subscribe.admin.title','fa-user-circle-o','route::admin_subscribe.index',0,NULL,NULL,NULL),(22,4,0,'lang::block_content.admin.title','fa-newspaper-o','route::admin_block_content.index',0,NULL,NULL,NULL),(23,4,0,'lang::link.admin.title','fa-chrome','route::admin_link.index',0,NULL,NULL,NULL),(24,4,0,'lang::template.admin.title','fa-columns','route::admin_template.index',0,NULL,NULL,NULL),(25,5,0,'lang::config.admin.title','fa-cog','route::admin_config.index',0,NULL,NULL,NULL),(26,5,0,'lang::store.admin.title','fa-cogs','route::admin_store.index',0,NULL,NULL,NULL),(27,5,0,'lang::admin.menu_titles.email_setting','fa-envelope','',0,NULL,NULL,NULL),(28,27,0,'lang::email.admin.title','fa-cog','route::admin_email.index',0,NULL,NULL,NULL),(29,27,0,'lang::email_template.admin.title','fa-bars','route::admin_email_template.index',0,NULL,NULL,NULL),(30,5,0,'lang::admin.menu_titles.localisation','fa-shirtsinbulk','',0,NULL,NULL,NULL),(31,30,0,'lang::language.admin.title','fa-pagelines','route::admin_language.index',0,NULL,NULL,NULL),(32,30,0,'lang::currency.admin.title','fa-dollar','route::admin_currency.index',0,NULL,NULL,NULL),(33,0,101,'lang::banner.admin.title','fa-image','route::admin_banner.index',0,NULL,NULL,NULL),(34,5,0,'lang::backup.admin.title','fa-save','route::admin_backup.index',0,NULL,NULL,NULL),(35,0,202,'lang::admin.menu_titles.extensions','fa-puzzle-piece','',0,NULL,NULL,NULL),(36,0,202,'lang::admin.menu_titles.modules','fa-codepen','',0,NULL,NULL,NULL),(37,0,302,'lang::admin.menu_titles.report_manager','fa-pie-chart','',0,NULL,NULL,NULL),(38,0,0,'lang::admin.menu_titles.admin','fa-sitemap','',0,NULL,NULL,NULL),(39,35,0,'lang::Extensions/language.Payment','fa-money','admin::extension/payment',0,NULL,NULL,NULL),(40,35,0,'lang::Extensions/language.Shipping','fa-ambulance','admin::extension/shipping',0,NULL,NULL,NULL),(41,35,0,'lang::Extensions/language.Total','fa-cog','admin::extension/total',0,NULL,NULL,NULL),(42,35,0,'lang::Extensions/language.Other','fa-circle-thin','admin::extension/other',0,NULL,NULL,NULL),(43,36,0,'lang::Modules/language.Cms','fa-modx','admin::module/cms',0,NULL,NULL,NULL),(44,36,0,'lang::Modules/language.Block','fa-bars','admin::module/block',0,NULL,NULL,NULL),(45,36,0,'lang::Modules/language.Other','fa-bars','admin::module/other',0,NULL,NULL,NULL),(46,38,0,'lang::admin.menu_titles.users','fa-users','admin::user',0,NULL,NULL,NULL),(47,38,0,'lang::admin.menu_titles.roles','fa-user','admin::role',0,NULL,NULL,NULL),(48,38,0,'lang::admin.menu_titles.permission','fa-ban','admin::permission',0,NULL,NULL,NULL),(49,38,0,'lang::admin.menu_titles.menu','fa-bars','admin::menu',0,NULL,NULL,NULL),(50,38,0,'lang::admin.menu_titles.operation_log','fa-history','admin::log',0,NULL,NULL,NULL),(51,0,302,'lang::admin.menu_titles.api_manager','fa-plug','',0,NULL,NULL,NULL),(52,0,103,'lang::news.admin.title','fa-file-powerpoint-o','route::admin_news.index',0,NULL,NULL,NULL),(53,37,0,'lang::admin.menu_titles.report_product','fa-bars','admin::report/product',0,NULL,NULL,NULL);
+INSERT INTO `admin_menu` VALUES (1,0,11,'lang::admin.menu_titles.order_manager','fa-cart-arrow-down','',0,NULL,NULL,NULL),(2,0,12,'lang::admin.menu_titles.product_mamager','fa-folder-open','',0,NULL,NULL,NULL),(3,0,13,'lang::admin.menu_titles.customer_manager','fa-group','',0,NULL,NULL,NULL),(4,0,201,'lang::admin.menu_titles.template_layout','fa-object-ungroup','',0,NULL,NULL,NULL),(5,0,301,'lang::admin.menu_titles.config_manager','fa-cogs','',0,NULL,NULL,NULL),(6,0,10,'lang::ADMIN SHOP','','',1,NULL,NULL,NULL),(7,0,100,'lang::ADMIN CONTENT','','',1,NULL,NULL,NULL),(8,0,200,'lang::ADMIN EXTENSION','','',1,NULL,NULL,NULL),(9,0,300,'lang::ADMIN SYSTEM','','',1,NULL,NULL,NULL),(10,0,102,'lang::page.admin.title','fa-clone','admin::page',0,NULL,NULL,NULL),(11,1,6,'lang::shipping_status.admin.title','fa-truck','admin::shipping_status',0,NULL,NULL,NULL),(12,1,3,'lang::order.admin.title','fa-shopping-cart','admin::order',0,NULL,NULL,NULL),(13,1,4,'lang::order_status.admin.title','fa-asterisk','admin::order_status',0,NULL,NULL,NULL),(14,1,5,'lang::payment_status.admin.title','fa-recycle','admin::payment_status',0,NULL,NULL,NULL),(15,2,0,'lang::category.admin.title','fa-folder-open-o','admin::category',0,NULL,NULL,NULL),(16,2,0,'lang::product.admin.title','fa-file-photo-o','admin::product',0,NULL,NULL,NULL),(17,2,0,'lang::vendor.admin.title','fa-user-secret','admin::vendor',0,NULL,NULL,NULL),(18,2,0,'lang::brand.admin.title','fa-bank','admin::brand',0,NULL,NULL,NULL),(19,2,0,'lang::attribute_group.admin.title','fa-bars','admin::attribute_group',0,NULL,NULL,NULL),(20,3,0,'lang::customer.admin.title','fa-user','admin::customer',0,NULL,NULL,NULL),(21,3,0,'lang::subscribe.admin.title','fa-user-circle-o','admin::subscribe',0,NULL,NULL,NULL),(22,4,0,'lang::block_content.admin.title','fa-newspaper-o','admin::block_content',0,NULL,NULL,NULL),(23,4,0,'lang::link.admin.title','fa-chrome','admin::link',0,NULL,NULL,NULL),(24,4,0,'lang::template.admin.title','fa-columns','admin::template',0,NULL,NULL,NULL),(25,5,0,'lang::config.admin.title','fa-cog','admin::config',0,NULL,NULL,NULL),(26,5,0,'lang::store.admin.title','fa-cogs','admin::store',0,NULL,NULL,NULL),(27,5,0,'lang::admin.menu_titles.email_setting','fa-envelope','',0,NULL,NULL,NULL),(28,27,0,'lang::email.admin.title','fa-cog','admin::email',0,NULL,NULL,NULL),(29,27,0,'lang::email_template.admin.title','fa-bars','admin::email_template',0,NULL,NULL,NULL),(30,5,0,'lang::admin.menu_titles.localisation','fa-shirtsinbulk','',0,NULL,NULL,NULL),(31,30,0,'lang::language.admin.title','fa-pagelines','admin::language',0,NULL,NULL,NULL),(32,30,0,'lang::currency.admin.title','fa-dollar','admin::currency',0,NULL,NULL,NULL),(33,0,101,'lang::banner.admin.title','fa-image','admin::banner',0,NULL,NULL,NULL),(34,5,0,'lang::backup.admin.title','fa-save','admin::backup',0,NULL,NULL,NULL),(35,0,202,'lang::admin.menu_titles.extensions','fa-puzzle-piece','',0,NULL,NULL,NULL),(36,0,202,'lang::admin.menu_titles.modules','fa-codepen','',0,NULL,NULL,NULL),(37,0,302,'lang::admin.menu_titles.report_manager','fa-pie-chart','',0,NULL,NULL,NULL),(38,0,0,'lang::admin.menu_titles.admin','fa-sitemap','',0,NULL,NULL,NULL),(39,35,0,'lang::Extensions/language.Payment','fa-money','admin::extension/payment',0,NULL,NULL,NULL),(40,35,0,'lang::Extensions/language.Shipping','fa-ambulance','admin::extension/shipping',0,NULL,NULL,NULL),(41,35,0,'lang::Extensions/language.Total','fa-cog','admin::extension/total',0,NULL,NULL,NULL),(42,35,0,'lang::Extensions/language.Other','fa-circle-thin','admin::extension/other',0,NULL,NULL,NULL),(43,36,0,'lang::Modules/language.Cms','fa-modx','admin::module/cms',0,NULL,NULL,NULL),(44,36,0,'lang::Modules/language.Block','fa-bars','admin::module/block',0,NULL,NULL,NULL),(45,36,0,'lang::Modules/language.Other','fa-bars','admin::module/other',0,NULL,NULL,NULL),(46,38,0,'lang::admin.menu_titles.users','fa-users','admin::user',0,NULL,NULL,NULL),(47,38,0,'lang::admin.menu_titles.roles','fa-user','admin::role',0,NULL,NULL,NULL),(48,38,0,'lang::admin.menu_titles.permission','fa-ban','admin::permission',0,NULL,NULL,NULL),(49,38,0,'lang::admin.menu_titles.menu','fa-bars','admin::menu',0,NULL,NULL,NULL),(50,38,0,'lang::admin.menu_titles.operation_log','fa-history','admin::log',0,NULL,NULL,NULL),(51,0,302,'lang::admin.menu_titles.api_manager','fa-plug','',0,NULL,NULL,NULL),(52,0,103,'lang::news.admin.title','fa-file-powerpoint-o','admin::news',0,NULL,NULL,NULL),(53,37,0,'lang::admin.menu_titles.report_product','fa-bars','admin::report/product',0,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `admin_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,7 +163,7 @@ CREATE TABLE `admin_permission` (
 
 LOCK TABLES `admin_permission` WRITE;
 /*!40000 ALTER TABLE `admin_permission` DISABLE KEYS */;
-INSERT INTO `admin_permission` VALUES (1,'Admin manager','admin.manager','GET::sc_admin/user,GET::sc_admin/role,GET::sc_admin/permission,ANY::sc_admin/log/*,ANY::sc_admin/menu/*','2019-09-17 14:55:52',NULL),(2,'Dashboard','dashboard','GET::sc_admin','2019-09-17 14:55:52',NULL),(3,'Auth manager','auth.full','ANY::sc_admin/auth/*','2019-09-17 14:55:52',NULL),(4,'Setting manager','setting.full','ANY::sc_admin/config/*,ANY::sc_admin/store/*,ANY::sc_admin/email/*,ANY::sc_admin/email_template/*,ANY::sc_admin/language/*,ANY::sc_admin/currency/*,ANY::sc_admin/backup/*','2019-09-17 14:55:52',NULL),(5,'Upload management','upload.full','ANY::sc_admin/uploads/*','2019-09-17 14:55:52',NULL),(6,'Module manager','module.full','ANY::sc_admin/module/**','2019-09-17 14:55:52',NULL),(7,'Extension manager','extension.full','ANY::sc_admin/extension/**','2019-09-17 14:55:52',NULL),(8,'CMS manager','cms.full','ANY::sc_admin/page/*,ANY::sc_admin/banner/*,ANY::sc_admin/cms_category/*,ANY::sc_admin/cms_content/*,ANY::sc_admin/news/*','2019-09-17 14:55:52',NULL),(11,'Discount manager','discount.full','ANY::sc_admin/shop_discount/**','2019-09-17 14:55:52',NULL),(14,'Shipping status','shipping_status.full','ANY::sc_admin/shipping_status/**','2019-09-17 14:55:52',NULL),(15,'Payment  status','payment_status.full','ANY::sc_admin/payment_status/**','2019-09-17 14:55:52',NULL),(17,'Customer manager','customer.full','ANY::sc_admin/customer/*,ANY::sc_admin/subscribe/*','2019-09-17 14:55:52',NULL),(18,'Order status','order_status.full','ANY::sc_admin/order_status/*','2019-09-17 14:55:52',NULL),(19,'Product manager','product.full','ANY::sc_admin/category/*,ANY::sc_admin/vendor/*,ANY::sc_admin/brand/*,ANY::sc_admin/attribute_group/*,ANY::sc_admin/product/*','2019-09-17 14:55:52',NULL),(20,'Order Manager','order.full','ANY::sc_admin/order/*','2019-09-17 14:55:52',NULL),(21,'Report manager','report.full','ANY::sc_admin/report/*','2019-09-17 14:55:52',NULL);
+INSERT INTO `admin_permission` VALUES (1,'Admin manager','admin.manager','GET::sc_admin/user,GET::sc_admin/role,GET::sc_admin/permission,ANY::sc_admin/log/*,ANY::sc_admin/menu/*','2019-09-17 23:29:18',NULL),(2,'Dashboard','dashboard','GET::sc_admin','2019-09-17 23:29:18',NULL),(3,'Auth manager','auth.full','ANY::sc_admin/auth/*','2019-09-17 23:29:18',NULL),(4,'Setting manager','setting.full','ANY::sc_admin/config/*,ANY::sc_admin/store/*,ANY::sc_admin/email/*,ANY::sc_admin/email_template/*,ANY::sc_admin/language/*,ANY::sc_admin/currency/*,ANY::sc_admin/backup/*','2019-09-17 23:29:18',NULL),(5,'Upload management','upload.full','ANY::sc_admin/uploads/*','2019-09-17 23:29:18',NULL),(6,'Module manager','module.full','ANY::sc_admin/module/**','2019-09-17 23:29:18',NULL),(7,'Extension manager','extension.full','ANY::sc_admin/extension/**','2019-09-17 23:29:18',NULL),(8,'CMS manager','cms.full','ANY::sc_admin/page/*,ANY::sc_admin/banner/*,ANY::sc_admin/cms_category/*,ANY::sc_admin/cms_content/*,ANY::sc_admin/news/*','2019-09-17 23:29:18',NULL),(11,'Discount manager','discount.full','ANY::sc_admin/shop_discount/**','2019-09-17 23:29:18',NULL),(14,'Shipping status','shipping_status.full','ANY::sc_admin/shipping_status/**','2019-09-17 23:29:18',NULL),(15,'Payment  status','payment_status.full','ANY::sc_admin/payment_status/**','2019-09-17 23:29:18',NULL),(17,'Customer manager','customer.full','ANY::sc_admin/customer/*,ANY::sc_admin/subscribe/*','2019-09-17 23:29:18',NULL),(18,'Order status','order_status.full','ANY::sc_admin/order_status/*','2019-09-17 23:29:18',NULL),(19,'Product manager','product.full','ANY::sc_admin/category/*,ANY::sc_admin/vendor/*,ANY::sc_admin/brand/*,ANY::sc_admin/attribute_group/*,ANY::sc_admin/product/*','2019-09-17 23:29:18',NULL),(20,'Order Manager','order.full','ANY::sc_admin/order/*','2019-09-17 23:29:18',NULL),(21,'Report manager','report.full','ANY::sc_admin/report/*','2019-09-17 23:29:18',NULL);
 /*!40000 ALTER TABLE `admin_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -192,7 +192,7 @@ CREATE TABLE `admin_role` (
 
 LOCK TABLES `admin_role` WRITE;
 /*!40000 ALTER TABLE `admin_role` DISABLE KEYS */;
-INSERT INTO `admin_role` VALUES (1,'Administrator','administrator','2019-09-17 14:55:52',NULL),(2,'Group only View','view.all','2019-09-17 14:55:52',NULL),(3,'Manager','manager','2019-09-17 14:55:52',NULL),(4,'Cms manager','cms','2019-09-17 14:55:52',NULL),(5,'Accountant','accountant','2019-09-17 14:55:52',NULL),(6,'Marketing','maketing','2019-09-17 14:55:52',NULL);
+INSERT INTO `admin_role` VALUES (1,'Administrator','administrator','2019-09-17 23:29:18',NULL),(2,'Group only View','view.all','2019-09-17 23:29:18',NULL),(3,'Manager','manager','2019-09-17 23:29:18',NULL),(4,'Cms manager','cms','2019-09-17 23:29:18',NULL),(5,'Accountant','accountant','2019-09-17 23:29:18',NULL),(6,'Marketing','maketing','2019-09-17 23:29:18',NULL);
 /*!40000 ALTER TABLE `admin_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -219,7 +219,7 @@ CREATE TABLE `admin_role_menu` (
 
 LOCK TABLES `admin_role_menu` WRITE;
 /*!40000 ALTER TABLE `admin_role_menu` DISABLE KEYS */;
-INSERT INTO `admin_role_menu` VALUES (1,38,'2019-09-17 14:55:52',NULL),(2,38,'2019-09-17 14:55:52',NULL),(3,38,'2019-09-17 14:55:52',NULL);
+INSERT INTO `admin_role_menu` VALUES (1,38,'2019-09-17 23:29:18',NULL),(2,38,'2019-09-17 23:29:18',NULL),(3,38,'2019-09-17 23:29:18',NULL);
 /*!40000 ALTER TABLE `admin_role_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -246,7 +246,7 @@ CREATE TABLE `admin_role_permission` (
 
 LOCK TABLES `admin_role_permission` WRITE;
 /*!40000 ALTER TABLE `admin_role_permission` DISABLE KEYS */;
-INSERT INTO `admin_role_permission` VALUES (3,1,'2019-09-17 14:55:52',NULL),(3,2,'2019-09-17 14:55:52',NULL),(3,3,'2019-09-17 14:55:52',NULL),(3,4,'2019-09-17 14:55:52',NULL),(3,5,'2019-09-17 14:55:52',NULL),(3,8,'2019-09-17 14:55:52',NULL),(3,11,'2019-09-17 14:55:52',NULL),(3,14,'2019-09-17 14:55:52',NULL),(3,15,'2019-09-17 14:55:52',NULL),(3,17,'2019-09-17 14:55:52',NULL),(3,18,'2019-09-17 14:55:52',NULL),(3,19,'2019-09-17 14:55:52',NULL),(3,20,'2019-09-17 14:55:52',NULL),(3,21,'2019-09-17 14:55:52',NULL),(4,3,'2019-09-17 14:55:52',NULL),(4,5,'2019-09-17 14:55:52',NULL),(4,8,'2019-09-17 14:55:52',NULL),(5,2,'2019-09-17 14:55:52',NULL),(5,3,'2019-09-17 14:55:52',NULL),(5,20,'2019-09-17 14:55:52',NULL),(5,21,'2019-09-17 14:55:52',NULL),(6,2,'2019-09-17 14:55:52',NULL),(6,3,'2019-09-17 14:55:52',NULL),(6,5,'2019-09-17 14:55:52',NULL),(6,8,'2019-09-17 14:55:52',NULL),(6,11,'2019-09-17 14:55:52',NULL),(6,14,'2019-09-17 14:55:52',NULL),(6,15,'2019-09-17 14:55:52',NULL),(6,17,'2019-09-17 14:55:52',NULL),(6,18,'2019-09-17 14:55:52',NULL),(6,19,'2019-09-17 14:55:52',NULL),(6,20,'2019-09-17 14:55:52',NULL),(6,21,'2019-09-17 14:55:52',NULL);
+INSERT INTO `admin_role_permission` VALUES (3,1,'2019-09-17 23:29:18',NULL),(3,2,'2019-09-17 23:29:18',NULL),(3,3,'2019-09-17 23:29:18',NULL),(3,4,'2019-09-17 23:29:18',NULL),(3,5,'2019-09-17 23:29:18',NULL),(3,8,'2019-09-17 23:29:18',NULL),(3,11,'2019-09-17 23:29:18',NULL),(3,14,'2019-09-17 23:29:18',NULL),(3,15,'2019-09-17 23:29:18',NULL),(3,17,'2019-09-17 23:29:18',NULL),(3,18,'2019-09-17 23:29:18',NULL),(3,19,'2019-09-17 23:29:18',NULL),(3,20,'2019-09-17 23:29:18',NULL),(3,21,'2019-09-17 23:29:18',NULL),(4,3,'2019-09-17 23:29:18',NULL),(4,5,'2019-09-17 23:29:18',NULL),(4,8,'2019-09-17 23:29:18',NULL),(5,2,'2019-09-17 23:29:18',NULL),(5,3,'2019-09-17 23:29:18',NULL),(5,20,'2019-09-17 23:29:18',NULL),(5,21,'2019-09-17 23:29:18',NULL),(6,2,'2019-09-17 23:29:18',NULL),(6,3,'2019-09-17 23:29:18',NULL),(6,5,'2019-09-17 23:29:18',NULL),(6,8,'2019-09-17 23:29:18',NULL),(6,11,'2019-09-17 23:29:18',NULL),(6,14,'2019-09-17 23:29:18',NULL),(6,15,'2019-09-17 23:29:18',NULL),(6,17,'2019-09-17 23:29:18',NULL),(6,18,'2019-09-17 23:29:18',NULL),(6,19,'2019-09-17 23:29:18',NULL),(6,20,'2019-09-17 23:29:18',NULL),(6,21,'2019-09-17 23:29:18',NULL);
 /*!40000 ALTER TABLE `admin_role_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -366,7 +366,7 @@ CREATE TABLE `admin_user` (
 
 LOCK TABLES `admin_user` WRITE;
 /*!40000 ALTER TABLE `admin_user` DISABLE KEYS */;
-INSERT INTO `admin_user` VALUES (1,'admin','$2y$10$JcmAHe5eUZ2rS0jU1GWr/.xhwCnh2RU13qwjTPcqfmtZXjZxcryPO','Administrator','/admin/avatar/user.jpg','XoQRrElfhea6vWj8Jdu9bz8AoR6Ynurn7wTd4Xw8Ov34LhClQyEEzUJ47wza','2019-09-17 14:55:52',NULL);
+INSERT INTO `admin_user` VALUES (1,'admin','$2y$10$JcmAHe5eUZ2rS0jU1GWr/.xhwCnh2RU13qwjTPcqfmtZXjZxcryPO','Administrator','/admin/avatar/user.jpg','lPAqzgeSBaKK2z8rNpBDJgvMaRrlKcIkrCJei2oMOSsB7eZXPCd2zln9WlLh','2019-09-17 23:29:18',NULL);
 /*!40000 ALTER TABLE `admin_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -587,6 +587,36 @@ LOCK TABLES `shop_banner` WRITE;
 /*!40000 ALTER TABLE `shop_banner` DISABLE KEYS */;
 INSERT INTO `shop_banner` VALUES (1,'/data/banner/Main-banner-1-1903x600.jpg',NULL,'',1,0,0,1,NULL,NULL),(2,'/data/banner/Main-banner-3-1903x600.jpg',NULL,'',1,0,0,1,NULL,NULL);
 /*!40000 ALTER TABLE `shop_banner` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shop_block_content`
+--
+
+DROP TABLE IF EXISTS `shop_block_content`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `shop_block_content` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `position` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `page` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `text` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 0,
+  `sort` tinyint(4) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shop_block_content`
+--
+
+LOCK TABLES `shop_block_content` WRITE;
+/*!40000 ALTER TABLE `shop_block_content` DISABLE KEYS */;
+INSERT INTO `shop_block_content` VALUES (1,'Facebook code','top','*','html','<div id=\"fb-root\"></div>\r\n<script>(function(d, s, id) {\r\n  var js, fjs = d.getElementsByTagName(s)[0];\r\n  if (d.getElementById(id)) return;\r\n  js = d.createElement(s); js.id = id;\r\n  js.src = \'//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.8&appId=934208239994473\';\r\n  fjs.parentNode.insertBefore(js, fjs);\r\n}(document, \'script\', \'facebook-jssdk\'));\r\n</script>',1,0),(2,'Google Analytics','header','*','html','<!-- Global site tag (gtag.js) - Google Analytics -->\r\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=UA-128658138-1\"></script>\r\n<script>\r\n  window.dataLayer = window.dataLayer || [];\r\n  function gtag(){dataLayer.push(arguments);}\r\n  gtag(\'js\', new Date());\r\n  gtag(\'config\', \'UA-128658138-1\');\r\n</script>',1,0),(3,'Product special','left','home,product_list','view','product_special',1,1),(4,'Brands','left','home,item_list','view','brands_left',1,3),(5,'Banner home','banner_top','home','view','banner_image',1,0),(6,'Categories','left','home,product_list,product_detail,shop_wishlist','view','categories',1,4),(7,'Product last view','left','*','module','LastViewProduct',1,0);
+/*!40000 ALTER TABLE `shop_block_content` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -845,36 +875,6 @@ INSERT INTO `shop_language` VALUES (1,'English','en','/data/language/flag_uk.png
 UNLOCK TABLES;
 
 --
--- Table structure for table `shop_layout`
---
-
-DROP TABLE IF EXISTS `shop_layout`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `shop_layout` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `position` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `page` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `type` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `text` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 0,
-  `sort` tinyint(4) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `shop_layout`
---
-
-LOCK TABLES `shop_layout` WRITE;
-/*!40000 ALTER TABLE `shop_layout` DISABLE KEYS */;
-INSERT INTO `shop_layout` VALUES (1,'Facebook code','top','*','html','<div id=\"fb-root\"></div>\r\n<script>(function(d, s, id) {\r\n  var js, fjs = d.getElementsByTagName(s)[0];\r\n  if (d.getElementById(id)) return;\r\n  js = d.createElement(s); js.id = id;\r\n  js.src = \'//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.8&appId=934208239994473\';\r\n  fjs.parentNode.insertBefore(js, fjs);\r\n}(document, \'script\', \'facebook-jssdk\'));\r\n</script>',1,0),(2,'Google Analytics','header','*','html','<!-- Global site tag (gtag.js) - Google Analytics -->\r\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=UA-128658138-1\"></script>\r\n<script>\r\n  window.dataLayer = window.dataLayer || [];\r\n  function gtag(){dataLayer.push(arguments);}\r\n  gtag(\'js\', new Date());\r\n  gtag(\'config\', \'UA-128658138-1\');\r\n</script>',1,0),(3,'Product special','left','home,product_list','view','product_special',1,1),(4,'Brands','left','home,item_list','view','brands_left',1,3),(5,'Banner home','banner_top','home','view','banner_image',1,0),(6,'Categories','left','home,product_list,product_detail,shop_wishlist','view','categories',1,4),(7,'Product last view','left','*','module','LastViewProduct',1,0);
-/*!40000 ALTER TABLE `shop_layout` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `shop_layout_page`
 --
 
@@ -953,13 +953,13 @@ INSERT INTO `shop_layout_type` VALUES (1,'html','Html'),(2,'view','View'),(3,'mo
 UNLOCK TABLES;
 
 --
--- Table structure for table `shop_layout_url`
+-- Table structure for table `shop_link`
 --
 
-DROP TABLE IF EXISTS `shop_layout_url`;
+DROP TABLE IF EXISTS `shop_link`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `shop_layout_url` (
+CREATE TABLE `shop_link` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `url` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -973,13 +973,13 @@ CREATE TABLE `shop_layout_url` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `shop_layout_url`
+-- Dumping data for table `shop_link`
 --
 
-LOCK TABLES `shop_layout_url` WRITE;
-/*!40000 ALTER TABLE `shop_layout_url` DISABLE KEYS */;
-INSERT INTO `shop_layout_url` VALUES (1,'lang::front.contact','route::pages::contact','_self','menu','',1,3),(2,'lang::front.about','route::pages::about','_self','menu','',1,4),(3,'S-Cart','https://s-cart.org','_blank','menu','',1,0),(4,'lang::front.my_profile','/member/login.html','_self','footer','',1,5),(5,'lang::front.compare_page','/compare.html','_self','footer','',1,4),(6,'lang::front.wishlist_page','route::wishlist','_self','footer','',1,3);
-/*!40000 ALTER TABLE `shop_layout_url` ENABLE KEYS */;
+LOCK TABLES `shop_link` WRITE;
+/*!40000 ALTER TABLE `shop_link` DISABLE KEYS */;
+INSERT INTO `shop_link` VALUES (1,'lang::front.contact','route::pages::contact','_self','menu','',1,3),(2,'lang::front.about','route::pages::about','_self','menu','',1,4),(3,'S-Cart','https://s-cart.org','_blank','menu','',1,0),(4,'lang::front.my_profile','/member/login.html','_self','footer','',1,5),(5,'lang::front.compare_page','/compare.html','_self','footer','',1,4),(6,'lang::front.wishlist_page','route::wishlist','_self','footer','',1,3);
+/*!40000 ALTER TABLE `shop_link` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1083,7 +1083,7 @@ CREATE TABLE `shop_order` (
 
 LOCK TABLES `shop_order` WRITE;
 /*!40000 ALTER TABLE `shop_order` DISABLE KEYS */;
-INSERT INTO `shop_order` VALUES (1,1,5000,2000,0,1,1,1,0,7000,'USD',1.00,0,7000,'Naruto','Kun','ADDRESS 1','ADDRESS 2','VN','667151172','test@test.com','ok','Cash','ShippingStandard',NULL,NULL,NULL,'2019-09-17 14:55:56',NULL);
+INSERT INTO `shop_order` VALUES (1,1,5000,2000,0,1,1,1,0,7000,'USD',1.00,0,7000,'Naruto','Kun','ADDRESS 1','ADDRESS 2','VN','667151172','test@test.com','ok','Cash','ShippingStandard',NULL,NULL,NULL,'2019-09-17 23:29:24',NULL);
 /*!40000 ALTER TABLE `shop_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1147,7 +1147,7 @@ CREATE TABLE `shop_order_history` (
 
 LOCK TABLES `shop_order_history` WRITE;
 /*!40000 ALTER TABLE `shop_order_history` DISABLE KEYS */;
-INSERT INTO `shop_order_history` VALUES (1,1,'New order',0,1,1,'2019-09-17 21:55:56');
+INSERT INTO `shop_order_history` VALUES (1,1,'New order',0,1,1,'2019-09-18 06:29:24');
 /*!40000 ALTER TABLE `shop_order_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1656,7 +1656,7 @@ CREATE TABLE `shop_user` (
 
 LOCK TABLES `shop_user` WRITE;
 /*!40000 ALTER TABLE `shop_user` DISABLE KEYS */;
-INSERT INTO `shop_user` VALUES (1,'Naruto','Kun','test@test.com','$2y$10$L61YPHy3WPdRl0CY0XtbN.sSg3/ow8q1vJrMOwMWq2jN9tJplTfSG','ADDRESS 1','ADDRESS 2','VN','0667151172',NULL,1,1,'2019-09-17 14:55:56',NULL);
+INSERT INTO `shop_user` VALUES (1,'Naruto','Kun','test@test.com','$2y$10$oMmihj15hY.1Igfm9SwDTe6HtyW0/zLOLtf6FPKzgsNK3pw0OodzG','ADDRESS 1','ADDRESS 2','VN','0667151172',NULL,1,1,'2019-09-17 23:29:24',NULL);
 /*!40000 ALTER TABLE `shop_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1699,4 +1699,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-17 21:56:28
+-- Dump completed on 2019-09-18  6:29:51

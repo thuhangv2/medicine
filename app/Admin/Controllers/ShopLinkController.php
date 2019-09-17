@@ -110,7 +110,7 @@ class ShopLinkController extends Controller
             'sub_title' => '',
             'title_description' => trans('link.admin.add_new_des'),
             'icon' => 'fa fa-plus',
-            'layout_url' => [],
+            'link' => [],
             'arrTarget' => $this->arrTarget,
             'arrGroup' => $this->arrGroup,
             'url_action' => route('admin_link.create'),
@@ -159,8 +159,8 @@ class ShopLinkController extends Controller
  */
     public function edit($id)
     {
-        $layout_url = ShopLink::find($id);
-        if ($layout_url === null) {
+        $link = ShopLink::find($id);
+        if ($link === null) {
             return 'no data';
         }
         $data = [
@@ -168,10 +168,10 @@ class ShopLinkController extends Controller
             'sub_title' => '',
             'title_description' => '',
             'icon' => 'fa fa-pencil-square-o',
-            'layout_url' => $layout_url,
+            'link' => $link,
             'arrTarget' => $this->arrTarget,
             'arrGroup' => $this->arrGroup,
-            'url_action' => route('admin_link.edit', ['id' => $layout_url['id']]),
+            'url_action' => route('admin_link.edit', ['id' => $link['id']]),
         ];
         return view('admin.screen.link')
             ->with($data);
