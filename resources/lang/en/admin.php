@@ -268,6 +268,8 @@ return [
         'cms_categories' => 'Cms categories',
         'cms_contents' => 'Cms contents',
         'design_layout' => 'Design Layout',
+        'block_content' => 'Block content',
+        'block_link' => 'Link manager',
         'cms_manager' => 'CMS_manager',
         'currencies' => 'Currencies',
         'blog_news' => 'Blog & News',

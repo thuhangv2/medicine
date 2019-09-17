@@ -273,6 +273,8 @@ return [
         'cms_categories' => 'Danh mục CMS',
         'cms_contents' => 'Nội dung CMS',
         'design_layout' => 'Thiết kế bố cục',
+        'block_content' => 'Khối nội dung',
+        'block_link' => 'Các liên kết',
         'cms_manager' => 'Quản lý CMS',
         'currencies' => 'Tiền tệ',
         'blog_news' => 'Blog & Tin tức',

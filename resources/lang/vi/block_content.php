@@ -8,10 +8,10 @@ return [
     'text' => 'Nội dung',
     'status' => 'Trạng thái',
     'admin' => [
-        'title' => 'Quản lý bố cục',
+        'title' => 'Khối nội dung',
         'create_success' => 'Tạo mới thành công!',
         'edit_success' => 'Cập nhật thành công!',
-        'list' => 'Danh sách bố cục',
+        'list' => 'Các khối nội dung',
         'id' => 'ID',
         'status' => 'Status',
         'action' => 'Hành động',
