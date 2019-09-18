@@ -3,7 +3,7 @@
 namespace App\Modules\Block\Controllers;
 
 use App\Models\AdminConfig;
-use App\Models\ShopLayout;
+use App\Models\ShopBlockContent;
 use App\Models\ShopProduct;
 use App\Modules\ModuleDefault;
 
@@ -78,7 +78,7 @@ class LastViewProduct extends \App\Http\Controllers\GeneralController
         if (!$process) {
             $return = ['error' => 1, 'msg' => 'Error when uninstall'];
         }
-        (new ShopLayout)->where('text', $this->namespace)->delete();
+        (new ShopBlockContent)->where('text', $this->namespace)->delete();
         return $return;
     }
     public function enable()
@@ -129,7 +129,7 @@ class LastViewProduct extends \App\Http\Controllers\GeneralController
 
     public function processDefault()
     {
-        return $process = ShopLayout::insert(
+        return $process = ShopBlockContent::insert(
             [
                 'name' => $this->title,
                 'position' => 'left',
