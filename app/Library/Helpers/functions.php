@@ -2,9 +2,9 @@
 use App\Library\Helper;
 use App\Models\AdminConfig;
 use App\Models\AdminStore;
+use App\Models\ShopBlockContent;
 use App\Models\ShopLanguage;
-use App\Models\ShopLayout;
-use App\Models\ShopLayoutUrl;
+use App\Models\ShopLink;
 
 /*
 Get extension in group
@@ -25,7 +25,7 @@ if (!function_exists('sc_link')) {
         if (Helper::$layoutsUrl !== null) {
             return Helper::$layoutsUrl;
         }
-        Helper::$layoutsUrl = ShopLayoutUrl::getGroup();
+        Helper::$layoutsUrl = ShopLink::getGroup();
         return Helper::$layoutsUrl;
     }
 }
@@ -39,7 +39,7 @@ if (!function_exists('sc_layouts')) {
         if (Helper::$layouts !== null) {
             return Helper::$layouts;
         }
-        Helper::$layouts = ShopLayout::getLayout();
+        Helper::$layouts = ShopBlockContent::getLayout();
         return Helper::$layouts;
     }
 }
