@@ -16,8 +16,8 @@
     <meta property="og:description" content="{{ $description??sc_store('description') }}" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 <!--Module meta -->
-  @isset ($layouts['meta'])
-      @foreach ( $layouts['meta']  as $layout)
+  @isset ($blocksContent['meta'])
+      @foreach ( $blocksContent['meta']  as $layout)
         @php
           $arrPage = explode(',', $layout->page)
         @endphp
@@ -45,8 +45,8 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('templates/'.sc_store('template').'/images/ico/apple-touch-icon-72-precomposed.png')}}">
     <link rel="apple-touch-icon-precomposed" href="{{ asset('templates/'.sc_store('template').'/images/ico/apple-touch-icon-57-precomposed.png')}}">
 <!--Module header -->
-  @isset ($layouts['header'])
-      @foreach ( $layouts['header']  as $layout)
+  @isset ($blocksContent['header'])
+      @foreach ( $blocksContent['header']  as $layout)
       @php
         $arrPage = explode(',', $layout->page)
       @endphp
@@ -65,8 +65,8 @@
 @include('templates.'.sc_store('template').'.header')
 
 <!--Module banner -->
-  @isset ($layouts['banner_top'])
-      @foreach ( $layouts['banner_top']  as $layout)
+  @isset ($blocksContent['banner_top'])
+      @foreach ( $blocksContent['banner_top']  as $layout)
       @php
         $arrPage = explode(',', $layout->page)
       @endphp
@@ -87,8 +87,8 @@
 
 
 <!--Module top -->
-  @isset ($layouts['top'])
-      @foreach ( $layouts['top']  as $layout)
+  @isset ($blocksContent['top'])
+      @foreach ( $blocksContent['top']  as $layout)
         @php
           $arrPage = explode(',', $layout->page)
         @endphp
@@ -235,8 +235,8 @@
 
 
 <!--Module bottom -->
-  @isset ($layouts['bottom'])
-      @foreach ( $layouts['bottom']  as $layout)
+  @isset ($blocksContent['bottom'])
+      @foreach ( $blocksContent['bottom']  as $layout)
         @php
           $arrPage = explode(',', $layout->page)
         @endphp

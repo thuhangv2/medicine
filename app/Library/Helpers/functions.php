@@ -33,8 +33,8 @@ if (!function_exists('sc_link')) {
 /*
 Get all layouts
  */
-if (!function_exists('sc_layouts')) {
-    function sc_layouts()
+if (!function_exists('sc_block_content')) {
+    function sc_block_content()
     {
         if (Helper::$layouts !== null) {
             return Helper::$layouts;

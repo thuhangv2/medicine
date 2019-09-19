@@ -1,6 +1,6 @@
 <!--Module right -->
-  @isset ($layouts['right'])
-      @foreach ( $layouts['right']  as $layout)
+  @isset ($blocksContent['right'])
+      @foreach ( $blocksContent['right']  as $layout)
         @if ($layout->page == null ||  $layout->page =='*' || $layout->page =='' || (isset($layout_page) && in_array($layout_page, $layout->page) ) )
           @if ($layout->type =='html')
             {!! $layout->text !!}
