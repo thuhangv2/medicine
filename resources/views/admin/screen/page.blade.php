@@ -124,7 +124,7 @@
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-pencil fa-fw"></i></span>
-@if (!in_array($page['id'], SC_GUARD_PAGES))
+@if (!in_array($page['id']??'', SC_GUARD_PAGES))
                                         <input type="text" id="key" name="key" value="{!! old('key',($page['key']??'')) !!}" class="form-control key" placeholder="" />
 @else
                                         <input type="text" id="key"  value="{!! $page['key'] !!}" disabled class="form-control key" placeholder="" />
