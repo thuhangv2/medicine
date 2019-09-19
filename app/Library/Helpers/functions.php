@@ -17,7 +17,7 @@ if (!function_exists('sc_get_extension')) {
 }
 
 /*
-Get all layouts link
+Get all block content
  */
 if (!function_exists('sc_link')) {
     function sc_link()
