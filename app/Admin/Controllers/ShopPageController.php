@@ -191,8 +191,7 @@ class ShopPageController extends Controller
     {
 
         $data = request()->all();
-        $dataOrigin = request()->all();
-        $validator = Validator::make($dataOrigin, [
+        $validator = Validator::make($data, [
             'key' => 'required|regex:/(^([0-9A-Za-z\-\._]+)$)/|unique:shop_page,key',
             'descriptions.*.title' => 'required|string|max:100',
         ], [
@@ -259,8 +258,7 @@ class ShopPageController extends Controller
     {
         $page = ShopPage::find($id);
         $data = request()->all();
-        $dataOrigin = request()->all();
-        $validator = Validator::make($dataOrigin, [
+        $validator = Validator::make($data, [
             'descriptions.*.title' => 'required|string|max:100',
             'key' => 'nullable|regex:/(^([0-9A-Za-z\-\._]+)$)/|unique:shop_page,key,' . $page->id . ',id',
         ], [
@@ -280,7 +278,7 @@ class ShopPageController extends Controller
             'status' => empty($data['status']) ? 0 : 1,
         ];
         if (!empty($data['key'])) {
-            $dataUpdate['key'] = $dataUpdate;
+            $dataUpdate['key'] = $data['key'];
         }
         $obj = ShopPage::find($id);
         $obj->update($dataUpdate);
