@@ -47,9 +47,6 @@ class CreateShopTables extends Migration
             $table->string('email', 150)->nullable();
             $table->string('time_active', 200);
             $table->string('address', 300);
-            $table->string('timezone', 50)->nullable();
-            $table->string('locale', 50)->nullable();
-            $table->string('currency', 10)->nullable();
             $table->string('template', 100)->nullable();
         });
 
@@ -587,7 +584,7 @@ class CreateShopTables extends Migration
 
         ]);
         DB::table('admin_store')->insert(
-            ['logo' => '/data/logo/scart-mid.png', 'site_status' => 1, 'template' => 'default', 'phone' => '0123456789', 'long_phone' => 'Support: 0987654321', 'email' => 'admin-demo@s-cart.org', 'time_active' => '', 'address' => '123st - abc - xyz', 'locale' => 'en', 'timezone' => 'Asia/Ho_Chi_Minh', 'currency' => 'USD']
+            ['logo' => '/data/logo/scart-mid.png', 'site_status' => 1, 'template' => 'default', 'phone' => '0123456789', 'long_phone' => 'Support: 0987654321', 'email' => 'admin-demo@s-cart.org', 'time_active' => '', 'address' => '123st - abc - xyz']
         );
 
         DB::table('admin_store_description')->insert([
