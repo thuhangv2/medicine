@@ -76,7 +76,7 @@ class LoginController extends Controller
 
         $request->session()->invalidate();
 
-        return redirect(config('admin.route.prefix'));
+        return redirect(config('app.admin_prefix'));
     }
 
     public function getSetting()
@@ -128,7 +128,7 @@ class LoginController extends Controller
         }
         $user->update($dataUpdate);
 //
-        return redirect()->route('homeAdmin')->with('success', trans('user.admin.edit_success'));
+        return redirect()->route('admin.home')->with('success', trans('user.admin.edit_success'));
     }
 
     /**
@@ -152,7 +152,7 @@ class LoginController extends Controller
             return $this->redirectTo();
         }
 
-        return property_exists($this, 'redirectTo') ? $this->redirectTo : config('admin.route.prefix');
+        return property_exists($this, 'redirectTo') ? $this->redirectTo : config('app.admin_prefix');
     }
 
     /**

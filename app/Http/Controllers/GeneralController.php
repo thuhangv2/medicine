@@ -22,7 +22,7 @@ class GeneralController extends Controller
         view()->share('blocksContent', $blocksContent);
         view()->share('layoutsUrl', $layoutsUrl);
 
-        if (!sc_store('site_status')) {
+        if (sc_config('SITE_STATUS') != 'on') {
             $maintain_content = sc_store('maintain_content') ?? '';
             echo <<<HTML
  <section>

@@ -41,7 +41,7 @@
           </ul>
         </div>
         <div style="clear: both;display: block;">
-            <p          >
+            <p>
                 {{ trans('install.info.about') }}<br>
                 {!! trans('install.info.about_us') !!}<br>
                 {!! trans('install.info.document') !!}<br>

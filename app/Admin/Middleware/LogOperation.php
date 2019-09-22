@@ -5,7 +5,6 @@ namespace App\Admin\Middleware;
 use App\Admin\Admin;
 use App\Admin\Models\AdminLog;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class LogOperation
 {
@@ -46,7 +45,7 @@ class LogOperation
      */
     protected function shouldLogOperation(Request $request)
     {
-        return sc_config('admin_log')
+        return sc_config('ADMIN_LOG')
         && !$this->inExceptArray($request)
         && Admin::user();
     }
@@ -60,22 +59,11 @@ class LogOperation
      */
     protected function inExceptArray($request)
     {
-        foreach (config('admin.operation_log.except') as $except) {
+        foreach (explode(',', sc_config('ADMIN_LOG_EXP')) as $except) {
             if ($except !== '/') {
                 $except = trim($except, '/');
             }
-
-            $methods = [];
-
-            if (Str::contains($except, ':')) {
-                list($methods, $except) = explode(':', $except);
-                $methods = explode(',', $methods);
-            }
-
-            $methods = array_map('strtoupper', $methods);
-
-            if ($request->is($except) &&
-                (empty($methods) || in_array($request->method(), $methods))) {
+            if ($request->path() == $except) {
                 return true;
             }
         }

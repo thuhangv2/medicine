@@ -140,7 +140,7 @@ if (!function_exists('sc_url_render')) {
 
         if (count($arrCheckUrl) == 2) {
             $string = \Illuminate\Support\Str::start($arrCheckUrl[1], '/');
-            $string = config('admin.route.prefix') . $string;
+            $string = config('app.admin_prefix') . $string;
             return url($string);
         }
         return url($string);

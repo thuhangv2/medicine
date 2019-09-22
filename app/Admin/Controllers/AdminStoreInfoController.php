@@ -1,23 +1,21 @@
 <?php
-#app/Http/Admin/Controllers/AdminStoreController.php
+#app/Http/Admin/Controllers/AdminStoreInfoController.php
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\AdminStore;
 use App\Models\AdminStoreDescription;
-use App\Models\ShopCurrency;
 use App\Models\ShopLanguage;
 use Illuminate\Http\Request;
 
-class AdminStoreController extends Controller
+class AdminStoreInfoController extends Controller
 {
 
     public function index()
     {
         $languages = ShopLanguage::getArray();
-        $currencies = ShopCurrency::getArray();
         $data = [
-            'title' => trans('store.admin.list'),
+            'title' => trans('store_info.admin.list'),
             'sub_title' => '',
             'icon' => 'fa fa-indent',
             'menu_left' => '',
@@ -41,19 +39,13 @@ class AdminStoreController extends Controller
             $infosDescription['keyword'][$code] = $langDescriptions['keyword'];
             $infosDescription['maintain_content'][$code] = $langDescriptions['maintain_content'];
         }
-        foreach (timezone_identifiers_list() as $key => $value) {
-            $arrTimezones[$value] = $value;
-        }
-        $timezones = $arrTimezones;
 
         $infos = AdminStore::first();
         $data['infos'] = $infos;
         $data['infosDescription'] = $infosDescription;
         $data['languages'] = $languages;
-        $data['timezones'] = $timezones;
-        $data['currencies'] = $currencies;
 
-        return view('admin.screen.store')
+        return view('admin.screen.store_info')
             ->with($data);
     }
 

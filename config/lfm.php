@@ -15,23 +15,22 @@ return [
     |--------------------------------------------------------------------------
      */
 
-    'use_package_routes'       => false,
+    'use_package_routes' => false,
 
     // // Use relative paths (without domain)
-    'relative_paths'           => false,
+    'relative_paths' => false,
 
     // The url to this package. Change it if necessary.
-    'url_prefix'               => config('admin.route.prefix') . '/uploads',
-
+    // 'url_prefix' => config('admin.route.prefix') . '/uploads',
     /*
     |--------------------------------------------------------------------------
     | Multi-User Mode
     |--------------------------------------------------------------------------
      */
 
-    'allow_multi_user'         => false,
+    'allow_multi_user' => false,
 
-    'allow_share_folder'       => false,
+    'allow_share_folder' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -44,18 +43,18 @@ return [
     // Then you can rewrite userField function in App\Handler\ConfigHandler class
     // And set 'user_field' to App\Handler\ConfigHandler::class
     // Ex: The private folder of user will be named as the user id.
-    'user_folder_name'         => UniSharp\LaravelFilemanager\Handlers\ConfigHandler::class,
+    'user_folder_name' => UniSharp\LaravelFilemanager\Handlers\ConfigHandler::class,
 
     // 'shared_folder_name'       => 'shares',
 
-    'thumb_folder_name'        => 'thumbs',
+    'thumb_folder_name' => 'thumbs',
 
-    'folder_categories'        => [
-        'product'  => [
-            'folder_name'  => 'product',
+    'folder_categories' => [
+        'product' => [
+            'folder_name' => 'product',
             'startup_view' => 'grid',
-            'max_size'     => 30000, // size in KB
-            'valid_mime'   => [
+            'max_size' => 30000, // size in KB
+            'valid_mime' => [
                 'image/jpeg',
                 'image/pjpeg',
                 'image/png',
@@ -65,10 +64,10 @@ return [
         ],
 
         'category' => [
-            'folder_name'  => 'category',
+            'folder_name' => 'category',
             'startup_view' => 'grid',
-            'max_size'     => 30000, // size in KB
-            'valid_mime'   => [
+            'max_size' => 30000, // size in KB
+            'valid_mime' => [
                 'image/jpeg',
                 'image/pjpeg',
                 'image/png',
@@ -77,11 +76,11 @@ return [
             ],
         ],
 
-        'brand'    => [
-            'folder_name'  => 'brand',
+        'brand' => [
+            'folder_name' => 'brand',
             'startup_view' => 'grid',
-            'max_size'     => 30000, // size in KB
-            'valid_mime'   => [
+            'max_size' => 30000, // size in KB
+            'valid_mime' => [
                 'image/jpeg',
                 'image/pjpeg',
                 'image/png',
@@ -90,11 +89,11 @@ return [
             ],
         ],
 
-        'vendor'   => [
-            'folder_name'  => 'vendor',
+        'vendor' => [
+            'folder_name' => 'vendor',
             'startup_view' => 'grid',
-            'max_size'     => 30000, // size in KB
-            'valid_mime'   => [
+            'max_size' => 30000, // size in KB
+            'valid_mime' => [
                 'image/jpeg',
                 'image/pjpeg',
                 'image/png',
@@ -104,10 +103,10 @@ return [
         ],
 
         'language' => [
-            'folder_name'  => 'language',
+            'folder_name' => 'language',
             'startup_view' => 'grid',
-            'max_size'     => 30000, // size in KB
-            'valid_mime'   => [
+            'max_size' => 30000, // size in KB
+            'valid_mime' => [
                 'image/jpeg',
                 'image/pjpeg',
                 'image/png',
@@ -117,10 +116,10 @@ return [
         ],
 
         'currency' => [
-            'folder_name'  => 'currency',
+            'folder_name' => 'currency',
             'startup_view' => 'grid',
-            'max_size'     => 30000, // size in KB
-            'valid_mime'   => [
+            'max_size' => 30000, // size in KB
+            'valid_mime' => [
                 'image/jpeg',
                 'image/pjpeg',
                 'image/png',
@@ -129,11 +128,11 @@ return [
             ],
         ],
 
-        'logo'     => [
-            'folder_name'  => 'logo',
+        'logo' => [
+            'folder_name' => 'logo',
             'startup_view' => 'grid',
-            'max_size'     => 50000, // size in KB
-            'valid_mime'   => [
+            'max_size' => 50000, // size in KB
+            'valid_mime' => [
                 'image/jpeg',
                 'image/pjpeg',
                 'image/png',
@@ -142,11 +141,11 @@ return [
             ],
         ],
 
-        'content'  => [
-            'folder_name'  => 'content',
+        'content' => [
+            'folder_name' => 'content',
             'startup_view' => 'grid',
-            'max_size'     => 30000, // size in KB
-            'valid_mime'   => [
+            'max_size' => 30000, // size in KB
+            'valid_mime' => [
                 'image/jpeg',
                 'image/pjpeg',
                 'image/png',
@@ -154,24 +153,11 @@ return [
                 'image/svg+xml',
             ],
         ],
-        'page'     => [
-            'folder_name'  => 'page',
+        'page' => [
+            'folder_name' => 'page',
             'startup_view' => 'grid',
-            'max_size'     => 30000, // size in KB
-            'valid_mime'   => [
-                'image/jpeg',
-                'image/pjpeg',
-                'image/png',
-                'image/gif',
-                'image/svg+xml',
-            ],
-        ],
-
-        'avatar'     => [
-            'folder_name'  => 'avatar',
-            'startup_view' => 'grid',
-            'max_size'     => 30000, // size in KB
-            'valid_mime'   => [
+            'max_size' => 30000, // size in KB
+            'valid_mime' => [
                 'image/jpeg',
                 'image/pjpeg',
                 'image/png',
@@ -180,11 +166,11 @@ return [
             ],
         ],
 
-        'other'    => [
-            'folder_name'  => 'other',
+        'avatar' => [
+            'folder_name' => 'avatar',
             'startup_view' => 'grid',
-            'max_size'     => 30000, // size in KB
-            'valid_mime'   => [
+            'max_size' => 30000, // size in KB
+            'valid_mime' => [
                 'image/jpeg',
                 'image/pjpeg',
                 'image/png',
@@ -193,11 +179,11 @@ return [
             ],
         ],
 
-        'banner'   => [
-            'folder_name'  => 'banner',
+        'other' => [
+            'folder_name' => 'other',
             'startup_view' => 'grid',
-            'max_size'     => 50000, // size in KB
-            'valid_mime'   => [
+            'max_size' => 30000, // size in KB
+            'valid_mime' => [
                 'image/jpeg',
                 'image/pjpeg',
                 'image/png',
@@ -206,11 +192,24 @@ return [
             ],
         ],
 
-        'file'     => [
-            'folder_name'  => 'file',
+        'banner' => [
+            'folder_name' => 'banner',
+            'startup_view' => 'grid',
+            'max_size' => 50000, // size in KB
+            'valid_mime' => [
+                'image/jpeg',
+                'image/pjpeg',
+                'image/png',
+                'image/gif',
+                'image/svg+xml',
+            ],
+        ],
+
+        'file' => [
+            'folder_name' => 'file',
             'startup_view' => 'list',
-            'max_size'     => 50000, // size in KB
-            'valid_mime'   => [
+            'max_size' => 50000, // size in KB
+            'valid_mime' => [
                 'image/jpeg',
                 'image/pjpeg',
                 'image/png',
@@ -221,11 +220,11 @@ return [
             ],
         ],
 
-        'manager'  => [
-            'folder_name'  => '',
+        'manager' => [
+            'folder_name' => '',
             'startup_view' => 'list',
-            'max_size'     => 50000, // size in KB
-            'valid_mime'   => [
+            'max_size' => 50000, // size in KB
+            'valid_mime' => [
                 'image/jpeg',
                 'image/pjpeg',
                 'image/png',
@@ -243,31 +242,31 @@ return [
     |--------------------------------------------------------------------------
      */
 
-    'disk'                     => 'uploads',
+    'disk' => 'uploads',
 
-    'rename_file'              => false,
+    'rename_file' => false,
 
-    'alphanumeric_filename'    => false,
+    'alphanumeric_filename' => false,
 
-    'alphanumeric_directory'   => false,
+    'alphanumeric_directory' => false,
 
-    'should_validate_size'     => false,
+    'should_validate_size' => false,
 
-    'should_validate_mime'     => false,
+    'should_validate_mime' => false,
 
     // permissions to be set when create a new folder or when it creates automatically with thumbnails
-    'create_folder_mode'       => 0755,
+    'create_folder_mode' => 0755,
 
     // permissions to be set on file upload.
-    'create_file_mode'         => 0644,
+    'create_file_mode' => 0644,
 
     // If true, it will attempt to chmod the file after upload
-    'should_change_file_mode'  => true,
+    'should_change_file_mode' => true,
 
     // behavior on files with identical name
     // setting it to true cause old file replace with new one
     // setting it to false show `error-file-exist` error and stop upload
-    'over_write_on_duplicate'  => true,
+    'over_write_on_duplicate' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -279,15 +278,15 @@ return [
     'should_create_thumbnails' => true,
 
     // Create thumbnails automatically only for listed types.
-    'raster_mimetypes'         => [
+    'raster_mimetypes' => [
         'image/jpeg',
         'image/pjpeg',
         'image/png',
     ],
 
-    'thumb_img_width'          => 200,
+    'thumb_img_width' => 200,
 
-    'thumb_img_height'         => 200,
+    'thumb_img_height' => 200,
 
     /*
     |--------------------------------------------------------------------------
@@ -295,9 +294,9 @@ return [
     |--------------------------------------------------------------------------
      */
 
-    'resize_aspectRatio'       => false,
+    'resize_aspectRatio' => false,
 
-    'resize_containment'       => true,
+    'resize_containment' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -305,33 +304,33 @@ return [
     |--------------------------------------------------------------------------
      */
 
-    'file_type_array'          => [
-        'pdf'  => 'Adobe Acrobat',
-        'doc'  => 'Microsoft Word',
+    'file_type_array' => [
+        'pdf' => 'Adobe Acrobat',
+        'doc' => 'Microsoft Word',
         'docx' => 'Microsoft Word',
-        'xls'  => 'Microsoft Excel',
+        'xls' => 'Microsoft Excel',
         'xlsx' => 'Microsoft Excel',
-        'zip'  => 'Archive',
-        'gif'  => 'GIF Image',
-        'jpg'  => 'JPEG Image',
+        'zip' => 'Archive',
+        'gif' => 'GIF Image',
+        'jpg' => 'JPEG Image',
         'jpeg' => 'JPEG Image',
-        'png'  => 'PNG Image',
-        'ppt'  => 'Microsoft PowerPoint',
+        'png' => 'PNG Image',
+        'ppt' => 'Microsoft PowerPoint',
         'pptx' => 'Microsoft PowerPoint',
     ],
 
-    'file_icon_array'          => [
-        'pdf'  => 'fa-file-pdf-o',
-        'doc'  => 'fa-file-word-o',
+    'file_icon_array' => [
+        'pdf' => 'fa-file-pdf-o',
+        'doc' => 'fa-file-word-o',
         'docx' => 'fa-file-word-o',
-        'xls'  => 'fa-file-excel-o',
+        'xls' => 'fa-file-excel-o',
         'xlsx' => 'fa-file-excel-o',
-        'zip'  => 'fa-file-archive-o',
-        'gif'  => 'fa-file-image-o',
-        'jpg'  => 'fa-file-image-o',
+        'zip' => 'fa-file-archive-o',
+        'gif' => 'fa-file-image-o',
+        'jpg' => 'fa-file-image-o',
         'jpeg' => 'fa-file-image-o',
-        'png'  => 'fa-file-image-o',
-        'ppt'  => 'fa-file-powerpoint-o',
+        'png' => 'fa-file-image-o',
+        'ppt' => 'fa-file-powerpoint-o',
         'pptx' => 'fa-file-powerpoint-o',
     ],
 
@@ -346,7 +345,7 @@ return [
     | Please note that the 'upload_max_filesize' & 'post_max_size'
     | directives are not supported.
      */
-    'php_ini_overrides'        => [
+    'php_ini_overrides' => [
         'memory_limit' => '256M',
     ],
 ];

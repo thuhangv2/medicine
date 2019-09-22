@@ -4,16 +4,18 @@ namespace App\Admin\Middleware;
 
 use Illuminate\Http\Request;
 
-class Session {
-	public function handle(Request $request, \Closure $next) {
-		$path = '/' . trim(config('admin.route.prefix'), '/');
+class Session
+{
+    public function handle(Request $request, \Closure $next)
+    {
+        $path = '/' . trim(config('app.admin_prefix'), '/');
 
-		config(['session.path' => $path]);
+        config(['session.path' => $path]);
 
-		if ($domain = config('admin.route.domain')) {
-			config(['session.domain' => $domain]);
-		}
+        if ($domain = config('admin.route.domain')) {
+            config(['session.domain' => $domain]);
+        }
 
-		return $next($request);
-	}
+        return $next($request);
+    }
 }
