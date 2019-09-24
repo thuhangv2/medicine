@@ -164,7 +164,7 @@ class CreateAdminTables extends Migration
             ['id' => 30, 'parent_id' => 5, 'sort' => 5, 'title' => 'lang::admin.menu_titles.localisation', 'icon' => 'fa-shirtsinbulk', 'uri' => '', 'type' => 0],
             ['id' => 31, 'parent_id' => 30, 'sort' => 0, 'title' => 'lang::language.admin.title', 'icon' => 'fa-pagelines', 'uri' => 'admin::language', 'type' => 0],
             ['id' => 32, 'parent_id' => 30, 'sort' => 0, 'title' => 'lang::currency.admin.title', 'icon' => 'fa-dollar', 'uri' => 'admin::currency', 'type' => 0],
-            ['id' => 34, 'parent_id' => 6, 'sort' => 5, 'title' => 'lang::backup.admin.title', 'icon' => 'fa-save', 'uri' => 'admin::backup', 'type' => 0],
+            ['id' => 34, 'parent_id' => 5, 'sort' => 5, 'title' => 'lang::backup.admin.title', 'icon' => 'fa-save', 'uri' => 'admin::backup', 'type' => 0],
             ['id' => 35, 'parent_id' => 0, 'sort' => 202, 'title' => 'lang::admin.menu_titles.extensions', 'icon' => 'fa-puzzle-piece', 'uri' => '', 'type' => 0],
             ['id' => 36, 'parent_id' => 0, 'sort' => 202, 'title' => 'lang::admin.menu_titles.modules', 'icon' => 'fa-codepen', 'uri' => '', 'type' => 0],
             ['id' => 37, 'parent_id' => 0, 'sort' => 302, 'title' => 'lang::admin.menu_titles.report_manager', 'icon' => 'fa-pie-chart', 'uri' => '', 'type' => 0],
