@@ -3,7 +3,7 @@
 @section('main')
 <div class="login-box">
   <div class="login-logo">
-    <a href="{{ route('homeAdmin') }}"><b>{{config('admin.name')}}</b></a>
+    <a href="{{ route('admin.home') }}"><b>{{sc_config('ADMIN_NAME')}}</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">

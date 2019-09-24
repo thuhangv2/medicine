@@ -100,8 +100,8 @@ class Permission
     {
         $routeName = $request->path();
         $excepts = [
-            config('admin.route.prefix') . '/auth/login',
-            config('admin.route.prefix') . '/auth/logout',
+            config('app.admin_prefix') . '/auth/login',
+            config('app.admin_prefix') . '/auth/logout',
         ];
         return in_array($routeName, $excepts);
     }
@@ -119,8 +119,8 @@ Check route defualt allow access
     public function viewWithout()
     {
         return [
-            config('admin.route.prefix') . '/uploads/delete',
-            config('admin.route.prefix') . '/uploads/newfolder',
+            config('app.admin_prefix') . '/uploads/delete',
+            config('app.admin_prefix') . '/uploads/newfolder',
         ];
     }
 

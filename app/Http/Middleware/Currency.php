@@ -17,7 +17,7 @@ class Currency
      */
     public function handle($request, Closure $next)
     {
-        ShopCurrency::setCode(session('currency') ?? sc_store('currency'));
+        ShopCurrency::setCode(session('currency') ?? sc_config('SITE_CURRENCY'));
         return $next($request);
     }
 }

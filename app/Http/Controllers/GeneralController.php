@@ -15,14 +15,14 @@ class GeneralController extends Controller
     {
         $languages = sc_language_all();
         $currencies = sc_currency_all();
-        $layouts = sc_layouts();
+        $blocksContent = sc_block_content();
         $layoutsUrl = sc_link();
         view()->share('languages', $languages);
         view()->share('currencies', $currencies);
-        view()->share('layouts', $layouts);
+        view()->share('blocksContent', $blocksContent);
         view()->share('layoutsUrl', $layoutsUrl);
 
-        if (!sc_store('site_status')) {
+        if (sc_config('SITE_STATUS') != 'on') {
             $maintain_content = sc_store('maintain_content') ?? '';
             echo <<<HTML
  <section>

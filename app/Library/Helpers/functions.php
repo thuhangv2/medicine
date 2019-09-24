@@ -17,7 +17,7 @@ if (!function_exists('sc_get_extension')) {
 }
 
 /*
-Get all layouts link
+Get all block content
  */
 if (!function_exists('sc_link')) {
     function sc_link()
@@ -33,8 +33,8 @@ if (!function_exists('sc_link')) {
 /*
 Get all layouts
  */
-if (!function_exists('sc_layouts')) {
-    function sc_layouts()
+if (!function_exists('sc_block_content')) {
+    function sc_block_content()
     {
         if (Helper::$layouts !== null) {
             return Helper::$layouts;
@@ -140,7 +140,7 @@ if (!function_exists('sc_url_render')) {
 
         if (count($arrCheckUrl) == 2) {
             $string = \Illuminate\Support\Str::start($arrCheckUrl[1], '/');
-            $string = config('admin.route.prefix') . $string;
+            $string = config('app.admin_prefix') . $string;
             return url($string);
         }
         return url($string);

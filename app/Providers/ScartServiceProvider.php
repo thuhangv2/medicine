@@ -61,10 +61,23 @@ class ScartServiceProvider extends ServiceProvider
             //email
 
             // Time zone
-            config(['app.timezone' => (sc_config('timezone') ?? config('app.timezone'))]);
+            config(['app.timezone' => (sc_config('SITE_TIMEZONE') ?? config('app.timezone'))]);
             // End time zone
 
+            //Debug mode
+            config(['app.debug' => env('APP_DEBUG') ? true : ((sc_config('APP_DEBUG') === 'on') ? true : false)]);
+            //End debug mode
+
+            //Admin prefix
+            config(['app.admin_prefix' => (sc_config('ADMIN_PREFIX') ?: env('ADMIN_PREFIX', 'sc_admin'))]);
+            //End Admin prefix
+
+            //Upload prefix
+            config(['lfm.url_prefix' => config('app.admin_prefix') . '/uploads']);
+            //End Upload prefix
+
         } catch (\Exception $e) {
+            //
         }
 
     }

@@ -18,7 +18,7 @@ class PermissionController extends Controller
     {
         $routes = app()->routes->getRoutes();
         foreach ($routes as $value) {
-            if (\Illuminate\Support\Str::startsWith($value->getPrefix(), config('admin.route.prefix'))) {
+            if (\Illuminate\Support\Str::startsWith($value->getPrefix(), config('app.admin_prefix'))) {
                 $routeAdmin[$value->getPrefix()] = [
                     'uri' => 'ANY::' . $value->getPrefix() . '/*',
                     'name' => $value->getPrefix() . '/*',
@@ -309,12 +309,12 @@ Need mothod destroy to boot deleting in model
     public function without()
     {
         return [
-            config('admin.route.prefix') . '/login',
-            config('admin.route.prefix') . '/logout',
-            config('admin.route.prefix') . '/forgot',
-            config('admin.route.prefix') . '/deny',
-            config('admin.route.prefix') . '/locale',
-            config('admin.route.prefix') . '/uploads',
+            config('app.admin_prefix') . '/login',
+            config('app.admin_prefix') . '/logout',
+            config('app.admin_prefix') . '/forgot',
+            config('app.admin_prefix') . '/deny',
+            config('app.admin_prefix') . '/locale',
+            config('app.admin_prefix') . '/uploads',
         ];
     }
 
