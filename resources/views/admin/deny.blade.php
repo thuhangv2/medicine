@@ -21,4 +21,7 @@
 @endpush
 
 @push('scripts')
+<script>
+  window.history.pushState("", "", '{{ $url }}');
+</script>
 @endpush
