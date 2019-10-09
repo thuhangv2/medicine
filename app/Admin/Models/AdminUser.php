@@ -10,9 +10,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class AdminUser extends Model implements AuthenticatableContract
 {
     use Authenticatable;
-    public $table = 'admin_user';
+    public $table      = 'admin_user';
     protected $guarded = [];
-    protected $hidden = [
+    protected $hidden  = [
         'password', 'remember_token',
     ];
     protected static $allPermissions = null;
@@ -45,7 +45,7 @@ class AdminUser extends Model implements AuthenticatableContract
     public static function updateInfo($dataUpdate, $id)
     {
         $dataUpdate = sc_clean($dataUpdate, 'password');
-        $obj = self::find($id);
+        $obj        = self::find($id);
         return $obj->update($dataUpdate);
     }
 
@@ -85,7 +85,7 @@ class AdminUser extends Model implements AuthenticatableContract
     public static function allPermissions()
     {
         if (self::$allPermissions === null) {
-            $user = \Admin::user();
+            $user                 = \Admin::user();
             self::$allPermissions = $user->roles()->with('permissions')->get()->pluck('permissions')->flatten()->merge($user->permissions);
         }
         return self::$allPermissions;
@@ -168,28 +168,47 @@ class AdminUser extends Model implements AuthenticatableContract
         return $this->roles->pluck('slug')->intersect($roles)->isNotEmpty();
     }
 
-    /**
-     * Check user can visile menu.
-     * Allow: is isAdministrator, or menu not yet require psermission, or require permission same user
-     *
-     * @param $roles
-     *
-     * @return bool
-     */
+     /**
+      * Check user can visile menu.
+      * Allow: is isAdministrator, is viewAll group, 
+      * or menu not yet require psermission, or require permission same user
+      *
+      *
+      * @param  \App\Admin\Models\AdminMenu  $menu 
+      *
+      * @return bool                                
+      */
     public function visible(\App\Admin\Models\AdminMenu $menu): bool
     {
-        $allPermissionsUser = $this->allPermissions()->pluck('slug')->flatten()->toArray();
-        $allPermissionsMenuAllow = $menu->permissions()->pluck('slug')->flatten()->toArray();
-        $allRolesMenuAllow = $menu->roles()->pluck('slug')->flatten()->toArray();
-        if ((!count($allPermissionsMenuAllow) && !count($allRolesMenuAllow)) || $this->isAdministrator() || $this->isViewAll()) {
+        $allPermissionsMenuAllow = $menu->permissions()
+            ->pluck('slug')->flatten()->toArray();
+        $allRolesMenuAllow       = $menu->roles()
+            ->pluck('slug')->flatten()->toArray();
+        /*
+            Allow if: user is administrator, is isViewAll
+            or 
+            menu not specify permission and role
+         */
+        if ((!count($allPermissionsMenuAllow) 
+            && !count($allRolesMenuAllow))
+            || $this->isAdministrator() 
+            || $this->isViewAll()){
             return true;
         }
 
+        /*
+            Allow if: user contains  role menu
+        */
         if ($allRolesMenuAllow) {
             return $this->inRoles($allRolesMenuAllow);
         }
+        /*
+            Allow if: user contains  permission menu
+        */        
         if ($allPermissionsMenuAllow) {
-            return $this->permissions->pluck('slug')->intersect($allPermissionsMenuAllow)->isNotEmpty();
+            return $this->permissions
+                ->pluck('slug')->intersect($allPermissionsMenuAllow)
+                ->isNotEmpty();
         }
 
         return false;
