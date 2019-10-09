@@ -2,7 +2,11 @@
     <img src="https://s-cart.org/logo.png" width="150">
 </p>
 <p align="center">Free open source e-commerce for business use laravel framework<br>
-<b>composer create-project lanhktc/s-cart</b></p>
+<p align="center">Free open source e-commerce for business use laravel framework<br>
+    <code><b>composer create-project lanhktc/s-cart</b></code></p>
+<p align="center">
+    <a href="https://www.paypal.me/LeLanh" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-green.svg" data-origin="https://img.shields.io/badge/Donate-PayPal-green.svg" alt="PayPal Me"></a>
+</p>
 <p align="center">
  <a href="https://s-cart.org">Home page</a> | <a href="https://demo.s-cart.org">Demo</a> | <a href="https://demo.s-cart.org/sc_admin">Demo admin</a> | <a href="https://s-cart.org/installation.html">Installation</a> | <a href="https://s-cart.org/pro.html">S-Cart Pro</a> | <a href="https://s-cart.org/video-guide.html">Video Guide</a>
 </p>
