@@ -1,8 +1,7 @@
 <p align="center">
     <img src="https://s-cart.org/logo.png" width="150">
 </p>
-<p align="center">Free open source e-commerce for business use laravel framework<br>
-<p align="center">Free open source e-commerce for business use laravel framework<br>
+<p align="center">Free Laravel e-commerce for business<br>
     <code><b>composer create-project lanhktc/s-cart</b></code></p>
 <p align="center">
     <a href="https://www.paypal.me/LeLanh" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-green.svg" data-origin="https://img.shields.io/badge/Donate-PayPal-green.svg" alt="PayPal Me"></a>
