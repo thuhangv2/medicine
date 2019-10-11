@@ -10,19 +10,19 @@
               <span class="label label-warning">{{$totalNewOrders}}</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">You have {{$totalNewOrders}} new orders</li>
+              <li class="header"> {{ trans('admin.menu_notice.new_order',['total'=>$totalNewOrders]) }}</li>
               <li>
                 <!-- inner menu: contains the actual data -->
                 <ul class="menu">
                   @foreach ($orders as $order)
                     <li>
                       <a href="{{route('admin_order.detail',['id'=>$order->id])}}">
-                        <i class="fa fa-shopping-cart text-green"></i> #{{$order->id}} - Date: {{$order->created_at}}
+                        <i class="fa fa-shopping-cart text-green"></i> #{{$order->id}} - {{ trans('admin.menu_notice.date') }}: {{$order->created_at}}
                       </a>
                     </li>                      
                   @endforeach
                 </ul>
               </li>
-              <li class="footer"><a href="{{route('admin_order.index')}}?order_status=1">View all</a></li>
+              <li class="footer"><a href="{{route('admin_order.index')}}?order_status=1">{{ trans('admin.menu_notice.view_all') }}</a></li>
             </ul>
           </li>
