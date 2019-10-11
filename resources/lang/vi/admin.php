@@ -298,4 +298,10 @@ return [
     'search' => 'Tìm kiếm',
     'top_order_new' => 'Đơn hàng mới',
     'top_customer_new' => 'Khách hàng mới',
+    'menu_notice'                       => [
+        'new_order' => 'Bạn có :total đơn hàng mới',
+        'date'      => 'Thời gian',
+        'view_all'  => 'Xem tất cả',
+       ],
+
 ];
