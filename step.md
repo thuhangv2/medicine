@@ -35,3 +35,10 @@ $ alter user 'root'@'localhost' identified with mysql_native_password by 'root';
 +--------------------------------------+-------+
 ket qua:
 $ mysql -uroot -proot 
+
+### cai dat vue
+$ npm install && npm install vue-router
+
+### bien dich file vueJs
+$ npm run watch
+
