@@ -193,8 +193,7 @@
                 <div class="box-tools pull-right">
                   <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                   </button>
-                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                </div>
+                  </div>
               </div>
 
               <div class="box-body table-responsive no-padding box-primary">
