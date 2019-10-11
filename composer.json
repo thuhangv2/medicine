@@ -1,7 +1,8 @@
 {
     "name": "lanhktc/s-cart",
-    "description": "Open source e-commerce for business use laravel framework",
-    "keywords": ["Open source","E-commerce","CMS", "framework", "laravel","shop", "store","business"],
+    "description": "Free Laravel e-commerce for business: shopping cart, cms content, and more...",
+    "keywords": ["Open source","E-commerce", "Ecommerce", "Shopping cart",  "CMS", "framework", "laravel","shop", "store","business"],
+    "homepage": "https://s-cart.org",
     "license": "MIT",
     "authors": [
         {
