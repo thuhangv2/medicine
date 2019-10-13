@@ -161,3 +161,6 @@ Step6:
 - Font-end : http://demo.s-cart.org
 - Back-end: http://demo.s-cart.org/sc_admin   <code>User/pass: test/123456</code>
 
+### 
+
+VPS SSD $5/mo, gets $50 in credit over 30 days. [DigitalOcean](https://m.do.co/c/450877e92a78).

@@ -30,6 +30,12 @@ return [
         'process_sucess' => 'Thiết lập quyền thành công!',
         'error' => 'Lỗi trong khi thiết lập quyền các thư mục',
     ],
+    'complete' => [
+        'process' => 'Chuẩn bị để kết thúc',
+        'process_sucess' => 'Hoàn tất!',
+        'error' => 'Có lỗi trong khi kết thúc công việc',
+    ],
+
     'validate' => [
         'database_port_number' => 'Port của dữ liệu là số',
         'database_port_required' => 'Port dữ liệu là bắt buộc',

@@ -32,6 +32,12 @@ return [
         'process_sucess' => 'Setting permission success!',
         'error' => 'Error while initializing setting permission folder',
     ],
+    'complete' => [
+        'process' => 'Prepare to finish',
+        'process_sucess' => 'Completed!',
+        'error' => 'Error while finish',
+    ],
+
     'validate' => [
         'database_port_number' => 'Database port is number',
         'database_port_required' => 'Database port required',

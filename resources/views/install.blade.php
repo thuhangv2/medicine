@@ -176,7 +176,7 @@ $('#submit-install').click(function(event) {
                     $('#msg').html(data.msg);
                     $('.progress-bar').css("width","25%");
                     $('.progress-bar').html("25%");
-                    setTimeout(generateKey, 1000);
+                    setTimeout(installDatabase, 1000);
                 }else{
                     $('#msg').removeClass('success');
                     $('#msg').addClass('error');
@@ -187,48 +187,10 @@ $('#submit-install').click(function(event) {
                 $('#msg').removeClass('success');
                 $('#msg').addClass('error');
                 $('#msg').html('{{ trans('install.env.error') }}');
+
             })
     }
 });
-
-function generateKey(){
-    $('#msg').removeClass('error');
-    $('#msg').removeClass('success');
-    $('#msg').html('{{ trans('install.key.process') }}');
-    $.ajax({
-        url: 'install.php{{ $path_lang }}',
-        type: 'POST',
-        dataType: 'json',
-        data: {step: 'step2'},
-    })
-    .done(function(data) {
-
-        $('#msg').removeClass('success');
-        $('#msg').removeClass('error');
-        error = parseInt(data.error);
-        if(error != 1 && error !=0){
-            $('#msg').addClass('error');
-            $('#msg').html(data);
-        }
-        else if(error ===0)
-        {
-            $('#msg').addClass('success');
-            $('#msg').html(data.msg);
-            $('.progress-bar').css("width","50%");
-            $('.progress-bar').html("50%");
-            setTimeout(installDatabase, 2000);
-        }else{
-            $('#msg').addClass('error');
-            $('#msg').html(data.msg);
-        }
-
-    })
-    .fail(function() {
-        $('#msg').removeClass('success');
-        $('#msg').addClass('error');
-        $('#msg').html('{{ trans('install.key.error') }}');
-    })
-}
 
 function installDatabase(){
     $('#msg').removeClass('error');
@@ -238,7 +200,7 @@ function installDatabase(){
         url: 'install.php{{ $path_lang }}',
         type: 'POST',
         dataType: 'json',
-        data: {step: 'step3'},
+        data: {step: 'step2'},
     })
     .done(function(data) {
 
@@ -255,7 +217,7 @@ function installDatabase(){
             $('#msg').html(data.msg);
             $('.progress-bar').css("width","75%");
             $('.progress-bar').html("75%");
-            setTimeout(setPermission, 2000);
+            setTimeout(completeInstall, 2000);
         }else{
             $('#msg').addClass('error');
             $('#msg').html(data.msg);
@@ -269,15 +231,15 @@ function installDatabase(){
     })
 }
 
-function setPermission(){
+function completeInstall(){
     $('#msg').removeClass('error');
     $('#msg').removeClass('success');
-    $('#msg').html('{{ trans('install.permission.process') }}');
+    $('#msg').html('{{ trans('install.complete.process') }}');
     $.ajax({
         url: 'install.php{{ $path_lang }}',
         type: 'POST',
         dataType: 'json',
-        data: {step: 'step4'},
+        data: {step: 'step3'},
     })
     .done(function(data) {
 
@@ -294,6 +256,7 @@ function setPermission(){
             $('#msg').html(data.msg);
             $('.progress-bar').css("width","100%");
             $('.progress-bar').html("100%");
+            $('#msg').html('{{ trans('install.complete.process_success') }}');
             setTimeout(function(){ window.location.replace($('#admin_url').val()); }, 2000);
         }else{
             $('#msg').addClass('error');
@@ -303,7 +266,7 @@ function setPermission(){
     .fail(function() {
         $('#msg').removeClass('success');
         $('#msg').addClass('error');
-        $('#msg').html('{{ trans('install.permission.error') }}');
+        $('#msg').html('{{ trans('install.complete.error') }}');
     })
 }
 

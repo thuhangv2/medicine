@@ -101,7 +101,7 @@ Store info
 if (!function_exists('sc_store')) {
     function sc_store($key = null, $default = null)
     {
-        $allStoreInfo = AdminStore::getData()->toArray();
+        $allStoreInfo = AdminStore::getData();
         $lang = app()->getLocale();
         $descriptions = $allStoreInfo['descriptions'];
         foreach ($descriptions as $row) {
