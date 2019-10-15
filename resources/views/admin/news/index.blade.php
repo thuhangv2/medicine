@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.adminApp')
 
 @section('content')
     <div class="container">
@@ -7,8 +7,9 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Tin tức</div>
 
-                    <div class="panel-body">
-                        Coming soon...
+                    <div class="panel-body table-responsive">
+                        <router-view name="newsIndex"></router-view>
+                        <router-view></router-view>
                     </div>
                 </div>
             </div>

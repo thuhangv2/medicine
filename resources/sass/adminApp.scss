@@ -6,3 +6,10 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+table thead th, table tbody td {
+  text-align: center;
+}
+.crud-form {
+  margin: 0 auto;
+}

@@ -7,6 +7,13 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import VueRouter from 'vue-router';
+
+window.Vue.use(VueRouter);
+
+import NewsIndex from './components/news/NewsIndex.vue';
+import NewsCreate from './components/news/NewsCreate.vue';
+import NewsEdit from './components/news/NewsEdit.vue';
 
 /**
  * The following block of code may be used to automatically register your
@@ -26,7 +33,20 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+const routes = [
+    {
+        path: '/',
+        components: {
+            newsIndex: NewsIndex
+        }
+    },
+    {path: '/admin/news/create', component: NewsCreate, name: 'createNews'},
+    {path: '/admin/news/edit/:id', component: NewsEdit, name: 'editNews'},
+]
 
-const app = new Vue({
-    el: '#app',
-});
+const router = new VueRouter({ routes })
+
+const adminApp = new Vue({ router }).$mount('#adminApp')
+// const adminApp = new Vue({
+//     el: '#adminApp',
+// });

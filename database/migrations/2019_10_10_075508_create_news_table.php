@@ -20,8 +20,13 @@ class CreateNewsTable extends Migration
             $table->string('than_bai')->nullable();
             $table->string('ket_luan')->nullable();
             $table->string('tham_khao')->nullable();
+            $table->integer('anh_minh_hoa_1')->nullable();
+            $table->integer('anh_minh_hoa_2')->nullable();
+            $table->integer('anh_minh_hoa_3')->nullable();
             $table->timestamps();
         });
+
+
     }
 
     /**

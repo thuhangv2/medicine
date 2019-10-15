@@ -1916,29 +1916,51 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      company: {
-        name: '',
-        address: '',
-        website: '',
-        email: ''
+      news: {
+        tieu_de: '',
+        mo_bai: '',
+        than_bai: '',
+        ket_luan: '',
+        tham_khao: '',
+        anh_minh_hoa_1: '',
+        anh_minh_hoa_2: '',
+        anh_minh_hoa_3: ''
       }
     };
   },
   methods: {
     saveForm: function saveForm() {
       event.preventDefault();
-      var app = this;
-      var newCompany = app.company;
-      axios.post('/api/v1/companies', newCompany).then(function (resp) {
-        app.$router.push({
+      var adminApp = this;
+      var newNews = adminApp.news;
+      axios.post('/api/v1/news', newNews).then(function (resp) {
+        adminApp.$router.push({
           path: '/'
         });
       })["catch"](function (resp) {
         console.log(resp);
-        alert("Could not create your company");
+        alert("Could not create your news");
       });
     }
   }
@@ -2001,11 +2023,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    var app = this;
-    var id = app.$route.params.id;
-    app.companyId = id;
+    var adminApp = this;
+    var id = adminApp.$route.params.id;
+    adminApp.companyId = id;
     axios.get('/api/v1/companies/' + id).then(function (resp) {
-      app.company = resp.data;
+      adminApp.company = resp.data;
     })["catch"](function () {
       alert("Could not load your company");
     });
@@ -2024,10 +2046,10 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     saveForm: function saveForm() {
       event.preventDefault();
-      var app = this;
-      var newCompany = app.company;
-      axios.patch('/api/v1/companies/' + app.companyId, newCompany).then(function (resp) {
-        app.$router.replace('/');
+      var adminApp = this;
+      var newCompany = adminApp.company;
+      axios.patch('/api/v1/companies/' + adminApp.companyId, newCompany).then(function (resp) {
+        adminApp.$router.replace('/');
       })["catch"](function (resp) {
         console.log(resp);
         alert("Could not create your company");
@@ -2093,26 +2115,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      companies: []
+      listOfNews: []
     };
   },
   mounted: function mounted() {
-    var app = this;
-    axios.get('/api/v1/news').then(function (resp) {
-      app.listOfNews = resp.data;
-    })["catch"](function (resp) {
-      console.log(resp);
+    var adminApp = this;
+    axios.get('/admin/news/create').then(function (response) {
+      console.log(response.data.length);
+      adminApp.listOfNews = response.data;
+    })["catch"](function (response) {
+      console.log(response);
       alert("Could not load news");
     });
   },
   methods: {
     deleteEntry: function deleteEntry(id, index) {
       if (confirm("Do you really want to delete it?")) {
-        var app = this;
-        axios["delete"]('/api/v1/news/' + id).then(function (resp) {
-          app.listOfNews.splice(index, 1);
-        })["catch"](function (resp) {
-          alert("Could not delete company");
+        var adminApp = this;
+        axios["delete"]('/admin/news/' + id).then(function (response) {
+          adminApp.listOfNews.splice(index, 1);
+        })["catch"](function (response) {
+          alert("Could not delete news");
         });
       }
     }
@@ -37462,7 +37485,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "crud-form" }, [
     _c(
       "div",
       { staticClass: "form-group" },
@@ -37477,9 +37500,7 @@ var render = function() {
     ),
     _vm._v(" "),
     _c("div", { staticClass: "panel panel-default" }, [
-      _c("div", { staticClass: "panel-heading" }, [
-        _vm._v("Create new company")
-      ]),
+      _c("div", { staticClass: "panel-heading" }, [_vm._v("Tạo mới tin tức")]),
       _vm._v(" "),
       _c("div", { staticClass: "panel-body" }, [
         _c(
@@ -37495,7 +37516,7 @@ var render = function() {
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-xs-12 form-group" }, [
                 _c("label", { staticClass: "control-label" }, [
-                  _vm._v("Company name")
+                  _vm._v("Tiêu đề")
                 ]),
                 _vm._v(" "),
                 _c("input", {
@@ -37503,19 +37524,19 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.company.name,
-                      expression: "company.name"
+                      value: _vm.news.tieu_de,
+                      expression: "news.tieu_de"
                     }
                   ],
                   staticClass: "form-control",
                   attrs: { type: "text" },
-                  domProps: { value: _vm.company.name },
+                  domProps: { value: _vm.news.tieu_de },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.company, "name", $event.target.value)
+                      _vm.$set(_vm.news, "tieu_de", $event.target.value)
                     }
                   }
                 })
@@ -37525,7 +37546,7 @@ var render = function() {
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-xs-12 form-group" }, [
                 _c("label", { staticClass: "control-label" }, [
-                  _vm._v("Company address")
+                  _vm._v("Mở bài")
                 ]),
                 _vm._v(" "),
                 _c("input", {
@@ -37533,19 +37554,19 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.company.address,
-                      expression: "company.address"
+                      value: _vm.news.mo_bai,
+                      expression: "news.mo_bai"
                     }
                   ],
                   staticClass: "form-control",
                   attrs: { type: "text" },
-                  domProps: { value: _vm.company.address },
+                  domProps: { value: _vm.news.mo_bai },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.company, "address", $event.target.value)
+                      _vm.$set(_vm.news, "mo_bai", $event.target.value)
                     }
                   }
                 })
@@ -37555,7 +37576,7 @@ var render = function() {
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-xs-12 form-group" }, [
                 _c("label", { staticClass: "control-label" }, [
-                  _vm._v("Company website")
+                  _vm._v("Thân bài")
                 ]),
                 _vm._v(" "),
                 _c("input", {
@@ -37563,19 +37584,19 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.company.website,
-                      expression: "company.website"
+                      value: _vm.news.than_bai,
+                      expression: "news.than_bai"
                     }
                   ],
                   staticClass: "form-control",
                   attrs: { type: "text" },
-                  domProps: { value: _vm.company.website },
+                  domProps: { value: _vm.news.than_bai },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.company, "website", $event.target.value)
+                      _vm.$set(_vm.news, "than_bai", $event.target.value)
                     }
                   }
                 })
@@ -37585,7 +37606,7 @@ var render = function() {
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-xs-12 form-group" }, [
                 _c("label", { staticClass: "control-label" }, [
-                  _vm._v("Company email")
+                  _vm._v("Kết luận")
                 ]),
                 _vm._v(" "),
                 _c("input", {
@@ -37593,19 +37614,109 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.company.email,
-                      expression: "company.email"
+                      value: _vm.news.ket_luan,
+                      expression: "news.ket_luan"
                     }
                   ],
                   staticClass: "form-control",
                   attrs: { type: "text" },
-                  domProps: { value: _vm.company.email },
+                  domProps: { value: _vm.news.ket_luan },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.company, "email", $event.target.value)
+                      _vm.$set(_vm.news, "ket_luan", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-xs-12 form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v("Ảnh minh hoạ 1")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.news.anh_minh_hoa_1,
+                      expression: "news.anh_minh_hoa_1"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.news.anh_minh_hoa_1 },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.news, "anh_minh_hoa_1", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-xs-12 form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v("Ảnh minh hoạ 2")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.news.anh_minh_hoa_2,
+                      expression: "news.anh_minh_hoa_2"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.news.anh_minh_hoa_2 },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.news, "anh_minh_hoa_2", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-xs-12 form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v("Ảnh minh hoạ 3")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.news.anh_minh_hoa_3,
+                      expression: "news.anh_minh_hoa_3"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.news.anh_minh_hoa_3 },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.news, "anh_minh_hoa_3", $event.target.value)
                     }
                   }
                 })
@@ -37626,7 +37737,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-xs-12 form-group" }, [
-        _c("button", { staticClass: "btn btn-success" }, [_vm._v("Create")])
+        _c("button", { staticClass: "btn btn-success" }, [_vm._v("Tạo tin")])
       ])
     ])
   }
@@ -37871,54 +37982,67 @@ var render = function() {
           _c(
             "tbody",
             _vm._l(_vm.listOfNews, function(news, index) {
-              return _c("tr", [
-                _c("td", [_vm._v(_vm._s(news.tieu_de))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(news.mo_bai))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(news.than_bai))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(news.ket_luan))]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "btn btn-xs btn-default",
-                        attrs: {
-                          to: { name: "editNews", params: { id: news.id } }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                            Edit\n                        "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-xs btn-danger",
-                        attrs: { href: "#" },
-                        on: {
-                          click: function($event) {
-                            return _vm.deleteEntry(news.id, index)
+              return _c(
+                "tr",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.listOfNews.length > 0,
+                      expression: "listOfNews.length > 0"
+                    }
+                  ]
+                },
+                [
+                  _c("td", [_vm._v(_vm._s(news.tieu_de))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(news.mo_bai))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(news.than_bai))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(news.ket_luan))]),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "btn btn-xs btn-default",
+                          attrs: {
+                            to: { name: "editNews", params: { id: news.id } }
                           }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                            Delete\n                        "
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ])
+                        },
+                        [
+                          _vm._v(
+                            "\n                            Edit\n                        "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-xs btn-danger",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              return _vm.deleteEntry(news.id, index)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                            Delete\n                        "
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ]
+              )
             }),
             0
           )
@@ -52984,10 +53108,10 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ "./resources/js/app.js":
-/*!*****************************!*\
+/***/ "./resources/js/adminApp.js":
+/*!**********************************!*\
   !*** ./resources/js/adminApp.js ***!
-  \*****************************/
+  \**********************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -53044,10 +53168,10 @@ var routes = [{
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   routes: routes
 });
-var app = new Vue({
+var adminApp = new Vue({
   router: router
-}).$mount('#app'); // const app = new Vue({
-//     el: '#app',
+}).$mount('#adminApp'); // const adminApp = new Vue({
+//     el: '#adminApp',
 // });
 
 /***/ }),
@@ -53373,10 +53497,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
+/***/ "./resources/sass/adminApp.scss":
+/*!**************************************!*\
   !*** ./resources/sass/adminApp.scss ***!
-  \*********************************/
+  \**************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -53385,9 +53509,9 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 0:
-/*!*************************************************************!*\
+/*!***********************************************************************!*\
   !*** multi ./resources/js/adminApp.js ./resources/sass/adminApp.scss ***!
-  \*************************************************************/
+  \***********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
