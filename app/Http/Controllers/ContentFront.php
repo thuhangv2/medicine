@@ -2,7 +2,7 @@
 #app/Http/Controller/ContentFront.php
 namespace App\Http\Controllers;
 
-use App\Models\EmailTemplate;
+use App\Models\ShopEmailTemplate;
 use App\Models\ShopNews;
 use App\Models\ShopPage;
 use Illuminate\Http\Request;
@@ -59,7 +59,7 @@ class ContentFront extends GeneralController
         $data['content'] = str_replace("\n", "<br>", $data['content']);
 
         if (sc_config('contact_to_admin')) {
-            $checkContent = (new EmailTemplate)->where('group', 'contact_to_admin')->where('status', 1)->first();
+            $checkContent = (new ShopEmailTemplate)->where('group', 'contact_to_admin')->where('status', 1)->first();
             if ($checkContent) {
                 $content = $checkContent->text;
                 $dataFind = [
