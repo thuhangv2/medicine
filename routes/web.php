@@ -22,5 +22,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/news', 'NewsController@index')->name('news.index');
     Route::get('/news/create', 'NewsController@create')->name('news.create');
+    Route::post('/news/post', 'NewsController@store')->name('news.store');
 //    Route::resource('news', 'NewsController');
 });

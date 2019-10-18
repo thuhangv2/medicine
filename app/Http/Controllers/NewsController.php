@@ -38,18 +38,19 @@ class NewsController extends Controller
 //        return view('admin.news.index');
 //    }
 //
-//    /**
-//     * Store a newly created resource in storage.
-//     *
-//     * @param  \Illuminate\Http\Request  $request
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function store(Request $request)
-//    {
-//        $news = News::create($request->all());
-//
-//        return $news;
-//    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        dd($request);
+        $news = News::create($request->all());
+
+        return $news;
+    }
 //
 //    /**
 //     * Display the specified resource.

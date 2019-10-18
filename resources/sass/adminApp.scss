@@ -10,6 +10,16 @@
 table thead th, table tbody td {
   text-align: center;
 }
-.crud-form {
-  margin: 0 auto;
+.crud-form td{
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.upload-image img {
+  width: 30%;
+  margin: auto;
+  display: block;
+  margin-bottom: 10px;
 }

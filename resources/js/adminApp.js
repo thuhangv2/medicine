@@ -34,12 +34,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 const routes = [
-    {
-        path: '/',
-        components: {
-            newsIndex: NewsIndex
-        }
-    },
+    {path: '/', components: {newsIndex: NewsIndex}},
     {path: '/admin/news/create', component: NewsCreate, name: 'createNews'},
     {path: '/admin/news/edit/:id', component: NewsEdit, name: 'editNews'},
 ]
