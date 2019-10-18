@@ -75,6 +75,7 @@ Free Open source E-commerce use Laravel framework for Business
 - Manage banner, logo
 - Configure email SMTP
 - System configuration: turn off website, hide / show products
+- Backup & Restore database
 ...
 ======= EXTENSIONS =======
 

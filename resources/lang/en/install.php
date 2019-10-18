@@ -34,7 +34,7 @@ return [
     ],
     'complete' => [
         'process' => 'Prepare to finish',
-        'process_sucess' => 'Completed!',
+        'process_success' => 'Completed!',
         'error' => 'Error while finish',
     ],
 

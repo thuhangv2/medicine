@@ -2,7 +2,7 @@
 #app/Http/Controller/ShopCart.php
 namespace App\Http\Controllers;
 
-use App\Models\EmailTemplate;
+use App\Models\ShopEmailTemplate;
 use App\Models\ShopAttributeGroup;
 use App\Models\ShopCountry;
 use App\Models\ShopOrder;
@@ -613,8 +613,8 @@ class ShopCart extends GeneralController
 
         if (sc_config('order_success_to_admin') || sc_config('order_success_to_customer')) {
             $data = ShopOrder::with('details')->find($orderId)->toArray();
-            $checkContent = (new EmailTemplate)->where('group', 'order_success_to_admin')->where('status', 1)->first();
-            $checkContentCustomer = (new EmailTemplate)->where('group', 'order_success_to_customer')->where('status', 1)->first();
+            $checkContent = (new ShopEmailTemplate)->where('group', 'order_success_to_admin')->where('status', 1)->first();
+            $checkContentCustomer = (new ShopEmailTemplate)->where('group', 'order_success_to_customer')->where('status', 1)->first();
             if ($checkContent || $checkContentCustomer) {
                 $orderDetail = '';
                 $orderDetail .= '<tr>

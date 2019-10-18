@@ -32,7 +32,7 @@ return [
     ],
     'complete' => [
         'process' => 'Chuẩn bị để kết thúc',
-        'process_sucess' => 'Hoàn tất!',
+        'process_success' => 'Hoàn tất!',
         'error' => 'Có lỗi trong khi kết thúc công việc',
     ],
 

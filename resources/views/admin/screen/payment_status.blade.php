@@ -66,6 +66,4 @@
 @endpush
 
 @push('scripts')
-
-</script>
 @endpush

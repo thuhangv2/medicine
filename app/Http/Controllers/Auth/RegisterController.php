@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\GeneralController;
-use App\Models\EmailTemplate;
+use App\Models\ShopEmailTemplate;
 use App\Models\ShopUser;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
@@ -86,7 +86,7 @@ class RegisterController extends GeneralController
         if ($user) {
             if (sc_config('welcome_customer')) {
 
-                $checkContent = (new EmailTemplate)->where('group', 'welcome_customer')->where('status', 1)->first();
+                $checkContent = (new ShopEmailTemplate)->where('group', 'welcome_customer')->where('status', 1)->first();
                 if ($checkContent) {
                     $content = $checkContent->text;
                     $dataFind = [
