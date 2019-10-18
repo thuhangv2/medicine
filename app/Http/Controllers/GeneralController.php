@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Subscribe;
+use App\Models\ShopSubscribe;
 use Illuminate\Http\Request;
 use Mail;
 use View;
@@ -40,11 +40,11 @@ HTML;
     }
 
 /**
- * [emailSubscribe description]
+ * [emailShop description]
  * @param  Request $request [description]
  * @return [type]           [description]
  */
-    public function emailSubscribe(Request $request)
+    public function emailShop(Request $request)
     {
         $data = $request->all();
         $validator = $request->validate([
@@ -54,9 +54,9 @@ HTML;
             'subscribe_email.email' => trans('validation.email'),
         ]);
 
-        $checkEmail = Subscribe::where('email', $data['subscribe_email'])->first();
+        $checkEmail = ShopSubscribe::where('email', $data['subscribe_email'])->first();
         if (!$checkEmail) {
-            Subscribe::insert(['email' => $data['subscribe_email']]);
+            ShopSubscribe::insert(['email' => $data['subscribe_email']]);
         }
         return redirect()->back()->with(['message' => trans('front.subscribe.subscribe_success')]);
     }
