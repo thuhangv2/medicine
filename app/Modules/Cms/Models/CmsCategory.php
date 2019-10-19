@@ -278,25 +278,6 @@ class CmsCategory extends Model
                     $table->tinyInteger('sort')->default(0);
                     $table->tinyInteger('status')->default(0);
                 });
-                $this->insert(
-                    ['id' => 1, 'parent' => 0, 'status'=>1]
-                );
-                $dataDes = [];
-                $dataDes[] = [
-                    'cms_category_id' => 1,
-                    'lang' => 'en',
-                    'title' => 'Demo category cms',
-                    'keyword' => '',
-                    'description' => '',
-                ];
-                $dataDes[] = [
-                    'cms_category_id' => 1,
-                    'lang' => 'vi',
-                    'title' => 'Demo category cms',
-                    'keyword' => '',
-                    'description' => '',
-                ];
-                CmsCategoryDescription::insert($dataDes);
 
             } catch (\Exception $e) {
                 $return = ['error' => 1, 'msg' => $e->getMessage()];
