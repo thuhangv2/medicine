@@ -83,7 +83,7 @@ class CmsContentController extends Controller
                 'id' => $row['id'],
                 'image' => sc_image_render($row->getThumb(), '50px', '50px'),
                 'title' => $row['title'],
-                'category_id' => $row['category_id'] ? ($row->category() ? $row->category()['title'] : '') : 'ROOT',
+                'category_id' => $row['category_id'] ? ($row->category ? $row->category['title'] : '') : 'ROOT',
 
                 'status' => $row['status'] ? '<span class="label label-success">ON</span>' : '<span class="label label-danger">OFF</span>',
                 'sort' => $row['sort'],
@@ -97,19 +97,25 @@ class CmsContentController extends Controller
 
         $data['listTh'] = $listTh;
         $data['dataTr'] = $dataTr;
-        $data['pagination'] = $dataTmp->appends(request()->except(['_token', '_pjax']))->links('admin.component.pagination');
-        $data['result_items'] = trans('Modules/Cms/Content.admin.result_item', ['item_from' => $dataTmp->firstItem(), 'item_to' => $dataTmp->lastItem(), 'item_total' => $dataTmp->total()]);
-//menu_left
+        $data['pagination'] = $dataTmp
+            ->appends(request()->except(['_token', '_pjax']))
+            ->links('admin.component.pagination');
+        $data['result_items'] = trans('Modules/Cms/Content.admin.result_item', 
+            [
+                'item_from' => $dataTmp->firstItem(), 
+                'item_to' => $dataTmp->lastItem(), 
+                'item_total' => $dataTmp->total()
+            ]
+        );
+        //menu_left
         $data['menu_left'] = '<div class="pull-left">
                     <button type="button" class="btn btn-default grid-select-all"><i class="fa fa-square-o"></i></button> &nbsp;
-
                     <a class="btn   btn-flat btn-danger grid-trash" title="Delete"><i class="fa fa-trash-o"></i><span class="hidden-xs"> ' . trans('admin.delete') . '</span></a> &nbsp;
-
                     <a class="btn   btn-flat btn-primary grid-refresh" title="Refresh"><i class="fa fa-refresh"></i><span class="hidden-xs"> ' . trans('admin.refresh') . '</span></a> &nbsp;</div>
                     ';
-//=menu_left
+        //=menu_left
 
-//menu_right
+        //menu_right
         $data['menu_right'] = '
                         <div class="btn-group pull-right" style="margin-right: 10px">
                            <a href="' . route('admin_cms_content.create') . '" class="btn  btn-success  btn-flat" title="New" id="button_create_new">
@@ -118,9 +124,9 @@ class CmsContentController extends Controller
                         </div>
 
                         ';
-//=menu_right
+        //=menu_right
 
-//menu_sort
+        //menu_sort
 
         $optionSort = '';
         foreach ($arrSort as $key => $status) {
@@ -147,10 +153,9 @@ class CmsContentController extends Controller
       $.pjax({url: url, container: '#pjax-container'})
     });";
 
-//=menu_sort
+        //=menu_sort
 
-//menu_search
-
+        //menu_search
         $data['menu_search'] = '
                 <form action="' . route('admin_cms_content.index') . '" id="button_search">
                    <div onclick="$(this).submit();" class="btn-group pull-right">
@@ -164,7 +169,7 @@ class CmsContentController extends Controller
                          </div>
                    </div>
                 </form>';
-//=menu_search
+        //=menu_search
 
         $data['url_delete_item'] = route('admin_cms_content.delete');
 
@@ -172,10 +177,10 @@ class CmsContentController extends Controller
             ->with($data);
     }
 
-/**
- * Form create new order in admin
- * @return [type] [description]
- */
+    /**
+     * Form create new order in admin
+     * @return [type] [description]
+     */
     public function create()
     {
         $data = [
@@ -193,10 +198,10 @@ class CmsContentController extends Controller
             ->with($data);
     }
 
-/**
- * Post create new order in admin
- * @return [type] [description]
- */
+    /**
+     * Post create new order in admin
+     * @return [type] [description]
+     */
     public function postCreate()
     {
         $data = request()->all();
@@ -205,7 +210,8 @@ class CmsContentController extends Controller
             'category_id' => 'required',
             'descriptions.*.title' => 'required|string|max:100',
         ], [
-            'descriptions.*.title.required' => trans('validation.required', ['attribute' => trans('Modules/Cms/Content.title')]),
+            'descriptions.*.title.required' => trans('validation.required', 
+            ['attribute' => trans('Modules/Cms/Content.title')]),
         ]);
 
         if ($validator->fails()) {
@@ -235,7 +241,8 @@ class CmsContentController extends Controller
         }
         CmsContentDescription::insert($dataDes);
 
-        return redirect()->route('admin_cms_content.index')->with('success', trans('Modules/Cms/Content.admin.create_success'));
+        return redirect()->route('admin_cms_content.index')
+        ->with('success', trans('Modules/Cms/Content.admin.create_success'));
 
     }
 
