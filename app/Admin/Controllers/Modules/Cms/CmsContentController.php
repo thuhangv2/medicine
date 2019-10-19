@@ -263,7 +263,7 @@ class CmsContentController extends Controller
             'languages' => $this->languages,
             'content' => $content,
             'categories' => (new CmsCategory)->getTreeCategories(),
-            'url_action' => route('admin_cms_content.edit', ['id' => $category['id']]),
+            'url_action' => route('admin_cms_content.edit', ['id' => $content['id']]),
         ];
         return view('admin.screen.cms_content')
             ->with($data);
