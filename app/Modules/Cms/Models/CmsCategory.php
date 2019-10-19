@@ -188,17 +188,17 @@ class CmsCategory extends Model
         return $listFullCategory;
     }
 
-/*
-Get thumb
- */
+    /*
+    Get thumb
+    */
     public function getThumb()
     {
         return sc_image_get_path_thumb($this->image);
     }
 
-/*
-Get image
- */
+    /*
+    Get image
+    */
     public function getImage()
     {
         return sc_image_get_path($this->image);
@@ -278,6 +278,7 @@ Get image
                     $table->tinyInteger('sort')->default(0);
                     $table->tinyInteger('status')->default(0);
                 });
+
             } catch (\Exception $e) {
                 $return = ['error' => 1, 'msg' => $e->getMessage()];
             }
