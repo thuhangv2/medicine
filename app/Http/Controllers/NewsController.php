@@ -3,10 +3,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\News;
-use App\Http\Controllers\Controller;
+use App\Components\GoogleClient;
+use Google_Service_Drive;
+use Illuminate\Http\UploadedFile;
 
 class NewsController extends Controller
 {
+    protected $client;
+
+    public function __construct(GoogleClient $client) {
+        $this->client = $client->getClient();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,8 +32,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        $listOfNews = News::all();
-        return $listOfNews;
+        return News::all();
     }
 
 //    /**
@@ -46,10 +53,40 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
-        $news = News::create($request->all());
+        if ($request->hasFile('myFile')) {
+            $imageID = $this->getImageID($request->file('myFile'));
+            echo "File ID = ".$imageID;
+            News::create(array_merge($request->all(), [
+                'image' => $imageID
+            ]));
+            $res = ['res' => 'ok'];
+        } else $res = ['res' => 'fail'];
 
-        return $news;
+        return response()->json($res);
+    }
+
+    /**
+     * Upload an image to google drive.
+     */
+    private function getImageID($image)
+    {
+        $driveService = new Google_Service_Drive($this->client);
+
+        try {
+            $fileMetadata = new \Google_Service_Drive_DriveFile([
+                'name' => time().'.'.$image->getClientOriginalExtension(),
+            ]);
+
+            $file = $driveService->files->create($fileMetadata, [
+                'data' => file_get_contents($image->getRealPath()),
+                'uploadType' => 'multipart',
+                'fields' => 'id',
+            ]);
+
+            return $file->id;
+        } catch (\Exception $e) {
+            //
+        }
     }
 //
 //    /**

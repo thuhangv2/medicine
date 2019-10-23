@@ -1906,7 +1906,7 @@ __webpack_require__.r(__webpack_exports__);
       reader.onload = function (e) {
         vm.image = e.target.result; // emit phai de o day moi run dc, tim mai moi ra day
 
-        _this.$emit('upload-an-image', vm.image);
+        _this.$emit('upload-an-image', file);
       };
 
       reader.readAsDataURL(file);
@@ -1992,39 +1992,51 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      news: {
-        tieu_de: '',
-        mo_bai: '',
-        than_bai: '',
-        ket_luan: '',
-        tham_khao: '',
-        anh_minh_hoa_1: '',
-        anh_minh_hoa_2: '',
-        anh_minh_hoa_3: ''
-      }
+      // news: {
+      //     tieu_de: '',
+      //     mo_bai: '',
+      //     than_bai: '',
+      //     ket_luan: '',
+      //     tham_khao: '',
+      //     anh_minh_hoa_1: '',
+      //     anh_minh_hoa_2: '',
+      //     anh_minh_hoa_3: ''
+      // }
+      selectedFile: null
     };
   },
   components: {
-    uploadImage: _Toys_uploadImage_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    'upload-image': _Toys_uploadImage_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   methods: {
-    saveForm: function saveForm() {
-      event.preventDefault();
-      var adminApp = this;
-      var newNews = adminApp.news;
-      axios.post('/admin/news/post', newNews).then(function (resp) {
-        adminApp.$router.push({
-          path: '/'
-        });
-      })["catch"](function (resp) {
-        console.log(resp);
-        alert("Could not create your news");
-      });
-    }
+    onFileChanged: function onFileChanged(event) {
+      this.selectedFile = event.target.files[0];
+      console.log(this.selectedFile);
+    },
+    onUpload: function onUpload() {
+      var formData = new FormData();
+      formData.append('myFile', this.selectedFile, this.selectedFile.name);
+      axios.post('/admin/news/post', formData);
+    } // saveForm() {
+    //     event.preventDefault();
+    //     console.log(this.news);
+    //     axios.post('/admin/news/post',this.news)
+    //         .then(function (resp) {
+    //             console.log(resp);
+    //             adminApp.$router.push({path: '/'});
+    //         })
+    //         .catch(function (resp) {
+    //             // console.log(resp);
+    //             alert("Could not create your news");
+    //         });
+    // }
+
   }
 });
 
@@ -37559,7 +37571,7 @@ var render = function() {
     !_vm.image
       ? _c("div", [
           _c("input", {
-            attrs: { type: "file" },
+            attrs: { type: "file", name: "anh_minh_hoa" },
             on: { change: _vm.onFileChange }
           })
         ])
@@ -37615,215 +37627,27 @@ var render = function() {
         _c(
           "form",
           {
+            attrs: { enctype: "multipart/form-data" },
             on: {
               submit: function($event) {
-                return _vm.saveForm()
+                return _vm.onUpload()
               }
             }
           },
           [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-12 form-group" }, [
-                _c("label", { staticClass: "control-label" }, [
-                  _vm._v("Tiêu đề")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.news.tieu_de,
-                      expression: "news.tieu_de"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.news.tieu_de },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.news, "tieu_de", $event.target.value)
-                    }
-                  }
-                })
-              ])
-            ]),
+            _c("input", {
+              attrs: { type: "file" },
+              on: { change: _vm.onFileChanged }
+            }),
             _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-12 form-group" }, [
-                _c("label", { staticClass: "control-label" }, [
-                  _vm._v("Mở bài")
-                ]),
-                _vm._v(" "),
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.news.mo_bai,
-                      expression: "news.mo_bai"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.news.mo_bai },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.news, "mo_bai", $event.target.value)
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-12 form-group" }, [
-                _c("label", { staticClass: "control-label" }, [
-                  _vm._v("Thân bài")
-                ]),
-                _vm._v(" "),
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.news.than_bai,
-                      expression: "news.than_bai"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.news.than_bai },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.news, "than_bai", $event.target.value)
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-12 form-group" }, [
-                _c("label", { staticClass: "control-label" }, [
-                  _vm._v("Kết luận")
-                ]),
-                _vm._v(" "),
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.news.ket_luan,
-                      expression: "news.ket_luan"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.news.ket_luan },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.news, "ket_luan", $event.target.value)
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c(
-                "div",
-                { staticClass: "col-12 form-group" },
-                [
-                  _c("label", { staticClass: "control-label" }, [
-                    _vm._v("Ảnh minh hoạ 1")
-                  ]),
-                  _vm._v(" "),
-                  _c("uploadImage", {
-                    on: {
-                      "upload-an-image": function($event) {
-                        _vm.news.anh_minh_hoa_1 = $event
-                      }
-                    }
-                  })
-                ],
-                1
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c(
-                "div",
-                { staticClass: "col-12 form-group" },
-                [
-                  _c("label", { staticClass: "control-label" }, [
-                    _vm._v("Ảnh minh hoạ 2")
-                  ]),
-                  _vm._v(" "),
-                  _c("uploadImage", {
-                    on: {
-                      "upload-an-image": function($event) {
-                        _vm.news.anh_minh_hoa_2 = $event
-                      }
-                    }
-                  })
-                ],
-                1
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c(
-                "div",
-                { staticClass: "col-12 form-group" },
-                [
-                  _c("label", { staticClass: "control-label" }, [
-                    _vm._v("Ảnh minh hoạ 3")
-                  ]),
-                  _vm._v(" "),
-                  _c("uploadImage", {
-                    on: {
-                      "upload-an-image": function($event) {
-                        _vm.news.anh_minh_hoa_3 = $event
-                      }
-                    }
-                  })
-                ],
-                1
-              )
-            ]),
-            _vm._v(" "),
-            _vm._m(0)
+            _c("button", [_vm._v("Upload!")])
           ]
         )
       ])
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-12 form-group" }, [
-        _c("button", { staticClass: "btn btn-success" }, [_vm._v("Tạo tin")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -38064,75 +37888,62 @@ var render = function() {
           _c(
             "tbody",
             _vm._l(_vm.listOfNews, function(news, index) {
-              return _c(
-                "tr",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.listOfNews.length > 0,
-                      expression: "listOfNews.length > 0"
-                    }
-                  ]
-                },
-                [
-                  _c("td", [_vm._v(_vm._s(news.tieu_de))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(news.mo_bai))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(news.than_bai))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(news.ket_luan))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(news.anh_minh_hoa_1))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(news.anh_minh_hoa_2))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(news.anh_minh_hoa_3))]),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "btn btn-xs btn-primary",
-                          attrs: {
-                            to: { name: "editNews", params: { id: news.id } }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                            Edit\n                        "
-                          )
-                        ]
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("td", [
+              return _c("tr", [
+                _c("td", [_vm._v(_vm._s(news.tieu_de))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(news.mo_bai))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(news.than_bai))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(news.ket_luan))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(news.anh_minh_hoa_1))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(news.anh_minh_hoa_2))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(news.anh_minh_hoa_3))]),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  [
                     _c(
-                      "a",
+                      "router-link",
                       {
-                        staticClass: "btn btn-xs btn-danger",
-                        attrs: { href: "#" },
-                        on: {
-                          click: function($event) {
-                            return _vm.deleteEntry(news.id, index)
-                          }
+                        staticClass: "btn btn-xs btn-primary",
+                        attrs: {
+                          to: { name: "editNews", params: { id: news.id } }
                         }
                       },
                       [
                         _vm._v(
-                          "\n                            Delete\n                        "
+                          "\n                            Edit\n                        "
                         )
                       ]
                     )
-                  ])
-                ]
-              )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-xs btn-danger",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          return _vm.deleteEntry(news.id, index)
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            Delete\n                        "
+                      )
+                    ]
+                  )
+                ])
+              ])
             }),
             0
           )

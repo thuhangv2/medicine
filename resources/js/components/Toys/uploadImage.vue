@@ -1,7 +1,7 @@
 <template>
     <div class="upload-image">
         <div v-if="!image">
-            <input type="file" @change="onFileChange">
+            <input type="file" @change="onFileChange" name="anh_minh_hoa">
         </div>
         <div v-else>
             <img :src="image" />
@@ -33,7 +33,7 @@
                 reader.onload = (e) => {
                     vm.image = e.target.result;
                     // emit phai de o day moi run dc, tim mai moi ra day
-                    this.$emit('upload-an-image', vm.image);
+                    this.$emit('upload-an-image', file);
                 };
 
                 reader.readAsDataURL(file);
