@@ -121,10 +121,9 @@ class ShopCart extends GeneralController
         );
     }
 
-/**
- * Process Cart, prepare for the checkout screen
- * @return redirect
- */
+    /**
+     * Process Cart, prepare for the checkout screen
+     */
     public function processCart()
     {
         if (Cart::count() == 0) {
@@ -164,7 +163,7 @@ class ShopCart extends GeneralController
             'address2' => request('address2'),
             'phone' => request('phone'),
             'comment' => request('comment'),
-        ],
+         ],
         ]);
         // dd(session()->all());
         return redirect()->route('checkout');
@@ -638,9 +637,12 @@ class ShopCart extends GeneralController
                 $dataFind = [
                     '/\{\{\$title\}\}/',
                     '/\{\{\$orderID\}\}/',
-                    '/\{\{\$first_name\}\}/',
-                    '/\{\{\$last_name\}\}/',
+                    '/\{\{\$firstName\}\}/',
+                    '/\{\{\$lastName\}\}/',
+                    '/\{\{\$toname\}\}/',
                     '/\{\{\$address\}\}/',
+                    '/\{\{\$address1\}\}/',
+                    '/\{\{\$address2\}\}/',
                     '/\{\{\$email\}\}/',
                     '/\{\{\$phone\}\}/',
                     '/\{\{\$comment\}\}/',
@@ -655,7 +657,10 @@ class ShopCart extends GeneralController
                     $orderId,
                     $data['first_name'],
                     $data['last_name'],
+                    $data['first_name'].' '.$data['last_name'],
                     $data['address1'] . ' ' . $data['address2'],
+                    $data['address1'],
+                    $data['address2'],
                     $data['email'],
                     $data['phone'],
                     $data['comment'],

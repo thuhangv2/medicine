@@ -51,8 +51,7 @@ Free Open source E-commerce use Laravel framework for Business
 
 ## List Functions of S-cart
 
-======= SHOPPING =======
-
+======= FRONT-END =======
 - Multi-language
 - Currencies
 - Customer sign up
@@ -60,35 +59,31 @@ Free Open source E-commerce use Laravel framework for Business
 - Process cart
 - Manage product: price sale, cost price, promotion price, quantity, multi images, attributes ..
 - Categories product
-- Brand product
-- Api manager
+- Brand, vendor product
+- Payment method (default: COD, Paypal), shipping method
+- CMS: blog/news, banner, content,
+- Upload manager
 ...
-======= SYSTEM MANAGEMENT =======
-
+======= ADMIN =======
 - Manage & permission users, groups
 - Customer management
-- Image management
+- Upload management
 - Order management: edit orders, update payment status, shipping status ...
 - Order history
-- Report:  chart, statistics, export csv, pdf...
-- Generate image thumbnail, watermark
-- Manage banner, logo
+- Report: chart, statistics, export csv, pdf...
 - Configure email SMTP
 - System configuration: turn off website, hide / show products
-- Backup & Restore database
+- Backup, restore data
 ...
 ======= EXTENSIONS =======
-
 - Shipping
 - Discount
 - Payment
-...Support for integrated extension from 3rd party
-
+...support for integrated extension from 3rd party
 ======= MODULES =======
-
 - Blog/News
 - Cms content: content categories, entries
-...Support for integrated modules from 3rd party
+...support for integrated modules from 3rd party
 
 
 ## Requirements:

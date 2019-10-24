@@ -215,4 +215,75 @@ Need mothod destroy to boot deleting in model
         }
     }
 
+    /**
+     * Get list variables support for email template
+     *
+     * @return json
+     */
+    public function listVariable()
+    {
+        $key = request('key');
+        $list = [];
+        switch ($key) {
+            case 'order_success_to_customer':
+            case 'order_success_to_admin':
+                $list = [
+                    '$title',
+                    '$orderID',
+                    '$toname',
+                    '$firstName',
+                    '$lastName',
+                    '$address',
+                    '$address1',
+                    '$address2',
+                    '$email',
+                    '$phone',
+                    '$comment',
+                    '$orderDetail',
+                    '$subtotal',
+                    '$shipping',
+                    '$discount',
+                    '$total',
+                ];
+                break;
+
+            case 'forgot_password':
+                $list = [
+                    '$title',
+                    '$reason_sednmail',
+                    '$note_sendmail',
+                    '$note_access_link',
+                    '$reset_link',
+                    '$reset_button',
+                ];
+                break;
+            case 'contact_to_admin':
+                $list = [
+                    '$title',
+                    '$name',
+                    '$email',
+                    '$phone',
+                    '$content',
+                ];
+                break;
+            case 'welcome_customer':
+                    $list = [
+                        '$title',
+                        '$first_name',
+                        '$last_name',
+                        '$email',
+                        '$phone',
+                        '$password',
+                        '$address1',
+                        '$address2',
+                        '$country',
+                    ];
+                    break;
+            default:
+                # code...
+                break;
+        }
+        return response()->json($list);
+    }
+
 }

@@ -76,6 +76,15 @@
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-8">
+                                    <label>Variables support:</label>
+                                    <div id="list-variables">
+                                    </div>                                   
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
@@ -124,6 +133,35 @@
 
 <script type="text/javascript">
     $("[name='top'],[name='status']").bootstrapSwitch();
+    $(document).ready(function(){
+        var group = $("[name='group'] option:selected").val();
+        loadListVariable(group);
+    });
+    $("[name='group']").change(function(){
+        var group = $("[name='group'] option:selected").val();
+        loadListVariable(group);        
+    });
+    function loadListVariable(group){
+    $.ajax({
+        type: "get",
+        data:{key:group},
+        url: "{{route('admin_email_template.list_variable')}}",
+        dataType: "json",
+        beforeSend: function(){
+                $('#loading').show();
+            },        
+        success: function (data) {
+            html = '<ul>';
+            $.each(data, function(i, item) {
+                html +='<li>'+item+'</li>';
+            });   
+            html += '</ul>';         
+            $('#list-variables').html(html);
+            $('#loading').hide();
+        }
+    })
+
+    }
 </script>
 
 <script type="text/javascript">
