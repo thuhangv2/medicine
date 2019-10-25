@@ -238,6 +238,7 @@ class ShopFront extends GeneralController
         }
         $product['availability'] = $availability;
         $product['showImages'] = $showImages;
+        $product['url'] = $product->getUrl();
         return response()->json($product);
 
     }

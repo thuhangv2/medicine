@@ -91,9 +91,25 @@ class RegisterController extends GeneralController
                     $content = $checkContent->text;
                     $dataFind = [
                         '/\{\{\$title\}\}/',
+                        '/\{\{\$first_name\}\}/',
+                        '/\{\{\$last_name\}\}/',
+                        '/\{\{\$email\}\}/',
+                        '/\{\{\$phone\}\}/',
+                        '/\{\{\$password\}\}/',
+                        '/\{\{\$address1\}\}/',
+                        '/\{\{\$address2\}\}/',
+                        '/\{\{\$country\}\}/',
                     ];
                     $dataReplace = [
                         trans('email.welcome_customer.title'),
+                        $data['reg_first_name'],
+                        $data['reg_last_name'],
+                        $data['reg_email'],
+                        $data['reg_phone'],
+                        $data['reg_password'],
+                        $data['reg_address1'],
+                        $data['reg_address2'],
+                        $data['reg_country'],                        
                     ];
                     $content = preg_replace($dataFind, $dataReplace, $content);
                     $data_mail = [

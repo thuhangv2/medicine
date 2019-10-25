@@ -196,6 +196,7 @@
             $('#product-detail-id').val(data.id);
             $('#product-detail-image').carousel();
             $('#loading').hide();
+            window.history.pushState("", "", data.url);            
           }
       });
 
