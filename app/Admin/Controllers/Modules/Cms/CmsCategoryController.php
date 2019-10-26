@@ -60,7 +60,7 @@ class CmsCategoryController extends Controller
         $obj = new CmsCategory;
 
         $obj = $obj
-            ->leftJoin('cms_category_description', 'cms_category_description.cms_category_id', 'cms_category.id')
+            ->leftJoin('cms_category_description', 'cms_category_description.category_id', 'cms_category.id')
             ->where('cms_category_description.lang', $this->lang);
         if ($keyword) {
             $obj = $obj->whereRaw('(id = ' . (int) $keyword . ' OR cms_category_description.title like "%' . $keyword . '%" )');
@@ -223,7 +223,7 @@ class CmsCategoryController extends Controller
         $languages = $this->languages;
         foreach ($languages as $code => $value) {
             $dataDes[] = [
-                'cms_category_id' => $id,
+                'category_id' => $id,
                 'lang' => $code,
                 'title' => $data['descriptions'][$code]['title'],
                 'keyword' => $data['descriptions'][$code]['keyword'],
@@ -292,7 +292,7 @@ class CmsCategoryController extends Controller
         $dataDes = [];
         foreach ($data['descriptions'] as $code => $row) {
             $dataDes[] = [
-                'cms_category_id' => $id,
+                'category_id' => $id,
                 'lang' => $code,
                 'title' => $row['title'],
                 'keyword' => $row['keyword'],

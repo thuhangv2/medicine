@@ -26,11 +26,11 @@ class CmsCategory extends Model
     }
     public function descriptions()
     {
-        return $this->hasMany(CmsCategoryDescription::class, 'cms_category_id', 'id');
+        return $this->hasMany(CmsCategoryDescription::class, 'category_id', 'id');
     }
     public function contents()
     {
-        return $this->hasMany(CmsContent::class, 'cms_category_id', 'id');
+        return $this->hasMany(CmsContent::class, 'category_id', 'id');
     }
 
     public function getTreeCategory($root = 0)
@@ -115,7 +115,7 @@ class CmsCategory extends Model
     {
         $arrChild = $this->arrChild($id);
         $arrChild[] = $id;
-        $query = (new CmsContent)->where('status', 1)->whereIn('cms_category_id', $arrChild)->sort();
+        $query = (new CmsContent)->where('status', 1)->whereIn('category_id', $arrChild)->sort();
         if (!(int) $limit) {
             return $query->get();
         } else

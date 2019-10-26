@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CmsCategoryDescription extends Model
 {
-    protected $primaryKey = ['lang', 'cms_category_id'];
+    protected $primaryKey = ['lang', 'category_id'];
     public $incrementing  = false;
     protected $guarded    = [];
     public $timestamps    = false;
@@ -29,12 +29,12 @@ class CmsCategoryDescription extends Model
         if (!Schema::hasTable($this->table)) {
             try {
                 Schema::create($this->table, function (Blueprint $table) {
-                    $table->integer('cms_category_id');
+                    $table->integer('category_id');
                     $table->string('lang', 10);
                     $table->string('title', 200)->nullable();
                     $table->string('keyword', 200)->nullable();
                     $table->string('description', 200)->nullable();
-                    $table->primary(['cms_category_id', 'lang']);
+                    $table->primary(['category_id', 'lang']);
                 });
             } catch (\Exception $e) {
                 $return = ['error' => 1, 'msg' => $e->getMessage()];
