@@ -23,11 +23,19 @@ class HomeController extends Controller
 
 //=========================
 
-        $totals = ShopOrder::select(DB::raw('DATE(created_at) as date, DATE_FORMAT(created_at, "%m/%d") as md, sum(total) as total_amount, count(id) as total_order'))
+        $totals = ShopOrder::select(
+            DB::raw(
+                'DATE(created_at) as date,
+                DATE_FORMAT(created_at, "%m/%d") as md,
+                sum(total/exchange_rate) as total_amount,
+                count(id) as total_order'
+            )
+        )
             ->groupBy('date', 'md')
             ->having('date', '<=', date('Y-m-d'))
             ->whereRaw('DATE(created_at) >=  DATE_SUB(DATE(NOW()), INTERVAL 1 MONTH)')
             ->get();
+            
         $orderGroup = $totals->keyBy('md')->toArray();
 
         $arrDays = [];
@@ -68,11 +76,18 @@ class HomeController extends Controller
             $arrTotalsAmount_year[$i] = 0;
         }
 
-        $totalsMonth = ShopOrder::select(DB::raw('DATE_FORMAT(created_at, "%Y-%m") as ym, sum(total) as total_amount, count(id) as total_order'))
+        $totalsMonth = ShopOrder::select(
+            DB::raw(
+                'DATE_FORMAT(created_at, "%Y-%m") as ym,
+                        sum(total/exchange_rate) as total_amount,
+                        count(id) as total_order'
+            )
+        )
             ->groupBy('ym')
             ->having('ym', '>=', $months2[12])
             ->having('ym', '<=', $months2[0])
             ->get();
+
         foreach ($totalsMonth as $key => $value) {
             $key_month = array_search($value->ym, $months2);
             $arrTotalsAmount_year[$key_month] = $value->total_amount;
