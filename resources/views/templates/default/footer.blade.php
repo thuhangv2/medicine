@@ -75,7 +75,7 @@
     <div class="footer-bottom">
       <div class="container">
         <div class="row">
-          <p class="pull-left">Copyright © 2018 <a href="{{ config('scart.homepage') }}">{{ config('scart.name') }} {{ config('scart.version') }}</a> Inc. All rights reserved.</p>
+          <p class="pull-left">Copyright © {{date('Y')}} <a href="{{ config('scart.homepage') }}">{{ config('scart.name') }} {{ config('scart.version') }}</a> Inc. All rights reserved.</p>
           <p class="pull-right">Hosted by  <span><a target="_blank" href="https://giaiphap247.com">GiaiPhap247</a></span></p>
             <!--
             S-Cart is free open source and you are free to remove the powered by S-cart if you want, but its generally accepted practise to make a small donation.
