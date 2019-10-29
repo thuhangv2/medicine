@@ -34,14 +34,41 @@ class AdminMenu extends Model
     public static function getList()
     {
         if (self::$getList == null) {
-            self::$getList = self::orderBy('sort', 'asc')->get()->groupBy('parent_id');
+            self::$getList = self::with('permissions','roles')
+                ->orderBy('sort', 'asc')->get();
         }
         return self::$getList;
     }
 
+    /**
+     * Get list menu can visible for user
+     *
+     * @return  [type]  [return description]
+     */
+    public static function getListVisible()
+    {
+        $list = self::getList();
+        $listVisible = [];
+        $admin = \Admin::user();
+        foreach ($list as  $menu) {
+            $allPermissionsMenuAllow = $menu->permissions
+                ->pluck('slug')->flatten()->toArray();
+            $allRolesMenuAllow       = $menu->roles
+                ->pluck('slug')->flatten()->toArray();
+            if ((!count($allPermissionsMenuAllow) 
+            && !count($allRolesMenuAllow))
+            || $admin->isAdministrator() 
+            || $admin->isViewAll()){
+                $listVisible[] = $menu;
+            }
+        }
+        $listVisible = collect($listVisible)->groupBy('parent_id');
+        return $listVisible;
+    }
+
     public function getTree($parent = 0, &$tree = null, $menus = null, &$st = '')
     {
-        $menus = $menus ?? $this->getList();
+        $menus = $menus ?? $this->getList()->groupBy('parent_id');
         $tree = $tree ?? [];
         $lisMenu = $menus[$parent] ?? [];
         foreach ($lisMenu as $menu) {
