@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\ShopNews;
 use App\Models\ShopOrder;
 use App\Models\ShopProduct;
 use App\Models\ShopUser;
@@ -20,6 +21,7 @@ class HomeController extends Controller
         $data['orders'] = new ShopOrder;
         $data['mapStyleStatus'] = ShopOrder::$mapStyleStatus;
         $data['products'] = new ShopProduct;
+        $data['blogs'] = new ShopNews;
 
 //=========================
 
@@ -35,7 +37,7 @@ class HomeController extends Controller
             ->having('date', '<=', date('Y-m-d'))
             ->whereRaw('DATE(created_at) >=  DATE_SUB(DATE(NOW()), INTERVAL 1 MONTH)')
             ->get();
-            
+
         $orderGroup = $totals->keyBy('md')->toArray();
 
         $arrDays = [];
@@ -87,7 +89,7 @@ class HomeController extends Controller
             ->having('ym', '>=', $months2[12])
             ->having('ym', '<=', $months2[0])
             ->get();
-
+            
         foreach ($totalsMonth as $key => $value) {
             $key_month = array_search($value->ym, $months2);
             $arrTotalsAmount_year[$key_month] = $value->total_amount;

@@ -5,52 +5,85 @@
 @section('main')
 
 <div class="row">
-  <div class="col-md-4">
-      <div  class="small-box bg-aqua">
-        <div class="inner">
-            <h3>{{ $products->count() }}</h3>
-            <p>{{ trans('admin.total_product') }}</p>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">{{ trans('admin.total_order') }}</span>
+              <span class="info-box-number">{{ number_format($orders->count()) }}</span>
+              <a href="{{ route('admin_order.index') }}" class="small-box-footer">
+                  {{ trans('admin.more') }}&nbsp;
+                  <i class="fa fa-arrow-circle-right"></i>
+              </a>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
         </div>
-        <div class="icon">
-            <i class="fa fa-tags"></i>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="fa fa-tags"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">{{ trans('admin.total_product') }}</span>
+              <span class="info-box-number">{{ number_format($products->count()) }}</span>
+              <a href="{{ route('admin_product.index') }}" class="small-box-footer">
+                  {{ trans('admin.more') }}&nbsp;
+                  <i class="fa fa-arrow-circle-right"></i>
+              </a>
+
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
         </div>
-        <a href="{{ route('admin_product.index') }}" class="small-box-footer">
-            {{ trans('admin.more') }}&nbsp;
-            <i class="fa fa-arrow-circle-right"></i>
-        </a>
-    </div>
-  </div>
-<div class="col-md-4">
-  <div  class="small-box bg-green">
-    <div class="inner">
-        <h3>{{ $orders->count() }}</h3>
-        <p>{{ trans('admin.total_order') }}</p>
-    </div>
-    <div class="icon">
-        <i class="fa fa-shopping-cart"></i>
-    </div>
-    <a href="{{ route('admin_order.index') }}" class="small-box-footer">
-        {{ trans('admin.more') }}&nbsp;
-        <i class="fa fa-arrow-circle-right"></i>
-    </a>
-</div>
-</div>
-<div class="col-md-4">
-    <div  class="small-box bg-yellow">
-      <div class="inner">
-          <h3>{{ $users->count() }}</h3>
-          <p>{{ trans('admin.total_customer') }}</p>
+
+
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">{{ trans('admin.total_customer') }}</span>
+              <span class="info-box-number">{{ number_format($users->count()) }}</span>
+              <a href="{{ route('admin_customer.index') }}" class="small-box-footer">
+                  {{ trans('admin.more') }}&nbsp;
+                  <i class="fa fa-arrow-circle-right"></i>
+              </a>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+
+
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-red"><i class="fa fa-map-signs"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">{{ trans('admin.total_blogs') }}</span>
+              <span class="info-box-number">{{ number_format($blogs->count()) }}</span>
+              <a href="{{ route('admin_news.index') }}" class="small-box-footer">
+                  {{ trans('admin.more') }}&nbsp;
+                  <i class="fa fa-arrow-circle-right"></i>
+              </a>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+
       </div>
-      <div class="icon">
-          <i class="fa fa-user"></i>
-      </div>
-      <a href="{{ route('admin_customer.index') }}" class="small-box-footer">
-          {{ trans('admin.more') }}&nbsp;
-          <i class="fa fa-arrow-circle-right"></i>
-      </a>
-  </div>
-</div>
-</div>
 
 
 {{-- Chart --}}
