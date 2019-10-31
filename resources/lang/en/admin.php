@@ -144,6 +144,7 @@ return [
  'total_order'                       => 'Order total',
  'total_customer'                    => 'Customer total',
  'new_customer'                      => 'New customer',
+ 'total_blogs'                       => 'Total blog',
  'hot_product'                       => 'Hot product',
  'new_product'                       => 'New product',
  'list_product'                      => 'List product',

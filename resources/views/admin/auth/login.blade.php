@@ -1,73 +1,90 @@
 @extends('admin.layout')
 
 @section('main')
-<div class="login-box">
-  <div class="login-logo">
-    <a href="{{ route('admin.home') }}"><b>{{sc_config('ADMIN_NAME')}}</b></a>
-  </div>
-  <!-- /.login-logo -->
-  <div class="login-box-body">
-   <p class="login-box-msg">{{ trans('admin.login') }}</p>
+<link rel="stylesheet" href="{{asset('admin/css/login.css')}}">
 
-    <form action="{{ route('admin.login') }}" method="post">
-      <div class="form-group has-feedback {!! !$errors->has('username') ?: 'has-error' !!}">
-
-        @if($errors->has('username'))
-          @foreach($errors->get('username') as $message)
-            <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{$message}}</label><br>
-          @endforeach
-        @endif
-
-        <input type="text" class="form-control" placeholder="{{ trans('admin.username') }}" name="username" value="{{ old('username') }}">
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-      </div>
-      <div class="form-group has-feedback {!! !$errors->has('password') ?: 'has-error' !!}">
-
-        @if($errors->has('password'))
-          @foreach($errors->get('password') as $message)
-            <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{$message}}</label><br>
-          @endforeach
-        @endif
-
-        <input type="password" class="form-control" placeholder="{{ trans('admin.password') }}" name="password">
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-      </div>
-      <div class="row">
-        <div class="col-xs-8">
-          <div class="checkbox icheck">
-            <label>
-              <input type="checkbox" name="remember" value="1" {{ (!old('username') || old('remember')) ? 'checked' : '' }}>
-              {{ trans('admin.remember_me') }}
-            </label>
+<body class="hold-transition login-page">
+  <div class="limiter">
+    <div class="container-login100">
+      <div class="wrap-login100 main-login">
+        <form action="{{ route('admin.login') }}" method="post">
+          <div class="col-md-12">
+            <img src="{{ asset(sc_store('logo')) }}" alt="logo" class="logo">
           </div>
-        </div>
-        <!-- /.col -->
-        <div class="col-xs-4">
+          <div class="login-title-des col-md-12 p-b-41">
+            <a><b>{{sc_config('ADMIN_NAME')}}</b></a>
+          </div>
+          <div class="col-md-12 form-group has-feedback {!! !$errors->has('username') ?: 'has-error' !!}">
+            <div class="wrap-input100 validate-input form-group ">
+              <input class="input100 form-control" type="text" placeholder="{{ trans('admin.username') }}"
+                name="username" value="{{ old('username') }}">
+              <span class="focus-input100"></span>
+              <span class="symbol-input100">
+                <i class="fa fa-user"></i>
+              </span>
+              @if($errors->has('username'))
+              @foreach($errors->get('username') as $message)
+              <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{$message}}</label><br>
+              @endforeach
+              @endif
+            </div>
+          </div>
+          <div class="col-md-12 form-group has-feedback {!! !$errors->has('password') ?: 'has-error' !!}">
+            <div class="wrap-input100 validate-input form-group ">
+              <input class="input100 form-control" type="password" placeholder="{{ trans('admin.password') }}"
+                name="password">
+              <span class="focus-input100"></span>
+              <span class="symbol-input100">
+                <i class="fa fa-lock"></i>
+              </span>
+
+              @if($errors->has('password'))
+              @foreach($errors->get('password') as $message)
+              <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i>{{$message}}</label><br>
+              @endforeach
+              @endif
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="container-login-btn">
+              <button class="login-btn" type="submit">
+                {{ trans('admin.login') }}
+              </button>
+            </div>
+            {{-- <div class="text-center">
+              <a href="" class="forgot">
+                <i class="fa fa-caret-right"></i> <b>Forgot Password</b>
+              </a>
+            </div> --}}
+
+            <div class="checkbox icheck text-center remember">
+              <label>
+                <input type="checkbox" name="remember" value="1"
+                  {{ (old('remember')) ? 'checked' : '' }}>
+                <b>{{ trans('admin.remember_me') }}</b>
+              </label>
+            </div>
+
+          </div>
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">{{ trans('admin.login') }}</button>
-        </div>
-        <!-- /.col -->
+        </form>
       </div>
-    </form>
+    </div>
 
-  </div>
-  <!-- /.login-box-body -->
-</div>
-
-@endsection
+    @endsection
 
 
-@push('styles')
-@endpush
+    @push('styles')
+    @endpush
 
-@push('scripts')
-<script>
-  $(function () {
+    @push('scripts')
+    <script>
+      $(function () {
     $('input').iCheck({
       checkboxClass: 'icheckbox_square-blue',
       radioClass: 'iradio_square-blue',
       increaseArea: '20%' /* optional */
     });
   });
-</script>
-@endpush
+    </script>
+    @endpush

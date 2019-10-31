@@ -150,6 +150,7 @@ return [
     'total_order' => 'Thống kê đơn hàng',
     'total_customer' => 'Thống kê khách hàng',
     'new_customer' => 'Khách hàng mới',
+    'total_blogs' => 'Thống kê blog',
     'hot_product' => 'Sản phẩm Hot',
     'new_product' => 'Sản phẩm mới nhất',
     'list_product' => 'Danh sách sản phẩm',

@@ -25,7 +25,7 @@ class LoginController extends Controller
             return redirect($this->redirectPath());
         }
 
-        return view('admin.auth.login');
+        return view('admin.auth.login',['title'=>'Login']);
     }
 
     /**
