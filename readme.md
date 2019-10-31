@@ -135,22 +135,22 @@ Step6:
 - Access to url admin: <b>your-domain/sc_admin</b>.
 - User/pass <code><b>admin</b>/<b>admin</b></code>
 
+## License:
+
+`S-Cart` is licensed under [The MIT License (MIT)](LICENSE).
+
 ## Demo:
 
 - Font-end : http://demo.s-cart.org
 - Back-end: http://demo.s-cart.org/sc_admin   <code>User/pass: test/123456</code>
 
-## License:
-
-`S-Cart` is licensed under [The MIT License (MIT)](LICENSE).
-
-### 
+### .
 
 VPS SSD $5/mo, gets $50 in credit over 30 days. [DigitalOcean](https://m.do.co/c/450877e92a78).
 
 
 ## Screenshots:
-<h2 class="fh5co-heading animate-box" data-animate-effect="fadeInRight">Screenshots</h2>
+
 
 <p><img src="https://s-cart.org/images/screen/v31/home.jpg" /></p>
 
